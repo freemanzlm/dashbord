@@ -1,0 +1,51 @@
+.container{
+	width: 1200px;
+	margin: 0 auto;	
+}
+
+.mt10{
+	margin-top:10px;	
+}
+
+.mt20{
+	margin-top:20px;	
+}
+
+.mt30{
+	margin-top:30px;	
+}
+.features {
+    padding-left: 20px;
+}
+
+ul.features li{
+	margin: 10px 0;	
+}
+
+#Foot {
+    clear: both;
+    position: relative;
+    min-width: 800px;
+}
+
+#vFoot {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-top: 1px solid #CCCCCC;
+    margin: 10px 0 0;
+    min-width: 860px;
+    overflow: hidden;
+    padding: 40px 10px;
+}
+
+#Bottom {
+    margin: 0 auto;
+    width: 1200px;
+    clear: both;
+    position: relative;
+}
+
+.demo #glbfooter{
+	border:none;
+	margin: 0;
+	padding: 0;
+}
