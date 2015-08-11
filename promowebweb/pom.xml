@@ -86,7 +86,11 @@
         		<groupId>javax.servlet</groupId>
         		<artifactId>javax.servlet-api</artifactId>
       		</dependency>
-
+      	<dependency>
+      		<groupId>com.ebay.cbt</groupId>
+      		<artifactId>salesforceService</artifactId>
+      		<version>0.0.1-SNAPSHOT</version>
+      	</dependency>
 	</dependencies>
 
 	<build>
