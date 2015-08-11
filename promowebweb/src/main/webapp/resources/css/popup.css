@@ -1,0 +1,58 @@
+.popup {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	
+	position: absolute;
+	display: none;
+	
+	max-width: 400px;
+	z-index: 10000;
+}
+
+.popup.open {
+	display: block;
+}
+
+.popup .anchor {
+	position: absolute;
+}
+
+.popup.left .anchor {
+	background: url(../img/anchor_right.png) no-repeat scroll transparent left top;
+	width: 13px;
+	height: 24px;
+	right: -12px;
+	top: 0;
+}
+
+.popup.right .anchor {
+	background: url(../img/anchor_left.png) no-repeat scroll transparent left top;
+	width: 13px;
+	height: 24px;
+	left: -12px;
+	top: 0;
+}
+
+.popup.top .anchor {
+	background: url(../img/anchor_down.png) no-repeat scroll transparent left top;
+	width: 24px;
+	height: 13px;
+	bottom: -12px;
+	left: 0;
+}
+
+.popup.bottom .anchor {
+	background: url(../img/anchor_up.png) no-repeat scroll transparent left top;
+	width: 24px;
+	height: 13px;
+	top: -12px;
+	left: 0;
+}
+
+.popup .popup-content {
+	border-radius: 5px;
+	background: #fff;
+	padding: 10px;
+	
+	line-height: 1.5;
+}

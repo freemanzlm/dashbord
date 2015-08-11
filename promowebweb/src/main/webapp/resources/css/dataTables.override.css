@@ -1,0 +1,216 @@
+@CHARSET "UTF-8";
+
+table.dataTable {
+	margin: 0;
+	border-collapse: collapse;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+	border-bottom: none;
+}
+
+/* table.dataTable tr.odd { background-color: #E2E4FF; } */
+table.dataTable tr.even { background-color: white; }
+
+table.dataTable tbody td {
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	/* border-bottom: 1px solid #ccc; */
+}
+
+table.dataTable thead {
+/* 	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, #C8D2DC),
+		color-stop(1, #FFFFFF)
+	);
+	background-image: -o-linear-gradient(bottom, #C8D2DC 0%, #EEEEEE 100%);
+	background-image: -moz-linear-gradient(bottom, #C8D2DC 0%, #EEEEEE 100%);
+	background-image: -webkit-linear-gradient(bottom, #C8D2DC 0%, #EEEEEE 100%);
+	background-image: -ms-linear-gradient(bottom, #C8D2DC 0%, #EEEEEE 100%);
+	background-image: linear-gradient(to bottom, #C8D2DC 0%, #EEEEEE 100%); */
+}
+
+table.dataTable thead th {
+	text-align: center;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-bottom: none;
+	padding: 10px;
+}
+
+table.dataTable thead .sorting {
+	background: url("${res.img.local.img.dataTables.sort_both_png}")
+		no-repeat center right transparent;
+}
+
+table.dataTable thead .sorting_asc {
+	background: url("${res.img.local.img.dataTables.sort_asc_png}")
+		no-repeat center right transparent;
+}
+
+table.dataTable thead .sorting_desc {
+	background: url("${res.img.local.img.dataTables.sort_desc_png}")
+		no-repeat center right transparent;
+}
+
+table.dataTable thead .sorting_asc_disabled {
+	background: url("${res.img.local.img.dataTables.sort_asc_disabled_png}")
+		no-repeat center right transparent;
+}
+
+table.dataTable thead .sorting_desc_disabled {
+	background:
+		url("${res.img.local.img.dataTables.sort_desc_disabled_png}")
+		no-repeat center right transparent;
+}
+
+table.dataTable tbody tr.even {
+  background-color: #fdfdfd;
+}
+
+table.dataTable tbody tr.odd {
+  background-color: #EAEFF5;
+}
+
+.datatable_header .dataTables_info {
+	padding-top: 0;
+	padding-bottom: 0.755em;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+	padding-top: 0.755em;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+	 padding: 0.1em 0.2em;
+}
+
+/* concrete table style begin */
+.dataTable-container {
+	margin-bottom: 20px;
+}
+
+/* conversion rate chat in table */
+.dataTables_scrollHead {
+	margin-bottom: 10px;
+}
+
+table.dataTable thead {
+	background-image: none;
+}
+
+table.dataTable thead th {
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid #ccc;
+}
+
+table.dataTable tbody tr[open] td {
+	border-top: 1px solid #86bbe5;
+	border-bottom: none;
+	background: #CDE6FA;
+}
+
+table.dataTable {
+	border-collapse: separate;
+}
+
+table.dataTable tbody td {
+	border-left: none;
+	border-right: none;
+}
+
+table.dataTable td.dataTables_empty {
+	text-align: center;
+	padding: 50px 0;
+}
+
+table.dataTable tbody td.open-tr,
+table.dataTable tbody tr.open-tr {
+	border-left: 1px solid #86bbe5;
+	border-right: 1px solid #86bbe5;
+	border-bottom: 1px solid #86bbe5;
+	background-color: #f8f8f8;
+}
+
+table.dataTable tbody tr[open] td {
+	border-top: 1px solid #86bbe5;
+}
+
+table.dataTable tbody tr[open] td:first-child {
+	border-left: 1px solid #86bbe5;
+}
+
+table.dataTable tbody tr[open] td:last-child {
+	border-right: 1px solid #86bbe5;
+}
+
+table.dataTable td.item-title img {
+	margin: 5px 10px;
+	width: 50px;
+	height: 50px;
+	float: left;
+}
+
+table.dataTable td.item-title p {
+	line-height: 1.3;
+}
+
+table.item-list-table {
+	border-spacing: 0 10px;
+	border-collapse: separate;
+}
+
+.dataTables_scrollHead table.item-list-table {
+	border-spacing: 0 10px;
+}
+
+.dataTables_scrollBody table.item-list-table {
+	margin-top: -20px;
+}
+
+table.item-list-table td {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+table.item-list-table td:first-child {
+	border-left: 1px solid #ccc;
+}
+
+table.item-list-table td:last-child {
+	border-right: 1px solid #ccc;
+}
+
+table.item-list-table tbody tr.odd,
+table.item-list-table tbody tr.even {
+	background-color: #fff;
+}
+
+table.dataTable tbody td .msg {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 1.2em;
+}
+
+table.dataTable td.skuName a span {
+	color: #f00;
+}
+
+#conv-item-table_info {
+  clear: both;
+  padding-left: 1em;
+  color: #666;
+  float: right;
+  padding-top: 1em;
+}
+#watched-items-table_info {
+	float: right;
+}
+

@@ -1,0 +1,84 @@
+@CHARSET "UTF-8";
+button {
+	cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+.btn {
+	border: none;
+	border-radius: 3px;
+	background: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, #007ABC),
+		color-stop(1, #00519D)
+	) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background: -o-linear-gradient(bottom, #007ABC, #00519D) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background: -moz-linear-gradient(bottom, #007ABC, #00519D) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background: -webkit-linear-gradient(bottom, #007ABC, #00519D) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	background: -ms-linear-gradient(bottom, #007ABC, #00519D) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=’false’, startColorstr='#007ABC', endColorstr='#00519D', GradientType='0'); /* IE5.5-9*/
+	background: linear-gradient(to bottom, #007ABC, #00519D) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	padding: 0.5em 1.2em;
+	
+	display: inline-block;
+	
+	font-weight: 500;
+	text-align: center;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+	color: #fff;
+	
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.btn.white {
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0.05, #FCFCFC),
+		color-stop(1, #F0F2EF)
+	);
+	background-image: -o-linear-gradient(bottom, #FCFCFC 5%, #F0F2EF 100%);
+	background-image: -moz-linear-gradient(bottom, #FCFCFC 5%, #F0F2EF 100%);
+	background-image: -webkit-linear-gradient(bottom, #FCFCFC 5%, #F0F2EF 100%);
+	background-image: -ms-linear-gradient(bottom, #FCFCFC 5%, #F0F2EF 100%);
+	background-image: linear-gradient(to bottom, #FCFCFC 5%, #F0F2EF 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=’false’, startColorstr='#FCFCFC', endColorstr='#F0F2EF', GradientType='0');
+	
+	border: 1px solid #ccc;
+	color: #166CC1;
+}
+
+.btn.medium {
+	line-height: 20px;
+	font-size: 1.5em;
+}
+
+.img-btn {
+	border: none;
+	padding: 0;
+	background-color: transparent;
+	outline: none;
+	cursor: pointer;
+	
+	display: inline-block;
+}
+
+td button {
+	background: #86bbe5;
+	border: 1px solid transparent;
+	border-radius: 5px;
+}
+td button:disabled {
+    background: #bbddff;
+}
+
+td button[open] {
+	background: #FFB246;
+}

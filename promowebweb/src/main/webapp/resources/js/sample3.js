@@ -1,1 +1,0 @@
-//document.write("this is sample3.js<br>");

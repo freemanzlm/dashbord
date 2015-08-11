@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+html body {
+	font-size: 12px;
+	color: #333;
+    font-family: "Helvetica neue",Helvetica,Arial,sans-serif;
+}
+
+main {
+	border: 0 none;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+
+table {
+	width: 100%;
+}
+
+input, select {
+	box-sizing: content-box;
+	outline: none;
+}
+
+a:visited {
+	color: #007ab0;
+}
+
+em {
+	font-weight: bold;
+}
+
+a:focus, a:hover {
+    color: #002398;
+    text-decoration: none;
+}

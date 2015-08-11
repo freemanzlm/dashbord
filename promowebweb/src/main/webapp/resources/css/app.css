@@ -1,6 +1,59 @@
-.container{
-	width: 1200px;
-	margin: 0 auto;	
+/* header */
+#header .logo {
+	margin: -27px 0 0 20px;
+	display: block;
+}
+
+#header .nav {
+	position: absolute;
+	bottom: 17px;
+	left: 265px;
+}
+
+#header .nav li {
+	margin: 0 0 0 20px;
+	list-style: none outside none;
+	float: left;
+}
+
+#header .nav li .icon {
+	margin-right: 8px;
+}
+
+
+#header .main h1 {
+	margin: 52px 0 0 152px;
+	float: left;
+	font-weight: bold;
+}
+
+#header .breadcrumb {
+	margin: 20px 0 0 20px;
+}
+
+/* top navigation */
+.top-nav {
+	margin: 10px 0 0;
+}
+
+.top-nav .tab-nav {
+	margin: 0 0 0 40px;
+	float: left;
+}
+
+.top-nav .btn {
+	margin-top: 5px;
+	margin-right: 10px;
+	float: right;
+}
+
+.top-nav .links-nav {
+	margin: 0 0 0 250px;
+}
+/* top navigation end*/
+
+#page h2 {
+	font-weight: bold;
 }
 
 .mt10{
@@ -13,39 +66,4 @@
 
 .mt30{
 	margin-top:30px;	
-}
-.features {
-    padding-left: 20px;
-}
-
-ul.features li{
-	margin: 10px 0;	
-}
-
-#Foot {
-    clear: both;
-    position: relative;
-    min-width: 800px;
-}
-
-#vFoot {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border-top: 1px solid #CCCCCC;
-    margin: 10px 0 0;
-    min-width: 860px;
-    overflow: hidden;
-    padding: 40px 10px;
-}
-
-#Bottom {
-    margin: 0 auto;
-    width: 1200px;
-    clear: both;
-    position: relative;
-}
-
-.demo #glbfooter{
-	border:none;
-	margin: 0;
-	padding: 0;
 }

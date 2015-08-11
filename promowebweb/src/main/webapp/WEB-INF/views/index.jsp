@@ -7,71 +7,118 @@
 <c:set var="categoryId" value="6000" />
 
 <r:includeJquery jsSlot="body" />
-<r:includeRaptorJS jsSlot="body" />
 <r:client />
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>eBay: Application</title>
-	<meta name="description" content="eBay Application">
+	<title>活动促销</title>
+	<meta name="description" content="活动促销">
 	<meta name="author" content="eBay: Apps">
+	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
+	
+	<script type="text/javascript">
+		var BizReport = BizReport || {};
+	</script>
+	<res:jsSlot id="head" />	
 	<res:jsSlot id="head-js" />
 	
 	<%--module "ebay.page" add Resets and Global css --%>
-	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head-css" />
+	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head" />
+	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
+	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	
+	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['locale_zh_CN.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['OnGoingPromoTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['RewardingPromoTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['EndPromoTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['index.js']}" target="exec-js"></res:useJs>
 	
 </head>
 
-<body class="demo">
+<body>
 <div class="container">
 	<!--  Global Header -->
-	<div class="header">
-	    <ghs:header layoutType="FULL" categoryId="${categoryId}" jsSlot="page-js" cssSlot="head-css" />	    
-	</div>
+	<jsp:include page="header.jsp"></jsp:include>
 	<!-- end: Global Header -->
 	
-	<!-- Page Content -->
-	<h1>${greeting}</h1>
-	<p>This is a sample web application generated from Raptor wizard. To change the content of this page, please modify <b>/webapp/WEB-INF/views/index.jsp</b></p>
-	<br><b>This sample eBay app has helped you setup a starter project with the following features:</b>
-	<%-- <rui:standardContainer title="This sample eBay app will get you started with followings:" cssSlot="head-css">				 --%>
-		<ul class="features">
-			<li>Demonstrates Global Header/Footer, Raptor JS framework and Raptor DS3 UI Components</li>
-			<li>Include jQuery and Raptor JS files</li>
-			<li>Resets and Globals CSS</li>		
-			<li>All the required JS and CSS resources slots are automatically included </li>
-			<li>Precludes need to define any slot</li>
-		</ul>				
-	<%-- </rui:standardContainer> --%>
-	
-	<div class="mt30">
-		<rui:button size="small" variant="checkout" value="Click Here to Visit Validate Internals" type="anchor" url="/admin/v3console/ValidateInternals" target="_blank" cssSlot="head-css" jsSlot="body"/>
+	<div id="page">
+		<div id="page-pane">
+			<div class="clr" style="margin-bottom: 15px;">
+				<button class="btn white fr" lang="zh_HK">切換至繁體中文</button>
+				<h2>活动促销</h2>
+			</div>
+			
+			<div class="pane pane-table">
+				<div class="header">
+					<div class="fr cl">
+						<select name="" id="" class="fr">
+							<option value="">所有进行中的活动</option>
+						</select>
+						<select name="" id="" class="fr">
+							<option value="">全部活动类型</option>
+						</select>
+					</div>
+					<h3>进行中的活动</h3>
+				</div>
+				<jsp:include page="table/ongoing.jsp"></jsp:include>
+			</div>
+			
+			<div class="pane pane-table">
+				<div class="header">
+					<div class="fr cl">
+						<select name="" id="" class="fr">
+							<option value="">所有进行中的活动</option>
+						</select>
+						<select name="" id="" class="fr">
+							<option value="">全部活动类型</option>
+						</select>
+					</div>
+					<h3>领取活动奖励</h3>
+				</div>
+				<jsp:include page="table/rewarding.jsp"></jsp:include>
+			</div>
+			
+			<div class="pane pane-table">
+				<div class="header">
+					<div class="fr cl">
+						<select name="" id="" class="fr">
+							<option value="">所有进行中的活动</option>
+						</select>
+						<select name="" id="" class="fr">
+							<option value="">全部活动类型</option>
+						</select>
+					</div>
+					<h3>已结束的活动</h3>
+				</div>
+				<jsp:include page="table/end.jsp"></jsp:include>
+			</div>
+		</div>
 	</div>
-	
-	<div class="mt30">
-		To learn more about Raptor, please visit: <a href="http://raptor" target="_blank">http://raptor</a>
-	</div>
-	
-	<div class="mt30">
-		For support on Raptor, visit: <a href="https://answerhub.corp.ebay.com/spaces/44/raptor.html" target="_blank">AnswerHub</a>
-		<p>Please review the previous threads and answers, most likely you will find the answers for your questions.</p>
-	</div>
-	
-	<!-- End: Page Content -->
 
+	<!-- Global Footer -->
+		<jsp:include page="footer.jsp"></jsp:include>
+	<!-- End: Global Footer -->
 </div>
-<!-- Global Footer -->
-<div id="Foot">
-	<div id="vFoot">
-	   <div id="Bottom">
-			<ghs:footer />
-	   </div>
-	</div>
-</div>
-<!-- End: Global Footer -->
+
+<%@ include file="dialog/alert.jsp" %>
+
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />
