@@ -56,6 +56,10 @@
 	font-weight: bold;
 }
 
+#page .pane h2 {
+	margin-bottom: 25px;
+}
+
 .mt10{
 	margin-top:10px;	
 }

@@ -42,7 +42,7 @@
 	margin: 20px 0 0;
 	border: 1px solid #ccc;
 	padding: 20px;
-	background: #f8f8f8;
+	background: #fff;
 }
 
 .pane .header {
@@ -65,3 +65,76 @@
 	margin-left: 20px;
 }
 /* pane end */
+
+.table {
+	display: table;
+}
+
+.table-row {
+	display: table-row;
+}
+
+.table-cell {
+	display: table-cell;
+}
+
+/* steps module begin */
+
+.steps-wrapper {
+	display: table;
+	width: 100%;
+}
+
+.steps {
+	display: table-row;
+}
+
+.steps .step {
+	padding: 0 17px 0 0px;
+	background: url(../img/step.png) no-repeat scroll right center #F9FAFB;
+	display: table-cell;
+	text-align: center;
+	line-height: 28px;
+}
+
+.steps .step span {
+	background-color: #F9FAFB;
+	display: block;
+}
+
+.steps .step:last-child {
+	background-image: none;
+}
+
+.steps .step.done {
+	background-image: url(../img/done.png);
+}
+
+.steps .step.done span {
+	background-color: #DEDEDF;
+	font-weight: bold;
+}
+/* steps module end */
+
+/* active detail begin */
+.active-detail {
+	margin-top: 20px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	padding: 20px 20px;
+	background-color: #F9FAFB;
+}
+
+.active-detail .active-time {
+	margin-bottom: 10px;
+}
+
+.active-detail .active-brief {
+	margin-bottom: 10px;
+}
+
+.active-detail .active-brief p {
+	margin: 8px 0;
+	line-height: 1.333;
+}
+/* active detail end */
