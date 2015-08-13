@@ -36,6 +36,11 @@ button:disabled {
 	cursor: pointer;
 }
 
+a.btn:visited,
+a.btn:hover {
+	color: #fff;
+}
+
 .btn.white {
 	background-image: -webkit-gradient(
 		linear,

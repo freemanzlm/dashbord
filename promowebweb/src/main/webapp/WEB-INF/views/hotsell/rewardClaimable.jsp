@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>爆款促销 - 可报名</title>
-	<meta name="description" content="爆款促销 - 可报名">
+	<title>爆款促销 - 可申领奖励</title>
+	<meta name="description" content="爆款促销 - 可申领奖励">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -60,14 +60,24 @@
 				<h2>爆款促销 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可报名</span></div>
-						<div class="step"><span>已提交报名</span></div>
-						<div class="step"><span>活动进行中</span></div>
-						<div class="step"><span>奖励确认中</span></div>
-						<div class="step"><span>可申领奖励</span></div>
+						<div class="step done"><span>可报名</span></div>
+						<div class="step done"><span>已提交报名</span></div>
+						<div class="step done"><span>活动进行中</span></div>
+						<div class="step done"><span>奖励确认中</span></div>
+						<div class="step current-step"><span>可申领奖励</span></div>
 						<div class="step"><span>活动完成</span></div>
 					</div>
 				</div>  <!-- steps end -->
+				
+				<div class="active-status-box success">
+					<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
+					<p class="desc">
+						请在2015年8月8日前点击进入领奖流程完成申领。
+					</p>
+					<menu>
+						<a href="" class="btn">填写奖励申领协议</a>
+					</menu>					
+				</div> <!-- active status box end -->
 				
 				<div class="active-detail">
 					<div class="active-time">

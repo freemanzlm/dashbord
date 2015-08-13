@@ -50,8 +50,8 @@ public class HotsellController {
 		return model;
 	}
 	
-	@RequestMapping(value = "rewardAppliable", method = RequestMethod.GET)
-	public HashMap<String, String> handleRewardAppliableRequest() {
+	@RequestMapping(value = "rewardClaimable", method = RequestMethod.GET)
+	public HashMap<String, String> handleRewardClaimableRequest() {
 		HashMap<String, String> model = new HashMap<String, String>();
 		String helloRaptor = "Say hello to Raptor!";
 		model.put("greeting", helloRaptor);

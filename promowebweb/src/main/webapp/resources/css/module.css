@@ -81,6 +81,7 @@
 /* steps module begin */
 
 .steps-wrapper {
+	margin-bottom: 20px;
 	display: table;
 	width: 100%;
 }
@@ -102,25 +103,34 @@
 	display: block;
 }
 
-.steps .step:last-child {
-	background-image: none;
-}
-
 .steps .step.done {
 	background-image: url(../img/done.png);
+	background-color: #DEDEDF;
 }
 
 .steps .step.done span {
 	background-color: #DEDEDF;
+}
+
+.steps .step.current-step {
+	background-image: url(../img/done.png);
+}
+
+.steps .step.current-step span {
+	background-color: #DEDEDF;
 	font-weight: bold;
+}
+
+.steps .step:last-child {
+	background-image: none;
+	padding-right: 0;
 }
 /* steps module end */
 
 /* active detail begin */
 .active-detail {
-	margin-top: 20px;
-	border-top: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
+	border-top: 2px solid #ccc;
+	border-bottom: 2px solid #ccc;
 	padding: 20px 20px;
 	background-color: #F9FAFB;
 }
@@ -138,3 +148,38 @@
 	line-height: 1.333;
 }
 /* active detail end */
+
+/* active status box begin */
+.active-status-box {
+	background-color: #ECF1F7;
+	margin-bottom: 20px;
+	min-height: 185px;
+	text-align: center;
+	
+	position: relative;
+}
+
+.active-status-box h3 {
+	padding: 30px 0 20px 0;
+	font-weight: bold;	
+}
+
+.active-status-box p {
+	line-height: 1.333;
+}
+
+.active-status-box menu {
+	position: absolute;
+	bottom: 30px;
+	
+	width: 100%;
+}
+
+.active-status-box.fail h3 {
+	color: #f00;
+}
+
+.active-status-box.success h3 {
+	color: #83B841;
+}
+/* active status box end */

@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>爆款促销 - 可报名</title>
-	<meta name="description" content="爆款促销 - 可报名">
+	<title>爆款促销 - 活动进行中</title>
+	<meta name="description" content="爆款促销 - 活动进行中">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -60,14 +60,25 @@
 				<h2>爆款促销 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可报名</span></div>
-						<div class="step"><span>已提交报名</span></div>
-						<div class="step"><span>活动进行中</span></div>
+						<div class="step done"><span>可报名</span></div>
+						<div class="step done"><span>已提交报名</span></div>
+						<div class="step current-step"><span>活动进行中</span></div>
 						<div class="step"><span>奖励确认中</span></div>
 						<div class="step"><span>可申领奖励</span></div>
 						<div class="step"><span>活动完成</span></div>
 					</div>
 				</div>  <!-- steps end -->
+				
+				<div class="active-status-box success">
+					<h3>恭喜，您的报名已完成审核！</h3>
+					<p class="desc">
+						活动时间为YYYY-MM-DD 到  YYYY-MM-DD, <br />
+						我们将在活动结束后尽快公布统计结果，请耐心等待！
+					</p>
+					<menu>
+						<a href="../index" class="btn">返回活动列表</a>
+					</menu>					
+				</div> <!-- active status box end -->
 				
 				<div class="active-detail">
 					<div class="active-time">

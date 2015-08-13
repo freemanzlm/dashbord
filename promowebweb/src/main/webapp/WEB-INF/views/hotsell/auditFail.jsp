@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>爆款促销 - 可报名</title>
-	<meta name="description" content="爆款促销 - 可报名">
+	<title>爆款促销 - 审核失败</title>
+	<meta name="description" content="爆款促销 - 审核失败">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -35,17 +35,6 @@
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
-	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['locale_zh_CN.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	
 </head>
 
 <body>
@@ -60,14 +49,21 @@
 				<h2>爆款促销 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可报名</span></div>
-						<div class="step"><span>已提交报名</span></div>
-						<div class="step"><span>活动进行中</span></div>
-						<div class="step"><span>奖励确认中</span></div>
-						<div class="step"><span>可申领奖励</span></div>
-						<div class="step"><span>活动完成</span></div>
+						<div class="step done"><span>可报名</span></div>
+						<div class="step done"><span>已提交报名</span></div>
+						<div class="step current-step"><span>审核失败</span></div>
 					</div>
 				</div>  <!-- steps end -->
+				
+				<div class="active-status-box fail">
+					<h3>很遗憾，您的报名未通过审核</h3>
+					<p class="desc">
+						感谢您的参与！
+					</p>
+					<menu>
+						<a href="../index" class="btn">返回活动列表</a>
+					</menu>					
+				</div> <!-- active status box end -->
 				
 				<div class="active-detail">
 					<div class="active-time">

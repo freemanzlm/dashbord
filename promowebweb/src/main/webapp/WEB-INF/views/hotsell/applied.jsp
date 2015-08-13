@@ -61,13 +61,23 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
-						<div class="step done"><span>已提交报名</span></div>
+						<div class="step current-step"><span>已提交报名</span></div>
 						<div class="step"><span>活动进行中</span></div>
 						<div class="step"><span>奖励确认中</span></div>
 						<div class="step"><span>可申领奖励</span></div>
 						<div class="step"><span>活动完成</span></div>
 					</div>
 				</div>  <!-- steps end -->
+				
+				<div class="active-status-box">
+					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
+					<p class="desc">
+						已超过报名有效期，您无法再修改刊登内容
+					</p>
+					<menu>
+						<a href="" class="btn">返回活动列表</a>
+					</menu>					
+				</div> <!-- active status box end -->
 				
 				<div class="active-detail">
 					<div class="active-time">
