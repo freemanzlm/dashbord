@@ -4,6 +4,26 @@
 	background: #fff;	
 }
 
+.mt10{
+	margin-top:10px;	
+}
+
+.mt20{
+	margin-top:20px;	
+}
+
+.mt30{
+	margin-top:30px;	
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
 #header {
 	background: #fff;
 	margin: 0 auto;

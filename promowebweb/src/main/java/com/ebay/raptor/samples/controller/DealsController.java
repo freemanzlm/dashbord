@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value="hotsell")
-public class HotsellController {
+@RequestMapping(value="deals")
+public class DealsController {
 
 	@RequestMapping(value = "applicable", method = RequestMethod.GET)
 	public HashMap<String, String> handleRequest() {
@@ -20,6 +20,22 @@ public class HotsellController {
 
 	@RequestMapping(value = "applied", method = RequestMethod.GET)
 	public HashMap<String, String> handleAppliedRequest() {
+		HashMap<String, String> model = new HashMap<String, String>();
+		String helloRaptor = "Say hello to Raptor!";
+		model.put("greeting", helloRaptor);
+		return model;
+	}
+	
+	@RequestMapping(value = "reviewing", method = RequestMethod.GET)
+	public HashMap<String, String> handleReveiwingRequest() {
+		HashMap<String, String> model = new HashMap<String, String>();
+		String helloRaptor = "Say hello to Raptor!";
+		model.put("greeting", helloRaptor);
+		return model;
+	}
+	
+	@RequestMapping(value = "applicationComfirm", method = RequestMethod.GET)
+	public HashMap<String, String> handleapplicationConfirmRequest() {
 		HashMap<String, String> model = new HashMap<String, String>();
 		String helloRaptor = "Say hello to Raptor!";
 		model.put("greeting", helloRaptor);
@@ -41,7 +57,6 @@ public class HotsellController {
 		model.put("greeting", helloRaptor);
 		return model;
 	}
-	
 	
 	@RequestMapping(value = "rewardConfirming", method = RequestMethod.GET)
 	public HashMap<String, String> handleRewardConfirmingRequest() {

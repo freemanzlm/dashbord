@@ -109,7 +109,14 @@
 			if (data && (data.status == "true" || data.status == true || data.status == "ok")) {
 				this.publish("dataloaded", data);
 				
-				this.feedTable(data);
+				this._preprocessData(data);
+				
+				if (this.initialized) {
+					this.feedTable(data);
+				} else {
+					this.tableConfig.data = data.data;
+					this.initDataTable();
+				}				
 			} else {
 				if (this.initialized) {
 					this.$dataTable.fnClearTable();
@@ -153,11 +160,10 @@
 		feedTable: function(data){
 			if (!data) return;
 			
-			this._preprocessData(data);
 			this.publish("beforeDataApplied", data);
 			
 			try {
-				if ($.fn.DataTable.fnIsDataTable(this.table.get(0))) {
+				if (this.initialized) {
 					this.$dataTable.fnClearTable();
 					if (this.$dataTable.fnClearSearchs) {
 						this.$dataTable.fnClearSearchs();

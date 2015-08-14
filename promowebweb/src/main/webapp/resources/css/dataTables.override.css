@@ -33,10 +33,6 @@ table.dataTable thead {
 	background-image: linear-gradient(to bottom, #C8D2DC 0%, #EEEEEE 100%); */
 }
 
-table.dataTable thead th {
-	text-align: center;
-}
-
 table.dataTable thead th, table.dataTable thead td {
 	border-right: 1px solid #ccc;
 	border-left: 1px solid #ccc;
@@ -83,6 +79,12 @@ table.dataTable tbody tr.odd {
 	padding-bottom: 0.755em;
 }
 
+.dataTables_wrapper {
+	border-top: 2px solid #ccc;
+	border-bottom: 2px solid #ccc;
+	padding-bottom: 10px;
+}	
+
 .dataTables_wrapper .dataTables_paginate {
 	padding-top: 0.755em;
 }
@@ -108,7 +110,7 @@ table.dataTable thead {
 table.dataTable thead th {
 	border-left: none;
 	border-right: none;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 2px solid #ccc;
 }
 
 table.dataTable tbody tr[open] td {

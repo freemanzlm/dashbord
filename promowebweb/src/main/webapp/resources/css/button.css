@@ -60,6 +60,11 @@ a.btn:hover {
 	color: #166CC1;
 }
 
+.btn.small {
+	line-height: 16px;
+	font-size: 16px;
+}
+
 .btn.medium {
 	line-height: 20px;
 	font-size: 1.5em;

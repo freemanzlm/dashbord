@@ -96,7 +96,8 @@
                 		width: this.$element.width(),
                 		height: this.$element.height(),
                 		position: 'absolute',
-                		background: 'rgba(0,0,0,0.5)',
+                		color: '#fff',
+                		background: 'rgba(0,0,0,0.75)',
                 		"z-index": 10
                 	});
                 	
@@ -113,7 +114,7 @@
                 case "overlay":
                     if( this.$element.is( "body") ) {
 						var max_height = this.element.scrollHeight > document.documentElement.scrollHeight ? this.element.scrollHeight : document.documentElement.scrollHeight;
-                        $( "body" ).prepend( '<div class="isloading-overlay" style="position:fixed; left:0; top:0; z-index: 10000; background: rgba(0,0,0,0.5); width: 100%; height: ' + max_height + 'px;" />' );
+                        $( "body" ).prepend( '<div class="isloading-overlay" style="position:fixed; left:0; top:0; z-index: 10000; color: #fff; background: rgba(0,0,0,0.75); width: 100%; height: ' + max_height + 'px;" />' );
                         
                         this.$element.find(".isloading-overlay").html( this._loader );
                         this._loader.css({
@@ -125,7 +126,7 @@
                     }
                     else {
                         var pos = this.$element.position();
-                        $( "body" ).prepend( '<div class="isloading-overlay" style="position:absolute; top: ' + pos.top + 'px; left: ' + pos.left + 'px; z-index: 10000; background: rgba(0,0,0,0.5); width: ' + this.$element.outerWidth() + 'px; height: ' + this.$element.outerHeight() + 'px;" />' );
+                        $( "body" ).prepend( '<div class="isloading-overlay" style="position:absolute; top: ' + pos.top + 'px; left: ' + pos.left + 'px; z-index: 10000; color: #fff;  background: rgba(0,0,0,0.75); width: ' + this.$element.outerWidth() + 'px; height: ' + this.$element.outerHeight() + 'px;" />' );
                         this.$element.find(".isloading-overlay").html( this._loader );
                         this._loader.css({
                     		left: (this.$element.width() - this._loader.innerWidth()) / 2,

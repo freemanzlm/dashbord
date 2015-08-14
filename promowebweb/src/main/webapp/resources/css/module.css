@@ -121,10 +121,12 @@
 	font-weight: bold;
 }
 
-.steps .step:last-child {
+.steps .step:last-child,
+.steps .step.last {
 	background-image: none;
 	padding-right: 0;
 }
+
 /* steps module end */
 
 /* active detail begin */
@@ -183,3 +185,24 @@
 	color: #83B841;
 }
 /* active status box end */
+
+.listings-upload {
+	background-color: #ECF1F7;
+	padding: 30px 0 0;
+	text-align: center;
+	
+	min-height: 140px;
+}
+
+.listings-upload h3 {
+	font-weight: bold;
+}
+
+.listings-upload p {
+	line-height: 1.333;
+}
+
+.listings-upload form {
+	font-size: 16px;
+	line-height: 29px;
+}

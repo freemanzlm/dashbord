@@ -1,0 +1,17 @@
+{
+	"data": [
+		{
+			"name": "campaign 1"
+		},
+		{
+			"name": "campaign 2"
+		},
+		{
+			"name": "campaign 3"
+		},
+		{
+			"name": "campaign 4"
+		}
+	],
+	"status": true
+}
