@@ -111,6 +111,11 @@ table.dataTable thead th {
 	border-left: none;
 	border-right: none;
 	border-bottom: 2px solid #ccc;
+	text-align: center;
+}
+
+table.dataTable thead th.text-left {
+	text-align: left;
 }
 
 table.dataTable tbody tr[open] td {

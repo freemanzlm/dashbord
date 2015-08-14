@@ -24,6 +24,10 @@
 	text-align: right;
 }
 
+.text-center {
+	text-align: center;
+}
+
 #header {
 	background: #fff;
 	margin: 0 auto;

@@ -1,0 +1,41 @@
+{
+	"data": [
+		{
+			"name": "campaign 1",
+			"itemId": "1",
+			"price": 0,
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 1
+		},
+		{
+			"name": "campaign 2",
+			"itemId": "1",
+			"price": 0,
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 0
+		},
+		{
+			"name": "campaign 3",
+			"itemId": "1",
+			"price": 0,
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 1
+		},
+		{
+			"name": "campaign 4",
+			"itemId": "1",
+			"price": 0,
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 2
+		}
+	],
+	"status": true
+}

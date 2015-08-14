@@ -110,7 +110,7 @@
 				
 				<div class="mt20" style="text-align: center;">
 					<label for="accept"><input type="checkbox" id="accept"/>我已阅读并接受 <a href="">法律协议</a></label> <br /><br />
-					<button class="btn">上传</button>
+					<button id="upload-btn" class="btn" disabled>上传</button>
 				</div>
 			</div>			
 		</div>

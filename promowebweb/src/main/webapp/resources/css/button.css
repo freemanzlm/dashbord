@@ -5,6 +5,20 @@ button {
 
 button:disabled {
     cursor: default;
+    background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, #CCCCCC),
+		color-stop(0.5, #FFFFFF),
+		color-stop(1, #CCCCCC)
+	);
+	background-image: -o-linear-gradient(bottom, #CCCCCC 0%, #FFFFFF 50%, #CCCCCC 100%);
+	background-image: -moz-linear-gradient(bottom, #CCCCCC 0%, #FFFFFF 50%, #CCCCCC 100%);
+	background-image: -webkit-linear-gradient(bottom, #CCCCCC 0%, #FFFFFF 50%, #CCCCCC 100%);
+	background-image: -ms-linear-gradient(bottom, #CCCCCC 0%, #FFFFFF 50%, #CCCCCC 100%);
+	background-image: linear-gradient(to bottom, #CCCCCC 0%, #FFFFFF 50%, #CCCCCC 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=’false’, startColorstr='#CCCCCC', endColorstr='#CCCCCC', GradientType='0'); /* IE5.5-9*/
 }
 
 .btn {

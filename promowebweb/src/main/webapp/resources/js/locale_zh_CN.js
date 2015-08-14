@@ -62,6 +62,13 @@ BizReport.locale = {
 			'rewardSuccess': '奖励领取成功',
 			'end': '结束的活动'
 		}
+	},
+	'listing': {
+		'state': {
+			'applied': '已报名',
+			'reviewing': '正在审核',
+			'reviewed': '通过预审'
+		}
 	}
 };
 

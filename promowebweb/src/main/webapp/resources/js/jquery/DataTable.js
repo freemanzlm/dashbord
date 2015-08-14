@@ -162,7 +162,7 @@
 			
 			this.publish("beforeDataApplied", data);
 			
-			try {
+//			try {
 				if (this.initialized) {
 					this.$dataTable.fnClearTable();
 					if (this.$dataTable.fnClearSearchs) {
@@ -175,9 +175,9 @@
 				}
 				
 				this.resizeTable();
-			} catch(e) {
-				console.error("Failed to feed table: %s", e.message);
-			}
+//			} catch(e) {
+//				console.error("Failed to feed table: %s", e.message);
+//			}
 			
 		}
 

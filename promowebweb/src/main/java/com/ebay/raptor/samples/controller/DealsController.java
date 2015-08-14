@@ -34,7 +34,7 @@ public class DealsController {
 		return model;
 	}
 	
-	@RequestMapping(value = "applicationComfirm", method = RequestMethod.GET)
+	@RequestMapping(value = "applicationConfirm", method = RequestMethod.GET)
 	public HashMap<String, String> handleapplicationConfirmRequest() {
 		HashMap<String, String> model = new HashMap<String, String>();
 		String helloRaptor = "Say hello to Raptor!";

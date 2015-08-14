@@ -45,7 +45,8 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	
+	<res:useJs value="${res.js.local.js.table['ListingSelectTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_applied.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -106,6 +107,11 @@
 						<strong>法律协议：点击查看 <a href="javascript:void(0)">法律协议</a></strong>
 					</div>
 				</div>
+
+				<div class="mt20">
+					<h3><strong>我提交的刊登</strong></h3>
+					<jsp:include page="../table/listing_select.jsp"></jsp:include>
+				</div>			
 			</div>
 		</div>
 	</div>
