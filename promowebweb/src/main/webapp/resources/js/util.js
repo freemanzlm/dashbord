@@ -139,10 +139,10 @@
 	 * 
 	 * @return {height: xxx, width: xxx}
 	 */
-	function getPageSize() {
+	function getPageSize(doc) {
 		return {
-			height: Math.max(document.documentElement.scrollHeight, document.body.scrollHeight),
-			width:  Math.max(document.documentElement.scrollWidth, document.body.scrollWidth)
+			height: Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight),
+			width:  Math.max(doc.documentElement.scrollWidth, doc.body.scrollWidth)
 		};
 	}
 	

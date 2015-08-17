@@ -47,6 +47,7 @@ button:disabled {
 	color: #fff;
 	
 	white-space: nowrap;
+	line-height: normal;
 	cursor: pointer;
 }
 

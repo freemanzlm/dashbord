@@ -33,6 +33,7 @@
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -41,13 +42,16 @@
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
+	
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['deals_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -96,7 +100,7 @@
 					</div>
 					
 					<div class="active-law">
-						<strong>法律协议：点击查看 <a href="javascript:void(0)">法律协议</a></strong>
+						<strong>法律协议：点击查看 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></strong>
 					</div>
 				</div> <!-- active detail end -->
 				
@@ -109,7 +113,7 @@
 				</div>
 				
 				<div class="mt20" style="text-align: center;">
-					<label for="accept"><input type="checkbox" id="accept"/>我已阅读并接受 <a href="">法律协议</a></label> <br /><br />
+					<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 					<button id="upload-btn" class="btn" disabled>上传</button>
 				</div>
 			</div>			
@@ -122,6 +126,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />

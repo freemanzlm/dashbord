@@ -9,7 +9,12 @@
 		zIndex: 10000, // mask layer's z-index
 		width: '',
 		title: 'Title',
-		wrapper: '<div class="dialog"><a class="close"></a><div class="dialog-header"><h2>Title</h2></div><div class="dialog-pane"><div class="dialog-body"></div></div></div>'
+		wrapper: '<div class="dialog"><a class="close"></a><div class="dialog-header"><h2>Title</h2></div><div class="dialog-pane"><div class="dialog-body"></div></div></div>',
+		body: {
+			style: {
+				'max-height': "400px"
+			}
+		}
 	};
 
 	$.extend(Dialog.prototype, {
@@ -26,6 +31,7 @@
 			}
 			
 			this.anchor = this.wrapper.find(".close");
+			this.body = this.wrapper.find(".dialog-body");
 			
 			/* Configuration item zIndex is use to set mask's z-index. Object maskManager will change 
 			 * overlay's zIndex to (this.config.zIndex + 10), so, you don't need to set z-index for overlay. */
@@ -33,6 +39,8 @@
 			this.maskManager.init({zIndex: this.config.zIndex});
 			
 			this.wrapper.width(this.config.width);
+			this.config.style && this.wrapper.css(this.config.style);
+			this.config.body.style && this.body.css(this.config.body.style);
 			
 			this.delegate();
 			this.isShow = false;

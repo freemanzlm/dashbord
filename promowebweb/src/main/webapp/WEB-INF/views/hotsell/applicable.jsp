@@ -42,10 +42,10 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	
+	<res:useJs value="${res.js.local.js.page['hotsell_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -93,7 +93,7 @@
 					</div>
 					
 					<div class="active-law">
-						<strong>法律协议：点击查看 <a href="javascript:void(0)">法律协议</a></strong>
+						<strong>法律协议：点击查看 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></strong>
 					</div>
 				</div>
 			</div>
@@ -106,6 +106,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
