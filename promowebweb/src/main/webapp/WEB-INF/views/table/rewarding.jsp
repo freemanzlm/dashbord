@@ -8,11 +8,8 @@
 			<tr>
 				<th class="name">活动名称</th>
 				<th class="type">活动类型</th>
-				<th class="promoDlDt">报名截止日期</th>
-				<th class="promoRwDt">报名审核时间</th>
-				<th class="promoDt">活动时间</th>
-				<th class="rewardRwDt">奖励审核时间</th>
-				<th class="rewardClmDt">奖励领取时间</th>
+				<th class="rewardDlDt">奖励申领截止时间</th>
+				<th class="promoDt">活动时间</th>				
 				<th class="reward">奖励金额</th>
 				<th class="state">活动状态</th>
 			</tr>

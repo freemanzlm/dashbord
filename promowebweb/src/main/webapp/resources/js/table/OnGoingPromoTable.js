@@ -72,10 +72,7 @@ var BizReport = BizReport || {};
 					{data: 'name'},
 					{data: 'type'},
 					{data: 'promoDlDt'},
-					{data: 'promoRwDt'},
 					{data: 'promoDt'},
-					{data: 'rewardRwDt'},
-					{data: 'rewardClmDt'},
 					{data: 'reward'},
 					{data: 'state'}
 				],
@@ -96,7 +93,6 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["type"],
-					bSortable: false,
 					sClass: "text-center",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -118,7 +114,6 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["reward"],
-					bSortable: false,
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -131,12 +126,18 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["state"],
-					bSortable: false,
-					sClass: "text-center",
+					sClass: "text-center state",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return locale.getText('promo.state.' + states[data]);
+							switch (data) {
+							case 0: 
+								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								break;
+							default:
+								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";
+							}
+							
 						}
 
 						return data;

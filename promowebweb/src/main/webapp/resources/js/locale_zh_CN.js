@@ -56,8 +56,8 @@ BizReport.locale = {
 			'rewardAppliable': '可申领奖励',
 			'claimReward': '领取奖励',
 			'reclaimReward': '重新申领奖励',
-			'toFillAgreement': '待填写协议',
-			'toUploadAgreement': '待上传协议',
+			'toFillAgreement': '填写协议',
+			'toUploadAgreement': '上传协议',
 			'rewardReviewing': '申领奖励审核中',
 			'rewardSuccess': '奖励领取成功',
 			'end': '结束的活动'

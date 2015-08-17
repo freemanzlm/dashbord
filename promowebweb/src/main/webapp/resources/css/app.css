@@ -59,3 +59,19 @@
 #page .pane h2 {
 	margin-bottom: 25px;
 }
+
+/* table styles */
+
+#rewarding-promo-table td .btn,
+#ongoing-promo-table td .btn,
+#end-promo-table td .btn {
+	width: 76px;
+	font-size: 12px;
+	display: inline-block;
+}
+
+.dataTable td.state a{
+	margin-top: 5px;
+	font-size: 10px;
+	display: block;
+}

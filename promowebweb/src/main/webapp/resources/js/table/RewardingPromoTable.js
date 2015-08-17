@@ -71,11 +71,8 @@ var BizReport = BizReport || {};
 				columns: [
 					{data: 'name'},
 					{data: 'type'},
-					{data: 'promoDlDt'},
-					{data: 'promoRwDt'},
-					{data: 'promoDt'},
-					{data: 'rewardRwDt'},
-					{data: 'rewardClmDt'},
+					{data: 'rewardDlDt'},
+					{data: 'promoDt'},					
 					{data: 'reward'},
 					{data: 'state'}
 				],
@@ -96,7 +93,6 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["type"],
-					bSortable: false,
 					sClass: "text-center",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -108,7 +104,7 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["promoDlDt", "promoRwDt", "promoDt", "rewardRwDt", "rewardClmDt"],
+					aTargets: ["promoDt", "rewardDlDt", "rewardClmDt"],
 					sType: "date",
 					sClass: "text-center",
 					sDefaultContent: "",
@@ -118,7 +114,6 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["reward"],
-					bSortable: false,
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -131,12 +126,25 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["state"],
-					bSortable: false,
-					sClass: "text-center",
+					sClass: "text-center state",
 					sDefaultContent: "",
+					sType: "numeric",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return locale.getText('promo.state.' + states[data]);
+							switch (parseInt(data)) {
+							case 8: // reward appliable
+								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+							case 7: // claim reward
+								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+							case 9: // to fill in agreement
+								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+							case 10: // to upload agreement
+								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+							case 11: // reclaim reward
+								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";							
+							default:
+								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";
+							}
 						}
 
 						return data;
