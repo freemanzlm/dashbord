@@ -42,10 +42,12 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	
+	<res:useJs value="${res.js.local.js.table['ListingSelectTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_applied.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -75,7 +77,7 @@
 						已超过报名有效期，您无法再修改刊登内容
 					</p>
 					<menu>
-						<a href="" class="btn">返回活动列表</a>
+						<a href="../index" class="btn">返回活动列表</a>
 					</menu>					
 				</div> <!-- active status box end -->
 				
@@ -106,6 +108,11 @@
 						<strong>法律协议：点击查看 <a href="javascript:void(0)">法律协议</a></strong>
 					</div>
 				</div>
+		
+				<div class="mt20">
+					<h3><strong>我提交的刊登</strong></h3>
+					<jsp:include page="../table/listing_states.jsp"></jsp:include>
+				</div>	
 			</div>
 		</div>
 	</div>
@@ -116,6 +123,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />

@@ -9,8 +9,8 @@
 var BizReport = BizReport || {};
 
 (function(namespace){
-	var ListingPreviewTable = function() {};
-	ListingPreviewTable.prototype = new namespace.Widget();
+	var ListingReviewTable = function() {};
+	ListingReviewTable.prototype = new namespace.Widget();
 	
 	var locale = namespace.locale;
 	
@@ -30,7 +30,7 @@ var BizReport = BizReport || {};
 				'bSort': true,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
-				'sDom': '<"datatable_header"rf>t<"datatable_pager"ip>',
+				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
@@ -80,11 +80,11 @@ var BizReport = BizReport || {};
 					sWidth: "250px",
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
-						if (type == "display") {
-							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
-							return display += "<p><a href='http://www.ebay.com/itm/" + full.itemId
-							    + "' data-item-id='" + full.itemId + "'>" + data + "</a></p>";
-						}
+//						if (type == "display") {
+//							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
+//							return display += "<p><a href='http://www.ebay.com/itm/" + full.itemId
+//							    + "' data-item-id='" + full.itemId + "'>" + data + "</a></p>";
+//						}
 						
 						return data;
 					}
@@ -130,7 +130,7 @@ var BizReport = BizReport || {};
 			}
 		};
 	
-	$.extend(ListingPreviewTable.prototype, {
+	$.extend(ListingReviewTable.prototype, {
 		init: function(config) {
 			var that = this;
 
@@ -150,8 +150,6 @@ var BizReport = BizReport || {};
 				initialized: function() {
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
-					
-					var settings = this.$dataTable.fnSettings();
 				}, 
 				ajaxbegin: function() {
 					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
@@ -187,5 +185,5 @@ var BizReport = BizReport || {};
 		}
 	});
 	
-	namespace.ListingPreviewTable = ListingPreviewTable;
+	namespace.ListingReviewTable = ListingReviewTable;
 })(BizReport = BizReport || {});

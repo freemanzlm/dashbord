@@ -5,7 +5,7 @@ $(function(){
 	var listingTable = new ListingSelectTable();
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "listing-select-table"
+			tableId: "listing-states-table"
 		}});
 	listingTable.update();	
 	

@@ -110,7 +110,7 @@
 
 				<div class="mt20">
 					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/listing_select.jsp"></jsp:include>
+					<jsp:include page="../table/listing_states.jsp"></jsp:include>
 				</div>			
 			</div>
 		</div>

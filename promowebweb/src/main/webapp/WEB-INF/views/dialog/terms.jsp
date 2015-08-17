@@ -8,7 +8,7 @@
 	</div>
 	<div class="dialog-pane">
 		<div class="dialog-body">
-			<iframe src="../hotsell/applicable" frameborder="0" width="100%" style="overflow: hidden;"></iframe>
+			<iframe src="../hotsell/end" frameborder="0" width="100%" style="overflow: hidden;"></iframe>
 		</div>
 
 		<div class="btns clz">
