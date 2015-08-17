@@ -25,7 +25,7 @@ var BizReport = BizReport || {};
 				'aaSorting': [[1, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
-				'bFilter': false,
+				'bFilter': true,
 				'bLengthChange': false,
 				'bDestroy': true,
 				'bServerSide': false,
@@ -33,7 +33,7 @@ var BizReport = BizReport || {};
 				'bSort': true,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
-				'sDom': '<"datatable_header"rf>t<"datatable_pager"ip>',
+				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
@@ -174,7 +174,13 @@ var BizReport = BizReport || {};
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
 					
-					var settings = this.$dataTable.fnSettings();
+					that.container.parents(".pane-table").find(".type-filter").change(function(){
+						oDataTable.column(1).search(this.value).draw();
+					});
+					
+					that.container.parents(".pane-table").find(".state-filter").change(function(){
+						oDataTable.column(5).search(this.value).draw();
+					});
 				}, 
 				ajaxbegin: function() {
 					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});

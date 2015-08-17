@@ -68,11 +68,19 @@
 			<div class="pane pane-table">
 				<div class="header">
 					<div class="fr cl">
-						<select name="" id="" class="fr">
+						<select name="" id="" class="fr state-filter">
 							<option value="">所有进行中的活动</option>
+							<option value="0">可报名活动</option>
+							<option value="2">已提交报名活动</option>
+							<option value="3">报名审核中的活动</option>
+							<option value="4">进行中的活动</option>
 						</select>
-						<select name="" id="" class="fr">
+						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
+							<option value="0">爆款促销活动</option>
+							<option value="1">Deals</option>
+							<option value="2">Deals招募</option>
+							<option value="3">其它活动</option>
 						</select>
 					</div>
 					<h3>进行中的活动</h3>
@@ -83,11 +91,21 @@
 			<div class="pane pane-table">
 				<div class="header">
 					<div class="fr cl">
-						<select name="" id="" class="fr">
+						<select name="" id="" class="fr state-filter">
 							<option value="">所有进行中的活动</option>
+							<option value="7">可申领奖励的活动</option>
+							<option value="8">可领取奖励的活动</option>
+							<option value="9">可重新申领奖励的活动</option>
+							<option value="10">待填写协议的活动</option>
+							<option value="11">待上传协议的活动</option>
+							<option value="12">奖励正在审核的活动</option>
 						</select>
-						<select name="" id="" class="fr">
+						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
+							<option value="0">爆款促销活动</option>
+							<option value="1">Deals</option>
+							<option value="2">Deals招募</option>
+							<option value="3">其它活动</option>
 						</select>
 					</div>
 					<h3>领取活动奖励</h3>
@@ -98,11 +116,21 @@
 			<div class="pane pane-table">
 				<div class="header">
 					<div class="fr cl">
-						<select name="" id="" class="fr">
+						<select name="" id="" class="fr state-filter">
 							<option value="">所有进行中的活动</option>
+							<option value="7">可申领奖励的活动</option>
+							<option value="8">可领取奖励的活动</option>
+							<option value="9">可重新申领奖励的活动</option>
+							<option value="10">待填写协议的活动</option>
+							<option value="11">待上传协议的活动</option>
+							<option value="12">奖励正在审核的活动</option>
 						</select>
-						<select name="" id="" class="fr">
+						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
+							<option value="0">爆款促销活动</option>
+							<option value="1">Deals</option>
+							<option value="2">Deals招募</option>
+							<option value="3">其它活动</option>
 						</select>
 					</div>
 					<h3>已结束的活动</h3>
