@@ -9,62 +9,12 @@
 var BizReport = BizReport || {};
 
 (function(namespace){
-	var OnGoingPromoTable = function() {};
-	OnGoingPromoTable.prototype = new namespace.Widget();
+	var HotsellApplicableTable = function() {};
+	HotsellApplicableTable.prototype = new namespace.Widget();
 	
 	var locale = namespace.locale;
 	
-	var promos = ['deals', 'dealsPreset', 'storm', 'other'];
-	var states = ['appliable','comfirmApplication',	'submitted','reviewing','ongoing','browseOnly',	'rewardConfirming',
-				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardReviewing',
-				'rewardSuccess','end'];
-	
-	function getLink(type, state) {
-		switch (type) {
-		case 0:
-			switch(state) {
-			case 0: return "deals/applicable";
-			case 1: return "deals/confirmApplication";
-			case 2: return "deals/applied";
-			case 3: return "deals/ongoing";
-			case 4: return "deals/applied";
-			case 5: return "deals/applied";
-			}
-			break;
-		case 1:
-			switch(state) {
-			case 0: return "dealsPreset/applicable";
-			case 1: return "dealsPreset/confirmApplication";
-			case 2: return "dealsPreset/applied";
-			case 3: return "dealsPreset/ongoing";
-			case 4: return "dealsPreset/applied";
-			case 5: return "dealsPreset/applied";
-			}
-			break;
-		case 2:
-			switch(state) {
-			case 0: return "hotsell/applicable";
-			case 1: return "hotsell/confirmApplication";
-			case 2: return "hotsell/applied";
-			case 3: return "hotsell/ongoing";
-			case 4: return "hotsell/applied";
-			case 5: return "hotsell/applied";
-			}
-			break;
-		case 3:
-			switch(state) {
-			case 0: return "other/applicable";
-			case 1: return "other/confirmApplication";
-			case 2: return "other/applied";
-			case 3: return "other/ongoing";
-			case 4: return "other/applied";
-			case 5: return "other/applied";
-			}
-			break;
-		}
-		
-		return "";
-	}
+	var states = ['applied','reviewing','reviewed'];
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
@@ -72,7 +22,7 @@ var BizReport = BizReport || {};
 				'aaSorting': [[1, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
-				'bFilter': true,
+				'bFilter': false,
 				'bLengthChange': false,
 				'bDestroy': true,
 				'bServerSide': false,
@@ -80,7 +30,7 @@ var BizReport = BizReport || {};
 				'bSort': true,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
-				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
+				'sDom': '<"datatable_header"rf>t<"datatable_pager"ip>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
@@ -94,7 +44,7 @@ var BizReport = BizReport || {};
 					}
 				},
 //				'sScrollX': "100%",
-				sAjaxSource: "js/data/ongoing.json",
+				sAjaxSource: "/promoweb/js/data/listing.json",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {
@@ -116,14 +66,28 @@ var BizReport = BizReport || {};
 				    });
 				},
 				columns: [
+				    {data: 'itemId'},
 					{data: 'name'},
-					{data: 'type'},
-					{data: 'promoDlDt'},
-					{data: 'promoDt'},
-					{data: 'reward'},
-					{data: 'state'}
+					{data: 'price'},
+					{data: 'volume'},
+					{data: 'sales'},
+					{data: 'comp'}
 				],
 				aoColumnDefs: [{
+					aTargets: ["itemId"],
+					bSortable: false,
+					sDefaultContent: "",					
+					sType: "string",
+					sWidth: "30px",
+					sClass: "text-center",
+					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
+						$(nTd).html($("<input type=checkbox name=item>").attr({
+							value:sData,
+							rowindex : iRowIndex
+						}));
+					}
+				},
+				{
 					aTargets: ["name"],
 					sDefaultContent: "",					
 					sType: "string",
@@ -131,36 +95,28 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a href='http://www.ebay.com/itm/" + full.itemId
-							    + "' data-item-id='" + full.itemId + "'>" + data + "</a>";
+							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
+							return display += "<p><a href='http://www.ebay.com/itm/" + full.itemId
+							    + "' data-item-id='" + full.itemId + "'>" + data + "</a></p>";
 						}
 						
 						return data;
-					}
+					}					
 				},
 				{
-					aTargets: ["type"],
-					sClass: "text-center",
+					aTargets: ["target-volume"],
+					sType: "date",
+					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return locale.getText('promo.type.' + promos[data]); 
+							return parseFloat(data).toUSFixed(0);
 						}
-						
 						return data;
 					}
 				},
 				{
-					aTargets: ["promoDlDt", "promoRwDt", "promoDt", "rewardRwDt", "rewardClmDt"],
-					sType: "date",
-					sClass: "text-center",
-					sDefaultContent: "",
-					mRender: function(data, type, full) {
-						return data;
-					}
-				},
-				{
-					aTargets: ["reward"],
+					aTargets: ["target-price", "compensate", "target-sales"],
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -173,18 +129,12 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["state"],
-					sClass: "text-center state",
+					bSortable: false,
+					sClass: "text-center",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							switch (data) {
-							case 0: 
-								return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-								break;
-							default:
-								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";
-							}
-							
+							return locale.getText('listing.state.' + states[data]);
 						}
 
 						return data;
@@ -193,7 +143,7 @@ var BizReport = BizReport || {};
 			}
 		};
 	
-	$.extend(OnGoingPromoTable.prototype, {
+	$.extend(HotsellApplicableTable.prototype, {
 		init: function(config) {
 			var that = this;
 
@@ -203,24 +153,21 @@ var BizReport = BizReport || {};
 	
 			this.config = $.extend({}, config);
 			this.dataTable = new namespace.DataTable(this.dataTableConfig);
+			this.selectedItems = []; // the selected items in current page
+			this.checkedBoxes = [];
+			
+			// this statement must be put before this.dataTable.initDataTable();
+			this.checkAllBox = this.dataTable.table.find(".check-all");
 			
 			// this statement must be put before this.dataTable.initDataTable();
 			this.container = that.dataTable.table.parents(".dataTable-container:first");
 			
-			var oDataTable = this.oDataTable = null, openRow = null;
+			var oDataTable = this.oDataTable = null;
 			
 			this.dataTable.subscribe({
 				initialized: function() {
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
-					
-					that.container.parents(".pane-table").find(".type-filter").change(function(){
-						oDataTable.column(1).search(this.value).draw();
-					});
-					
-					that.container.parents(".pane-table").find(".state-filter").change(function(){
-						oDataTable.column(5).search(this.value).draw();
-					});
 				}, 
 				ajaxbegin: function() {
 					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
@@ -240,45 +187,39 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
-			}, this.dataTable);
+			}, this.dataTable);		
 			
-			function showRowDetail(nTr) {
-				if (!nTr) return;
-				
-				closeRow(openRow);
-				nTr.setAttribute("open", "");
-				openRow = nTr;
-				var nOpenRow = that.fnOpenCallback(nTr);
-				that.publish("open", {nTr: nTr, openTr: nOpenRow, data: oDataTable.row(nTr).data()});
-			}
-			
-			function closeRow(nTr) {
-				if (!nTr) return;
-				
-				nTr.removeAttribute("open");
-				$(nTr).find("button").html(locale.getText('dataTable.open')).removeAttr("open");
-				that.dataTable.$dataTable.fnClose(nTr);
-				that.publish("close", {nTr: nTr});
-			}
-			
-			this.dataTable.table.find("button").live("click", function(){
-				var nTr = $(this).parents("tr").get(0);
-				
-				if (this.hasAttribute("open")) {
-					closeRow(nTr);
-					this.removeAttribute("open");
-					this.innerHTML=locale.getText('dataTable.open');
+			this.checkAllBox.click(function(){
+				if (!oDataTable) return;
+				if (this.checked) {
+					that.selectedItems.splice(0); // empty selectedItems
+					that.dataTable.table.find("input[name=item]").each(function(){
+						this.checked = true;
+						that.selectedItems.push(oDataTable.row(this.getAttribute("rowindex")).data());
+					});
 				} else {
-					showRowDetail(nTr);
-					this.setAttribute("open", "");
-					this.innerHTML=locale.getText('dataTable.close');
+					that.dataTable.table.find("input[name=item]").removeAttr("checked");
+					that.selectedItems.splice(0); // empty selectedItems
 				}
 			});
 			
-			this.dataTable.table.on("order.dt page.dt", function(){
-				closeRow(openRow);
+			$("input[name=item]").live("click", function(){
+				if (!oDataTable) return;
+				
+				if (this.checked) {
+					that.selectedItems.push(oDataTable.row(this.getAttribute("rowindex")).data());
+				} else {
+					that.checkAllBox.removeAttr("checked");
+					that.removeItem(oDataTable.row(this.getAttribute("rowindex")).data());
+				}
 			});
 			
+			this.dataTable.table.on("page.dt", function(){
+				// user can only select items on the displayed page.
+				that.checkAllBox.removeAttr("checked");
+				that.dataTable.table.find("input[name=item]").removeAttr("checked");
+				that.selectedItems.splice(0); // empty selectedItems
+			});
 		},
 		
 		initDataTable: function() {
@@ -289,12 +230,19 @@ var BizReport = BizReport || {};
 			this.dataTable.update(param);
 		},
 		
-		fnOpenCallback: function(nTr) {
-			var html = null;
-			if (this.config.fnOpenCallback) {
-				html = this.config.fnOpenCallback.call(this);
+		removeItem: function(item) {
+			// search from backmost to headmost
+			var i = this.selectedItems.length;
+			while (--i >= 0) {
+				if (this.selectedItems[i] = item) {
+					this.selectedItems.splice(i, 1);
+					break;
+				}
 			}
-			return this.dataTable.$dataTable.fnOpen(nTr, html || "", "open-tr");
+		},
+		
+		hasSelectedItem: function() {
+			return this.selectedItems.length > 0;
 		},
 		
 		getDataSize: function() {
@@ -302,5 +250,5 @@ var BizReport = BizReport || {};
 		}
 	});
 	
-	namespace.OnGoingPromoTable = OnGoingPromoTable;
+	namespace.HotsellApplicableTable = HotsellApplicableTable;
 })(BizReport = BizReport || {});

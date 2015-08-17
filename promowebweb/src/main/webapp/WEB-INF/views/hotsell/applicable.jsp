@@ -43,8 +43,10 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
-	
+	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['HotsellApplicableTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['hotsell_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -69,12 +71,12 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-detail">
-					<div class="active-time">
+				<div class="activity-detail">
+					<div class="activity-time">
 						<strong>报名截止时间：2015.02.01</strong>
 						<strong style="margin-left: 90px;">活动时间：2015.02.06 - 2015.04.01</strong>
 					</div>
-					<div class="table active-brief">
+					<div class="table activity-brief">
 						<div class="table-row">
 							<div class="table-cell" style="width: 64px;">活动简介：</div>
 							<div class="table-cell">
@@ -92,9 +94,18 @@
 						</div>
 					</div>
 					
-					<div class="active-law">
+					<div class="activity-law">
 						<strong>法律协议：点击查看 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></strong>
 					</div>
+				</div> <!-- activity end -->
+				
+				<div class="mt20">
+					<jsp:include page="../table/listing.jsp"></jsp:include>
+				</div>
+				
+				<div class="mt20" style="text-align: center;">
+					<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
+					<button id="form-btn" class="btn" disabled>提交</button>
 				</div>
 			</div>
 		</div>

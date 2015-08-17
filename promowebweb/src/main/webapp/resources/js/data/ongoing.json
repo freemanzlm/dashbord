@@ -43,6 +43,17 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
 			"state": 4
+		},
+		{
+			"name": "campaign 4",
+			"type": 2,
+			"promoDlDt": "2015-02-01",
+			"promoRwDt": "2015-02-01",
+			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"rewardRwDt": "2015-02-01",
+			"rewardClmDt": "2015-02-01",
+			"reward": "15",
+			"state": 0
 		}
 	],
 	"status": true

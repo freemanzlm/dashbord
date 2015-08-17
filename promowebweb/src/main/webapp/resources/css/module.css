@@ -130,22 +130,22 @@
 /* steps module end */
 
 /* active detail begin */
-.active-detail {
+.activity-detail {
 	border-top: 2px solid #ccc;
 	border-bottom: 2px solid #ccc;
 	padding: 20px 20px;
 	background-color: #F9FAFB;
 }
 
-.active-detail .active-time {
+.activity-detail .activity-time {
 	margin-bottom: 10px;
 }
 
-.active-detail .active-brief {
+.activity-detail .activity-brief {
 	margin-bottom: 10px;
 }
 
-.active-detail .active-brief p {
+.activity-detail .activity-brief p {
 	margin: 8px 0;
 	line-height: 1.333;
 }

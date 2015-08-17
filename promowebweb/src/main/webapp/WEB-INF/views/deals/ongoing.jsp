@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>爆款促销 - 活动进行中</title>
+	<title>Deals - 活动进行中</title>
 	<meta name="description" content="爆款促销 - 活动进行中">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
@@ -57,7 +57,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>爆款促销 活动名称</h2>
+				<h2>Deals 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
@@ -80,12 +80,12 @@
 					</menu>					
 				</div> <!-- active status box end -->
 				
-				<div class="active-detail">
-					<div class="active-time">
+				<div class="activity-detail">
+					<div class="activity-time">
 						<strong>报名截止时间：2015.02.01</strong>
 						<strong style="margin-left: 90px;">活动时间：2015.02.06 - 2015.04.01</strong>
 					</div>
-					<div class="table active-brief">
+					<div class="table activity-brief">
 						<div class="table-row">
 							<div class="table-cell" style="width: 64px;">活动简介：</div>
 							<div class="table-cell">
@@ -103,7 +103,7 @@
 						</div>
 					</div>
 					
-					<div class="active-law">
+					<div class="activity-law">
 						<strong>法律协议：点击查看 <a href="javascript:void(0)">法律协议</a></strong>
 					</div>
 				</div>
