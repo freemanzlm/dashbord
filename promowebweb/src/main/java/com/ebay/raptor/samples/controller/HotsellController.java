@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value="hotsell")
@@ -65,6 +66,13 @@ public class HotsellController {
 		String helloRaptor = "Say hello to Raptor!";
 		model.put("greeting", helloRaptor);
 		return model;
+	}
+	
+	@RequestMapping(value = "submit", method = RequestMethod.POST)
+	public ModelAndView handleSubmitRequest() {
+		ModelAndView mav = new ModelAndView("listingReview");
+		mav.addObject("formUrl", "applied");
+		return mav;
 	}
 	
 }

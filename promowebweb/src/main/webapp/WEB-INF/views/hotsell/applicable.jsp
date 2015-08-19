@@ -104,8 +104,11 @@
 				</div>
 				
 				<div class="mt20" style="text-align: center;">
-					<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
-					<button id="form-btn" class="btn" disabled>提交</button>
+					<form action="submit" method="post">
+						<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
+						<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
+						<button id="form-btn" class="btn" disabled type="submit">提交</button>
+					</form>
 				</div>
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-/* Define Exposure Table implementation.
+/* List all listings with states.
  * 
  * @Description All configuration for exposure table are put here
  * 
@@ -9,8 +9,8 @@
 var BizReport = BizReport || {};
 
 (function(namespace){
-	var ListingReviewTable = function() {};
-	ListingReviewTable.prototype = new namespace.Widget();
+	var ListingStatesTable = function() {};
+	ListingStatesTable.prototype = new namespace.Widget();
 	
 	var locale = namespace.locale;
 	
@@ -130,7 +130,7 @@ var BizReport = BizReport || {};
 			}
 		};
 	
-	$.extend(ListingReviewTable.prototype, {
+	$.extend(ListingStatesTable.prototype, {
 		init: function(config) {
 			var that = this;
 
@@ -150,6 +150,7 @@ var BizReport = BizReport || {};
 				initialized: function() {
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
+					console.log(oDataTable);
 				}, 
 				ajaxbegin: function() {
 					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
@@ -182,8 +183,12 @@ var BizReport = BizReport || {};
 		
 		getDataSize: function() {
 			return this.oDataTable.data().length;
+		},
+		
+		hideCheckbox: function() {
+//			this.oDataTable && this.oDataTable.
 		}
 	});
 	
-	namespace.ListingReviewTable = ListingReviewTable;
+	namespace.ListingStatesTable = ListingStatesTable;
 })(BizReport = BizReport || {});

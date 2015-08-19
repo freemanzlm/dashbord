@@ -1,4 +1,4 @@
-/* Define Exposure Table implementation.
+/* List all listings which user selected and will submit.
  * 
  * @Description All configuration for exposure table are put here
  * 
@@ -9,12 +9,10 @@
 var BizReport = BizReport || {};
 
 (function(namespace){
-	var HotsellApplicableTable = function() {};
-	HotsellApplicableTable.prototype = new namespace.Widget();
+	var ListingSubmittedTable = function() {};
+	ListingSubmittedTable.prototype = new namespace.Widget();
 	
 	var locale = namespace.locale;
-	
-	var states = ['applied','reviewing','reviewed'];
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
@@ -30,7 +28,7 @@ var BizReport = BizReport || {};
 				'bSort': true,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
-				'sDom': '<"datatable_header"rf>t<"datatable_pager"ip>',
+				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
@@ -66,7 +64,6 @@ var BizReport = BizReport || {};
 				    });
 				},
 				columns: [
-				    {data: 'itemId'},
 					{data: 'name'},
 					{data: 'price'},
 					{data: 'volume'},
@@ -74,24 +71,10 @@ var BizReport = BizReport || {};
 					{data: 'comp'}
 				],
 				aoColumnDefs: [{
-					aTargets: ["itemId"],
-					bSortable: false,
-					sDefaultContent: "",					
-					sType: "string",
-					sWidth: "30px",
-					sClass: "text-center",
-					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
-						$(nTd).html($("<input type=checkbox name=item>").attr({
-							value:sData,
-							rowindex : iRowIndex
-						}));
-					}
-				},
-				{
 					aTargets: ["name"],
 					sDefaultContent: "",					
 					sType: "string",
-					sWidth: "250px",
+					sWidth: "400px",
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
@@ -101,7 +84,7 @@ var BizReport = BizReport || {};
 						}
 						
 						return data;
-					}					
+					}
 				},
 				{
 					aTargets: ["target-volume"],
@@ -117,24 +100,12 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["target-price", "compensate", "target-sales"],
+					bSortable: false,
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(2);
-						}
-
-						return data;
-					}
-				},
-				{
-					aTargets: ["state"],
-					bSortable: false,
-					sClass: "text-center",
-					sDefaultContent: "",
-					mRender: function(data, type, full) {
-						if (type == "display") {
-							return locale.getText('listing.state.' + states[data]);
+							return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
 						}
 
 						return data;
@@ -143,7 +114,7 @@ var BizReport = BizReport || {};
 			}
 		};
 	
-	$.extend(HotsellApplicableTable.prototype, {
+	$.extend(ListingSubmittedTable.prototype, {
 		init: function(config) {
 			var that = this;
 
@@ -153,11 +124,6 @@ var BizReport = BizReport || {};
 	
 			this.config = $.extend({}, config);
 			this.dataTable = new namespace.DataTable(this.dataTableConfig);
-			this.selectedItems = []; // the selected items in current page
-			this.checkedBoxes = [];
-			
-			// this statement must be put before this.dataTable.initDataTable();
-			this.checkAllBox = this.dataTable.table.find(".check-all").prop("checked", false);
 			
 			// this statement must be put before this.dataTable.initDataTable();
 			this.container = that.dataTable.table.parents(".dataTable-container:first");
@@ -187,39 +153,7 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
-			}, this.dataTable);		
-			
-			this.checkAllBox.click(function(){
-				if (!oDataTable) return;
-				if (this.checked) {
-					that.selectedItems.splice(0); // empty selectedItems
-					that.dataTable.table.find("input[name=item]").each(function(){
-						this.checked = true;
-						that.selectedItems.push(oDataTable.row(this.getAttribute("rowindex")).data());
-					});
-				} else {
-					that.dataTable.table.find("input[name=item]").removeAttr("checked");
-					that.selectedItems.splice(0); // empty selectedItems
-				}
-			});
-			
-			$("input[name=item]").live("click", function(){
-				if (!oDataTable) return;
-				
-				if (this.checked) {
-					that.selectedItems.push(oDataTable.row(this.getAttribute("rowindex")).data());
-				} else {
-					that.checkAllBox.removeAttr("checked");
-					that.removeItem(oDataTable.row(this.getAttribute("rowindex")).data());
-				}
-			});
-			
-			this.dataTable.table.on("page.dt", function(){
-				// user can only select items on the displayed page.
-				that.checkAllBox.removeAttr("checked");
-				that.dataTable.table.find("input[name=item]").removeAttr("checked");
-				that.selectedItems.splice(0); // empty selectedItems
-			});
+			}, this.dataTable);			
 		},
 		
 		initDataTable: function() {
@@ -230,25 +164,10 @@ var BizReport = BizReport || {};
 			this.dataTable.update(param);
 		},
 		
-		removeItem: function(item) {
-			// search from backmost to headmost
-			var i = this.selectedItems.length;
-			while (--i >= 0) {
-				if (this.selectedItems[i] = item) {
-					this.selectedItems.splice(i, 1);
-					break;
-				}
-			}
-		},
-		
-		hasSelectedItem: function() {
-			return this.selectedItems.length > 0;
-		},
-		
 		getDataSize: function() {
 			return this.oDataTable.data().length;
 		}
 	});
 	
-	namespace.HotsellApplicableTable = HotsellApplicableTable;
+	namespace.ListingSubmittedTable = ListingSubmittedTable;
 })(BizReport = BizReport || {});

@@ -3,7 +3,6 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 
 <r:includeJquery jsSlot="body" />
@@ -73,7 +72,14 @@
 				<div class="active-status-box">
 					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
 					<p class="desc">
-						已超过报名有效期，您无法再修改刊登内容
+						<c:choose>
+							<c:when test="${not expired }">
+								在报名有效期内，您可以重新选择预报名的刊登，并重新提交 
+							</c:when>
+							<c:otherwise>
+								已超过报名有效期，您无法再修改刊登内容
+							</c:otherwise>
+						</c:choose>
 					</p>
 					<menu>
 						<a href="" class="btn">返回活动列表</a>
@@ -111,6 +117,10 @@
 				<div class="mt20">
 					<h3><strong>我提交的刊登</strong></h3>
 					<jsp:include page="../table/listing_states.jsp"></jsp:include>
+				</div>	
+				
+				<div class="page-bottom-actions">
+					<button class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
 				</div>			
 			</div>
 		</div>

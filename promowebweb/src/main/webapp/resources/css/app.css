@@ -61,6 +61,17 @@
 }
 
 /* table styles */
+table.dataTable td.item-title img {
+	margin: 5px 10px;
+	width: 50px;
+	height: 50px;
+	float: left;
+}
+
+table.dataTable td.item-title p {
+	line-height: 1.3;
+	margin-top: 5px;
+}
 
 #rewarding-promo-table td .btn,
 #ongoing-promo-table td .btn,
@@ -74,4 +85,18 @@
 	margin-top: 5px;
 	font-size: 10px;
 	display: block;
+}
+
+.page-bottom-actions {
+	text-align: center;
+}
+
+.page-bottom-actions a,
+.page-bottom-actions .btn {
+	margin-left: 5px;
+}
+
+.page-bottom-actions a:first-child,
+.page-bottom-actions .btn:first-child {
+	margin-left: 0;
 }

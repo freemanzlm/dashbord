@@ -112,7 +112,7 @@
 					<jsp:include page="../upload_listings.jsp"></jsp:include>
 				</div>
 				
-				<div class="mt20" style="text-align: center;">
+				<div class="mt20 page-bottom-actions">
 					<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 					<button id="upload-btn" class="btn" disabled>上传</button>
 				</div>

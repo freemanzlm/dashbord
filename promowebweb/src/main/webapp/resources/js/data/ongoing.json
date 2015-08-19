@@ -12,6 +12,50 @@
 			"state": 0
 		},
 		{
+			"name": "campaign 1",
+			"type": 0,
+			"promoDlDt": "2015-02-01",
+			"promoRwDt": "2015-02-01",
+			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"rewardRwDt": "2015-02-01",
+			"rewardClmDt": "2015-02-01",
+			"reward": "38",
+			"state": 1
+		},
+		{
+			"name": "campaign 1",
+			"type": 0,
+			"promoDlDt": "2015-02-01",
+			"promoRwDt": "2015-02-01",
+			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"rewardRwDt": "2015-02-01",
+			"rewardClmDt": "2015-02-01",
+			"reward": "38",
+			"state": 2
+		},
+		{
+			"name": "campaign 2",
+			"type": 1,
+			"promoDlDt": "2015-02-01",
+			"promoRwDt": "2015-02-01",
+			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"rewardRwDt": "2015-02-01",
+			"rewardClmDt": "2015-02-01",
+			"reward": "0.26",
+			"state": 0
+		},
+		{
+			"name": "campaign 2",
+			"type": 1,
+			"promoDlDt": "2015-02-01",
+			"promoRwDt": "2015-02-01",
+			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"rewardRwDt": "2015-02-01",
+			"rewardClmDt": "2015-02-01",
+			"reward": "0.26",
+			"state": 1
+		},
+		{
 			"name": "campaign 2",
 			"type": 1,
 			"promoDlDt": "2015-02-01",
@@ -23,15 +67,15 @@
 			"state": 2
 		},
 		{
-			"name": "campaign 3",
-			"type": 3,
+			"name": "campaign 4",
+			"type": 2,
 			"promoDlDt": "2015-02-01",
 			"promoRwDt": "2015-02-01",
 			"promoDt": "2015-02-01 ~ 2015-04-01",
 			"rewardRwDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
-			"reward": "24",
-			"state": 3
+			"reward": "15",
+			"state": 0
 		},
 		{
 			"name": "campaign 4",
@@ -42,8 +86,42 @@
 			"rewardRwDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"state": 4
+			"state": 1
 		},
+		{
+			"name": "campaign 4",
+			"type": 2,
+			"promoDlDt": "2015-02-01",
+			"promoRwDt": "2015-02-01",
+			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"rewardRwDt": "2015-02-01",
+			"rewardClmDt": "2015-02-01",
+			"reward": "15",
+			"state": 2
+		},
+		{
+			"name": "campaign 4",
+			"type": 2,
+			"promoDlDt": "2015-02-01",
+			"promoRwDt": "2015-02-01",
+			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"rewardRwDt": "2015-02-01",
+			"rewardClmDt": "2015-02-01",
+			"reward": "15",
+			"state": 3
+		},
+		{
+			"name": "campaign 3",
+			"type": 3,
+			"promoDlDt": "2015-02-01",
+			"promoRwDt": "2015-02-01",
+			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"rewardRwDt": "2015-02-01",
+			"rewardClmDt": "2015-02-01",
+			"reward": "24",
+			"state": 0
+		},
+		
 		{
 			"name": "campaign 4",
 			"type": 2,

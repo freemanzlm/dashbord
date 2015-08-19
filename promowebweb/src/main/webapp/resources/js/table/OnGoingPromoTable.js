@@ -24,7 +24,7 @@ var BizReport = BizReport || {};
 		case 0:
 			switch(state) {
 			case 0: return "deals/applicable";
-			case 1: return "deals/confirmApplication";
+			case 1: return "deals/applicationConfirm";
 			case 2: return "deals/applied";
 			case 3: return "deals/ongoing";
 			case 4: return "deals/applied";
@@ -34,7 +34,7 @@ var BizReport = BizReport || {};
 		case 1:
 			switch(state) {
 			case 0: return "dealsPreset/applicable";
-			case 1: return "dealsPreset/confirmApplication";
+			case 1: return "dealsPreset/applicationConfirm";
 			case 2: return "dealsPreset/applied";
 			case 3: return "dealsPreset/ongoing";
 			case 4: return "dealsPreset/applied";
@@ -44,7 +44,7 @@ var BizReport = BizReport || {};
 		case 2:
 			switch(state) {
 			case 0: return "hotsell/applicable";
-			case 1: return "hotsell/confirmApplication";
+			case 1: return "hotsell/applicationConfirm";
 			case 2: return "hotsell/applied";
 			case 3: return "hotsell/ongoing";
 			case 4: return "hotsell/applied";
@@ -54,7 +54,7 @@ var BizReport = BizReport || {};
 		case 3:
 			switch(state) {
 			case 0: return "other/applicable";
-			case 1: return "other/confirmApplication";
+			case 1: return "other/applicationConfirm";
 			case 2: return "other/applied";
 			case 3: return "other/ongoing";
 			case 4: return "other/applied";
@@ -180,7 +180,8 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 0: 
 								return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-								break;
+							case 1: 
+								return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							default:
 								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";
 							}

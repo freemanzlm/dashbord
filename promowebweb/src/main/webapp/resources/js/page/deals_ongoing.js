@@ -5,7 +5,7 @@ $(function(){
 	var listingTable = new ListingReviewTable();
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "listing-review-table"
+			tableId: "listing-submitted-table"
 		}});
 	listingTable.update();
 	

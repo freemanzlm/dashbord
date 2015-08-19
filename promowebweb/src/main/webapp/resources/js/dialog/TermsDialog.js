@@ -27,6 +27,21 @@
 				self.dialog.hide();
 			});
 			
+			var frame = this.dialog.wrapper.find("iframe").on("load", function(){
+				// if there is iframe in dialog, don't use iframe's scrollbar.
+				var iframe = this;
+				function setFrameSize() {
+					if (iframe.contentDocument.body && iframe.contentDocument.body.innerHTML.length > 0) {
+						frame.height(iframe.contentDocument.documentElement.scrollHeight);
+						frame.width(iframe.contentDocument.documentElement.scrollWidth);
+					} else {
+						setTimeout(setFrameSize, 100);
+					}
+				}
+				
+				setFrameSize();
+			});
+			
 			this.dialog.body.scroll(function(){
 				// allow 2 px deviation
 				if (this.scrollTop + this.clientHeight >= this.scrollHeight - 2) {
@@ -46,13 +61,6 @@
 			
 			this.dialog.wrapper.find(".dialog-body").html(text);
 			this.dialog.show();
-			
-			var frame = this.dialog.wrapper.find("iframe");
-			if (frame.length > 0) {
-				// if there is iframe in dialog, don't use iframe's scrollbar.
-				frame.height(frame[0].contentDocument.documentElement.scrollHeight);
-				frame.width(frame[0].contentDocument.documentElement.scrollWidth);
-			}			
 		},
 		
 		close: function() {

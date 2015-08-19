@@ -113,6 +113,10 @@
 					<h3><strong>我提交的刊登</strong></h3>
 					<jsp:include page="../table/listing_states.jsp"></jsp:include>
 				</div>	
+				
+				<div class="page-bottom-actions">
+					<button class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
+				</div>	
 			</div>
 		</div>
 	</div>

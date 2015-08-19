@@ -1,4 +1,4 @@
-/* Define Exposure Table implementation.
+/* List listings and allow user to select or unselect some listings for further operations.
  * 
  * @Description All configuration for exposure table are put here
  * 
@@ -170,6 +170,7 @@ var BizReport = BizReport || {};
 				initialized: function() {
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
+					console.log(oDataTable);
 				}, 
 				ajaxbegin: function() {
 					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
