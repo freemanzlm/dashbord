@@ -46,7 +46,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingReviewTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['ListingSubmittedTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['deals_ongoing.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -112,7 +112,7 @@
 				
 				<div class="mt20">
 					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/listing_submitted.jsp"></jsp:include>
+					<jsp:include page="../table/listingSubmitted.jsp"></jsp:include>
 				</div>	
 			</div>
 			

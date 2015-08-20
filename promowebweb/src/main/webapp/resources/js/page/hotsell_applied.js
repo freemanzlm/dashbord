@@ -1,31 +1,31 @@
 $(function(){
 	var ListingSelectTable = BizReport.ListingSelectTable;
+	var termsDialog = BizReport.termsDialog;
+	
+	var formBtn = document.getElementById("form-btn");	
+	
 	
 	var listingTable = new ListingSelectTable();
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "listing-table"
+			tableId: "listing-states-table"
 		}});
-	listingTable.update();
-	
-	var formBtn = document.getElementById("form-btn");
-	var acceptCheckbox = $("#accept").change(function(){
-		if (this.checked) {
-			formBtn.removeAttribute("disabled");
-		} else {
-			formBtn.setAttribute("disabled", "disabled");
+	listingTable.subscribe({
+		initialized: function() {
+			if (pageData && pageData.expired) {
+				// if it has passed the apply deadline date, user can't select listings and submit again.
+				listingTable.hideCheckbox();
+			}
+		},
+		selectChange: function(){
+			if (this.hasSelectedItem()) {
+				formBtn.removeAttribute("disabled");
+			} else {
+				formBtn.setAttribute("disabled", "disabled");
+			}
 		}
-	});
-	
-	var termsDialog = BizReport.termsDialog;
-	termsDialog.subscribe({
-		"scrollEnd": function() {
-			acceptCheckbox.removeAttr("disabled");
-		}
-	});
-	$(".terms-conditions").click(function(event){
-		termsDialog.show();
-	});
+	}, listingTable);
+	listingTable.update();	
 	
 	var form = $("form").submit(function(){
 		// if user doesn't select a item, form can't be submitted.
@@ -39,9 +39,14 @@ $(function(){
 			return true;
 		}		
 		
+		// no listing selection, no form submission.
 		return false;
 	});
 	
 	// prevent form remembering while user using history.back().
-	form.length && form[0].reset();
+	form.length && form[0].reset();	
+	
+	$(".terms-conditions").click(function(event){
+		termsDialog.show();
+	});
 });

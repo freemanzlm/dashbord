@@ -116,7 +116,7 @@
 
 				<div class="mt20">
 					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/listing_states.jsp"></jsp:include>
+					<jsp:include page="../table/listingStates.jsp"></jsp:include>
 				</div>	
 				
 				<div class="page-bottom-actions">

@@ -118,12 +118,11 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["target-price", "compensate", "target-sales"],
-					bSortable: false,
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(2);
+							return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
 						}
 
 						return data;
@@ -131,7 +130,6 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["state"],
-					bSortable: false,
 					sClass: "text-center",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -170,7 +168,7 @@ var BizReport = BizReport || {};
 				initialized: function() {
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
-					console.log(oDataTable);
+					that.publish("initialized");
 				}, 
 				ajaxbegin: function() {
 					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
@@ -204,6 +202,8 @@ var BizReport = BizReport || {};
 					that.dataTable.table.find("input[name=item]").removeAttr("checked");
 					that.selectedItems.splice(0); // empty selectedItems
 				}
+				
+				that.publish("selectChange");
 			});
 			
 			$("input[name=item]").live("click", function(){
@@ -215,6 +215,8 @@ var BizReport = BizReport || {};
 					that.checkAllBox.removeAttr("checked");
 					that.removeItem(oDataTable.row(this.getAttribute("rowindex")).data());
 				}
+				
+				that.publish("selectChange");
 			});
 			
 			this.dataTable.table.on("page.dt", function(){
@@ -250,6 +252,10 @@ var BizReport = BizReport || {};
 		
 		getDataSize: function() {
 			return this.oDataTable.data().length;
+		},
+		
+		hideCheckbox: function() {
+			this.oDataTable.column(0).visible(false);
 		}
 	});
 	

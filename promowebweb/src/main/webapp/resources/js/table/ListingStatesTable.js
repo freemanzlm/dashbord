@@ -1,4 +1,4 @@
-/* List all listings with states.
+/* List all listings with states but no select operation.
  * 
  * @Description All configuration for exposure table are put here
  * 

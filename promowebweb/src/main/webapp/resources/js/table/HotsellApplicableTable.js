@@ -1,4 +1,4 @@
-/* Define Exposure Table implementation.
+/* Listing hotsell listings and there are selection checkboxes for further operation.
  * 
  * @Description All configuration for exposure table are put here
  * 

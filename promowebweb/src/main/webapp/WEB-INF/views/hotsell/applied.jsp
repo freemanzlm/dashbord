@@ -47,7 +47,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['ListingSelectTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_applied.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['hotsell_applied.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -118,14 +118,14 @@
 		
 				<div class="mt20">
 					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/listing_states.jsp"></jsp:include>
+					<jsp:include page="../table/listingStates.jsp"></jsp:include>
 				</div>	
 				
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
 						<form action="preview" method="post">
 							<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
-							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
+							<button class="btn" id="form-btn"  disabled title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
 						</form>
 					</div>	 
 				</c:if>
@@ -141,6 +141,13 @@
 
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/terms.jsp" %>
+
+<script type="text/javascript">
+	var pageData = {
+		expired: ${ expired == true }
+		
+	};
+</script>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
