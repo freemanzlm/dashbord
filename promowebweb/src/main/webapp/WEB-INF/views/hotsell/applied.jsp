@@ -74,7 +74,14 @@
 				<div class="active-status-box">
 					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
 					<p class="desc">
-						已超过报名有效期，您无法再修改刊登内容
+						<c:choose>
+							<c:when test="${not expired }">
+								在报名有效期内，您可以重新选择预报名的刊登，并重新提交 
+							</c:when>
+							<c:otherwise>
+								已超过报名有效期，您无法再修改刊登内容
+							</c:otherwise>
+						</c:choose>
 					</p>
 					<menu>
 						<a href="../index" class="btn">返回活动列表</a>
@@ -114,9 +121,15 @@
 					<jsp:include page="../table/listing_states.jsp"></jsp:include>
 				</div>	
 				
-				<div class="page-bottom-actions">
-					<button class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
-				</div>	
+				<c:if test="${not expired }">
+					<div class="page-bottom-actions">
+						<form action="preview" method="post">
+							<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
+							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
+						</form>
+					</div>	 
+				</c:if>
+				
 			</div>
 		</div>
 	</div>

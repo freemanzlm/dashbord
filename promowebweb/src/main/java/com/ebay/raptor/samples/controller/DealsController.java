@@ -83,10 +83,18 @@ public class DealsController {
 		return model;
 	}
 	
+	@RequestMapping(value = "submit", method = RequestMethod.POST)
+	public ModelAndView handleSubmitRequest() {
+		ModelAndView mav = new ModelAndView("deals/applied");
+		mav.addObject("formUrl", "upload");
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "upload", method = RequestMethod.POST)
 	public ModelAndView handleUploadRequest() {
-		ModelAndView mav = new ModelAndView("listingReview");
-		mav.addObject("formUrl", "applied");
+		ModelAndView mav = new ModelAndView("deals/listingPreview");
+		mav.addObject("formUrl", "submit");
 		
 		return mav;
 	}

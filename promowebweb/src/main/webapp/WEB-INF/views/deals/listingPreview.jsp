@@ -54,7 +54,7 @@
 <body>
 <div class="container">
 	<!--  Global Header -->
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="../header.jsp"></jsp:include>
 	<!-- end: Global Header -->
 	
 	<div id="page">
@@ -63,14 +63,14 @@
 				<h2>已选择的刊登预览</h2>
 				
 				<div class="mt20">
-					<jsp:include page="table/listing_preview.jsp"></jsp:include>
+					<jsp:include page="../table/listingPreview.jsp"></jsp:include>
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
-					<form action="${formUrl }" method="get">
+					<form action="${formUrl }" method="post">
 						<!-- TODO put selected listing ids here -->
 						<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
-						<a href="../index">返回修改</a>
+						<a href="../applicable">返回修改</a>
 						<button type="submit" class="btn">提交报名信息</button>
 					</form>
 					
@@ -80,12 +80,12 @@
 	</div>
 
 	<!-- Global Footer -->
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="../footer.jsp"></jsp:include>
 	<!-- End: Global Footer -->
 </div>
 
-<%@ include file="dialog/alert.jsp" %>
-<%@ include file="dialog/terms.jsp" %>
+<%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />

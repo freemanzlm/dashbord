@@ -68,10 +68,16 @@ public class HotsellController {
 		return model;
 	}
 	
+	@RequestMapping(value = "preview", method = RequestMethod.POST)
+	public ModelAndView handlePreviewRequest() {
+		ModelAndView mav = new ModelAndView("hotsell/listingPreview");
+		return mav;
+	}
+	
 	@RequestMapping(value = "submit", method = RequestMethod.POST)
 	public ModelAndView handleSubmitRequest() {
-		ModelAndView mav = new ModelAndView("listingReview");
-		mav.addObject("formUrl", "applied");
+		ModelAndView mav = new ModelAndView("hotsell/applied");
+		mav.addObject("formUrl", "preview");
 		return mav;
 	}
 	
