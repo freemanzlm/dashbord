@@ -9,7 +9,7 @@ $(function(){
 		}});
 	skuList.update();
 	
-	var uploadForm = $("form").submit(function(){
+	var uploadForm = $("#upload-form").submit(function(){
 		return !!$(this).find("input[type=file]").attr("value") && acceptCheckbox[0].checked;
 	});
 	

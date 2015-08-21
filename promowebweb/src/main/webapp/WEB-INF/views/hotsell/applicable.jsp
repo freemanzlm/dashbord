@@ -73,7 +73,8 @@
 				
 				<jsp:include page="activity.jsp"></jsp:include>
 				
-				<div class="mt20">
+				<div class="mt20 my-listing">
+					<h3>选择我的刊登报名 <small>（已选 <span>0</span> 项）</small></h3>
 					<jsp:include page="../table/listing.jsp"></jsp:include>
 				</div>
 				

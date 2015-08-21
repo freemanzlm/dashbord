@@ -36,6 +36,9 @@ BizReport.locale = {
 		    'de': '德国站',
 		    'au': '澳大利亚',
 		    'other': '其他站点'
+		},
+		'listing': {
+			'info': '总共_TOTAL_个刊登'
 		}
 	},
 	'promo': {

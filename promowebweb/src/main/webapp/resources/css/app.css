@@ -92,6 +92,12 @@ table.dataTable td.item-title p {
 .my-listing h3 {
 	margin-bottom: 10px;
 	font-size: 14px;
+	font-weight: bold;
+}
+
+.my-listing h3 small {
+	font-size: smaller;
+	color: #888;
 }
 
 /* button and other control at the bottom of the page  */

@@ -33,7 +33,7 @@ var BizReport = BizReport || {};
 				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
-					sInfo: locale.getText('dataTable.info'),
+					sInfo: locale.getText('dataTable.listing.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
 					oPaginate: {

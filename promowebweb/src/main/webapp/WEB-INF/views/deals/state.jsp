@@ -60,7 +60,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingSubmittedTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['deals_ongoing.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -78,6 +78,8 @@
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
 						<div class="step done"><span>已提交报名</span></div>
+						<div class="step done"><span>报名预审中</span></div>
+						<div class="step done"><span>确认报名刊登</span></div>
 						<div class="step ${ state eq 'ongoing' ? 'current-step' : 'done' }"><span>活动进行中</span></div>
 						<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'claimable' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
 						<div class="step ${ state eq 'claimable' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>可申领奖励</span></div>

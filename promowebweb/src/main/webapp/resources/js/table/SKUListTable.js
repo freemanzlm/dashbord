@@ -70,14 +70,8 @@ var BizReport = BizReport || {};
 					aTargets: ["name"],
 					sDefaultContent: "",					
 					sType: "string",
-					sWidth: "250px",
 					sClass: "text-left",
 					mRender: function(data, type, full, meta) {
-						if (type == "display") {
-							return "<a href='http://www.ebay.com/itm/" + full.itemId
-							    + "' data-item-id='" + full.itemId + "'>" + data + "</a>";
-						}
-						
 						return data;
 					}
 				}] 

@@ -1,0 +1,131 @@
+{
+	"data": [
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 1
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 2
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 2
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 3
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		},
+		{
+			"name": "campaign 1",
+			"itemId": "81675465656",
+			"price": 4000,
+			"currency": "USD",
+			"inventory": "150",
+			"actPrice": "3800",
+			"state": 0
+		}
+	],
+	"status": true
+}

@@ -5,7 +5,7 @@ $(function(){
 	var listingTable = new ListingPreviewTable();
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "listing-preivew-table"
+			tableId: "deals-listing-table"
 		}});
 	listingTable.update();	
 	

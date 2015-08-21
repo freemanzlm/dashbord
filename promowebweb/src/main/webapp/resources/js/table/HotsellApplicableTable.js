@@ -33,7 +33,7 @@ var BizReport = BizReport || {};
 				'sDom': '<"datatable_header"rf>t<"datatable_pager"i>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
-					sInfo: locale.getText('dataTable.info'),
+					sInfo: locale.getText('dataTable.listing.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
 					oPaginate: {
@@ -202,6 +202,8 @@ var BizReport = BizReport || {};
 					that.dataTable.table.find("input[name=item]").removeAttr("checked");
 					that.selectedItems.splice(0); // empty selectedItems
 				}
+				
+				that.publish("selectChange");
 			});
 			
 			$("input[name=item]").live("click", function(){
@@ -213,6 +215,8 @@ var BizReport = BizReport || {};
 					that.checkAllBox.removeAttr("checked");
 					that.removeItem(oDataTable.row(this.getAttribute("rowindex")).data());
 				}
+				
+				that.publish("selectChange");
 			});
 			
 			this.dataTable.table.on("page.dt", function(){

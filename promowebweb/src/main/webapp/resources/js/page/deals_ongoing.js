@@ -1,8 +1,8 @@
 $(function(){
 	
-	var ListingReviewTable = BizReport.ListingReviewTable;
+	var DealsListingTable = BizReport.DealsListingTable;
 	
-	var listingTable = new ListingReviewTable();
+	var listingTable = new DealsListingTable();
 	listingTable.init({
 		dataTableConfig: {
 			tableId: "listing-submitted-table"

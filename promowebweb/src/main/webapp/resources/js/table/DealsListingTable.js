@@ -9,8 +9,8 @@
 var BizReport = BizReport || {};
 
 (function(namespace){
-	var ListingSelectTable = function() {};
-	ListingSelectTable.prototype = new namespace.Widget();
+	var DealsListingTable = function() {};
+	DealsListingTable.prototype = new namespace.Widget();
 	
 	var locale = namespace.locale;
 	
@@ -45,7 +45,7 @@ var BizReport = BizReport || {};
 				},
 				'bScrollCollapse': true,
 				'sScrollY': "600",
-				sAjaxSource: "/promoweb/js/data/listing.json",
+				sAjaxSource: "/promoweb/js/data/dealsListing.json",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {
@@ -68,11 +68,11 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
+				    {data: 'itemId'},
 					{data: 'name'},
 					{data: 'price'},
-					{data: 'volume'},
-					{data: 'sales'},
-					{data: 'comp'},
+					{data: 'actPrice'},
+					{data: 'inventory'},
 					{data: 'state'}
 				],
 				aoColumnDefs: [{
@@ -90,24 +90,35 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["name"],
+					aTargets: ["item-id"],
 					sDefaultContent: "",					
 					sType: "string",
-					sWidth: "250px",
-					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
-							return display += "<p><a href='http://www.ebay.com/itm/" + full.itemId
-							    + "' data-item-id='" + full.itemId + "'>" + data + "</a></p>";
+							return "<a href='http://www.ebay.com/itm/" + data + "'>" + data + "</a>";
 						}
 						
 						return data;
 					}					
 				},
 				{
-					aTargets: ["target-volume"],
-					sType: "date",
+					aTargets: ["name"],
+					sDefaultContent: "",					
+					sType: "string",
+					sWidth: "350px",
+					sClass: "item-title",
+					mRender: function(data, type, full, meta) {
+						if (type == "display") {
+							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
+							return display += "<p>" + data + "</p>";
+						}
+						
+						return data;
+					}					
+				},
+				{
+					aTargets: ["inventory"],
+					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -118,7 +129,8 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["target-price", "compensate", "target-sales"],
+					aTargets: ["price", "activity-price"],
+					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -144,7 +156,7 @@ var BizReport = BizReport || {};
 			}
 		};
 	
-	$.extend(ListingSelectTable.prototype, {
+	$.extend(DealsListingTable.prototype, {
 		init: function(config) {
 			var that = this;
 
@@ -257,8 +269,12 @@ var BizReport = BizReport || {};
 		
 		hideCheckbox: function() {
 			this.oDataTable.column(0).visible(false);
+		},
+		
+		hideStateColumn: function() {
+			this.oDataTable.column(6).visible(false);
 		}
 	});
 	
-	namespace.ListingSelectTable = ListingSelectTable;
+	namespace.DealsListingTable = DealsListingTable;
 })(BizReport = BizReport || {});

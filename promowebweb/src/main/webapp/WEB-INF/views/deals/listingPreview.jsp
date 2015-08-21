@@ -47,8 +47,8 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingSubmittedTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['listing_preview.js']}" target="page-js"></res:useJs>	
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_listing_preview.js']}" target="page-js"></res:useJs>	
 </head>
 
 <body>
@@ -63,14 +63,14 @@
 				<h2>已选择的刊登预览</h2>
 				
 				<div class="mt20">
-					<jsp:include page="../table/listingPreview.jsp"></jsp:include>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
 					<form action="${formUrl }" method="post">
 						<!-- TODO put selected listing ids here -->
 						<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
-						<a href="../applicable">返回修改</a>
+						<a href="applicable">返回修改</a>
 						<button type="submit" class="btn">提交报名信息</button>
 					</form>
 					

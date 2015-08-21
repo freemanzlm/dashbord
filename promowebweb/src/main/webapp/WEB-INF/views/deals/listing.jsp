@@ -3,16 +3,26 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
+<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-
+<c:set var="state" value="confirm"></c:set>
+<c:set var="expired" value="true"></c:set>
 <r:includeJquery jsSlot="body" />
 <r:client />
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals - 已提交报名</title>
-	<meta name="description" content="爆款促销 - 已提交报名">
+	<c:choose>
+		<c:when test="${state eq 'inquiry' }">
+			<title>Deals - 报名预审中</title>					
+		</c:when>
+		<c:when test="${state eq 'confirm' }">
+			<title>Deals - 确认报名刊登</title>
+		</c:when>
+	</c:choose>
+	
+	<meta name="description" content="爆款促销 ">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -30,7 +40,6 @@
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
-	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
@@ -47,9 +56,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_applied.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_listing.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -65,9 +72,9 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
-						<div class="step current-step"><span>已提交报名</span></div>
-						<div class="step"><span>报名预审中</span></div>
-						<div class="step"><span>确认报名刊登</span></div>
+						<div class="step done"><span>已提交报名</span></div>
+						<div class="step ${ state eq 'inquiry' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
+						<div class="step ${ state eq 'confirm' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
 						<div class="step"><span>活动进行中</span></div>
 						<div class="step"><span>奖励确认中</span></div>
 						<div class="step"><span>可申领奖励</span></div>
@@ -76,48 +83,62 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box">
-					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
-					<p class="desc">
-						<c:choose>
-							<c:when test="${not expired }">
-								在报名有效期内，您可以重新选择预报名的刊登，并重新提交 
-							</c:when>
-							<c:otherwise>
-								已超过报名有效期，您无法再修改刊登内容
-							</c:otherwise>
-						</c:choose>
-					</p>
+					<c:choose>
+						<c:when test="${state eq 'inquiry' }">
+							<h3>您已成功提交预审！请耐心等待预审结果。</h3>
+							
+							<c:choose>
+								<c:when test="${ not expired }">
+									<p class="desc">需要您确认通过预审的刊登完成报名！</p>
+								</c:when>
+								<c:otherwise>
+									<p class="desc">已超过报名有效期，您无法再修改刊登内容</p>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:when test="${state eq 'confirm' }">
+							<h3>您已成功通过预审！</h3>
+							<c:choose>
+								<c:when test="${ not expired }">
+									<p class="desc">请于YYYY-MM-DD前在如下刊登中选择您要参加活动的刊登并提交报名。</p>
+								</c:when>
+								<c:otherwise>
+									<p class="desc">已超过报名有效期，您无法再修改刊登内容</p>
+								</c:otherwise>
+							</c:choose>							
+						</c:when>
+					</c:choose>
+					
 					<menu>
-						<a href="" class="btn">返回活动列表</a>
-					</menu>					
+						<a href="../index" class="btn">返回活动列表</a>
+					</menu>	
 				</div> <!-- active status box end -->
 				
 				<jsp:include page="activity.jsp"></jsp:include>
-
-				<div class="mt20 my-listing">
-					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
-				</div>	
 				
-				<c:if test="${ not expired }">
-					<div class="mt20">
-						<div class="listings-upload">
-							<h3>重新上传我要提交的刊登</h3>
-							<p class="mt10">您可以通过下载<a href="javascript:void(0)" target="_blank">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
-							<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
-							<form id="upload-form" action="upload" class="mt30" method="post">
-								选择上传您的刊登列表 
-								<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="*.xsl" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
-							</form>
-						</div>
-					</div>
+				<div class="mt20 my-listing">
+					<c:choose>
+						<c:when test="${expired eq 'inquiry' or expired }">
+							<h3>我提交的刊登</h3>
+						</c:when>
+						<c:when test="${state eq 'confirm' and not expired }">
+							<h3>我提交的刊登<small>（已选 <span>0</span> 项）</small></h3>
+						</c:when>
+					</c:choose>
 					
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+				</div>
+				
+				<c:if test="${(state eq 'confirm') && (expired eq false) }">
 					<div class="mt20 page-bottom-actions">
-						<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
-						<button id="upload-btn" class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>预览修改报名信息</button>
+						<form action="preview" method="post">
+							<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
+							<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
+							<button id="form-btn" class="btn" disabled type="submit">预览报名信息</button>
+						</form>
 					</div>	
 				</c:if>
-						
+				
 			</div>
 		</div>
 	</div>
@@ -129,6 +150,14 @@
 
 <%@ include file="../dialog/alert.jsp" %>
 <jsp:include page="../dialog/terms.jsp"></jsp:include>
+
+<script type="text/javascript">
+	var pageData = {
+		state: '${ state }',
+		expired: ${ expired eq true }
+	};
+</script>
+
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />

@@ -1,7 +1,14 @@
 $(function(){
-var HotsellApplicableTable = BizReport.HotsellApplicableTable;
+	var HotsellApplicableTable = BizReport.HotsellApplicableTable;
+	
+	var listingCountJ = $(".my-listing h3 small span");
 	
 	var listingTable = new HotsellApplicableTable();
+	listingTable.subscribe({
+		selectChange: function(){
+			listingCountJ.text(this.selectedItems.length);
+		}
+	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
 			tableId: "listing-table"
