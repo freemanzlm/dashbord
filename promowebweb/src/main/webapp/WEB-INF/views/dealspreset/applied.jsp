@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>爆款促销 - 可申领奖励</title>
-	<meta name="description" content="爆款促销 - 可申领奖励">
+	<title>Deals招募 - 已提交报名</title>
+	<meta name="description" content="Deals招募- 已提交报名">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -42,10 +42,12 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	
+	<res:useJs value="${res.js.local.js.table['ListingSelectTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['hotsell_applied.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -61,21 +63,28 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
-						<div class="step done"><span>已提交报名</span></div>
-						<div class="step done"><span>活动进行中</span></div>
-						<div class="step done"><span>奖励确认中</span></div>
-						<div class="step current-step"><span>可申领奖励</span></div>
+						<div class="step current-step"><span>已提交报名</span></div>
+						<div class="step"><span>活动进行中</span></div>
+						<div class="step"><span>奖励确认中</span></div>
+						<div class="step"><span>可申领奖励</span></div>
 						<div class="step last"><span>活动完成</span></div>
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box success">
-					<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
+				<div class="active-status-box">
+					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
 					<p class="desc">
-						请在2015年8月8日前点击进入领奖流程完成申领。
+						<c:choose>
+							<c:when test="${not expired }">
+								在报名有效期内，您可以重新选择预报名的刊登，并重新提交 
+							</c:when>
+							<c:otherwise>
+								已超过报名有效期，您无法再修改刊登内容
+							</c:otherwise>
+						</c:choose>
 					</p>
 					<menu>
-						<a href="" class="btn">填写奖励申领协议</a>
+						<a href="../index" class="btn">返回活动列表</a>
 					</menu>					
 				</div> <!-- active status box end -->
 				
@@ -106,6 +115,21 @@
 						<strong>法律协议：点击查看 <a href="javascript:void(0)">法律协议</a></strong>
 					</div>
 				</div>
+		
+				<div class="mt20 my-listing">
+					<h3><strong>我提交的刊登</strong></h3>
+					<jsp:include page="../table/listingStates.jsp"></jsp:include>
+				</div>	
+				
+				<c:if test="${not expired }">
+					<div class="page-bottom-actions">
+						<form action="preview" method="post">
+							<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
+							<button class="btn" id="form-btn"  disabled title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
+						</form>
+					</div>	 
+				</c:if>
+				
 			</div>
 		</div>
 	</div>
@@ -116,6 +140,14 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
+
+<script type="text/javascript">
+	var pageData = {
+		expired: ${ expired == true }
+		
+	};
+</script>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />

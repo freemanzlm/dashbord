@@ -116,7 +116,7 @@
 					</div>
 				</div>
 		
-				<div class="mt20">
+				<div class="mt20 my-listing">
 					<h3><strong>我提交的刊登</strong></h3>
 					<jsp:include page="../table/listingStates.jsp"></jsp:include>
 				</div>	

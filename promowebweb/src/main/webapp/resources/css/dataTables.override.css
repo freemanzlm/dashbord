@@ -114,6 +114,14 @@ table.dataTable thead th {
 	text-align: center;
 }
 
+.dataTables_wrapper.no-footer div.dataTables_scrollHeadInner {
+	border-bottom: 2px solid #ccc;
+}
+
+div.dataTables_scrollHead thead th {
+	border-bottom: none;
+}
+
 table.dataTable thead th.text-left {
 	text-align: left;
 }

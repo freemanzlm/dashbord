@@ -28,9 +28,9 @@ var BizReport = BizReport || {};
 				'bServerSide': false,
 				'bSortCellsTop': true,
 				'bSort': true,
-				'iDisplayLength': 10,
+//				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
-				'sDom': '<"datatable_header"rf>t<"datatable_pager"ip>',
+				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"i>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
@@ -43,7 +43,8 @@ var BizReport = BizReport || {};
 						sNext: locale.getText('dataTable.nextPage')
 					}
 				},
-//				'sScrollX': "100%",
+				'bScrollCollapse': true,
+				'sScrollY': "600",
 				sAjaxSource: "/promoweb/js/data/listing.json",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 

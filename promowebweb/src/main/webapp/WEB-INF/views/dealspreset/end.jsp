@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals - 活动进行中</title>
-	<meta name="description" content="爆款促销 - 活动进行中">
+	<title>Deals招募 - 活动完成</title>
+	<meta name="description" content="Deals招募 - 活动完成">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -43,11 +43,7 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingSubmittedTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_ongoing.js']}" target="page-js"></res:useJs>
+	
 </head>
 
 <body>
@@ -59,24 +55,15 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals 活动名称</h2>
+				<h2>爆款促销 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可报名</span></div>
-						<div class="step done"><span>已提交报名</span></div>
-						<div class="step current-step"><span>活动进行中</span></div>
-						<div class="step"><span>奖励确认中</span></div>
-						<div class="step"><span>可申领奖励</span></div>
-						<div class="step last"><span>活动完成</span></div>
+						<div class="step current-step last"><span>活动已结束</span></div>
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box success">
-					<h3>恭喜，您的报名已完成审核！</h3>
-					<p class="desc">
-						活动时间为YYYY-MM-DD 到  YYYY-MM-DD, <br />
-						我们将在活动结束后尽快公布统计结果，请耐心等待！
-					</p>
+				<div class="active-status-box">
+					<h3>活动已结束，感谢您的参与！</h3>
 					<menu>
 						<a href="../index" class="btn">返回活动列表</a>
 					</menu>					
@@ -109,13 +96,7 @@
 						<strong>法律协议：点击查看 <a href="javascript:void(0)" class="terms-conditions">法律协议</a></strong>
 					</div>
 				</div>
-				
-				<div class="mt20">
-					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/listingSubmitted.jsp"></jsp:include>
-				</div>	
 			</div>
-			
 		</div>
 	</div>
 
@@ -130,5 +111,10 @@
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />
+<script type="text/javascript">
+	$(".terms-conditions").click(function(event){
+		BizReport.termsDialog.show();
+	});
+</script>
 </body>
 </html>

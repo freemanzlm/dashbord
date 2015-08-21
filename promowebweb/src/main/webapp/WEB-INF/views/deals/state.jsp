@@ -5,6 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
+<c:set var="state" value="ongoing"></c:set>
 
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -12,9 +13,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>其它活动 - 活动进行中</title>
-	<meta name="description" content="其它活动- 活动进行中">
-	<meta name="author" content="eBay: Apps">
+	<c:choose>
+		<c:when test="${state eq 'ongoing' }">
+			<title>Deals - 活动进行中</title>						
+		</c:when>
+		<c:when test="${state eq 'rewarding' }">
+			<title>Deals - 奖励确认中</title>
+		</c:when>
+		<c:when test="${state eq 'claimable' }">
+			<title>Deals - 可申领奖励</title>
+		</c:when>
+		<c:when test="${state eq 'complete' }">
+			<title>Deals - 活动完成</title>
+		</c:when>
+	</c:choose>
+	
+	<meta name="description" content="爆款促销 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	
@@ -42,10 +56,12 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	
+	<res:useJs value="${res.js.local.js.table['ListingSubmittedTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_ongoing.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -57,16 +73,58 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>其它活动 活动名称</h2>
+				<h2>Deals 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>活动进行中</span></div>
-						<div class="step"><span>奖励确认中</span></div>
-						<div class="step"><span>可申领奖励</span></div>
-						<div class="step last"><span>活动完成</span></div>
+						<div class="step done"><span>可报名</span></div>
+						<div class="step done"><span>已提交报名</span></div>
+						<div class="step ${ state eq 'ongoing' ? 'current-step' : 'done' }"><span>活动进行中</span></div>
+						<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'claimable' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
+						<div class="step ${ state eq 'claimable' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>可申领奖励</span></div>
+						<div class="step ${ state eq 'complete' ? 'current-step' : '' } last"><span>活动完成</span></div>
 					</div>
 				</div>  <!-- steps end -->
-						
+				
+				<div class="active-status-box success">
+					<c:choose>
+						<c:when test="${state eq 'ongoing' }">
+							<h3>恭喜，您的报名已完成审核！</h3>
+							<p class="desc">
+								活动时间为YYYY-MM-DD 到  YYYY-MM-DD, <br />
+								我们将在活动结束后尽快公布统计结果，请耐心等待！
+							</p>
+							<menu>
+								<a href="../index" class="btn">返回活动列表</a>
+							</menu>							
+						</c:when>
+						<c:when test="${state eq 'rewarding' }">
+							<h3>恭喜您已完成活动！</h3>
+							<p class="desc">
+								奖励结果统计中，请耐心等待！
+							</p>
+							<menu>
+								<a href="../index" class="btn">返回活动列表</a>
+							</menu>
+						</c:when>
+						<c:when test="${state eq 'claimable' }">
+							<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
+							<p class="desc">
+								请在2015年8月8日前点击进入领奖流程完成申领。
+							</p>
+							<menu>
+								<a href="../index" class="btn">填写奖励申请协议</a>
+							</menu>
+						</c:when>
+						<c:when test="${state eq 'complete' }">
+							<h3>您已成功领取等值888元的ebay万里通积分</h3>
+							<menu>
+								<a href="../index" class="btn">返回活动列表</a>
+							</menu>
+						</c:when>
+					</c:choose>
+					
+				</div> <!-- active status box end -->
+				
 				<div class="activity-detail">
 					<div class="activity-time">
 						<strong>报名截止时间：2015.02.01</strong>
@@ -91,14 +149,16 @@
 					</div>
 					
 					<div class="activity-law">
-						<strong>法律协议：点击查看 <a href="javascript:void(0)">法律协议</a></strong>
+						<strong>法律协议：点击查看 <a href="javascript:void(0)" class="terms-conditions">法律协议</a></strong>
 					</div>
 				</div>
 				
-				<div class="mt20" style="text-align: center;">
-					<a href="../index" class="btn">返回活动列表</a>
-				</div>			
+				<div class="mt20">
+					<h3><strong>我提交的刊登</strong></h3>
+					<jsp:include page="../table/listingSubmitted.jsp"></jsp:include>
+				</div>	
 			</div>
+			
 		</div>
 	</div>
 
@@ -108,6 +168,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />

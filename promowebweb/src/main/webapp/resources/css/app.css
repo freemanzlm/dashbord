@@ -61,6 +61,7 @@
 }
 
 /* table styles */
+
 table.dataTable td.item-title img {
 	margin: 5px 10px;
 	width: 50px;
@@ -86,6 +87,14 @@ table.dataTable td.item-title p {
 	font-size: 10px;
 	display: block;
 }
+
+/* my uploaed listing */
+.my-listing h3 {
+	margin-bottom: 10px;
+	font-size: 14px;
+}
+
+/* button and other control at the bottom of the page  */
 
 .page-bottom-actions {
 	text-align: center;

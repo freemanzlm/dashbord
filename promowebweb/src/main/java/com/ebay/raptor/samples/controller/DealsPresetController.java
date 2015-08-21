@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value="deals")
-public class DealsController {
+@RequestMapping(value="dealspreset")
+public class DealsPresetController {
 
 	@RequestMapping(value = "applicable", method = RequestMethod.GET)
 	public HashMap<String, String> handleRequest() {
@@ -27,36 +27,20 @@ public class DealsController {
 		return model;
 	}
 	
-	@RequestMapping(value = "reviewing", method = RequestMethod.GET)
-	public HashMap<String, String> handleReveiwingRequest() {
+	@RequestMapping(value = "state", method = RequestMethod.GET)
+	public HashMap<String, String> handleOnGoingRequest() {
 		HashMap<String, String> model = new HashMap<String, String>();
-		String helloRaptor = "Say hello to Raptor!";
-		model.put("greeting", helloRaptor);
+		model.put("state", "ongoing");
 		return model;
 	}
 	
-	@RequestMapping(value = "applicationConfirm", method = RequestMethod.GET)
-	public HashMap<String, String> handleapplicationConfirmRequest() {
-		HashMap<String, String> model = new HashMap<String, String>();
-		String helloRaptor = "Say hello to Raptor!";
-		model.put("greeting", helloRaptor);
-		return model;
-	}
-	
-	@RequestMapping(value = "auditFail", method = RequestMethod.GET)
+	@RequestMapping(value = "applyFail", method = RequestMethod.GET)
 	public HashMap<String, String> handleAuditFailRequest() {
 		HashMap<String, String> model = new HashMap<String, String>();
 		String helloRaptor = "Say hello to Raptor!";
 		model.put("greeting", helloRaptor);
 		return model;
-	}
-	
-	@RequestMapping(value = "state", method = RequestMethod.GET)
-	public HashMap<String, String> handleStateRequest() {
-		HashMap<String, String> model = new HashMap<String, String>();
-		model.put("state", "ongoing");
-		return model;
-	}
+	}	
 	
 	@RequestMapping(value = "end", method = RequestMethod.GET)
 	public HashMap<String, String> handleEndRequest() {
@@ -66,19 +50,16 @@ public class DealsController {
 		return model;
 	}
 	
-	@RequestMapping(value = "submit", method = RequestMethod.POST)
-	public ModelAndView handleSubmitRequest() {
-		ModelAndView mav = new ModelAndView("deals/applied");
-		mav.addObject("formUrl", "upload");
-		
+	@RequestMapping(value = "preview", method = RequestMethod.POST)
+	public ModelAndView handlePreviewRequest() {
+		ModelAndView mav = new ModelAndView("hotsell/listingPreview");
 		return mav;
 	}
 	
-	@RequestMapping(value = "upload", method = RequestMethod.POST)
-	public ModelAndView handleUploadRequest() {
-		ModelAndView mav = new ModelAndView("deals/listingPreview");
-		mav.addObject("formUrl", "submit");
-		
+	@RequestMapping(value = "submit", method = RequestMethod.POST)
+	public ModelAndView handleSubmitRequest() {
+		ModelAndView mav = new ModelAndView("hotsell/applied");
+		mav.addObject("formUrl", "preview");
 		return mav;
 	}
 	

@@ -30,6 +30,7 @@
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
@@ -114,14 +115,29 @@
 					</div>
 				</div>
 
-				<div class="mt20">
+				<div class="mt20 my-listing">
 					<h3><strong>我提交的刊登</strong></h3>
 					<jsp:include page="../table/listingStates.jsp"></jsp:include>
 				</div>	
 				
-				<div class="page-bottom-actions">
-					<button class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
-				</div>			
+				<c:if test="${ not expired }">
+					<div class="mt20">
+						<div class="listings-upload">
+							<h3>重新上传我要提交的刊登</h3>
+							<p class="mt10">您可以通过下载<a href="javascript:void(0)" target="_blank">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
+							<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
+							<form action="upload" class="mt30" method="post">
+								选择上传您的刊登列表 
+								<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="*.xsl" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
+							</form>
+						</div>
+					</div>
+					
+					<div class="mt20 page-bottom-actions">
+						<button class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
+					</div>	
+				</c:if>
+						
 			</div>
 		</div>
 	</div>

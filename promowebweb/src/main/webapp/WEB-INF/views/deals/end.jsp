@@ -12,9 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals- 活动完成</title>
-	<meta name="description" content="爆款促销 - 活动完成">
-	<meta name="author" content="eBay: Apps">
+	<title>Deals- 活动已结束</title>
+	<meta name="description" content="爆款促销 - 活动已结束">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	
@@ -42,9 +41,7 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	
 </head>
 
@@ -60,17 +57,12 @@
 				<h2>Deals 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可报名</span></div>
-						<div class="step done"><span>已提交报名</span></div>
-						<div class="step done"><span>活动进行中</span></div>
-						<div class="step done"><span>奖励确认中</span></div>
-						<div class="step done"><span>可申领奖励</span></div>
-						<div class="step current-step last"><span>活动完成</span></div>
+						<div class="step current-step last"><span>活动已结束</span></div>
 					</div>
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box success">
-					<h3>您已成功领取等值888元的ebay万里通积分</h3>
+					<h3>活动已结束，感谢您的参与！</h3>
 					<menu>
 						<a href="../index" class="btn">返回活动列表</a>
 					</menu>					
@@ -113,9 +105,15 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />
+<script type="text/javascript">
+	$(".terms-conditions").click(function(event){
+		BizReport.termsDialog.show();
+	});
+</script>
 </body>
 </html>
