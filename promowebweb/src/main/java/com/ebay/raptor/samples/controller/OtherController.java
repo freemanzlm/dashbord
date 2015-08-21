@@ -18,8 +18,8 @@ public class OtherController {
 		return model;
 	}
 	
-	@RequestMapping(value = "auditFail", method = RequestMethod.GET)
-	public HashMap<String, String> handleAuditFailRequest() {
+	@RequestMapping(value = "applyFail", method = RequestMethod.GET)
+	public HashMap<String, String> handleApplyFailRequest() {
 		HashMap<String, String> model = new HashMap<String, String>();
 		String helloRaptor = "Say hello to Raptor!";
 		model.put("greeting", helloRaptor);

@@ -22,8 +22,7 @@ public class DealsController {
 	@RequestMapping(value = "applied", method = RequestMethod.GET)
 	public HashMap<String, String> handleAppliedRequest() {
 		HashMap<String, String> model = new HashMap<String, String>();
-		String helloRaptor = "Say hello to Raptor!";
-		model.put("greeting", helloRaptor);
+		model.put("expired", "false");
 		return model;
 	}
 	
@@ -43,7 +42,7 @@ public class DealsController {
 		return model;
 	}
 	
-	@RequestMapping(value = "auditFail", method = RequestMethod.GET)
+	@RequestMapping(value = "applyFail", method = RequestMethod.GET)
 	public HashMap<String, String> handleAuditFailRequest() {
 		HashMap<String, String> model = new HashMap<String, String>();
 		String helloRaptor = "Say hello to Raptor!";

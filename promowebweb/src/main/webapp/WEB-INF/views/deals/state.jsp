@@ -61,7 +61,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_ongoing.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_state.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -129,9 +129,9 @@
 				
 				<jsp:include page="activity.jsp"></jsp:include>
 				
-				<div class="mt20">
-					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/listingSubmitted.jsp"></jsp:include>
+				<div class="mt20 my-listing">
+					<h3>我提交的刊登</h3>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 			</div>
 			

@@ -6,7 +6,7 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="state" value="confirm"></c:set>
-<c:set var="expired" value="true"></c:set>
+<c:set var="expired" value="false"></c:set>
 <r:includeJquery jsSlot="body" />
 <r:client />
 

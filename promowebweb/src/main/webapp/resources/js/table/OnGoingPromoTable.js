@@ -24,7 +24,7 @@ var BizReport = BizReport || {};
 		case 0:
 			switch(state) {
 			case 0: return "deals/applicable";
-			case 1: return "deals/applicationConfirm";
+			case 1: return "deals/listing";
 			case 2: return "deals/applied";
 			case 3: return "deals/ongoing";
 			case 4: return "deals/applied";
