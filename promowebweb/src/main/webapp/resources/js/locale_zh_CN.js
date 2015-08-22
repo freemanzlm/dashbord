@@ -55,8 +55,9 @@ BizReport.locale = {
 			'applicationConfirm': '确认报名刊登',
 			'ongoing': '活动进行中',
 			'rewardComputing': '奖励确认中',
-			'rewardAppliable': '可申领奖励',
-			'complete': '活动完成'
+			'rewardApplicable': '可申领奖励',
+			'complete': '活动完成',
+			'end': '活动已结束'
 		}
 	},
 	'listing': {

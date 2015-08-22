@@ -15,9 +15,58 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['deals', 'dealsPreset', 'storm', 'other'];
-	var states = ['appliable','comfirmApplication',	'submitted','reviewing','ongoing','browseOnly',	'rewardConfirming',
-				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardReviewing',
-				'rewardSuccess','end'];
+	var states = ['applicable', 'applied', 'reviewing', 'applicationConfirm', 'ongoing', 'rewardComputing', 'rewardApplicable', 'complete', 'end'];
+	
+	function getLink(type, state) {
+		switch (type) {
+		case 0:
+			switch(state) {
+			case 0: return "deals/applicable";
+			case 1: return "deals/listing";
+			case 2: return "deals/applied";
+			case 3: return "deals/ongoing";
+			case 4: return "deals/applied";
+			case 5: return "deals/applied";
+			case 8: return "hotsell/end";
+			}
+			break;
+		case 1:
+			switch(state) {
+			case 0: return "dealsPreset/applicable";
+			case 1: return "dealsPreset/applicationConfirm";
+			case 2: return "dealsPreset/applied";
+			case 3: return "dealsPreset/ongoing";
+			case 4: return "dealsPreset/applied";
+			case 5: return "dealsPreset/applied";
+			case 8: return "hotsell/end";
+			}
+			break;
+		case 2:
+			switch(state) {
+			case 0: return "hotsell/applicable";
+			case 1: return "hotsell/applied";
+			case 2: return "hotsell/state";
+			case 3: return "hotsell/state";
+			case 4: return "hotsell/state";
+			case 5: return "hotsell/state";
+			case 8: return "hotsell/end";
+			}
+			break;
+		case 3:
+			switch(state) {
+			case 0: return "other/applicable";
+			case 1: return "other/applicationConfirm";
+			case 2: return "other/applied";
+			case 3: return "other/ongoing";
+			case 4: return "other/applied";
+			case 5: return "other/applied";
+			case 8: return "hotsell/end";
+			}
+			break;
+		}
+		
+		return "";
+	}
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
@@ -47,7 +96,7 @@ var BizReport = BizReport || {};
 					}
 				},
 //				'sScrollX': "100%",
-				sAjaxSource: "js/data/ongoing.json",
+				sAjaxSource: "js/data/end.json",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {
@@ -130,7 +179,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";
+							return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
 						}
 
 						return data;
