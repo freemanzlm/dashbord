@@ -30,8 +30,8 @@
     <context:component-scan base-package="com.ebay.raptor.config" />
 	<context:component-scan base-package="com.ebay.raptor.promotion" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.controller" />
-	<context:component-scan base-package="com.ebay.raptor.samples.controller" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.resource" />
+	<context:component-scan base-package="com.ebay.raptor.promotion.service" />
 
 	<!-- Handles HTTP GET requests by efficiently serving up static resources 
 	     in the corresponding directory -->

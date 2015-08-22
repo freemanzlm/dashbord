@@ -1,4 +1,4 @@
-package com.ebay.raptor.samples.controller;
+package com.ebay.raptor.promotion.controller;
 
 import java.util.HashMap;
 
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value="hotsell")
-public class HotsellController {
+@RequestMapping(value="dealspreset")
+public class DealsPresetController {
 
 	@RequestMapping(value = "applicable", method = RequestMethod.GET)
 	public HashMap<String, String> handleRequest() {

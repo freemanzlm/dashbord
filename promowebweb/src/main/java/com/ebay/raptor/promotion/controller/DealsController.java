@@ -1,4 +1,4 @@
-package com.ebay.raptor.samples.controller;
+package com.ebay.raptor.promotion.controller;
 
 import java.util.HashMap;
 

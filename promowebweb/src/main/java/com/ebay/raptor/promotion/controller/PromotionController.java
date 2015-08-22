@@ -87,7 +87,6 @@ public class PromotionController {
         }
     }
 
-    @AuthNeed
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView handleIndexRequest(HttpServletRequest request,
             HttpServletResponse response) throws MissingArgumentException {
