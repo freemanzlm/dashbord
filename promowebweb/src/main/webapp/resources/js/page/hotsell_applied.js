@@ -1,14 +1,14 @@
 $(function(){
-	var ListingSelectTable = BizReport.ListingSelectTable;
+	var HotsellListingTable = BizReport.HotsellListingTable;
 	var termsDialog = BizReport.termsDialog;
 	
 	var formBtn = document.getElementById("form-btn");	
 	
 	
-	var listingTable = new ListingSelectTable();
+	var listingTable = new HotsellListingTable();
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "listing-states-table"
+			tableId: "hotsell-listing-table"
 		}});
 	listingTable.subscribe({
 		initialized: function() {

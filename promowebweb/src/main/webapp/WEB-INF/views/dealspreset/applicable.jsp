@@ -75,7 +75,7 @@
 				
 				<div class="mt20">
 					<h3>选择我的刊登报名 <small>（已选 <span>0</span> 项）</small></h3>
-					<jsp:include page="../table/listing.jsp"></jsp:include>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
 				<div class="mt20" style="text-align: center;">

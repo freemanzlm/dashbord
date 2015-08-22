@@ -9,17 +9,18 @@
 var BizReport = BizReport || {};
 
 (function(namespace){
-	var DealsListingTable = function() {};
-	DealsListingTable.prototype = new namespace.Widget();
+	var HotsellListingTable = function() {};
+	HotsellListingTable.prototype = new namespace.Widget();
 	
 	var locale = namespace.locale;
 	
-	var states = ['applied','reviewing','reviewed'];
+	var states = ['applicable', 'applied', 'nonapplied', 'notSubmitted', 'pass','pretrial', 'pretrialPass', 'pretrialFail'];
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[1, 'asc']],
+				'aaSorting': [[5, 'desc']],
+				'aaSortingFixed': [[6, 'desc'], [7, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -28,7 +29,7 @@ var BizReport = BizReport || {};
 				'bServerSide': false,
 				'bSortCellsTop': true,
 				'bSort': true,
-				'iDisplayLength': 10,
+				'iDisplayLength': 200,
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'oLanguage': {
@@ -43,7 +44,9 @@ var BizReport = BizReport || {};
 						sNext: locale.getText('dataTable.nextPage')
 					}
 				},
-				sAjaxSource: "/promoweb/js/data/dealsListing.json",
+				'bScrollCollapse': true,
+				'sScrollY': "600",
+				sAjaxSource: "/promoweb/js/data/listing.json",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {
@@ -57,7 +60,7 @@ var BizReport = BizReport || {};
 				        "type": "GET",
 				        "url": sSource,
 				        "data": aoData,
-				        "success": function(json) {
+				        "success": function(json) { 
 				        	// stop update table if no data is gained.
 				        	if (json.status != true || json.status != "ok") return;
 				        	fnCallback(json);
@@ -74,14 +77,36 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
-				    {data: 'itemId'},
 					{data: 'name'},
 					{data: 'price'},
-					{data: 'actPrice'},
-					{data: 'inventory'},
-					{data: 'state'}
+					{data: 'volume'},
+					{data: 'sales'},
+					{data: 'comp'},
+					{data: 'state'},
+					{data: 'currency'}
 				],
 				aoColumnDefs: [{
+					aTargets: ["currency"],
+					bVisible: false,
+					sDefaultContent: "",					
+					sType: "string",
+					mRender: function(data, type, full, meta) {
+						if (type == "sort") {
+							switch(data) {
+							case 'GBP':
+								return '1';
+							case 'EUR':
+								return '2';
+							case 'USD':
+								return '3';							
+							case 'AUD':
+								return '4';
+							}
+						}
+						
+						return data;
+					}
+				},{
 					aTargets: ["itemId"],
 					bSortable: false,
 					sDefaultContent: "",					
@@ -91,40 +116,30 @@ var BizReport = BizReport || {};
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
-							rowindex : iRowIndex
+							rowindex : iRowIndex,
+							checked: oRow.checked
 						}));
 					}
-				},
-				{
-					aTargets: ["item-id"],
-					sDefaultContent: "",					
-					sType: "string",
-					mRender: function(data, type, full, meta) {
-						if (type == "display") {
-							return "<a href='http://www.ebay.com/itm/" + data + "'>" + data + "</a>";
-						}
-						
-						return data;
-					}					
 				},
 				{
 					aTargets: ["name"],
 					sDefaultContent: "",					
 					sType: "string",
-					sWidth: "350px",
+					sWidth: "250px",
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
 							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
-							return display += "<p>" + data + "</p>";
+							return display += "<p><a href='http://www.ebay.com/itm/" + full.itemId
+							    + "' data-item-id='" + full.itemId + "'>" + data + "</a></p>";
 						}
 						
 						return data;
 					}					
 				},
 				{
-					aTargets: ["inventory"],
-					sType: "numeric",
+					aTargets: ["target-volume"],
+					sType: "date",
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -135,8 +150,7 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["price", "activity-price"],
-					sType: "numeric",
+					aTargets: ["target-price", "compensate", "target-sales"],
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
@@ -151,9 +165,24 @@ var BizReport = BizReport || {};
 					aTargets: ["state"],
 					sClass: "text-center",
 					sDefaultContent: "",
+					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							return locale.getText('listing.state.' + states[data]);
+						}
+						
+						if (type == "sort") {
+							switch (data) {
+							case 1: // applied
+							case 3: // pass
+							case 6: // pretrial pass
+								return 1;
+							case 2: // not applied
+							case 4: // not sumitted
+							case 7: // pretiral fail
+								return 0;
+							default: return -1;
+							}
 						}
 
 						return data;
@@ -162,7 +191,7 @@ var BizReport = BizReport || {};
 			}
 		};
 	
-	$.extend(DealsListingTable.prototype, {
+	$.extend(HotsellListingTable.prototype, {
 		init: function(config) {
 			var that = this;
 
@@ -207,7 +236,7 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
-			}, this.dataTable);		
+			}, this.dataTable);	
 			
 			this.checkAllBox.click(function(){
 				if (!oDataTable) return;
@@ -283,5 +312,5 @@ var BizReport = BizReport || {};
 		}
 	});
 	
-	namespace.DealsListingTable = DealsListingTable;
+	namespace.HotsellListingTable = HotsellListingTable;
 })(BizReport = BizReport || {});

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="dataTable-container">
-	<table id="listing-table" class="dataTable">
+	<table id="hotsell-listing-table" class="dataTable">
 		<thead>
 			<tr>
 				<th class="itemId"><input type="checkbox" class="check-all" /></th>
@@ -12,6 +12,8 @@
 				<th class="target-volume">目标销量</th>
 				<th class="target-sales">目标销售额</th>
 				<th class="compensate">最大补偿幅度</th>
+				<th class="state">状态</th>
+				<th class="currency"></th>
 			</tr>
 		</thead>
 		<tbody>

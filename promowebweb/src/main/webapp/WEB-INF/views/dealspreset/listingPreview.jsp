@@ -63,7 +63,7 @@
 				<h2>已选择的刊登预览</h2>
 				
 				<div class="mt20">
-					<jsp:include page="../table/listingPreview.jsp"></jsp:include>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
 				<div class="mt20 page-bottom-actions">

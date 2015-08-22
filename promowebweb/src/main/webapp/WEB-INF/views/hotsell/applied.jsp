@@ -46,7 +46,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingSelectTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['HotsellListingTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['hotsell_applied.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -91,8 +91,8 @@
 				<jsp:include page="activity.jsp"></jsp:include>
 		
 				<div class="mt20 my-listing">
-					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/listingStates.jsp"></jsp:include>
+					<h3>我提交的刊登</h3>
+					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
 				</div>	
 				
 				<c:if test="${not expired }">
@@ -119,7 +119,6 @@
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true }
-		
 	};
 </script>
 

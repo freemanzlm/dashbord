@@ -1,17 +1,20 @@
 $(function(){
-	var HotsellApplicableTable = BizReport.HotsellApplicableTable;
+	var HotsellListingTable = BizReport.HotsellListingTable;
 	
 	var listingCountJ = $(".my-listing h3 small span");
 	
-	var listingTable = new HotsellApplicableTable();
+	var listingTable = new HotsellListingTable();
 	listingTable.subscribe({
+		initialized: function() {
+			listingTable.hideStateColumn();
+		},
 		selectChange: function(){
 			listingCountJ.text(this.selectedItems.length);
 		}
 	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "listing-table"
+			tableId: "hotsell-listing-table"
 		}});
 	listingTable.update();
 	

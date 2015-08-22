@@ -3,7 +3,7 @@
 		{
 			"name": "campaign 1",
 			"itemId": "1",
-			"price": 0,
+			"price": 3234,
 			"currency": "USD",
 			"volume": "150",
 			"sales": "4000",
@@ -13,8 +13,8 @@
 		{
 			"name": "campaign 2",
 			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
+			"price": 43,
+			"currency": "GBP",
 			"volume": "150",
 			"sales": "4000",
 			"comp": "38",
@@ -23,8 +23,8 @@
 		{
 			"name": "campaign 3",
 			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
+			"price": 435,
+			"currency": "EUR",
 			"volume": "150",
 			"sales": "4000",
 			"comp": "38",
@@ -33,7 +33,17 @@
 		{
 			"name": "campaign 4",
 			"itemId": "1",
-			"price": 0,
+			"price": 6547,
+			"currency": "EUR",
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 2
+		},
+		{
+			"name": "campaign 4",
+			"itemId": "1",
+			"price": 3456,
 			"currency": "USD",
 			"volume": "150",
 			"sales": "4000",
@@ -43,7 +53,17 @@
 		{
 			"name": "campaign 4",
 			"itemId": "1",
-			"price": 0,
+			"price": 456,
+			"currency": "GBP",
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 2
+		},
+		{
+			"name": "campaign 4",
+			"itemId": "1",
+			"price": 725,
 			"currency": "USD",
 			"volume": "150",
 			"sales": "4000",
@@ -53,7 +73,57 @@
 		{
 			"name": "campaign 4",
 			"itemId": "1",
-			"price": 0,
+			"price": 8765,
+			"currency": "AUD",
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 2
+		},
+		{
+			"name": "campaign 4",
+			"itemId": "1",
+			"price": 34,
+			"currency": "RMB",
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 2
+		},
+		{
+			"name": "campaign 4",
+			"itemId": "1",
+			"price": 235,
+			"currency": "RMB",
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 2
+		},
+		{
+			"name": "campaign 4",
+			"itemId": "1",
+			"price": 435,
+			"currency": "AUD",
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 2
+		},
+		{
+			"name": "campaign 4",
+			"itemId": "1",
+			"price": 67,
+			"currency": "EUR",
+			"volume": "150",
+			"sales": "4000",
+			"comp": "38",
+			"state": 2
+		},
+		{
+			"name": "campaign 4",
+			"itemId": "1",
+			"price": 8765,
 			"currency": "USD",
 			"volume": "150",
 			"sales": "4000",
@@ -63,77 +133,7 @@
 		{
 			"name": "campaign 4",
 			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
-			"volume": "150",
-			"sales": "4000",
-			"comp": "38",
-			"state": 2
-		},
-		{
-			"name": "campaign 4",
-			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
-			"volume": "150",
-			"sales": "4000",
-			"comp": "38",
-			"state": 2
-		},
-		{
-			"name": "campaign 4",
-			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
-			"volume": "150",
-			"sales": "4000",
-			"comp": "38",
-			"state": 2
-		},
-		{
-			"name": "campaign 4",
-			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
-			"volume": "150",
-			"sales": "4000",
-			"comp": "38",
-			"state": 2
-		},
-		{
-			"name": "campaign 4",
-			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
-			"volume": "150",
-			"sales": "4000",
-			"comp": "38",
-			"state": 2
-		},
-		{
-			"name": "campaign 4",
-			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
-			"volume": "150",
-			"sales": "4000",
-			"comp": "38",
-			"state": 2
-		},
-		{
-			"name": "campaign 4",
-			"itemId": "1",
-			"price": 0,
-			"currency": "USD",
-			"volume": "150",
-			"sales": "4000",
-			"comp": "38",
-			"state": 2
-		},
-		{
-			"name": "campaign 4",
-			"itemId": "1",
-			"price": 0,
+			"price": 5654,
 			"currency": "USD",
 			"volume": "150",
 			"sales": "4000",

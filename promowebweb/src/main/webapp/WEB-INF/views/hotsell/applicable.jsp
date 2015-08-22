@@ -46,7 +46,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['HotsellApplicableTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['HotsellListingTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['hotsell_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -75,7 +75,7 @@
 				
 				<div class="mt20 my-listing">
 					<h3>选择我的刊登报名 <small>（已选 <span>0</span> 项）</small></h3>
-					<jsp:include page="../table/listing.jsp"></jsp:include>
+					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
 				</div>
 				
 				<div class="mt20" style="text-align: center;">

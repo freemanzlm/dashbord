@@ -49,28 +49,26 @@ BizReport.locale = {
 			'other': '其他活动'
 		},
 		'state': {
-			'appliable': '可报名',
-			'comfirmApplication': '确认报名刊登',
-			'submitted': '已提交报名',
+			'applicable': '可报名',
+			'applied': '已提交报名',
 			'reviewing': '报名审核中',
+			'applicationConfirm': '确认报名刊登',
 			'ongoing': '活动进行中',
-			'browseOnly': '仅供浏览',
-			'rewardConfirming': '奖励确认中',
+			'rewardComputing': '奖励确认中',
 			'rewardAppliable': '可申领奖励',
-			'claimReward': '领取奖励',
-			'reclaimReward': '重新申领奖励',
-			'toFillAgreement': '填写协议',
-			'toUploadAgreement': '上传协议',
-			'rewardReviewing': '申领奖励审核中',
-			'rewardSuccess': '奖励领取成功',
-			'end': '结束的活动'
+			'complete': '活动完成'
 		}
 	},
 	'listing': {
 		'state': {
+			'applicable': '可报名',
 			'applied': '已报名',
-			'reviewing': '正在审核',
-			'reviewed': '通过预审'
+			'nonapplied': '未报名',
+			'pass': '通过审核',
+			'notSubmitted': '未提交',
+			'pretrial': '待审核',
+			'pretrialPass': '通过预审',
+			'pretrialFail': '未通过'
 		}
 	}
 };

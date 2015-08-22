@@ -47,8 +47,8 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingSubmittedTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['listing_preview.js']}" target="page-js"></res:useJs>	
+	<res:useJs value="${res.js.local.js.table['HotsellListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['hotsell_preview.js']}" target="page-js"></res:useJs>	
 </head>
 
 <body>
@@ -63,7 +63,7 @@
 				<h2>已选择的刊登预览</h2>
 				
 				<div class="mt20">
-					<jsp:include page="../table/listingPreview.jsp"></jsp:include>
+					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
 				</div>
 				
 				<div class="mt20 page-bottom-actions">

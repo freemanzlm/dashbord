@@ -15,9 +15,11 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['deals', 'dealsPreset', 'storm', 'other'];
-	var states = ['appliable','comfirmApplication',	'submitted','reviewing','ongoing','browseOnly',	'rewardConfirming',
-				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardReviewing',
-				'rewardSuccess','end'];
+	var hotsellStates = ['applicable', 'applied', 'ongoing', 'rewardComputing', 'rewardAppliable', 'compelete'];
+	var dealsStates = ['applicable', 'submitted', 'reviewing', 'applyconfirm', 'ongoing', 'rewardComputing', 'rewardAppliable', 'complete'];
+//	var states = ['appliable','comfirmApplication',	'submitted','reviewing','ongoing','browseOnly',	'rewardConfirming',
+//				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardReviewing',
+//				'rewardSuccess','end'];
 	
 	function getLink(type, state) {
 		switch (type) {
@@ -44,11 +46,11 @@ var BizReport = BizReport || {};
 		case 2:
 			switch(state) {
 			case 0: return "hotsell/applicable";
-			case 1: return "hotsell/applicationConfirm";
-			case 2: return "hotsell/applied";
-			case 3: return "hotsell/ongoing";
-			case 4: return "hotsell/applied";
-			case 5: return "hotsell/applied";
+			case 1: return "hotsell/applied";
+			case 2: return "hotsell/state";
+			case 3: return "hotsell/state";
+			case 4: return "hotsell/state";
+			case 5: return "hotsell/state";
 			}
 			break;
 		case 3:
@@ -177,13 +179,23 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							switch (data) {
-							case 0: 
-								return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+							switch (full.type) {
+							case 0:
+								if (data == 0) {
+									return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + dealsStates[data]) + "</a>";
+								} else {
+									return locale.getText('promo.state.' + dealsStates[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+								}
+								break;
 							case 1: 
-								return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+							case 2:
+								if (data == 0) {
+									return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + hotsellStates[data]) + "</a>";
+								} else {
+									return locale.getText('promo.state.' + hotsellStates[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+								}
 							default:
-								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";
+								return locale.getText('promo.state.' + hotsellSteps[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
 							}
 							
 						}

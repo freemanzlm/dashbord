@@ -1,8 +1,8 @@
 $(function(){
 	
-	var ListingSelectTable = BizReport.ListingSelectTable;
+	var HotsellListingTable = BizReport.HotsellListingTable;
 	
-	var listingTable = new ListingSelectTable();
+	var listingTable = new HotsellListingTable();
 	listingTable.subscribe({
 		initialized: function() {
 			// if it has passed the apply deadline date, user can't select listings and submit again.
@@ -12,7 +12,7 @@ $(function(){
 	
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "listing-states-table"
+			tableId: "hotsell-listing-table"
 		}});
 	listingTable.update();
 	
