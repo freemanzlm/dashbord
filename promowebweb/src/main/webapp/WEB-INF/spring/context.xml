@@ -19,21 +19,28 @@
 	<aop:aspectj-autoproxy />
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
+
 	<mvc:annotation-driven>
 			<mvc:message-converters>
-			  <!--  Support AJAX processing with progressive rendering. Overrides HttpOutputMessage with RaptorResponseWriter -->
-			<beans:bean class="com.ebay.raptor.kernel.filter.RaptorJacksonHttpMessageConverter"/>					
+            <!--  Support AJAX processing with progressive rendering. Overrides HttpOutputMessage with RaptorResponseWriter -->
+			<beans:bean class="com.ebay.raptor.kernel.filter.RaptorJacksonHttpMessageConverter"/>
 			</mvc:message-converters>
 	</mvc:annotation-driven>
-	
-	<context:component-scan base-package="com.ebay.raptor.config" />
+
+    <context:component-scan base-package="com.ebay.raptor.config" />
+	<context:component-scan base-package="com.ebay.raptor.promotion" />
+	<context:component-scan base-package="com.ebay.raptor.promotion.controller" />
 	<context:component-scan base-package="com.ebay.raptor.samples.controller" />
-	<context:component-scan base-package="com.ebay.raptor.samples.resource" />	 	
+	<context:component-scan base-package="com.ebay.raptor.promotion.resource" />
 
 	<!-- Handles HTTP GET requests by efficiently serving up static resources 
 	     in the corresponding directory -->
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/css/**" location="/resources/css/" />
+	
+	<mvc:interceptors>
+       <beans:bean class="com.ebay.raptor.promotion.interceptor.AuthInterceptor"></beans:bean>
+    </mvc:interceptors>
  
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
