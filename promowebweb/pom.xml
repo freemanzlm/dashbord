@@ -18,14 +18,6 @@
 
 	<dependencies>
 		<!-- Spring Dependencies -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-		</dependency>
 		
 		<!-- Ebay Dependencies -->
 		<dependency>
@@ -58,10 +50,6 @@
 		<!-- Raptor & Resource Dependencies -->
 		<dependency>
 			<groupId>com.ebay.raptor.core</groupId>
-			<artifactId>RaptorKernel</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.ebay.raptor.core</groupId>
 			<artifactId>ConfigWeb</artifactId>
 		</dependency>
 		<dependency>
@@ -82,14 +70,19 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
-		<dependency>
-        		<groupId>javax.servlet</groupId>
-        		<artifactId>javax.servlet-api</artifactId>
-      		</dependency>
       	<dependency>
       		<groupId>com.ebay.cbt</groupId>
       		<artifactId>salesforceService</artifactId>
       		<version>0.0.1-SNAPSHOT</version>
+      	</dependency>
+      	<dependency>
+      		<groupId>com.ebay.app.raptor</groupId>
+      		<artifactId>PromoCommon</artifactId>
+      		<version>0.0.1-SNAPSHOT</version>
+      	</dependency>
+      	<dependency>
+      		<groupId>javax.servlet</groupId>
+      		<artifactId>javax.servlet-api</artifactId>
       	</dependency>
 	</dependencies>
 
