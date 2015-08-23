@@ -47,20 +47,11 @@ public class PromoClient {
 			logger.log(LogLevel.ERROR, "Failed to init the Promo Client.", e);
 		}
 	}
-	
-<<<<<<< Updated upstream
-	public static GingerClient getClient(){
-		if(null == CLIENT || (null != CLIENT && GingerClientState.DOWN == CLIENT.getState())){
-			synchronized(PromoClient.class){
-				init();
-			}
-		}
-=======
+
 	public synchronized static GingerClient getClient(){
-	    if(null == CLIENT){
-            init();
-        }
->>>>>>> Stashed changes
+		if(null == CLIENT || (null != CLIENT && GingerClientState.DOWN == CLIENT.getState())){
+			init();
+		}
 		return CLIENT;
 	}
 	
