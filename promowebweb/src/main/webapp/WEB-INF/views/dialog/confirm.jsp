@@ -5,7 +5,7 @@
 		<h2>请确认</h2>
 	</div>
 	<div class="dialog-pane">
-		<div class="alert-content"></div>
+		<div class="dialog-content"></div>
 
 		<div class="btns clz">
 			<button class="btn btn-s btn-prim confirm" style="margin-right: 10px;">确认</button>

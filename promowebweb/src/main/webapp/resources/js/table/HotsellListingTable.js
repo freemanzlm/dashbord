@@ -117,7 +117,7 @@ var BizReport = BizReport || {};
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
-							checked: oRow.checked
+							checked: oRow.checked || oRow.state == 1
 						}));
 					}
 				},
@@ -216,6 +216,11 @@ var BizReport = BizReport || {};
 				initialized: function() {
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
+					var aRows = oDataTable.data();
+					
+					that.selectedItems = aRows.filter(function(oRow){
+						return oRow.state == 1;
+					});
 					that.publish("initialized");
 				}, 
 				ajaxbegin: function() {

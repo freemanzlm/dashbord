@@ -11,7 +11,7 @@
 }
 
 .dialog .close {
-	background: url("../img/icon/close.png") no-repeat scroll;
+	background: url("${res.img.local.img.icon.close_png}") no-repeat scroll;
 	height: 12px;
 	position: absolute;
 	right: 10px;

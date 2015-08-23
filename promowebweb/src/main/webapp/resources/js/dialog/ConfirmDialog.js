@@ -33,6 +33,6 @@
 		}
 
 	});
-
-	namespace.confirmDialog = new ConfirmDialog();
+	
+	namespace.ConfirmDialog = ConfirmDialog;
 })(BizReport = BizReport || {});
