@@ -4,7 +4,7 @@
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <c:set var="categoryId" value="6000" />
-
+<c:set var="rewarding" value="true" />
 <r:includeJquery jsSlot="body" />
 <r:client />
 
@@ -68,10 +68,12 @@
 						<div class="step current-step"><span>已提交报名</span></div>
 						<div class="step"><span>报名预审中</span></div>
 						<div class="step"><span>确认报名刊登</span></div>
-						<div class="step"><span>活动进行中</span></div>
-						<div class="step"><span>奖励确认中</span></div>
-						<div class="step"><span>可申领奖励</span></div>
-						<div class="step last"><span>活动完成</span></div>
+						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
+						<c:if test="${ rewarding }">
+							<div class="step"><span>奖励确认中</span></div>
+							<div class="step"><span>可申领奖励</span></div>
+							<div class="step last"><span>活动完成</span></div>
+						</c:if>
 					</div>
 				</div>  <!-- steps end -->
 				

@@ -14,7 +14,8 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var promos = ['deals', 'dealsPreset', 'storm', 'other'];
+	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
+//	var states = ['applicable', 'submitted', 'applyconfirm', 'applied', 'ongoing'];
 	var states = ['appliable','comfirmApplication',	'submitted','reviewing','ongoing','browseOnly',	'rewardConfirming',
 				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardReviewing',
 				'rewardSuccess','end'];
