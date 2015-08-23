@@ -92,9 +92,9 @@ public class PromotionController {
             HttpServletResponse response) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
 
-        UserData userData = CookieUtil.getUserDataFromCookie(request);
-
-        addPageLevelData(mav, request, userData);
+//        UserData userData = CookieUtil.getUserDataFromCookie(request);
+//
+//        addPageLevelData(mav, request, userData);
 
         mav.setViewName("index");
         return mav;
