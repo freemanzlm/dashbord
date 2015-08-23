@@ -1,18 +1,26 @@
 package com.ebay.raptor.promotion.pojo;
 
+import com.ebay.app.raptor.promocommon.util.CommonConstant;
+
 public class UserData {
     public UserData(){}
-    
-    public UserData(long userId, String userName, boolean admin) {
+
+    public UserData(Long userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
+        this.admin = false;
+    }
+
+    public UserData(Long userId, String userName, Boolean admin) {
         this.userId = userId;
         this.userName = userName;
         this.admin = admin;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
     public String getUserName() {
@@ -21,16 +29,14 @@ public class UserData {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-    public boolean isAdmin() {
+    public Boolean getAdmin() {
         return admin;
     }
-
-    public void setAdmin(boolean admin) {
+    public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
 
-    private long userId;
+	private Long userId;
     private String userName;
-    private boolean admin;
+    private Boolean admin;
 }

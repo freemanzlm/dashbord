@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +21,9 @@ public class LoginService {
 
     @Autowired PromoDataService promoDataService;
 
-    private static List <String> validIps;
-
-    @PostConstruct
-    public void init () {
-        validIps = loadValidIps();
-    }
-
     public boolean isLoginIPValid (String ip) {
         // load for every check
-        validIps = loadValidIps();
+        List <String> validIps = loadValidIps();
 
         for (String validIp : validIps) {
             if (validIp.equalsIgnoreCase(ip)) {

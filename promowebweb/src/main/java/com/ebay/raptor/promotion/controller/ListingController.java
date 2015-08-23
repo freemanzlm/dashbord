@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ebay.raptor.kernel.context.IRaptorContext;
-import com.ebay.raptor.promotion.pojo.Listing;
-import com.ebay.raptor.promotion.pojo.Sku;
+import com.ebay.raptor.promotion.pojo.business.Listing;
+import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.service.ListingService;
 import com.ebay.raptor.promotion.service.ResourceProvider;

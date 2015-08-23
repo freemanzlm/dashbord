@@ -48,12 +48,19 @@ public class PromoClient {
 		}
 	}
 	
+<<<<<<< Updated upstream
 	public static GingerClient getClient(){
 		if(null == CLIENT || (null != CLIENT && GingerClientState.DOWN == CLIENT.getState())){
 			synchronized(PromoClient.class){
 				init();
 			}
 		}
+=======
+	public synchronized static GingerClient getClient(){
+	    if(null == CLIENT){
+            init();
+        }
+>>>>>>> Stashed changes
 		return CLIENT;
 	}
 	

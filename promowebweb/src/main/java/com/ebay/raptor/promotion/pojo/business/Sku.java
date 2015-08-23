@@ -1,4 +1,4 @@
-package com.ebay.raptor.promotion.pojo;
+package com.ebay.raptor.promotion.pojo.business;
 
 public class Sku {
 

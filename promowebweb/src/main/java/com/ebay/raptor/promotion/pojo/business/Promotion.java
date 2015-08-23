@@ -1,8 +1,10 @@
-package com.ebay.raptor.promotion.pojo;
+package com.ebay.raptor.promotion.pojo.business;
 
 import java.util.Date;
 
 public class Promotion {
+
+	private String id;
 
 	private String name;
 
@@ -21,6 +23,14 @@ public class Promotion {
 	private Float reward;
 
 	private Integer state;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -93,5 +103,4 @@ public class Promotion {
 	public void setState(Integer state) {
 		this.state = state;
 	}
-
 }
