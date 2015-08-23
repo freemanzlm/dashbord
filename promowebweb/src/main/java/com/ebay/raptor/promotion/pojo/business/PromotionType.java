@@ -1,7 +1,7 @@
 package com.ebay.raptor.promotion.pojo.business;
 
 public enum PromotionType {
-    Default(""), HotSell(""), DealsPreset(""), DealsUpload(""), Other("");
+    Default(""), HotSell("HotSell"), DealsPreset("DealsPreset"), DealsUpload("DealsUpload"), Other("Other");
 
     PromotionType (String shortName){
         this.setShortName(shortName);

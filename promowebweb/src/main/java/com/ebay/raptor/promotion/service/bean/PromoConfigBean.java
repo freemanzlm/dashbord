@@ -17,7 +17,7 @@ public class PromoConfigBean extends BaseConfigBean implements
 	
 	private static final long serialVersionUID = -7520474759891279308L;
 
-	private static final String CATEGORY_ID = "com.ebay.raptor.promotion.service.bean.SaDConfigBean";
+	private static final String CATEGORY_ID = "com.ebay.raptor.promotion.service.bean.PromoConfigBean";
 
 	private static final String GROUP_ID = "com.ebay.promotion.service";
 
