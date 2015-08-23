@@ -17,7 +17,7 @@ var BizReport = BizReport || {};
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
 //	var hotsellStates = ['applicable', 'applied', 'ongoing', 'rewardComputing', 'rewardAppliable', 'compelete'];
 //	var dealsStates = ['applicable', 'submitted', 'applyconfirm', 'applied', 'ongoing', 'rewardComputing', 'rewardAppliable', 'complete'];
-	var states = ['applicable', 'submitted', 'applyconfirm', 'applied', 'ongoing'];
+	var states = ['applicable', 'submitted', 'applyConfirm', 'applied', 'ongoing'];
 	
 	function getLink(type, state) {
 		switch (type) {

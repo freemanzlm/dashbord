@@ -43,6 +43,7 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
@@ -98,6 +99,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/confirm.jsp" %>
 <%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />

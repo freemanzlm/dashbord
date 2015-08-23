@@ -60,7 +60,8 @@ BizReport.locale = {
 			'end': '活动已结束'
 		},
 		'hotsell': {
-			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，您确认吗？'
+			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，您确认吗？',
+			'applyCondition': '申请参与活动前，请至少选择一条刊登。'
 		}
 	},
 	'listing': {

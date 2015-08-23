@@ -117,13 +117,8 @@
 				<div class="header">
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
-							<option value="">所有进行中的活动</option>
-							<option value="7">可申领奖励的活动</option>
-							<option value="8">可领取奖励的活动</option>
-							<option value="9">可重新申领奖励的活动</option>
-							<option value="10">待填写协议的活动</option>
-							<option value="11">待上传协议的活动</option>
-							<option value="12">奖励正在审核的活动</option>
+							<option value="">所有已结束的活动</option>							
+							<option value="12">领取奖励成功的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>

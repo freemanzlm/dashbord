@@ -1,5 +1,8 @@
 $(function(){
 	var HotsellListingTable = BizReport.HotsellListingTable;
+	var confirmDialog = new BizReport.ConfirmDialog();
+	var alertDialog = BizReport.alertDialog;
+	var locale = BizReport.locale;
 	
 	var listingCountJ = $(".my-listing h3 small span");
 	
@@ -27,6 +30,31 @@ $(function(){
 		}
 	});
 	
+	var form = $("form").submit(function(){
+		// if user doesn't select a item, form can't be submitted.
+		var listing = listingTable.selectedItems;
+		if (listing && listing.length > 0) {
+			return true;
+		}
+		
+		return false;
+	});
+	
+	$(formBtn).click(function(event){
+		var listing = listingTable.selectedItems;
+		if (listing && listing.length > 0) {
+			// collect item ids into form hidden input and separated by comma.
+			form.find("input[name=listings]").val(listing.map(function(item){
+				return item.itemId;
+			}).join(","));
+			
+			form.submit();
+		} else {
+			event.preventDefault();
+			alertDialog.alert(locale.getText('promo.hotsell.applyCondition'));
+		}
+	});
+	
 	var termsDialog = BizReport.termsDialog;
 	termsDialog.subscribe({
 		"scrollEnd": function() {
@@ -35,22 +63,7 @@ $(function(){
 	});
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
-	});
-	
-	var form = $("form").submit(function(){
-		// if user doesn't select a item, form can't be submitted.
-		var listing = listingTable.selectedItems;
-		if (listing && listing.length > 0) {
-			// collect item ids into form hidden input and separated by comma.
-			form.find("input[name=listings]").val(listing.map(function(item){
-				return item.itemId;
-			}).join(","));
-			
-			return true;
-		}		
-		
-		return false;
-	});
+	});	
 	
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();
