@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.service;
 
 import org.ebayopensource.ginger.client.GingerClient;
+import org.ebayopensource.ginger.client.GingerClientState;
 import org.ebayopensource.ginger.client.internal.GingerClientFactory.ClientCreationException;
 import org.ebayopensource.ginger.client.internal.GingerClientManager;
 import org.ebayopensource.ginger.client.internal.GingerClientManager.ClientAlreadyRegisteredException;
@@ -23,11 +24,11 @@ public class PromoClient {
 	private static String getPoolEnv(){
 		String pool = Site.getPooltype().getName();
 		String[][] envs = new String[][]{
-			{"DEVELOPER", "feature"},
-			{"FEATURE", "feature"},
-			{"SANDBOX", "feature"},
-			{"STAGING", "staging"},
-			{"PRODUCTION", "production"},
+			{"dev", "dev"},
+			{"feature", "feature"},
+			{"sandbox", "feature"},
+			{"staging", "feature"},
+			{"production", "production"},
 		};
 		for(String[] env : envs){
 			if(env[0].equalsIgnoreCase(pool)){
@@ -48,7 +49,7 @@ public class PromoClient {
 	}
 	
 	public static GingerClient getClient(){
-		if(null == CLIENT){
+		if(null == CLIENT || (null != CLIENT && GingerClientState.DOWN == CLIENT.getState())){
 			synchronized(PromoClient.class){
 				init();
 			}
