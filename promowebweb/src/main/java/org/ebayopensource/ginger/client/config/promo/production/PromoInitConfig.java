@@ -8,7 +8,7 @@ public class PromoInitConfig extends BasePromoInitConfig{
 	@Override
 	public String getEndPoint() {
 //		return "http://phx5qa01c-ee86.stratus.phx.qa.ebay.com:8080/promocamp/sampleResource/v1";
-		return "http://localhost:8080/promocamp/sampleResource/v1";
+		return "http://www.promocamp.stratus.ebay.com/promocamp/sampleResource/v1";
 	}
 
 }
