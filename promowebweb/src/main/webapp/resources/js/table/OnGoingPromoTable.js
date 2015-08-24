@@ -51,7 +51,7 @@ var BizReport = BizReport || {};
 			case 5: return "hotsell/state";
 			}
 			break;
-		case 3:
+		default:
 			switch(state) {
 			case 0: return "other/applicable";
 			case 1: return "other/applicationConfirm";

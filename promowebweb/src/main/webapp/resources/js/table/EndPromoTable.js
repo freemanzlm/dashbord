@@ -20,17 +20,18 @@ var BizReport = BizReport || {};
 					'rewardSuccess','complete'];
 	
 	function getLink(type, state) {
+		type = parseInt(type), state = parseInt(state);
 		switch (type) {
 		case 0:
 			switch(state) {
 			case 5: return "deals/state";
-			default: return 'hotsell/end';
+			default: return 'deals/end';
 			}
 			break;
 		case 1:
 			switch(state) {
 			case 5: return "dealsPreset/state";
-			default: return "hotsell/end";
+			default: return "dealsPreset/end";
 			}
 			break;
 		case 2:
@@ -39,10 +40,10 @@ var BizReport = BizReport || {};
 			default: return "hotsell/end";
 			}
 			break;
-		case 3:
+		default:
 			switch(state) {
 			case 5: return "other/state";
-			default: return "hotsell/end";
+			default: return "other/end";
 			}
 			break;
 		}

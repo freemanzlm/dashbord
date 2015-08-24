@@ -7,7 +7,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "38",
-			"state": 8
+			"state": 12
 		},
 		{
 			"name": "campaign 2",
@@ -16,7 +16,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "0.26",
-			"state": 8
+			"state": 12
 		},
 		{
 			"name": "campaign 3",
@@ -25,7 +25,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "24",
-			"state": 8
+			"state": 12
 		},
 		{
 			"name": "campaign 4",
@@ -34,7 +34,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"state": 8
+			"state": 12
 		},
 		{
 			"name": "campaign 4",
@@ -43,7 +43,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"state": 8
+			"state": 12
 		},
 		{
 			"name": "campaign 4",
@@ -52,7 +52,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"state": 8
+			"state": 12
 		}
 	],
 	"status": true

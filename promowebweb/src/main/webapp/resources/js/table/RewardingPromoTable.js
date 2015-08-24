@@ -20,6 +20,53 @@ var BizReport = BizReport || {};
 				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardVerifying',
 				'rewardSuccess','complete'];
 	
+	function getLink(type, state) {
+		switch (type) {
+		case 0:
+			switch(state) {
+			case 0: return "deals/applicable";
+			case 1: return "deals/listing";
+			case 2: return "deals/applied";
+			case 3: return "deals/ongoing";
+			case 4: return "deals/applied";
+			case 5: return "deals/applied";
+			}
+			break;
+		case 1:
+			switch(state) {
+			case 0: return "dealsPreset/applicable";
+			case 1: return "dealsPreset/applicationConfirm";
+			case 2: return "dealsPreset/applied";
+			case 3: return "dealsPreset/ongoing";
+			case 4: return "dealsPreset/applied";
+			case 5: return "dealsPreset/applied";
+			}
+			break;
+		case 2:
+			switch(state) {
+			case 0: return "hotsell/applicable";
+			case 1: return "hotsell/applied";
+			case 2: return "hotsell/state";
+			case 3: return "hotsell/state";
+			case 4: return "hotsell/state";
+			case 5: return "hotsell/state";
+			}
+			break;
+		default:
+			switch(state) {
+			case 0: return "other/state";
+			case 1: return "other/state";
+			case 2: return "other/state";
+			case 3: return "other/end";
+			case 4: return "other/end";
+			case 5: return "other/end";
+			}
+			break;
+		}
+		
+		return "";
+	}
+	
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],

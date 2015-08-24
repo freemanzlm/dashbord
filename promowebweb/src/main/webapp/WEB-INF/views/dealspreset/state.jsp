@@ -16,10 +16,10 @@
 		<c:when test="${state eq 'ongoing' }">
 			<title>Deals招募 - 活动进行中</title>						
 		</c:when>
-		<c:when test="${state eq 'rewarding' }">
+		<c:when test="${state eq 'rewardVerifying' }">
 			<title>Deals招募 - 奖励确认中</title>
 		</c:when>
-		<c:when test="${state eq 'claimable' }">
+		<c:when test="${state eq 'rewarding' }">
 			<title>Deals招募 - 可申领奖励</title>
 		</c:when>
 		<c:when test="${state eq 'complete' }">
@@ -83,8 +83,8 @@
 						<c:choose>
 							<c:when test="${ rewarding }">
 								<div class="step ${ state eq 'ongoing' ? 'current-step' : 'done' }"><span>活动进行中</span></div>
-								<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'claimable' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
-								<div class="step ${ state eq 'claimable' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>可申领奖励</span></div>
+								<div class="step ${ state eq 'rewardVerifying' ? 'current-step' : (state eq 'rewarding' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
+								<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>可申领奖励</span></div>
 								<div class="step ${ state eq 'complete' ? 'current-step' : '' } last"><span>活动完成</span></div>
 							</c:when>
 							<c:otherwise>
@@ -107,7 +107,7 @@
 								<a href="../index" class="btn">返回活动列表</a>
 							</menu>							
 						</c:when>
-						<c:when test="${state eq 'rewarding' }">
+						<c:when test="${state eq 'rewardVerifying' }">
 							<h3>恭喜您已完成活动！</h3>
 							<p class="desc">
 								奖励结果统计中，请耐心等待！
@@ -116,13 +116,20 @@
 								<a href="../index" class="btn">返回活动列表</a>
 							</menu>
 						</c:when>
-						<c:when test="${state eq 'claimable' }">
+						<c:when test="${state eq 'rewarding' or state eq 'agreement' }">
 							<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
 							<p class="desc">
 								请在2015年8月8日前点击进入领奖流程完成申领。
 							</p>
 							<menu>
-								<a href="../index" class="btn">填写奖励申请协议</a>
+								<c:choose>
+									<c:when test="${ state eq 'rewarding' }">
+										<a href="../index" class="btn">填写奖励申请协议</a>
+									</c:when>
+									<c:otherwise>
+										<a href="../index" class="btn">上传奖励申请协议</a>
+									</c:otherwise>
+								</c:choose>
 							</menu>
 						</c:when>
 						<c:when test="${state eq 'complete' }">
