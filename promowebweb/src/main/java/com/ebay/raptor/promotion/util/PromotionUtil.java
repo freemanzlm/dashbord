@@ -9,11 +9,11 @@ public class PromotionUtil {
 	static {
 		if (CommonUtil.isProduction()) {
 		    // TODO -
-		    _promoUrlPrefix = "";
-			_promoServicePrefix = "";
+		    _promoUrlPrefix = "http://somehost";
+			_promoServicePrefix = "http://somehost";
 		} else {
-		    _promoUrlPrefix = "";
-            _promoServicePrefix = "test";
+		    _promoUrlPrefix = "http://somehost";
+            _promoServicePrefix = "http://somehost";
 		}
 	}
 }
