@@ -19,7 +19,6 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.service.CSApiService;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
-import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.PromotionStatus;
@@ -99,17 +98,16 @@ public class PromotionController {
             @ModelAttribute RequestParameter param) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
 
-        UserData userData = CookieUtil.getUserDataFromCookie(request);
+//        UserData userData = CookieUtil.getUserDataFromCookie(request);
 
         // add page level data: userId, userName, admin
-        addPageLevelData(mav, userData, param);
+//        addPageLevelData(mav, userData, param);
 
         if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(param.getLang())) {
         	mav.setViewName("zh_HK/index");
         } else {
         	mav.setViewName("index"); // TODO - change to zh_CN/index
         }
-
         return mav;
     }
     
