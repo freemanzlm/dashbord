@@ -25,7 +25,7 @@ public class PromotionDataController {
 	PromotionService service;
 
 	@GET
-	@RequestMapping(ResourceProvider.PromotionRes.listing)
+	@RequestMapping(ResourceProvider.PromotionRes.listPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> handleRequest() {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();

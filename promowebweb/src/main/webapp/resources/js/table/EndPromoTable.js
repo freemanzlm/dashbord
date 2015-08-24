@@ -77,7 +77,7 @@ var BizReport = BizReport || {};
 					}
 				},
 //				'sScrollX': "100%",
-				sAjaxSource: "promotion/listing", //"js/data/end.json",
+				sAjaxSource: "promotion/listPromotions", //"js/data/end.json",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {

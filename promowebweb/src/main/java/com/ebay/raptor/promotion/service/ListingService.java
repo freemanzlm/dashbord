@@ -21,7 +21,7 @@ public class ListingService extends BaseService {
 	}
 	
 	public List<Listing> getListing(){
-		GingerClientResponse resp = httpGet(url(ResourceProvider.ListingRes.listing));
+		GingerClientResponse resp = httpGet(url(ResourceProvider.ListingRes.getApplicableListings));
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<ListDataServiceResponse<Listing>> type = new GenericType<ListDataServiceResponse<Listing>>(){};
 			ListDataServiceResponse<Listing> listing = resp.getEntity(type);
@@ -36,7 +36,7 @@ public class ListingService extends BaseService {
 	}
 	
 	public List<Sku> getSku(){
-		GingerClientResponse resp = httpGet(url(ResourceProvider.ListingRes.skus));
+		GingerClientResponse resp = httpGet(url(ResourceProvider.ListingRes.getSKUsByPromotionId));
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<ListDataServiceResponse<Sku>> type = new GenericType<ListDataServiceResponse<Sku>>(){};
 			ListDataServiceResponse<Sku> data = resp.getEntity(type);

@@ -26,7 +26,7 @@ public class ListingController {
 	ListingService service;
 
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.listing)
+	@RequestMapping(ResourceProvider.ListingRes.getApplicableListings)
 	@ResponseBody
 	public ListDataWebResponse<Listing> handleRequest() {
 		ListDataWebResponse<Listing> resp = new ListDataWebResponse<Listing>();
@@ -35,7 +35,7 @@ public class ListingController {
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.skus)
+	@RequestMapping(ResourceProvider.ListingRes.getSKUsByPromotionId)
 	@ResponseBody
 	public ListDataWebResponse<Sku> getSkuList() {
 		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();

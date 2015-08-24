@@ -10,7 +10,9 @@ public class ResourceProvider {
 
 	public interface PromotionRes {
 		String base = "promotion";
-		String listing = "/listing";
+
+		String listPromotions = "/listPromotions";
+		String getPromotionById = "/getPromotionById";
 	}
 	
 	public interface UserPromotionRes {
@@ -20,8 +22,14 @@ public class ResourceProvider {
 	
 	public interface ListingRes {
 		String base = "listing";
-		String listing = "/listing";
-		String skus = "/skus";
+		
+		String getApplicableListings = "/getApplicableListings";
+		String uploadPresetListings = "/uploadPresetListings";
+		String getAppliedListings = "/getAppliedListings";
+		String getApprovedListings = "/getApprovedListings";
+		String getSKUsByPromotionId = "/getSKUsByPromotionId";
+		String uploadDealsListings = "/uploadDealsListings";
+		String uploadApprovedDealsListings = "/uploadApprovedDealsListings";
 	}
 	
 	public interface Token{
