@@ -49,6 +49,13 @@ public class DealsPresetController {
 		return mav;
 	}
 	
+    @RequestMapping(value = "cancel", method = RequestMethod.GET)
+    public ModelAndView handleCancelRequest() {
+		ModelAndView mav = new ModelAndView("dealsPreset/cancel");
+		mav.addObject("state", "cancel");
+		return mav;
+	}
+	
 	@RequestMapping(value = "preview", method = RequestMethod.POST)
 	public ModelAndView handlePreviewRequest() {
 		ModelAndView mav = new ModelAndView("hotsell/listingPreview");

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value="other")
@@ -24,6 +25,13 @@ public class OtherController {
 		String helloRaptor = "Say hello to Raptor!";
 		model.put("greeting", helloRaptor);
 		return model;
+	}
+	
+    @RequestMapping(value = "cancel", method = RequestMethod.GET)
+    public ModelAndView handleCancelRequest() {
+		ModelAndView mav = new ModelAndView("other/cancel");
+		mav.addObject("state", "cancel");
+		return mav;
 	}
 	
 }

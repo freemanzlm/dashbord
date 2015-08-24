@@ -56,6 +56,8 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box">
+					<h3>活动已取消</h3>
+					<p class="desc">如有疑问请联系您的客户经理或客服，感谢您的参与！</p>
 					<menu>
 						<a href="../index" class="btn">返回活动列表</a>
 					</menu>					

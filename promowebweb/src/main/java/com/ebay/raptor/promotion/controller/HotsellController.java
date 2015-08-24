@@ -55,6 +55,13 @@ public class HotsellController {
 		mav.addObject("state", "end");
 		return mav;
 	}
+    
+    @RequestMapping(value = "cancel", method = RequestMethod.GET)
+    public ModelAndView handleCancelRequest() {
+		ModelAndView mav = new ModelAndView("hotsell/cancel");
+		mav.addObject("state", "cancel");
+		return mav;
+	}
 
     @RequestMapping(value = "preview", method = RequestMethod.POST)
     public ModelAndView handlePreviewRequest() {

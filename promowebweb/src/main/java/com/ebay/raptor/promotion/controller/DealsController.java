@@ -64,6 +64,13 @@ public class DealsController {
 		return mav;
 	}
 	
+    @RequestMapping(value = "cancel", method = RequestMethod.GET)
+    public ModelAndView handleCancelRequest() {
+		ModelAndView mav = new ModelAndView("deals/cancel");
+		mav.addObject("state", "cancel");
+		return mav;
+	}
+	
 	@RequestMapping(value = "submit", method = RequestMethod.POST)
 	public ModelAndView handleSubmitRequest() {
 		ModelAndView mav = new ModelAndView("deals/applied");
