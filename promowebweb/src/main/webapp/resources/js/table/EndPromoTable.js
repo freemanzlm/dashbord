@@ -15,9 +15,7 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
-	var states = ['applicable', 'quit', 'submitted', 'verifying','applyConfirm', 'applied', 'ongoing', 'rewardComputing',
-					'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardVerifying',
-					'rewardSuccess','complete'];
+	var states = ['applicable', 'verifying', 'approved', 'applied', 'applyExpired', 'ongoing', 'rewardCounting', 'rewarding', 'agreement', 'complete', 'claimFail', 'claimExpired', 'end'];
 	
 	function getLink(type, state) {
 		type = parseInt(type), state = parseInt(state);

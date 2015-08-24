@@ -55,10 +55,12 @@ BizReport.locale = {
 			'applied': '已提交报名',
 			'applyExpired': '未报名', // apply period expired
 			'ongoing': '活动进行中',
-			'rewardVerifying': '奖励确认中',
-			'rewarding': '可申领奖励',
+			'rewardCounting': '奖励确认中',
+			'rewarding': '申领奖励',
 			'agreement': '上传协议',
+			'rewardVerifying': '奖励审核中',
 			'complete': '活动完成',
+			'claimFail': '重新申领奖励',
 			'claimExpired': '申领已过期', // reward claim period expired
 			'end': '活动已结束'
 		},

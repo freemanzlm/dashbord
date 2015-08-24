@@ -15,21 +15,21 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
-//	var states = ['applicable', 'submitted', 'applyconfirm', 'applied', 'ongoing'];
-	var states = ['applicable', 'quit', 'submitted', 'verifying','applyConfirm', 'applied', 'ongoing', 'rewardComputing',
-				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardVerifying',
-				'rewardSuccess','complete'];
+	var states = ['applicable', 'verifying', 'approved', 'applied', 'applyExpired', 'ongoing', 'rewardCounting', 'rewarding', 'agreement', 'complete', 'claimFail', 'claimExpired', 'end'];
 	
 	function getLink(type, state) {
 		switch (type) {
-		case 0:
+		case 0: // deals
 			switch(state) {
 			case 0: return "deals/applicable";
 			case 1: return "deals/listing";
-			case 2: return "deals/applied";
-			case 3: return "deals/ongoing";
-			case 4: return "deals/applied";
-			case 5: return "deals/applied";
+			case 2: return "deals/listing";
+			case 3: return "deals/applied";
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // agreement
+			case 9: return "deals/state"; // complete
 			}
 			break;
 		case 1:
@@ -45,21 +45,21 @@ var BizReport = BizReport || {};
 		case 2:
 			switch(state) {
 			case 0: return "hotsell/applicable";
-			case 1: return "hotsell/applied";
-			case 2: return "hotsell/state";
-			case 3: return "hotsell/state";
-			case 4: return "hotsell/state";
-			case 5: return "hotsell/state";
+			case 3: return "hotsell/applied";
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // agreement
+			case 9: return "hotsell/state"; // complete
 			}
 			break;
 		default:
 			switch(state) {
-			case 0: return "other/state";
-			case 1: return "other/state";
-			case 2: return "other/state";
-			case 3: return "other/end";
-			case 4: return "other/end";
-			case 5: return "other/end";
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // agreement
+			case 9: return "other/state"; // complete
 			}
 			break;
 		}

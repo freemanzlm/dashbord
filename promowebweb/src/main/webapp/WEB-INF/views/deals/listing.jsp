@@ -77,7 +77,7 @@
 						<div class="step ${ state eq 'confirm' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
 						<div class="step"><span>活动进行中</span></div>
 						<div class="step"><span>奖励确认中</span></div>
-						<div class="step"><span>可申领奖励</span></div>
+						<div class="step"><span>申领奖励</span></div>
 						<div class="step last"><span>活动完成</span></div>
 					</div>
 				</div>  <!-- steps end -->

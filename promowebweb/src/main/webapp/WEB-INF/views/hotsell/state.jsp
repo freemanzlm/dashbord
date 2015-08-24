@@ -16,11 +16,11 @@
 		<c:when test="${state eq 'ongoing' }">
 			<title>Deals - 活动进行中</title>						
 		</c:when>
-		<c:when test="${state eq 'rewardVerifying' }">
+		<c:when test="${state eq 'rewardCounting' }">
 			<title>Deals - 奖励确认中</title>
 		</c:when>
 		<c:when test="${state eq 'rewarding' }">
-			<title>Deals - 可申领奖励</title>
+			<title>Deals - 申领奖励</title>
 		</c:when>
 		<c:when test="${state eq 'complete' }">
 			<title>Deals - 活动完成</title>
@@ -83,8 +83,8 @@
 						<c:choose>
 							<c:when test="${ rewarding }">
 								<div class="step ${ state eq 'ongoing' ? 'current-step' : 'done' }"><span>活动进行中</span></div>
-								<div class="step ${ state eq 'rewardVerifying' ? 'current-step' : (state eq 'rewarding' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
-								<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>可申领奖励</span></div>
+								<div class="step ${ state eq 'rewardCounting' ? 'current-step' : (state eq 'rewarding' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
+								<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>申领奖励</span></div>
 								<div class="step ${ state eq 'complete' ? 'current-step' : '' } last"><span>活动完成</span></div>
 							</c:when>
 							<c:otherwise>
@@ -107,7 +107,7 @@
 								<a href="../index" class="btn">返回活动列表</a>
 							</menu>							
 						</c:when>
-						<c:when test="${state eq 'rewardVerifying' }">
+						<c:when test="${state eq 'rewardCounting' }">
 							<h3>恭喜您已完成活动！</h3>
 							<p class="desc">
 								奖励结果统计中，请耐心等待！

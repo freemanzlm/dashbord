@@ -17,53 +17,58 @@ var BizReport = BizReport || {};
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
 //	var hotsellStates = ['applicable', 'applied', 'ongoing', 'rewardComputing', 'rewardAppliable', 'compelete'];
 //	var dealsStates = ['applicable', 'submitted', 'applyconfirm', 'applied', 'ongoing', 'rewardComputing', 'rewardAppliable', 'complete'];
-	var states = ['applicable', 'quit', 'submitted', 'applyConfirm', 'applied', 'ongoing'];
+	var states = ['applicable', 'verifying', 'approved', 'applied', 'applyExpired', 'ongoing'];
 	
 	function getLink(type, state) {
 		switch (type) {
-		case 0:
+		case 0: // deals
 			switch(state) {
 			case 0: return "deals/applicable";
 			case 1: return "deals/listing";
-			case 2: return "deals/applied";
-			case 3: return "deals/ongoing";
-			case 4: return "deals/applied";
-			case 5: return "deals/applied";
+			case 2: return "deals/listing";
+			case 3: return "deals/applied";
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // agreement
+			case 9: // rewardVerifying
+			case 10: return "deals/state"; // complete
 			}
 			break;
 		case 1:
 			switch(state) {
 			case 0: return "dealsPreset/applicable";
-			case 1: return "dealsPreset/applicationConfirm";
-			case 2: return "dealsPreset/applied";
-			case 3: return "dealsPreset/ongoing";
-			case 4: return "dealsPreset/applied";
-			case 5: return "dealsPreset/applied";
+			case 3: return "dealsPreset/applied";
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // agreement
+			case 9: // rewardVerifying
+			case 10: return "dealsPreset/state"; // complete
 			}
 			break;
 		case 2:
 			switch(state) {
 			case 0: return "hotsell/applicable";
-			case 1: return "hotsell/applied";
-			case 2: return "hotsell/state";
-			case 3: return "hotsell/state";
-			case 4: return "hotsell/state";
-			case 5: return "hotsell/state";
+			case 3: return "hotsell/applied";
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // agreement
+			case 9: // rewardVerifying
+			case 10: return "hotsell/state"; // complete
 			}
 			break;
 		default:
 			switch(state) {
-			case 0: return "other/applicable";
-			case 1: return "other/applicationConfirm";
-			case 2: return "other/applied";
-			case 3: return "other/ongoing";
-			case 4: return "other/applied";
-			case 5: return "other/applied";
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // agreement
+			case 9: return "other/state"; // complete
 			}
 			break;
 		}
-		
-		return "";
 	}
 	
 	var defaultDataTableConfigs = {
