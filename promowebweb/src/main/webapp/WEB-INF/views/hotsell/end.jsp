@@ -66,6 +66,7 @@
 								<div class="step current-step last"><span>审核失败</span></div>
 							</c:when>
 							<c:otherwise>
+								<!-- 未报名、未申领奖励  -->
 								<div class="step current-step last"><span>活动已结束</span></div>
 							</c:otherwise>
 						</c:choose>

@@ -16,8 +16,8 @@ var BizReport = BizReport || {};
 	
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
 //	var states = ['applicable', 'submitted', 'applyconfirm', 'applied', 'ongoing'];
-	var states = ['applicable', 'submitted', 'reviewing','applyConfirm', 'applied', 'ongoing', 'rewardComputing',
-				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardReviewing',
+	var states = ['applicable', 'quit', 'submitted', 'verifying','applyConfirm', 'applied', 'ongoing', 'rewardComputing',
+				'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardVerifying',
 				'rewardSuccess','complete'];
 	
 	var defaultDataTableConfigs = {

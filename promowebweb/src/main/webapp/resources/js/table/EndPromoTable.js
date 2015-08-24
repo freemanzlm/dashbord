@@ -15,8 +15,8 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
-	var states = ['applicable', 'submitted', 'reviewing','applyConfirm', 'applied', 'ongoing', 'rewardComputing',
-					'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardReviewing',
+	var states = ['applicable', 'quit', 'submitted', 'verifying','applyConfirm', 'applied', 'ongoing', 'rewardComputing',
+					'rewardAppliable','claimReward','reclaimReward','toFillAgreement','toUploadAgreement','rewardVerifying',
 					'rewardSuccess','complete'];
 	
 	function getLink(type, state) {
@@ -161,8 +161,8 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (data == 15) {
-								return locale.getText('promo.state.rewardSuccess') + "<br/>" + "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
+							if (data == 15 || data == 1) {
+								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
 							} else {
 								return locale.getText('promo.state.end') + "<br/>" + "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
 							}
