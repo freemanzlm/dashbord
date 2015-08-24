@@ -13,6 +13,11 @@ public class ResourceProvider {
 		String listing = "/listing";
 	}
 	
+	public interface UserPromotionRes {
+		String base = "promotion";
+		String userPromo = "/userPromo";
+	}
+	
 	public interface ListingRes {
 		String base = "listing";
 		String listing = "/listing";

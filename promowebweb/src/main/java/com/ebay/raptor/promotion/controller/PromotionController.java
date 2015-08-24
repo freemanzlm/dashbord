@@ -157,8 +157,12 @@ public class PromotionController {
         	case HotSell:
         		handleHotSellPromotion(mav, userData, promotionDetail, param.getLang());
         		break;
-        	case DealsPreset: break;
-        	case DealsUpload: break;
+        	case DealsPreset:
+        		handleDealsPresetPromotion(mav, userData, promotionDetail, param.getLang());
+        		break;
+        	case DealsUpload:
+        		handleDealsUploadPromotion(mav, userData, promotionDetail, param.getLang());
+        		break;
         	case Other: break;
         	default:
         }
@@ -230,6 +234,175 @@ public class PromotionController {
     			break;
     		case End:
     			viewName += "hotsell/end";
+    			break;
+    		default:
+    			viewName += "error";
+    			break;
+    	}
+
+    	mav.setViewName(viewName);
+    }
+    
+    private void handleDealsPresetPromotion (ModelAndView mav,
+            UserData userData, UserPromotion promotionDetail, String lang) {
+    	PromotionStatus promoStatus  = promotionDetail.getPromoStatus();
+    	Boolean result = promotionDetail.getPromoResult();
+    	String viewName = "";
+
+    	if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(lang)) {
+    		viewName = "zh_HK/";
+    	} else {
+//    		viewName = "zh_CN/";
+    	}
+
+    	switch (promoStatus) {
+    		case Created:
+    			viewName += "dealspreset/applicable";
+    			break;
+    		case OwnerConfirmed:
+    			viewName += "dealspreset/applicable";
+    			break;
+    		case Enrolled:
+    			viewName += "dealspreset/applied";
+    			break;
+    		case EnrollAudited:
+    			if (result) {
+    				viewName += "dealspreset/state";
+    				mav.addObject("state", "ongoing");
+    			} else {
+    				viewName += "dealspreset/applyFail";
+    			}
+    			break;
+    		case Start:
+    			if (result) {
+    				viewName += "dealspreset/state";
+    				mav.addObject("state", "ongoing");
+    			} else {
+    				viewName += "dealspreset/applyFail";
+    			}
+    			break;
+    		case ShutDown:
+    			if (result) {
+    				viewName += "dealspreset/state";
+    				mav.addObject("state", "rewarding");
+    			} else {
+    				viewName += "dealspreset/end";
+    			}
+    			break;
+    		case SubsidyAudited:
+    			if (result) {
+    				viewName += "dealspreset/state";
+    				mav.addObject("state", "claimable");
+    			} else {
+    				viewName += "dealspreset/end";
+    			}
+    			break;
+    		case SubsidyApplied:
+    			if (result) {
+    				viewName += "dealspreset/state";
+    				mav.addObject("state", "complete");
+    			} else {
+    				viewName += "dealspreset/end";
+    			}
+    			break;
+    		case End:
+    			viewName += "dealspreset/end";
+    			break;
+    		default:
+    			viewName += "error";
+    			break;
+    	}
+
+    	mav.setViewName(viewName);
+    }
+    
+    private void handleDealsUploadPromotion (ModelAndView mav,
+            UserData userData, UserPromotion promotionDetail, String lang) {
+    	PromotionStatus promoStatus  = promotionDetail.getPromoStatus();
+    	Boolean result = promotionDetail.getPromoResult();
+    	String viewName = "";
+
+    	if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(lang)) {
+    		viewName = "zh_HK/";
+    	} else {
+//    		viewName = "zh_CN/";
+    	}
+
+    	switch (promoStatus) {
+    		case Created:
+    			viewName += "deals/applicable";
+    			break;
+    		case OwnerConfirmed:
+    			viewName += "deals/applicable";
+    			break;
+    		case Enrolled:
+    			// enrolled and uploaded listings, waiting for auditing
+    			viewName += "deals/applied";
+    			break;
+    		case EnrollFirstAudited:
+    			// first audit complete, need to confirm and submit listings
+    			if (result) {
+    				viewName += "deals/listing";
+    				mav.addObject("state", "inquiry");
+    				mav.addObject("expired", false);
+    			} else {
+    				viewName += "deals/applyFail";
+    			}
+    			break;
+    		case EnrollSubmitted:
+    			// enroll confirmed, need to submit the final listings
+    			if (result) {
+    				viewName += "deals/listing";
+    				mav.addObject("state", "confirm");
+    				mav.addObject("expired", false);
+    			} else {
+    				viewName += "deals/applyFail";
+    			}
+    			break;
+    		case EnrollAudited:
+    			// final audit complete, waiting to start
+    			if (result) {
+    				viewName += "deals/listing";
+    				mav.addObject("state", "confirm");
+    				mav.addObject("expired", false);
+    			} else {
+    				viewName += "deals/applyFail";
+    			}
+    			break;
+    		case Start:
+    			if (result) {
+    				viewName += "deals/state";
+    				mav.addObject("state", "ongoing");
+    			} else {
+    				viewName += "deals/applyFail";
+    			}
+    			break;
+    		case ShutDown:
+    			if (result) {
+    				viewName += "deals/state";
+    				mav.addObject("state", "rewarding");
+    			} else {
+    				viewName += "deals/end";
+    			}
+    			break;
+    		case SubsidyAudited:
+    			if (result) {
+    				viewName += "deals/state";
+    				mav.addObject("state", "claimable");
+    			} else {
+    				viewName += "deals/end";
+    			}
+    			break;
+    		case SubsidyApplied:
+    			if (result) {
+    				viewName += "deals/state";
+    				mav.addObject("state", "complete");
+    			} else {
+    				viewName += "deals/end";
+    			}
+    			break;
+    		case End:
+    			viewName += "deals/end";
     			break;
     		default:
     			viewName += "error";
