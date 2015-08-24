@@ -5,6 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
+<c:set var="state" value="applyFail"></c:set>
 
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -12,8 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals招募 - 活动完成</title>
-	<meta name="description" content="Deals招募 - 活动完成">
+	<title>Deals招募 </title>
+	<meta name="description" content="Deals招募 ">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -58,16 +59,34 @@
 				<h2>爆款促销 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step last"><span>活动已结束</span></div>
+						<c:choose>
+							<c:when test="${ state == 'applyFail' }">
+								<div class="step done"><span>可报名</span></div>
+								<div class="step done"><span>已提交报名</span></div>
+								<div class="step current-step last"><span>审核失败</span></div>
+							</c:when>
+							<c:otherwise>
+								<div class="step current-step last"><span>活动已结束</span></div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box">
-					<h3>活动已结束，感谢您的参与！</h3>
+				<div class="active-status-box ${ state == 'applyFail' ? 'fail' : 'success' }">
+					<c:choose>
+						<c:when test="${ state == 'applyFail' }">
+							<h3>很遗憾，您的报名未通过审核</h3>
+							<p class="desc">感谢您的参与！</p>
+						</c:when>
+						<c:otherwise>
+							<h3>活动已结束，感谢您的参与！</h3>
+						</c:otherwise>
+					</c:choose>
+					
 					<menu>
 						<a href="../index" class="btn">返回活动列表</a>
 					</menu>					
-				</div> <!-- active status box end -->
+				</div> <!-- active status box end -->	
 				
 				<jsp:include page="activity.jsp"></jsp:include>
 			</div>

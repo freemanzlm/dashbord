@@ -43,11 +43,11 @@ public class DealsController {
 	}
 	
 	@RequestMapping(value = "applyFail", method = RequestMethod.GET)
-	public HashMap<String, String> handleAuditFailRequest() {
-		HashMap<String, String> model = new HashMap<String, String>();
-		String helloRaptor = "Say hello to Raptor!";
-		model.put("greeting", helloRaptor);
-		return model;
+	public ModelAndView handleAuditFailRequest() {
+		ModelAndView mav = new ModelAndView("deals/end");
+		mav.addObject("state", "applyFail");
+		
+		return mav;
 	}
 	
 	@RequestMapping(value = "state", method = RequestMethod.GET)
@@ -58,11 +58,10 @@ public class DealsController {
 	}
 	
 	@RequestMapping(value = "end", method = RequestMethod.GET)
-	public HashMap<String, String> handleEndRequest() {
-		HashMap<String, String> model = new HashMap<String, String>();
-		String helloRaptor = "Say hello to Raptor!";
-		model.put("greeting", helloRaptor);
-		return model;
+	public ModelAndView handleEndRequest() {
+		ModelAndView mav = new ModelAndView("deals/end");
+		mav.addObject("state", "end");
+		return mav;
 	}
 	
 	@RequestMapping(value = "submit", method = RequestMethod.POST)
