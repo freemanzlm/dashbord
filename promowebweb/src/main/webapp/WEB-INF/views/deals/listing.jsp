@@ -156,7 +156,6 @@
 	};
 </script>
 
-
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />

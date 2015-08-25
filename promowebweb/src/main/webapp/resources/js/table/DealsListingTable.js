@@ -20,6 +20,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[1, 'asc']],
+				'aaSortingFixed': [[6, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -135,13 +136,30 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["price", "activity-price"],
+					aTargets: ["price"],
 					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
+						}
+
+						return data;
+					}
+				},
+				{
+					aTargets: ["activity-price"],
+					sType: "numeric",
+					sClass: "text-right",
+					sDefaultContent: "",
+					mRender: function(data, type, full) {
+						if (type == "display") {
+							if (full.sellerPrice) {
+								return "<span class='red'>" + parseFloat(data).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.sellerPrice).toUSFixed(2) + " " + full.currency + ")</del>";
+							} else {
+								return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
+							}
 						}
 
 						return data;

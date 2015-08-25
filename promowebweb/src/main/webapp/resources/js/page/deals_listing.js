@@ -22,15 +22,6 @@ $(function(){
 		}});
 	listingTable.update();	
 	
-	var acceptCheckbox = $("#accept").change(function(){
-		checkUploadBtnStatus();
-	});	
-	
-	termsDialog.subscribe({
-		"scrollEnd": function() {
-			acceptCheckbox.removeAttr("disabled");
-		}
-	});
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
 	});
