@@ -42,12 +42,13 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingSelectTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['hotsell_applied.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['preset_applied.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -93,15 +94,15 @@
 				<jsp:include page="activity.jsp"></jsp:include>
 		
 				<div class="mt20 my-listing">
-					<h3><strong>我提交的刊登</strong></h3>
-					<jsp:include page="../table/listingStates.jsp"></jsp:include>
+					<h3>我提交的刊登<small>（已选 <span>0</span> 项）</small></h3>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 				
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
-						<form action="preview" method="post">
+						<form id="listing-form" action="preview" method="post">
 							<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
-							<button class="btn" id="form-btn"  disabled title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
+							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
 						</form>
 					</div>	 
 				</c:if>
@@ -116,6 +117,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/confirm.jsp" %>
 <%@ include file="../dialog/terms.jsp" %>
 
 <script type="text/javascript">

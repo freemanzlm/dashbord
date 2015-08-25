@@ -46,8 +46,8 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['HotsellApplicableTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['hotsell_applicable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['preset_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -75,13 +75,13 @@
 				
 				<jsp:include page="activity.jsp"></jsp:include>
 				
-				<div class="mt20">
+				<div class="mt20 my-listing">
 					<h3>选择我的刊登报名 <small>（已选 <span>0</span> 项）</small></h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
 				<div class="mt20" style="text-align: center;">
-					<form action="preview" method="post">
+					<form id="listing-form" action="preview" method="post">
 						<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
 						<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 						<button id="form-btn" class="btn" disabled type="submit">预览报名信息</button>

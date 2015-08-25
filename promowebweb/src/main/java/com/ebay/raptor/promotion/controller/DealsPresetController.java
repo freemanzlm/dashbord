@@ -58,13 +58,13 @@ public class DealsPresetController {
 	
 	@RequestMapping(value = "preview", method = RequestMethod.POST)
 	public ModelAndView handlePreviewRequest() {
-		ModelAndView mav = new ModelAndView("hotsell/listingPreview");
+		ModelAndView mav = new ModelAndView("dealsPreset/listingPreview");
 		return mav;
 	}
 	
 	@RequestMapping(value = "submit", method = RequestMethod.POST)
 	public ModelAndView handleSubmitRequest() {
-		ModelAndView mav = new ModelAndView("hotsell/applied");
+		ModelAndView mav = new ModelAndView("dealsPreset/applied");
 		mav.addObject("formUrl", "preview");
 		return mav;
 	}

@@ -47,8 +47,8 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingSubmittedTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['listing_preview.js']}" target="page-js"></res:useJs>	
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['preset_listing_preview.js']}" target="page-js"></res:useJs>	
 </head>
 
 <body>

@@ -144,5 +144,10 @@
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />
+<script type="text/javascript">
+	$(".terms-conditions").click(function(event){
+		BizReport.termsDialog.show();
+	});
+</script>
 </body>
 </html>

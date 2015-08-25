@@ -60,8 +60,8 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['ListingSelectTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['hotsell_state.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['preset_state.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -146,7 +146,7 @@
 				<jsp:include page="activity.jsp"></jsp:include>
 				
 				<div class="mt20">
-					<jsp:include page="../table/listingStates.jsp"></jsp:include>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 			</div>
 		</div>

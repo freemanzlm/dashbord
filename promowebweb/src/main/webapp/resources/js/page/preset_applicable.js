@@ -1,11 +1,11 @@
 $(function(){
-	var HotsellListingTable = BizReport.HotsellListingTable;
+	var DealsListingTable = BizReport.DealsListingTable;
 	var alertDialog = BizReport.alertDialog;
 	var locale = BizReport.locale;
 	
 	var listingCountJ = $(".my-listing h3 small span");
 	
-	var listingTable = new HotsellListingTable();
+	var listingTable = new DealsListingTable();
 	listingTable.subscribe({
 		initialized: function() {
 			listingTable.hideStateColumn();
@@ -16,7 +16,7 @@ $(function(){
 	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "hotsell-listing-table"
+			tableId: "deals-listing-table"
 		}});
 	listingTable.update();
 	
@@ -29,7 +29,7 @@ $(function(){
 		}
 	});
 	
-	var form = $("form").submit(function(){
+	var form = $("#listing-form").submit(function(){
 		// if user doesn't select a item, form can't be submitted.
 		var listing = listingTable.selectedItems;
 		if (listing && listing.length > 0) {
