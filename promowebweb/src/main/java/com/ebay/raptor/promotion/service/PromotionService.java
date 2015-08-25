@@ -45,8 +45,8 @@ public class PromotionService extends BaseService {
 	/*
 	 * Get User Promotion detail data.
 	 */
-	public UserPromotion getPromotionDetail(Long userId, String promoId){
-		GingerClientResponse resp = httpGet(url(ResourceProvider.UserPromotionRes.userPromo)); // TODO - 
+	public UserPromotion getPromotionDetail(String userId, String promoId){
+		GingerClientResponse resp = httpGet(url(ResourceProvider.UserPromotionRes.userPromo)+"?uid="+userId+"&pid="+promoId); // TODO - 
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralServiceResponse<UserPromotion>> type = new GenericType<GeneralServiceResponse<UserPromotion>>(){};
 			GeneralServiceResponse<UserPromotion> promos = resp.getEntity(type);

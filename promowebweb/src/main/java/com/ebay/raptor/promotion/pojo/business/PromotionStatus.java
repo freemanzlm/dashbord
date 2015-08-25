@@ -19,7 +19,7 @@ public enum PromotionStatus {
         this.shortName = shortName;
     }
 
-    public static PromotionStatus getConversionType (String typeStr) {
+    public static PromotionStatus getPromotionStatus (String typeStr) {
         if (typeStr == null) {
             return Default;
         }

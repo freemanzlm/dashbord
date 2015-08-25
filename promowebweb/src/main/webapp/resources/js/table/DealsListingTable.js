@@ -14,12 +14,12 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var states = ['applied','verifying','reviewed'];
+	var states = ['applicable', 'applied', 'nonapplied', 'pass', 'notSubmitted', 'pretrial', 'pretrialPass', 'pretrialFail'];
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[1, 'asc']],
+				'aaSorting': [[2, 'asc']],
 				'aaSortingFixed': [[6, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
@@ -167,6 +167,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["state"],
+					bSortable: false,
 					sClass: "text-center",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {

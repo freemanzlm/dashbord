@@ -15,7 +15,7 @@ public enum PromotionType {
         this.shortName = shortName;
     }
 
-    public static PromotionType getConversionType (String typeStr) {
+    public static PromotionType getPromotionType (String typeStr) {
         if (typeStr == null) {
             return Default;
         }

@@ -86,7 +86,7 @@ public class PromotionController {
         }
 
         try {
-            response.sendRedirect("index");
+            response.sendRedirect("promotion");// TODO - index
         } catch (IOException e) {
             // ignore
         }
@@ -148,10 +148,10 @@ public class PromotionController {
     private void addPromotionPageData (ModelAndView mav,
             UserData userData, RequestParameter param) {
     	UserPromotion promotionDetail =
-        		promotionService.getPromotionDetail(userData.getUserId(),
+        		promotionService.getPromotionDetail(userData.getUserName(), //TODO
         				param.getPromoId());
  
-    	PromotionType promotionType = promotionDetail.getPromotionType();
+    	PromotionType promotionType = PromotionType.getPromotionType(promotionDetail.getPromoType());
 
         switch (promotionType) {
         	case HotSell:
@@ -172,7 +172,7 @@ public class PromotionController {
     
     private void handleHotSellPromotion (ModelAndView mav,
             UserData userData, UserPromotion promotionDetail, String lang) {
-    	PromotionStatus promoStatus  = promotionDetail.getPromoStatus();
+    	PromotionStatus promoStatus  = PromotionStatus.getPromotionStatus(promotionDetail.getPromoStatus());
     	Boolean result = promotionDetail.getPromoResult();
     	String viewName = "";
 
@@ -245,7 +245,7 @@ public class PromotionController {
     
     private void handleDealsPresetPromotion (ModelAndView mav,
             UserData userData, UserPromotion promotionDetail, String lang) {
-    	PromotionStatus promoStatus  = promotionDetail.getPromoStatus();
+    	PromotionStatus promoStatus  = PromotionStatus.getPromotionStatus(promotionDetail.getPromoStatus());
     	Boolean result = promotionDetail.getPromoResult();
     	String viewName = "";
 
@@ -318,7 +318,7 @@ public class PromotionController {
     
     private void handleDealsUploadPromotion (ModelAndView mav,
             UserData userData, UserPromotion promotionDetail, String lang) {
-    	PromotionStatus promoStatus  = promotionDetail.getPromoStatus();
+    	PromotionStatus promoStatus  = PromotionStatus.getPromotionStatus(promotionDetail.getPromoStatus());
     	Boolean result = promotionDetail.getPromoResult();
     	String viewName = "";
 

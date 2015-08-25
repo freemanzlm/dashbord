@@ -26,16 +26,16 @@ public class UserPromotion {
 	public void setPromoId(String promoId) {
 		this.promoId = promoId;
 	}
-	public PromotionType getPromotionType() {
+	public String getPromoType() {
 		return promoType;
 	}
-	public void setPromotionType(PromotionType promoType) {
+	public void setPromoType(String promoType) {
 		this.promoType = promoType;
 	}
-	public PromotionStatus getPromoStatus() {
+	public String getPromoStatus() {
 		return promoStatus;
 	}
-	public void setPromoStatus(PromotionStatus promoStatus) {
+	public void setPromoStatus(String promoStatus) {
 		this.promoStatus = promoStatus;
 	}
 	public String getPromoDescription() {
@@ -74,8 +74,8 @@ public class UserPromotion {
 	private Long userId;
 	private String promoName;
 	private String promoId;
-	private PromotionType promoType;
-	private PromotionStatus promoStatus;
+	private String promoType;
+	private String promoStatus;
 	private Boolean promoResult;
 	private String promoDescription;
 	private String promoEnrollDeadline;
