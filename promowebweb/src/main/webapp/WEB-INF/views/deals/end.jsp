@@ -41,7 +41,6 @@
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	
 </head>
@@ -85,7 +84,7 @@
 					<menu>
 						<a href="../index" class="btn">返回活动列表</a>
 					</menu>					
-				</div> <!-- active status box end -->				
+				</div> <!-- active status box end -->
 				
 				<jsp:include page="activity.jsp"></jsp:include>
 			</div>

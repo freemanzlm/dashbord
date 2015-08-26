@@ -206,3 +206,8 @@
 	font-size: 16px;
 	line-height: 29px;
 }
+
+.listings-upload a.template {
+	padding: 5px 10px;
+	background-color: #fff;
+}

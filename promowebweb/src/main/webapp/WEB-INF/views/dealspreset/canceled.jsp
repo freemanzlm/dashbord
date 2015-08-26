@@ -35,6 +35,12 @@
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
+	<res:useJs value="${res.js.local.js['locale_zh_CN.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -49,44 +55,6 @@
 				<h2>Deals 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<c:if test="${ oldState == 'verifying' })">
-							<div class="step done"><span>可报名</span></div>
-							<div class="step done"><span>报名审核中</span></div>
-						</c:if>
-						
-						<c:if test="${ oldState == 'approved' })">
-							<div class="step done"><span>可报名</span></div>
-							<div class="step done"><span>报名审核中</span></div>
-							<div class="step done"><span>确认报名刊登</span></div>
-						</c:if>
-						
-						<c:if test="${ oldState == 'applied' })">
-							<div class="step done"><span>可报名</span></div>
-							<div class="step done"><span>报名审核中</span></div>
-							<div class="step done"><span>确认报名刊登</span></div>
-							<div class="step done"><span>已提交报名</span></div>
-						</c:if>
-						
-						<c:if test="${ oldState == 'verifyFailed' })">
-							<div class="step done"><span>可报名</span></div>
-							<div class="step done"><span>报名审核中</span></div>
-							<div class="step done"><span>确认报名刊登</span></div>
-							<div class="step done"><span>审核失败</span></div>
-						</c:if>
-						
-						<c:if test="${ oldState == 'ongoing' })">
-							<div class="step done"><span>可报名</span></div>
-							<div class="step done"><span>已提交报名</span></div>
-							<div class="step done"><span>活动进行中</span></div>
-						</c:if>
-						
-						<c:if test="${ oldState == 'rewarding' })">
-							<div class="step done"><span>可报名</span></div>
-							<div class="step done"><span>已提交报名</span></div>
-							<div class="step done"><span>活动进行中</span></div>
-							<div class="step done"><span>申领奖励</span></div>
-						</c:if>
-						
 						<div class="step current-step last"><span>活动已取消</span></div>
 					</div>
 				</div>  <!-- steps end -->
@@ -99,6 +67,7 @@
 					</menu>					
 				</div> <!-- active status box end -->				
 				
+				<jsp:include page="activity.jsp"></jsp:include>
 			</div>
 		</div>
 	</div>
@@ -109,10 +78,15 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />
-
+<script type="text/javascript">
+	$(".terms-conditions").click(function(event){
+		BizReport.termsDialog.show();
+	});
+</script>
 </body>
 </html>

@@ -105,7 +105,7 @@
 					<div class="mt20">
 						<div class="listings-upload">
 							<h3>重新上传我要提交的刊登</h3>
-							<p class="mt10">您可以通过下载<a href="javascript:void(0)" target="_blank">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
+							<p class="mt10">您可以通过下载<a class="template" href="javascript:void(0)" target="_blank">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
 							<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
 							<form id="upload-form" action="upload" class="mt30" method="post">
 								选择上传您的刊登列表 

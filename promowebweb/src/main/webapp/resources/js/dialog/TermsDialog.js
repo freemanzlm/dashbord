@@ -27,33 +27,6 @@
 				self.dialog.hide();
 			});
 			
-//			var frame = this.dialog.wrapper.find("iframe").on("load", function(){
-//				// if there is iframe in dialog, don't use iframe's scrollbar.
-//				var iframe = this;
-//				frame.width(self.dialog.body.width());
-//				function setFrameSize() {
-//					if (iframe.contentDocument.body && iframe.contentDocument.body.innerHTML.length > 0) {
-//						var docEle = iframe.contentDocument.documentElement;
-//						frame.height(docEle.scrollHeight);
-//						if (docEle.scrollWidth > self.dialog.wrapper.width()) {
-//							frame.width(docEle.scrollWidth);
-//						}
-//					} else {
-//						setTimeout(setFrameSize, 100);
-//					}
-//				}
-//				
-//				setFrameSize();
-//			});
-			
-//			$(frame[0].contentWindow).on("resize", function(){
-//				var docEle = this.document.documentElement;				
-//				frame.height(docEle.scrollHeight);
-//				if (docEle.scrollWidth > self.dialog.wrapper.width()) {
-//					frame.width(docEle.scrollWidth);
-//				}
-//			});
-			
 			this.dialog.body.scroll(function(){
 				// allow 2 px deviation
 				if (this.scrollTop + this.clientHeight >= this.scrollHeight - 2) {
