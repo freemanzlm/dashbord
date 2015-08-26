@@ -1,15 +1,30 @@
 package com.ebay.raptor.promotion.pojo.business;
 
-public class Listing {
+public class HotSellListing {
+
+	private Long itemId;
 
 	private String name;
-	private Integer itemId;
+
 	private Float price;
+
 	private String currency;
+
 	private Integer volume;
+
 	private Integer sales;
-	private Integer comp;
+
+	private Float comp;
+
 	private Integer state;
+
+	public Long getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
+	}
 
 	public String getName() {
 		return name;
@@ -17,14 +32,6 @@ public class Listing {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Integer getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Integer itemId) {
-		this.itemId = itemId;
 	}
 
 	public Float getPrice() {
@@ -59,11 +66,11 @@ public class Listing {
 		this.sales = sales;
 	}
 
-	public Integer getComp() {
+	public Float getComp() {
 		return comp;
 	}
 
-	public void setComp(Integer comp) {
+	public void setComp(Float comp) {
 		this.comp = comp;
 	}
 

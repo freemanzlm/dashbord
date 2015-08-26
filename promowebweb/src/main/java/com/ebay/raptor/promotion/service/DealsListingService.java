@@ -8,23 +8,23 @@ import javax.ws.rs.core.Response.Status;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
-import com.ebay.raptor.promotion.pojo.business.Listing;
+import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 
 @Component
-public class ListingService extends BaseService {
+public class DealsListingService extends BaseService {
 
 	private String url(String url){
 		return secureUrl(ResourceProvider.ListingRes.base) + url;
 	}
 	
-	public List<Listing> getListing(){
+	public List<DealsListing> getListing(){
 		GingerClientResponse resp = httpGet(url(ResourceProvider.ListingRes.getApplicableListings));
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<Listing>> type = new GenericType<ListDataServiceResponse<Listing>>(){};
-			ListDataServiceResponse<Listing> listing = resp.getEntity(type);
+			GenericType<ListDataServiceResponse<DealsListing>> type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
+			ListDataServiceResponse<DealsListing> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			}
