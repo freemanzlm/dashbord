@@ -20,9 +20,11 @@ BizReport.locale = {
 	},
 	'dataTable': {
 		'emptyTable': '<p>没有数据，如正在加载，请等待。</p>',
+		'zeroRecords': '<p>没有数据相关数据。</p>',
 		'open': '展开',
 		'close': '收起',
 		'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条',
+		'infoFiltered': '所有记录总共_TOTAL_条',
 		'loading': '请稍等，正在加载...',
 		'handling': '处理中。。。',
 		'firstPage': '第一页',

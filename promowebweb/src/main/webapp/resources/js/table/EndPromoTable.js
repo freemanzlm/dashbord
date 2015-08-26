@@ -63,12 +63,13 @@ var BizReport = BizReport || {};
 				'bSort': true,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
-				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
+				'sDom': '<"datatable_header">t<"datatable_pager"p>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
+					sZeroRecords: locale.getText('dataTable.zeroRecords'),
 					oPaginate: {
 						sFirst: locale.getText('dataTable.firstPage'),
 						sLast: locale.getText('dataTable.lastPage'),

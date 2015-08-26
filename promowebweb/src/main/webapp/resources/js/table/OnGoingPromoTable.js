@@ -95,12 +95,13 @@ var BizReport = BizReport || {};
 				'bSort': true,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
-				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
+				'sDom': '<"datatable_header">t<"datatable_pager"p>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
+					sZeroRecords: locale.getText('dataTable.zeroRecords'),
 					oPaginate: {
 						sFirst: locale.getText('dataTable.firstPage'),
 						sLast: locale.getText('dataTable.lastPage'),
@@ -209,7 +210,7 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (full.type != 3) {
+							if (full.type == 0) {
 								switch (data) {
 								case 0:
 								case 1:
@@ -217,6 +218,18 @@ var BizReport = BizReport || {};
 								case 2:
 								case 3:
 								case 4:
+								case 5:
+								case 6:
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+								default:
+									return "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+								}
+							} else if (full.type != 3) {
+								switch (data) {
+								case 0:
+								case 1:
+									return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								case 3:
 								case 5:
 								case 6:
 									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
