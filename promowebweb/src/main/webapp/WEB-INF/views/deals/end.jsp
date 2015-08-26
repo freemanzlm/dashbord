@@ -59,7 +59,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<c:choose>
-							<c:when test="${ state == 'applyFail' }">
+							<c:when test="${ state == 'verifyFailed' }">
 								<div class="step done"><span>可报名</span></div>
 								<div class="step done"><span>已提交报名</span></div>
 								<div class="step current-step last"><span>审核失败</span></div>
@@ -71,7 +71,7 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box ${ state == 'applyFail' ? 'fail' : 'success' }">
+				<div class="active-status-box ${ state == 'verifyFailed' ? 'fail' : 'success' }">
 					<c:choose>
 						<c:when test="${ state == 'applyFail' }">
 							<h3>很遗憾，您的报名未通过审核</h3>

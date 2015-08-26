@@ -15,7 +15,7 @@
 		<c:when test="${state eq 'inquiry' }">
 			<title>Deals - 报名预审中</title>					
 		</c:when>
-		<c:when test="${state eq 'confirm' }">
+		<c:when test="${state eq 'approved' }">
 			<title>Deals - 确认报名刊登</title>
 		</c:when>
 	</c:choose>
@@ -72,7 +72,7 @@
 						<div class="step done"><span>可报名</span></div>
 						<div class="step done"><span>已提交报名</span></div>
 						<div class="step ${ state eq 'inquiry' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
-						<div class="step ${ state eq 'confirm' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
+						<div class="step ${ state eq 'approved' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
 						<div class="step"><span>活动进行中</span></div>
 						<div class="step"><span>奖励确认中</span></div>
 						<div class="step"><span>申领奖励</span></div>
@@ -94,7 +94,7 @@
 								</c:otherwise>
 							</c:choose>
 						</c:when>
-						<c:when test="${state eq 'confirm' }">
+						<c:when test="${state eq 'approved' }">
 							<h3>您已成功通过预审！</h3>
 							<c:choose>
 								<c:when test="${ not expired }">
@@ -119,7 +119,7 @@
 						<c:when test="${expired eq 'inquiry' or expired }">
 							<h3>我提交的刊登</h3>
 						</c:when>
-						<c:when test="${state eq 'confirm' and not expired }">
+						<c:when test="${state eq 'approved' and not expired }">
 							<h3>我提交的刊登<small>（已选 <span>0</span> 项）</small></h3>
 						</c:when>
 					</c:choose>
@@ -127,7 +127,7 @@
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
-				<c:if test="${(state eq 'confirm') && (expired eq false) }">
+				<c:if test="${(state eq 'approved') && (expired eq false) }">
 					<div class="mt20 page-bottom-actions">
 						<form action="preview" method="post">
 							<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />

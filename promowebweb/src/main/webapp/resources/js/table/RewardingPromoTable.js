@@ -181,11 +181,11 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							console.log(states[data]);
 							switch (parseInt(data)) {
-							case 7: // rewarding
+							case 8: // rewarding
 								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-							case 8: // upload agreement
+							case 9: // upload agreement
 								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-							case 11: // reclaim reward
+							case 12: // reclaim reward
 								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							default:
 								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";

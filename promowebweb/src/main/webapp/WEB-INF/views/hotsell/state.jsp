@@ -116,6 +116,15 @@
 								<a href="../index" class="btn">返回活动列表</a>
 							</menu>
 						</c:when>
+						<c:when test="${state eq 'rewardVerifying' }">
+							<h3>恭喜您已上传协议！</h3>
+							<p class="desc">
+								奖励协议审核中，请耐心等待！
+							</p>
+							<menu>
+								<a href="../index" class="btn">返回活动列表</a>
+							</menu>
+						</c:when>
 						<c:when test="${state eq 'rewarding' or state eq 'agreement' }">
 							<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
 							<p class="desc">

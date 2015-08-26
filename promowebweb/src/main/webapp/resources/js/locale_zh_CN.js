@@ -54,14 +54,16 @@ BizReport.locale = {
 			'approved': '确认报名刊登',
 			'applied': '已提交报名',
 			'applyExpired': '未报名', // apply period expired
+			'verifyFailed': '审核失败',
 			'ongoing': '活动进行中',
 			'rewardCounting': '奖励确认中',
 			'rewarding': '申领奖励',
 			'agreement': '上传协议',
 			'rewardVerifying': '奖励审核中',
 			'complete': '活动完成',
-			'claimFail': '重新申领奖励',
+			'claimFail': '重新申领奖励', // agreement verifying failed.
 			'claimExpired': '申领已过期', // reward claim period expired
+			'canceled': '活动已取消',
 			'end': '活动已结束'
 		},
 		'hotsell': {

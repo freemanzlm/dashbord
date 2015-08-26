@@ -137,6 +137,12 @@
 								<a href="../index" class="btn">返回活动列表</a>
 							</menu>
 						</c:when>
+						<c:when test="${state eq 'claimExpired' }">
+							<h3>很遗憾，您错过了最后的奖励领取时间，此活动已结束。</h3>
+							<menu>
+								<a href="../index" class="btn">返回活动列表</a>
+							</menu>
+						</c:when>
 					</c:choose>
 					
 				</div> <!-- active status box end -->

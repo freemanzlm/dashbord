@@ -160,10 +160,10 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (data == 15 || data == 1) {
-								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
+							if (data == 11) { // complete
+								return locale.getText('promo.state.complete') + "<br/><a href='" + getLink(full.type, data)  + "'>查看详情</a>";
 							} else {
-								return locale.getText('promo.state.end') + "<br/>" + "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
+								return "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
 							}
 						}
 
