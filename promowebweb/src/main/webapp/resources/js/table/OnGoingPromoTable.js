@@ -21,40 +21,49 @@ var BizReport = BizReport || {};
 		switch (type) {
 		case 0: // deals
 			switch(state) {
-			case 0: return "deals/applicable";
-			case 1: return "deals/listing";
-			case 2: return "deals/listing";
-			case 3: return "deals/applied";
+			case 0: return "deals/applicable"; // applicable
+			case 1: return "deals/applied"; // approved
+			case 2: return "deals/listing"; // submitted
+			case 3: return "deals/applied"; // applied
+			case 4: return "deals/listing"; // verifying
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
-			case 8: // agreement
-			case 9: // rewardVerifying
-			case 10: return "deals/state"; // complete
+			case 8: // claimFail
+			case 9: // agreement
+			case 10: // rewardVerifying
+				return "deals/state"; // complete
+			default: return "deals/end";
 			}
 			break;
 		case 1:
 			switch(state) {
-			case 0: return "dealsPreset/applicable";
-			case 3: return "dealsPreset/applied";
+			case 0: return "dealsPreset/applicable"; // applicable
+			case 1: return "dealsPreset/applied"; // approved
+			case 3: return "dealsPreset/applied"; // applied
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
-			case 8: // agreement
-			case 9: // rewardVerifying
-			case 10: return "dealsPreset/state"; // complete
+			case 8: // claimFail
+			case 9: // agreement
+			case 10: // rewardVerifying
+				return "dealsPreset/state"; // complete
+			default: return "dealsPreset/end";
 			}
 			break;
 		case 2:
 			switch(state) {
-			case 0: return "hotsell/applicable";
-			case 3: return "hotsell/applied";
+			case 0: return "hotsell/applicable"; // applicable
+			case 1: return "hotsell/applied"; // approved
+			case 3: return "hotsell/applied"; // applied
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
 			case 8: // agreement
 			case 9: // rewardVerifying
-			case 10: return "hotsell/state"; // complete
+			case 10: // rewardVerifying
+				return "hotsell/state"; // complete
+			default: return "hotsell/end";
 			}
 			break;
 		default:
@@ -62,8 +71,11 @@ var BizReport = BizReport || {};
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
-			case 8: // agreement
-			case 9: return "other/state"; // complete
+			case 8: // claimFail
+			case 9: // agreement
+			case 10: // rewardVerifying
+				return "other/state"; // complete
+			default: return "other/end";
 			}
 			break;
 		}
@@ -197,20 +209,27 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							switch (data) {
-							case 0:
-							case 1:
-								return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-							case 2:
-							case 3:
-							case 4:
-							case 5:
-							case 6:
-								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
-							default:
-								return "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+							if (full.type != 3) {
+								switch (data) {
+								case 0:
+								case 1:
+									return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								case 2:
+								case 3:
+								case 4:
+								case 5:
+								case 6:
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+								default:
+									return "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+								}
+							} else {
+								if (data == 5 || data == 6) {
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+								} else {
+									return "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+								}
 							}
-							
 						}
 
 						return data;

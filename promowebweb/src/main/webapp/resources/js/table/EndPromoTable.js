@@ -175,7 +175,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (data == 12) { // complete
+							if (data == 11) { // complete
 								return locale.getText('promo.state.complete') + "<br/><a href='" + getLink(full.type, data)  + "'>查看详情</a>";
 							} else {
 								return "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
@@ -183,8 +183,8 @@ var BizReport = BizReport || {};
 						}
 						
 						if (type == "sort") {
-							if (data != 12) {
-								return 13;
+							if (data != 11) {
+								return 12;
 							}
 						}
 

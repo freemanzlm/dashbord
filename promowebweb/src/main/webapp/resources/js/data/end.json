@@ -9,7 +9,7 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "38",
 			"currency": "USD",
-			"state": 12
+			"state": 11
 		},
 		{
 			"name": "campaign 2",
@@ -42,7 +42,7 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
 			"currency": "USD",
-			"state": 14
+			"state": 11
 		},
 		{
 			"name": "campaign 4",

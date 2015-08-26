@@ -61,7 +61,6 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="clr" style="margin-bottom: 15px;">
-				<button class="btn white fr" lang="zh_HK">切換至繁體中文</button>
 				<h2>活动促销</h2>
 			</div>
 			
@@ -96,10 +95,10 @@
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
 							<option value="">所有进行中的活动</option>
-							<option value="8">待申领奖励的活动</option>
-							<option value="9">需要重新申领奖励的活动</option>
-							<option value="10">待上传协议的活动</option>
-							<option value="11">奖励审核中的活动</option>
+							<option value="7">待申领奖励的活动</option>
+							<option value="8">需要重新申领奖励的活动</option>
+							<option value="9">待上传协议的活动</option>
+							<option value="10">奖励审核中的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
@@ -119,7 +118,7 @@
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
 							<option value="">所有已结束的活动</option>
-							<option value="12">领取奖励成功的活动</option>
+							<option value="11">领取奖励成功的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
