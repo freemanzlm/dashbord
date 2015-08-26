@@ -4,19 +4,17 @@ import java.util.Date;
 
 public class Promotion {
 
-	private String id;
-
 	private String name;
+	
+	private String desc;
 
 	private Integer type;
 
 	private Date promoDlDt;
 
-	private Date promoRwDt;
+	private Date promoSdt;
 
-	private String promoDt;
-
-	private Date rewardRwDt;
+	private Date promoEdt;
 
 	private Date rewardClmDt;
 
@@ -24,12 +22,12 @@ public class Promotion {
 
 	private Integer state;
 
-	public String getId() {
-		return id;
+	public String getDesc() {
+		return desc;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	public String getName() {
@@ -56,28 +54,20 @@ public class Promotion {
 		this.promoDlDt = promoDlDt;
 	}
 
-	public Date getPromoRwDt() {
-		return promoRwDt;
+	public Date getPromoSdt() {
+		return promoSdt;
 	}
 
-	public void setPromoRwDt(Date promoRwDt) {
-		this.promoRwDt = promoRwDt;
+	public void setPromoSdt(Date promoSdt) {
+		this.promoSdt = promoSdt;
 	}
 
-	public String getPromoDt() {
-		return promoDt;
+	public Date getPromoEdt() {
+		return promoEdt;
 	}
 
-	public void setPromoDt(String promoDt) {
-		this.promoDt = promoDt;
-	}
-
-	public Date getRewardRwDt() {
-		return rewardRwDt;
-	}
-
-	public void setRewardRwDt(Date rewardRwDt) {
-		this.rewardRwDt = rewardRwDt;
+	public void setPromoEdt(Date promoEdt) {
+		this.promoEdt = promoEdt;
 	}
 
 	public Date getRewardClmDt() {
@@ -103,4 +93,5 @@ public class Promotion {
 	public void setState(Integer state) {
 		this.state = state;
 	}
+
 }
