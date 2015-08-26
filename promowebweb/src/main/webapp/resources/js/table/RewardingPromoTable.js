@@ -15,7 +15,7 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
-	var states = ['applicable', 'verifying', 'approved', 'applied', 'applyExpired', 'ongoing', 'rewardCounting', 'rewarding', 'agreement', 'complete', 'claimFail', 'claimExpired', 'end'];
+	var states = ['applicable', 'approved', 'submitted', 'applied', 'verifying', 'ongoing', 'rewardCounting', 'rewarding', 'claimFail', 'agreement', 'rewardVerifying', 'complete', 'applyExpired', 'verifyFailed', 'claimExpired', 'canceled', 'end'];
 	
 	function getLink(type, state) {
 		switch (type) {
@@ -70,7 +70,7 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[1, 'asc']],
+				'aaSorting': [[5, 'asc'], [3, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': true,
@@ -95,7 +95,7 @@ var BizReport = BizReport || {};
 					}
 				},
 //				'sScrollX': "100%",
-				sAjaxSource: "promotion/listPromotions", //"js/data/ongoing.json", 
+				sAjaxSource: "promotion/listPromotions", //"js/data/ongoing.json",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {
@@ -120,7 +120,7 @@ var BizReport = BizReport || {};
 					{data: 'name'},
 					{data: 'type'},
 					{data: 'rewardDlDt'},
-					{data: 'promoDt'},					
+					{data: 'promoEdt'},					
 					{data: 'reward'},
 					{data: 'state'}
 				],
@@ -152,11 +152,23 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["promoDt", "rewardDlDt", "rewardClmDt"],
+					aTargets: ["rewardDlDt", "rewardClmDt"],
 					sType: "date",
 					sClass: "text-center",
-					sDefaultContent: "",
+					sDefaultContent: "-",
 					mRender: function(data, type, full) {
+						return data;
+					}
+				},
+				{
+					aTargets: ["promoDt"],
+					sType: "date",
+					sClass: "text-center",
+					sDefaultContent: "-",
+					mRender: function(data, type, full) {
+						if (type == "display") {
+							return full.promoSdt + " ~ " + data;
+						}
 						return data;
 					}
 				},
@@ -165,8 +177,11 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
+						var val = parseFloat(data);
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(2);
+							if (!isNaN(val)) {
+								return val.toUSFixed(2) + " (" + full.currency + ")";
+							}
 						}
 
 						return data;
@@ -181,11 +196,11 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							console.log(states[data]);
 							switch (parseInt(data)) {
-							case 8: // rewarding
+							case 7: // rewarding
 								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-							case 9: // upload agreement
+							case 8: // upload agreement
 								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-							case 12: // reclaim reward
+							case 9: // reclaim reward
 								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							default:
 								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";

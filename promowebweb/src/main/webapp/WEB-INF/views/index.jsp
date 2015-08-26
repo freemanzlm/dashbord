@@ -71,9 +71,12 @@
 						<select name="" id="" class="fr state-filter">
 							<option value="">所有进行中的活动</option>
 							<option value="0">可报名活动</option>
-							<option value="1">报名审核中的活动</option>
-							<option value="3">已提交报名活动</option>
+							<option value="1">待确认报名刊登的活动</option>
+							<option value="2">已提交预审的活动</option>
+							<option value="3">已提交报名的活动</option>
+							<option value="4">报名审核中的活动</option>
 							<option value="5">进行中的活动</option>
+							<option value="6">奖励确认中的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
@@ -93,10 +96,10 @@
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
 							<option value="">所有进行中的活动</option>
-							<option value="6">奖励确认中的活动</option>
-							<option value="7">申领奖励的活动</option>
-							<option value="8">待上传协议的活动</option>
-							<option value="10">需要重新申领奖励的活动</option>			
+							<option value="8">待申领奖励的活动</option>
+							<option value="9">需要重新申领奖励的活动</option>
+							<option value="10">待上传协议的活动</option>
+							<option value="11">奖励审核中的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
@@ -116,9 +119,7 @@
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
 							<option value="">所有已结束的活动</option>
-							<option value="4">未报名的活动</option>
-							<option value="11">领取奖励成功的活动</option>
-							<option value="12">未领取奖励的活动</option>
+							<option value="12">领取奖励成功的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>

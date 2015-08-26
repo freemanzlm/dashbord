@@ -3,56 +3,68 @@
 		{
 			"name": "campaign 1",
 			"type": 0,
-			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"promoSdt": "2015-02-01",
+			"promoEdt": "2015-04-01",
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "38",
+			"currency": "USD",
 			"state": 7
 		},
 		{
 			"name": "campaign 2",
 			"type": 1,
-			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"promoSdt": "2015-02-01",
+			"promoEdt": "2015-04-01",
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "0.26",
+			"currency": "USD",
 			"state": 8
 		},
 		{
 			"name": "campaign 3",
 			"type": 3,
-			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"promoSdt": "2015-02-01",
+			"promoEdt": "2015-04-01",
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "24",
+			"currency": "USD",
 			"state": 9
 		},
 		{
 			"name": "campaign 4",
 			"type": 2,
-			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"promoSdt": "2015-02-01",
+			"promoEdt": "2015-04-01",
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
+			"currency": "USD",
 			"state": 10
 		},
 		{
 			"name": "campaign 4",
 			"type": 2,
-			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"promoSdt": "2015-02-01",
+			"promoEdt": "2015-04-01",
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"state": 11
+			"currency": "USD",
+			"state": 10
 		},
 		{
 			"name": "campaign 4",
 			"type": 2,
-			"promoDt": "2015-02-01 ~ 2015-04-01",
+			"promoSdt": "2015-02-01",
+			"promoEdt": "2015-04-01",
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"state": 12
+			"currency": "USD",
+			"state": 10
 		}
 	],
 	"status": true
