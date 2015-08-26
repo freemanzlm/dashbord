@@ -56,10 +56,10 @@ public class HotsellController {
 		return mav;
 	}
     
-    @RequestMapping(value = "cancel", method = RequestMethod.GET)
+    @RequestMapping(value = "canceled", method = RequestMethod.GET)
     public ModelAndView handleCancelRequest() {
-		ModelAndView mav = new ModelAndView("hotsell/cancel");
-		mav.addObject("state", "cancel");
+		ModelAndView mav = new ModelAndView("hotsell/canceled");
+		mav.addObject("state", "canceled");
 		return mav;
 	}
 

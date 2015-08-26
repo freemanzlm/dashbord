@@ -49,10 +49,10 @@ public class DealsPresetController {
 		return mav;
 	}
 	
-    @RequestMapping(value = "cancel", method = RequestMethod.GET)
+    @RequestMapping(value = "canceled", method = RequestMethod.GET)
     public ModelAndView handleCancelRequest() {
-		ModelAndView mav = new ModelAndView("dealsPreset/cancel");
-		mav.addObject("state", "cancel");
+		ModelAndView mav = new ModelAndView("dealsPreset/canceled");
+		mav.addObject("state", "canceled");
 		return mav;
 	}
 	
