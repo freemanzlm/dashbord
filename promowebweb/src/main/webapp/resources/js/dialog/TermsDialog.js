@@ -27,20 +27,32 @@
 				self.dialog.hide();
 			});
 			
-			var frame = this.dialog.wrapper.find("iframe").on("load", function(){
-				// if there is iframe in dialog, don't use iframe's scrollbar.
-				var iframe = this;
-				function setFrameSize() {
-					if (iframe.contentDocument.body && iframe.contentDocument.body.innerHTML.length > 0) {
-						frame.height(iframe.contentDocument.documentElement.scrollHeight);
-						frame.width(iframe.contentDocument.documentElement.scrollWidth);
-					} else {
-						setTimeout(setFrameSize, 100);
-					}
-				}
-				
-				setFrameSize();
-			});
+//			var frame = this.dialog.wrapper.find("iframe").on("load", function(){
+//				// if there is iframe in dialog, don't use iframe's scrollbar.
+//				var iframe = this;
+//				frame.width(self.dialog.body.width());
+//				function setFrameSize() {
+//					if (iframe.contentDocument.body && iframe.contentDocument.body.innerHTML.length > 0) {
+//						var docEle = iframe.contentDocument.documentElement;
+//						frame.height(docEle.scrollHeight);
+//						if (docEle.scrollWidth > self.dialog.wrapper.width()) {
+//							frame.width(docEle.scrollWidth);
+//						}
+//					} else {
+//						setTimeout(setFrameSize, 100);
+//					}
+//				}
+//				
+//				setFrameSize();
+//			});
+			
+//			$(frame[0].contentWindow).on("resize", function(){
+//				var docEle = this.document.documentElement;				
+//				frame.height(docEle.scrollHeight);
+//				if (docEle.scrollWidth > self.dialog.wrapper.width()) {
+//					frame.width(docEle.scrollWidth);
+//				}
+//			});
 			
 			this.dialog.body.scroll(function(){
 				// allow 2 px deviation
@@ -51,16 +63,36 @@
 		},
 		
 		show: function(text, title) {
+			var that = this;
 			if (title) {
 				this.dialog.setTitle(title);
 				this.titleChanged = true;
 			} else if (this.titleChanged) {
 				this.dialog.setTitle(this.defaultTitle);
 				this.titleChanged = false;
-			}
+			}			
 			
 			this.dialog.wrapper.find(".dialog-body").html(text);
 			this.dialog.show();
+			
+			var frame = this.dialog.wrapper.find("iframe");
+			var iframe = frame[0];
+			frame.width(this.dialog.body[0].scrollWidth);
+			
+			function setFrameSize() {
+				// remove iframe scrollbars.
+				if (iframe.contentDocument.body && iframe.contentDocument.body.innerHTML.length > 0) {
+					var docEle = iframe.contentDocument.documentElement;
+					frame.height(docEle.scrollHeight);
+					if (docEle.scrollWidth > that.dialog.wrapper.width()) {
+						frame.width(docEle.scrollWidth);
+					}
+				} else {
+					setTimeout(setFrameSize, 100);
+				}
+			}
+			
+			setFrameSize();
 		},
 		
 		close: function() {

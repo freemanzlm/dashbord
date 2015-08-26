@@ -33,5 +33,11 @@ public class OtherController {
 		mav.addObject("state", "canceled");
 		return mav;
 	}
+    
+    @RequestMapping(value = "terms", method = RequestMethod.GET)
+    public ModelAndView handleTermsRequest() {
+        ModelAndView mav = new ModelAndView("terms/other");
+        return mav;
+    }
 	
 }

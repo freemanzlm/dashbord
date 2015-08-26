@@ -95,4 +95,10 @@ public class DealsController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "terms", method = RequestMethod.GET)
+    public ModelAndView handleTermsRequest() {
+        ModelAndView mav = new ModelAndView("terms/deals");
+        return mav;
+    }
+	
 }

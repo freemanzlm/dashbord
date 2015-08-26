@@ -69,4 +69,9 @@ public class DealsPresetController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "terms", method = RequestMethod.GET)
+    public ModelAndView handleTermsRequest() {
+        ModelAndView mav = new ModelAndView("terms/dealsPreset");
+        return mav;
+    }
 }

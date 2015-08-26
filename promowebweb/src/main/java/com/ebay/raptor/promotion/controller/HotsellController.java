@@ -75,5 +75,11 @@ public class HotsellController {
         mav.addObject("formUrl", "preview");
         return mav;
     }
+    
+    @RequestMapping(value = "terms", method = RequestMethod.GET)
+    public ModelAndView handleTermsRequest() {
+        ModelAndView mav = new ModelAndView("terms/hotsell");
+        return mav;
+    }
 
 }
