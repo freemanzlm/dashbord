@@ -134,8 +134,8 @@
 					<div class="mt20 page-bottom-actions">
 						<form id="listing-form" action="preview" method="post">
 							<input type="hidden" name="listings" value="[]" />
-							<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
-							<button id="form-btn" class="btn" disabled type="submit">预览报名信息</button>
+							<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
+							<button id="form-btn" class="btn" type="submit" disabled>预览报名信息</button>
 						</form>
 					</div>	
 				</c:if>
