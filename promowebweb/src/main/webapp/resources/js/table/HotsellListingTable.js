@@ -114,10 +114,11 @@ var BizReport = BizReport || {};
 					sWidth: "30px",
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
+						oRow.checked = oRow.state == 1;
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
-							checked: oRow.checked || oRow.state == 1
+							checked: oRow.checked
 						}));
 					}
 				},
@@ -306,6 +307,10 @@ var BizReport = BizReport || {};
 		
 		getDataSize: function() {
 			return this.oDataTable.data().length;
+		},
+		
+		getData: function() {
+			return this.oDataTable.data();
 		},
 		
 		hideCheckbox: function() {

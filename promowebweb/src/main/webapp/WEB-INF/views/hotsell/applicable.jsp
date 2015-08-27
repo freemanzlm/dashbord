@@ -84,7 +84,7 @@
 				
 				<div class="mt20" style="text-align: center;">
 					<form action="preview" method="post">
-						<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
+						<input type="hidden" name="listings" value="[]" />
 						<label for="accept"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 						<button id="form-btn" class="btn" disabled type="submit">预览报名信息</button>
 					</form>

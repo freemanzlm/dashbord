@@ -289,6 +289,10 @@ var BizReport = BizReport || {};
 			return this.selectedItems.length > 0;
 		},
 		
+		getData: function() {
+			return this.oDataTable.data();
+		},
+		
 		getDataSize: function() {
 			return this.oDataTable.data().length;
 		},

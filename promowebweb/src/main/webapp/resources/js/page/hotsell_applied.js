@@ -37,9 +37,10 @@ $(function(){
 		var listing = listingTable.selectedItems;
 		if (listing && listing.length > 0) {
 			// collect item ids into form hidden input and separated by comma.
-			form.find("input[name=listings]").val(listing.map(function(item){
-				return item.itemId;
-			}).join(","));
+			listing = listingTable.getData();
+			form.find("input[name=listings]").val("[" + listing.map(function(item){
+				return "{itemId: " + item.itemId + ", selected: " + (item.checked ? 1 : 0) + "}";
+			}).join(",") + "]");
 			
 			form.submit();
 		} else {
