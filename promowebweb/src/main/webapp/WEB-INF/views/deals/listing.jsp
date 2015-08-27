@@ -97,7 +97,9 @@
 								</c:otherwise>
 							</c:choose>
 							<menu>
-								<a href="../index" class="btn">返回活动列表</a>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
 							</menu>	
 						</div> <!-- active status box end -->		
 					</c:when>
@@ -113,9 +115,11 @@
 								</c:otherwise>
 							</c:choose>	
 							<menu>
-								<a href="../index" class="btn">返回活动列表</a>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
 							</menu>	
-						</div> <!-- active status box end -->					
+						</div> <!-- active status box end -->
 					</c:when>
 				</c:choose>
 				

@@ -40,7 +40,7 @@ BizReport.locale = {
 		    'other': '其他站点'
 		},
 		'listing': {
-			'info': '总共_TOTAL_个刊登'
+			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条刊登'
 		}
 	},
 	'promo': {

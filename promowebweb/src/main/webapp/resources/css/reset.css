@@ -33,3 +33,7 @@ a:focus, a:hover {
     color: #002398;
     text-decoration: none;
 }
+
+menu li {
+	list-style: none;
+}

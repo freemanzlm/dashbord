@@ -196,7 +196,6 @@ var BizReport = BizReport || {};
 					sType: "numeric",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							console.log(states[data]);
 							switch (parseInt(data)) {
 							case 7: // rewarding
 								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";

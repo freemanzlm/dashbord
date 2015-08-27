@@ -87,14 +87,20 @@
 						</c:choose>
 					</p>
 					<menu>
-						<a href="../index" class="btn">返回活动列表</a>
+						<li>
+							<a href="../index" class="btn">返回活动列表</a>
+						</li>
 					</menu>					
 				</div> <!-- active status box end -->
 				
 				<jsp:include page="activity.jsp"></jsp:include>
 		
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登</h3>
+					<h3>我提交的刊登
+						<c:if test="${ not expired }">
+							<small>（已选 <span>0</span> 项）</small>
+						</c:if>
+					</h3>
 					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
 				</div>	
 				

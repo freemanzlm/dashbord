@@ -103,7 +103,9 @@
 								我们将在活动结束后尽快公布统计结果，请耐心等待！
 							</p>
 							<menu>
-								<a href="../index" class="btn">返回活动列表</a>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
 							</menu>							
 						</c:when>
 						<c:when test="${state eq 'rewardCounting' }">
@@ -112,7 +114,9 @@
 								奖励结果统计中，请耐心等待！
 							</p>
 							<menu>
-								<a href="../index" class="btn">返回活动列表</a>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
 							</menu>
 						</c:when>
 						<c:when test="${state eq 'rewarding' or state eq 'agreement' }">
@@ -121,26 +125,32 @@
 								请在2015年8月8日前点击进入领奖流程完成申领。
 							</p>
 							<menu>
-								<c:choose>
-									<c:when test="${ state eq 'rewarding' }">
-										<a href="../index" class="btn">填写奖励申请协议</a>
-									</c:when>
-									<c:otherwise>
-										<a href="../index" class="btn">上传奖励申请协议</a>
-									</c:otherwise>
-								</c:choose>
+								<li>
+									<c:choose>
+										<c:when test="${ state eq 'rewarding' }">
+											<a href="../index" class="btn">填写奖励申请协议</a>
+										</c:when>
+										<c:otherwise>
+											<a href="../index" class="btn">上传奖励申请协议</a>
+										</c:otherwise>
+									</c:choose>
+								</li>
 							</menu>
 						</c:when>
 						<c:when test="${state eq 'complete' }">
 							<h3>您已成功领取等值888元的ebay万里通积分</h3>
 							<menu>
-								<a href="../index" class="btn">返回活动列表</a>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
 							</menu>
 						</c:when>
 						<c:when test="${state eq 'claimExpired' }">
 							<h3>很遗憾，您错过了最后的奖励领取时间，此活动已结束。</h3>
 							<menu>
-								<a href="../index" class="btn">返回活动列表</a>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
 							</menu>
 						</c:when>
 					</c:choose>

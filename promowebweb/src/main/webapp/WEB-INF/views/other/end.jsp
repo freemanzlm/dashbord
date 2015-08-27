@@ -62,7 +62,9 @@
 				<div class="active-status-box">
 					<h3>活动已结束，感谢您的参与！</h3>
 					<menu>
-						<a href="../index" class="btn">返回活动列表</a>
+						<li>
+							<a href="../index" class="btn">返回活动列表</a>
+						</li>
 					</menu>					
 				</div> <!-- active status box end -->
 				

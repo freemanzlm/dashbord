@@ -1,9 +1,10 @@
 $(function(){
 	var HotsellListingTable = BizReport.HotsellListingTable;
 	var termsDialog = BizReport.termsDialog;
-	var locale = BizReport.locale;
-	
+	var locale = BizReport.locale;	
 	var confirmDialog = new BizReport.ConfirmDialog();
+	
+	var listingCountJ = $(".my-listing h3 small span");
 	
 	var listingTable = new HotsellListingTable();
 	listingTable.init({
@@ -15,10 +16,12 @@ $(function(){
 			if (pageData && pageData.expired) {
 				// if it has passed the apply deadline date, user can't select listings and submit again.
 				listingTable.hideCheckbox();
+			} else {
+				listingCountJ.text(this.selectedItems.length);
 			}
 		},
 		selectChange: function(){
-			
+			listingCountJ.text(this.selectedItems.length);
 		}
 	}, listingTable);
 	listingTable.update();
