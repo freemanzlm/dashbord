@@ -16,7 +16,7 @@ import com.ebay.raptor.promotion.service.DealsListingService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 
 @Controller
-@RequestMapping(ResourceProvider.ListingRes.base)
+@RequestMapping(ResourceProvider.ListingRes.dealsBase)
 public class DealsListingController {
 
 	@Inject

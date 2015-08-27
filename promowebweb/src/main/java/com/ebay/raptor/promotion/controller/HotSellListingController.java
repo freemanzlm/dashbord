@@ -16,7 +16,7 @@ import com.ebay.raptor.promotion.service.HotSellListingService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 
 @Controller
-@RequestMapping(ResourceProvider.ListingRes.base)
+@RequestMapping(ResourceProvider.ListingRes.hotsellBase)
 public class HotSellListingController {
 
 	@Inject
