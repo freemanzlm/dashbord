@@ -51,6 +51,7 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
@@ -82,9 +83,9 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box">
-					<c:choose>
-						<c:when test="${state eq 'inquiry' }">
+				<c:choose>
+					<c:when test="${state eq 'inquiry' }">
+						<div class="active-status-box">
 							<h3>您已成功提交预审！请耐心等待预审结果。</h3>
 							
 							<c:choose>
@@ -95,8 +96,13 @@
 									<p class="desc">已超过报名有效期，您无法再修改刊登内容</p>
 								</c:otherwise>
 							</c:choose>
-						</c:when>
-						<c:when test="${state eq 'approved' }">
+							<menu>
+								<a href="../index" class="btn">返回活动列表</a>
+							</menu>	
+						</div> <!-- active status box end -->		
+					</c:when>
+					<c:when test="${state eq 'approved' }">
+						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已成功通过预审！</h3>
 							<c:choose>
 								<c:when test="${ not expired }">
@@ -105,14 +111,13 @@
 								<c:otherwise>
 									<p class="desc">已超过报名有效期，您无法再修改刊登内容</p>
 								</c:otherwise>
-							</c:choose>							
-						</c:when>
-					</c:choose>
-					
-					<menu>
-						<a href="../index" class="btn">返回活动列表</a>
-					</menu>	
-				</div> <!-- active status box end -->
+							</c:choose>	
+							<menu>
+								<a href="../index" class="btn">返回活动列表</a>
+							</menu>	
+						</div> <!-- active status box end -->					
+					</c:when>
+				</c:choose>
 				
 				<jsp:include page="activity.jsp"></jsp:include>
 				
@@ -149,6 +154,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/confirm.jsp" %>
 <jsp:include page="../dialog/terms.jsp"></jsp:include>
 
 <script type="text/javascript">

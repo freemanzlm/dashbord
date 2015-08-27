@@ -2,6 +2,8 @@ $(function(){
 	
 	var DealsListingTable = BizReport.DealsListingTable;
 	var termsDialog = BizReport.termsDialog;
+	var confirmDialog = new BizReport.ConfirmDialog();
+	var locale = BizReport.locale;
 	
 	var listingCountJ = $(".my-listing h3 small span");
 	
@@ -10,7 +12,7 @@ $(function(){
 	var listingTable = new DealsListingTable();
 	listingTable.subscribe({
 		initialized: function() {
-			if (pageData && (pageData.state != "confirm" || pageData.expired)) {
+			if (pageData && (pageData.state != "approved" || pageData.expired)) {
 				listingTable.hideCheckbox();
 			}
 		},
@@ -40,6 +42,30 @@ $(function(){
 			formBtn.setAttribute("disabled", "disabled");
 		}
 	});	
+	
+	confirmDialog.init();
+	confirmDialog.subscribe({
+		confirm: function() {
+			form.submit();
+		}
+	});
+	
+	$("#form-btn").click(function(event){
+		var listing = listingTable.getData();
+		form.find("input[name=listings]").val("[" + listing.map(function(item){
+			return "{itemId: " + item.itemId + ", selected: " + (item.checked ? 1 : 0) + "}";
+		}).join(",") + "]");
+		
+		listing = listingTable.selectedItems;
+		
+		if (listing && listing.length > 0) {
+			// collect item ids into form hidden input and separated by comma.
+			form.submit();
+		} else {
+			event.preventDefault();
+			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
+		}
+	});
 	
 	termsDialog.subscribe({
 		"scrollEnd": function() {
