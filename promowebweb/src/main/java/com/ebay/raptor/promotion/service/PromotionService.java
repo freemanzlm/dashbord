@@ -23,7 +23,7 @@ public class PromotionService extends BaseService {
 	}
 	
 	public List<Promotion> getPromotions(){
-		GingerClientResponse resp = httpGet(url(ResourceProvider.PromotionRes.listPromotions));
+		GingerClientResponse resp = httpGet(url(ResourceProvider.PromotionRes.getPromotions));
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<ListDataServiceResponse<Promotion>> type = new GenericType<ListDataServiceResponse<Promotion>>(){};
 			ListDataServiceResponse<Promotion> promos = resp.getEntity(type);

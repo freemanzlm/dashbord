@@ -11,7 +11,7 @@ public class ResourceProvider {
 	public interface PromotionRes {
 		String base = "promotion";
 
-		String listPromotions = "/listPromotions";
+		String getPromotions = "/getPromotions";
 		String getPromotionById = "/getPromotionById";
 	}
 	
@@ -21,7 +21,8 @@ public class ResourceProvider {
 	}
 	
 	public interface ListingRes {
-		String base = "listing";
+		String dealsBase = "deals";
+		String hotsellBase = "hotsell";
 		
 		String getApplicableListings = "/getApplicableListings";
 		String uploadPresetListings = "/uploadPresetListings";

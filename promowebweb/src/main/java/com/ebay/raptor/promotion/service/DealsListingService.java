@@ -17,7 +17,7 @@ import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 public class DealsListingService extends BaseService {
 
 	private String url(String url){
-		return secureUrl(ResourceProvider.ListingRes.base) + url;
+		return secureUrl(ResourceProvider.ListingRes.dealsBase) + url;
 	}
 	
 	public List<DealsListing> getListing(){
