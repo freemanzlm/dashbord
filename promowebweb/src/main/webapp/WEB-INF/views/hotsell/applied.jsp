@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>爆款促销 - 已提交报名</title>
-	<meta name="description" content="爆款促销 - 已提交报名">
+	<title>爆款促销 </title>
+	<meta name="description" content="爆款促销 ">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />

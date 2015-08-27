@@ -13,16 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:choose>
-		<c:when test="${state eq 'inquiry' }">
-			<title>Deals - 报名预审中</title>					
-		</c:when>
-		<c:when test="${state eq 'approved' }">
-			<title>Deals - 确认报名刊登</title>
-		</c:when>
-	</c:choose>
-	
-	<meta name="description" content="爆款促销 ">
+	<title>Deals招募</title>
+	<meta name="description" content="Deals招募 ">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />

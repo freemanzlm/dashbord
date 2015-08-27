@@ -12,22 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<c:choose>
-		<c:when test="${state eq 'ongoing' }">
-			<title>Deals招募 - 活动进行中</title>						
-		</c:when>
-		<c:when test="${state eq 'rewardCounting' }">
-			<title>Deals招募 - 奖励确认中</title>
-		</c:when>
-		<c:when test="${state eq 'rewarding' }">
-			<title>Deals招募 - 申领奖励</title>
-		</c:when>
-		<c:when test="${state eq 'complete' }">
-			<title>Deals招募 - 活动完成</title>
-		</c:when>
-	</c:choose>
-	
-	<meta name="description" content="Deals招募 ">
+	<title>Deals预置</title>
+	<meta name="description" content="Deals预置 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	

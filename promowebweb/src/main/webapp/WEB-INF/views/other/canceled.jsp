@@ -13,8 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals</title>
-	<meta name="description" content="Deals ">
+	<title>其他活动</title>
+	<meta name="description" content="其他活动 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	

@@ -12,7 +12,7 @@
 <html>
 <head>
 	<title>已选择的刊登预览</title>
-	<meta name="description" content="Deals - 可报名">
+	<meta name="description" content="Deals预置">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />

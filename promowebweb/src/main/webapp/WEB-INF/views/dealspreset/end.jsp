@@ -13,8 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals招募 </title>
-	<meta name="description" content="Deals招募 ">
+	<title>Deals预置 </title>
+	<meta name="description" content="Deals预置 ">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />

@@ -13,7 +13,7 @@
 <html>
 <head>
 	<title>其他活动</title>
-	<meta name="author" content="eBay: Apps">
+	<meta name="author" content="其他活动">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	

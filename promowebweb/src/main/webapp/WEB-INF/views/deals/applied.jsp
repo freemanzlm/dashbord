@@ -11,8 +11,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals - 已提交报名</title>
-	<meta name="description" content="爆款促销 - 已提交报名">
+	<title>Deals招募</title>
+	<meta name="description" content="Deals招募">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -109,7 +109,7 @@
 							<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
 							<form id="upload-form" action="upload" class="mt30" method="post">
 								选择上传您的刊登列表 
-								<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="*.xsl" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
+								<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
 							</form>
 						</div>
 					</div>
