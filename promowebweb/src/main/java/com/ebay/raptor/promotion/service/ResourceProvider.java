@@ -11,8 +11,10 @@ public class ResourceProvider {
 	public interface PromotionRes {
 		String base = "promotion";
 
-		String getPromotions = "/getPromotions";
-		String getPromotionById = "/getPromotionById";
+		String _getPromotions = "/getPromotions";
+		String getPromotions = "/getPromotions/uid/{uid}";
+		String _getPromotionById = "/getPromotionById";
+		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}";
 	}
 	
 	public interface UserPromotionRes {
@@ -24,11 +26,15 @@ public class ResourceProvider {
 		String dealsBase = "deals";
 		String hotsellBase = "hotsell";
 		
-		String getApplicableListings = "/getApplicableListings";
-		String uploadPresetListings = "/uploadPresetListings";
-		String getAppliedListings = "/getAppliedListings";
-		String getApprovedListings = "/getApprovedListings";
+		String _getApplicableListings = "/getApplicableListings";
+		String getApplicableListings = "/getApplicableListings/promoId/{promoId}/uid/{uid}";
+		String _getAppliedListings = "/getAppliedListings";
+		String getAppliedListings = "/getAppliedListings/promoId/{promoId}/uid/{uid}";
+		String _getApprovedListings = "/getApprovedListings";
+		String getApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}";
+		
 		String getSKUsByPromotionId = "/getSKUsByPromotionId";
+		String uploadPresetListings = "/uploadPresetListings";
 		String uploadDealsListings = "/uploadDealsListings";
 		String uploadApprovedDealsListings = "/uploadApprovedDealsListings";
 	}

@@ -2,6 +2,8 @@ package com.ebay.raptor.promotion.pojo.business;
 
 public class HotSellListing {
 
+	private String skuId;
+	
 	private Long itemId;
 
 	private String name;
@@ -80,6 +82,14 @@ public class HotSellListing {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public String getSkuId() {
+		return skuId;
+	}
+
+	public void setSkuId(String skuId) {
+		this.skuId = skuId;
 	}
 
 }

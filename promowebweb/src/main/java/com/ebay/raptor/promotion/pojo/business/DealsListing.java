@@ -2,6 +2,8 @@ package com.ebay.raptor.promotion.pojo.business;
 
 public class DealsListing {
 
+	private String skuId;
+	
 	private Long itemId;
 
 	private String name;
@@ -10,7 +12,7 @@ public class DealsListing {
 
 	private String currency;
 
-	private Integer inventory;
+	private Float inventory;
 
 	private Float actPrice;
 
@@ -48,11 +50,11 @@ public class DealsListing {
 		this.currency = currency;
 	}
 
-	public Integer getInventory() {
+	public Float getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(Integer inventory) {
+	public void setInventory(Float inventory) {
 		this.inventory = inventory;
 	}
 
@@ -70,6 +72,14 @@ public class DealsListing {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public String getSkuId() {
+		return skuId;
+	}
+
+	public void setSkuId(String skuId) {
+		this.skuId = skuId;
 	}
 
 }
