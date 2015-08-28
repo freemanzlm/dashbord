@@ -9,11 +9,13 @@ import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.util.DummyDataBuilder;
+import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.business.UserPromotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
+import com.ebay.raptor.promotion.pojo.service.resp.PromotionResponse;
 
 @Component
 public class PromotionService extends BaseService {
@@ -22,8 +24,9 @@ public class PromotionService extends BaseService {
 		return secureUrl(ResourceProvider.PromotionRes.base) + url;
 	}
 	
-	public List<Promotion> getPromotions(){
-		GingerClientResponse resp = httpGet(url(ResourceProvider.PromotionRes.getPromotions));
+	public List<Promotion> getPromotions(Long uid) throws PromoException{
+		String uri = url(params(ResourceProvider.PromotionRes.getPromotions, new Object[]{"{uid}", uid}));
+		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<ListDataServiceResponse<Promotion>> type = new GenericType<ListDataServiceResponse<Promotion>>(){};
 			ListDataServiceResponse<Promotion> promos = resp.getEntity(type);
@@ -34,10 +37,31 @@ public class PromotionService extends BaseService {
 					d.setState(DummyDataBuilder.randomInteger(13));
 				}
 				return promos.getData();
+			} else {
+				if(null != promos && null != promos.getErrorMessage() && null != promos.getErrorMessage().getError()){
+					throw new PromoException(promos.getErrorMessage().getError().toString());
+				}
 			}
 		} else {
-			System.out.println(resp.getStatus());
-			System.out.println(resp.getEntity(String.class));
+			throw new PromoException("Internal Error happens.");
+		}
+		return null;
+	}
+	
+	public Promotion getPromotionById(String promoId, Long uid) throws PromoException{
+		String uri = url(params(ResourceProvider.PromotionRes.getPromotionById, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			PromotionResponse promo = resp.getEntity(PromotionResponse.class);
+			if(null != promo && AckValue.SUCCESS == promo.getAckValue()){
+				return promo.getPromotion();
+			} else {
+				if(null != promo && null != promo.getErrorMessage() && null != promo.getErrorMessage().getError()){
+					throw new PromoException(promo.getErrorMessage().getError().toString());
+				}
+			}
+		} else {
+			throw new PromoException("Internal Error happens.");
 		}
 		return null;
 	}

@@ -10,6 +10,16 @@ import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.ebayopensource.ginger.client.GingerWebTarget;
 
 public class BaseService {
+
+	protected String params(String url, Object... objs){
+		for(int pos = 0; pos < objs.length; pos = pos + 2){
+            if(null == objs[pos + 1]){
+                continue;
+            }
+            url = url.replace(objs[pos].toString(), objs[pos + 1].toString());
+        }
+		return url;
+	}
 	
 	protected String secureUrl(String url){
 		return "/promoser/" + url;
