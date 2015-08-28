@@ -1,6 +1,7 @@
 {
 	"data": [
 		{
+			"promoId": 43432484,
 			"name": "campaign 1",
 			"type": 0,
 			"promoSdt": "2015-02-01",
@@ -8,10 +9,12 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "38",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 11
 		},
 		{
+			"promoId": 343248734,
 			"name": "campaign 2",
 			"type": 1,
 			"promoSdt": "2015-02-01",
@@ -19,10 +22,12 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "0.26",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 12
 		},
 		{
+			"promoId": 43432483234,
 			"name": "campaign 3",
 			"type": 3,
 			"promoSdt": "2015-02-01",
@@ -30,10 +35,12 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "24",
+			"rewarding": false,
 			"currency": "USD",
 			"state": 13
 		},
 		{
+			"promoId": 43432484,
 			"name": "campaign 4",
 			"type": 2,
 			"promoSdt": "2015-02-01",
@@ -41,10 +48,12 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 11
 		},
 		{
+			"promoId": 4343243734,
 			"name": "campaign 4",
 			"type": 2,
 			"promoSdt": "2015-02-01",
@@ -52,10 +61,12 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
+			"rewarding": false,
 			"currency": "USD",
 			"state": 15
 		},
 		{
+			"promoId": 4343248234,
 			"name": "campaign 4",
 			"type": 2,
 			"promoSdt": "2015-02-01",
@@ -63,6 +74,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 16
 		}

@@ -17,51 +17,64 @@ var BizReport = BizReport || {};
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
 	var states = ['applicable', 'approved', 'submitted', 'applied', 'verifying', 'ongoing', 'rewardCounting', 'rewarding', 'claimFail', 'agreement', 'rewardVerifying', 'complete', 'applyExpired', 'verifyFailed', 'claimExpired', 'canceled', 'end'];
 	
-	function getLink(type, state) {
+	function getLink(type, state, promoId) {
 		switch (type) {
 		case 0: // deals
 			switch(state) {
-			case 0: return "deals/applicable";
-			case 1: return "deals/listing";
-			case 2: return "deals/listing";
-			case 3: return "deals/applied";
+			case 0: return "deals/applicable/?promoId" + promoId;
+			case 1: return "deals/listing/?promoId" + promoId;
+			case 2: return "deals/listing/?promoId" + promoId;
+			case 3: return "deals/applied/?promoId" + promoId;
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
 			case 8: // agreement
-			case 9: return "deals/state"; // complete
+			case 9: // rewardVerifying
+			case 10: // rewardVerifying
+			case 11:
+				return "deals/state/?promoId" + promoId; // complete
+			default: return "deals/end/?promoId" + promoId; // complete
 			}
-			break;
 		case 1:
 			switch(state) {
-			case 0: return "dealsPreset/applicable";
-			case 1: return "dealsPreset/applicationConfirm";
-			case 2: return "dealsPreset/applied";
-			case 3: return "dealsPreset/ongoing";
-			case 4: return "dealsPreset/applied";
-			case 5: return "dealsPreset/applied";
+			case 0: return "dealspreset/applicable/?promoId" + promoId; // applicable
+			case 3: return "dealspreset/applied/?promoId" + promoId; // applied
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // claimFail
+			case 9: // agreement
+			case 10: // rewardVerifying
+			case 11:
+				return "dealspreset/state/?promoId" + promoId; // complete
+			default: return "dealspreset/end/?promoId" + promoId;
 			}
-			break;
 		case 2:
 			switch(state) {
-			case 0: return "hotsell/applicable";
-			case 3: return "hotsell/applied";
+			case 0: return "hotsell/applicable/?promoId" + promoId; // applicable
+			case 3: return "hotsell/applied/?promoId" + promoId; // applied
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
 			case 8: // agreement
-			case 9: return "hotsell/state"; // complete
+			case 9: // rewardVerifying
+			case 10: // rewardVerifying
+			case 11:
+				return "hotsell/state/?promoId" + promoId; // complete
+			default: return "hotsell/end/?promoId" + promoId;
 			}
-			break;
 		default:
 			switch(state) {
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
-			case 8: // agreement
-			case 9: return "other/state"; // complete
+			case 8: // claimFail
+			case 9: // agreement
+			case 10: // rewardVerifying
+			case 11:
+				return "other/state/?promoId" + promoId; // complete
+			default: return "other/end/?promoId" + promoId;
 			}
-			break;
 		}
 		
 		return "";
@@ -134,8 +147,7 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a href='http://www.ebay.com/itm/" + full.itemId
-							    + "' data-item-id='" + full.itemId + "'>" + data + "</a>";
+							return "<a href='" + getLink(full.type, full.state, full.promoId) + "'>" + data + "</a>";
 						}
 						
 						return data;
@@ -181,9 +193,19 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var val = parseFloat(data);
 						if (type == "display") {
-							if (!isNaN(val)) {
-								return val.toUSFixed(2) + " (" + full.currency + ")";
+							if (full.rewarding) {
+								if (!isNaN(val) && full.state != 6) {
+									return val.toUSFixed(2) + " (" + full.currency + ")";
+								} else {
+									return locale.getText('dataTable.promo.rewardCounting');
+								}
+							} else {
+								return locale.getText('dataTable.promo.noReward');
 							}
+						}
+						
+						if (type == "sort") {
+							return isNaN(val) ? -1 : val;
 						}
 
 						return data;
@@ -198,13 +220,13 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							switch (parseInt(data)) {
 							case 7: // rewarding
-								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								return "<a class='btn' href='" + getLink(full.type, full.state, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							case 8: // upload agreement
-								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								return "<a class='btn' href='" + getLink(full.type, full.state, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							case 9: // reclaim reward
-								return "<a class='btn'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								return "<a class='btn' href='" + getLink(full.type, full.state, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							default:
-								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a>查看详情</a>";
+								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, full.state, full.promoId) + "'>查看详情</a>";
 							}
 						}
 

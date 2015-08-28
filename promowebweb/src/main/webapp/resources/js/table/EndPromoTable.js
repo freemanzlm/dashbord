@@ -17,31 +17,31 @@ var BizReport = BizReport || {};
 	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
 	var states = ['applicable', 'approved', 'submitted', 'applied', 'verifying', 'ongoing', 'rewardCounting', 'rewarding', 'claimFail', 'agreement', 'rewardVerifying', 'complete', 'applyExpired', 'verifyFailed', 'claimExpired', 'canceled', 'end'];
 	
-	function getLink(type, state) {
+	function getLink(type, state, promoId) {
 		type = parseInt(type), state = parseInt(state);
 		switch (type) {
 		case 0:
 			switch(state) {
-			case 5: return "deals/state";
-			default: return 'deals/end';
+			case 11: return "deals/state/?promoId" + promoId;
+			default: return "deals/end/?promoId" + promoId;
 			}
 			break;
 		case 1:
 			switch(state) {
-			case 5: return "dealsPreset/state";
-			default: return "dealsPreset/end";
+			case 11: return "dealspreset/state/?promoId" + promoId;
+			default: return "dealspreset/end/?promoId" + promoId;
 			}
 			break;
 		case 2:
 			switch(state) {
-			case 5: return "hotsell/state";
-			default: return "hotsell/end";
+			case 11: return "hotsell/state/?promoId" + promoId;
+			default: return "hotsell/end/?promoId" + promoId;
 			}
 			break;
 		default:
 			switch(state) {
-			case 5: return "other/state";
-			default: return "other/end";
+			case 11: return "other/state/?promoId" + promoId;
+			default: return "other/end/?promoId" + promoId;
 			}
 			break;
 		}
@@ -115,8 +115,7 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a href='http://www.ebay.com/itm/" + full.itemId
-							    + "' data-item-id='" + full.itemId + "'>" + data + "</a>";
+							return "<a href='" + getLink(full.type, full.state, full.promoId) + "'>" + data + "</a>";
 						}
 						
 						return data;
@@ -162,12 +161,20 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var val = parseFloat(data);
 						if (type == "display") {
-							if (!isNaN(val)) {
-								return val.toUSFixed(2) + " (" + full.currency + ")";
+							if (full.rewarding) {
+								if (!isNaN(val) && full.state != 6) {
+									return val.toUSFixed(2) + " (" + full.currency + ")";
+								} else {
+									return locale.getText('dataTable.promo.rewardCounting');
+								}
+							} else {
+								return locale.getText('dataTable.promo.noReward');
 							}
 						}
-
-						return data;
+						
+						if (type == "sort") {
+							return isNaN(val) ? -1 : val;
+						}
 					}
 				},
 				{
@@ -177,9 +184,9 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (data == 11) { // complete
-								return locale.getText('promo.state.complete') + "<br/><a href='" + getLink(full.type, data)  + "'>查看详情</a>";
+								return locale.getText('promo.state.complete') + "<br/><a href='" + getLink(full.type, data, full.promoId)  + "'>查看详情</a>";
 							} else {
-								return "<a href='" + getLink(full.type, data)  + "'>查看详情</a>";
+								return "<a href='" + getLink(full.type, data, full.promoId)  + "'>查看详情</a>";
 							}
 						}
 						

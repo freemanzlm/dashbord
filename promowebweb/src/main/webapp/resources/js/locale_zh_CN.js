@@ -41,6 +41,13 @@ BizReport.locale = {
 		},
 		'listing': {
 			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条刊登'
+		},
+		'skuList': {
+			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条SKU'
+		},
+		'promo': {
+			'rewardCounting': '待评估',
+			'noReward': '无奖励'
 		}
 	},
 	'promo': {

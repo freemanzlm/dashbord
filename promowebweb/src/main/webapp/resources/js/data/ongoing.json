@@ -1,123 +1,146 @@
 {
 	"data": [
 		{
+			"promoId": 43432434,
 			"name": "campaign 1",
 			"type": 0,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-07-01",
 			"reward": "38",
+			"rewarding": false,
 			"currency": "USD",
 			"state": 0
 		},
 		{
+			"promoId": 43432432,
 			"name": "campaign 1",
 			"type": 0,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-09-01",
 			"reward": "38",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 1
 		},
 		{
+			"promoId": 43432634,
 			"name": "campaign 1",
 			"type": 0,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-03-01",
 			"reward": "38",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 2
 		},
 		{
+			"promoId": 434322434,
 			"name": "campaign 2",
 			"type": 1,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-07-01",
 			"reward": "0.26",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 0
 		},
 		{
+			"promoId": 434334,
 			"name": "campaign 2",
 			"type": 1,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-05-01",
 			"reward": "0.26",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 1
 		},
 		{
+			"promoId": 4343249834,
 			"name": "campaign 2",
 			"type": 1,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-07-01",
 			"reward": "0.26",
+			"rewarding": false,
 			"currency": "USD",
 			"state": 2
 		},
 		{
+			"promoId": 4332432434,
 			"name": "campaign 4",
 			"type": 2,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-04-01",
 			"reward": "15",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 0
 		},
 		{
+			"promoId": 4343243094,
 			"name": "campaign 4",
 			"type": 2,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-09-01",
 			"reward": "15",
+			"rewarding": false,
 			"currency": "USD",
 			"state": 1
 		},
 		{
+			"promoId": 434302434,
 			"name": "campaign 4",
 			"type": 2,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-05-01",
 			"reward": "15",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 2
 		},
 		{
+			"promoId": 430432434,
 			"name": "campaign 4",
 			"type": 2,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-07-01",
 			"reward": "15",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 3
 		},
 		{
+			"promoId": 4343248734,
 			"name": "campaign 3",
 			"type": 3,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-08-01",
 			"reward": "24",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 5
 		},
-		
 		{
+			"promoId": 434322434,
 			"name": "campaign 4",
 			"type": 2,
 			"promoDlDt": "2015-02-01",
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-04-01",
 			"reward": "15",
+			"rewarding": true,
 			"currency": "USD",
 			"state": 0
 		}
