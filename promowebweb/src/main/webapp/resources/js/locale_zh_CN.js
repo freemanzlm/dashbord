@@ -47,7 +47,8 @@ BizReport.locale = {
 		},
 		'promo': {
 			'rewardCounting': '待评估',
-			'noReward': '无奖励'
+			'noReward': '无奖励',
+			'emptyTable': '<p>没有符合筛选条件的活动。</p>',
 		}
 	},
 	'promo': {

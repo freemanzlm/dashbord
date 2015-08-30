@@ -61,7 +61,7 @@ var BizReport = BizReport || {};
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header">t<"datatable_pager"p>',
 				'oLanguage': {
-					sEmptyTable: locale.getText('dataTable.emptyTable'),
+					sEmptyTable: locale.getText('dataTable.promo.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
@@ -189,6 +189,12 @@ var BizReport = BizReport || {};
 								return 12;
 							}
 						}
+						
+						if (type == "filter") {
+							if (data != 11) {
+								return 4;
+							}
+						}
 
 						return data;
 					}
@@ -243,45 +249,7 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
-			}, this.dataTable);
-			
-			function showRowDetail(nTr) {
-				if (!nTr) return;
-				
-				closeRow(openRow);
-				nTr.setAttribute("open", "");
-				openRow = nTr;
-				var nOpenRow = that.fnOpenCallback(nTr);
-				that.publish("open", {nTr: nTr, openTr: nOpenRow, data: oDataTable.row(nTr).data()});
-			}
-			
-			function closeRow(nTr) {
-				if (!nTr) return;
-				
-				nTr.removeAttribute("open");
-				$(nTr).find("button").html(locale.getText('dataTable.open')).removeAttr("open");
-				that.dataTable.$dataTable.fnClose(nTr);
-				that.publish("close", {nTr: nTr});
-			}
-			
-			this.dataTable.table.find("button").live("click", function(){
-				var nTr = $(this).parents("tr").get(0);
-				
-				if (this.hasAttribute("open")) {
-					closeRow(nTr);
-					this.removeAttribute("open");
-					this.innerHTML=locale.getText('dataTable.open');
-				} else {
-					showRowDetail(nTr);
-					this.setAttribute("open", "");
-					this.innerHTML=locale.getText('dataTable.close');
-				}
-			});
-			
-			this.dataTable.table.on("order.dt page.dt", function(){
-				closeRow(openRow);
-			});
-			
+			}, this.dataTable);			
 		},
 		
 		initDataTable: function() {

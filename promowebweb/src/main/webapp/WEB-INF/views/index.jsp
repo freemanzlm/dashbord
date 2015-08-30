@@ -68,18 +68,18 @@
 				<div class="header">
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
-							<option value="">所有进行中的活动</option>
-							<option value="0">可报名活动</option>
+							<option value="">显示所有活动</option>
+							<option value="0">可报名的活动</option>
 							<option value="1">待确认报名刊登的活动</option>
 							<option value="2">已提交预审的活动</option>
 							<option value="3">已提交报名的活动</option>
-							<option value="4">报名审核中的活动</option>
 							<option value="5">进行中的活动</option>
 							<option value="6">奖励确认中的活动</option>
+							<option value="4">只能查看详细的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
-							<option value="0">爆款促销活动</option>
+							<option value="0">爆款促销</option>
 							<option value="1">Deals</option>
 							<option value="2">Deals招募</option>
 							<option value="3">其它活动</option>
@@ -94,15 +94,15 @@
 				<div class="header">
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
-							<option value="">所有进行中的活动</option>
-							<option value="7">待申领奖励的活动</option>
+							<option value="">显示所有活动</option>
+							<option value="7">可申领奖励的活动</option>
 							<option value="8">需要重新申领奖励的活动</option>
 							<option value="9">待上传协议的活动</option>
-							<option value="10">奖励审核中的活动</option>
+							<option value="10">申领审核中的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
-							<option value="0">爆款促销活动</option>
+							<option value="0">爆款促销</option>
 							<option value="1">Deals</option>
 							<option value="2">Deals招募</option>
 							<option value="3">其它活动</option>
@@ -117,12 +117,13 @@
 				<div class="header">
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
-							<option value="">所有已结束的活动</option>
+							<option value="">显示所有活动</option>
 							<option value="11">领取奖励成功的活动</option>
+							<option value="4">只能查看详细的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
-							<option value="0">爆款促销活动</option>
+							<option value="0">爆款促销</option>
 							<option value="1">Deals</option>
 							<option value="2">Deals招募</option>
 							<option value="3">其它活动</option>

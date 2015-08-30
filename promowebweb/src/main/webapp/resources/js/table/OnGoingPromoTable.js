@@ -95,7 +95,7 @@ var BizReport = BizReport || {};
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header">t<"datatable_pager"p>',
 				'oLanguage': {
-					sEmptyTable: locale.getText('dataTable.emptyTable'),
+					sEmptyTable: locale.getText('dataTable.promo.emptyTable'),
 					sInfo: locale.getText('dataTable.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
@@ -225,7 +225,6 @@ var BizReport = BizReport || {};
 									return "<a class='btn' href='" + getLink(full.type, data, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 2:
 								case 3:
-								case 4:
 								case 5:
 								case 6:
 									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
@@ -249,6 +248,22 @@ var BizReport = BizReport || {};
 									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								} else {
 									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
+								}
+							}
+						}
+						
+						if (type == "filter") {
+							if (full.type == 1) {
+								if (data == 4 || data > 6) {
+									return 4;
+								}
+							} else if (full.type != 3) {
+								if (data == 1 || data == 2 || data > 6) {
+									return 4;
+								}
+							} else {
+								if (data != 6) {
+									return 4;
 								}
 							}
 						}
@@ -306,45 +321,7 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
-			}, this.dataTable);
-			
-			function showRowDetail(nTr) {
-				if (!nTr) return;
-				
-				closeRow(openRow);
-				nTr.setAttribute("open", "");
-				openRow = nTr;
-				var nOpenRow = that.fnOpenCallback(nTr);
-				that.publish("open", {nTr: nTr, openTr: nOpenRow, data: oDataTable.row(nTr).data()});
-			}
-			
-			function closeRow(nTr) {
-				if (!nTr) return;
-				
-				nTr.removeAttribute("open");
-				$(nTr).find("button").html(locale.getText('dataTable.open')).removeAttr("open");
-				that.dataTable.$dataTable.fnClose(nTr);
-				that.publish("close", {nTr: nTr});
-			}
-			
-			this.dataTable.table.find("button").live("click", function(){
-				var nTr = $(this).parents("tr").get(0);
-				
-				if (this.hasAttribute("open")) {
-					closeRow(nTr);
-					this.removeAttribute("open");
-					this.innerHTML=locale.getText('dataTable.open');
-				} else {
-					showRowDetail(nTr);
-					this.setAttribute("open", "");
-					this.innerHTML=locale.getText('dataTable.close');
-				}
-			});
-			
-			this.dataTable.table.on("order.dt page.dt", function(){
-				closeRow(openRow);
-			});
-			
+			}, this.dataTable);			
 		},
 		
 		initDataTable: function() {
