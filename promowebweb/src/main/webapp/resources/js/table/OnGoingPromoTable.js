@@ -14,46 +14,15 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
+	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
 	var states = ['applicable', 'approved', 'submitted', 'applied', 'verifying', 'ongoing', 'rewardCounting', 'rewarding', 'claimFail', 'agreement', 'rewardVerifying', 'complete', 'applyExpired', 'verifyFailed', 'claimExpired', 'canceled', 'end'];
 	
 	function getLink(type, state, promoId) {
 		switch (type) {
 		case 0: // deals
 			switch(state) {
-			case 0: return "deals/applicable/?promoId" + promoId; // applicable
-			case 1: return "deals/applied/?promoId" + promoId; // approved
-			case 2: return "deals/listing/?promoId" + promoId; // submitted
-			case 3: return "deals/applied/?promoId" + promoId; // applied
-			case 4: return "deals/listing/?promoId" + promoId; // verifying
-			case 5: // ongoing
-			case 6: // rewardCounting
-			case 7: // rewarding
-			case 8: // claimFail
-			case 9: // agreement
-			case 10: // rewardVerifying
-			case 11:
-				return "deals/state/?promoId" + promoId; // complete
-			default: return "deals/end/?promoId" + promoId;
-			}
-		case 1:
-			switch(state) {
-			case 0: return "dealspreset/applicable/?promoId" + promoId; // applicable
-			case 3: return "dealspreset/applied/?promoId" + promoId; // applied
-			case 5: // ongoing
-			case 6: // rewardCounting
-			case 7: // rewarding
-			case 8: // claimFail
-			case 9: // agreement
-			case 10: // rewardVerifying
-			case 11:
-				return "dealspreset/state/?promoId" + promoId; // complete
-			default: return "dealspreset/end/?promoId" + promoId;
-			}
-		case 2:
-			switch(state) {
-			case 0: return "hotsell/applicable/?promoId" + promoId; // applicable
-			case 3: return "hotsell/applied/?promoId" + promoId; // applied
+			case 0: return "hotsell/applicable/?promoId=" + promoId; // applicable
+			case 3: return "hotsell/applied/?promoId=" + promoId; // applied
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
@@ -61,8 +30,39 @@ var BizReport = BizReport || {};
 			case 9: // rewardVerifying
 			case 10: // rewardVerifying
 			case 11:
-				return "hotsell/state/?promoId" + promoId; // complete
-			default: return "hotsell/end/?promoId" + promoId;
+				return "hotsell/state/?promoId=" + promoId; // complete
+			default: return "hotsell/end/?promoId=" + promoId;
+			}
+		case 1:
+			switch(state) {
+			case 0: return "deals/applicable/?promoId=" + promoId; // applicable
+			case 1: return "deals/applied/?promoId=" + promoId; // approved
+			case 2: return "deals/listing/?promoId=" + promoId; // submitted
+			case 3: return "deals/applied/?promoId=" + promoId; // applied
+			case 4: return "deals/listing/?promoId=" + promoId; // verifying
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // claimFail
+			case 9: // agreement
+			case 10: // rewardVerifying
+			case 11:
+				return "deals/state/?promoId=" + promoId; // complete
+			default: return "deals/end/?promoId=" + promoId;
+			}
+		case 2:
+			switch(state) {
+			case 0: return "dealspreset/applicable/?promoId=" + promoId; // applicable
+			case 3: return "dealspreset/applied/?promoId=" + promoId; // applied
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // claimFail
+			case 9: // agreement
+			case 10: // rewardVerifying
+			case 11:
+				return "dealspreset/state/?promoId=" + promoId; // complete
+			default: return "dealspreset/end/?promoId=" + promoId;
 			}
 		default:
 			switch(state) {
@@ -73,8 +73,8 @@ var BizReport = BizReport || {};
 			case 9: // agreement
 			case 10: // rewardVerifying
 			case 11:
-				return "other/state/?promoId" + promoId; // complete
-			default: return "other/end/?promoId" + promoId;
+				return "other/state/?promoId=" + promoId; // complete
+			default: return "other/end/?promoId=" + promoId;
 			}
 		}
 	}
@@ -187,13 +187,14 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["reward"],
+					bSortable: false,
 					sClass: "text-right",
 					sDefaultContent: "-",
 					mRender: function(data, type, full) {
 						var val = parseFloat(data);
 						if (type == "display") {
-							if (full.rewarding) {
-								if (!isNaN(val) && full.state != 6) {
+							if (full.rewardType != 0) {
+								if (val > 0) {
 									return val.toUSFixed(2) + " (" + full.currency + ")";
 								} else {
 									return locale.getText('dataTable.promo.rewardCounting');
@@ -221,33 +222,33 @@ var BizReport = BizReport || {};
 								switch (data) {
 								case 0:
 								case 1:
-									return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+									return "<a class='btn' href='" + getLink(full.type, data, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 2:
 								case 3:
 								case 4:
 								case 5:
 								case 6:
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								default:
-									return "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								}
 							} else if (full.type != 3) {
 								switch (data) {
 								case 0:
 								case 1:
-									return "<a class='btn' href='" + getLink(full.type, data) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+									return "<a class='btn' href='" + getLink(full.type, data, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 3:
 								case 5:
 								case 6:
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								default:
-									return "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								}
 							} else {
 								if (data == 5 || data == 6) {
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								} else {
-									return "<a href='" + getLink(full.type, data) + "'>查看详情</a>";
+									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								}
 							}
 						}

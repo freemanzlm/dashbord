@@ -14,17 +14,15 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var promos = ['deals', 'dealsPreset', 'hotsell', 'other'];
+	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
 	var states = ['applicable', 'approved', 'submitted', 'applied', 'verifying', 'ongoing', 'rewardCounting', 'rewarding', 'claimFail', 'agreement', 'rewardVerifying', 'complete', 'applyExpired', 'verifyFailed', 'claimExpired', 'canceled', 'end'];
 	
 	function getLink(type, state, promoId) {
 		switch (type) {
 		case 0: // deals
 			switch(state) {
-			case 0: return "deals/applicable/?promoId" + promoId;
-			case 1: return "deals/listing/?promoId" + promoId;
-			case 2: return "deals/listing/?promoId" + promoId;
-			case 3: return "deals/applied/?promoId" + promoId;
+			case 0: return "hotsell/applicable/?promoId=" + promoId; // applicable
+			case 3: return "hotsell/applied/?promoId=" + promoId; // applied
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
@@ -32,13 +30,29 @@ var BizReport = BizReport || {};
 			case 9: // rewardVerifying
 			case 10: // rewardVerifying
 			case 11:
-				return "deals/state/?promoId" + promoId; // complete
-			default: return "deals/end/?promoId" + promoId; // complete
+				return "hotsell/state/?promoId=" + promoId; // complete
+			default: return "hotsell/end/?promoId=" + promoId;
 			}
 		case 1:
 			switch(state) {
-			case 0: return "dealspreset/applicable/?promoId" + promoId; // applicable
-			case 3: return "dealspreset/applied/?promoId" + promoId; // applied
+			case 0: return "deals/applicable/?promoId=" + promoId;
+			case 1: return "deals/listing/?promoId=" + promoId;
+			case 2: return "deals/listing/?promoId=" + promoId;
+			case 3: return "deals/applied/?promoId=" + promoId;
+			case 5: // ongoing
+			case 6: // rewardCounting
+			case 7: // rewarding
+			case 8: // agreement
+			case 9: // rewardVerifying
+			case 10: // rewardVerifying
+			case 11:
+				return "deals/state/?promoId=" + promoId; // complete
+			default: return "deals/end/?promoId=" + promoId; // complete
+			}
+		case 2:
+			switch(state) {
+			case 0: return "dealspreset/applicable/?promoId=" + promoId; // applicable
+			case 3: return "dealspreset/applied/?promoId=" + promoId; // applied
 			case 5: // ongoing
 			case 6: // rewardCounting
 			case 7: // rewarding
@@ -46,22 +60,8 @@ var BizReport = BizReport || {};
 			case 9: // agreement
 			case 10: // rewardVerifying
 			case 11:
-				return "dealspreset/state/?promoId" + promoId; // complete
-			default: return "dealspreset/end/?promoId" + promoId;
-			}
-		case 2:
-			switch(state) {
-			case 0: return "hotsell/applicable/?promoId" + promoId; // applicable
-			case 3: return "hotsell/applied/?promoId" + promoId; // applied
-			case 5: // ongoing
-			case 6: // rewardCounting
-			case 7: // rewarding
-			case 8: // agreement
-			case 9: // rewardVerifying
-			case 10: // rewardVerifying
-			case 11:
-				return "hotsell/state/?promoId" + promoId; // complete
-			default: return "hotsell/end/?promoId" + promoId;
+				return "dealspreset/state/?promoId=" + promoId; // complete
+			default: return "dealspreset/end/?promoId=" + promoId;
 			}
 		default:
 			switch(state) {
@@ -72,8 +72,8 @@ var BizReport = BizReport || {};
 			case 9: // agreement
 			case 10: // rewardVerifying
 			case 11:
-				return "other/state/?promoId" + promoId; // complete
-			default: return "other/end/?promoId" + promoId;
+				return "other/state/?promoId=" + promoId; // complete
+			default: return "other/end/?promoId=" + promoId;
 			}
 		}
 		
