@@ -82,6 +82,7 @@
 				
 				<div class="mt20" style="text-align: center;">
 					<form id="listing-form" action="preview" method="post">
+						<input type="hidden" name="promoId" value="4324324"/>
 						<input type="hidden" name="listings" value="[]" />
 						<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 						<button id="form-btn" class="btn" type="submit" disabled>预览报名信息</button>

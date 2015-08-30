@@ -68,6 +68,7 @@
 				
 				<div class="mt20 page-bottom-actions">
 					<form action="submit" method="post">
+						<input type="hidden" name="promoId" value="4324324"/>
 						<!-- TODO put selected listing ids here -->
 						<input type="hidden" name="listings" value="" />
 						<a href="../applicable">返回修改</a>

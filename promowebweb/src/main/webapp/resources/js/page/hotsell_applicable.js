@@ -45,7 +45,7 @@ $(function(){
 			// collect item ids into form hidden input and separated by comma.
 			listing = listingTable.getData();
 			form.find("input[name=listings]").val("[" + listing.map(function(item){
-				return "{itemId: " + item.itemId + ", selected: " + (item.checked ? 1 : 0) + "}";
+				return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
 			}).join(",") + "]");
 			
 			form.submit();

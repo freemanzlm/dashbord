@@ -7,5 +7,6 @@
 	<form id="upload-form" action="upload" class="mt30" method="post">
 		选择上传您的刊登列表 
 		<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
+		<input type="hidden" name="promoId" value="4324324"/>
 	</form>
 </div>
