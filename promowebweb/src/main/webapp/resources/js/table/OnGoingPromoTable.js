@@ -168,7 +168,7 @@ var BizReport = BizReport || {};
 					aTargets: ["promoDlDt"],
 					sType: "date",
 					sClass: "text-center",
-					sDefaultContent: "-",
+					sDefaultContent: " ",
 					mRender: function(data, type, full) {
 						return data;
 					}
@@ -193,7 +193,7 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var val = parseFloat(data);
 						if (type == "display") {
-							if (full.rewardType != 0) {
+							if (full.rewardType != 0 && full.state != 6) {
 								if (val > 0) {
 									return val.toUSFixed(2) + " (" + full.currency + ")";
 								} else {
@@ -218,7 +218,7 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (full.type == 0) {
+							if (full.type == 1) {
 								switch (data) {
 								case 0:
 								case 1:
@@ -235,7 +235,6 @@ var BizReport = BizReport || {};
 							} else if (full.type != 3) {
 								switch (data) {
 								case 0:
-								case 1:
 									return "<a class='btn' href='" + getLink(full.type, data, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 3:
 								case 5:
@@ -245,7 +244,8 @@ var BizReport = BizReport || {};
 									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								}
 							} else {
-								if (data == 5 || data == 6) {
+								if (data == 6) {
+									// calculating reward
 									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
 								} else {
 									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";

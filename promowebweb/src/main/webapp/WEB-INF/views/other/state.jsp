@@ -57,21 +57,16 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>其它活动 活动名称</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<c:choose>
-							<c:when test="${ rewarding }">
-								<div class="step ${ state eq 'ongoing' ? 'current-step' : 'done' }"><span>活动进行中</span></div>
-								<div class="step ${ state eq 'rewardCounting' ? 'current-step' : (state eq 'rewarding' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
-								<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>申领奖励</span></div>
-								<div class="step ${ state eq 'complete' ? 'current-step' : '' } last"><span>活动完成</span></div>
-							</c:when>
-							<c:otherwise>
-								<div class="step current-step last"><span>活动进行中</span></div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>  <!-- steps end -->
+				
+				<c:if test="${ rewarding }">
+					<div class="steps-wrapper">
+						<div class="steps clr">
+							<div class="step ${ state eq 'rewardCounting' ? 'current-step' : (state eq 'rewarding' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
+							<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>申领奖励</span></div>
+							<div class="step ${ state eq 'complete' ? 'current-step' : '' } last"><span>活动完成</span></div>
+						</div>
+					</div>  <!-- steps end -->
+				</c:if>				
 						
 				<jsp:include page="activity.jsp"></jsp:include>
 				

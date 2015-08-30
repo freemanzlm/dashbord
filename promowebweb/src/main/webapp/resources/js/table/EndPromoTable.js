@@ -157,15 +157,13 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var val = parseFloat(data);
 						if (type == "display") {
-							if (full.rewarding) {
-								if (!isNaN(val) && full.state != 6) {
+							if (full.rewardType != 0) {
+								if (val > 0) {
 									return val.toUSFixed(2) + " (" + full.currency + ")";
-								} else {
-									return locale.getText('dataTable.promo.rewardCounting');
 								}
-							} else {
-								return locale.getText('dataTable.promo.noReward');
 							}
+							
+							return locale.getText('dataTable.promo.noReward');
 						}
 						
 						if (type == "sort") {

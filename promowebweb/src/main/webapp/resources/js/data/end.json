@@ -9,7 +9,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "38",
-			"rewarding": true,
+			"rewardType": 1,
 			"currency": "USD",
 			"state": 11
 		},
@@ -22,7 +22,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "0.26",
-			"rewarding": true,
+			"rewardType": 1,
 			"currency": "USD",
 			"state": 12
 		},
@@ -35,7 +35,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "24",
-			"rewarding": false,
+			"rewardType": 0,
 			"currency": "USD",
 			"state": 13
 		},
@@ -48,7 +48,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"rewarding": true,
+			"rewardType": 1,
 			"currency": "USD",
 			"state": 11
 		},
@@ -61,7 +61,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"rewarding": false,
+			"rewardType": 0,
 			"currency": "USD",
 			"state": 15
 		},
@@ -74,7 +74,7 @@
 			"rewardDlDt": "2015-02-01",
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
-			"rewarding": true,
+			"rewardType": 1,
 			"currency": "USD",
 			"state": 16
 		}
