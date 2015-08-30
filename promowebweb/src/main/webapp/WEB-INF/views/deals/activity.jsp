@@ -1,7 +1,7 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="deadline" value="2015-02-05"></c:set>
-<c:set var="timeSlot" value="2015-02-06 ~ 2015-03-06"></c:set>
+<c:set var="deadline" value="2015-02-05 23:59:59"></c:set>
+<c:set var="timeSlot" value="2015-02-06 00:00:00 ~ 2015-03-06 23:59:59"></c:set>
 <c:set var="activityContent" value='
 <p>1.此活动仅限eBay美国网站（ebay.com）、eBay英国网站（ebay.co.uk）、eBay德国网站（ebay.de）、
 		eBay澳洲网站（ebay.com.au）及eBay汽车网站（ebay.com/motors）（“活动网站”）</p>

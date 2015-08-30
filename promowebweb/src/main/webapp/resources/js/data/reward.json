@@ -2,7 +2,7 @@
 	"data": [
 		{
 			"promoId": 4343248734,
-			"name": "campaign 1",
+			"name": "一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十",
 			"type": 0,
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-04-01",
@@ -10,12 +10,13 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "0",
 			"rewardType": 0,
+			"rewardUrl": "http://www.ebay.com",
 			"currency": "USD",
 			"state": 7
 		},
 		{
 			"promoId": 43432484,
-			"name": "campaign 2",
+			"name": "一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十",
 			"type": 1,
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-04-01",
@@ -23,12 +24,13 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "0.26",
 			"rewardType": 1,
+			"rewardUrl": "http://www.ebay.com",
 			"currency": "USD",
 			"state": 8
 		},
 		{
 			"promoId": 4324832734,
-			"name": "campaign 3",
+			"name": "一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十",
 			"type": 3,
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-04-01",
@@ -36,12 +38,13 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "24",
 			"rewardType": 0,
+			"rewardUrl": "http://www.ebay.com",
 			"currency": "USD",
 			"state": 9
 		},
 		{
 			"promoId": 434324734,
-			"name": "campaign 4",
+			"name": "一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十",
 			"type": 2,
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-04-01",
@@ -49,12 +52,13 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "5",
 			"rewardType": 1,
+			"rewardUrl": "http://www.ebay.com",
 			"currency": "USD",
 			"state": 10
 		},
 		{
 			"promoId": 4343248732,
-			"name": "campaign 4",
+			"name": "一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十",
 			"type": 2,
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-04-01",
@@ -62,12 +66,13 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "0",
 			"rewardType": 0,
+			"rewardUrl": "http://www.ebay.com",
 			"currency": "USD",
 			"state": 10
 		},
 		{
 			"promoId": 43432434,
-			"name": "campaign 4",
+			"name": "一二三四五六七八九十一二三四五六七八九十一二三四五六七八九十",
 			"type": 2,
 			"promoSdt": "2015-02-01",
 			"promoEdt": "2015-04-01",
@@ -75,6 +80,7 @@
 			"rewardClmDt": "2015-02-01",
 			"reward": "15",
 			"rewardType": 1,
+			"rewardUrl": "http://www.ebay.com",
 			"currency": "USD",
 			"state": 10
 		}

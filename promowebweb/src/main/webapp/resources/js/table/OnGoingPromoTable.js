@@ -99,7 +99,7 @@ var BizReport = BizReport || {};
 					sInfo: locale.getText('dataTable.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
-					sZeroRecords: locale.getText('dataTable.zeroRecords'),
+					sZeroRecords: locale.getText('dataTable.promo.zeroRecords'),
 					oPaginate: {
 						sFirst: locale.getText('dataTable.firstPage'),
 						sLast: locale.getText('dataTable.lastPage'),

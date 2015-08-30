@@ -9,6 +9,12 @@ $(function(){
 	listingTable.subscribe({
 		initialized: function() {
 			listingTable.hideStateColumn();
+			if (pageData && pageData.expired) {
+				// if it has passed the apply deadline date, user can't select listings and submit again.
+				listingTable.hideCheckbox();
+			} else {
+				listingCountJ.text(this.selectedItems.length);
+			}
 		},
 		selectChange: function(){
 			listingCountJ.text(this.selectedItems.length);

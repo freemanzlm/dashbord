@@ -100,7 +100,7 @@ var BizReport = BizReport || {};
 					sInfo: locale.getText('dataTable.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
-					sZeroRecords: locale.getText('dataTable.zeroRecords'),
+					sZeroRecords: locale.getText('dataTable.promo.zeroRecords'),
 					sInfoFiltered: locale.getText('dataTable.infoFiltered'),
 					oPaginate: {
 						sFirst: locale.getText('dataTable.firstPage'),
@@ -218,11 +218,9 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							switch (parseInt(data)) {
 							case 7: // rewarding
-								return "<a class='btn' href='" + getLink(full.type, full.state, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							case 8: // upload agreement
-								return "<a class='btn' href='" + getLink(full.type, full.state, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							case 9: // reclaim reward
-								return "<a class='btn' href='" + getLink(full.type, full.state, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								return "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							default:
 								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, full.state, full.promoId) + "'>查看详情</a>";
 							}

@@ -73,7 +73,7 @@ var BizReport = BizReport || {};
 						settings.aoData.forEach(function(oRow){
 							$(oRow.nTr).find("input[type=checkbox]").prop("checked", oRow._aData.checked);
 						});
-					}					
+					}
 				},
 				columns: [
 				    {data: 'itemId'},
@@ -114,7 +114,7 @@ var BizReport = BizReport || {};
 					sWidth: "30px",
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
-						oRow.checked = oRow.state == 1;
+						oRow.checked = oRow.checked || oRow.state == 1;
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
@@ -126,7 +126,7 @@ var BizReport = BizReport || {};
 					aTargets: ["name"],
 					sDefaultContent: "",					
 					sType: "string",
-					sWidth: "250px",
+					sWidth: "300px",
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {

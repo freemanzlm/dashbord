@@ -67,7 +67,7 @@
 /* table styles */
 
 table.dataTable td.item-title img {
-	margin: 5px 10px;
+	margin-right: 10px;
 	width: 50px;
 	height: 50px;
 	float: left;

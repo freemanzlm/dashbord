@@ -49,6 +49,7 @@ BizReport.locale = {
 			'rewardCounting': '待评估',
 			'noReward': '无奖励',
 			'emptyTable': '<p>没有符合筛选条件的活动。</p>',
+			'zeroRecords': '<p>没有符合筛选条件的活动。</p>',
 		}
 	},
 	'promo': {
@@ -56,7 +57,7 @@ BizReport.locale = {
 			'deals': 'Deals招募',
 			'dealsPreset': 'Deals招募预置',
 			'hotsell': '暴款促销',
-			'other': '其他活动'
+			'other': '其它活动'
 		},
 		'state': {
 			'applicable': '可报名',
