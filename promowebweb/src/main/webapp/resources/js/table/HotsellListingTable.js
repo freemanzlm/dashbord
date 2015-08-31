@@ -264,7 +264,7 @@ var BizReport = BizReport || {};
 				that.publish("selectChange");
 			});
 			
-			$("input[name=item]").live("click", function(){
+			this.container.find("input[name=item]").live("click", function(){
 				if (!oDataTable) return;
 				
 				var oData = oDataTable.row(this.getAttribute("rowindex")).data();
@@ -311,6 +311,11 @@ var BizReport = BizReport || {};
 		
 		getData: function() {
 			return this.oDataTable.data();
+		},
+		
+		setData: function(data) {
+			this.oDataTable.clear();
+			this.oDataTable.rows.add(data).draw();
 		},
 		
 		hideCheckbox: function() {

@@ -36,7 +36,7 @@ $(function(){
 		}
 	});
 	
-	$("#form-btn").click(function(event){
+/*	$("#form-btn").click(function(event){
 		var listing = listingTable.selectedItems;
 		if (listing && listing.length > 0) {
 			// collect item ids into form hidden input and separated by comma.
@@ -46,6 +46,26 @@ $(function(){
 			}).join(",") + "]");
 			
 			form.submit();
+		} else {
+			event.preventDefault();
+			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
+		}
+	});*/
+	
+	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
+	var previewDialog = new ListingPreviewDialog();
+	previewDialog.init();
+	previewDialog.subscribe({
+		ok: function(){
+			form.submit();
+		}
+	});
+	
+	$("#form-btn").click(function(event){
+		var listings = listingTable.selectedItems;
+		if (listings && listings.length > 0) {
+			previewDialog.show();
+			previewDialog.listingTable.setData(listings);
 		} else {
 			event.preventDefault();
 			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));

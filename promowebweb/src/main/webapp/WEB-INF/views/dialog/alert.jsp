@@ -8,7 +8,7 @@
 		<div class="alert-content"></div>
 
 		<div class="btns clz">
-			<button class="btn btn-s btn-prim ok" style="margin-right: 10px;">确认</button>
+			<button class="btn btn-s btn-prim ok" style="margin-right: 10px;">好</button>
 		</div>
 	</div>
 </div>

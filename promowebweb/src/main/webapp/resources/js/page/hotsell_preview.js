@@ -1,6 +1,6 @@
 $(function(){
 	var HotsellListingTable = BizReport.HotsellListingTable;
-	var alertDialog = BizReport.alertDialog;
+	var alertDialog = BizReport.alertDialog;	
 	
 	var confirmForm = $("form");
 	

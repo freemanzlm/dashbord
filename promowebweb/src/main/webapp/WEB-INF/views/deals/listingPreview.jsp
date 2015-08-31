@@ -4,7 +4,7 @@
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <c:set var="categoryId" value="6000" />
-
+<!-- TODO 废弃这个页面 -->
 <r:includeJquery jsSlot="body" />
 <r:client />
 

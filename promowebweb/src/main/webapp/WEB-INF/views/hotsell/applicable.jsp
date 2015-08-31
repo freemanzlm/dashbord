@@ -33,6 +33,7 @@
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -45,10 +46,12 @@
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['HotsellListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['hotsell_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -83,11 +86,11 @@
 				</div>
 				
 				<div class="mt20" style="text-align: center;">
-					<form action="preview" method="post">
+					<form action="applied" method="post">
 						<input type="hidden" name="promoId" value="4324324"/>
 						<input type="hidden" name="listings" value="[]" />
-						<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
-						<button id="form-btn" class="btn" type="submit" disabled>预览报名信息</button>
+						<label for="accept" title="每次提交报名前请确认点击阅读法律协议，确认接受后方可提交报名。"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
+						<button id="form-btn" class="btn" type="button" disabled>预览报名信息</button>
 					</form>
 				</div>
 			</div>
@@ -102,6 +105,7 @@
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/confirm.jsp" %>
 <%@ include file="../dialog/terms.jsp" %>
+<%@ include file="previewDialog.jsp" %>
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true }
