@@ -27,7 +27,15 @@ $(function(){
 	listingTable.update();
 	
 	
-	var form = $("#listing-form");
+	var form = $("#listing-form").submit(function(){
+		// if user doesn't select a item, form can't be submitted.
+		listings = listingTable.getData();
+		form.find("input[name=listings]").val("[" + listings.map(function(item){
+			return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
+		}).join(",") + "]");
+		
+		return true;
+	});
 	
 	confirmDialog.init();
 	confirmDialog.subscribe({
@@ -62,12 +70,12 @@ $(function(){
 	});
 	
 	$("#form-btn").click(function(event){
+		event.preventDefault();
 		var listings = listingTable.selectedItems;
 		if (listings && listings.length > 0) {
 			previewDialog.show();
 			previewDialog.listingTable.setData(listings);
 		} else {
-			event.preventDefault();
 			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
 		}
 	});

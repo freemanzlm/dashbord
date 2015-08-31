@@ -49,6 +49,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['deals_listing.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -136,7 +137,7 @@
 							<input type="hidden" name="promoId" value="4324324"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
-							<button id="form-btn" class="btn" type="submit" disabled>预览报名信息</button>
+							<button id="form-btn" class="btn" type="button" disabled>预览报名信息</button>
 						</form>
 					</div>	
 				</c:if>
@@ -153,6 +154,7 @@
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/confirm.jsp" %>
 <jsp:include page="../dialog/terms.jsp"></jsp:include>
+<%@ include file="previewDialog.jsp" %>
 
 <script type="text/javascript">
 	var pageData = {

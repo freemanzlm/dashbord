@@ -257,7 +257,7 @@ var BizReport = BizReport || {};
 				that.publish("selectChange");
 			});
 			
-			this.container.find("input[name=item]").live("click", function(){
+			$("input[name=item]", this.container.get(0)).live("click", function(){
 				if (!oDataTable) return;
 				
 				var oData = oDataTable.row(this.getAttribute("rowindex")).data();
