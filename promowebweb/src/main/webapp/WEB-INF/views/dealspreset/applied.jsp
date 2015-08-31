@@ -48,6 +48,7 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['preset_applied.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -100,7 +101,7 @@
 				
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
-						<form id="listing-form" action="preview" method="post">
+						<form id="listing-form" action="applied" method="post">
 							<input type="hidden" name="promoId" value="4324324"/>
 							<input type="hidden" name="listings" value="[]" />
 							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
@@ -120,6 +121,7 @@
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/confirm.jsp" %>
 <%@ include file="../dialog/terms.jsp" %>
+<%@ include file="previewDialog.jsp" %>
 
 <script type="text/javascript">
 	var pageData = {

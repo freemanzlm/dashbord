@@ -29,7 +29,8 @@
 				dataTableConfig: {
 					tableId: "listing-preview-table",
 					customTableConfig: {
-						'sScrollY': "400"
+						'sScrollY': "400",
+						'iDisplayLength': 10
 					}
 				}});
 			listingTable.initDataTable();

@@ -32,6 +32,8 @@ var BizReport = BizReport || {};
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
+				'bScrollCollapse': true,
+				'sScrollY': "600",
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.emptyTable'),
 					sInfo: locale.getText('dataTable.listing.info'),
@@ -255,7 +257,7 @@ var BizReport = BizReport || {};
 				that.publish("selectChange");
 			});
 			
-			$("input[name=item]").live("click", function(){
+			this.container.find("input[name=item]").live("click", function(){
 				if (!oDataTable) return;
 				
 				var oData = oDataTable.row(this.getAttribute("rowindex")).data();
@@ -298,6 +300,11 @@ var BizReport = BizReport || {};
 		
 		getData: function() {
 			return this.oDataTable.data();
+		},
+		
+		setData: function(data) {
+			this.oDataTable.clear();
+			this.oDataTable.rows.add(data).draw();
 		},
 		
 		getDataSize: function() {
