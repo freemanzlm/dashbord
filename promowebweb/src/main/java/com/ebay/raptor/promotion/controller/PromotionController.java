@@ -24,8 +24,8 @@ import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.PromotionStatus;
 import com.ebay.raptor.promotion.pojo.business.PromotionType;
 import com.ebay.raptor.promotion.pojo.business.UserPromotion;
+import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.service.LoginService;
-import com.ebay.raptor.promotion.service.PromotionService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
 @Controller
@@ -92,7 +92,7 @@ public class PromotionController {
         }
     }
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/promoindex", method = RequestMethod.GET)
     public ModelAndView handleIndexRequest(HttpServletRequest request,
             HttpServletResponse response,
             @ModelAttribute RequestParameter param) throws MissingArgumentException {

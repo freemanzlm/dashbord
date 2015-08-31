@@ -10,9 +10,18 @@ public class ResourceProvider {
 
 	public interface PromotionRes {
 		String base = "promotion";
+		
+		String isUserAccessable = "/isUserAccessable";
 
 		String _getPromotions = "/getPromotions";
 		String getPromotions = "/getPromotions/uid/{uid}";
+		String _getIngPromotion = "/getIngPromotion/uid/{uid}";
+		String getIngPromotion = "/getIngPromotion";
+		String _getSubsidyPromotions = "/getSubsidyPromotions/uid/{uid}";
+		String getSubsidyPromotions = "/getSubsidyPromotions";
+		String _getEndPromotions = "/getEndPromotions/uid/{uid}";
+		String getEndPromotions = "/getEndPromotions";
+		
 		String _getPromotionById = "/getPromotionById";
 		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}";
 	}
@@ -37,6 +46,12 @@ public class ResourceProvider {
 		String uploadPresetListings = "/uploadPresetListings";
 		String uploadDealsListings = "/uploadDealsListings";
 		String uploadApprovedDealsListings = "/uploadApprovedDealsListings";
+	}
+	
+	public interface SubsidyRes {
+		String base = "subsidy";
+		
+		String getSubSidy = "/{sid}";
 	}
 	
 	public interface Token{

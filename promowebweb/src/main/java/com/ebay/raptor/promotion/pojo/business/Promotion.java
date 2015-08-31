@@ -2,23 +2,35 @@ package com.ebay.raptor.promotion.pojo.business;
 
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.ebay.raptor.promotion.util.WebDateSerializer;
+
 public class Promotion {
 
+	private String promoId;
+	
 	private String name;
 	
 	private String desc;
 
 	private Integer type;
 
+	@JsonSerialize(using=WebDateSerializer.class)
 	private Date promoDlDt;
 
+	@JsonSerialize(using=WebDateSerializer.class)
 	private Date promoSdt;
 
+	@JsonSerialize(using=WebDateSerializer.class)
 	private Date promoEdt;
 
+	@JsonSerialize(using=WebDateSerializer.class)
 	private Date rewardClmDt;
 
 	private Float reward;
+	
+	private Integer rewardType;
 
 	private Integer state;
 
@@ -92,6 +104,22 @@ public class Promotion {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public String getPromoId() {
+		return promoId;
+	}
+
+	public void setPromoId(String promoId) {
+		this.promoId = promoId;
+	}
+
+	public Integer getRewardType() {
+		return rewardType;
+	}
+
+	public void setRewardType(Integer rewardType) {
+		this.rewardType = rewardType;
 	}
 
 }

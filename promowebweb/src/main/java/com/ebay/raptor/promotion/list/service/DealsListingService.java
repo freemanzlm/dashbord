@@ -1,4 +1,4 @@
-package com.ebay.raptor.promotion.service;
+package com.ebay.raptor.promotion.list.service;
 
 import java.util.List;
 
@@ -13,6 +13,8 @@ import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
+import com.ebay.raptor.promotion.service.BaseService;
+import com.ebay.raptor.promotion.service.ResourceProvider;
 
 @Component
 public class DealsListingService extends BaseService {
