@@ -19,7 +19,7 @@ public class LoginService {
     private static CommonLogger logger =
             CommonLogger.getInstance(LoginService.class);
 
-    @Autowired PromoDataService promoDataService;
+    @Autowired BaseDataService baseDataService;
 
     public boolean isLoginIPValid (String ip) {
         // load for every check
@@ -38,7 +38,7 @@ public class LoginService {
         List<String> ips = new ArrayList<String>();
         try {
             List<Parameter> params =
-                    promoDataService.getParameters(ParameterType.PromoBackendUserIp,
+            		baseDataService.getParameters(ParameterType.PromoBackendUserIp,
                             CommonConstant.PARAMETER_ENABLE);
 
             if (params != null && params.size() > 0) {
