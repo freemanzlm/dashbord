@@ -108,8 +108,8 @@ var BizReport = BizReport || {};
 					}
 				},
 //				'sScrollX': "100%",
-//				sAjaxSource: "promotion/listPromotions", //"js/data/ongoing.json", 
-				sAjaxSource: "js/data/ongoing.json",
+				sAjaxSource: "promotion/getIngPromotions", //"js/data/ongoing.json", 
+//				sAjaxSource: "js/data/ongoing.json",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {

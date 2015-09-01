@@ -1,5 +1,6 @@
 package com.ebay.raptor.promotion.service;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -41,6 +42,15 @@ public class BaseService {
 	protected GingerClientResponse httpGet(String url){
 		GingerWebTarget target = PromoClient.getClient().target(url);
 		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(TokenService.getIAFToken())).get();
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			return resp;
+		}
+		return resp;
+	}
+	
+	protected GingerClientResponse httpPost(String url, Object postObj){
+		GingerWebTarget target = PromoClient.getClient().target(url);
+		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(TokenService.getIAFToken())).post(Entity.json(postObj));
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			return resp;
 		}
