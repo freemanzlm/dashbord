@@ -81,7 +81,7 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20">
 					<jsp:include page="../table/skuList.jsp"></jsp:include>

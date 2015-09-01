@@ -64,7 +64,7 @@
 					</menu>					
 				</div> <!-- active status box end -->				
 				
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 			</div>
 		</div>
 	</div>

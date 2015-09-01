@@ -2,6 +2,14 @@
 	color: red;
 }
 
+.green {
+	color: #84B940;
+}
+
+.gray {
+	color: #808282;
+}
+
 /* header */
 #header .logo {
 	margin: -27px 0 0 20px;

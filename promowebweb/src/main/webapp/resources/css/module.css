@@ -211,3 +211,7 @@
 	padding: 5px 10px;
 	background-color: #fff;
 }
+
+.listings-upload .memo {
+	text-align: left;
+}

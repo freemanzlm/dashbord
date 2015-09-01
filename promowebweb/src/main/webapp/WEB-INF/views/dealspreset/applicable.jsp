@@ -74,7 +74,7 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">
 					<h3>选择我的刊登报名 <small>（已选 <span>0</span> 项）</small></h3>

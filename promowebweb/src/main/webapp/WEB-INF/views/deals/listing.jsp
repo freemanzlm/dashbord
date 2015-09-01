@@ -116,7 +116,7 @@
 					</c:when>
 				</c:choose>
 				
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">
 					<c:choose>

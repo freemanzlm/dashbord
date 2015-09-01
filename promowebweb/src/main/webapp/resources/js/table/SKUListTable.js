@@ -72,7 +72,7 @@ var BizReport = BizReport || {};
 					sType: "string",
 					sClass: "text-left",
 					mRender: function(data, type, full, meta) {
-						return data;
+						return '<a target="_blank" href="http://www.ebay.com/sch/i.html?_nkw=' + encodeURIComponent(data) + '">' + data + '</a>';
 					}
 				}] 
 			}

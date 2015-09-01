@@ -68,7 +68,7 @@
 					</div>  <!-- steps end -->
 				</c:if>				
 						
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20" style="text-align: center;">
 					<c:choose>

@@ -5,6 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
+<c:set var="listingNum" value="2" />
 
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -66,27 +67,28 @@
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
 						<div class="step current-step"><span>已提交报名</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
+						<div class="step ${ rewarding ? '' : 'last' } gray"><span>活动进行中</span></div>
 						<c:if test="${ rewarding }">
-							<div class="step"><span>奖励确认中</span></div>
-							<div class="step"><span>申领奖励</span></div>
-							<div class="step last"><span>活动完成</span></div>
+							<div class="step gray"><span>奖励确认中</span></div>
+							<div class="step gray"><span>申领奖励</span></div>
+							<div class="step last gray"><span>活动完成</span></div>
 						</c:if>
 					</div>
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box">
 					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
-					<p class="desc">
-						<c:choose>
-							<c:when test="${not expired }">
-								在报名有效期内，您可以重新选择预报名的刊登，并重新提交 
-							</c:when>
-							<c:otherwise>
-								已超过报名有效期，您无法再修改刊登内容
-							</c:otherwise>
-						</c:choose>
-					</p>
+					
+					<c:choose>
+						<c:when test="${not expired }">
+							<%-- <p class="desc">您总共提交了 ${listingNum } 条刊登 </p> --%>
+							<p class="desc green">在报名有效期内您可以修改后重新提交。报名有效期内不做审核操作。</p> 
+						</c:when>
+						<c:otherwise>
+							<p class="desc gray">已超过报名有效期，您无法再修改刊登内容</p>
+						</c:otherwise>
+					</c:choose>
+						
 					<menu>
 						<li>
 							<a href="../index" class="btn">返回活动列表</a>
@@ -94,7 +96,7 @@
 					</menu>					
 				</div> <!-- active status box end -->
 				
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 		
 				<div class="mt20 my-listing">
 					<h3>我提交的刊登

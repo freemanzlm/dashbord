@@ -137,7 +137,7 @@
 									
 				</div> <!-- active status box end -->
 				
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20">
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>

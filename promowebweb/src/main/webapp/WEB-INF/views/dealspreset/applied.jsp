@@ -92,7 +92,7 @@
 					</menu>					
 				</div> <!-- active status box end -->
 				
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 		
 				<div class="mt20 my-listing">
 					<h3>我提交的刊登<small>（已选 <span>0</span> 项）</small></h3>

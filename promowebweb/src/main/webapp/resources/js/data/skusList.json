@@ -1,16 +1,20 @@
 {
 	"data": [
 		{
-			"name": "campaign 1"
+			"name": "campaign 1",
+			"skuId": 431434343
 		},
 		{
-			"name": "campaign 2"
+			"name": "campaign 2",
+			"skuId": 431434343
 		},
 		{
-			"name": "campaign 3"
+			"name": "campaign 3",
+			"skuId": 431434343
 		},
 		{
-			"name": "campaign 4"
+			"name": "campaign 4",
+			"skuId": 431434343
 		}
 	],
 	"status": true

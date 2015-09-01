@@ -6,6 +6,10 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="true" />
+<c:set var="listingNum" value="2" />
+<c:set var="state" value="rewarding" />
+<c:set var="promoStartDate" value="2015-08-01" />
+<c:set var="promoEndDate" value="2015-09-01" />
 <r:includeJquery jsSlot="body" />
 <r:client />
 
@@ -59,8 +63,6 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<c:set var="state" value="ongoing"></c:set>
-				
 				<h2>爆款促销 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
@@ -69,9 +71,9 @@
 						<c:choose>
 							<c:when test="${ rewarding }">
 								<div class="step ${ state eq 'ongoing' ? 'current-step' : 'done' }"><span>活动进行中</span></div>
-								<div class="step ${ state eq 'rewardCounting' ? 'current-step' : (state eq 'rewarding' or state eq 'complete' ? 'done' : '') }"><span>奖励确认中</span></div>
-								<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'complete' ? 'done' : '') }"><span>申领奖励</span></div>
-								<div class="step ${ state eq 'complete' ? 'current-step' : '' } last"><span>活动完成</span></div>
+								<div class="step ${ state eq 'rewardCounting' ? 'current-step' : (state eq 'rewarding' or state eq 'complete' ? 'done' : 'gray') }"><span>奖励确认中</span></div>
+								<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'complete' ? 'done' : 'gray') }"><span>申领奖励</span></div>
+								<div class="step ${ state eq 'complete' ? 'current-step' : 'gray' } last"><span>活动完成</span></div>
 							</c:when>
 							<c:otherwise>
 								<div class="step ${ rewarding ? 'current-step' : '' } last"><span>活动进行中</span></div>
@@ -84,9 +86,10 @@
 					
 					<c:choose>
 						<c:when test="${state eq 'ongoing' }">
-							<h3>恭喜，您的报名已完成审核！</h3>
+							<!-- <h3>恭喜，您的报名已完成审核！</h3> -->
+							<h3>恭喜您的 ${listingNum} 条报名刊登已通过审核！</h3>
 							<p class="desc">
-								活动时间为YYYY-MM-DD 到  YYYY-MM-DD, <br />
+								活动时间为 ${promoStartDate} 到 ${promoEndDate}, <br />
 								我们将在活动结束后尽快公布统计结果，请耐心等待！
 							</p>
 							<menu>
@@ -148,7 +151,7 @@
 									
 				</div> <!-- active status box end -->
 				
-				<jsp:include page="activity.jsp"></jsp:include>
+				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">
 					<h3>我提交的刊登</h3>
