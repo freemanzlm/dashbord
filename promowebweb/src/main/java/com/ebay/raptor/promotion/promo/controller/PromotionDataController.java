@@ -51,6 +51,7 @@ public class PromotionDataController{
 			}
 		} catch (PromoException e) {
 			e.printStackTrace();
+			model.setViewName(ViewResource.ERROR.getPath());
 		}
 		return model;
 	}
@@ -62,10 +63,10 @@ public class PromotionDataController{
 				result = view.highVelocityView(promo);
 				break;
 			case DEALS_DASHBOARD_UPLOAD:
-				result = view.dealsPresetView(promo);
+				result = view.dealsUpload(promo);
 				break;
 			case DEALS_AM_UPLOAD:
-				result = view.dealsUpload(promo);
+				result = view.dealsPresetView(promo);
 				break;
 			case STANDARD:
 				result = view.standard(promo);
