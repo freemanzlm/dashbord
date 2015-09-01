@@ -17,66 +17,70 @@ var BizReport = BizReport || {};
 	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
 	var states = ['applicable', 'approved', 'submitted', 'applied', 'verifying', 'ongoing', 'rewardCounting', 'rewarding', 'claimFail', 'agreement', 'rewardVerifying', 'complete', 'applyExpired', 'verifyFailed', 'claimExpired', 'canceled', 'end'];
 	
-	function getLink(type, state, promoId) {
-		switch (type) {
-		case 0: // deals
-			switch(state) {
-			case 0: return "hotsell/applicable/?promoId=" + promoId; // applicable
-			case 3: return "hotsell/applied/?promoId=" + promoId; // applied
-			case 5: // ongoing
-			case 6: // rewardCounting
-			case 7: // rewarding
-			case 8: // agreement
-			case 9: // rewardVerifying
-			case 10: // rewardVerifying
-			case 11:
-				return "hotsell/state/?promoId=" + promoId; // complete
-			default: return "hotsell/end/?promoId=" + promoId;
-			}
-		case 1:
-			switch(state) {
-			case 0: return "deals/applicable/?promoId=" + promoId; // applicable
-			case 1: return "deals/applied/?promoId=" + promoId; // approved
-			case 2: return "deals/listing/?promoId=" + promoId; // submitted
-			case 3: return "deals/applied/?promoId=" + promoId; // applied
-			case 4: return "deals/listing/?promoId=" + promoId; // verifying
-			case 5: // ongoing
-			case 6: // rewardCounting
-			case 7: // rewarding
-			case 8: // claimFail
-			case 9: // agreement
-			case 10: // rewardVerifying
-			case 11:
-				return "deals/state/?promoId=" + promoId; // complete
-			default: return "deals/end/?promoId=" + promoId;
-			}
-		case 2:
-			switch(state) {
-			case 0: return "dealspreset/applicable/?promoId=" + promoId; // applicable
-			case 3: return "dealspreset/applied/?promoId=" + promoId; // applied
-			case 5: // ongoing
-			case 6: // rewardCounting
-			case 7: // rewarding
-			case 8: // claimFail
-			case 9: // agreement
-			case 10: // rewardVerifying
-			case 11:
-				return "dealspreset/state/?promoId=" + promoId; // complete
-			default: return "dealspreset/end/?promoId=" + promoId;
-			}
-		default:
-			switch(state) {
-			case 5: // ongoing
-			case 6: // rewardCounting
-			case 7: // rewarding
-			case 8: // claimFail
-			case 9: // agreement
-			case 10: // rewardVerifying
-			case 11:
-				return "other/state/?promoId=" + promoId; // complete
-			default: return "other/end/?promoId=" + promoId;
-			}
-		}
+//	function getLink(type, state, promoId) {
+//		switch (type) {
+//		case 0: // deals
+//			switch(state) {
+//			case 0: return "hotsell/applicable/?promoId=" + promoId; // applicable
+//			case 3: return "hotsell/applied/?promoId=" + promoId; // applied
+//			case 5: // ongoing
+//			case 6: // rewardCounting
+//			case 7: // rewarding
+//			case 8: // agreement
+//			case 9: // rewardVerifying
+//			case 10: // rewardVerifying
+//			case 11:
+//				return "hotsell/state/?promoId=" + promoId; // complete
+//			default: return "hotsell/end/?promoId=" + promoId;
+//			}
+//		case 1:
+//			switch(state) {
+//			case 0: return "deals/applicable/?promoId=" + promoId; // applicable
+//			case 1: return "deals/applied/?promoId=" + promoId; // approved
+//			case 2: return "deals/listing/?promoId=" + promoId; // submitted
+//			case 3: return "deals/applied/?promoId=" + promoId; // applied
+//			case 4: return "deals/listing/?promoId=" + promoId; // verifying
+//			case 5: // ongoing
+//			case 6: // rewardCounting
+//			case 7: // rewarding
+//			case 8: // claimFail
+//			case 9: // agreement
+//			case 10: // rewardVerifying
+//			case 11:
+//				return "deals/state/?promoId=" + promoId; // complete
+//			default: return "deals/end/?promoId=" + promoId;
+//			}
+//		case 2:
+//			switch(state) {
+//			case 0: return "dealspreset/applicable/?promoId=" + promoId; // applicable
+//			case 3: return "dealspreset/applied/?promoId=" + promoId; // applied
+//			case 5: // ongoing
+//			case 6: // rewardCounting
+//			case 7: // rewarding
+//			case 8: // claimFail
+//			case 9: // agreement
+//			case 10: // rewardVerifying
+//			case 11:
+//				return "dealspreset/state/?promoId=" + promoId; // complete
+//			default: return "dealspreset/end/?promoId=" + promoId;
+//			}
+//		default:
+//			switch(state) {
+//			case 5: // ongoing
+//			case 6: // rewardCounting
+//			case 7: // rewarding
+//			case 8: // claimFail
+//			case 9: // agreement
+//			case 10: // rewardVerifying
+//			case 11:
+//				return "other/state/?promoId=" + promoId; // complete
+//			default: return "other/end/?promoId=" + promoId;
+//			}
+//		}
+//	}
+	
+	function getLink(promoId) {
+		return "promotion/" + promoId;
 	}
 	
 	var defaultDataTableConfigs = {
@@ -146,7 +150,7 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a href='" + getLink(full.type, full.state, full.promoId) + "'>" + data + "</a>";
+							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
 						}
 						
 						return data;
@@ -222,32 +226,32 @@ var BizReport = BizReport || {};
 								switch (data) {
 								case 0:
 								case 1:
-									return "<a class='btn' href='" + getLink(full.type, data, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 2:
 								case 3:
 								case 5:
 								case 6:
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								default:
-									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
+									return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
 							} else if (full.type != 3) {
 								switch (data) {
 								case 0:
-									return "<a class='btn' href='" + getLink(full.type, data, full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 3:
 								case 5:
 								case 6:
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								default:
-									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
+									return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
 							} else {
 								if (data == 6) {
 									// calculating reward
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								} else {
-									return "<a href='" + getLink(full.type, data, full.promoId) + "'>查看详情</a>";
+									return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
 							}
 						}
@@ -287,6 +291,7 @@ var BizReport = BizReport || {};
 			
 			// this statement must be put before this.dataTable.initDataTable();
 			this.container = that.dataTable.table.parents(".dataTable-container:first");
+			this.pane = this.container.parents(".pane-table");
 			
 			var oDataTable = this.oDataTable = null, openRow = null;
 			
@@ -304,10 +309,10 @@ var BizReport = BizReport || {};
 					});
 				}, 
 				ajaxbegin: function() {
-					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
+					$(that.pane).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
 				},
 				ajaxfinished: function(data) {
-				    that.container.isLoading('hide');
+				    that.pane.isLoading('hide');
 
 				    if (data && data.status) {
 				        that.container.find(".datatable_pager").show();
@@ -318,7 +323,7 @@ var BizReport = BizReport || {};
 				    if (config.fnDataUpdatedCallback) {config.fnDataUpdatedCallback.call(that, data);}
 				},
 				error: function(data) {
-				    that.container.isLoading('hide');
+				    that.pane.isLoading('hide');
 					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);			

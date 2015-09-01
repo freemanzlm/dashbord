@@ -17,32 +17,36 @@ var BizReport = BizReport || {};
 	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
 	var states = ['applicable', 'approved', 'submitted', 'applied', 'verifying', 'ongoing', 'rewardCounting', 'rewarding', 'claimFail', 'agreement', 'rewardVerifying', 'complete', 'applyExpired', 'verifyFailed', 'claimExpired', 'canceled', 'end'];
 	
-	function getLink(type, state, promoId) {
-		type = parseInt(type), state = parseInt(state);
-		switch (type) {
-		case 0:
-			switch(state) {
-			case 11: return "hotsell/state/?promoId=" + promoId;
-			default: return "hotsell/end/?promoId=" + promoId;
-			}
-		case 1:
-			switch(state) {
-			case 11: return "deals/state/?promoId=" + promoId;
-			default: return "deals/end/?promoId=" + promoId;
-			}
-		case 2:
-			switch(state) {
-			case 11: return "dealspreset/state/?promoId=" + promoId;
-			default: return "dealspreset/end/?promoId=" + promoId;
-			}
-		default:
-			switch(state) {
-			case 11: return "other/state/?promoId=" + promoId;
-			default: return "other/end/?promoId=" + promoId;
-			}
-		}
-		
-		return "";
+//	function getLink(type, state, promoId) {
+//		type = parseInt(type), state = parseInt(state);
+//		switch (type) {
+//		case 0:
+//			switch(state) {
+//			case 11: return "hotsell/state/?promoId=" + promoId;
+//			default: return "hotsell/end/?promoId=" + promoId;
+//			}
+//		case 1:
+//			switch(state) {
+//			case 11: return "deals/state/?promoId=" + promoId;
+//			default: return "deals/end/?promoId=" + promoId;
+//			}
+//		case 2:
+//			switch(state) {
+//			case 11: return "dealspreset/state/?promoId=" + promoId;
+//			default: return "dealspreset/end/?promoId=" + promoId;
+//			}
+//		default:
+//			switch(state) {
+//			case 11: return "other/state/?promoId=" + promoId;
+//			default: return "other/end/?promoId=" + promoId;
+//			}
+//		}
+//		
+//		return "";
+//	}
+	
+	function getLink(promoId) {
+		return "promotion/" + promoId;
 	}
 	
 	var defaultDataTableConfigs = {
@@ -111,7 +115,7 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a href='" + getLink(full.type, full.state, full.promoId) + "'>" + data + "</a>";
+							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
 						}
 						
 						return data;
@@ -178,9 +182,9 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (data == 11) { // complete
-								return locale.getText('promo.state.complete') + "<br/><a href='" + getLink(full.type, data, full.promoId)  + "'>查看详情</a>";
+								return locale.getText('promo.state.complete') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							} else {
-								return "<a href='" + getLink(full.type, data, full.promoId)  + "'>查看详情</a>";
+								return "<a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							}
 						}
 						
@@ -215,6 +219,7 @@ var BizReport = BizReport || {};
 			
 			// this statement must be put before this.dataTable.initDataTable();
 			this.container = that.dataTable.table.parents(".dataTable-container:first");
+			this.pane = this.container.parents(".pane-table");
 			
 			var oDataTable = this.oDataTable = null, openRow = null;
 			
@@ -232,10 +237,10 @@ var BizReport = BizReport || {};
 					});
 				}, 
 				ajaxbegin: function() {
-					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
+					that.pane.isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
 				},
 				ajaxfinished: function(data) {
-				    that.container.isLoading('hide');
+				    that.pane.isLoading('hide');
 
 				    if (data && data.status) {
 				        that.container.find(".datatable_pager").show();
@@ -246,7 +251,7 @@ var BizReport = BizReport || {};
 				    if (config.fnDataUpdatedCallback) {config.fnDataUpdatedCallback.call(that, data);}
 				},
 				error: function(data) {
-				    that.container.isLoading('hide');
+				    that.pane.isLoading('hide');
 					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);			

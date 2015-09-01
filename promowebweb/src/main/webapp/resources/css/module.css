@@ -1,3 +1,11 @@
+.error-msg {
+	color: #f00;
+}
+
+.error-msg .icon {
+	margin-right: 10px;
+}
+
 /* breadcrumb begin */
 .breadcrumb {
 /*	margin: 20px 0 10px 0;
@@ -188,14 +196,14 @@
 
 .listings-upload {
 	background-color: #ECF1F7;
-	padding: 30px 0 0;
-	text-align: center;
+	padding: 30px 0 20px;
 	
 	min-height: 140px;
 }
 
 .listings-upload h3 {
 	font-weight: bold;
+	text-align: center;
 }
 
 .listings-upload p {
@@ -203,8 +211,10 @@
 }
 
 .listings-upload form {
+	margin-left: 300px;
 	font-size: 16px;
 	line-height: 29px;
+	clear: both;
 }
 
 .listings-upload a.template {
@@ -213,5 +223,18 @@
 }
 
 .listings-upload .memo {
+	margin-top: 20px;
+	margin-left: 300px;
 	text-align: left;
+}
+
+.listings-upload .memo ul {
+	line-height: 1.333;
+	margin-left: 30px;
+	list-style: inside;
+	float: left;
+}
+
+.listings-upload .error-msg {
+	margin-top: 20px;
 }

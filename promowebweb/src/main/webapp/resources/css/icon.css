@@ -15,19 +15,6 @@
 	height: 12px;
 }
 
-.help {
-	background-image: url("../img/icon/icon_help.gif");
-	margin-top: -1px;
-}
-
-.filter {
-	background-image: url("../img/icon/filter.png");
-}
-
-.export {
-	background-image: url("../img/icon/export.png");
-}
-
-.question {
-	background-image: url("../img/icon/question.png");
+.error {
+	background-image: url("../img/icon/error.png");
 }
