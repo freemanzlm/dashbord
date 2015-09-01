@@ -27,7 +27,7 @@ public class PromotionService extends BaseService {
 	}
 	
 	public List<Promotion> getIngPromotion(Long uid) throws PromoException{
-		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getIngPromotion, uid);
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getIngPromotions, uid);
 	}
 	
 	public List<Promotion> getSubsidyPromotions(Long uid) throws PromoException{

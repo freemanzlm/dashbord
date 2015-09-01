@@ -51,6 +51,9 @@ public class PromoClient {
 	public synchronized static GingerClient getClient(){
 		if(null == CLIENT || (null != CLIENT && GingerClientState.DOWN == CLIENT.getState())){
 			init();
+			if(GingerClientState.DOWN == CLIENT.getState()){
+				CLIENT.markUp();
+			}
 		}
 		return CLIENT;
 	}

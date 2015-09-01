@@ -38,7 +38,6 @@ public class PromotionDataController{
 	
 	@GET
 	@RequestMapping("/{promoId}")
-	@ResponseBody
 	public ModelAndView promotion(@PathVariable("promoId") String promoId) {
 		ModelAndView model = new ModelAndView();
 		//TODO Get the uid from cookie
@@ -80,12 +79,14 @@ public class PromotionDataController{
 	
 
 	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._getIngPromotion)
+	@RequestMapping(ResourceProvider.PromotionRes._getIngPromotions)
 	@ResponseBody
-	public ListDataWebResponse<Promotion> getIngPromotion(@RequestParam("uid") Long uid) {
+	public ListDataWebResponse<Promotion> getIngPromotion() {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		try {
-			resp.setData(service.getPromotions(uid));
+			//TODO Change to cookie.
+			Long uid = 689917510l; 
+			resp.setData(service.getIngPromotion(uid));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
@@ -95,10 +96,12 @@ public class PromotionDataController{
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getSubsidyPromotions)
 	@ResponseBody
-	public ListDataWebResponse<Promotion> getSubsidyPromotions(@RequestParam("uid") Long uid) {
+	public ListDataWebResponse<Promotion> getSubsidyPromotions() {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		try {
-			resp.setData(service.getPromotions(uid));
+			//TODO Change to cookie.
+			Long uid = 689917510l; 
+			resp.setData(service.getSubsidyPromotions(uid));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
@@ -108,10 +111,12 @@ public class PromotionDataController{
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getEndPromotions)
 	@ResponseBody
-	public ListDataWebResponse<Promotion> getEndPromotions(@RequestParam("uid") Long uid) {
+	public ListDataWebResponse<Promotion> getEndPromotions() {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		try {
-			resp.setData(service.getPromotions(uid));
+			//TODO Change to cookie.
+			Long uid = 689917510l; 
+			resp.setData(service.getEndPromotions(uid));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);
 		}

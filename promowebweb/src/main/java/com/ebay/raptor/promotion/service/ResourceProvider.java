@@ -15,12 +15,12 @@ public class ResourceProvider {
 
 		String _getPromotions = "/getPromotions";
 		String getPromotions = "/getPromotions/uid/{uid}";
-		String _getIngPromotion = "/getIngPromotion/uid/{uid}";
-		String getIngPromotion = "/getIngPromotion";
-		String _getSubsidyPromotions = "/getSubsidyPromotions/uid/{uid}";
-		String getSubsidyPromotions = "/getSubsidyPromotions";
-		String _getEndPromotions = "/getEndPromotions/uid/{uid}";
-		String getEndPromotions = "/getEndPromotions";
+		String _getIngPromotions = "/getIngPromotions";
+		String getIngPromotions = "/getIngPromotions/uid/{uid}";
+		String _getSubsidyPromotions = "/getSubsidyPromotions";
+		String getSubsidyPromotions = "/getSubsidyPromotions/uid/{uid}";
+		String _getEndPromotions = "/getEndPromotions";
+		String getEndPromotions = "/getEndPromotions/uid/{uid}";
 		
 		String _getPromotionById = "/getPromotionById";
 		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}";
