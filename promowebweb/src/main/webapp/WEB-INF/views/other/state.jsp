@@ -96,63 +96,67 @@
 						</c:choose>
 						</div>
 					</div>  <!-- steps end -->
-				</c:if>				
-						
+				</c:if>	
+				
+				<c:if test="${ rewarding }">
+					<div class="active-status-box success">
+						<c:choose>
+							<c:when test="${state eq 'Started' }">
+								<h3>活动正在进行中！</h3>
+								<menu>
+									<li>
+										<a href="../index" class="btn">返回活动列表</a>
+									</li>
+								</menu>
+							</c:when>
+							<c:when test="${state eq 'RewardCounting' }">
+								<h3>恭喜您已完成活动！</h3>
+								<p class="desc">
+									奖励结果统计中，请耐心等待！
+								</p>
+								<menu>
+									<li>
+										<a href="../index" class="btn">返回活动列表</a>
+									</li>
+								</menu>
+							</c:when>
+							<c:when test="${state eq 'Completed' }">
+								<h3>您已成功领取等值888元的ebay万里通积分</h3>
+								<menu>
+									<li>
+										<a href="../index" class="btn">返回活动列表</a>
+									</li>
+								</menu>
+							</c:when>
+							<c:otherwise>
+								<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
+								<p class="desc">
+									请在2015年8月8日前点击进入领奖流程完成申领。
+								</p>
+								<menu>
+									<li>
+										<c:choose>
+											<c:when test="${ state eq 'Rewarding' }">
+												<a href="../index" class="btn">填写奖励申请协议</a>
+											</c:when>
+											<c:otherwise>
+												<a href="../index" class="btn">上传奖励申请协议</a>
+											</c:otherwise>
+										</c:choose>
+									</li>
+								</menu>
+							</c:otherwise>
+						</c:choose>
+					</div>			
+				</c:if>
+
 				<%@ include file="activity.jsp" %>
 				
-				<div class="mt20" style="text-align: center;">
-					<c:choose>
-						<c:when test="${state eq 'Started' }">
-							<h3>恭喜，您的报名已完成审核！</h3>
-							<p class="desc">
-								活动时间为YYYY-MM-DD 到  YYYY-MM-DD, <br />
-								我们将在活动结束后尽快公布统计结果，请耐心等待！
-							</p>
-							<menu>
-								<li>
-									<a href="../index" class="btn">返回活动列表</a>
-								</li>
-							</menu>
-						</c:when>
-						<c:when test="${state eq 'RewardCounting' }">
-							<h3>恭喜您已完成活动！</h3>
-							<p class="desc">
-								奖励结果统计中，请耐心等待！
-							</p>
-							<menu>
-								<li>
-									<a href="../index" class="btn">返回活动列表</a>
-								</li>
-							</menu>
-						</c:when>
-						<c:when test="${state eq 'Completed' }">
-							<h3>您已成功领取等值888元的ebay万里通积分</h3>
-							<menu>
-								<li>
-									<a href="../index" class="btn">返回活动列表</a>
-								</li>
-							</menu>
-						</c:when>
-						<c:otherwise">
-							<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
-							<p class="desc">
-								请在2015年8月8日前点击进入领奖流程完成申领。
-							</p>
-							<menu>
-								<li>
-									<c:choose>
-										<c:when test="${ state eq 'Rewarding' }">
-											<a href="../index" class="btn">填写奖励申请协议</a>
-										</c:when>
-										<c:otherwise>
-											<a href="../index" class="btn">上传奖励申请协议</a>
-										</c:otherwise>
-									</c:choose>
-								</li>
-							</menu>
-						</c:otherwise>
-					</c:choose>
-				</div>
+				<c:if test="${ not rewarding }">
+					<div class="mt20" style="text-align: center;">
+						<a href="../index" class="btn">返回活动列表</a>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>

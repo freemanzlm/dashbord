@@ -161,12 +161,13 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (full.type == 1) {
+								//deals
 								switch (data) {
-								case 0:
-								case 1:
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-								case 2:
+								case 0: // created
 								case 3:
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								case 1:
+								case 2:
 								case 5:
 								case 6:
 									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
@@ -176,10 +177,11 @@ var BizReport = BizReport || {};
 							} else if (full.type != 3) {
 								switch (data) {
 								case 0:
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 3:
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 5:
 								case 6:
+								case 7:
 									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								default:
 									return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";

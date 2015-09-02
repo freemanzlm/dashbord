@@ -14,6 +14,5 @@
 				<th class="state">活动状态</th>
 			</tr>
 		</thead>
-		<tbody></tbody>
 	</table>
 </div>

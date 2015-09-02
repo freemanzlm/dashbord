@@ -158,9 +158,9 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							switch (parseInt(data)) {
-							case 7: // rewarding
-							case 8: // upload agreement
-							case 9: // reclaim reward
+							case 8: // rewarding
+							case 9: // upload agreement
+							case 12: // reclaim reward
 								return "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							default:
 								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";

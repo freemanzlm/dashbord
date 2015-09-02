@@ -135,7 +135,7 @@
 								</li>
 							</menu>
 						</c:when>
-						<c:otherwise">
+						<c:otherwise>
 							<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
 							<p class="desc">
 								请在2015年8月8日前点击进入领奖流程完成申领。
