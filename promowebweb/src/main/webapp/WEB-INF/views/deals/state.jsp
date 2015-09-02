@@ -5,7 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="state" value="ongoing"></c:set>
+<c:set var="state" value="RewardCounting"></c:set>
 <c:set var="rewarding" value="true" />
 <r:includeJquery jsSlot="body" />
 <r:client />

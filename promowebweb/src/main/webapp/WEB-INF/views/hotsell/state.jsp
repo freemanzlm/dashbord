@@ -7,7 +7,7 @@
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="true" />
 <c:set var="listingNum" value="2" />
-<c:set var="state" value="rewarding" />
+<c:set var="state" value="RewardCounting" />
 <c:set var="promoStartDate" value="2015-08-01" />
 <c:set var="promoEndDate" value="2015-09-01" />
 <r:includeJquery jsSlot="body" />
