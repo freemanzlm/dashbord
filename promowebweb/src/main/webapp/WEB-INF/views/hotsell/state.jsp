@@ -70,10 +70,32 @@
 						<div class="step done"><span>已提交报名</span></div>
 						<c:choose>
 							<c:when test="${ rewarding }">
-								<div class="step ${ state eq 'ongoing' ? 'current-step' : 'done' }"><span>活动进行中</span></div>
-								<div class="step ${ state eq 'rewardCounting' ? 'current-step' : (state eq 'rewarding' or state eq 'complete' ? 'done' : 'gray') }"><span>奖励确认中</span></div>
-								<div class="step ${ state eq 'rewarding' ? 'current-step' : (state eq 'complete' ? 'done' : 'gray') }"><span>申领奖励</span></div>
-								<div class="step ${ state eq 'complete' ? 'current-step' : 'gray' } last"><span>活动完成</span></div>
+								<c:choose>
+									<c:when test="${ state eq 'started' }">
+										<div class="step current-step"><span>活动进行中</span></div>
+										<div class="step"><span>奖励确认中</span></div>
+										<div class="step"><span>申领奖励</span></div>
+										<div class="step last"><span>活动完成</span></div>
+									</c:when>
+									<c:when test="${ state eq 'rewardCounting' }">
+										<div class="step done"><span>活动进行中</span></div>
+										<div class="step current-step"><span>奖励确认中</span></div>
+										<div class="step"><span>申领奖励</span></div>
+										<div class="step last"><span>活动完成</span></div>
+									</c:when>
+									<c:when test="${ state eq 'complete' }">
+										<div class="step done"><span>活动进行中</span></div>
+										<div class="step done"><span>奖励确认中</span></div>
+										<div class="step done"><span>申领奖励</span></div>
+										<div class="step current-step last"><span>活动完成</span></div>
+									</c:when>
+									<c:otherwise>
+										<div class="step done"><span>活动进行中</span></div>
+										<div class="step done"><span>奖励确认中</span></div>
+										<div class="step current-step"><span>申领奖励</span></div>
+										<div class="step last"><span>活动完成</span></div>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
 								<div class="step ${ rewarding ? 'current-step' : '' } last"><span>活动进行中</span></div>
@@ -85,18 +107,17 @@
 				<div class="active-status-box success">					
 					
 					<c:choose>
-						<c:when test="${state eq 'ongoing' }">
-							<!-- <h3>恭喜，您的报名已完成审核！</h3> -->
-							<h3>恭喜您的 ${listingNum} 条报名刊登已通过审核！</h3>
+						<c:when test="${state eq 'started' }">
+							<h3>恭喜，您的报名已完成审核！</h3>
 							<p class="desc">
-								活动时间为 ${promoStartDate} 到 ${promoEndDate}, <br />
+								活动时间为YYYY-MM-DD 到  YYYY-MM-DD, <br />
 								我们将在活动结束后尽快公布统计结果，请耐心等待！
 							</p>
 							<menu>
 								<li>
 									<a href="../index" class="btn">返回活动列表</a>
 								</li>
-							</menu>							
+							</menu>
 						</c:when>
 						<c:when test="${state eq 'rewardCounting' }">
 							<h3>恭喜您已完成活动！</h3>
@@ -109,18 +130,15 @@
 								</li>
 							</menu>
 						</c:when>
-						<c:when test="${state eq 'rewardVerifying' }">
-							<h3>恭喜您已上传协议！</h3>
-							<p class="desc">
-								奖励协议审核中，请耐心等待！
-							</p>
+						<c:when test="${state eq 'complete' }">
+							<h3>您已成功领取等值888元的ebay万里通积分</h3>
 							<menu>
 								<li>
 									<a href="../index" class="btn">返回活动列表</a>
 								</li>
 							</menu>
 						</c:when>
-						<c:when test="${state eq 'rewarding' or state eq 'agreement' }">
+						<c:otherwise">
 							<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
 							<p class="desc">
 								请在2015年8月8日前点击进入领奖流程完成申领。
@@ -137,17 +155,8 @@
 									</c:choose>
 								</li>
 							</menu>
-						</c:when>
-						<c:when test="${state eq 'complete' }">
-							<h3>您已成功领取等值888元的ebay万里通积分</h3>
-							<menu>
-								<li>
-									<a href="../index" class="btn">返回活动列表</a>
-								</li>
-							</menu>
-						</c:when>
+						</c:otherwise>
 					</c:choose>
-					
 									
 				</div> <!-- active status box end -->
 				

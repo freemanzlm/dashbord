@@ -67,8 +67,8 @@
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
 						<div class="step done"><span>已提交报名</span></div>
-						<div class="step ${ state eq 'inquiry' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
-						<div class="step ${ state eq 'approved' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
+						<div class="step ${ state eq 'verifying' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
+						<div class="step ${ state eq 'promotionApproved' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
 						<div class="step"><span>活动进行中</span></div>
 						<div class="step"><span>奖励确认中</span></div>
 						<div class="step"><span>申领奖励</span></div>
@@ -120,10 +120,10 @@
 				
 				<div class="mt20 my-listing">
 					<c:choose>
-						<c:when test="${expired eq 'inquiry' or expired }">
+						<c:when test="${state eq 'verifying' or expired }">
 							<h3>我提交的刊登</h3>
 						</c:when>
-						<c:when test="${state eq 'approved' and not expired }">
+						<c:when test="${state eq 'promotionApproved' and not expired }">
 							<h3>我提交的刊登<small>（已选 <span>0</span> 项）</small></h3>
 						</c:when>
 					</c:choose>
@@ -131,7 +131,7 @@
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
-				<c:if test="${(state eq 'approved') && (expired eq false) }">
+				<c:if test="${(state eq 'promotionApproved') && (expired eq false) }">
 					<div class="mt20 page-bottom-actions">
 						<form id="listing-form" action="preview" method="post">
 							<input type="hidden" name="promoId" value="4324324"/>
