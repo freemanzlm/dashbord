@@ -15,35 +15,7 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
-	var states = ['applicable', 'approved', 'submitted', 'applied', 'verifying', 'ongoing', 'rewardCounting', 'rewarding', 'claimFail', 'agreement', 'rewardVerifying', 'complete', 'applyExpired', 'verifyFailed', 'claimExpired', 'canceled', 'end'];
-	
-//	function getLink(type, state, promoId) {
-//		type = parseInt(type), state = parseInt(state);
-//		switch (type) {
-//		case 0:
-//			switch(state) {
-//			case 11: return "hotsell/state/?promoId=" + promoId;
-//			default: return "hotsell/end/?promoId=" + promoId;
-//			}
-//		case 1:
-//			switch(state) {
-//			case 11: return "deals/state/?promoId=" + promoId;
-//			default: return "deals/end/?promoId=" + promoId;
-//			}
-//		case 2:
-//			switch(state) {
-//			case 11: return "dealspreset/state/?promoId=" + promoId;
-//			default: return "dealspreset/end/?promoId=" + promoId;
-//			}
-//		default:
-//			switch(state) {
-//			case 11: return "other/state/?promoId=" + promoId;
-//			default: return "other/end/?promoId=" + promoId;
-//			}
-//		}
-//		
-//		return "";
-//	}
+	var states = ['Created', 'Submitted', 'Verifying', 'PromotionApproved', 'VerifyFailed', 'Applied', 'Started', 'SubsidyCounting', 'SubsidyWaiting', 'NeedAgreement', 'SubsidyVerifying', 'Completed', 'ClaimFail', 'rewardVerifying', 'Canceled', 'End'];
 	
 	function getLink(promoId) {
 		return "promotion/" + promoId;

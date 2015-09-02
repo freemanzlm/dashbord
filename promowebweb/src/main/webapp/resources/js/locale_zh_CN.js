@@ -60,23 +60,22 @@ BizReport.locale = {
 			'other': '其它活动'
 		},
 		'state': {
-			'applicable': '可报名',
-			'approved': '确认报名刊登',
-			'submitted': '已提交预审',
-			'applied': '已提交报名',
-			'verifying': '报名审核中',
-			'ongoing': '活动进行中',
-			'rewardCounting': '奖励确认中',
-			'rewarding': '申领奖励',
-			'claimFail': '重新申领奖励', // agreement verifying failed.
-			'agreement': '上传协议',
+			'Created': '可报名',
+			'Submitted': '已提交预审',
+			'Verifying': '报名审核中',
+			'PromotionApproved': '确认报名刊登',
+			'VerifyFailed': '审核失败',
+			'Applied': '已提交报名',
+			'Started': '活动进行中',
+			'SubsidyCounting': '奖励确认中',
+			'SubsidyWaiting': '申领奖励',
+			'NeedAgreement': '上传协议',
+			'SubsidyVerifying': '奖励审核中',
+			'Completed': '领取奖励成功',
+			'ClaimFail': '重新申领奖励', // agreement verifying failed.			
 			'rewardVerifying': '奖励审核中',
-			'complete': '领取奖励成功',
-			'applyExpired': '未报名', // apply period expired
-			'verifyFailed': '审核失败',
-			'claimExpired': '申领已过期', // reward claim period expired
-			'canceled': '活动已取消',
-			'end': '活动已结束'
+			'Canceled': '活动已取消',
+			'End': '活动已结束'
 		},
 		'hotsell': {
 			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，您确认吗？',

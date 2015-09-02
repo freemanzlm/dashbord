@@ -67,8 +67,8 @@
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
 						<div class="step done"><span>已提交报名</span></div>
-						<div class="step ${ state eq 'verifying' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
-						<div class="step ${ state eq 'promotionApproved' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
+						<div class="step ${ state eq 'Verifying' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
+						<div class="step ${ state eq 'PromotionApproved' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
 						<div class="step"><span>活动进行中</span></div>
 						<div class="step"><span>奖励确认中</span></div>
 						<div class="step"><span>申领奖励</span></div>
@@ -77,7 +77,7 @@
 				</div>  <!-- steps end -->
 				
 				<c:choose>
-					<c:when test="${state eq 'inquiry' }">
+					<c:when test="${state eq 'Verifying' }">
 						<div class="active-status-box">
 							<h3>您已成功提交预审！请耐心等待预审结果。</h3>
 							
@@ -96,7 +96,7 @@
 							</menu>	
 						</div> <!-- active status box end -->		
 					</c:when>
-					<c:when test="${state eq 'approved' }">
+					<c:when test="${state eq 'PromotionApproved' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已成功通过预审！</h3>
 							<c:choose>
@@ -119,19 +119,17 @@
 				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">
-					<c:choose>
-						<c:when test="${state eq 'verifying' or expired }">
-							<h3>我提交的刊登</h3>
-						</c:when>
-						<c:when test="${state eq 'promotionApproved' and not expired }">
-							<h3>我提交的刊登<small>（已选 <span>0</span> 项）</small></h3>
-						</c:when>
-					</c:choose>
+					<h3>
+						我提交的刊登
+						<c:if test="${state eq 'PromotionApproved' and not expired }">
+							<small>（已选 <span>0</span> 项）</small>
+						</c:if>
+					</h3>						
 					
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
-				<c:if test="${(state eq 'promotionApproved') && (expired eq false) }">
+				<c:if test="${(state eq 'PromotionApproved') && (expired eq false) }">
 					<div class="mt20 page-bottom-actions">
 						<form id="listing-form" action="preview" method="post">
 							<input type="hidden" name="promoId" value="4324324"/>

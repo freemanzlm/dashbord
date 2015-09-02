@@ -71,19 +71,19 @@
 						<c:choose>
 							<c:when test="${ rewarding }">
 								<c:choose>
-									<c:when test="${ state eq 'started' }">
+									<c:when test="${ state eq 'Started' }">
 										<div class="step current-step"><span>活动进行中</span></div>
 										<div class="step"><span>奖励确认中</span></div>
 										<div class="step"><span>申领奖励</span></div>
 										<div class="step last"><span>活动完成</span></div>
 									</c:when>
-									<c:when test="${ state eq 'rewardCounting' }">
+									<c:when test="${ state eq 'RewardCounting' }">
 										<div class="step done"><span>活动进行中</span></div>
 										<div class="step current-step"><span>奖励确认中</span></div>
 										<div class="step"><span>申领奖励</span></div>
 										<div class="step last"><span>活动完成</span></div>
 									</c:when>
-									<c:when test="${ state eq 'complete' }">
+									<c:when test="${ state eq 'Completed' }">
 										<div class="step done"><span>活动进行中</span></div>
 										<div class="step done"><span>奖励确认中</span></div>
 										<div class="step done"><span>申领奖励</span></div>
@@ -107,7 +107,7 @@
 				<div class="active-status-box success">					
 					
 					<c:choose>
-						<c:when test="${state eq 'started' }">
+						<c:when test="${state eq 'Started' }">
 							<h3>恭喜，您的报名已完成审核！</h3>
 							<p class="desc">
 								活动时间为YYYY-MM-DD 到  YYYY-MM-DD, <br />
@@ -119,7 +119,7 @@
 								</li>
 							</menu>
 						</c:when>
-						<c:when test="${state eq 'rewardCounting' }">
+						<c:when test="${state eq 'RewardCounting' }">
 							<h3>恭喜您已完成活动！</h3>
 							<p class="desc">
 								奖励结果统计中，请耐心等待！
@@ -130,7 +130,7 @@
 								</li>
 							</menu>
 						</c:when>
-						<c:when test="${state eq 'complete' }">
+						<c:when test="${state eq 'Completed' }">
 							<h3>您已成功领取等值888元的ebay万里通积分</h3>
 							<menu>
 								<li>
@@ -146,7 +146,7 @@
 							<menu>
 								<li>
 									<c:choose>
-										<c:when test="${ state eq 'rewarding' }">
+										<c:when test="${ state eq 'Rewarding' }">
 											<a href="../index" class="btn">填写奖励申请协议</a>
 										</c:when>
 										<c:otherwise>
