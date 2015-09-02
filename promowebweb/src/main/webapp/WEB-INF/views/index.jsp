@@ -75,7 +75,7 @@
 							<option value="3">已提交报名的活动</option>
 							<option value="5">进行中的活动</option>
 							<option value="6">奖励确认中的活动</option>
-							<option value="4">只能查看详细的活动</option>
+							<option value="20">只能查看详细的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
@@ -119,7 +119,7 @@
 						<select name="" id="" class="fr state-filter">
 							<option value="">显示所有活动</option>
 							<option value="11">领取奖励成功的活动</option>
-							<option value="4">只能查看详细的活动</option>
+							<option value="20">只能查看详细的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>

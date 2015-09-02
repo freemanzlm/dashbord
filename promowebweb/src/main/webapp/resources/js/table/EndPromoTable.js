@@ -160,15 +160,9 @@ var BizReport = BizReport || {};
 							}
 						}
 						
-						if (type == "sort") {
+						if (type == "filter" && type == "sort") {
 							if (data != 11) {
-								return 12;
-							}
-						}
-						
-						if (type == "filter") {
-							if (data != 11) {
-								return 4;
+								return 20;
 							}
 						}
 
