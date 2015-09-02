@@ -82,7 +82,7 @@
 					<p class="desc">
 						<c:choose>
 							<c:when test="${not expired }">
-								在报名有效期内，您可以重新选择预报名的刊登，并重新提交 
+								在报名有效期内，您可以随时提交新的报名刊登，新提交的报名刊登列表会全量替换之前的刊登。 
 							</c:when>
 							<c:otherwise>
 								已超过报名有效期，您无法再修改刊登内容
@@ -105,13 +105,17 @@
 					<div class="mt20">
 						<div class="listings-upload">
 							<h3>重新上传我要提交的刊登</h3>
-							<p class="mt10">您可以通过下载<a class="template" href="javascript:void(0)" target="_blank">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
-							<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
-							<form id="upload-form" action="upload" class="mt30" method="post">
-								选择上传您的刊登列表 
-								<input type="hidden" name="promoId" value="4324324"/>
-								<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
-							</form>
+							
+							<div class="body mt20"  style="width: 420px;">
+								<p class="mt10">您可以通过下载<a class="template" href="javascript:void(0)" target="_blank">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
+								<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
+								
+								<form id="upload-form" action="upload" class="mt30" method="post" enctype="multipart/form-data">
+									选择上传您的刊登列表 
+									<input type="hidden" name="promoId" value="4324324"/>
+									<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
+								</form>
+							</div>
 						</div>
 					</div>
 					

@@ -98,6 +98,7 @@ var BizReport = BizReport || {};
 				initialized: function() {
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
+					that.publish("initialized");
 				}, 
 				ajaxbegin: function() {
 					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});

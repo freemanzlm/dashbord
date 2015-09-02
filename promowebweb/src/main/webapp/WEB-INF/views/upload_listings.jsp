@@ -7,7 +7,7 @@
 <div class="listings-upload">
 	<h3>批量上传我要提交的刊登</h3>
 	
-	<div class="memo mt20">
+	<div class="body mt20" style="width: 545px;">
 		<p>您可以通过下载<a class="template" href="javascript:void(0)" target="_blank">批量提交模板</a>按格式填写并上传您的刊登参与本活动。</p>
 		<div class="clr" style="margin-top: 30px; ">
 			<span style="float: left; font-weight: bold;">注：</span>
@@ -22,10 +22,11 @@
 		<c:if test="${ not empty errorMsg }">
 			<p class="error-msg"><span class="icon error"></span>${ errorMsg }</p>
 		</c:if>
-	</div>
-	<form id="upload-form" action="upload" class="mt20" method="post">
-		选择上传您的刊登列表 
-		<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
-		<input type="hidden" name="promoId" value="4324324"/>
-	</form>
+		
+		<form id="upload-form" action="upload" class="mt20" method="post" ecntype="multipart/form-data">
+			选择上传您的刊登列表 
+			<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;">选择</button></span>
+			<input type="hidden" name="promoId" value="4324324"/>
+		</form>
+	</div>	
 </div>

@@ -20,7 +20,7 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.export.ColumnFormat;
 import com.ebay.app.raptor.promocommon.export.HeaderConfiguration;
-import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
+//import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -57,10 +57,10 @@ public class DownloadController {
         	preCfgs.add(new HeaderConfiguration(60, "stockedNum", resource("stockedNum") , ColumnFormat.FltNum));
 
         	XSSFWorkbook workBook = new XSSFWorkbook();
-        	ExcelSheetWriter<Sku> writer = new ExcelSheetWriter<Sku>(Sku.class, workBook, prefixFileName);
-            writer.setPreConfiguration(preCfgs);
-            writer.resetHeaders();
-            writer.build(skus);
+//        	ExcelSheetWriter<Sku> writer = new ExcelSheetWriter<Sku>(Sku.class, workBook, prefixFileName);
+//            writer.setPreConfiguration(preCfgs);
+//            writer.resetHeaders();
+//            writer.build(skus);
 
             workBook.write(response.getOutputStream());
         } catch (IOException e) {

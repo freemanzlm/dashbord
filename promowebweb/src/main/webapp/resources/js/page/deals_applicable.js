@@ -1,8 +1,15 @@
 $(function(){
 	
 	var SKUListTable = BizReport.SKUListTable;
+	var locale = BizReport.locale;
 	
 	var skuList = new SKUListTable();
+	skuList.subscribe({
+		initialized: function() {
+			// if file upload fail, show the error message to user.
+			window.scrollTo(window.scrollX, $('.error-msg').offset().top);
+		}
+	});
 	skuList.init({
 		dataTableConfig: {
 			tableId: "sku-list-table"
@@ -23,7 +30,7 @@ $(function(){
 		checkUploadBtnStatus();
 	});
 	
-	acceptCheckbox.parent().popup({"trigger": "hover", html: "阅读完法律协议之后，方可勾选，勾选之前请确认已选择需要上传的文件。"});
+	acceptCheckbox.parent().popup({"trigger": "hover", html: locale.getText('promo.terms.upload')});
 	
 	var uploadBtn = document.getElementById("upload-btn");
 	function checkUploadBtnStatus() {
@@ -49,6 +56,7 @@ $(function(){
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
 	});
+	
 	
 	console.log("hello");
 });
