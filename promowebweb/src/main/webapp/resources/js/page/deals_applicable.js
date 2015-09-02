@@ -1,9 +1,13 @@
 $(function(){
 	
 	var SKUListTable = BizReport.SKUListTable;
+	var alertDialog = BizReport.alertDialog;
+	var termsDialog = BizReport.termsDialog;
 	var locale = BizReport.locale;
 	
-	var skuList = new SKUListTable();
+	var skuList, uploadForm, fileInput, acceptCheckbox, uploadBtn;
+	
+	skuList = new SKUListTable();
 	skuList.subscribe({
 		initialized: function() {
 			// if file upload fail, show the error message to user.
@@ -16,23 +20,28 @@ $(function(){
 		}});
 	skuList.update();
 	
-	var uploadForm = $("#upload-form").submit(function(){
+	uploadForm = $("#upload-form").submit(function(){
+		var fileName = fileInput.val();
+		if (!fileName || fileName.indexOf(".xls") < 0) {
+			alertDialog.alert(locale.getText("promo.deals.onlyXls"));
+			return false;
+		}
 		return !!$(this).find("input[type=file]").attr("value") && acceptCheckbox[0].checked;
 	});
 	
-	var fileInput = uploadForm.find("input[type=file]");
+	fileInput = uploadForm.find("input[type=file]");
 	
 	uploadForm.find("input[type=file]").change(function(){
 		checkUploadBtnStatus();
 	});
 	
-	var acceptCheckbox = $("#accept").change(function(){
+	acceptCheckbox = $("#accept").change(function(){
 		checkUploadBtnStatus();
 	});
 	
-	acceptCheckbox.parent().popup({"trigger": "hover", html: locale.getText('promo.terms.upload')});
+	acceptCheckbox.parent().popup({"trigger": "hover", html: locale.getText('promo.deals.upload')});
 	
-	var uploadBtn = document.getElementById("upload-btn");
+	uploadBtn = document.getElementById("upload-btn");
 	function checkUploadBtnStatus() {
 		if (acceptCheckbox[0].checked && fileInput.val()) {
 			uploadBtn.removeAttribute("disabled");
@@ -47,7 +56,7 @@ $(function(){
 		}
 	});
 	
-	var termsDialog = BizReport.termsDialog;
+	
 	termsDialog.subscribe({
 		"scrollEnd": function() {
 			acceptCheckbox.removeAttr("disabled");
@@ -57,6 +66,4 @@ $(function(){
 		termsDialog.show();
 	});
 	
-	
-	console.log("hello");
 });
