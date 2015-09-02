@@ -196,7 +196,25 @@ var BizReport = BizReport || {};
 							}
 						}
 						
-						if (type == "filter" || type == "sort") {
+						if (type == "filter") {
+							if (full.type == 1) {
+								if (data != 0 && data != 3 && data != 1 && data != 2 && data != 5 && data !=6) {
+									return 'Detailed';
+								}
+							} else if (full.type != 3) {
+								if (data != 0 && data != 3 && data != 5 && data != 6 && data != 7) {
+									return 'Detailed';
+								}
+							} else {
+								if (data != 6) {
+									return 'Detailed';
+								}
+							}
+							
+							return states[data];
+						}
+						
+						if (type == "sort") {
 							if (full.type == 1) {
 								if (data != 0 && data != 3 && data != 1 && data != 2 && data != 5 && data !=6) {
 									return 20;

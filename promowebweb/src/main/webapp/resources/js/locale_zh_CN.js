@@ -73,7 +73,6 @@ BizReport.locale = {
 			'SubsidyVerifying': '奖励审核中',
 			'Completed': '领取奖励成功',
 			'ClaimFail': '重新申领奖励', // agreement verifying failed.			
-			'rewardVerifying': '奖励审核中',
 			'Canceled': '活动已取消',
 			'End': '活动已结束'
 		},

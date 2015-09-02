@@ -166,6 +166,11 @@ var BizReport = BizReport || {};
 								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 							}
 						}
+						
+						if (type == "filter") {
+							return states[data];
+						}						
+						
 
 						return data;
 					}

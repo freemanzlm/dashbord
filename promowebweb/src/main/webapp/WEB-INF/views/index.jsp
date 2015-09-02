@@ -69,13 +69,13 @@
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
 							<option value="">显示所有活动</option>
-							<option value="0">可报名的活动</option>
-							<option value="1">待确认报名刊登的活动</option>
-							<option value="2">已提交预审的活动</option>
-							<option value="3">已提交报名的活动</option>
-							<option value="5">进行中的活动</option>
-							<option value="6">奖励确认中的活动</option>
-							<option value="20">只能查看详细的活动</option>
+							<option value="Created">可报名的活动</option>
+							<option value="PromotionApproved">待确认报名刊登的活动</option>
+							<option value="Submitted">已提交预审的活动</option>
+							<option value="Applied">已提交报名的活动</option>
+							<option value="Started">进行中的活动</option>
+							<option value="SubsidyCounting">奖励确认中的活动</option>
+							<option value="Detailed">只能查看详细的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
@@ -95,10 +95,10 @@
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
 							<option value="">显示所有活动</option>
-							<option value="7">可申领奖励的活动</option>
-							<option value="8">需要重新申领奖励的活动</option>
-							<option value="9">待上传协议的活动</option>
-							<option value="10">申领审核中的活动</option>
+							<option value="SubsidyWaiting">可申领奖励的活动</option>
+							<option value="ClaimFail">需要重新申领奖励的活动</option>
+							<option value="NeedAgreement">待上传协议的活动</option>
+							<option value="SubsidyVerifying">申领审核中的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
@@ -118,8 +118,8 @@
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
 							<option value="">显示所有活动</option>
-							<option value="11">领取奖励成功的活动</option>
-							<option value="20">只能查看详细的活动</option>
+							<option value="Completed">领取奖励成功的活动</option>
+							<option value="Detailed">只能查看详细的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>

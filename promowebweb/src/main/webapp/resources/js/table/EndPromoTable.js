@@ -165,6 +165,14 @@ var BizReport = BizReport || {};
 								return 20;
 							}
 						}
+						
+						if (type == "filter") {
+							if (data != 11) {
+								return 'Detailed';
+							}
+							
+							return states[data];
+						}
 
 						return data;
 					}
