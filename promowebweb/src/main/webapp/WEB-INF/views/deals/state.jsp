@@ -5,7 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="state" value="RewardCounting"></c:set>
+<c:set var="state" value="Started"></c:set>
 <c:set var="rewarding" value="true" />
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -105,7 +105,7 @@
 				<div class="active-status-box success">
 					<c:choose>
 						<c:when test="${state eq 'Started' }">
-							<h3>恭喜，您的报名已完成审核！</h3>
+							<h3>恭喜您的报名已完成审核！</h3>
 							<p class="desc">
 								活动时间为YYYY-MM-DD 到  YYYY-MM-DD, <br />
 								我们将在活动结束后尽快公布统计结果，请耐心等待！

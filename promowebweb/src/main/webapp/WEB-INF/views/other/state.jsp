@@ -5,8 +5,8 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="state" value="RewardCounting"></c:set>
-<c:set var="rewarding" value="true" />
+<c:set var="state" value="Started"></c:set>
+<c:set var="rewarding" value="false" />
 <r:includeJquery jsSlot="body" />
 <r:client />
 
@@ -58,11 +58,10 @@
 			<div class="pane">
 				<h2>其它活动 活动名称</h2>
 				
-				<c:if test="${ rewarding }">
-					<div class="steps-wrapper">
-						<div class="steps clr">
-							<c:choose>
-							<c:when test="${ rewarding }">
+				<c:choose>
+					<c:when test="${ rewarding }">
+						<div class="steps-wrapper">
+							<div class="steps clr">
 								<c:choose>
 									<c:when test="${ state eq 'Started' }">
 										<div class="step current-step"><span>活动进行中</span></div>
@@ -89,14 +88,19 @@
 										<div class="step last"><span>活动完成</span></div>
 									</c:otherwise>
 								</c:choose>
-							</c:when>
-							<c:otherwise>
-								<div class="step ${ rewarding ? 'current-step' : '' } last"><span>活动进行中</span></div>
-							</c:otherwise>
-						</c:choose>
-						</div>
-					</div>  <!-- steps end -->
-				</c:if>	
+							</div>
+						</div>  <!-- steps end -->
+					</c:when>
+					<c:otherwise>
+						<c:if test="${ state eq 'Started' }">
+							<div class="steps-wrapper">
+								<div class="steps clr">
+									<div class="step current-step"><span>活动进行中</span></div>
+								</div>
+							</div>  <!-- steps end -->
+						</c:if>
+					</c:otherwise>
+				</c:choose>
 				
 				<c:if test="${ rewarding }">
 					<div class="active-status-box success">

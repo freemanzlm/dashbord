@@ -67,17 +67,24 @@
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
 						<div class="step done"><span>已提交预审</span></div>
-						<div class="step ${ state eq 'Verifying' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
+						<c:if test="${ state eq 'Verifying'">
+							<div class="step current-step"><span>报名预审中</span></div>
+							<div class="step"><span>确认报名刊登</span></div>
+						</c:if>
 						<c:if test="${ state eq 'PromotionApproved' }">
+							<div class="step done"><span>报名预审中</span></div>
 							<div class="step current-step"><span>确认报名刊登</span></div>
 						</c:if>
 						<c:if test="${ state eq 'Applied' }">
+							<div class="step done"><span>报名预审中</span></div>
 							<div class="step current-step"><span>已提交报名</span></div>
 						</c:if>
 						<div class="step"><span>活动进行中</span></div>
-						<div class="step"><span>奖励确认中</span></div>
-						<div class="step"><span>申领奖励</span></div>
-						<div class="step last"><span>活动完成</span></div>
+						<c:if test="${ rewarding }">
+							<div class="step"><span>奖励确认中</span></div>
+							<div class="step"><span>申领奖励</span></div>
+							<div class="step last"><span>活动完成</span></div>
+						</c:if>
 					</div>
 				</div>  <!-- steps end -->
 				
