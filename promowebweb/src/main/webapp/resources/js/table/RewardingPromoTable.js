@@ -15,7 +15,7 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
-	var states = ['Created', 'Submitted', 'Verifying', 'PromotionApproved', 'VerifyFailed', 'Applied', 'Started', 'SubsidyCounting', 'SubsidyWaiting', 'NeedAgreement', 'SubsidyVerifying', 'Completed', 'ClaimFail', 'rewardVerifying', 'Canceled', 'End'];
+	var states = ['Created', 'Submitted', 'Verifying', 'PromotionApproved', 'VerifyFailed', 'Applied', 'Started', 'SubsidyCounting', 'SubsidyWaiting', 'NeedAgreement', 'SubsidyVerifying', 'Completed', 'ClaimFail', 'rewardVerifying', 'Canceled', 'End', 'Claimed'];
 	
 	function getLink(promoId) {
 		return "promotion/" + promoId;
@@ -157,10 +157,16 @@ var BizReport = BizReport || {};
 					sType: "numeric",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							switch (parseInt(data)) {
+							switch (data) {
 							case 8: // rewarding
+							case 'SubsidyWaiting':
+								var display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+//								display += "<br /><a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.Claimed') + "</a>";
+								return display;
 							case 9: // upload agreement
+							case 'NeedAgreement':
 							case 12: // reclaim reward
+							case 'ClaimFail':
 								return "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 							default:
 								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
@@ -169,9 +175,24 @@ var BizReport = BizReport || {};
 						
 						if (type == "filter") {
 							return states[data];
-						}						
+						}
 						
-
+						if (type == "sort") {
+							switch (data) {
+							case 8: // rewarding
+							case 'SubsidyWaiting':
+								return 8;
+							case 12: // reclaim reward
+							case 'ClaimFail':
+								return 9;
+							case 9: // upload agreement
+							case 'NeedAgreement':
+								return 10;
+							}
+							
+							return 20;
+						}
+						
 						return data;
 					}
 				}] 

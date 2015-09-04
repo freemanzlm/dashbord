@@ -72,9 +72,10 @@ BizReport.locale = {
 			'NeedAgreement': '上传协议',
 			'SubsidyVerifying': '奖励审核中',
 			'Completed': '领取奖励成功',
-			'ClaimFail': '重新申领奖励', // agreement verifying failed.			
+			'ClaimFail': '重新申领奖励',	
 			'Canceled': '活动已取消',
-			'End': '活动已结束'
+			'End': '活动已结束',
+			'Claimed': '我已领取奖励'
 		},
 		'hotsell': {
 			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，您确认吗？',

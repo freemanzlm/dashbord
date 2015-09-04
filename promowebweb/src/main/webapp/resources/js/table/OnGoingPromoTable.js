@@ -135,15 +135,17 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var val = parseFloat(data);
 						if (type == "display") {
-							if (full.rewardType != 0 && full.state != 6) {
-								if (val > 0) {
-									return val.toUSFixed(2) + " (" + full.currency + ")";
-								} else {
+							if (full.rewardType != 0) {
+								if (full.state > 7) { // After subsidy counting
+									if (val > 0) {
+										return val.toUSFixed(2) + " (" + full.currency + ")";
+									}
+								}  else {
 									return locale.getText('dataTable.promo.rewardCounting');
 								}
-							} else {
-								return locale.getText('dataTable.promo.noReward');
 							}
+							
+							return locale.getText('dataTable.promo.noReward');
 						}
 						
 						if (type == "sort") {
@@ -160,74 +162,80 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (full.type == 1) {
-								//deals
-								switch (data) {
-								case 0: // created
-								case 3:
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-								case 1:
-								case 2:
-								case 5:
-								case 6:
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
-								default:
-									return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
-								}
-							} else if (full.type != 3) {
+							if (full.type != 3) {
 								switch (data) {
 								case 0:
+								case 'Created':
 								case 3:
+								case 'PromotionApproved':
 									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
 								case 5:
+								case 'Applied':
+								case 1:
+								case 'Submitted':
 								case 6:
+								case 'Started':
 								case 7:
+								case 'SubsidyCounting':
 									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
-								default:
-									return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
-								}
-							} else {
-								if (data == 6) {
-									// calculating reward
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
-								} else {
-									return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
-								}
-							}
-						}
-						
-						if (type == "filter") {
-							if (full.type == 1) {
-								if (data != 0 && data != 3 && data != 1 && data != 2 && data != 5 && data !=6) {
-									return 'Detailed';
-								}
-							} else if (full.type != 3) {
-								if (data != 0 && data != 3 && data != 5 && data != 6 && data != 7) {
-									return 'Detailed';
-								}
-							} else {
-								if (data != 6) {
-									return 'Detailed';
 								}
 							}
 							
-							return states[data];
+							return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+						}
+						
+						if (type == "filter") {
+							if (full.type != 3) {
+								switch (data) {
+								case 0:
+								case 'Created':
+									return 'Created';
+								case 3:
+								case 'PromotionApproved':
+									return 'PromotionApproved';
+								case 5:
+								case 'Applied':
+									return 'Applied';
+								case 1:
+								case 'Submitted':
+									return 'Submitted';
+								case 6:
+								case 'Started':
+									return 'Started';
+								case 7:
+								case 'SubsidyCounting':
+									return 'SubsidyCounting';
+								}
+							}
+							
+							return 'Detailed';
 						}
 						
 						if (type == "sort") {
-							if (full.type == 1) {
-								if (data != 0 && data != 3 && data != 1 && data != 2 && data != 5 && data !=6) {
-									return 20;
-								}
-							} else if (full.type != 3) {
-								if (data != 0 && data != 3 && data != 5 && data != 6 && data != 7) {
-									return 20;
-								}
-							} else {
-								if (data != 6) {
-									return 20;
+							if (full.type != 3) {
+								switch (data) {
+								case 0:
+								case 'Created':
+									return 0;
+								case 3:
+								case 'PromotionApproved':
+									return 1;
+								case 5:
+								case 'Applied':
+									return 2;
+								case 1:
+								case 'Submitted':
+									return 3;
+								case 6:
+								case 'Started':
+									return 4;
+								case 7:
+								case 'SubsidyCounting':
+									return 5;
 								}
 							}
+							
+							return 20;
 						}
 
 						return data;

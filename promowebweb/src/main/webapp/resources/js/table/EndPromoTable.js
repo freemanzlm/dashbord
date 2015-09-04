@@ -153,25 +153,27 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (data == 11) { // complete
-								return locale.getText('promo.state.complete') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
+							if (data == 11 || data == 'Completed') { // complete
+								return locale.getText('promo.state.Completed') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							} else {
 								return "<a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							}
 						}
 						
-						if (type == "filter" && type == "sort") {
-							if (data != 11) {
-								return 20;
+						if (type == "sort") {
+							if (data == 11 || data == 'Completed') {
+								return 11;
 							}
+							
+							return 20;
 						}
 						
 						if (type == "filter") {
-							if (data != 11) {
-								return 'Detailed';
+							if (data == 11 || data == 'Completed') {
+								return 'Completed';
 							}
 							
-							return states[data];
+							return 'Detailed';
 						}
 
 						return data;

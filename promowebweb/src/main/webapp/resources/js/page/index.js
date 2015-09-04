@@ -18,6 +18,7 @@ $(function(){
 			tableId: "rewarding-promo-table",
 			customTableConfig: {
 				sAjaxSource: "promotion/getSubsidyPromotions", //'js/data/reward.json'
+//				sAjaxSource: 'js/data/reward.json'
 			}
 		}});
 	rwardingPromoTable.update();
@@ -28,6 +29,7 @@ $(function(){
 			tableId: "end-promo-table",
 			customTableConfig: {
 				sAjaxSource: "promotion/getEndPromotions", //'js/data/end.json'
+//				sAjaxSource: 'js/data/end.json'
 			}
 		}});
 	endPromoTable.update();
