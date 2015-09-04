@@ -88,14 +88,14 @@ BizReport.locale = {
 	},
 	'listing': {
 		'state': {
-			'applicable': '可报名',
-			'applied': '已报名',
-			'nonapplied': '未报名',
-			'pass': '通过审核',
-			'notSubmitted': '未提交',
-			'pretrial': '待审核',
-			'pretrialPass': '通过预审',
-			'pretrialFail': '未通过'
+			'Applicable': '可报名',
+			'Applied': '已报名', // hot sell and deals preset
+			'Nonapplied': '未报名',
+			'Pretrial': '待审核', // deals
+			'PretrialPass': '通过预审',
+			'ApplyConfirm': '待确认报名',
+			'PretrialFail': '未通过',
+			'NotSubmitted': '未提交'
 		}
 	}
 };

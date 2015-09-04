@@ -66,7 +66,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
-						<div class="step done"><span>已提交报名</span></div>
+						<div class="step done"><span>已提交预审</span></div>
 						<div class="step ${ state eq 'Verifying' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
 						<div class="step ${ state eq 'PromotionApproved' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
 						<div class="step"><span>活动进行中</span></div>

@@ -70,7 +70,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step"><span>可报名</span></div>
-						<div class="step"><span>已提交报名</span></div>
+						<div class="step"><span>已提交预审</span></div>
 						<div class="step"><span>报名预审中</span></div>
 						<div class="step"><span>确认报名刊登</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>

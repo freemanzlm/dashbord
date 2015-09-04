@@ -63,7 +63,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
-						<div class="step done"><span>已提交报名</span></div>
+						<div class="step done"><span>已提交预审</span></div>
 						<div class="step done"><span>报名预审中</span></div>
 						<div class="step done"><span>确认报名刊登</span></div>
 						<c:choose>

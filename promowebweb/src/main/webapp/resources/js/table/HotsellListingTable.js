@@ -14,7 +14,7 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var states = ['applicable', 'applied', 'nonapplied', 'pass', 'notSubmitted', 'pretrial', 'pretrialPass', 'pretrialFail'];
+	var states = ['Applicable', 'Nonapplied', 'Applied'];
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {

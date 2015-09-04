@@ -14,7 +14,7 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var states = ['applicable', 'applied', 'nonapplied', 'pass', 'notSubmitted', 'pretrial', 'pretrialPass', 'pretrialFail'];
+	var states = ['Applicable', 'Nonapplied', 'Applied', 'Pretrial', 'PretrialPass', 'ApplyConfirm', 'PretrialFail', 'NotSubmitted'];
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
@@ -71,7 +71,7 @@ var BizReport = BizReport || {};
 					// update checkbox status
 					if (settings.aoColumns[0].bVisible) {
 						settings.aoData.forEach(function(oRow){
-							$(oRow.nTr).find("input[type=checkbox]").prop("checked", oRow._aData.checked);
+							$(oRow.nTr).find("input[type=checkbox]:enabled").prop("checked", oRow._aData.checked);
 						});
 					}				
 				},
@@ -92,11 +92,13 @@ var BizReport = BizReport || {};
 					sWidth: "30px",
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
-						oRow.checked = oRow.checked || oRow.state == 1;
+						oRow.checked = oRow.checked || (oRow.state == 1 || oRow.state == 'Applied');
+							
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
-							checked: oRow.checked
+							checked: oRow.checked,
+							disabled: (oRow.state == 'PretrialFail' || oRow.state == 6)
 						}));
 					}
 				},
@@ -241,6 +243,10 @@ var BizReport = BizReport || {};
 				if (!oDataTable) return;
 				
 				var aRows = oDataTable.data(), checkbox = this;
+				aRows = aRows.filter(function(listing){
+					return !(listing.state == 6 || listing.state == 'PretrialFail');
+				});
+				
 				aRows.each(function(item){
 					// mark each row is selected
 					item.checked = checkbox.checked;
@@ -252,12 +258,12 @@ var BizReport = BizReport || {};
 					that.selectedItems.splice(0); // empty selectedItems
 				}
 				
-				that.dataTable.table.find("input[name=item]").prop("checked", this.checked);
+				that.dataTable.table.find("input[name=item]:enabled").prop("checked", this.checked);
 				
 				that.publish("selectChange");
 			});
 			
-			$("input[name=item]", this.container.get(0)).live("click", function(){
+			$("input[name=item]:enabled", this.container.get(0)).live("click", function(){
 				if (!oDataTable) return;
 				
 				var oData = oDataTable.row(this.getAttribute("rowindex")).data();
