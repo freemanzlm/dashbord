@@ -52,11 +52,6 @@ public class PromotionService extends BaseService {
 			GenericType<ListDataServiceResponse<Promotion>> type = new GenericType<ListDataServiceResponse<Promotion>>(){};
 			ListDataServiceResponse<Promotion> promos = resp.getEntity(type);
 			if(null != promos && AckValue.SUCCESS == promos.getAckValue()){
-				List<Promotion> data = promos.getData();
-				for(Promotion d : data){
-					d.setType(DummyDataBuilder.randomInteger(3));
-					d.setState(DummyDataBuilder.randomInteger(13));
-				}
 				return promos.getData();
 			} else {
 				if(null != promos && null != promos.getErrorMessage() && null != promos.getErrorMessage().getError()){
@@ -76,11 +71,6 @@ public class PromotionService extends BaseService {
 			GenericType<ListDataServiceResponse<Promotion>> type = new GenericType<ListDataServiceResponse<Promotion>>(){};
 			ListDataServiceResponse<Promotion> promos = resp.getEntity(type);
 			if(null != promos && AckValue.SUCCESS == promos.getAckValue()){
-				List<Promotion> data = promos.getData();
-				for(Promotion d : data){
-					d.setType(DummyDataBuilder.randomInteger(3));
-					d.setState(DummyDataBuilder.randomInteger(13));
-				}
 				return promos.getData();
 			} else {
 				if(null != promos && null != promos.getErrorMessage() && null != promos.getErrorMessage().getError()){

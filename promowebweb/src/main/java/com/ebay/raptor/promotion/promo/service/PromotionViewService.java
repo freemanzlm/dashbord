@@ -99,14 +99,16 @@ public class PromotionViewService {
 				case CREATED:
 					view = ViewResource.DU_APPLICABLE;
 					break;
-				case VERIFYING:
-				case PROMOTION_APPROVED:
-					view = ViewResource.DU_LISTING_PREVIEW;
-					break;
+//					view = ViewResource.DU_LISTING_PREVIEW;
+//					break;
 				case APPLIED:
 					view = ViewResource.DU_APPLIED;
 				case SUBMITTED:
 				case VERIFY_FAILED:
+				case VERIFYING:
+				case PROMOTION_APPROVED:
+					view = ViewResource.DU_LISTING;
+					break;
 				case STARTED:
 				case SUBSIDY_COUNTING:
 				case SUBSIDY_WAITING:
