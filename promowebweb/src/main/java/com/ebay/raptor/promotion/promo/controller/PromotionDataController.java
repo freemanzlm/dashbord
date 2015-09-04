@@ -1,5 +1,7 @@
 package com.ebay.raptor.promotion.promo.controller;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 
@@ -20,6 +22,7 @@ import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ContextViewRes;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
+import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 
@@ -48,6 +51,7 @@ public class PromotionDataController{
 				ContextViewRes res = handleViewBasedOnPromotion(promo);
 				model.setViewName(res.getView().getPath());
 				model.addAllObjects(res.getContext());
+				model.addObject(ViewContext.Promotion.getAttr(), promo);
 			}
 		} catch (PromoException e) {
 			e.printStackTrace();
@@ -150,5 +154,9 @@ public class PromotionDataController{
 		return resp;
 	}
 
+	public static void main(String[] args){
+		System.out.println(new Date());
+	}
+	
 
 }
