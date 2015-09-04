@@ -68,7 +68,12 @@
 						<div class="step done"><span>可报名</span></div>
 						<div class="step done"><span>已提交预审</span></div>
 						<div class="step ${ state eq 'Verifying' ? 'current-step' : 'done' }"><span>报名预审中</span></div>
-						<div class="step ${ state eq 'PromotionApproved' ? 'current-step' : '' }"><span>确认报名刊登</span></div>
+						<c:if test="${ state eq 'PromotionApproved' }">
+							<div class="step current-step"><span>确认报名刊登</span></div>
+						</c:if>
+						<c:if test="${ state eq 'Applied' }">
+							<div class="step current-step"><span>已提交报名</span></div>
+						</c:if>
 						<div class="step"><span>活动进行中</span></div>
 						<div class="step"><span>奖励确认中</span></div>
 						<div class="step"><span>申领奖励</span></div>
@@ -80,15 +85,7 @@
 					<c:when test="${state eq 'Verifying' }">
 						<div class="active-status-box">
 							<h3>您已成功提交预审！请耐心等待预审结果。</h3>
-							
-							<c:choose>
-								<c:when test="${ not expired }">
-									<p class="desc">需要您确认通过预审的刊登完成报名！</p>
-								</c:when>
-								<c:otherwise>
-									<p class="desc">已超过报名有效期，您无法再修改刊登内容</p>
-								</c:otherwise>
-							</c:choose>
+							<p class="desc">需要您确认通过预审的刊登完成报名！</p>
 							<menu>
 								<li>
 									<a href="../index" class="btn">返回活动列表</a>
@@ -99,14 +96,20 @@
 					<c:when test="${state eq 'PromotionApproved' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已成功通过预审！</h3>
-							<c:choose>
-								<c:when test="${ not expired }">
-									<p class="desc">请于YYYY-MM-DD前在如下刊登中选择您要参加活动的刊登并提交报名。</p>
-								</c:when>
-								<c:otherwise>
-									<p class="desc">已超过报名有效期，您无法再修改刊登内容</p>
-								</c:otherwise>
-							</c:choose>	
+							<p class="desc">请于YYYY-MM-DD前在如下刊登中选择您要参加活动的刊登并提交报名。</p>
+							<menu>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
+							</menu>	
+						</div> <!-- active status box end -->
+					</c:when>
+					<c:when test="${state eq 'Applied' }">
+						<div class="active-status-box ${ not expired ? 'success' : '' }">
+							<h3>您已成功提交！请耐心等待审核结果。</h3>
+							<c:if test="${ not expired }">
+								<p class="desc">在报名有效期内您可以修改后重新提交。</p>
+							</c:if>
 							<menu>
 								<li>
 									<a href="../index" class="btn">返回活动列表</a>
@@ -132,7 +135,7 @@
 				<c:if test="${(state eq 'PromotionApproved') && (expired eq false) }">
 					<div class="mt20 page-bottom-actions">
 						<form id="listing-form" action="preview" method="post">
-							<input type="hidden" name="promoId" value="4324324"/>
+							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 							<button id="form-btn" class="btn" type="button" disabled>预览报名信息</button>

@@ -5,11 +5,15 @@ $(function(){
 	var confirmDialog = new BizReport.ConfirmDialog();
 	var locale = BizReport.locale;
 	
-	var listingCountJ = $(".my-listing h3 small span");
+	var listingCountJ, listingTable, formBtn, acceptCheckBox;
 	
-	var form = $("#listing-form");
+	listingCountJ = $(".my-listing h3 small span");
 	
-	var listingTable = new DealsListingTable();
+	var form = $("#listing-form").submit(function(){
+		return acceptCheckbox && acceptCheckbox.prop('checked');
+	});
+	
+	listingTable = new DealsListingTable();
 	listingTable.subscribe({
 		initialized: function() {
 			if (pageData && (pageData.state != "PromotionApproved" || pageData.expired)) {
@@ -36,8 +40,8 @@ $(function(){
 		}});
 	listingTable.update();	
 	
-	var formBtn = document.getElementById("form-btn");
-	var acceptCheckbox = $("#accept").change(function(){
+	formBtn = document.getElementById("form-btn");
+	acceptCheckbox = $("#accept").change(function(){
 		if (this.checked) {
 			formBtn.removeAttribute("disabled");
 		} else {

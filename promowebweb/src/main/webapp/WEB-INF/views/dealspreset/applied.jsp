@@ -102,7 +102,7 @@
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
 						<form id="listing-form" action="applied" method="post">
-							<input type="hidden" name="promoId" value="4324324"/>
+							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
 							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
 						</form>
