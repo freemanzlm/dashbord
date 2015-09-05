@@ -62,7 +62,7 @@ public class PromotionDataController{
 	
 	private ContextViewRes handleViewBasedOnPromotion(Promotion promo) throws PromoException{
 		ContextViewRes result = new ContextViewRes();
-		switch(PMPromotionType.valueOf(promo.getType())){
+		switch(PMPromotionType.valueOfPMType(promo.getType())){
 			case HIGH_VELOCITY:
 				result = view.highVelocityView(promo);
 				break;
@@ -90,7 +90,7 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		try {
 			//TODO Change to cookie.
-			Long uid = 689917510l; 
+			Long uid = 1023516985l; 
 			resp.setData(service.getIngPromotion(uid));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);

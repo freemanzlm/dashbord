@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
+import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.HotSellListingService;
 import com.ebay.raptor.promotion.pojo.business.HotSellListing;
@@ -34,14 +35,14 @@ public class HotSellListingController {
 	HotSellListingService service;
 	
 	@POST
-	@RequestMapping(ResourceProvider.ListingRes.uploadPresetListings)
+	@RequestMapping(ResourceProvider.ListingRes.confirmHotSellListings)
 	@ResponseBody
-	public ListDataWebResponse<HotSellListing> uploadPresetListings(@ModelAttribute UploadListingForm listings){
+	public ListDataWebResponse<HotSellListing> confirmHotSellListings(@ModelAttribute UploadListingForm listings){
 		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
 		if(null != listings){
 			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class, false);
 			try {
-				service.uploadPresetListings(listingAry, listings.getPromoId(), listings.getUid());
+				service.confirmHotSellListings(listingAry, listings.getPromoId(), listings.getUid());
 			} catch (PromoException e) {
 				resp.setStatus(Boolean.FALSE);
 			}
@@ -52,10 +53,10 @@ public class HotSellListingController {
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getApplicableListings)
 	@ResponseBody
-	public ListDataWebResponse<HotSellListing> getApplicableListings(@RequestParam("promoId")String promoId, @RequestParam("uid") Long uid) {
+	public ListDataWebResponse<HotSellListing> getApplicableListings(@ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
 		try {
-			resp.setData(service.getApplicableListings(promoId, uid));
+			resp.setData(service.getApplicableListings(param.getPromoId(), param.getUid()));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);
 		}

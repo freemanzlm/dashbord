@@ -43,9 +43,9 @@ public class ResourceProvider {
 		String getApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}";
 		
 		String getSKUsByPromotionId = "/getSKUsByPromotionId";
-		String uploadPresetListings = "/uploadPresetListings";
+		String confirmDealsListings = "/confirmDealsListings";
+		String confirmHotSellListings = "/confirmHotSellListings";
 		String uploadDealsListings = "/uploadDealsListings";
-		String uploadApprovedDealsListings = "/uploadApprovedDealsListings";
 	}
 	
 	public interface SubsidyRes {

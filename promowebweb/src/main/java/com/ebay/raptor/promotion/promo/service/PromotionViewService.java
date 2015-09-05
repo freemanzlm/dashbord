@@ -19,7 +19,7 @@ public class PromotionViewService {
 		res.setContext(context);
 		ViewResource view = ViewResource.HV_DETAIL;
 		try {
-			switch(PMPromotionStatus.getById(pro.getState())){
+			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
 					view = ViewResource.HV_APPLICABLE;
 					break;
@@ -44,7 +44,7 @@ public class PromotionViewService {
 				default:
 					throw new PromoException("Status " + pro.getState() + " is not supportted for this type of promotion.");
 			}
-		} catch (CommonException e) {
+		} catch (Throwable e) {
 			throw new PromoException("Promotion status not valid!");
 		}
 		res.setView(view);
@@ -54,14 +54,15 @@ public class PromotionViewService {
 	public ContextViewRes dealsPresetView(Promotion pro) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
-		res.setContext(context);
-		ViewResource view = ViewResource.HV_DETAIL;
+		ViewResource view = ViewResource.DP_DETAIL;
 		try {
-			switch(PMPromotionStatus.getById(pro.getState())){
+			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
+					context.put(ViewContext.FormURL.getAttr(), ViewResource.DU_CONFIRM_LISTING.getPath());
 					view = ViewResource.DP_APPLICABLE;
 					break;
 				case APPLIED:
+					context.put(ViewContext.FormURL.getAttr(), ViewResource.DU_CONFIRM_LISTING.getPath());
 					view = ViewResource.DP_APPLIED;
 					break;
 				case STARTED:
@@ -82,9 +83,10 @@ public class PromotionViewService {
 				default:
 					throw new PromoException("Status " + pro.getState() + " is not supportted for this type of promotion.");
 			}
-		} catch (CommonException e) {
+		} catch (Throwable e) {
 			throw new PromoException("Promotion status not valid!");
 		}
+		res.setContext(context);
 		res.setView(view);
 		return res;
 	}
@@ -95,7 +97,7 @@ public class PromotionViewService {
 		res.setContext(context);
 		ViewResource view = ViewResource.DU_DETAIL;
 		try {
-			switch(PMPromotionStatus.getById(pro.getState())){
+			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
 					view = ViewResource.DU_APPLICABLE;
 					break;
@@ -127,7 +129,7 @@ public class PromotionViewService {
 				default:
 					throw new PromoException("Status " + pro.getState() + " is not supportted for this type of promotion.");
 			}
-		} catch (CommonException e) {
+		} catch (Throwable e) {
 			throw new PromoException("Promotion status not valid!");
 		}
 		res.setView(view);
@@ -140,7 +142,7 @@ public class PromotionViewService {
 		res.setContext(context);
 		ViewResource view = ViewResource.DU_APPLIED;
 		try {
-			switch(PMPromotionStatus.getById(pro.getState())){
+			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
 				case APPLIED:
 				case STARTED:
@@ -161,7 +163,7 @@ public class PromotionViewService {
 				default:
 					throw new PromoException("Status " + pro.getState() + " is not supportted for this type of promotion.");
 			}
-		} catch (CommonException e) {
+		} catch (Throwable e) {
 			throw new PromoException("Promotion status not valid!");
 		}
 		res.setView(view);

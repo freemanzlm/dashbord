@@ -84,8 +84,8 @@ public class HotSellListingService extends BaseService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public boolean uploadPresetListings(Listing[] listingAry, String promoId, String uid) throws PromoException {
-		String uri = url(ResourceProvider.ListingRes.uploadPresetListings);
+	public boolean confirmHotSellListings(Listing[] listingAry, String promoId, String uid) throws PromoException {
+		String uri = url(ResourceProvider.ListingRes.confirmHotSellListings);
 		List<Listing> listingList = Arrays.asList(listingAry);
 		UploadListingRequest req = new UploadListingRequest();
 		req.setListings(listingList);;

@@ -1,5 +1,7 @@
 package com.ebay.raptor.promotion.promo.service;
 
+import com.ebay.raptor.promotion.service.ResourceProvider;
+
 public enum ViewResource {
 
 	HV_APPLICABLE("hotsell/applicable"), 
@@ -21,6 +23,8 @@ public enum ViewResource {
 	DU_LISTING_PREVIEW("deals/listingPreview"),
 	DU_LISTING("deals/listing"),
 	DU_DETAIL("deals/state"),
+	
+	DU_CONFIRM_LISTING("/promotion/deals/confirmDealsListings"),
 	
 	OTHER_CANCELLED("other/canceled"),
 	OTHER_END("other/end"),

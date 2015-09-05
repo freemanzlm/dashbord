@@ -2,7 +2,8 @@ package com.ebay.raptor.promotion.promo.service;
 
 public enum ViewContext {
 
-	Promotion(1, "promo");
+	Promotion(1, "promo"),
+	FormURL(2, "formUrl");
 	
 	private Integer id;
 

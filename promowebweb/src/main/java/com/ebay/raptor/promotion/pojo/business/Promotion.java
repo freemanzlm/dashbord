@@ -32,7 +32,7 @@ public class Promotion {
 	
 	private Integer rewardType;
 
-	private Integer state;
+	private String state;
 
 	public String getDesc() {
 		return desc;
@@ -98,11 +98,11 @@ public class Promotion {
 		this.reward = reward;
 	}
 
-	public Integer getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
