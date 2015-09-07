@@ -87,13 +87,12 @@ public class DealsListingController {
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.getSKUsByPromotionId)
+	@RequestMapping(ResourceProvider.ListingRes.getSkuListingsByPromotionId)
 	@ResponseBody
-	public ListDataWebResponse<Sku> getSkuList(@RequestParam("promoId")String promoId, @RequestParam("uid") Long uid) {
-		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();
-		resp.setData(service.getSKUsByPromotionId(promoId, uid));
+	public ListDataWebResponse<DealsListing> getSkuList(@RequestParam("promoId")String promoId, @RequestParam("uid") Long uid) {
+		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
+		resp.setData(service.getSkuListingByPromotionId(promoId, uid));
 		return resp;
 	}
-
 
 }

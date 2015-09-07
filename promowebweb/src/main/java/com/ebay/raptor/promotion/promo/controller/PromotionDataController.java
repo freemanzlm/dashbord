@@ -46,7 +46,14 @@ public class PromotionDataController{
 		//TODO Get the uid from cookie
 		Long uid = -1L;
 		try {
-			Promotion promo = service.getPromotionById(promoId, uid);
+//			Promotion promo = service.getPromotionById(promoId, uid);
+			Promotion promo = new Promotion();
+			promo.setPromoId("Test_SF_ID0");
+			promo.setType(1);
+			promo.setState("Created");
+			promo.setName("no name");
+			promo.setDesc("this is the description...");
+			promo.setPromoDlDt(new Date());
 			if(null != promo){
 				ContextViewRes res = handleViewBasedOnPromotion(promo);
 				model.setViewName(res.getView().getPath());

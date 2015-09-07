@@ -3,7 +3,7 @@ package com.ebay.raptor.promotion.pojo.business;
 public class DealsListing {
 
 	private String skuId;
-	
+
 	private Long itemId;
 
 	private String name;
@@ -12,7 +12,7 @@ public class DealsListing {
 
 	private String currency;
 
-	private Float inventory;
+	private Long inventory;
 
 	private Float actPrice;
 
@@ -50,11 +50,11 @@ public class DealsListing {
 		this.currency = currency;
 	}
 
-	public Float getInventory() {
+	public Long getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(Float inventory) {
+	public void setInventory(Long inventory) {
 		this.inventory = inventory;
 	}
 

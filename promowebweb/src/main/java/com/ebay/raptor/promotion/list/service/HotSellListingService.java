@@ -87,7 +87,7 @@ public class HotSellListingService extends BaseService {
 	public boolean confirmHotSellListings(Listing[] listingAry, String promoId, String uid) throws PromoException {
 		String uri = url(ResourceProvider.ListingRes.confirmHotSellListings);
 		List<Listing> listingList = Arrays.asList(listingAry);
-		UploadListingRequest req = new UploadListingRequest();
+		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
 		req.setListings(listingList);;
 		req.setPromoId(promoId);
 		req.setUid(Long.parseLong(uid));
