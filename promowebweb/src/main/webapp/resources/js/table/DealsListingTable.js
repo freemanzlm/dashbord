@@ -46,7 +46,7 @@ var BizReport = BizReport || {};
 						sNext: locale.getText('dataTable.nextPage')
 					}
 				},
-				sAjaxSource: "/promoweb/js/data/dealsListing.json",
+				sAjaxSource: "/promoweb/deals/getApplicableListings", //"/promoweb/js/data/dealsListing.json"
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {

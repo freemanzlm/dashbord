@@ -12,9 +12,9 @@ public class HotSellListing {
 
 	private String currency;
 
-	private Integer volume;
+	private Float volume;
 
-	private Integer sales;
+	private Float sales;
 
 	private Float comp;
 
@@ -52,19 +52,19 @@ public class HotSellListing {
 		this.currency = currency;
 	}
 
-	public Integer getVolume() {
+	public Float getVolume() {
 		return volume;
 	}
 
-	public void setVolume(Integer volume) {
+	public void setVolume(Float volume) {
 		this.volume = volume;
 	}
 
-	public Integer getSales() {
+	public Float getSales() {
 		return sales;
 	}
 
-	public void setSales(Integer sales) {
+	public void setSales(Float sales) {
 		this.sales = sales;
 	}
 

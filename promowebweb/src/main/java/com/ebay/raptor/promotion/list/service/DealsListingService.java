@@ -27,6 +27,23 @@ public class DealsListingService extends BaseService {
 		return secureUrl(ResourceProvider.ListingRes.dealsBase) + url;
 	}
 	
+
+	@SuppressWarnings("unchecked")
+	public Boolean confirmDealsListings(Listing[] listings, String promoId, Long uid) throws PromoException{
+		String uri = url(ResourceProvider.ListingRes.confirmDealsListings);
+		List<Listing> listingList = Arrays.asList(listings);
+		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
+		req.setListings(listingList);;
+		req.setPromoId(promoId);
+		req.setUid(uid);
+		GingerClientResponse resp = httpPost(uri, req);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			return Boolean.TRUE;
+		} else {
+			throw new PromoException("Internal Error Happens.");
+		}
+	}
+	
 	public List<DealsListing> getApplicableListings(String promoId, Long uid) throws PromoException{
 		String uri = url(params(ResourceProvider.ListingRes.getApplicableListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
 		GingerClientResponse resp = httpGet(uri);

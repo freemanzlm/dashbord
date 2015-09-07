@@ -15,7 +15,8 @@ public class WebDateSerializer extends JsonSerializer<Date> {
 	public void serialize(Date value, JsonGenerator jgen,
 			SerializerProvider provider) throws IOException,
 			JsonProcessingException {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		jgen.writeString(sdf.format(value));
 	}
 

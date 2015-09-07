@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.excep.PromoException;
+import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
@@ -46,14 +47,14 @@ public class PromotionDataController{
 		//TODO Get the uid from cookie
 		Long uid = -1L;
 		try {
-//			Promotion promo = service.getPromotionById(promoId, uid);
-			Promotion promo = new Promotion();
-			promo.setPromoId("Test_SF_ID0");
-			promo.setType(1);
-			promo.setState("Created");
-			promo.setName("no name");
-			promo.setDesc("this is the description...");
-			promo.setPromoDlDt(new Date());
+			Promotion promo = service.getPromotionById(promoId, uid);
+//			Promotion promo = new Promotion();
+//			promo.setPromoId("Test_SF_ID0");
+//			promo.setType(1);
+//			promo.setState("Created");
+//			promo.setName("no name");
+//			promo.setDesc("this is the description...");
+//			promo.setPromoDlDt(new Date());
 			if(null != promo){
 				ContextViewRes res = handleViewBasedOnPromotion(promo);
 				model.setViewName(res.getView().getPath());
@@ -97,7 +98,7 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		try {
 			//TODO Change to cookie.
-			Long uid = 1023516985l; 
+			Long uid = ListingWebParam.UID; 
 			resp.setData(service.getIngPromotion(uid));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -112,7 +113,7 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		try {
 			//TODO Change to cookie.
-			Long uid = 689917510l; 
+			Long uid = ListingWebParam.UID; 
 			resp.setData(service.getSubsidyPromotions(uid));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -127,7 +128,7 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		try {
 			//TODO Change to cookie.
-			Long uid = 689917510l; 
+			Long uid = ListingWebParam.UID; 
 			resp.setData(service.getEndPromotions(uid));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);

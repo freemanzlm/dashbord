@@ -4,23 +4,25 @@ public class UploadListingForm {
 
 	private String promoId;
 
-	private String uid;
+	private Long uid;
 
 	private String listings;
 
 	public String getPromoId() {
-		return promoId;
+//		return promoId;
+		return ListingWebParam.SFID;
 	}
 
 	public void setPromoId(String promoId) {
 		this.promoId = promoId;
 	}
 
-	public String getUid() {
-		return uid;
+	public Long getUid() {
+//		return uid;
+		return ListingWebParam.UID;
 	}
 
-	public void setUid(String uid) {
+	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 

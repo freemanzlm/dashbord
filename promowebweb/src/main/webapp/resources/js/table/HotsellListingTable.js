@@ -46,7 +46,8 @@ var BizReport = BizReport || {};
 				},
 				'bScrollCollapse': true,
 				'sScrollY': "600",
-				sAjaxSource: "/promoweb/js/data/listing.json",
+//				sAjaxSource: "/promoweb/js/data/listing.json",
+				sAjaxSource: "/promoweb/hotsell/getApplicableListings",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {

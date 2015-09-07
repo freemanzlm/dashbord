@@ -60,7 +60,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>爆款促销 活动名称</h2>
+				<h2>Deals预置 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step"><span>可报名</span></div>
@@ -82,8 +82,8 @@
 				</div>
 				
 				<div class="mt20" style="text-align: center;">
-					<form id="listing-form" action="applied" method="post">
-						<input type="hidden" name="promoId" value=""/>
+					<form id="listing-form" action="/promoweb/deals/confirmDealsListings" method="post">
+						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
 						<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 						<button id="form-btn" class="btn" type="button" disabled>预览报名信息</button>

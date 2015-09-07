@@ -8,7 +8,7 @@ public abstract class BasePromoInitConfig extends DefaultInitGingerClientConfig{
 	public int getConnectTimeout() {
 		return 50000;
 	}
-
+	
 	@Override
 	public String getEndPoint() {
 		return "http://localhost:8080/";
@@ -22,6 +22,11 @@ public abstract class BasePromoInitConfig extends DefaultInitGingerClientConfig{
 	@Override
 	public int getThreadPoolSize() {
 		return 20;
+	}
+
+	@Override
+	public int getErrorCountThreshold() {
+		return 10000;
 	}
 
 }

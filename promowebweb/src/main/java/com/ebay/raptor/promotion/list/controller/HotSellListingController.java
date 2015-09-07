@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -19,7 +20,11 @@ import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.HotSellListingService;
 import com.ebay.raptor.promotion.pojo.business.HotSellListing;
+import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
+import com.ebay.raptor.promotion.promo.service.PromotionService;
+import com.ebay.raptor.promotion.promo.service.ViewContext;
+import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 
@@ -34,20 +39,28 @@ public class HotSellListingController {
 	@Autowired
 	HotSellListingService service;
 	
+	@Autowired
+	PromotionService promoService;
+	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.confirmHotSellListings)
-	@ResponseBody
-	public ListDataWebResponse<HotSellListing> confirmHotSellListings(@ModelAttribute UploadListingForm listings){
-		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
+	public ModelAndView confirmHotSellListings(@ModelAttribute UploadListingForm listings){
+		ModelAndView model = new ModelAndView();
 		if(null != listings){
 			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class, false);
 			try {
-				service.confirmHotSellListings(listingAry, listings.getPromoId(), listings.getUid());
+				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), listings.getUid())){
+					model.setViewName(ViewResource.HV_APPLIED.getPath());
+					Promotion promo = promoService.getPromotionById(listings.getPromoId(), listings.getUid());
+					model.addObject(ViewContext.Promotion.getAttr(), promo);
+				} else {
+					model.setViewName(ViewResource.ERROR.getPath());
+				}
 			} catch (PromoException e) {
-				resp.setStatus(Boolean.FALSE);
+				model.setViewName(ViewResource.ERROR.getPath());
 			}
 		}
-		return resp;
+		return model;
 	}
 
 	@GET

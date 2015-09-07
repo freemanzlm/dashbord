@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
@@ -18,8 +20,12 @@ import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
+import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
+import com.ebay.raptor.promotion.promo.service.PromotionService;
+import com.ebay.raptor.promotion.promo.service.ViewContext;
+import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 
@@ -33,18 +39,39 @@ public class DealsListingController {
 	@Autowired
 	DealsListingService service;
 	
+	@Autowired
+	PromotionService promoService;
+	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.confirmDealsListings)
-	@ResponseBody
-	public ListDataWebResponse<DealsListing> confirmDealsListings(@ModelAttribute("listings") UploadListingForm listings) {
-		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
+	public ModelAndView confirmDealsListings(@ModelAttribute("listings") UploadListingForm listings) {
+		ModelAndView model = new ModelAndView();
 		if(null != listings){
+			//TODO Add uid
+			listings.setUid(ListingWebParam.UID);
 			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class, false);
-			for(Listing listing : listingAry){
-				System.out.println(listing.getItemId() + " - " + listing.getSelected());
+			try {
+				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), listings.getUid());
+				if(result){
+					Promotion promotion = promoService.getPromotionById(listings.getPromoId(), listings.getUid());
+					model.addObject(ViewContext.Promotion.getAttr(), promotion);
+					switch(PMPromotionType.valueOfPMType(promotion.getType())){
+						case DEALS_DASHBOARD_UPLOAD:
+							model.setViewName(ViewResource.DU_APPLIED.getPath());
+							break;
+						case DEALS_AM_UPLOAD:
+							model.setViewName(ViewResource.DP_APPLIED.getPath());
+							break;
+						default:
+							model.setViewName(ViewResource.ERROR.getPath());
+							break;
+					}
+				}
+			} catch (PromoException e) {
+				model.setViewName(ViewResource.ERROR.getPath());
 			}
 		}
-		return resp;
+		return model;
 	}
 
 	@GET
