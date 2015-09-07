@@ -42,7 +42,7 @@ public class ResourceProvider {
 		String _getApprovedListings = "/getApprovedListings";
 		String getApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}";
 		
-		String getSKUsByPromotionId = "/getSKUsByPromotionId";
+		String getSkuListingsByPromotionId = "/getSkuListingsByPromotionId";
 		String confirmDealsListings = "/confirmDealsListings";
 		String confirmHotSellListings = "/confirmHotSellListings";
 		String uploadDealsListings = "/uploadDealsListings";

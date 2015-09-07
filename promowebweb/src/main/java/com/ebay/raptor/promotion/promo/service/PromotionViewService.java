@@ -100,6 +100,7 @@ public class PromotionViewService {
 			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
 					view = ViewResource.DU_APPLICABLE;
+					context.put("termsAccpted", true);
 					break;
 //					view = ViewResource.DU_LISTING_PREVIEW;
 //					break;

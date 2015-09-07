@@ -24,6 +24,7 @@ import com.ebay.app.raptor.promocommon.export.HeaderConfiguration;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
@@ -47,7 +48,7 @@ public class DownloadController {
         	
         	UserData userData = CookieUtil.getUserDataFromCookie(request);
         	
-        	List<Sku> skus = dealsListingService.getSKUsByPromotionId(param.getPromoId(), userData.getUserId());
+        	List<DealsListing> skuListings = dealsListingService.getSkuListingByPromotionId(param.getPromoId(), userData.getUserId());
 
         	List<HeaderConfiguration> preCfgs = new ArrayList<HeaderConfiguration>();
         	preCfgs.add(new HeaderConfiguration(20, "itemId", resource("itemId") , ColumnFormat.String));
