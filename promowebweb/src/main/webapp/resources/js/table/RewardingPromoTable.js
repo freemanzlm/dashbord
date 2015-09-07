@@ -160,32 +160,25 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 8: // rewarding
 							case 'SubsidyWaiting':
-								var display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								var display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
 //								display += "<br /><a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.Claimed') + "</a>";
 								return display;
 							case 9: // upload agreement
 							case 'NeedAgreement':
 							case 12: // reclaim reward
 							case 'ClaimFail':
-								return "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
+								return "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
 							default:
-								return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+								return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 							}
-						}
-						
-						if (type == "filter") {
-							return states[data];
 						}
 						
 						if (type == "sort") {
 							switch (data) {
-							case 8: // rewarding
 							case 'SubsidyWaiting':
 								return 8;
-							case 12: // reclaim reward
 							case 'ClaimFail':
 								return 9;
-							case 9: // upload agreement
 							case 'NeedAgreement':
 								return 10;
 							}

@@ -153,7 +153,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (data == 11 || data == 'Completed') { // complete
+							if (data == 'Completed') { // complete
 								return locale.getText('promo.state.Completed') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							} else {
 								return "<a href='" + getLink(full.promoId)  + "'>查看详情</a>";
@@ -161,7 +161,7 @@ var BizReport = BizReport || {};
 						}
 						
 						if (type == "sort") {
-							if (data == 11 || data == 'Completed') {
+							if (data == 'Completed') {
 								return 11;
 							}
 							
@@ -169,7 +169,7 @@ var BizReport = BizReport || {};
 						}
 						
 						if (type == "filter") {
-							if (data == 11 || data == 'Completed') {
+							if (data == 'Completed') {
 								return 'Completed';
 							}
 							

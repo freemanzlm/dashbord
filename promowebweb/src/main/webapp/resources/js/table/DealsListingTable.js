@@ -29,7 +29,7 @@ var BizReport = BizReport || {};
 				'bServerSide': false,
 				'bSortCellsTop': true,
 				'bSort': true,
-				'iDisplayLength': 10,
+				'iDisplayLength': 200,
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'bScrollCollapse': true,

@@ -164,20 +164,14 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							if (full.type != 3) {
 								switch (data) {
-								case 0:
 								case 'Created':
-								case 3:
 								case 'PromotionApproved':
-									return "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + states[data]) + "</a>";
-								case 5:
+									return "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + data) + "</a>";
 								case 'Applied':
-								case 1:
 								case 'Submitted':
-								case 6:
 								case 'Started':
-								case 7:
 								case 'SubsidyCounting':
-									return locale.getText('promo.state.' + states[data]) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
 							}
 							
@@ -187,22 +181,16 @@ var BizReport = BizReport || {};
 						if (type == "filter") {
 							if (full.type != 3) {
 								switch (data) {
-								case 0:
 								case 'Created':
 									return 'Created';
-								case 3:
 								case 'PromotionApproved':
 									return 'PromotionApproved';
-								case 5:
 								case 'Applied':
 									return 'Applied';
-								case 1:
 								case 'Submitted':
 									return 'Submitted';
-								case 6:
 								case 'Started':
 									return 'Started';
-								case 7:
 								case 'SubsidyCounting':
 									return 'SubsidyCounting';
 								}
@@ -214,22 +202,16 @@ var BizReport = BizReport || {};
 						if (type == "sort") {
 							if (full.type != 3) {
 								switch (data) {
-								case 0:
 								case 'Created':
 									return 0;
-								case 3:
 								case 'PromotionApproved':
 									return 1;
-								case 5:
 								case 'Applied':
 									return 2;
-								case 1:
 								case 'Submitted':
 									return 3;
-								case 6:
 								case 'Started':
 									return 4;
-								case 7:
 								case 'SubsidyCounting':
 									return 5;
 								}
