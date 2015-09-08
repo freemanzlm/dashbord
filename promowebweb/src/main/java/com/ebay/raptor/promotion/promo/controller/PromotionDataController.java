@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonException;
+import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
@@ -47,6 +48,8 @@ import com.ebay.raptor.promotion.util.CookieUtil;
 @Controller
 @RequestMapping(ResourceProvider.PromotionRes.base)
 public class PromotionDataController{
+	private static CommonLogger logger =
+            CommonLogger.getInstance(PromotionDataController.class);
 
 	@Inject
 	IRaptorContext raptorCtx;
@@ -203,9 +206,11 @@ public class PromotionDataController{
 			mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
 		} catch (IOException | PromoException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
+			logger.error("Upload listings got error.", e);
 			mav.setViewName(ViewResource.ERROR.getPath());
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
+			logger.error("The uploaded listings are invalid.", e);
 
 			try {
 				Promotion promo = service.getPromotionById(promoId);

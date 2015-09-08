@@ -2,8 +2,6 @@
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="errorMsg" value="[34324324]的信息填写不完整，请修改后重新上传。"></c:set>
-
 <div class="listings-upload">
 	<h3>批量上传我要提交的刊登</h3>
 	
@@ -26,7 +24,7 @@
 		<form id="upload-form" action="upload" class="mt20" method="post" enctype="multipart/form-data">
 			选择上传您的刊登列表 
 			<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="UploadListing" accept="application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">选择</button></span>
-			<input type="hidden" name="promoId" value=""/>
+			<input type="hidden" name="promoId" value="${promo.promoId}"/>
 		</form>
 	</div>	
 </div>
