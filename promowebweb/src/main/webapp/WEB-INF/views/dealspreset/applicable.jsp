@@ -84,7 +84,7 @@
 					<form id="listing-form" action="/promoweb/deals/confirmDealsListings" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
-						<button id="form-btn" class="btn" type="button" disabled>预览报名信息</button>
+						<button id="form-btn" class="btn" type="button">预览报名信息</button>
 					</form>
 				</div>
 			</div>

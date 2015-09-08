@@ -106,9 +106,12 @@ var BizReport = BizReport || {};
 					aTargets: ["item-id"],
 					sDefaultContent: "",					
 					sType: "string",
+					sWidth: "150px",
+					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a href='http://www.ebay.com/itm/" + data + "'>" + data + "</a>";
+							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + data + ".jpg' height='50' width='50'/>";
+							return display += "<p><a href='http://www.ebay.com/itm/" + "'>" + data + "</a></p>";
 						}
 						
 						return data;
@@ -118,14 +121,9 @@ var BizReport = BizReport || {};
 					aTargets: ["name"],
 					sDefaultContent: "",					
 					sType: "string",
-					sWidth: "350px",
+					sWidth: "300px",
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
-						if (type == "display") {
-							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
-							return display += "<p>" + data + "</p>";
-						}
-						
 						return data;
 					}					
 				},
