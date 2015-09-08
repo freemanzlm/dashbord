@@ -108,7 +108,8 @@
 <%@ include file="previewDialog.jsp" %>
 <script type="text/javascript">
 	var pageData = {
-		expired: ${ expired == true }
+		expired: ${ expired == true },
+		promoId: '${ promoId }'
 	};
 </script>
 <res:jsSlot id="body" />

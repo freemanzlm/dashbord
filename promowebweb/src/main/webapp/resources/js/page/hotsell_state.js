@@ -14,12 +14,11 @@ $(function(){
 		dataTableConfig: {
 			tableId: "hotsell-listing-table"
 		}});
-	listingTable.update();
+	listingTable.update({promoId:pageData.promoId});
 	
 	var termsDialog = BizReport.termsDialog;
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
 	});
 	
-	console.log("hello");
 });

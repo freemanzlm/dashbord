@@ -35,7 +35,7 @@ $(function(){
 				}).join(",") + "]");
 			}
 		}});
-	listingTable.update();
+	listingTable.update({promoId:pageData.promoId});
 	
 	confirmDialog.init();
 	confirmDialog.subscribe({

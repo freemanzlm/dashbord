@@ -17,7 +17,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "sku-list-table"
 		}});
-	skuList.update();
+	skuList.update({promoId:pageData.promoId});
 	
 	uploadForm = $("#upload-form").submit(function(){
 		var fileName = fileInput.val();

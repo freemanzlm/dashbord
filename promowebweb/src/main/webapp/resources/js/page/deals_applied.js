@@ -16,7 +16,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "deals-listing-table"
 		}});
-	listingTable.update();	
+	listingTable.update({promoId:pageData.promoId});	
 	
 	uploadForm = $("#upload-form").submit(function(){
 		var fileName = fileInput.val();

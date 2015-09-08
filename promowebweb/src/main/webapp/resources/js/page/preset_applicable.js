@@ -19,7 +19,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "deals-listing-table"
 		}});
-	listingTable.update();
+	listingTable.update({promoId:pageData.promoId});
 	
 	var form = $("#listing-form").submit(function(){
 		// if user doesn't select a item, form can't be submitted.

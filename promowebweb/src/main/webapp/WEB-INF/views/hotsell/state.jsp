@@ -178,6 +178,12 @@
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/terms.jsp" %>
 
+<script type="text/javascript">
+	var pageData = {
+		promoId: '${ promoId }'
+	};
+</script>
+
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />

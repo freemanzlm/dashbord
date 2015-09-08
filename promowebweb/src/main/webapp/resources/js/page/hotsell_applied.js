@@ -24,7 +24,7 @@ $(function(){
 			listingCountJ.text(this.selectedItems.length);
 		}
 	}, listingTable);
-	listingTable.update();
+	listingTable.update({promoId:pageData.promoId});
 	
 	
 	var form = $("#listing-form").submit(function(){

@@ -43,7 +43,6 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
@@ -120,13 +119,12 @@
 
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/confirm.jsp" %>
-<%@ include file="../dialog/terms.jsp" %>
 <%@ include file="previewDialog.jsp" %>
 
 <script type="text/javascript">
 	var pageData = {
-		expired: ${ expired == true }
-		
+		expired: ${ expired == true },
+		promoId: '${ promoId }'
 	};
 </script>
 

@@ -24,7 +24,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "hotsell-listing-table"
 		}});
-	listingTable.update();
+	listingTable.update({promoId:pageData.promoId});
 	
 	var formBtn = document.getElementById("form-btn");
 	var acceptCheckbox = $("#accept").change(function(){
