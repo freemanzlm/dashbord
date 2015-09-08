@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response.Status;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
+import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
@@ -135,10 +136,10 @@ public class DealsListingService extends BaseService {
 //					throw new PromoException(listing.getErrorMessage().getError().toString());
 //				}
 //			}
+			return true;
 		} else {
-			throw new PromoException("Internal Error Happens.");
+			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
-		return Boolean.FALSE;
 	}
 	
 	public boolean confirmDealsListings(List<Listing> listings, String promoId, String uid) throws PromoException {

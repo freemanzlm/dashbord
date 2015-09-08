@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
+import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.excel.EmptyCellValueException;
 import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
@@ -27,7 +28,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 	}
 
 	@Override
-	public void handleSheet(XSSFSheet sheet) throws InvalidCellValueException, PromoException {
+	public void handleSheet(XSSFSheet sheet) throws CommonException {
 		readHeader(sheet);
 		readContent(sheet);
 	}

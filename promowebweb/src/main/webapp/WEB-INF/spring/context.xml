@@ -41,6 +41,13 @@
 	<mvc:interceptors>
        <beans:bean class="com.ebay.raptor.promotion.interceptor.AuthInterceptor"></beans:bean>
     </mvc:interceptors>
+    
+    <beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the properties available; the maximum file size in bytes -->
+		<beans:property name="maxUploadSize" value="100000"/>
+	</beans:bean>
+    
  
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

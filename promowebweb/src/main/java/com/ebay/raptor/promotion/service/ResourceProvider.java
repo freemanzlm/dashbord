@@ -23,7 +23,8 @@ public class ResourceProvider {
 		String getEndPromotions = "/getEndPromotions/uid/{uid}";
 		
 		String _getPromotionById = "/getPromotionById";
-		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}";
+		String getPromotionById = "/getPromotionById/promoId/{promoId}";
+		String uploadListing = "/upload";
 	}
 	
 	public interface UserPromotionRes {

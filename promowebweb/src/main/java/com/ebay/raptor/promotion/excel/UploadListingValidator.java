@@ -13,7 +13,7 @@ public class UploadListingValidator {
 	public static Long validateItemId (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
 
-		if (cell.getStringCellValue() == "") {
+		if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
 			if (ex == null) {
 				emptyException.set(new EmptyCellValueException(cell.getRowIndex(), cell.getColumnIndex()));
 			}
@@ -43,7 +43,7 @@ public class UploadListingValidator {
 	public static String validateItemTitleAndSku (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
 
-		if (cell.getStringCellValue() == "") {
+		if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
 			if (ex == null) {
 				emptyException.set(new EmptyCellValueException(cell.getRowIndex(), cell.getColumnIndex()));
 			}
@@ -73,7 +73,7 @@ public class UploadListingValidator {
 	public static Float validatePrice (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
 
-		if (cell.getStringCellValue() == "") {
+		if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
 			if (ex == null) {
 				emptyException.set(new EmptyCellValueException(cell.getRowIndex(), cell.getColumnIndex()));
 			}
@@ -103,7 +103,7 @@ public class UploadListingValidator {
 	public static Long validateStockNumber (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
 
-		if (cell.getStringCellValue() == "") {
+		if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
 			if (ex == null) {
 				emptyException.set(new EmptyCellValueException(cell.getRowIndex(), cell.getColumnIndex()));
 			}

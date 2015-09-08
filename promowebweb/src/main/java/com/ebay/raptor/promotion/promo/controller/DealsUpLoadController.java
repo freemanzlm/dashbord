@@ -22,12 +22,15 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.ExcelReader;
 import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
 @Controller
@@ -35,9 +38,9 @@ public class DealsUpLoadController {
 	
 	@Autowired DealsListingService dealsListingService;
 
-	@RequestMapping(value = "promotion/upload", method = RequestMethod.POST)
+	@RequestMapping(value = "promotion1/upload", method = RequestMethod.POST)
 	public ModelAndView handleUploadRequest(HttpServletRequest request,
-            HttpServletResponse response, @RequestPart("file") MultipartFile xmlFile,
+            HttpServletResponse response, @RequestPart("UploadListing") MultipartFile xmlFile,
             @RequestParam String promoId) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView("deals/listingPreview");
 		
@@ -51,10 +54,15 @@ public class DealsUpLoadController {
 					new UploadListingSheetHandler(dealsListingService,
 							promoId, userData.getUserId()));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			mav.setViewName("deals/listingPreview"); // TODO - upload failed...
+			// Got IO exception -> means app level error -> should show error page.
+			mav.setViewName(ViewResource.ERROR.getPath());
+		} catch (CommonException e) {
+			// Got logic exception -> check the error code and return the message to UI
+			ErrorType errorType = e.getErrorType();
+			
+			
+			mav.setViewName("promotion/error");
+			
 		}
 		
 		mav.setViewName("deals/listingPreview");
