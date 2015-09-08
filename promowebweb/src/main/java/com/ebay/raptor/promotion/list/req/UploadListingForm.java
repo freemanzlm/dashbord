@@ -9,8 +9,8 @@ public class UploadListingForm {
 	private String listings;
 
 	public String getPromoId() {
-//		return promoId;
-		return ListingWebParam.SFID;
+		return promoId;
+//		return ListingWebParam.SFID;
 	}
 
 	public void setPromoId(String promoId) {
