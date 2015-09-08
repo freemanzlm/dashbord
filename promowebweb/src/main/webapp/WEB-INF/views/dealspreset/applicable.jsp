@@ -81,7 +81,7 @@
 				</div>
 				
 				<div class="mt20" style="text-align: center;">
-					<form id="listing-form" action="/promoweb/deals/confirmDealsListings" method="post">
+					<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
 						<button id="form-btn" class="btn" type="button">预览报名信息</button>
@@ -101,7 +101,7 @@
 
 <script type="text/javascript">
 	var pageData = {
-		promoId: '${promoId}'
+		promoId: '${promo.promoId}'
 	};
 </script>
 

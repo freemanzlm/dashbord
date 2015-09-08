@@ -67,7 +67,7 @@
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
-					<form action="/promoweb/hotsell/uploadPresetListings" method="post">
+					<form action="/promotion/hotsell/uploadPresetListings" method="post">
 						<input type="hidden" name="promoId" value="4324324"/>
 						<!-- TODO put selected listing ids here -->
 						<input type="hidden" name="listings" value="" />

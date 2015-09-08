@@ -4,7 +4,8 @@ public enum ViewContext {
 
 	Promotion(1, "promo"),
 	FormURL(2, "formUrl"),
-	PromotionId(3, "promoId");
+	PromotionId(3, "promoId"),
+	ErrorMsg(4, "errorMsg");
 	
 	private Integer id;
 

@@ -102,18 +102,17 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public List<DealsListing> getSkuListingByPromotionId(String promoId, Long uid){
-		String uri = url(params(ResourceProvider.ListingRes.getSkuListingsByPromotionId, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+	public List<Sku> getSkuListingByPromotionId(String promoId, Long uid) throws PromoException{
+		String uri = url(params(ResourceProvider.ListingRes.getSKUsByPromotionId, new Object[]{"{promoId}", promoId, "{uid}", uid}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<DealsListing>> type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
-			ListDataServiceResponse<DealsListing> data = resp.getEntity(type);
+			GenericType<ListDataServiceResponse<Sku>> type = new GenericType<ListDataServiceResponse<Sku>>(){};
+			ListDataServiceResponse<Sku> data = resp.getEntity(type);
 			if(null != data && AckValue.SUCCESS == data.getAckValue()){
 				return data.getData();
 			}
 		} else {
-			System.out.println(resp.getStatus());
-			System.out.println(resp.getEntity(String.class));
+			throw new PromoException("Failed to retrieve the SKU list with provided promo ID: " + promoId);
 		}
 		return null;
 	}

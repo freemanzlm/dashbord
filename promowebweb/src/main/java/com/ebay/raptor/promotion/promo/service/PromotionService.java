@@ -8,7 +8,6 @@ import javax.ws.rs.core.Response.Status;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
-import com.ebay.app.raptor.promocommon.util.DummyDataBuilder;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.business.UserPromotion;

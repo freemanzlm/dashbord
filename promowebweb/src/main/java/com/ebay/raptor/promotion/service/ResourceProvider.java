@@ -24,7 +24,6 @@ public class ResourceProvider {
 		
 		String _getPromotionById = "/getPromotionById";
 		String getPromotionById = "/getPromotionById/promoId/{promoId}";
-		String uploadListing = "/upload";
 	}
 	
 	public interface UserPromotionRes {
@@ -43,10 +42,14 @@ public class ResourceProvider {
 		String _getApprovedListings = "/getApprovedListings";
 		String getApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}";
 		
-		String getSkuListingsByPromotionId = "/getSkuListingsByPromotionId";
+		String _getSKUsByPromotionId = "/getSKUsByPromotionId";
+		String getSKUsByPromotionId = "/getSKUsByPromotionId/promoId/{promoId}/uid/{uid}";
 		String confirmDealsListings = "/confirmDealsListings";
 		String confirmHotSellListings = "/confirmHotSellListings";
+		String downloadSkuList = "/downloadSkuList";
 		String uploadDealsListings = "/uploadDealsListings";
+		
+		String skuListFileName = "Deals_listing_template"; //TODO Here should be Chinese 
 	}
 	
 	public interface SubsidyRes {

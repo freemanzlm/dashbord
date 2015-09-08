@@ -86,7 +86,7 @@
 				</div>
 				
 				<div class="mt20" style="text-align: center;">
-					<form action="/promoweb/hotsell/confirmHotSellListings" method="post">
+					<form action="/promotion/hotsell/confirmHotSellListings" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
 						<label for="accept" title="每次提交报名前请确认点击阅读法律协议，确认接受后方可提交报名。"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />

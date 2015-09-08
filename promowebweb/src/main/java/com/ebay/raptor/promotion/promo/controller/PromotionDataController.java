@@ -186,7 +186,7 @@ public class PromotionDataController{
 		return resp;
 	}
 	
-	@RequestMapping(value = ResourceProvider.PromotionRes.uploadListing, method = RequestMethod.POST)
+	@RequestMapping(value = ResourceProvider.ListingRes.uploadDealsListings, method = RequestMethod.POST)
 	public ModelAndView handleUploadRequest(HttpServletRequest request,
             HttpServletResponse response, @RequestPart("UploadListing") MultipartFile xmlFile,
             @RequestParam String promoId) throws MissingArgumentException {

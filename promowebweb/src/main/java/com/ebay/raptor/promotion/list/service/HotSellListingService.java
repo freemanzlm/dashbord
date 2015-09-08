@@ -64,24 +64,6 @@ public class HotSellListingService extends BaseService {
 		return null;
 	}
 	
-	public List<HotSellListing> getApprovedListings(String promoId, Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.ListingRes.getApprovedListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
-		GingerClientResponse resp = httpGet(uri);
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<HotSellListing>> type = new GenericType<ListDataServiceResponse<HotSellListing>>(){};
-			ListDataServiceResponse<HotSellListing> listing = resp.getEntity(type);
-			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
-				return listing.getData();
-			} else {
-				if(null != listing){
-					throw new PromoException(listing.getErrorMessage().getError().toString());
-				}
-			}
-		} else {
-			throw new PromoException("Internal Error Happens.");
-		}
-		return null;
-	}
 
 	@SuppressWarnings("unchecked")
 	public boolean confirmHotSellListings(Listing[] listingAry, String promoId, Long uid) throws PromoException {

@@ -165,7 +165,7 @@
 	var pageData = {
 		state: '${ state }',
 		expired: ${ expired eq true },
-		promoId: '${promoId}'
+		promoId: '${promo.promoId}'
 	};
 </script>
 

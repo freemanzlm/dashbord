@@ -133,7 +133,7 @@
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },
-		promoId: '${ promoId }'
+		promoId: '${ promo.promoId }'
 	};
 </script>
 
