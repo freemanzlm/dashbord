@@ -53,7 +53,7 @@ public class DealsListingController {
 			try {
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), listings.getUid());
 				if(result){
-					Promotion promotion = promoService.getPromotionById(listings.getPromoId(), listings.getUid());
+					Promotion promotion = promoService.getPromotionById(listings.getPromoId());
 					model.addObject(ViewContext.Promotion.getAttr(), promotion);
 					switch(PMPromotionType.valueOfPMType(promotion.getType())){
 						case DEALS_DASHBOARD_UPLOAD:

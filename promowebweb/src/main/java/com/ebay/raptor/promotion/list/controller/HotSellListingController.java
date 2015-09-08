@@ -51,7 +51,7 @@ public class HotSellListingController {
 			try {
 				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), listings.getUid())){
 					model.setViewName(ViewResource.HV_APPLIED.getPath());
-					Promotion promo = promoService.getPromotionById(listings.getPromoId(), listings.getUid());
+					Promotion promo = promoService.getPromotionById(listings.getPromoId());
 					model.addObject(ViewContext.Promotion.getAttr(), promo);
 				} else {
 					model.setViewName(ViewResource.ERROR.getPath());
