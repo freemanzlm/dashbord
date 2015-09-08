@@ -16,10 +16,9 @@ $(function(){
 		}});
 	listingTable.update();
 	
-	var termsDialog = BizReport.termsDialog;
+	/*var termsDialog = BizReport.termsDialog;
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
-	});
+	});*/
 	
-	console.log("hello");
 });

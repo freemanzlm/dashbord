@@ -48,7 +48,6 @@
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['deals_applied.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -111,7 +110,6 @@
 					</div>
 					
 					<div class="mt20 page-bottom-actions">
-						<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 						<button id="upload-btn" class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>预览修改报名信息</button>
 					</div>	
 				</c:if>

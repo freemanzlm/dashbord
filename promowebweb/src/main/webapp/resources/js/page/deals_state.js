@@ -1,7 +1,7 @@
 $(function(){
 	
 	var DealsListingTable = BizReport.DealsListingTable;
-	var termsDialog = BizReport.termsDialog;
+	
 	
 	var listingTable = new DealsListingTable();
 	listingTable.subscribe({
@@ -17,9 +17,9 @@ $(function(){
 		}});
 	listingTable.update();	
 	
+	/*var termsDialog = BizReport.termsDialog;
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
-	});
+	});*/
 	
-	console.log("hello");
 });

@@ -67,7 +67,7 @@
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
 						<div class="step done"><span>已提交预审</span></div>
-						<c:if test="${ state eq 'Verifying'">
+						<c:if test="${ state eq 'Verifying' }">
 							<div class="step current-step"><span>报名预审中</span></div>
 							<div class="step"><span>确认报名刊登</span></div>
 						</c:if>
@@ -144,8 +144,7 @@
 						<form id="listing-form" action="preview" method="post">
 							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
-							<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
-							<button id="form-btn" class="btn" type="button" disabled>预览报名信息</button>
+							<button id="form-btn" class="btn" type="button">预览报名信息</button>
 						</form>
 					</div>	
 				</c:if>

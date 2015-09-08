@@ -1,17 +1,14 @@
 $(function(){
 	
 	var DealsListingTable = BizReport.DealsListingTable;
-	var termsDialog = BizReport.termsDialog;
 	var confirmDialog = new BizReport.ConfirmDialog();
 	var locale = BizReport.locale;
 	
-	var listingCountJ, listingTable, formBtn, acceptCheckBox;
+	var listingCountJ, listingTable, form;
 	
 	listingCountJ = $(".my-listing h3 small span");
 	
-	var form = $("#listing-form").submit(function(){
-		return acceptCheckbox && acceptCheckbox.prop('checked');
-	});
+	form = $("#listing-form");
 	
 	listingTable = new DealsListingTable();
 	listingTable.subscribe({
@@ -38,16 +35,7 @@ $(function(){
 				}).join(",") + "]");
 			}
 		}});
-	listingTable.update();	
-	
-	formBtn = document.getElementById("form-btn");
-	acceptCheckbox = $("#accept").change(function(){
-		if (this.checked) {
-			formBtn.removeAttribute("disabled");
-		} else {
-			formBtn.setAttribute("disabled", "disabled");
-		}
-	});	
+	listingTable.update();
 	
 	confirmDialog.init();
 	confirmDialog.subscribe({
@@ -93,6 +81,7 @@ $(function(){
 		}
 	});
 	
+	/*var termsDialog = BizReport.termsDialog;
 	termsDialog.subscribe({
 		"scrollEnd": function() {
 			acceptCheckbox.removeAttr("disabled");
@@ -100,7 +89,7 @@ $(function(){
 	});
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
-	});	
+	});	*/
 	
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();

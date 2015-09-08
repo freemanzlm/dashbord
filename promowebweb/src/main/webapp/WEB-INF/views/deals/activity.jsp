@@ -26,7 +26,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="activity-law">
+	<!-- <div class="activity-law">
 		<strong>法律协议：点击查看 <a href="javascript:void(0)" class="terms-conditions">法律协议</a></strong>
-	</div>
+	</div> -->
 </div>			

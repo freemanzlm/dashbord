@@ -1,6 +1,5 @@
 $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
-	var termsDialog = BizReport.termsDialog;
 	var locale = BizReport.locale;
 	var confirmDialog = new BizReport.ConfirmDialog();
 	
@@ -81,7 +80,8 @@ $(function(){
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();	
 	
+	/*var termsDialog = BizReport.termsDialog;
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
-	});
+	});*/
 });

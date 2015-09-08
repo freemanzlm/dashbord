@@ -4,6 +4,7 @@ $(function(){
 	var locale = BizReport.locale;
 	
 	var listingCountJ = $(".my-listing h3 small span");
+	var formBtn = document.getElementById("form-btn");
 	
 	var listingTable = new DealsListingTable();
 	listingTable.subscribe({
@@ -19,15 +20,6 @@ $(function(){
 			tableId: "deals-listing-table"
 		}});
 	listingTable.update();
-	
-	var formBtn = document.getElementById("form-btn");
-	var acceptCheckbox = $("#accept").change(function(){
-		if (this.checked) {
-			formBtn.removeAttribute("disabled");
-		} else {
-			formBtn.setAttribute("disabled", "disabled");
-		}
-	});
 	
 	var form = $("#listing-form").submit(function(){
 		// if user doesn't select a item, form can't be submitted.
@@ -78,7 +70,7 @@ $(function(){
 		}
 	});
 	
-	var termsDialog = BizReport.termsDialog;
+	/*var termsDialog = BizReport.termsDialog;
 	termsDialog.subscribe({
 		"scrollEnd": function() {
 			acceptCheckbox.removeAttr("disabled");
@@ -86,7 +78,7 @@ $(function(){
 	});
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
-	});	
+	});	*/
 	
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();

@@ -2,10 +2,9 @@ $(function(){
 	
 	var SKUListTable = BizReport.SKUListTable;
 	var alertDialog = BizReport.alertDialog;
-	var termsDialog = BizReport.termsDialog;
 	var locale = BizReport.locale;
 	
-	var skuList, uploadForm, fileInput, acceptCheckbox, uploadBtn;
+	var skuList, uploadForm, fileInput, uploadBtn;
 	
 	skuList = new SKUListTable();
 	skuList.subscribe({
@@ -26,24 +25,16 @@ $(function(){
 			alertDialog.alert(locale.getText("promo.deals.onlyXls"));
 			return false;
 		}
-		return !!$(this).find("input[type=file]").attr("value") && acceptCheckbox[0].checked;
+		return !!$(this).find("input[type=file]").attr("value");
 	});
 	
-	fileInput = uploadForm.find("input[type=file]");
-	
-	uploadForm.find("input[type=file]").change(function(){
+	fileInput = uploadForm.find("input[type=file]").change(function(){
 		checkUploadBtnStatus();
 	});
-	
-	acceptCheckbox = $("#accept").change(function(){
-		checkUploadBtnStatus();
-	});
-	
-	acceptCheckbox.parent().popup({"trigger": "hover", html: locale.getText('promo.deals.upload')});
 	
 	uploadBtn = document.getElementById("upload-btn");
 	function checkUploadBtnStatus() {
-		if (acceptCheckbox[0].checked && fileInput.val()) {
+		if (fileInput.val()) {
 			uploadBtn.removeAttribute("disabled");
 		} else {
 			uploadBtn.setAttribute("disabled", "disabled");
@@ -54,9 +45,9 @@ $(function(){
 		if (!this.hasAttribute("disabled")) {
 			uploadForm.submit();
 		}
-	});
+	});	
 	
-	
+	/*var termsDialog = BizReport.termsDialog;
 	termsDialog.subscribe({
 		"scrollEnd": function() {
 			acceptCheckbox.removeAttr("disabled");
@@ -64,6 +55,6 @@ $(function(){
 	});
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
-	});
+	});*/
 	
 });

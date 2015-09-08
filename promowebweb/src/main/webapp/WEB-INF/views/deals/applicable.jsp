@@ -35,7 +35,6 @@
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -53,7 +52,6 @@
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['deals_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
@@ -93,7 +91,6 @@
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
-					<label for="accept"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">法律协议</a></label> <br /><br />
 					<button id="upload-btn" class="btn" disabled>上传</button>
 				</div>
 			</div>
