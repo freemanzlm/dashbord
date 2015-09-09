@@ -78,7 +78,7 @@ var BizReport = BizReport || {};
 				columns: [
 				    {data: 'itemId'},
 				    {data: 'itemId'},
-					{data: 'name'},
+					{data: 'skuName'},
 					{data: 'price'},
 					{data: 'actPrice'},
 					{data: 'inventory'},
@@ -176,6 +176,23 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
+							switch(data) {
+							case 1:
+							case 'Pretrial':
+								return locale.getText('listing.state.Pretrial');
+							case 2:
+							case 'PretrialPass':
+								return locale.getText('listing.state.PretrialPass');
+							case 3:
+							case 'PretrialFail':
+								return locale.getText('listing.state.PretrialFail');
+							case 5:
+							case 'Applied':
+								return locale.getText('listing.state.ApplyConfirmed');
+							case 6:
+							case 'NonApplied':
+								return locale.getText('listing.state.NotSubmitted');
+							}
 							return locale.getText('listing.state.' + states[data]);
 						}
 

@@ -93,7 +93,7 @@ BizReport.locale = {
 			'Nonapplied': '未报名',
 			'Pretrial': '待审核', // deals
 			'PretrialPass': '通过预审',
-			'ApplyConfirm': '待确认报名',
+			'ApplyConfirmed': '已确认报名',
 			'PretrialFail': '未通过',
 			'NotSubmitted': '未提交'
 		}

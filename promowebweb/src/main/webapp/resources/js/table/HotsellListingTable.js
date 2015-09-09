@@ -78,7 +78,7 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
-					{data: 'name'},
+					{data: 'itemName'},
 					{data: 'price'},
 					{data: 'volume'},
 					{data: 'sales'},
@@ -170,18 +170,24 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return locale.getText('listing.state.' + states[data]);
+							switch (data) {
+							case 5: // applied
+							case 'Applied':
+								return locale.getText('listing.state.Applied');
+							case 6: // not applied
+							case 'NonApplied':
+								return locale.getText('listing.state.NonApplied');
+							default: '';
+							}
 						}
 						
 						if (type == "sort") {
 							switch (data) {
-							case 1: // applied
-							case 3: // pass
-							case 6: // pretrial pass
+							case 5: // applied
+							case 'Applied':
 								return 1;
-							case 2: // not applied
-							case 4: // not sumitted
-							case 7: // pretiral fail
+							case 6: // not applied
+							case 'NonApplied':
 								return 0;
 							default: return -1;
 							}
