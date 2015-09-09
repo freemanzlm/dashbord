@@ -72,13 +72,7 @@ public class PromotionDataController{
 		Long uid = -1L;
 		try {
 			Promotion promo = service.getPromotionById(promoId);
-//			Promotion promo = new Promotion();
-//			promo.setPromoId("Test_SF_ID0");
-//			promo.setType(1);
-//			promo.setState("Created");
-//			promo.setName("no name");
-//			promo.setDesc("this is the description...");
-//			promo.setPromoDlDt(new Date());
+
 			if(null != promo){
 				ContextViewRes res = handleViewBasedOnPromotion(promo);
 				model.setViewName(res.getView().getPath());
@@ -214,13 +208,7 @@ public class PromotionDataController{
 
 			try {
 				Promotion promo = service.getPromotionById(promoId);
-//				Promotion promo = new Promotion();
-//				promo.setPromoId("Test_SF_ID0");
-//				promo.setType(1);
-//				promo.setState("Created");
-//				promo.setName("no name");
-//				promo.setDesc("this is the description...");
-//				promo.setPromoDlDt(new Date());
+
 				if(null != promo){
 					ContextViewRes res = handleViewBasedOnPromotion(promo);
 					mav.setViewName(res.getView().getPath());

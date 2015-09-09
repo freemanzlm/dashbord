@@ -70,20 +70,13 @@ public class DealsListingController extends AbstractListingController{
         	resp.setHeader("Content-disposition", "attachment; filename=" + ResourceProvider.ListingRes.skuListFileName + ".xlsx");
 //        	UserData userData = CookieUtil.getUserDataFromCookie(req);
         	
-        	List<Sku> skuListings = service.getSkuListingByPromotionId(param.getPromoId(), ListingWebParam.UID); // TODO userData.getUserId());
+        	List<DealsListing> skuListings = service.getSkuListingByPromotionId(param.getPromoId(), ListingWebParam.UID); // TODO userData.getUserId());
 
-        	List<HeaderConfiguration> preCfgs = new ArrayList<HeaderConfiguration>();
-        	preCfgs.add(new HeaderConfiguration(20, "itemId", resource("itemId") , ColumnFormat.String));
-        	preCfgs.add(new HeaderConfiguration(30, "itemTitle", resource("itemTitle") , ColumnFormat.String));
-        	preCfgs.add(new HeaderConfiguration(40, "currPrice", resource("currPrice") , ColumnFormat.FltNum));
-        	preCfgs.add(new HeaderConfiguration(50, "targetPrice", resource("targetPrice") , ColumnFormat.FltNum));
-        	preCfgs.add(new HeaderConfiguration(60, "stockedNum", resource("stockedNum") , ColumnFormat.FltNum));
 
         	XSSFWorkbook workBook = new XSSFWorkbook();
-//        	ExcelSheetWriter<Sku> writer = new ExcelSheetWriter<Sku>(Sku.class, workBook, ResourceProvider.ListingRes.skuListFileName);
-//            writer.setPreConfiguration(preCfgs);
-//            writer.resetHeaders();
-//            writer.build(skuListings);
+        	ExcelSheetWriter<DealsListing> writer = new ExcelSheetWriter<DealsListing>(DealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName);
+            writer.resetHeaders();
+            writer.build(skuListings);
             workBook.write(resp.getOutputStream());
         } catch (IOException | PromoException e) {
         	logger.error("Unable to download deals listing.", e);
@@ -102,19 +95,26 @@ public class DealsListingController extends AbstractListingController{
 			ExcelReader.readWorkbook(workbook, 0, new UploadListingSheetHandler(service,
 							promoId, ListingWebParam.UID));
 
+			mav.addObject("formUrl", "submit"); // TODO - use constants and get the status
 			mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
 		} catch (IOException | PromoException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
+			logger.error("Upload listings got error.", e);
 			mav.setViewName(ViewResource.ERROR.getPath());
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
+			logger.error("The uploaded listings are invalid.", e);
+
 			try {
 				addPromotionContext(mav, promoId, ViewResource.DU_APPLICABLE.getPath());
 				ErrorType errorType = e.getErrorType();
 				mav.addObject(ViewContext.ErrorMsg.getAttr(),
 									messageSource.getMessage("err-"+errorType.getCode(),
 									e.getArgs(), Locale.SIMPLIFIED_CHINESE)); // TODO - use constants
+				mav.setViewName(ViewResource.DU_APPLICABLE.getPath());
+
 			} catch (PromoException ex) {
+				logger.error("Unable to get promotion data.", e);
 				mav.setViewName(ViewResource.ERROR.getPath());
 			}
 		} finally {
@@ -201,8 +201,8 @@ public class DealsListingController extends AbstractListingController{
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getSKUsByPromotionId)
 	@ResponseBody
-	public ListDataWebResponse<Sku> getSKUsByPromotionId(@ModelAttribute ListingWebParam param) {
-		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();
+	public ListDataWebResponse<DealsListing> getSKUsByPromotionId(@ModelAttribute ListingWebParam param) {
+		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
 			resp.setData(service.getSkuListingByPromotionId(param.getPromoId(), param.getUid()));
 		} catch (PromoException e) {

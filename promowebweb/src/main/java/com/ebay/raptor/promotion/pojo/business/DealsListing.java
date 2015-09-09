@@ -1,19 +1,30 @@
 package com.ebay.raptor.promotion.pojo.business;
 
-public class DealsListing {
+import com.ebay.app.raptor.promocommon.export.ColumnFormat;
+import com.ebay.app.raptor.promocommon.export.Header;
 
+public class DealsListing {
+	
 	private String skuId;
 
+	@Header(name = "招募SKU名称", order=1, format=ColumnFormat.String)
+	private String skuName;
+
+	@Header(name = "刊登编号", order=2, format=ColumnFormat.IntNum)
 	private Long itemId;
 
-	private String name;
+	@Header(name = "刊登名称", order=3, format=ColumnFormat.String)
+	private String itemName;
 
+	@Header(name = "刊登当前单价（USD）", order=4, format=ColumnFormat.FltNum)
 	private Float price;
 
 	private String currency;
 
+	@Header(name = "刊登刊登库存量", order=6, format=ColumnFormat.IntNum)
 	private Long inventory;
 
+	@Header(name = "刊登活动单价（USD）", order=5, format=ColumnFormat.FltNum)
 	private Float actPrice;
 
 	private Integer state;
@@ -26,12 +37,20 @@ public class DealsListing {
 		this.itemId = itemId;
 	}
 
-	public String getName() {
-		return name;
+	public String getSkuName() {
+		return skuName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setSkuName(String skuName) {
+		this.skuName = skuName;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
 	public Float getPrice() {
