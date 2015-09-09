@@ -53,7 +53,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 		
 		List<DealsListing> uploadedListings = new ArrayList<DealsListing>();
 		
-		for (int i = 1; i < rowNum; i++) {
+		for (int i = 1; i <= rowNum; i++) {
 			Row row = sheet.getRow(i);
 			AtomicReference<EmptyCellValueException> emptyException = new AtomicReference<EmptyCellValueException>();
 
@@ -61,13 +61,13 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			DealsListing listing = new DealsListing();
 			listing.setSkuId(UploadListingValidator.validateItemTitleAndSku(row.getCell(0), emptyException));
 			listing.setItemId(UploadListingValidator.validateItemId(row.getCell(1), emptyException));
-			listing.setName(UploadListingValidator.validateItemTitleAndSku(row.getCell(2), emptyException));
+			listing.setItemName(UploadListingValidator.validateItemTitleAndSku(row.getCell(2), emptyException));
 			listing.setPrice(UploadListingValidator.validatePrice(row.getCell(3), emptyException));
 			listing.setActPrice(UploadListingValidator.validatePrice(row.getCell(4), emptyException));
 			listing.setInventory(UploadListingValidator.validateStockNumber(row.getCell(5), emptyException));
 			
 			EmptyCellValueException ex = emptyException.get();
-			if (ex != null && ex.getColIndex() == 6) {
+			if (ex != null && ex.getColIndex() == 5) {
 				throw ex;
 			}
 			

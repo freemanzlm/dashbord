@@ -82,7 +82,7 @@ public class IndexController {
         }
 
         try {
-            response.sendRedirect("promotion");// TODO - index
+            response.sendRedirect("index");// TODO - index
         } catch (IOException e) {
             // ignore
         }

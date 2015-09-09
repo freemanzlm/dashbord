@@ -20,11 +20,13 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.export.ColumnFormat;
 import com.ebay.app.raptor.promocommon.export.HeaderConfiguration;
+import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.raptor.promotion.excep.PromoException;
 //import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
@@ -48,7 +50,7 @@ public class DownloadController {
         	
         	UserData userData = CookieUtil.getUserDataFromCookie(request);
         	
-        	List<Sku> skuListings = dealsListingService.getSkuListingByPromotionId(param.getPromoId(), userData.getUserId());
+        	List<DealsListing> skuListings = dealsListingService.getSkuListingByPromotionId(param.getPromoId(), userData.getUserId());
 
         	List<HeaderConfiguration> preCfgs = new ArrayList<HeaderConfiguration>();
         	preCfgs.add(new HeaderConfiguration(20, "itemId", resource("itemId") , ColumnFormat.String));
@@ -58,10 +60,10 @@ public class DownloadController {
         	preCfgs.add(new HeaderConfiguration(60, "stockedNum", resource("stockedNum") , ColumnFormat.FltNum));
 
         	XSSFWorkbook workBook = new XSSFWorkbook();
-//        	ExcelSheetWriter<Sku> writer = new ExcelSheetWriter<Sku>(Sku.class, workBook, prefixFileName);
-//            writer.setPreConfiguration(preCfgs);
-//            writer.resetHeaders();
-//            writer.build(skus);
+        	ExcelSheetWriter<DealsListing> writer = new ExcelSheetWriter<DealsListing>(DealsListing.class, workBook, prefixFileName);
+            writer.setPreConfiguration(preCfgs);
+            writer.resetHeaders();
+            writer.build(skuListings);
 
             workBook.write(response.getOutputStream());
         } catch (IOException | PromoException e) {

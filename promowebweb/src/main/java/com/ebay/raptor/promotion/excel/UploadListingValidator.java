@@ -6,16 +6,21 @@ import org.apache.poi.ss.usermodel.Cell;
 
 import com.ebay.app.raptor.promocommon.excel.EmptyCellValueException;
 import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
+import com.ebay.app.raptor.promocommon.util.StringUtil;
 
 public class UploadListingValidator {
 
 	// validate item Id: number only, 
 	public static Long validateItemId (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
+		int rowIndex = cell.getRowIndex() + 1;
+		int colIndex = cell.getColumnIndex() + 1;
 
-		if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+		if (cell.getCellType() == Cell.CELL_TYPE_BLANK
+				|| (cell.getCellType() == Cell.CELL_TYPE_STRING && StringUtil
+						.isEmpty(cell.getStringCellValue()))) {
 			if (ex == null) {
-				emptyException.set(new EmptyCellValueException(cell.getRowIndex(), cell.getColumnIndex()));
+				emptyException.set(new EmptyCellValueException(rowIndex, colIndex));
 			}
 			
 			return null;
@@ -30,11 +35,11 @@ public class UploadListingValidator {
 		try {
 			itemId = cell.getNumericCellValue();
 		} catch (Exception e) {
-			throw new InvalidCellValueException(cell.getRowIndex(), cell.getColumnIndex(), e);
+			throw new InvalidCellValueException(rowIndex, colIndex, e);
 		}
 		
 		if (itemId < 0) {
-			throw new InvalidCellValueException(cell.getRowIndex(), cell.getColumnIndex());
+			throw new InvalidCellValueException(rowIndex, colIndex);
 		}
 		
 		return (long) itemId;
@@ -42,10 +47,14 @@ public class UploadListingValidator {
 	
 	public static String validateItemTitleAndSku (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
+		int rowIndex = cell.getRowIndex() + 1;
+		int colIndex = cell.getColumnIndex() + 1;
 
-		if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+		if (cell.getCellType() == Cell.CELL_TYPE_BLANK
+				|| (cell.getCellType() == Cell.CELL_TYPE_STRING && StringUtil
+						.isEmpty(cell.getStringCellValue()))) {
 			if (ex == null) {
-				emptyException.set(new EmptyCellValueException(cell.getRowIndex(), cell.getColumnIndex()));
+				emptyException.set(new EmptyCellValueException(rowIndex, colIndex));
 			}
 			
 			return null;
@@ -60,11 +69,11 @@ public class UploadListingValidator {
 		try {
 			itemTitle = cell.getStringCellValue();
 		} catch (Exception e) {
-			throw new InvalidCellValueException(cell.getRowIndex(), cell.getColumnIndex(), e);
+			throw new InvalidCellValueException(rowIndex, colIndex, e);
 		}
 		
 		if (itemTitle == null || itemTitle.length() > 200 || itemTitle.length() <= 0) {
-			throw new InvalidCellValueException(cell.getRowIndex(), cell.getColumnIndex());
+			throw new InvalidCellValueException(rowIndex, colIndex);
 		}
 		
 		return itemTitle;
@@ -72,10 +81,14 @@ public class UploadListingValidator {
 	
 	public static Float validatePrice (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
+		int rowIndex = cell.getRowIndex() + 1;
+		int colIndex = cell.getColumnIndex() + 1;
 
-		if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+		if (cell.getCellType() == Cell.CELL_TYPE_BLANK
+				|| (cell.getCellType() == Cell.CELL_TYPE_STRING && StringUtil
+						.isEmpty(cell.getStringCellValue()))) {
 			if (ex == null) {
-				emptyException.set(new EmptyCellValueException(cell.getRowIndex(), cell.getColumnIndex()));
+				emptyException.set(new EmptyCellValueException(rowIndex, colIndex));
 			}
 			
 			return null;
@@ -90,11 +103,11 @@ public class UploadListingValidator {
 		try {
 			price = cell.getNumericCellValue();
 		} catch (Exception e) {
-			throw new InvalidCellValueException(cell.getRowIndex(), cell.getColumnIndex(), e);
+			throw new InvalidCellValueException(rowIndex, colIndex, e);
 		}
 		
 		if (price < 0) {
-			throw new InvalidCellValueException(cell.getRowIndex(), cell.getColumnIndex());
+			throw new InvalidCellValueException(rowIndex, colIndex);
 		}
 		
 		return (float) price;
@@ -102,10 +115,14 @@ public class UploadListingValidator {
 	
 	public static Long validateStockNumber (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
+		int rowIndex = cell.getRowIndex() + 1;
+		int colIndex = cell.getColumnIndex() + 1;
 
-		if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+		if (cell.getCellType() == Cell.CELL_TYPE_BLANK
+				|| (cell.getCellType() == Cell.CELL_TYPE_STRING && StringUtil
+						.isEmpty(cell.getStringCellValue()))) {
 			if (ex == null) {
-				emptyException.set(new EmptyCellValueException(cell.getRowIndex(), cell.getColumnIndex()));
+				emptyException.set(new EmptyCellValueException(rowIndex, colIndex));
 			}
 			
 			return null;
@@ -120,11 +137,11 @@ public class UploadListingValidator {
 		try {
 			price = cell.getNumericCellValue();
 		} catch (Exception e) {
-			throw new InvalidCellValueException(cell.getRowIndex(), cell.getColumnIndex(), e);
+			throw new InvalidCellValueException(rowIndex, colIndex, e);
 		}
 		
 		if (price < 0) {
-			throw new InvalidCellValueException(cell.getRowIndex(), cell.getColumnIndex());
+			throw new InvalidCellValueException(rowIndex, colIndex);
 		}
 		
 		return (long) price;
