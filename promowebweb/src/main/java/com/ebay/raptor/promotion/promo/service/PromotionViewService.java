@@ -16,6 +16,7 @@ public class PromotionViewService {
 	public ContextViewRes highVelocityView(Promotion pro) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
+		context.put(ViewContext.Agreement.getAttr(), ViewResource.HV_AGGREMENT.getPath());
 		res.setContext(context);
 		ViewResource view = ViewResource.HV_DETAIL;
 		try {
@@ -54,6 +55,7 @@ public class PromotionViewService {
 	public ContextViewRes dealsPresetView(Promotion pro) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
+		context.put(ViewContext.Agreement.getAttr(), ViewResource.DP_AGGREMENT.getPath());
 		ViewResource view = ViewResource.DP_DETAIL;
 		try {
 			switch(PMPromotionStatus.getByName(pro.getState())){
@@ -94,6 +96,7 @@ public class PromotionViewService {
 	public ContextViewRes dealsUpload(Promotion pro) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
+		context.put(ViewContext.Agreement.getAttr(), ViewResource.DU_AGGREMENT.getPath());
 		res.setContext(context);
 		ViewResource view = ViewResource.DU_DETAIL;
 		try {
@@ -140,6 +143,7 @@ public class PromotionViewService {
 	public ContextViewRes standard(Promotion pro) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
+		context.put(ViewContext.Agreement.getAttr(), ViewResource.OTHER_AGGREMENT.getPath());
 		res.setContext(context);
 		ViewResource view = ViewResource.DU_APPLIED;
 		try {

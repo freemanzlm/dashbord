@@ -54,13 +54,21 @@ public class ResourceProvider {
 	
 	public interface SubsidyRes {
 		String base = "subsidy";
-		
 		String getSubSidy = "/{sid}";
 	}
 	
 	public interface Token{
 		String base = "/token";
 		String token = "/iaftoken";
+	}
+	
+	public interface Terms{
+		String base = "/promotion/terms";
+		
+		String hotSell = "/hotsell";
+		String deals = "/deals";
+		String dealsPreset = "/dealsPreset";
+		String other = "/other";
 	}
 	
 }

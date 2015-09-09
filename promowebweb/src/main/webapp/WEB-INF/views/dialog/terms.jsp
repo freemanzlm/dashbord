@@ -8,7 +8,7 @@
 	</div>
 	<div class="dialog-pane">
 		<div class="dialog-body">
-			<iframe src="terms" frameborder="0" width="810" style="overflow: hidden;"></iframe>
+			<iframe src="${agreement}" frameborder="0" width="810" style="overflow: hidden;"></iframe>
 		</div>
 
 		<div class="btns clz">

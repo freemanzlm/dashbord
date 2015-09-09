@@ -9,12 +9,14 @@ public enum ViewResource {
 	HV_CANCELLED("hotsell/canceled"),
 	HV_END("hotsell/end"),
 	HV_DETAIL("hotsell/state"),
+	HV_AGGREMENT("terms/hotsell"),
 	
 	DP_APPLICABLE("dealspreset/applicable"),
 	DP_APPLIED("dealspreset/applied"),
 	DP_CANCELLED("dealspreset/canceled"),
 	DP_END("dealspreset/end"),
 	DP_DETAIL("dealspreset/state"),
+	DP_AGGREMENT("terms/dealsPreset"),
 	
 	DU_APPLICABLE("deals/applicable"),
 	DU_APPLIED("deals/applied"),
@@ -23,12 +25,13 @@ public enum ViewResource {
 	DU_LISTING_PREVIEW("deals/listingPreview"),
 	DU_LISTING("deals/listing"),
 	DU_DETAIL("deals/state"),
-	
 	DU_CONFIRM_LISTING("/promotion/deals/confirmDealsListings"),
+	DU_AGGREMENT("terms/deals"),
 	
 	OTHER_CANCELLED("other/canceled"),
 	OTHER_END("other/end"),
 	OTHER_DETAIL("other/state"),
+	OTHER_AGGREMENT("terms/other"),
 
 	ERROR("error");
 

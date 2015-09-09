@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:formatDate value="${promo.promoDlDt}" var="deadline" pattern="yyyy-MM-dd HH:mm:ss" />
-<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd HH:mm:ss" />
-<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd HH:mm:ss" />
-<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd HH:mm:ss" />
+<fmt:formatDate value="${promo.promoDlDt}" var="deadline" pattern="yyyy-MM-dd" />
+<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" />
+<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" />
+<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" />
 
 <c:set var="timeSlot" value="${promoStart} ~ ${promoEnd}"></c:set>
 <c:set var="activityContent" value="${promo.desc}"></c:set>
