@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.pojo.business.UserPromotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
-import com.ebay.raptor.promotion.pojo.service.resp.GeneralServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromotionResponse;
 import com.ebay.raptor.promotion.service.BaseService;
@@ -97,24 +95,6 @@ public class PromotionService extends BaseService {
 			}
 		} else {
 			throw new PromoException("Internal Error happens.");
-		}
-		return null;
-	}
-
-	/*
-	 * Get User Promotion detail data.
-	 */
-	public UserPromotion getPromotionDetail(String userId, String promoId){
-		GingerClientResponse resp = httpGet(url(ResourceProvider.UserPromotionRes.userPromo)+"?uid="+userId+"&pid="+promoId); // TODO - 
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<GeneralServiceResponse<UserPromotion>> type = new GenericType<GeneralServiceResponse<UserPromotion>>(){};
-			GeneralServiceResponse<UserPromotion> promos = resp.getEntity(type);
-			if(null != promos && AckValue.SUCCESS == promos.getAckValue()){
-				return promos.getData();
-			}
-		} else {
-			System.out.println(resp.getStatus());
-			System.out.println(resp.getEntity(String.class));
 		}
 		return null;
 	}
