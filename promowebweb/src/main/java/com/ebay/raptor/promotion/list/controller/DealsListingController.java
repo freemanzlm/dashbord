@@ -86,16 +86,19 @@ public class DealsListingController extends AbstractListingController{
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadDealsListings)
 	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
-			@RequestPart MultipartFile dealsListings, @RequestParam String promoId){
+			@RequestPart MultipartFile dealsListings, @RequestParam String promoId) throws MissingArgumentException{
 		ModelAndView mav = new ModelAndView();
+		UserData userData = CookieUtil.getUserDataFromCookie(req);
+
 		XSSFWorkbook workbook = null;
 		try {
-//			UserData userData = CookieUtil.getUserDataFromCookie(req);
+
 			workbook = new XSSFWorkbook(dealsListings.getInputStream());
 			ExcelReader.readWorkbook(workbook, 0, new UploadListingSheetHandler(service,
-							promoId, ListingWebParam.UID));
+							promoId, userData.getUserId()));
 
 			mav.addObject("formUrl", "submit"); // TODO - use constants and get the status
+			mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
 			mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
 		} catch (IOException | PromoException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
@@ -162,10 +165,12 @@ public class DealsListingController extends AbstractListingController{
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getApplicableListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getApplicableListings(@ModelAttribute ListingWebParam param) {
+	public ListDataWebResponse<DealsListing> getApplicableListings(HttpServletRequest req,
+			@ModelAttribute ListingWebParam param) throws MissingArgumentException {
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
+		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		try {
-			resp.setData(service.getApplicableListings(param.getPromoId(), param.getUid()));
+			resp.setData(service.getApplicableListings(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);
 		}

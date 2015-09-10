@@ -64,10 +64,10 @@ var BizReport = BizReport || {};
 				    });
 				},
 				columns: [
-					{data: 'name'}
+					{data: 'skuName'}
 				],
 				aoColumnDefs: [{
-					aTargets: ["name"],
+					aTargets: ["skuName"],
 					sDefaultContent: "",					
 					sType: "string",
 					sClass: "text-left",
