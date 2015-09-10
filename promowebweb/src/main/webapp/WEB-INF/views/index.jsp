@@ -118,7 +118,7 @@
 					<div class="fr cl">
 						<select name="" id="" class="fr state-filter">
 							<option value="">显示所有活动</option>
-							<option value="Completed">领取奖励成功的活动</option>
+							<option value="SubsidyRetrieved">领取奖励成功的活动</option>
 							<option value="Detailed">只能查看详细的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">

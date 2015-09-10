@@ -158,29 +158,33 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							switch (data) {
-							case 8: // rewarding
 							case 'SubsidyWaiting':
+							case 'SubsidyAccessed':
+							case 'SubsidySubmmitted':
+							case 'SubsidyRetrievable':
+							case 'SubsidyResubmittable':
 								var display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
-//								display += "<br /><a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.Claimed') + "</a>";
 								return display;
-							case 9: // upload agreement
-							case 'NeedAgreement':
-							case 12: // reclaim reward
-							case 'ClaimFail':
-								return "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
 							default:
 								return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 							}
 						}
 						
 						if (type == "sort") {
+							
 							switch (data) {
 							case 'SubsidyWaiting':
 								return 8;
-							case 'ClaimFail':
+							case 'SubsidyResubmittable':
 								return 9;
-							case 'NeedAgreement':
+							case 'SubsidyRetrievable':
 								return 10;
+							case 'SubsidyAccessed':
+								return 11;
+							case 'SubsidySubmmitted':
+								return 12;
+							case 'SubsidyUploaded':
+								return 13;
 							}
 							
 							return 20;

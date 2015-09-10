@@ -80,7 +80,7 @@
 										<div class="step"><span>申领奖励</span></div>
 										<div class="step last"><span>活动完成</span></div>
 									</c:when>
-									<c:when test="${ state eq 'Completed' }">
+									<c:when test="${ state eq 'SubsidyRetrieved' }">
 										<div class="step done"><span>活动进行中</span></div>
 										<div class="step done"><span>奖励确认中</span></div>
 										<div class="step done"><span>申领奖励</span></div>
@@ -126,7 +126,7 @@
 								</li>
 							</menu>
 						</c:when>
-						<c:when test="${state eq 'Completed' }">
+						<c:when test="${state eq 'SubsidyRetrieved' }">
 							<h3>您已成功领取等值888元的ebay万里通积分</h3>
 							<menu>
 								<li>

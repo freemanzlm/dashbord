@@ -15,7 +15,7 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
-	var states = ['Created', 'Submitted', 'Verifying', 'PromotionApproved', 'VerifyFailed', 'Applied', 'Started', 'SubsidyCounting', 'SubsidyWaiting', 'NeedAgreement', 'SubsidyVerifying', 'Completed', 'ClaimFail', 'rewardVerifying', 'Canceled', 'End'];
+	var states = ['Created', 'Submitted', 'Verifying', 'PromotionApproved', 'VerifyFailed', 'Applied', 'Started', 'SubsidyCounting', 'SubsidyWaiting', 'NeedAgreement', 'SubsidyVerifying', 'SubsidyRetrieved', 'ClaimFail', 'rewardVerifying', 'Canceled', 'End'];
 	
 	function getLink(promoId) {
 		return "promotion/" + promoId;
@@ -153,15 +153,15 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (data == 'Completed') { // complete
-								return locale.getText('promo.state.Completed') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
+							if (data == 'SubsidyRetrieved') { // complete
+								return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							} else {
 								return "<a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							}
 						}
 						
 						if (type == "sort") {
-							if (data == 'Completed') {
+							if (data == 'SubsidyRetrieved') {
 								return 11;
 							}
 							
@@ -169,8 +169,8 @@ var BizReport = BizReport || {};
 						}
 						
 						if (type == "filter") {
-							if (data == 'Completed') {
-								return 'Completed';
+							if (data == 'SubsidyRetrieved') {
+								return 'SubsidyRetrieved';
 							}
 							
 							return 'Detailed';
