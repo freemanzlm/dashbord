@@ -53,7 +53,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 		
 		List<DealsListing> uploadedListings = new ArrayList<DealsListing>();
 		
-		for (int i = 1; i <= rowNum; i++) {
+		for (int i = 1; i < rowNum; i++) {
 			Row row = sheet.getRow(i);
 			AtomicReference<EmptyCellValueException> emptyException = new AtomicReference<EmptyCellValueException>();
 
@@ -67,7 +67,11 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			listing.setInventory(UploadListingValidator.validateStockNumber(row.getCell(5), emptyException));
 			
 			EmptyCellValueException ex = emptyException.get();
-			if (ex != null && ex.getColIndex() == 5) {
+			// EmptyCellValueException has been thrown if there is empty cell ahead a data cell, but
+			// won't when an empty cell after data cells, at the same time it's valid that if all cells
+			// are empty, so just need to check if the empty cell's index won't be the second one (first
+			// column is always set). 
+			if (ex != null && ex.getColIndex() > 2) {
 				throw ex;
 			}
 			
