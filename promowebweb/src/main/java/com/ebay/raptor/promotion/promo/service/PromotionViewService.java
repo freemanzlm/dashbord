@@ -30,10 +30,14 @@ public class PromotionViewService {
 				case STARTED:
 				case SUBSIDY_COUNTING:
 				case SUBSIDY_WAITING:
-				case NEED_AGREEMENT:
-				case SUBSIDY_VREIFYING:
-				case COMPLETED:
-				case CLAIM_FAIL:
+				case SUBSIDY_ACCESSED:
+				case SUBSIDY_SUBMITTED:
+				case SUBSIDY_UPLOADED:
+				case SUBSIDY_RETRIEVABLE:
+				case SUBSIDY_RESUBMITTABLE:
+				case SUBSIDY_RETRIEVED:
+				case SUBSIDY_EXPIRED:
+				case SUBSIDY_RETRIEVE_FAILED:
 					view = ViewResource.HV_DETAIL;
 					break;
 				case CANCELLED:
@@ -70,10 +74,14 @@ public class PromotionViewService {
 				case STARTED:
 				case SUBSIDY_COUNTING:
 				case SUBSIDY_WAITING:
-				case NEED_AGREEMENT:
-				case SUBSIDY_VREIFYING:
-				case COMPLETED:
-				case CLAIM_FAIL:
+				case SUBSIDY_ACCESSED:
+				case SUBSIDY_SUBMITTED:
+				case SUBSIDY_UPLOADED:
+				case SUBSIDY_RETRIEVABLE:
+				case SUBSIDY_RESUBMITTABLE:
+				case SUBSIDY_RETRIEVED:
+				case SUBSIDY_EXPIRED:
+				case SUBSIDY_RETRIEVE_FAILED:
 					view = ViewResource.DP_DETAIL;
 					break;
 				case CANCELLED:
@@ -118,10 +126,14 @@ public class PromotionViewService {
 				case STARTED:
 				case SUBSIDY_COUNTING:
 				case SUBSIDY_WAITING:
-				case NEED_AGREEMENT:
-				case SUBSIDY_VREIFYING:
-				case COMPLETED:
-				case CLAIM_FAIL:
+				case SUBSIDY_ACCESSED:
+				case SUBSIDY_SUBMITTED:
+				case SUBSIDY_UPLOADED:
+				case SUBSIDY_RETRIEVABLE:
+				case SUBSIDY_RESUBMITTABLE:
+				case SUBSIDY_RETRIEVED:
+				case SUBSIDY_EXPIRED:
+				case SUBSIDY_RETRIEVE_FAILED:
 					view = ViewResource.DU_DETAIL;
 					break;
 				case CANCELLED:
@@ -153,10 +165,14 @@ public class PromotionViewService {
 				case STARTED:
 				case SUBSIDY_COUNTING:
 				case SUBSIDY_WAITING:
-				case NEED_AGREEMENT:
-				case SUBSIDY_VREIFYING:
-				case COMPLETED:
-				case CLAIM_FAIL:
+				case SUBSIDY_ACCESSED:
+				case SUBSIDY_SUBMITTED:
+				case SUBSIDY_UPLOADED:
+				case SUBSIDY_RETRIEVABLE:
+				case SUBSIDY_RESUBMITTABLE:
+				case SUBSIDY_RETRIEVED:
+				case SUBSIDY_EXPIRED:
+				case SUBSIDY_RETRIEVE_FAILED:
 					view = ViewResource.OTHER_DETAIL;
 					break;
 				case CANCELLED:
