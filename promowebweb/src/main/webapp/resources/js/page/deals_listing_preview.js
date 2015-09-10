@@ -27,7 +27,7 @@ $(function(){
 			}
 			
 		}});
-	listingTable.update();
+	listingTable.update({promoId: pageData.promoId});
 	
 	
 });
