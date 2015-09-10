@@ -4,7 +4,9 @@ $(function(){
 	var alertDialog = BizReport.alertDialog;
 	var locale = BizReport.locale;
 	
-	var skuList, uploadForm, fileInput, uploadBtn;
+	var skuList, uploadForm, fileInput, uploadBtn, uploadIFrame;
+	
+	uploadIFrame = $("iframe[name=uploadIframe]");
 	
 	skuList = new SKUListTable();
 	skuList.subscribe({
@@ -43,6 +45,15 @@ $(function(){
 	
 	$(uploadBtn).click(function(){
 		if (!this.hasAttribute("disabled")) {
+			uploadIFrame.on("load", function(){
+				if (uploadIFrame.contents().length == 0) {
+					console.log("failed");
+				} else {
+					// refresh current page.
+					location.reload();
+				}
+			});
+			
 			uploadForm.submit();
 		}
 	});	

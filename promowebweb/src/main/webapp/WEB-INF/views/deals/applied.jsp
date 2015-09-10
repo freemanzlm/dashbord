@@ -99,11 +99,12 @@
 								<p class="mt10">您可以通过下载<a class="template" href="javascript:void(0)" target="_blank">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
 								<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
 								
-								<form id="upload-form" action="upload" class="mt30" method="post" enctype="multipart/form-data">
+								<form id="upload-form" action="upload" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
 									选择上传您的刊登列表 
 									<input type="hidden" name="promoId" value="4324324"/>
 									<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.ms-excel" /> <button type="button" class="btn" style="margin-left: 3px;">选择</button></span>
 								</form>
+								<iframe name="uploadIframe" src="_blank" frameborder="0" style="display: none;"></iframe>
 							</div>
 						</div>
 					</div>
