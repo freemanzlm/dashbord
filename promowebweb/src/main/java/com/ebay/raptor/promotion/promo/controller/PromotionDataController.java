@@ -1,37 +1,23 @@
 package com.ebay.raptor.promotion.promo.controller;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
-import com.ebay.app.raptor.promocommon.error.ErrorType;
-import com.ebay.app.raptor.promocommon.excel.ExcelReader;
 import com.ebay.raptor.kernel.context.IRaptorContext;
-import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
@@ -66,10 +52,11 @@ public class PromotionDataController{
 	
 	@GET
 	@RequestMapping("/{promoId}")
-	public ModelAndView promotion(@PathVariable("promoId") String promoId) {
+	public ModelAndView promotion(HttpServletRequest request,
+			@PathVariable("promoId") String promoId) throws MissingArgumentException {
 		ModelAndView model = new ModelAndView();
-		//TODO Get the uid from cookie
-		Long uid = -1L;
+//		UserData userData = CookieUtil.getUserDataFromCookie(request);
+
 		try {
 			Promotion promo = service.getPromotionById(promoId);
 
@@ -80,7 +67,7 @@ public class PromotionDataController{
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
 			}
 		} catch (PromoException e) {
-			e.printStackTrace();
+			logger.error("Unable to get promotion for " + promoId, e);
 			model.setViewName(ViewResource.ERROR.getPath());
 		}
 		return model;
@@ -112,13 +99,14 @@ public class PromotionDataController{
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getIngPromotions)
 	@ResponseBody
-	public ListDataWebResponse<Promotion> getIngPromotion() {
+	public ListDataWebResponse<Promotion> getIngPromotion(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
+
 		try {
-			//TODO Change to cookie.
-			Long uid = ListingWebParam.UID; 
-			resp.setData(service.getIngPromotion(uid));
+			resp.setData(service.getIngPromotion(userData.getUserId()));
 		} catch (PromoException e) {
+			logger.error("Unable to get in-progress promotion of user " + userData.getUserId(), e);
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
@@ -127,13 +115,13 @@ public class PromotionDataController{
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getSubsidyPromotions)
 	@ResponseBody
-	public ListDataWebResponse<Promotion> getSubsidyPromotions() {
+	public ListDataWebResponse<Promotion> getSubsidyPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
 		try {
-			//TODO Change to cookie.
-			Long uid = ListingWebParam.UID; 
-			resp.setData(service.getSubsidyPromotions(uid));
+			resp.setData(service.getSubsidyPromotions(userData.getUserId()));
 		} catch (PromoException e) {
+			logger.error("Unable to get subsidy promotion of user " + userData.getUserId(), e);
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
@@ -142,12 +130,11 @@ public class PromotionDataController{
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getEndPromotions)
 	@ResponseBody
-	public ListDataWebResponse<Promotion> getEndPromotions() {
+	public ListDataWebResponse<Promotion> getEndPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
 		try {
-			//TODO Change to cookie.
-			Long uid = ListingWebParam.UID; 
-			resp.setData(service.getEndPromotions(uid));
+			resp.setData(service.getEndPromotions(userData.getUserId()));
 		} catch (PromoException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
@@ -157,11 +144,13 @@ public class PromotionDataController{
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getPromotions)
 	@ResponseBody
-	public ListDataWebResponse<Promotion> getPromotions(@RequestParam("uid") Long uid) {
+	public ListDataWebResponse<Promotion> getPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
 		try {
-			resp.setData(service.getPromotions(uid));
+			resp.setData(service.getPromotions(userData.getUserId()));
 		} catch (PromoException e) {
+			logger.error("Unable to get promotions of user " + userData.getUserId(), e);
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
@@ -175,69 +164,9 @@ public class PromotionDataController{
 		try {
 			resp.setData(service.getPromotionById(promoId));
 		} catch (PromoException e) {
+			logger.error("Unable to get promotion of user " + uid + " and promotionID " + promoId, e);
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
 	}
-	
-	@RequestMapping(value = ResourceProvider.ListingRes.uploadDealsListings, method = RequestMethod.POST)
-	public ModelAndView handleUploadRequest(HttpServletRequest request,
-            HttpServletResponse response, @RequestPart("UploadListing") MultipartFile xmlFile,
-            @RequestParam String promoId) throws MissingArgumentException {
-		ModelAndView mav = new ModelAndView();
-		
-		UserData userData = CookieUtil.getUserDataFromCookie(request);
-		
-		XSSFWorkbook workbook = null;
-
-		try {
-			workbook = new XSSFWorkbook(xmlFile.getInputStream());
-			ExcelReader.readWorkbook(workbook, 0,
-					new UploadListingSheetHandler(dealsListingService,
-							promoId, userData.getUserId()));
-
-			mav.addObject("formUrl", "submit"); // TODO - use constants
-			mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
-		} catch (IOException | PromoException e) {
-			// Got IO or PromoException exception -> means app level error -> show error page.
-			logger.error("Upload listings got error.", e);
-			mav.setViewName(ViewResource.ERROR.getPath());
-		} catch (CommonException e) {
-			// Got logic exception -> check the error code and return the message to UI
-			logger.error("The uploaded listings are invalid.", e);
-
-			try {
-				Promotion promo = service.getPromotionById(promoId);
-
-				if(null != promo){
-					ContextViewRes res = handleViewBasedOnPromotion(promo);
-					mav.setViewName(res.getView().getPath());
-					mav.addAllObjects(res.getContext());
-					mav.addObject(ViewContext.Promotion.getAttr(), promo);
-					ErrorType errorType = e.getErrorType();
-					mav.addObject("errorMsg",
-							messageSource.getMessage("err-"+errorType.getCode(),
-									e.getArgs(), Locale.SIMPLIFIED_CHINESE)); // TODO - use constants
-				}
-			} catch (PromoException ex) {
-				mav.setViewName(ViewResource.ERROR.getPath());
-			}
-		} finally {
-			if (workbook != null) {
-				try {
-					workbook.close();
-				} catch (IOException e) {
-					// ignore...
-				}
-			}
-		}
-
-		return mav;
-	}
-
-	public static void main(String[] args){
-		System.out.println(new Date());
-	}
-	
-
 }
