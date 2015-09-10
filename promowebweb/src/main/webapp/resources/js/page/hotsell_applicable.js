@@ -41,7 +41,7 @@ $(function(){
 		if (listings && listings.length > 0) {
 			listings = listingTable.getData();
 			form.find("input[name=listings]").val("[" + listings.map(function(item){
-				return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
+				return "{'skuId': '" + item.skuId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
 			}).join(",") + "]");
 			
 			return true;

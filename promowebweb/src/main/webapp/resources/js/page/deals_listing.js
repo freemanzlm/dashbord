@@ -31,7 +31,7 @@ $(function(){
 			var listings = data.data;
 			if (Array.isArray(listings) && listings.length > 0) {
 				form.find("input[name=listings]").val("[" + listings.map(function(item){
-					return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
+					return "{'skuId': '" + item.skuId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
 				}).join(",") + "]");
 			}
 		}});

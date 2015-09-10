@@ -45,8 +45,8 @@ $(function(){
 	$(uploadBtn).click(function(){
 		if (!this.hasAttribute("disabled")) {
 			uploadIFrame.on("load", function(){
-				if (uploadIFrame.contents().length == 0) {
-					console.log("failed");
+				if (uploadIFrame.contents().length == 0 || uploadIFrame.contents().find("body").html().indexOf("error") > 0) {
+					alertDialog.alert(uploadIFrame.contents().find("body").html());
 				} else {
 					// refresh current page.
 					location.reload();

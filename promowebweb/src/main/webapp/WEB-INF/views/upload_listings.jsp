@@ -26,6 +26,6 @@
 			<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="dealsListings" accept="application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">选择</button></span>
 			<input type="hidden" name="promoId" value="${promo.promoId}"/>
 		</form>
-		<iframe name="uploadIframe" src="_blank" frameborder="0" style="display: none;"></iframe>
+		<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
 	</div>	
 </div>
