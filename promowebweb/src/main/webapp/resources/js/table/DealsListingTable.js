@@ -216,7 +216,7 @@ var BizReport = BizReport || {};
 			this.checkedBoxes = [];
 			
 			// this statement must be put before this.dataTable.initDataTable();
-			this.checkAllBox = this.dataTable.table.find(".check-all");
+			this.checkAllBox = this.dataTable.table.find(".check-all").prop("checked", false);
 			
 			// this statement must be put before this.dataTable.initDataTable();
 			this.container = that.dataTable.table.parents(".dataTable-container:first");

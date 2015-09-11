@@ -4,7 +4,7 @@
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <c:set var="categoryId" value="6000" />
-<c:set var="rewarding" value="true" />
+<c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
 <r:includeJquery jsSlot="body" />
 <r:client />
 

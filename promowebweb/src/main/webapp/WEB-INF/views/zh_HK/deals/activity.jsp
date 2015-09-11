@@ -7,6 +7,7 @@
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" />
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" />
 
+<c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
 <c:set var="timeSlot" value="${promoStart} ~ ${promoEnd}"></c:set>
 <c:set var="activityContent" value="${promo.desc}"></c:set>
 
