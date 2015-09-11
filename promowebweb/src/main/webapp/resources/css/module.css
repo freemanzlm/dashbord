@@ -105,6 +105,7 @@
 	display: table-cell;
 	text-align: center;
 	line-height: 28px;
+	color: #808282;
 }
 
 .steps .step span {
@@ -115,6 +116,7 @@
 .steps .step.done {
 	background-image: url(../img/done.png);
 	background-color: #DEDEDF;
+	color: #333;
 }
 
 .steps .step.done span {
@@ -123,6 +125,7 @@
 
 .steps .step.current-step {
 	background-image: url(../img/done.png);
+	color: #333;
 }
 
 .steps .step.current-step span {

@@ -68,12 +68,12 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step"><span>可报名</span></div>
-						<div class="step gray"><span>已提交报名</span></div>
-						<div class="step ${ rewarding ? '' : 'last' } gray"><span>活动进行中</span></div>
+						<div class="step"><span>已提交报名</span></div>
+						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
 						<c:if test="${ rewarding }">
-							<div class="step gray"><span>奖励确认中</span></div>
-							<div class="step gray"><span>申领奖励</span></div>
-							<div class="step last gray"><span>活动完成</span></div>
+							<div class="step"><span>奖励确认中</span></div>
+							<div class="step"><span>申领奖励</span></div>
+							<div class="step last"><span>活动完成</span></div>
 						</c:if>
 					</div>
 				</div>  <!-- steps end -->
