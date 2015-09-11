@@ -113,7 +113,7 @@ public class UploadListingValidator {
 		return (float) price;
 	}
 	
-	public static Long validateStockNumber (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
+	public static Float validateStockNumber (Cell cell, AtomicReference<EmptyCellValueException> emptyException) throws InvalidCellValueException {
 		EmptyCellValueException ex = emptyException.get();
 		int rowIndex = cell.getRowIndex() + 1;
 		int colIndex = cell.getColumnIndex() + 1;
@@ -144,6 +144,6 @@ public class UploadListingValidator {
 			throw new InvalidCellValueException(rowIndex, colIndex);
 		}
 		
-		return (long) price;
+		return (float) price;
 	}
 }

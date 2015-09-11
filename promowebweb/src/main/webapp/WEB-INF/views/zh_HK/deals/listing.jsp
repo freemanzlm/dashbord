@@ -61,7 +61,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals 活动名称</h2>
+				<h2>Deals ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可報名</span></div>

@@ -10,7 +10,6 @@ public class UploadListingForm {
 
 	public String getPromoId() {
 		return promoId;
-//		return ListingWebParam.SFID;
 	}
 
 	public void setPromoId(String promoId) {
@@ -18,8 +17,7 @@ public class UploadListingForm {
 	}
 
 	public Long getUid() {
-//		return uid;
-		return ListingWebParam.UID;
+		return uid;
 	}
 
 	public void setUid(Long uid) {

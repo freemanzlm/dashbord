@@ -22,7 +22,7 @@ public class DealsListing {
 	private String currency;
 
 	@Header(name = "刊登刊登库存量", order=6, format=ColumnFormat.IntNum)
-	private Long inventory;
+	private Float inventory;
 
 	@Header(name = "刊登活动单价（USD）", order=5, format=ColumnFormat.FltNum)
 	private Float actPrice;
@@ -69,11 +69,11 @@ public class DealsListing {
 		this.currency = currency;
 	}
 
-	public Long getInventory() {
+	public Float getInventory() {
 		return inventory;
 	}
 
-	public void setInventory(Long inventory) {
+	public void setInventory(Float inventory) {
 		this.inventory = inventory;
 	}
 

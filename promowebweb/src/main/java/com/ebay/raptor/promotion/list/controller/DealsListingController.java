@@ -65,9 +65,9 @@ public class DealsListingController extends AbstractListingController{
         try {
         	resp.setContentType("application/x-msdownload;");
         	resp.setHeader("Content-disposition", "attachment; filename=" + ResourceProvider.ListingRes.skuListFileName + ".xlsx");
-//        	UserData userData = CookieUtil.getUserDataFromCookie(req);
+        	UserData userData = CookieUtil.getUserDataFromCookie(req);
         	
-        	List<DealsListing> skuListings = service.getSkuListingByPromotionId(param.getPromoId(), ListingWebParam.UID); // TODO userData.getUserId());
+        	List<DealsListing> skuListings = service.getSkuListingByPromotionId(param.getPromoId(), userData.getUserId()); // TODO userData.getUserId());
 
 
         	XSSFWorkbook workBook = new XSSFWorkbook();
@@ -75,7 +75,7 @@ public class DealsListingController extends AbstractListingController{
             writer.resetHeaders();
             writer.build(skuListings);
             workBook.write(resp.getOutputStream());
-        } catch (IOException | PromoException e) {
+        } catch (IOException | PromoException | MissingArgumentException e) {
         	logger.error("Unable to download deals listing.", e);
         }
     }
@@ -129,14 +129,13 @@ public class DealsListingController extends AbstractListingController{
 	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.confirmDealsListings)
-	public ModelAndView confirmDealsListings(@ModelAttribute("listings") UploadListingForm listings) {
+	public ModelAndView confirmDealsListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
 		ModelAndView model = new ModelAndView();
 		if(null != listings){
-			//TODO Add uid
-			listings.setUid(ListingWebParam.UID);
 			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class, false);
 			try {
-				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), listings.getUid());
+				UserData userData = CookieUtil.getUserDataFromCookie(req);
+				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
 				if(result){
 					Promotion promotion = this.promoService.getPromotionById(listings.getPromoId());
 					model.addObject(ViewContext.Promotion.getAttr(), promotion);
@@ -152,7 +151,7 @@ public class DealsListingController extends AbstractListingController{
 							break;
 					}
 				}
-			} catch (PromoException e) {
+			} catch (PromoException | MissingArgumentException e) {
 				model.setViewName(ViewResource.ERROR.getPath());
 			}
 		}
@@ -163,12 +162,12 @@ public class DealsListingController extends AbstractListingController{
 	@RequestMapping(ResourceProvider.ListingRes._getApplicableListings)
 	@ResponseBody
 	public ListDataWebResponse<DealsListing> getApplicableListings(HttpServletRequest req,
-			@ModelAttribute ListingWebParam param) throws MissingArgumentException {
+			@ModelAttribute ListingWebParam param)  {
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
-		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		try {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
 			resp.setData(service.getApplicableListings(param.getPromoId(), userData.getUserId()));
-		} catch (PromoException e) {
+		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
@@ -177,11 +176,12 @@ public class DealsListingController extends AbstractListingController{
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getAppliedListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getAppliedListings(@ModelAttribute ListingWebParam param) {
+	public ListDataWebResponse<DealsListing> getAppliedListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
-			resp.setData(service.getAppliedListings(param.getPromoId(), param.getUid()));
-		} catch (PromoException e) {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			resp.setData(service.getAppliedListings(param.getPromoId(), userData.getUserId()));
+		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
@@ -190,11 +190,12 @@ public class DealsListingController extends AbstractListingController{
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getApprovedListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getApprovedListings(@ModelAttribute ListingWebParam param) {
+	public ListDataWebResponse<DealsListing> getApprovedListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
-			resp.setData(service.getApprovedListings(param.getPromoId(), param.getUid()));
-		} catch (PromoException e) {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			resp.setData(service.getApprovedListings(param.getPromoId(), userData.getUserId()));
+		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
@@ -203,11 +204,12 @@ public class DealsListingController extends AbstractListingController{
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getSKUsByPromotionId)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getSKUsByPromotionId(@ModelAttribute ListingWebParam param) {
+	public ListDataWebResponse<DealsListing> getSKUsByPromotionId(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
-			resp.setData(service.getSkuListingByPromotionId(param.getPromoId(), param.getUid()));
-		} catch (PromoException e) {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			resp.setData(service.getSkuListingByPromotionId(param.getPromoId(), userData.getUserId()));
+		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;

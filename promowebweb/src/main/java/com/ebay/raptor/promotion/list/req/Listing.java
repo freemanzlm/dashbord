@@ -6,17 +6,9 @@ public class Listing {
 		super();
 	}
 
-	private String itemId;
+	private String skuId;
 
 	private Integer selected;
-
-	public String getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
-	}
 
 	public Integer getSelected() {
 		return selected;
@@ -24,6 +16,14 @@ public class Listing {
 
 	public void setSelected(Integer selected) {
 		this.selected = selected;
+	}
+
+	public String getSkuId() {
+		return skuId;
+	}
+
+	public void setSkuId(String skuId) {
+		this.skuId = skuId;
 	}
 
 }

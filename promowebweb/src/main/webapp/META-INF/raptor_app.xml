@@ -25,6 +25,9 @@
 	      	<authorization>true</authorization>
 	      	<roleId>true</roleId>
 	      </security>
+	      <parameters-Map>
+	  		<parameters key="xss.requestParameterCheck">false</parameters>
+	  	  </parameters-Map>
     	</page>    
     <!-- Add new page entries here. For siteCatalystID, provide a value or leave as blank to generate one. Sample: -->
    <!-- <page>

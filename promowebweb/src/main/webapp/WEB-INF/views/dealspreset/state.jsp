@@ -59,7 +59,7 @@
 			<div class="pane">
 				<c:set var="state" value="ongoing"></c:set>
 				
-				<h2>爆款促销 活动名称</h2>
+				<h2>爆款促销 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
