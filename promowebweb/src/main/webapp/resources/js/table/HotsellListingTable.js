@@ -78,7 +78,7 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
-					{data: 'itemName'},
+					{data: 'name'},
 					{data: 'price'},
 					{data: 'volume'},
 					{data: 'sales'},

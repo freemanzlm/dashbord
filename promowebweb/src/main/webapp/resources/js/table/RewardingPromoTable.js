@@ -15,7 +15,6 @@ var BizReport = BizReport || {};
 	var locale = namespace.locale;
 	
 	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
-	var states = ['Created', 'Submitted', 'Verifying', 'PromotionApproved', 'VerifyFailed', 'Applied', 'Started', 'SubsidyCounting', 'SubsidyWaiting', 'NeedAgreement', 'SubsidyVerifying', 'Completed', 'ClaimFail', 'rewardVerifying', 'Canceled', 'End', 'Claimed'];
 	
 	function getLink(promoId) {
 		return "promotion/" + promoId;
@@ -211,7 +210,7 @@ var BizReport = BizReport || {};
 			this.container = that.dataTable.table.parents(".dataTable-container:first");
 			this.pane = this.container.parents(".pane-table");
 			
-			var oDataTable = this.oDataTable = null, openRow = null;
+			var oDataTable = this.oDataTable = null;
 			
 			this.dataTable.subscribe({
 				initialized: function() {
