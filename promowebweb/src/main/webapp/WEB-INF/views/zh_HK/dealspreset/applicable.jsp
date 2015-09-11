@@ -6,15 +6,14 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="true" />
-
 <r:includeJquery jsSlot="body" />
 <r:client />
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals招募</title>
-	<meta name="description" content="Deals招募">
+	<title>Deals預置</title>
+	<meta name="description" content="Deals預置">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -30,10 +29,8 @@
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.icon_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
-	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
@@ -43,15 +40,14 @@
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
-	
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_applicable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['preset_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -63,34 +59,33 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals 活动名称</h2>
+				<h2>Deals預置 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可报名</span></div>
-						<div class="step"><span>已提交预审</span></div>
-						<div class="step"><span>报名预审中</span></div>
-						<div class="step"><span>确认报名刊登</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
+						<div class="step current-step"><span>可報名</span></div>
+						<div class="step"><span>已提交報名</span></div>
+						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
-							<div class="step"><span>奖励确认中</span></div>
-							<div class="step"><span>申领奖励</span></div>
-							<div class="step last"><span>活动完成</span></div>
+							<div class="step"><span>獎勵確認中</span></div>
+							<div class="step"><span>申領獎勵</span></div>
+							<div class="step last"><span>活動名稱</span></div>
 						</c:if>
 					</div>
 				</div>  <!-- steps end -->
 				
 				<%@ include file="activity.jsp" %>
 				
-				<div class="mt20">
-					<%@ include file="../table/skuList.jsp" %>
+				<div class="mt20 my-listing">
+					<h3>選擇我的刊登報名<small>（已選<span>0</span>項）</small></h3>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
-				<div class="mt20">
-					<%@ include file="upload_listings.jsp" %>
-				</div>
-				
-				<div class="mt20 page-bottom-actions">
-					<button id="upload-btn" class="btn" disabled>上传</button>
+				<div class="mt20" style="text-align: center;">
+					<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
+						<input type="hidden" name="promoId" value="${promo.promoId}"/>
+						<input type="hidden" name="listings" value="[]" />
+						<button id="form-btn" class="btn" type="button">預覽報名資訊</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -102,6 +97,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="previewDialog.jsp" %>
 
 <script type="text/javascript">
 	var pageData = {

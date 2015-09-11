@@ -3,17 +3,15 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="rewarding" value="true" />
-
+<!-- TODO 废弃这个页面 -->
 <r:includeJquery jsSlot="body" />
 <r:client />
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals招募</title>
+	<title>已選擇的刊登預覽</title>
 	<meta name="description" content="Deals招募">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
@@ -30,11 +28,11 @@
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.icon_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -49,9 +47,8 @@
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_applicable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_listing_preview.js']}" target="page-js"></res:useJs>	
 </head>
 
 <body>
@@ -63,36 +60,23 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals 活动名称</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step current-step"><span>可报名</span></div>
-						<div class="step"><span>已提交预审</span></div>
-						<div class="step"><span>报名预审中</span></div>
-						<div class="step"><span>确认报名刊登</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
-						<c:if test="${ rewarding }">
-							<div class="step"><span>奖励确认中</span></div>
-							<div class="step"><span>申领奖励</span></div>
-							<div class="step last"><span>活动完成</span></div>
-						</c:if>
-					</div>
-				</div>  <!-- steps end -->
-				
-				<%@ include file="activity.jsp" %>
+				<h2>已選擇的刊登預覽</h2>
 				
 				<div class="mt20">
-					<%@ include file="../table/skuList.jsp" %>
-				</div>
-				
-				<div class="mt20">
-					<%@ include file="upload_listings.jsp" %>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
-					<button id="upload-btn" class="btn" disabled>上传</button>
+					<form action="${formUrl }" method="post">
+						<input type="hidden" name="promoId" value="4324324"/>
+						<!-- TODO put selected listing ids here -->
+						<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
+						<a href="applicable">返回修改</a>
+						<button type="submit" class="btn">提交報名資訊</button>
+					</form>
+					
 				</div>
-			</div>
+			</div>			
 		</div>
 	</div>
 
@@ -102,10 +86,11 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <script type="text/javascript">
 	var pageData = {
-		promoId: '${promo.promoId}'
+		promoId: '${promoId}'
 	};
 </script>
 

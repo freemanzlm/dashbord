@@ -63,18 +63,18 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals 活动名称</h2>
+				<h2>Deals 活動名稱</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可报名</span></div>
-						<div class="step"><span>已提交预审</span></div>
-						<div class="step"><span>报名预审中</span></div>
-						<div class="step"><span>确认报名刊登</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
+						<div class="step current-step"><span>可報名</span></div>
+						<div class="step"><span>已提交預審</span></div>
+						<div class="step"><span>報名預審中</span></div>
+						<div class="step"><span>確認報名刊登</span></div>
+						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
-							<div class="step"><span>奖励确认中</span></div>
-							<div class="step"><span>申领奖励</span></div>
-							<div class="step last"><span>活动完成</span></div>
+							<div class="step"><span>獎勵確認中</span></div>
+							<div class="step"><span>申領獎勵</span></div>
+							<div class="step last"><span>活動名稱</span></div>
 						</c:if>
 					</div>
 				</div>  <!-- steps end -->

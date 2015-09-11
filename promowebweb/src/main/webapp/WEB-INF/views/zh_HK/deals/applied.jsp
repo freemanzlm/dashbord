@@ -3,10 +3,8 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="true" />
-
 <r:includeJquery jsSlot="body" />
 <r:client />
 
@@ -30,7 +28,6 @@
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.icon_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
@@ -43,15 +40,14 @@
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
-	
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_applicable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_applied.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -66,32 +62,58 @@
 				<h2>Deals 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可报名</span></div>
-						<div class="step"><span>已提交预审</span></div>
-						<div class="step"><span>报名预审中</span></div>
-						<div class="step"><span>确认报名刊登</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
+						<div class="step done"><span>可報名</span></div>
+						<div class="step current-step"><span>已提交預審</span></div>
+						<div class="step"><span>報名預審中</span></div>
+						<div class="step"><span>確認報名刊登</span></div>
+						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
-							<div class="step"><span>奖励确认中</span></div>
-							<div class="step"><span>申领奖励</span></div>
-							<div class="step last"><span>活动完成</span></div>
+							<div class="step"><span>獎勵確認中</span></div>
+							<div class="step"><span>申領獎勵</span></div>
+							<div class="step last"><span>活動完成</span></div>
 						</c:if>
 					</div>
 				</div>  <!-- steps end -->
 				
+				<div class="active-status-box">
+					<h3>您已成功提交報名！請耐心等待預審結果。</h3>
+					<p class="desc green">需要您確認通過預審的刊登完成報名！</p>
+					<menu>
+						<li><a href="" class="btn">返回活動清單</a></li>
+					</menu>					
+				</div> <!-- active status box end -->
+				
 				<%@ include file="activity.jsp" %>
+
+				<div class="mt20 my-listing">
+					<h3><strong>我提交的刊登</strong></h3>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+				</div>	
 				
-				<div class="mt20">
-					<%@ include file="../table/skuList.jsp" %>
-				</div>
-				
-				<div class="mt20">
-					<%@ include file="upload_listings.jsp" %>
-				</div>
-				
-				<div class="mt20 page-bottom-actions">
-					<button id="upload-btn" class="btn" disabled>上传</button>
-				</div>
+				<c:if test="${ not expired }">
+					<div class="mt20">
+						<div class="listings-upload">
+							<h3>重新上傳我要提交的刊登</h3>
+							
+							<div class="body mt20"  style="width: 420px;">
+								<p class="mt10">您可以通過下載<a class="template" href="javascript:void(0)" target="_blank">已提交的刊登</a>修改並重新上傳您的刊登參與本活動。</p>
+								<p class="mt10">您新上傳的數據將完全替換原數據。提交數據需再次接受Deals招募法律協定。</p>
+								
+								<form id="upload-form" action="upload" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
+									選擇上傳您的刊登清單
+									<input type="hidden" name="promoId" value="4324324"/>
+									<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇檔案" /> <input type="file" accept="application/vnd.ms-excel" /> <button type="button" class="btn" style="margin-left: 3px;">選擇</button></span>
+								</form>
+								<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
+							</div>
+						</div>
+					</div>
+					
+					<div class="mt20 page-bottom-actions">
+						<button id="upload-btn" class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>預覽修改報名資訊</button>
+					</div>	
+				</c:if>
+						
 			</div>
 		</div>
 	</div>
