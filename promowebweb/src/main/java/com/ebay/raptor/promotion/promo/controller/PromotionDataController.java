@@ -141,20 +141,20 @@ public class PromotionDataController{
 		return resp;
 	}
 	
-	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._getPromotions)
-	@ResponseBody
-	public ListDataWebResponse<Promotion> getPromotions(HttpServletRequest request) throws MissingArgumentException {
-		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = CookieUtil.getUserDataFromCookie(request);
-		try {
-			resp.setData(service.getPromotions(userData.getUserId()));
-		} catch (PromoException e) {
-			logger.error("Unable to get promotions of user " + userData.getUserId(), e);
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
-	}
+//	@GET
+//	@RequestMapping(ResourceProvider.PromotionRes._getPromotions)
+//	@ResponseBody
+//	public ListDataWebResponse<Promotion> getPromotions(HttpServletRequest request) throws MissingArgumentException {
+//		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+//		UserData userData = CookieUtil.getUserDataFromCookie(request);
+//		try {
+//			resp.setData(service.getPromotions(userData.getUserId()));
+//		} catch (PromoException e) {
+//			logger.error("Unable to get promotions of user " + userData.getUserId(), e);
+//			resp.setStatus(Boolean.FALSE);
+//		}
+//		return resp;
+//	}
 	
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getPromotionById)

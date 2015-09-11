@@ -61,26 +61,25 @@ public class PromotionService extends BaseService {
 		return null;
 	}
 	
-	public List<Promotion> getPromotions(Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.PromotionRes.getPromotions, new Object[]{"{uid}", uid}));
-		GingerClientResponse resp = httpGet(uri);
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<Promotion>> type = new GenericType<ListDataServiceResponse<Promotion>>(){};
-			ListDataServiceResponse<Promotion> promos = resp.getEntity(type);
-			if(null != promos && AckValue.SUCCESS == promos.getAckValue()){
-				return promos.getData();
-			} else {
-				if(null != promos && null != promos.getErrorMessage() && null != promos.getErrorMessage().getError()){
-					throw new PromoException(promos.getErrorMessage().getError().toString());
-				}
-			}
-		} else {
-			throw new PromoException("Internal Error happens.");
-		}
-		return null;
-	}
+//	public List<Promotion> getPromotions(Long uid) throws PromoException{
+//		String uri = url(params(ResourceProvider.PromotionRes.getPromotions, new Object[]{"{uid}", uid}));
+//		GingerClientResponse resp = httpGet(uri);
+//		if(Status.OK.getStatusCode() == resp.getStatus()){
+//			GenericType<ListDataServiceResponse<Promotion>> type = new GenericType<ListDataServiceResponse<Promotion>>(){};
+//			ListDataServiceResponse<Promotion> promos = resp.getEntity(type);
+//			if(null != promos && AckValue.SUCCESS == promos.getAckValue()){
+//				return promos.getData();
+//			} else {
+//				if(null != promos && null != promos.getErrorMessage() && null != promos.getErrorMessage().getError()){
+//					throw new PromoException(promos.getErrorMessage().getError().toString());
+//				}
+//			}
+//		} else {
+//			throw new PromoException("Internal Error happens.");
+//		}
+//		return null;
+//	}
 	
-	// TODO - uid is not needed
 	public Promotion getPromotionById(String promoId) throws PromoException{
 		String uri = url(params(ResourceProvider.PromotionRes.getPromotionById, new Object[]{"{promoId}", promoId}));
 		GingerClientResponse resp = httpGet(uri);
