@@ -74,7 +74,7 @@
 										<div class="step"><span>申領獎勵</span></div>
 										<div class="step last"><span>活動完成</span></div>
 									</c:when>
-									<c:when test="${ state eq 'RewardCounting' }">
+									<c:when test="${ state eq 'SubsidyCounting' }">
 										<div class="step done"><span>活動進行中</span></div>
 										<div class="step current-step"><span>獎勵確認中</span></div>
 										<div class="step"><span>申領獎勵</span></div>
@@ -114,7 +114,7 @@
 								</li>
 							</menu>
 						</c:when>
-						<c:when test="${state eq 'RewardCounting' }">
+						<c:when test="${state eq 'SubsidyCounting' }">
 							<h3>恭喜您已完成活動！</h3>
 							
 							<p class="desc">獎勵結果統計中，請耐心等待！</p>

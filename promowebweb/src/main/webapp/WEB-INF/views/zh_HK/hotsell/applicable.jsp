@@ -6,14 +6,15 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="true" />
+
 <r:includeJquery jsSlot="body" />
 <r:client />
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals預置</title>
-	<meta name="description" content="Deals預置">
+	<title>爆款促銷 </title>
+	<meta name="description" content="爆款促銷 ">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -32,6 +33,7 @@
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -43,12 +45,14 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['HotsellListingTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['preset_applied.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['hotsell_applicable.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -60,11 +64,11 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals預置 活动名称</h2>
+				<h2>爆款促銷 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可報名</span></div>
-						<div class="step current-step"><span>已提交報名</span></div>
+						<div class="step current-step"><span>可報名</span></div>
+						<div class="step"><span>已提交報名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
 							<div class="step"><span>獎勵確認中</span></div>
@@ -74,40 +78,21 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box">
-					<h3>您已成功提交報名！請耐心等待稽核結果。</h3>
-					<p class="desc">
-						<c:choose>
-							<c:when test="${not expired }">
-								在報名有效期內，您可以重新選擇預報名的刊登，並重新提交
-							</c:when>
-							<c:otherwise>
-								已超過報名有效期，您無法再修改刊登內容
-							</c:otherwise>
-						</c:choose>
-					</p>
-					<menu>
-						<li><a href="../index" class="btn">返回活動清單</a></li>
-					</menu>					
-				</div> <!-- active status box end -->
-				
 				<%@ include file="activity.jsp" %>
-		
+				
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登<small>（已選<span>0</span>項）</small></h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
-				</div>	
+					<h3>選擇我的刊登報名<small>（已選<span>0</span>項）</small></h3>
+					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
+				</div>
 				
-				<c:if test="${not expired }">
-					<div class="page-bottom-actions">
-						<form id="listing-form" action="applied" method="post">
-							<input type="hidden" name="promoId" value=""/>
-							<input type="hidden" name="listings" value="[]" />
-							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">預覽修改報名資訊</button>
-						</form>
-					</div>	 
-				</c:if>
-				
+				<div class="mt20" style="text-align: center;">
+					<form action="/promotion/hotsell/confirmHotSellListings" method="post">
+						<input type="hidden" name="promoId" value="${promo.promoId}"/>
+						<input type="hidden" name="listings" value="[]" />
+						<label for="accept" title="每次提交報名前請確認點擊閱讀法律協定，確認接受後方可提交報名。"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已閱讀並接受 <a class="terms-conditions" href="javascript:void(0)">法律協定</a></label> <br /><br />
+						<button id="form-btn" class="btn" type="button" disabled>預覽報名資訊</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -119,15 +104,14 @@
 
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/confirm.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 <%@ include file="previewDialog.jsp" %>
-
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },
-		promoId: '${ promo.promoId }'
+		promoId: '${ promoId }'
 	};
 </script>
-
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />

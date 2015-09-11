@@ -5,15 +5,16 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="rewarding" value="true" />
+<c:set var="listingNum" value="2" />
+
 <r:includeJquery jsSlot="body" />
 <r:client />
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals預置</title>
-	<meta name="description" content="Deals預置">
+	<title>爆款促銷</title>
+	<meta name="description" content="爆款促銷">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -43,12 +44,13 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['HotsellListingTable.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['preset_applied.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['hotsell_applied.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -60,7 +62,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals預置 活动名称</h2>
+				<h2>爆款促銷 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可報名</span></div>
@@ -88,14 +90,14 @@
 					</p>
 					<menu>
 						<li><a href="../index" class="btn">返回活動清單</a></li>
-					</menu>					
+					</menu>
 				</div> <!-- active status box end -->
 				
 				<%@ include file="activity.jsp" %>
 		
 				<div class="mt20 my-listing">
 					<h3>我提交的刊登<small>（已選<span>0</span>項）</small></h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
 				</div>	
 				
 				<c:if test="${not expired }">
@@ -103,7 +105,7 @@
 						<form id="listing-form" action="applied" method="post">
 							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
-							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">預覽修改報名資訊</button>
+							<button class="btn" id="form-btn" type="button" title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
 						</form>
 					</div>	 
 				</c:if>
@@ -119,8 +121,8 @@
 
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/confirm.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 <%@ include file="previewDialog.jsp" %>
-
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },

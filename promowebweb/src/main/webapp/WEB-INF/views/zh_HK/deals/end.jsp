@@ -5,7 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="state" value="applyFail"></c:set>
+<c:set var="state" value="VerifyFailed"></c:set>
 
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -50,7 +50,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<c:choose>
-							<c:when test="${ state == 'verifyFailed' }">
+							<c:when test="${ state == 'VerifyFailed' }">
 								<div class="step done"><span>可報名</span></div>
 								<div class="step done"><span>已提交報名</span></div>
 								<div class="step current-step last"><span>稽核失敗</span></div>
@@ -62,9 +62,9 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box ${ state == 'verifyFailed' ? 'fail' : 'success' }">
+				<div class="active-status-box ${ state == 'VerifyFailed' ? 'fail' : 'success' }">
 					<c:choose>
-						<c:when test="${ state == 'applyFail' }">
+						<c:when test="${ state == 'VerifyFailed' }">
 							<h3>很遺憾，您的報名未通過審核</h3>
 							<p class="desc">感謝您的參與！</p>
 						</c:when>

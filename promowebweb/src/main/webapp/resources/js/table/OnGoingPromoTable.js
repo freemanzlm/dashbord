@@ -141,7 +141,7 @@ var BizReport = BizReport || {};
 										return val.toUSFixed(2) + " (" + full.currency + ")";
 									}
 								}  else {
-									return locale.getText('dataTable.promo.rewardCounting');
+									return locale.getText('dataTable.promo.SubsidyCounting');
 								}
 							}
 							

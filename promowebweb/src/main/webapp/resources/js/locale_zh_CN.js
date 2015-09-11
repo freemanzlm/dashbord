@@ -46,7 +46,7 @@ BizReport.locale = {
 			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条SKU'
 		},
 		'promo': {
-			'rewardCounting': '待评估',
+			'SubsidyCounting': '待评估',
 			'noReward': '无奖励',
 			'emptyTable': '<p>没有符合筛选条件的活动。</p>',
 			'zeroRecords': '<p>没有符合筛选条件的活动。</p>',

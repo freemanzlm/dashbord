@@ -13,8 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>其他活动</title>
-	<meta name="description" content="其它活动">
+	<title>其它活動</title>
+	<meta name="description" content="其它活動">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -56,7 +56,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>其它活动 活动名称</h2>
+				<h2>其它活動 活动名称</h2>
 				
 				<c:choose>
 					<c:when test="${ rewarding }">
@@ -64,28 +64,28 @@
 							<div class="steps clr">
 								<c:choose>
 									<c:when test="${ state eq 'Started' }">
-										<div class="step current-step"><span>活动进行中</span></div>
-										<div class="step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
+										<div class="step current-step"><span>活動進行中</span></div>
+										<div class="step"><span>獎勵確認中</span></div>
+										<div class="step"><span>申領獎勵</span></div>
+										<div class="step last"><span>活動完成</span></div>
 									</c:when>
 									<c:when test="${ state eq 'SubsidyCounting' }">
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step current-step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
+										<div class="step done"><span>活動進行中</span></div>
+										<div class="step current-step"><span>獎勵確認中</span></div>
+										<div class="step"><span>申領獎勵</span></div>
+										<div class="step last"><span>活動完成</span></div>
 									</c:when>
 									<c:when test="${ state eq 'SubsidyRetrieved' }">
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step done"><span>奖励确认中</span></div>
-										<div class="step done"><span>申领奖励</span></div>
-										<div class="step current-step last"><span>活动完成</span></div>
+										<div class="step done"><span>活動進行中</span></div>
+										<div class="step done"><span>獎勵確認中</span></div>
+										<div class="step done"><span>申領獎勵</span></div>
+										<div class="step current-step last"><span>活動完成</span></div>
 									</c:when>
 									<c:otherwise>
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step done"><span>奖励确认中</span></div>
-										<div class="step current-step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
+										<div class="step done"><span>活動進行中</span></div>
+										<div class="step done"><span>獎勵確認中</span></div>
+										<div class="step current-step"><span>申領獎勵</span></div>
+										<div class="step last"><span>活動完成</span></div>
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -95,7 +95,7 @@
 						<c:if test="${ state eq 'Started' }">
 							<div class="steps-wrapper">
 								<div class="steps clr">
-									<div class="step current-step"><span>活动进行中</span></div>
+									<div class="step current-step"><span>活動進行中</span></div>
 								</div>
 							</div>  <!-- steps end -->
 						</c:if>
@@ -106,29 +106,27 @@
 					<div class="active-status-box success">
 						<c:choose>
 							<c:when test="${state eq 'Started' }">
-								<h3>活动正在进行中！</h3>
+								<h3>活動正在進行中！</h3>
 								<menu>
 									<li>
-										<a href="../index" class="btn">返回活动列表</a>
+										<a href="../index" class="btn">返回活動清單</a>
 									</li>
 								</menu>
 							</c:when>
 							<c:when test="${state eq 'SubsidyCounting' }">
-								<h3>恭喜您已完成活动！</h3>
-								<p class="desc">
-									奖励结果统计中，请耐心等待！
-								</p>
+								<h3>恭喜您已完成活動！</h3>
+								<p class="desc">獎勵結果統計中，請耐心等待！</p>
 								<menu>
 									<li>
-										<a href="../index" class="btn">返回活动列表</a>
+										<a href="../index" class="btn">返回活動清單</a>
 									</li>
 								</menu>
 							</c:when>
 							<c:when test="${state eq 'SubsidyRetrieved' }">
-								<h3>您已成功领取等值888元的ebay万里通积分</h3>
+								<h3>您已成功領取等值888元的ebay萬裏通積分</h3>
 								<menu>
 									<li>
-										<a href="../index" class="btn">返回活动列表</a>
+										<a href="../index" class="btn">返回活動清單</a>
 									</li>
 								</menu>
 							</c:when>
@@ -141,10 +139,10 @@
 									<li>
 										<c:choose>
 											<c:when test="${ state eq 'Rewarding' }">
-												<a href="../index" class="btn">填写奖励申请协议</a>
+												<a href="../index" class="btn">填寫獎勵申請協定</a>
 											</c:when>
 											<c:otherwise>
-												<a href="../index" class="btn">上传奖励申请协议</a>
+												<a href="../index" class="btn">上傳獎勵申請協定</a>
 											</c:otherwise>
 										</c:choose>
 									</li>
@@ -158,7 +156,7 @@
 				
 				<c:if test="${ not rewarding }">
 					<div class="mt20" style="text-align: center;">
-						<a href="../index" class="btn">返回活动列表</a>
+						<a href="../index" class="btn">返回活動清單</a>
 					</div>
 				</c:if>
 			</div>

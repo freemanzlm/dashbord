@@ -13,8 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals预置 </title>
-	<meta name="description" content="Deals预置 ">
+	<title>爆款促销</title>
+	<meta name="description" content="爆款促销 ">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -36,6 +36,13 @@
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
+	<res:useJs value="${res.js.local.js['locale_zh_CN.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
+	
 </head>
 
 <body>
@@ -52,12 +59,12 @@
 					<div class="steps clr">
 						<c:choose>
 							<c:when test="${ state == 'VerifyFailed' }">
-								<div class="step done"><span>可报名</span></div>
-								<div class="step done"><span>已提交报名</span></div>
-								<div class="step current-step last"><span>审核失败</span></div>
+								<div class="step done"><span>可報名</span></div>
+								<div class="step done"><span>已提交報名</span></div>
+								<div class="step current-step last"><span>稽核失敗</span></div>
 							</c:when>
 							<c:otherwise>
-								<div class="step current-step last"><span>活动已结束</span></div>
+								<div class="step current-step last"><span>活動已結束</span></div>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -66,20 +73,20 @@
 				<div class="active-status-box ${ state == 'VerifyFailed' ? 'fail' : 'success' }">
 					<c:choose>
 						<c:when test="${ state == 'VerifyFailed' }">
-							<h3>很遗憾，您的报名未通过审核</h3>
-							<p class="desc">感谢您的参与！</p>
+							<h3>很遺憾，您的報名未通過審核</h3>
+							<p class="desc">感謝您的參與！</p>
 						</c:when>
 						<c:otherwise>
-							<h3>活动已结束，感谢您的参与！</h3>
+							<h3>活動已結束，感謝您的參與！</h3>
 						</c:otherwise>
 					</c:choose>
 					
 					<menu>
 						<li>
-							<a href="../index" class="btn">返回活动列表</a>
+							<a href="../index" class="btn">返回活動清單</a>
 						</li>
 					</menu>					
-				</div> <!-- active status box end -->	
+				</div> <!-- active status box end -->
 				
 				<%@ include file="activity.jsp" %>
 			</div>
@@ -91,8 +98,16 @@
 	<!-- End: Global Footer -->
 </div>
 
+<%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
+
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />
+<script type="text/javascript">
+	$(".terms-conditions").click(function(event){
+		BizReport.termsDialog.show();
+	});
+</script>
 </body>
 </html>

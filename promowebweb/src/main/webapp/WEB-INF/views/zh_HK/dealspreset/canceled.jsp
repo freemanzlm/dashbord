@@ -13,9 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals预置 </title>
-	<meta name="description" content="Deals预置 ">
-	<meta name="author" content="eBay: Apps">
+	<title>Deals預置</title>
+	<meta name="description" content="Deals預置 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	
@@ -35,7 +34,7 @@
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
-	
+
 </head>
 
 <body>
@@ -47,39 +46,22 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>爆款促销 活动名称</h2>
+				<h2>Deals 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<c:choose>
-							<c:when test="${ state == 'VerifyFailed' }">
-								<div class="step done"><span>可报名</span></div>
-								<div class="step done"><span>已提交报名</span></div>
-								<div class="step current-step last"><span>审核失败</span></div>
-							</c:when>
-							<c:otherwise>
-								<div class="step current-step last"><span>活动已结束</span></div>
-							</c:otherwise>
-						</c:choose>
+						<div class="step current-step last"><span>活動已取消</span></div>
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box ${ state == 'VerifyFailed' ? 'fail' : 'success' }">
-					<c:choose>
-						<c:when test="${ state == 'VerifyFailed' }">
-							<h3>很遗憾，您的报名未通过审核</h3>
-							<p class="desc">感谢您的参与！</p>
-						</c:when>
-						<c:otherwise>
-							<h3>活动已结束，感谢您的参与！</h3>
-						</c:otherwise>
-					</c:choose>
-					
+				<div class="active-status-box">
+					<h3>活動已取消</h3>
+					<p class="desc">如有疑問請聯系您的客戶經理或客服，感謝您的參與！</p>
 					<menu>
 						<li>
-							<a href="../index" class="btn">返回活动列表</a>
+							<a href="../index" class="btn">返回活動清單</a>
 						</li>
 					</menu>					
-				</div> <!-- active status box end -->	
+				</div> <!-- active status box end -->
 				
 				<%@ include file="activity.jsp" %>
 			</div>

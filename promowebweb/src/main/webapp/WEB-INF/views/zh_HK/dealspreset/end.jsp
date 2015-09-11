@@ -13,8 +13,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals预置 </title>
-	<meta name="description" content="Deals预置 ">
+	<title>Deals預置 </title>
+	<meta name="description" content="Deals預置 ">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -47,17 +47,17 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>爆款促销 活动名称</h2>
+				<h2>Deals預置 活动名称</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<c:choose>
 							<c:when test="${ state == 'VerifyFailed' }">
-								<div class="step done"><span>可报名</span></div>
-								<div class="step done"><span>已提交报名</span></div>
-								<div class="step current-step last"><span>审核失败</span></div>
+								<div class="step done"><span>可報名</span></div>
+								<div class="step done"><span>已提交報名</span></div>
+								<div class="step current-step last"><span>稽核失敗</span></div>
 							</c:when>
 							<c:otherwise>
-								<div class="step current-step last"><span>活动已结束</span></div>
+								<div class="step current-step last"><span>活動已結束</span></div>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -66,17 +66,17 @@
 				<div class="active-status-box ${ state == 'VerifyFailed' ? 'fail' : 'success' }">
 					<c:choose>
 						<c:when test="${ state == 'VerifyFailed' }">
-							<h3>很遗憾，您的报名未通过审核</h3>
-							<p class="desc">感谢您的参与！</p>
+							<h3>很遺憾，您的報名未通過審核</h3>
+							<p class="desc">感謝您的參與！</p>
 						</c:when>
 						<c:otherwise>
-							<h3>活动已结束，感谢您的参与！</h3>
+							<h3>活動已結束，感謝您的參與！</h3>
 						</c:otherwise>
 					</c:choose>
 					
 					<menu>
 						<li>
-							<a href="../index" class="btn">返回活动列表</a>
+							<a href="../index" class="btn">返回活動清單</a>
 						</li>
 					</menu>					
 				</div> <!-- active status box end -->	

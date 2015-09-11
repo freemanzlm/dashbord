@@ -3,7 +3,7 @@
 <div id="listing-preview-dialog" class="dialog">
 	<a class="close"></a>
 	<div class="dialog-header">
-		<h2>已選擇的刊登預覽</h2>
+		<h2>已选择的刊登预览</h2>
 	</div>
 	<div class="dialog-pane">
 		<div class="dialog-body">
@@ -13,12 +13,13 @@
 						<thead>
 							<tr>
 								<th class="itemId"><input type="checkbox" class="check-all" /></th>
-								<th class="item-id">刊登編號</th>
-								<th class="name">SKU名稱</th>
-								<th class="price">當前刊登單價</th>
-								<th class="activity-price">活動單價</th>
-								<th class="inventory">刊登庫存量</th>
+								<th class="name">刊登</th>
+								<th class="target-price">目標單價</th>
+								<th class="target-volume">目標銷量</th>
+								<th class="target-sales">目標銷售額</th>
+								<th class="compensate">最大補償幅度</th>
 								<th class="state">狀態</th>
+								<th class="currency"></th>
 							</tr>
 						</thead>
 						<tbody>

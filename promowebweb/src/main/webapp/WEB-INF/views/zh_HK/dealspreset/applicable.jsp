@@ -68,7 +68,7 @@
 						<c:if test="${ rewarding }">
 							<div class="step"><span>獎勵確認中</span></div>
 							<div class="step"><span>申領獎勵</span></div>
-							<div class="step last"><span>活動名稱</span></div>
+							<div class="step last"><span>活動完成</span></div>
 						</c:if>
 					</div>
 				</div>  <!-- steps end -->
