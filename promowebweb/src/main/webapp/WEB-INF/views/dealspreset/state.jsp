@@ -57,7 +57,6 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<c:set var="state" value="ongoing"></c:set>
 				
 				<h2>爆款促销 ${promo.name}</h2>
 				<div class="steps-wrapper">
