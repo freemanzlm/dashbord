@@ -113,8 +113,6 @@ public class PromotionViewService {
 					view = ViewResource.DU_APPLICABLE;
 					context.put("termsAccpted", true);
 					break;
-//					view = ViewResource.DU_LISTING_PREVIEW;
-//					break;
 				case APPLIED:
 					view = ViewResource.DU_APPLIED;
 				case SUBMITTED:

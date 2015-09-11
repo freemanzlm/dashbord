@@ -1,7 +1,6 @@
 package com.ebay.raptor.promotion.list.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,8 +27,6 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.ExcelReader;
-import com.ebay.app.raptor.promocommon.export.ColumnFormat;
-import com.ebay.app.raptor.promocommon.export.HeaderConfiguration;
 import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
@@ -39,10 +36,10 @@ import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
+import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -85,10 +82,11 @@ public class DealsListingController extends AbstractListingController{
 	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadDealsListings)
-	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
+	public @ResponseBody ResponseData <String> uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile dealsListings, @RequestParam String promoId) throws MissingArgumentException{
 		ModelAndView mav = new ModelAndView();
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
+		ResponseData <String> responseData = new ResponseData <String>();
 
 		XSSFWorkbook workbook = null;
 		try {
@@ -98,28 +96,18 @@ public class DealsListingController extends AbstractListingController{
 							promoId, userData.getUserId()));
 
 			mav.addObject("formUrl", "submit"); // TODO - use constants and get the status
-			mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
-			mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
+			responseData.setResult(true);
 		} catch (IOException | PromoException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
 			logger.error("Upload listings got error.", e);
-			mav.setViewName(ViewResource.ERROR.getPath());
+			responseData.setResult(false);
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
 			logger.error("The uploaded listings are invalid.", e);
-
-			try {
-				addPromotionContext(mav, promoId, ViewResource.DU_APPLICABLE.getPath());
-				ErrorType errorType = e.getErrorType();
-				mav.addObject(ViewContext.ErrorMsg.getAttr(),
-									messageSource.getMessage("err-"+errorType.getCode(),
-									e.getArgs(), Locale.SIMPLIFIED_CHINESE)); // TODO - use constants
-				mav.setViewName(ViewResource.DU_APPLICABLE.getPath());
-
-			} catch (PromoException ex) {
-				logger.error("Unable to get promotion data.", e);
-				mav.setViewName(ViewResource.ERROR.getPath());
-			}
+			ErrorType errorType = e.getErrorType();
+			responseData.setResult(false);
+			responseData.setMessage(messageSource.getMessage("err-"+ errorType.getCode(),
+									e.getArgs(), Locale.SIMPLIFIED_CHINESE));
 		} finally {
 			if (workbook != null) {
 				try {
@@ -127,6 +115,15 @@ public class DealsListingController extends AbstractListingController{
 				} catch (IOException e) {}
 			}
 		}
+		return responseData;
+	}
+	
+	@GET
+	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
+	public ModelAndView reviewUploadedListings(@RequestParam String promoId) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
+		mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
 		return mav;
 	}
 	

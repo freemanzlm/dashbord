@@ -16,10 +16,8 @@
 				<li>不报名的SKU请留空填写内容，不填写任何待天蝎信息，模板自带信息请勿修改。</li>
 			</ul>
 		</div>
-		
-		<c:if test="${ not empty errorMsg }">
-			<p class="error-msg"><span class="icon error"></span>${ errorMsg }</p>
-		</c:if>
+
+		<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><em ></em></p>
 		
 		<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
 			选择上传您的刊登列表 

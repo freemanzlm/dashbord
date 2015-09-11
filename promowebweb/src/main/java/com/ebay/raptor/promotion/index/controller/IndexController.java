@@ -100,6 +100,19 @@ public class IndexController {
         }
         return mav;
     }
+	
+	@RequestMapping(value = "/error", method = RequestMethod.GET)
+    public ModelAndView handleErrorRequest(HttpServletRequest request,
+            HttpServletResponse response,
+            @ModelAttribute RequestParameter param) throws MissingArgumentException {
+        ModelAndView mav = new ModelAndView();
+        if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(param.getLang())) {
+        	mav.setViewName("zh_HK/error");
+        } else {
+        	mav.setViewName("error");
+        }
+        return mav;
+    }
     
 	@ExceptionHandler(MissingArgumentException.class)
     public ModelAndView handleException(MissingArgumentException exception,
