@@ -52,7 +52,7 @@ $(function(){
 					var responseData = $.parseJSON(response);
 					// verification returns no error 
 					if (responseData.result) {
-						window.location.replace("reviewUploadedListings?promoId="+pageData.promoId);
+						window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId);
 					}
 					// handle error
 					else {
