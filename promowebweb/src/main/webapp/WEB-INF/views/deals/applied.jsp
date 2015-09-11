@@ -102,7 +102,7 @@
 								<form id="upload-form" action="upload" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
 									选择上传您的刊登列表 
 									<input type="hidden" name="promoId" value="4324324"/>
-									<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.ms-excel" /> <button type="button" class="btn" style="margin-left: 3px;">选择</button></span>
+									<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button type="button" class="btn" style="margin-left: 3px;">选择</button></span>
 								</form>
 								<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
 							</div>
