@@ -56,7 +56,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>其它活动 活动名称</h2>
+				<h2>其它活动 ${promo.name}</h2>
 				
 				<c:choose>
 					<c:when test="${ rewarding }">

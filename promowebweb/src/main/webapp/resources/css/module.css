@@ -4,6 +4,7 @@
 
 .error-msg .icon {
 	margin-right: 10px;
+	margin-top: -5px;
 }
 
 /* breadcrumb begin */
@@ -234,4 +235,12 @@
 
 .listings-upload .error-msg {
 	margin-top: 20px;
+}
+
+.hide {
+	display: none;
+}
+
+.unhide {
+	display: inline-block;
 }

@@ -46,11 +46,29 @@ $(function(){
 	$(uploadBtn).click(function(){
 		if (!this.hasAttribute("disabled")) {
 			uploadIFrame.on("load", function(){
-				if (uploadIFrame.contents().length == 0 || uploadIFrame.contents().find("body").html().indexOf("error") > 0) {
-					alertDialog.alert(uploadIFrame.contents().find("body").html());
+				// check the response
+				if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").find("pre").length > 0) {
+					var response = uploadIFrame.contents().find("body").find("pre").text();
+					var responseData = $.parseJSON(response);
+					// verification returns no error 
+					if (responseData.result) {
+						window.location.replace("reviewUploadedListings?promoId="+pageData.promoId);
+					}
+					// handle error
+					else {
+						// show error infor
+						if (responseData.message.length > 0) {
+							$("#upload-error-msg").removeClass("hide");
+							$("#upload-error-msg").find("em").text(responseData.message);
+						}
+						// redirect to error page
+						else {
+							window.location.replace("error");
+						}
+					}
 				} else {
-					// refresh current page.
-					location.reload();
+					// redirect to error page
+					window.location.replace("error");
 				}
 			});
 			

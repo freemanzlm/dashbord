@@ -2,7 +2,7 @@ package com.ebay.raptor.promotion.list.req;
 
 public class ListingWebParam {
 	
-	public static Long UID = 689917510l;
+//	public static Long UID = 689917510l;
 	
 //	public static String SFID = "701O0000000QyWPIA0";
 
@@ -19,7 +19,7 @@ public class ListingWebParam {
 	}
 
 	public Long getUid() {
-		return UID;
+		return uid;
 	}
 
 	public void setUid(Long uid) {
