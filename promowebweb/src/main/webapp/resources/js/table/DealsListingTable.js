@@ -232,7 +232,12 @@ var BizReport = BizReport || {};
 					that.selectedItems = aRows.filter(function(oRow){
 						return oRow.state == 1;
 					});
+					
+					if (that.selectedItems.length == aRows.length) {
+						that.checkAllBox.prop("checked", true);
+					}
 					that.publish("initialized");
+					that.publish("selectChange");
 				}, 
 				ajaxbegin: function() {
 					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
