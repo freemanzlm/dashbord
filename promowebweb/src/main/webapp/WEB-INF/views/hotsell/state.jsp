@@ -146,11 +146,17 @@
 							<menu>
 								<li>
 									<c:choose>
-										<c:when test="${ state eq 'Rewarding' }">
-											<a href="../index" class="btn">填写奖励申请协议</a>
+										<c:when test="${ state eq 'SubsidySubmitted' }">
+											<a href="#" class="btn">上传奖励申请协议</a>
+										</c:when>
+										<c:when test="${ state eq 'SubsidyRetrievable' }">
+											<a href="#" class="btn">申领奖励</a>
+										</c:when>
+										<c:when test="${ state eq 'SubsidyResubmittable' }">
+											<a href="#" class="btn">重新申领奖励</a>
 										</c:when>
 										<c:otherwise>
-											<a href="../index" class="btn">上传奖励申请协议</a>
+											<a href="#" class="btn">填写奖励申请协议</a>
 										</c:otherwise>
 									</c:choose>
 								</li>
