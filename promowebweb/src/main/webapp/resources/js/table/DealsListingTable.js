@@ -177,21 +177,20 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							switch(data) {
-							case 1:
 							case 'Pretrial':
 								return locale.getText('listing.state.Pretrial');
-							case 2:
 							case 'PretrialPass':
 								return locale.getText('listing.state.PretrialPass');
-							case 3:
 							case 'PretrialFail':
 								return locale.getText('listing.state.PretrialFail');
-							case 5:
 							case 'Applied':
-								return locale.getText('listing.state.ApplyConfirmed');
-							case 6:
+								return locale.getText('listing.state.Confirmed');
 							case 'NonApplied':
-								return locale.getText('listing.state.NotSubmitted');
+								return locale.getText('listing.state.Nonsubmitted');
+							case 'Confirmed':
+								return locale.getText('listing.state.Confirmed');
+							case 'Nonsubmitted':
+								return locale.getText('listing.state.Nonsubmitted');
 							}
 							return locale.getText('listing.state.' + states[data]);
 						}

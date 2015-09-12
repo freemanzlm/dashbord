@@ -100,7 +100,7 @@ BizReport.locale = {
 			'PretrialPass': '通过预审',
 			'PretrialFail': '未通过',
 			'Confirmed': '已确认报名',
-			'NotSubmitted': '未提交'
+			'Nonsubmitted': '未提交'
 		}
 	}
 };
