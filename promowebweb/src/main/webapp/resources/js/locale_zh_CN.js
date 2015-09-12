@@ -82,8 +82,8 @@ BizReport.locale = {
 			'Claimed': '我已领取奖励'
 		},
 		'hotsell': {
-			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，您确认吗？',
-			'applyCondition': '申请参与活动前，请至少选择一条刊登。'
+			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，确认吗？',
+			'applyCondition': '申请参与活动需要选择至少一条刊登报名。'
 		},
 		'deals': {
 			'upload': '提交刊登报名前请先阅读法律协议，并<strong>全部读完</strong>，然后点击确认接受该法律协议后方可提交报名。',

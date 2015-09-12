@@ -122,6 +122,7 @@ public class DealsListingController extends AbstractListingController{
 	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
 	public ModelAndView reviewUploadedListings(@RequestParam String promoId) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("formUrl", "/promotion/promotion/"+promoId);
 		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
 		mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
 		return mav;
@@ -159,7 +160,7 @@ public class DealsListingController extends AbstractListingController{
 	}
 
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.getPromotionListings)
+	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
 	@ResponseBody
 	public ListDataWebResponse<DealsListing> getPromotionListings(HttpServletRequest req,
 			@ModelAttribute ListingWebParam param)  {

@@ -1,12 +1,15 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
 <c:set var="state" value="${ promo.state }" />
+<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" />
+<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" />
+<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" />
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardType" value="加油卡" />
@@ -126,7 +129,7 @@
 						<c:when test="${state eq 'Started' }">
 							<h3>恭喜您的報名已完成稽核！</h3>
 							<p class="desc">
-								活動時間為YYYY-MM-DD到YYYY-MM-DD，<br />我們將在活動結束後儘快公佈統計結果，請耐心等待！
+								活動時間為${ promoStart }到${ promoEnd }，<br />我們將在活動結束後儘快公佈統計結果，請耐心等待！
 							</p>
 							<menu>
 								<li>
@@ -155,7 +158,7 @@
 						<c:otherwise>
 							<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
 							<p class="desc">
-								请在2015年8月8日前点击进入领奖流程完成申领。
+								請在${ rewardDeadline }前點擊進入領獎流程完成申領。
 							</p>
 							<menu>
 								<li>
