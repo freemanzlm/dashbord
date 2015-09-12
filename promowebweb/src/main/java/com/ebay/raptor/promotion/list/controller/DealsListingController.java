@@ -137,7 +137,7 @@ public class DealsListingController extends AbstractListingController{
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
 				if(result){
-					Promotion promotion = this.promoService.getPromotionById(listings.getPromoId());
+					Promotion promotion = this.promoService.getPromotionById(listings.getPromoId(), userData.getUserId());
 					model.addObject(ViewContext.Promotion.getAttr(), promotion);
 					switch(PMPromotionType.valueOfPMType(promotion.getType())){
 						case DEALS_DASHBOARD_UPLOAD:

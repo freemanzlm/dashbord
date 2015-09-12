@@ -9,7 +9,6 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,7 +20,6 @@ import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ContextViewRes;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
@@ -55,10 +53,9 @@ public class PromotionDataController{
 	public ModelAndView promotion(HttpServletRequest request,
 			@PathVariable("promoId") String promoId) throws MissingArgumentException {
 		ModelAndView model = new ModelAndView();
-//		UserData userData = CookieUtil.getUserDataFromCookie(request);
-
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
 		try {
-			Promotion promo = service.getPromotionById(promoId);
+			Promotion promo = service.getPromotionById(promoId, userData.getUserId());
 
 			if(null != promo){
 				ContextViewRes res = handleViewBasedOnPromotion(promo);
@@ -156,17 +153,17 @@ public class PromotionDataController{
 //		return resp;
 //	}
 	
-	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._getPromotionById)
-	@ResponseBody
-	public DataWebResponse<Promotion> getPromotionById(@RequestParam("promoId")String promoId, @RequestParam("uid") Long uid) {
-		DataWebResponse<Promotion> resp = new DataWebResponse<Promotion>();
-		try {
-			resp.setData(service.getPromotionById(promoId));
-		} catch (PromoException e) {
-			logger.error("Unable to get promotion of user " + uid + " and promotionID " + promoId, e);
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
-	}
+//	@GET
+//	@RequestMapping(ResourceProvider.PromotionRes._getPromotionById)
+//	@ResponseBody
+//	public DataWebResponse<Promotion> getPromotionById(@RequestParam("promoId")String promoId, @RequestParam("uid") Long uid) {
+//		DataWebResponse<Promotion> resp = new DataWebResponse<Promotion>();
+//		try {
+//			resp.setData(service.getPromotionById(promoId, uid));
+//		} catch (PromoException e) {
+//			logger.error("Unable to get promotion of user " + uid + " and promotionID " + promoId, e);
+//			resp.setStatus(Boolean.FALSE);
+//		}
+//		return resp;
+//	}
 }
