@@ -233,7 +233,7 @@ var BizReport = BizReport || {};
 						return oRow.state == 1;
 					});
 					
-					if (that.selectedItems.length == aRows.length) {
+					if (that.selectedItems.length == aRows.length && that.selectedItems.length > 0) {
 						that.checkAllBox.prop("checked", true);
 					}
 					that.publish("initialized");
@@ -255,7 +255,9 @@ var BizReport = BizReport || {};
 				},
 				error: function(data) {
 				    that.container.isLoading('hide');
-					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
+				    that.initDataTable();
+//				    that.dataTable.table.css("visibility", "visible");
+//					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);		
 			

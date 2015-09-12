@@ -116,7 +116,9 @@ var BizReport = BizReport || {};
 				},
 				error: function(data) {
 				    that.container.isLoading('hide');
-					alertDialog.alert(locale.getText('dataTable.requestFail'));
+				    that.initDataTable();
+				    that.dataTable.table.css("visibility", "visible");
+//					alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);
 		},

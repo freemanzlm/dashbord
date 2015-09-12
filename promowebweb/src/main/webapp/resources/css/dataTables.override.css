@@ -80,8 +80,8 @@ table.dataTable tbody tr.odd {
 }
 
 .dataTables_wrapper {
-	border-top: 2px solid #ccc;
-	border-bottom: 2px solid #ccc;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 	padding-bottom: 10px;
 }	
 
@@ -110,12 +110,12 @@ table.dataTable thead {
 table.dataTable thead th {
 	border-left: none;
 	border-right: none;
-	border-bottom: 2px solid #ccc;
+	border-bottom: 1px solid #ccc;
 	text-align: center;
 }
 
 .dataTables_wrapper.no-footer div.dataTables_scrollHeadInner {
-	border-bottom: 2px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
 
 div.dataTables_scrollHead thead th {

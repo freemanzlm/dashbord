@@ -227,7 +227,8 @@ var BizReport = BizReport || {};
 				},
 				error: function(data) {
 				    that.pane.isLoading('hide');
-					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
+				    that.initDataTable();
+//					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);			
 		},

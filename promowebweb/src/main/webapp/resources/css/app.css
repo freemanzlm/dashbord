@@ -73,6 +73,9 @@
 }
 
 /* table styles */
+.pane-table .dataTables_wrapper {
+	border-top: none;
+}
 
 table.dataTable td.item-title img {
 	margin-right: 10px;
