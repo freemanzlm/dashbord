@@ -18,9 +18,9 @@ public abstract class AbstractListingController {
 	
 	@Autowired 
 	ResourceBundleMessageSource messageSource;
-	
-	protected void addPromotionContext(ModelAndView model, String promoId, long uid, String successView) throws PromoException{
-		Promotion promotion = promoService.getPromotionById(promoId, uid);
+
+	protected void addPromotionContext(ModelAndView model, String promoId, Long userId, String successView) throws PromoException{
+		Promotion promotion = promoService.getPromotionById(promoId, userId);
 		model.addObject(ViewContext.Promotion.getAttr(), promotion);
 		if(null != successView){
 			model.setViewName(successView);

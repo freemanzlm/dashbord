@@ -110,11 +110,13 @@ public class PromotionViewService {
 			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
 					view = ViewResource.DU_APPLICABLE;
-					context.put("termsAccpted", true);
+					context.put("termsAccpted", true); // TODO -
 					break;
 				case APPLIED:
-					view = ViewResource.DU_APPLIED;
 				case SUBMITTED:
+					context.put("expired", false); // TODO - 
+					view = ViewResource.DU_APPLIED;
+					break;
 				case VERIFY_FAILED:
 				case VERIFYING:
 				case PROMOTION_APPROVED:

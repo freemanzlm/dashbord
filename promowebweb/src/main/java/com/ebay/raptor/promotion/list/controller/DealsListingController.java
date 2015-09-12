@@ -122,6 +122,7 @@ public class DealsListingController extends AbstractListingController{
 	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
 	public ModelAndView reviewUploadedListings(@RequestParam String promoId) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("formUrl", "/promotion/promotion/"+promoId);
 		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
 		mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
 		return mav;

@@ -75,7 +75,9 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 				throw ex;
 			}
 			
-			uploadedListings.add(listing);
+			if (ex == null) {
+				uploadedListings.add(listing);
+			}
 		}
 		
 		// TODO - persist listings
