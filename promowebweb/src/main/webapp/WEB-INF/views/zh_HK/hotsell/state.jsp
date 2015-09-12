@@ -6,6 +6,7 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
+<c:set var="state" value="${ promo.state }" />
 <c:set var="listingNum" value="2" />
 <r:includeJquery jsSlot="body" />
 <r:client />

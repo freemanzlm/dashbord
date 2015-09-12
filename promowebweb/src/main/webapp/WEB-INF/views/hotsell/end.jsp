@@ -5,6 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
+<c:set var="state" value="${ promo.state }" />
 
 <r:includeJquery jsSlot="body" />
 <r:client />

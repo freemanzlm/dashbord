@@ -6,6 +6,8 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
+<c:set var="state" value="${ promo.state }" />
+
 <r:includeJquery jsSlot="body" />
 <r:client />
 
@@ -62,6 +64,12 @@
 						<div class="steps-wrapper">
 							<div class="steps clr">
 								<c:choose>
+									<c:when test="${ state eq 'Created' or state eq 'Unknow' }">
+										<div class="step"><span>活动进行中</span></div>
+										<div class="step"><span>奖励确认中</span></div>
+										<div class="step"><span>申领奖励</span></div>
+										<div class="step last"><span>活动完成</span></div>
+									</c:when>
 									<c:when test="${ state eq 'Started' }">
 										<div class="step current-step"><span>活动进行中</span></div>
 										<div class="step"><span>奖励确认中</span></div>
@@ -102,17 +110,29 @@
 				</c:choose>
 				
 				<c:if test="${ rewarding }">
-					<div class="active-status-box success">
-						<c:choose>
-							<c:when test="${state eq 'Started' }">
+					<c:choose>
+						<c:when test="${state eq 'Created' or state eq 'Unknow' }">
+							<div class="active-status-box">
+								<h3>活动还没开始，请耐心等待活动开始！</h3>
+								<menu>
+									<li>
+										<a href="../index" class="btn">返回活动列表</a>
+									</li>
+								</menu>
+							</div>
+						</c:when>
+						<c:when test="${state eq 'Started' }">
+							<div class="active-status-box success">
 								<h3>活动正在进行中！</h3>
 								<menu>
 									<li>
 										<a href="../index" class="btn">返回活动列表</a>
 									</li>
 								</menu>
-							</c:when>
-							<c:when test="${state eq 'SubsidyCounting' }">
+							</div>
+						</c:when>
+						<c:when test="${state eq 'SubsidyCounting' }">
+							<div class="active-status-box success">
 								<h3>恭喜您已完成活动！</h3>
 								<p class="desc">
 									奖励结果统计中，请耐心等待！
@@ -122,16 +142,20 @@
 										<a href="../index" class="btn">返回活动列表</a>
 									</li>
 								</menu>
-							</c:when>
-							<c:when test="${state eq 'SubsidyRetrieved' }">
+							</div>
+						</c:when>
+						<c:when test="${state eq 'SubsidyRetrieved' }">
+							<div class="active-status-box success">
 								<h3>您已成功领取等值888元的ebay万里通积分</h3>
 								<menu>
 									<li>
 										<a href="../index" class="btn">返回活动列表</a>
 									</li>
 								</menu>
-							</c:when>
-							<c:otherwise>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="active-status-box success">
 								<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
 								<p class="desc">
 									请在2015年8月8日前点击进入领奖流程完成申领。
@@ -154,9 +178,9 @@
 										</c:choose>
 									</li>
 								</menu>
-							</c:otherwise>
-						</c:choose>
-					</div>			
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 
 				<%@ include file="activity.jsp" %>
