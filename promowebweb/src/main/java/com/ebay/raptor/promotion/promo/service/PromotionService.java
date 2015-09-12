@@ -80,8 +80,8 @@ public class PromotionService extends BaseService {
 //		return null;
 //	}
 	
-	public Promotion getPromotionById(String promoId) throws PromoException{
-		String uri = url(params(ResourceProvider.PromotionRes.getPromotionById, new Object[]{"{promoId}", promoId}));
+	public Promotion getPromotionById(String promoId, long uid) throws PromoException{
+		String uri = url(params(ResourceProvider.PromotionRes.getPromotionById, new Object[]{"{promoId}", promoId, "{uid}", uid}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			PromotionResponse promo = resp.getEntity(PromotionResponse.class);

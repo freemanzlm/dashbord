@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.businesstype.PMPromotionStatus;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;

@@ -55,7 +55,7 @@ public class HotSellListingController extends AbstractListingController{
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), userData.getUserId())){
 					model.setViewName(ViewResource.HV_APPLIED.getPath());
-					Promotion promo = promoService.getPromotionById(listings.getPromoId());
+					Promotion promo = promoService.getPromotionById(listings.getPromoId(), userData.getUserId());
 					model.addObject(ViewContext.Promotion.getAttr(), promo);
 				} else {
 					model.setViewName(ViewResource.ERROR.getPath());
