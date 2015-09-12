@@ -206,7 +206,7 @@
 
 <script type="text/javascript">
 	var pageData = {
-		promoId: '${ promoId }'
+		promoId: '${ promo.promoId }'
 	};
 </script>
 
