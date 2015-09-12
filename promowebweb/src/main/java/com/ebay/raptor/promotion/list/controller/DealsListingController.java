@@ -159,7 +159,7 @@ public class DealsListingController extends AbstractListingController{
 	}
 
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.getPromotionListings)
+	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
 	@ResponseBody
 	public ListDataWebResponse<DealsListing> getPromotionListings(HttpServletRequest req,
 			@ModelAttribute ListingWebParam param)  {
