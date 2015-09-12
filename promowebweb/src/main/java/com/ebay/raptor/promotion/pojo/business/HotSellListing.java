@@ -18,7 +18,7 @@ public class HotSellListing {
 
 	private Float comp;
 
-	private Integer state;
+	private String state;
 
 	public Long getItemId() {
 		return itemId;
@@ -76,11 +76,11 @@ public class HotSellListing {
 		this.comp = comp;
 	}
 
-	public Integer getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 

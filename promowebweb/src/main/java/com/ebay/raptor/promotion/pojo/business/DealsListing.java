@@ -27,7 +27,7 @@ public class DealsListing {
 	@Header(name = "刊登活动单价（USD）", order=5, format=ColumnFormat.FltNum)
 	private Float actPrice;
 
-	private Integer state;
+	private String state;
 
 	public Long getItemId() {
 		return itemId;
@@ -85,11 +85,11 @@ public class DealsListing {
 		this.actPrice = actPrice;
 	}
 
-	public Integer getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
