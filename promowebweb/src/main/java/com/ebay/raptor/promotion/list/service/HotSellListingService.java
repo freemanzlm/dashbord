@@ -26,6 +26,25 @@ public class HotSellListingService extends BaseService {
 		return secureUrl(ResourceProvider.ListingRes.hotsellBase) + url;
 	}
 	
+	public List<HotSellListing> getPromotionListing(String promoId, Long uid) throws PromoException{
+		String uri = url(params(ResourceProvider.ListingRes.getPromotionListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<ListDataServiceResponse<HotSellListing>> type = new GenericType<ListDataServiceResponse<HotSellListing>>(){};
+			ListDataServiceResponse<HotSellListing> listing = resp.getEntity(type);
+			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
+				return listing.getData();
+			} else {
+				if(null != listing){
+					throw new PromoException(listing.getErrorMessage().getError().toString());
+				}
+			}
+		} else {
+			throw new PromoException("Internal Error Happens.");
+		}
+		return null;
+	}
+	
 	public List<HotSellListing> getApplicableListings(String promoId, Long uid) throws PromoException{
 		String uri = url(params(ResourceProvider.ListingRes.getApplicableListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
 		GingerClientResponse resp = httpGet(uri);

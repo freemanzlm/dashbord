@@ -35,6 +35,8 @@ public class ResourceProvider {
 		String dealsBase = "deals";
 		String hotsellBase = "hotsell";
 		
+		String _getPromotionListings = "/getPromotionListings";
+		String getPromotionListings = "/getPromotionListings/promoId/{promoId}/uid/{uid}";
 		String _getApplicableListings = "/getApplicableListings";
 		String getApplicableListings = "/getApplicableListings/promoId/{promoId}/uid/{uid}";
 		String _getAppliedListings = "/getAppliedListings";

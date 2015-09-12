@@ -68,6 +68,20 @@ public class HotSellListingController extends AbstractListingController{
 	}
 
 	@GET
+	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
+	@ResponseBody
+	public ListDataWebResponse<HotSellListing> getPromotionListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
+		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
+		try {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			resp.setData(service.getPromotionListing(param.getPromoId(), userData.getUserId()));
+		} catch (PromoException | MissingArgumentException e) {
+			resp.setStatus(Boolean.FALSE);
+		}
+		return resp;
+	}
+	
+	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getApplicableListings)
 	@ResponseBody
 	public ListDataWebResponse<HotSellListing> getApplicableListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {

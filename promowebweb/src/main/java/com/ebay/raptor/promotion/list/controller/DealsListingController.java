@@ -159,6 +159,27 @@ public class DealsListingController extends AbstractListingController{
 	}
 
 	@GET
+	@RequestMapping(ResourceProvider.ListingRes.getPromotionListings)
+	@ResponseBody
+	public ListDataWebResponse<DealsListing> getPromotionListings(HttpServletRequest req,
+			@ModelAttribute ListingWebParam param)  {
+		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
+		try {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			List<DealsListing> listings = service.getPromotionListings(param.getPromoId(), userData.getUserId());
+			if (listings != null && listings.size() > 0) {
+				resp.setData(listings);
+			} else {
+				logger.error("No applicable listings found.");
+			}
+		} catch (PromoException | MissingArgumentException e) {
+			logger.error("Unable to get applicable listings, with error", e);
+			resp.setStatus(Boolean.FALSE);
+		}
+		return resp;
+	}
+	
+	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getApplicableListings)
 	@ResponseBody
 	public ListDataWebResponse<DealsListing> getApplicableListings(HttpServletRequest req,
