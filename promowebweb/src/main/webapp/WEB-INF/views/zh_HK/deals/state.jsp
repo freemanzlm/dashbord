@@ -7,6 +7,23 @@
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
 <c:set var="state" value="${ promo.state }" />
+<c:choose>
+	<c:when test="${ promo.rewardType eq 1 }">
+		<c:set var="rewardType" value="加油卡" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 2 }">
+		<c:set var="rewardType" value="京東卡" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 3 }">
+		<c:set var="rewardType" value="萬邑通" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 4 }">
+		<c:set var="rewardType" value="ebay萬裏通積分" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 5 }">
+		<c:set var="rewardType" value="郵票" />
+	</c:when>
+</c:choose>
 
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -127,17 +144,17 @@
 							</menu>
 						</c:when>
 						<c:when test="${state eq 'SubsidyRetrieved' }">
-							<h3>您已成功領取等值888元的ebay萬裏通積分</h3>
+							<h3>您已成功领取等值${promo.reward }元的${rewardType }</h3>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活動清單</a>
+									<a href="../index" class="btn">返回活动列表</a>
 								</li>
 							</menu>
 						</c:when>
 						<c:otherwise>
-							<h3>您已成功領取等值888元的ebay萬裏通積分</h3>
+							<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
 							<p class="desc">
-								請在2015年8月8日前點擊進入領獎流程完成申領。
+								请在2015年8月8日前点击进入领奖流程完成申领。
 							</p>
 							<menu>
 								<li>

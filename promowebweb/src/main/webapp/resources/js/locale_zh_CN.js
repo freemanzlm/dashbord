@@ -95,10 +95,11 @@ BizReport.locale = {
 			'Applicable': '可报名',
 			'Applied': '已报名', // hot sell and deals preset
 			'Nonapplied': '未报名',
+			'AuditSuccess': '通过审核',
 			'Pretrial': '待审核', // deals
 			'PretrialPass': '通过预审',
-			'ApplyConfirmed': '已确认报名',
 			'PretrialFail': '未通过',
+			'Confirmed': '已确认报名',
 			'NotSubmitted': '未提交'
 		}
 	}

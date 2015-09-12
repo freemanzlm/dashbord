@@ -8,6 +8,24 @@
 <c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
 <c:set var="state" value="${ promo.state }" />
 
+<c:choose>
+	<c:when test="${ promo.rewardType eq 1 }">
+		<c:set var="rewardType" value="加油卡" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 2 }">
+		<c:set var="rewardType" value="京东卡" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 3 }">
+		<c:set var="rewardType" value="万邑通" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 4 }">
+		<c:set var="rewardType" value="ebay万里通积分" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 5 }">
+		<c:set var="rewardType" value="邮票" />
+	</c:when>
+</c:choose>
+
 <r:includeJquery jsSlot="body" />
 <r:client />
 
@@ -99,13 +117,22 @@
 						</div>  <!-- steps end -->
 					</c:when>
 					<c:otherwise>
-						<c:if test="${ state eq 'Started' }">
-							<div class="steps-wrapper">
-								<div class="steps clr">
-									<div class="step current-step"><span>活动进行中</span></div>
+						<c:choose>
+							<c:when test="${ state eq 'Created' or state eq 'Unknow' }">
+								<div class="steps-wrapper">
+									<div class="steps clr">
+										<div class="step last"><span>活动进行中</span></div>
+									</div>
 								</div>
-							</div>  <!-- steps end -->
-						</c:if>
+							</c:when>
+							<c:when test="${ state eq 'Starged' }">
+								<div class="steps-wrapper">
+									<div class="steps clr">
+										<div class="step current-step last"><span>活动进行中</span></div>
+									</div>
+								</div>
+							</c:when>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 				
@@ -146,7 +173,7 @@
 						</c:when>
 						<c:when test="${state eq 'SubsidyRetrieved' }">
 							<div class="active-status-box success">
-								<h3>您已成功领取等值888元的ebay万里通积分</h3>
+								<h3>您已成功领取等值${promo.reward }元的${rewardType }</h3>
 								<menu>
 									<li>
 										<a href="../index" class="btn">返回活动列表</a>
@@ -156,7 +183,7 @@
 						</c:when>
 						<c:otherwise>
 							<div class="active-status-box success">
-								<h3>恭喜，您的奖励为等值888元的ebay万里通积分</h3>
+								<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
 								<p class="desc">
 									请在2015年8月8日前点击进入领奖流程完成申领。
 								</p>
