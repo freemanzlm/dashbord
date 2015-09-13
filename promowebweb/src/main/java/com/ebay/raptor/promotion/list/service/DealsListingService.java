@@ -12,6 +12,7 @@ import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
+import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
@@ -121,7 +122,22 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public List<DealsListing> getSkuListingByPromotionId(String promoId, Long uid) throws PromoException{
+	public List<Sku> getSkusByPromotionId(String promoId, Long uid) throws PromoException{
+		String uri = url(params(ResourceProvider.ListingRes.getSKUsByPromotionId, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<ListDataServiceResponse<Sku>> type = new GenericType<ListDataServiceResponse<Sku>>(){};
+			ListDataServiceResponse<Sku> data = resp.getEntity(type);
+			if(null != data && AckValue.SUCCESS == data.getAckValue()){
+				return data.getData();
+			}
+		} else {
+			throw new PromoException("Failed to retrieve the SKU list with provided promo ID: " + promoId);
+		}
+		return null;
+	}
+	
+	public List<DealsListing> getSkuListingsByPromotionId(String promoId, Long uid) throws PromoException{
 		String uri = url(params(ResourceProvider.ListingRes.getSKUListingsByPromotionId, new Object[]{"{promoId}", promoId, "{uid}", uid}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){

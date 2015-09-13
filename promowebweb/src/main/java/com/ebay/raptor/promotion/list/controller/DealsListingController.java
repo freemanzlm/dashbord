@@ -40,6 +40,7 @@ import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
+import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -67,8 +68,7 @@ public class DealsListingController extends AbstractListingController{
         	resp.setHeader("Content-disposition", "attachment; filename=" + ResourceProvider.ListingRes.skuListFileName + ".xlsx");
         	UserData userData = CookieUtil.getUserDataFromCookie(req);
         	
-        	List<DealsListing> skuListings = service.getSkuListingByPromotionId(param.getPromoId(), userData.getUserId()); // TODO userData.getUserId());
-
+        	List<DealsListing> skuListings = service.getSkuListingsByPromotionId(param.getPromoId(), userData.getUserId());
 
         	XSSFWorkbook workBook = new XSSFWorkbook();
         	ExcelSheetWriter<DealsListing> writer = new ExcelSheetWriter<DealsListing>(DealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName);
@@ -84,7 +84,6 @@ public class DealsListingController extends AbstractListingController{
 	@RequestMapping(ResourceProvider.ListingRes.uploadDealsListings)
 	public @ResponseBody ResponseData <String> uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile dealsListings, @RequestParam String promoId) throws MissingArgumentException{
-		ModelAndView mav = new ModelAndView();
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 
@@ -94,8 +93,6 @@ public class DealsListingController extends AbstractListingController{
 			workbook = new XSSFWorkbook(dealsListings.getInputStream());
 			ExcelReader.readWorkbook(workbook, 0, new UploadListingSheetHandler(service,
 							promoId, userData.getUserId()));
-
-			mav.addObject("formUrl", "submit"); // TODO - use constants and get the status
 			responseData.setResult(true);
 		} catch (IOException | PromoException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
@@ -230,13 +227,13 @@ public class DealsListingController extends AbstractListingController{
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes._getSKUsByPromotionId)
+	@RequestMapping(ResourceProvider.ListingRes.getSKUsByPromotionId)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getSKUsByPromotionId(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
-		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
+	public ListDataWebResponse<Sku> getSKUsByPromotionId(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
+		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();
 		try {
 			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			resp.setData(service.getSkuListingByPromotionId(param.getPromoId(), userData.getUserId()));
+			resp.setData(service.getSkusByPromotionId(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
 		}

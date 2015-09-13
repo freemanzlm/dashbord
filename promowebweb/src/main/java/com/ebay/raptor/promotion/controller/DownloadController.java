@@ -50,7 +50,7 @@ public class DownloadController {
         	
         	UserData userData = CookieUtil.getUserDataFromCookie(request);
         	
-        	List<DealsListing> skuListings = dealsListingService.getSkuListingByPromotionId(param.getPromoId(), userData.getUserId());
+        	List<DealsListing> skuListings = dealsListingService.getSkuListingsByPromotionId(param.getPromoId(), userData.getUserId());
 
         	List<HeaderConfiguration> preCfgs = new ArrayList<HeaderConfiguration>();
         	preCfgs.add(new HeaderConfiguration(20, "itemId", resource("itemId") , ColumnFormat.String));

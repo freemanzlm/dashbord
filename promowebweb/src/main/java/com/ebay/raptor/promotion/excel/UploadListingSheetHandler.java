@@ -2,7 +2,6 @@ package com.ebay.raptor.promotion.excel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -10,12 +9,15 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.CommonLogger;
+import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.EmptyCellValueException;
 import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
 import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
+import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
+import com.ebay.raptor.promotion.pojo.business.Sku;
 
 public class UploadListingSheetHandler implements IExcelSheetHandler {
 	private static CommonLogger logger =
@@ -49,42 +51,117 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 	}
 	
 	private void readContent (XSSFSheet sheet) throws InvalidCellValueException, PromoException {
-		int rowNum = sheet.getPhysicalNumberOfRows();
-		
+		List<Sku> skus = dealsListingService.getSkusByPromotionId(promoId, userId);
 		List<DealsListing> uploadedListings = new ArrayList<DealsListing>();
+		int rowNum = sheet.getPhysicalNumberOfRows();
 		
 		for (int i = 1; i < rowNum; i++) {
 			Row row = sheet.getRow(i);
-			AtomicReference<EmptyCellValueException> emptyException = new AtomicReference<EmptyCellValueException>();
 
-			// TODO - optimize the parsing process
+			Cell skuCell = row.getCell(0);
+			Cell itemIdCell = row.getCell(1);
+			Cell itemNameCell = row.getCell(2);
+			Cell priceCell = row.getCell(3);
+			Cell actPriceCell = row.getCell(4);
+			Cell inventoryCell = row.getCell(5);
+	
+			Object skuNameObj = getCellValue(skuCell);
+			Object itemIdObj = getCellValue(itemIdCell);
+			Object itemNameObj = getCellValue(itemNameCell);
+			Object priceObj = getCellValue(priceCell);
+			Object actPriceObj = getCellValue(actPriceCell);
+			Object inventoryObj = getCellValue(inventoryCell);
+			
 			DealsListing listing = new DealsListing();
-			listing.setSkuId(UploadListingValidator.validateItemTitleAndSku(row.getCell(0), emptyException));
-			listing.setItemId(UploadListingValidator.validateItemId(row.getCell(1), emptyException));
-			listing.setItemName(UploadListingValidator.validateItemTitleAndSku(row.getCell(2), emptyException));
-			listing.setPrice(UploadListingValidator.validatePrice(row.getCell(3), emptyException));
-			listing.setActPrice(UploadListingValidator.validatePrice(row.getCell(4), emptyException));
-			listing.setInventory(UploadListingValidator.validateStockNumber(row.getCell(5), emptyException));
 			
-			EmptyCellValueException ex = emptyException.get();
-			// EmptyCellValueException has been thrown if there is empty cell ahead a data cell, but
-			// won't when an empty cell after data cells, at the same time it's valid that if all cells
-			// are empty, so just need to check if the empty cell's index won't be the second one (first
-			// column is always set). 
-			if (ex != null && ex.getColIndex() > 2) {
-				throw ex;
+			// check if the sku is in the list
+			String skuName = skuNameObj == null ? "" : skuNameObj.toString();
+			if (!skus.contains(skuName)) {
+				throw new InvalidCellValueException(ErrorType.InvalidSkuCellValue,
+						skuCell.getRowIndex() + 1, skuCell.getColumnIndex() + 1, skuName);
 			}
+			listing.setSkuName(skuName);
 			
-			if (ex == null) {
+			// check if the list is set
+			if (itemIdObj == null && itemNameObj == null && priceObj == null && actPriceObj == null && inventoryObj == null) {
+				continue;
+			} else {
+				listing.setItemId(validateNumberData(itemIdObj, itemIdCell).longValue());
+				listing.setItemName(validateStringData(itemNameObj, itemNameCell));
+				listing.setPrice(validateNumberData(priceObj, priceCell).floatValue());
+				listing.setActPrice(validateNumberData(actPriceObj, actPriceCell).floatValue());
+				listing.setInventory(validateNumberData(inventoryObj, inventoryCell).floatValue());
 				uploadedListings.add(listing);
 			}
 		}
 		
-		// TODO - persist listings
-		dealsListingService.uploadDealsListings(uploadedListings, promoId, userId);
+		if (uploadedListings.size() > 0) {
+			dealsListingService.uploadDealsListings(uploadedListings, promoId, userId);
+		}
+	}
+
+	private Object getCellValue (Cell cell) {
+		int cellType = cell.getCellType();
+
+		if (cellType == Cell.CELL_TYPE_BLANK) {
+			return null;
+		} else if (cellType == Cell.CELL_TYPE_STRING) {
+			String cellValue = cell.getStringCellValue();
+			return StringUtil.isEmpty(cellValue) ? null : cellValue;
+		} else if (cellType == Cell.CELL_TYPE_NUMERIC) {
+			return cell.getNumericCellValue();
+		} else {
+			return null;
+		}
 	}
 	
-	 private DealsListingService dealsListingService;
-	 private String promoId;
-	 private Long userId;
+	private String validateStringData (Object cellValue, Cell cell) throws InvalidCellValueException {
+		int rowIndex = cell.getRowIndex() + 1;
+		int colIndex = cell.getColumnIndex() + 1;
+
+		if (cellValue == null) {
+			throw new EmptyCellValueException(rowIndex, colIndex);
+		}
+
+		String value = "";
+
+		try {
+			value = (String)cellValue;
+		} catch (Exception e) {
+			throw new InvalidCellValueException(rowIndex, colIndex, cellValue.toString(), e);
+		}
+		
+		if (value.length() > 200 || value.length() <= 0) {
+			throw new InvalidCellValueException(rowIndex, colIndex, value);
+		}
+		
+		return value;
+	}
+	
+	private Double validateNumberData (Object cellValue, Cell cell) throws InvalidCellValueException {
+		int rowIndex = cell.getRowIndex() + 1;
+		int colIndex = cell.getColumnIndex() + 1;
+
+		if (cellValue == null) {
+			throw new EmptyCellValueException(rowIndex, colIndex);
+		}
+
+		Double value = -1.0;
+
+		try {
+			value = (double)cellValue;
+		} catch (Exception e) {
+			throw new InvalidCellValueException(rowIndex, colIndex, cellValue.toString(), e);
+		}
+		
+		if (value < 0) {
+			throw new InvalidCellValueException(rowIndex, colIndex, value + "");
+		}
+		
+		return value;
+	}
+
+	private DealsListingService dealsListingService;
+	private String promoId;
+	private Long userId;
 }
