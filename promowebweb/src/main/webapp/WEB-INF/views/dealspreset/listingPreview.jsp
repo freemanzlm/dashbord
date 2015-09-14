@@ -67,7 +67,7 @@
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
-					<form action="submit" method="post">
+					<form action="/promotion/deals/confirmDealsListings" method="post">
 						<input type="hidden" name="promoId" value="4324324"/>
 						<!-- TODO put selected listing ids here -->
 						<input type="hidden" name="listings" value="" />

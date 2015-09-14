@@ -6,7 +6,7 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="listingNum" value="2" />
-<c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
+<c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -110,7 +110,7 @@
 				
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
-						<form id="listing-form" action="applied" method="post">
+						<form id="listing-form" action="/promotion/hotsell/confirmHotSellListings" method="post">
 							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
 							<button class="btn" id="form-btn" type="button" title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>

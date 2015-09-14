@@ -5,7 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="rewarding" value="${ promo.rewardType eq 0 or promo.rewardType eq -1 }" />
+<c:set var="rewarding" value="${!(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
 
 <r:includeJquery jsSlot="body" />
@@ -62,7 +62,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>爆款促销 ${promo.name}</h2>
+				<h2>Deals预置 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可报名</span></div>
@@ -102,8 +102,8 @@
 				
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
-						<form id="listing-form" action="applied" method="post">
-							<input type="hidden" name="promoId" value=""/>
+						<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
+							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
 						</form>

@@ -175,8 +175,8 @@ var BizReport = BizReport || {};
 							case 'Applied':
 								return locale.getText('listing.state.Applied');
 							case 6: // not applied
-							case 'NonApplied':
-								return locale.getText('listing.state.NonApplied');
+							case 'Nonapplied':
+								return locale.getText('listing.state.Nonapplied');
 							default: '';
 							}
 						}
@@ -187,7 +187,7 @@ var BizReport = BizReport || {};
 							case 'Applied':
 								return 1;
 							case 6: // not applied
-							case 'NonApplied':
+							case 'Nonapplied':
 								return 0;
 							default: return -1;
 							}
