@@ -97,13 +97,13 @@
 							<h3>重新上傳我要提交的刊登</h3>
 							
 							<div class="body mt20"  style="width: 420px;">
-								<p class="mt10">您可以通過下載<a class="template" href="javascript:void(0)" target="_blank">已提交的刊登</a>修改並重新上傳您的刊登參與本活動。</p>
+								<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登</a>修改並重新上傳您的刊登參與本活動。</p>
 								<p class="mt10">您新上傳的數據將完全替換原數據。提交數據需再次接受Deals招募法律協定。</p>
 								
-								<form id="upload-form" action="upload" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
+								<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
 									選擇上傳您的刊登清單
-									<input type="hidden" name="promoId" value="4324324"/>
-									<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇檔案" /> <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button type="button" class="btn" style="margin-left: 3px;">選擇</button></span>
+									<input type="hidden" name="promoId" value="${promo.promoId}"/>
+									<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇檔案" /> <input type="file" name="dealsListings" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button type="button" class="btn" style="margin-left: 3px;">選擇</button></span>
 								</form>
 								<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
 							</div>

@@ -227,7 +227,7 @@ public class DealsListingController extends AbstractListingController{
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.getSKUsByPromotionId)
+	@RequestMapping(ResourceProvider.ListingRes._getSKUsByPromotionId)
 	@ResponseBody
 	public ListDataWebResponse<Sku> getSKUsByPromotionId(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();

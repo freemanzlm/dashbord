@@ -76,11 +76,23 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			
 			// check if the sku is in the list
 			String skuName = skuNameObj == null ? "" : skuNameObj.toString();
-			if (!skus.contains(skuName)) {
+			String skuId = "";
+			boolean foundSku = false;
+			for (Sku sku : skus) {
+				String storedSkuName = sku.getName();
+				if (skuName.equalsIgnoreCase(storedSkuName)) {
+					foundSku = true;
+					skuId = sku.getSkuId();
+					break;
+				}
+			}
+			if (!foundSku) {
 				throw new InvalidCellValueException(ErrorType.InvalidSkuCellValue,
 						skuCell.getRowIndex() + 1, skuCell.getColumnIndex() + 1, skuName);
+			} else {
+				listing.setSkuName(skuName);
+				listing.setSkuId(skuId);
 			}
-			listing.setSkuName(skuName);
 			
 			// check if the list is set
 			if (itemIdObj == null && itemNameObj == null && priceObj == null && actPriceObj == null && inventoryObj == null) {
