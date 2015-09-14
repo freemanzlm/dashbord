@@ -38,27 +38,36 @@ $(function(){
 		}});
 	listingTable.update({promoId:pageData.promoId});
 	
+	function submitListings() {
+		var listings = listingTable.getData();
+		form.find("input[name=listings]").val("[" + listings.map(function(item){
+			return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
+		}).join(",") + "]");
+		
+		var data = form.serialize();
+		$.ajax({
+			url: form.prop('action'),
+			type: 'POST',
+			data: data,
+			contentType: 'application/json',
+			dataType : 'json',
+			success : function(json){
+				if (json && json.status) {
+					location.reload();
+				} else {
+					alertDialog.alert(locale.getText('promo.request.fail'));
+				}
+			},
+			error: function(){
+				alertDialog.alert(locale.getText('promo.request.fail'));
+			}
+		});
+	}
+	
 	confirmDialog.init();
 	confirmDialog.subscribe({
 		confirm: function() {
-			var data = form.serialize();
-			$.ajax({
-				url: 'preview',
-				type: 'POST',
-				data: data,
-				contentType: 'application/json',
-				dataType : 'json',
-				success : function(json){
-					if (json && json.status) {
-						location.reload();
-					} else {
-						alertDialog.alert(locale.getText('promo.request.fail'));
-					}
-				},
-				error: function(){
-					alertDialog.alert(locale.getText('promo.request.fail'));
-				}
-			});
+			submitListings();
 //			form.submit();
 		}
 	});
@@ -85,7 +94,8 @@ $(function(){
 	previewDialog.init();
 	previewDialog.subscribe({
 		ok: function(){
-			form.submit();
+			submitListings();
+//			form.submit();
 		}
 	});
 	
