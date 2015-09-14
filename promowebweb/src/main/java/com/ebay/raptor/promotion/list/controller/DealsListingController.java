@@ -24,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.ExcelReader;
 import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
@@ -39,7 +38,6 @@ import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -93,16 +91,16 @@ public class DealsListingController extends AbstractListingController{
 			workbook = new XSSFWorkbook(dealsListings.getInputStream());
 			ExcelReader.readWorkbook(workbook, 0, new UploadListingSheetHandler(service,
 							promoId, userData.getUserId()));
-			responseData.setResult(true);
+			responseData.setStatus(true);
 		} catch (IOException | PromoException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
 			logger.error("Upload listings got error.", e);
-			responseData.setResult(false);
+			responseData.setStatus(false);
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
 			logger.error("The uploaded listings are invalid.", e);
 			ErrorType errorType = e.getErrorType();
-			responseData.setResult(false);
+			responseData.setStatus(false);
 			responseData.setMessage(messageSource.getMessage("err-"+ errorType.getCode(),
 									e.getArgs(), Locale.SIMPLIFIED_CHINESE));
 		} finally {
@@ -136,10 +134,10 @@ public class DealsListingController extends AbstractListingController{
 			try {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
-				responseData.setResult(result);
+				responseData.setStatus(result);
 			} catch (PromoException | MissingArgumentException e) {
 				// do not throw but set the error status.
-				responseData.setResult(false);
+				responseData.setStatus(false);
 				responseData.setMessage("Internal Error happens.");
 			}
 		}

@@ -43,7 +43,7 @@ $(function(){
 		confirm: function() {
 			var data = form.serialize();
 			$.ajax({
-				url: 'preview',
+				url: '/promotion/deals/confirmDealsListings',
 				type: 'POST',
 				data: data,
 				contentType: 'application/json',
