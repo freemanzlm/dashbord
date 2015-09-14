@@ -33,6 +33,8 @@ public class Promotion {
 	private Integer rewardType;
 
 	private String state;
+	
+	private Boolean regEnded;
 
 	public String getDesc() {
 		return desc;
@@ -120,6 +122,14 @@ public class Promotion {
 
 	public void setRewardType(Integer rewardType) {
 		this.rewardType = rewardType;
+	}
+
+	public Boolean getRegEnded() {
+		return regEnded;
+	}
+
+	public void setRegEnded(Boolean regEnded) {
+		this.regEnded = regEnded;
 	}
 
 }

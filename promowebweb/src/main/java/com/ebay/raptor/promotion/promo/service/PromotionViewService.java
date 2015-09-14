@@ -113,7 +113,7 @@ public class PromotionViewService {
 					break;
 				case APPLIED:
 				case SUBMITTED:
-					context.put("expired", false); // TODO - 
+					context.put("expired", pro.getRegEnded());
 					view = ViewResource.DU_APPLIED;
 					break;
 				case VERIFY_FAILED:
