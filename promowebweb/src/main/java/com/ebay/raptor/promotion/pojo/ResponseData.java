@@ -15,14 +15,15 @@ public class ResponseData <T> {
 		this.data = data;
 	}
 
-	public Boolean getResult() {
-		return result;
+	public Boolean getStatus() {
+		return status;
 	}
-	public void setResult(Boolean result) {
-		this.result = result;
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
-	private Boolean result;
+
+	private Boolean status;
 	private String message;
 	private T data;
 	
