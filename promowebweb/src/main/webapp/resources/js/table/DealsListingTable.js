@@ -92,13 +92,13 @@ var BizReport = BizReport || {};
 					sWidth: "30px",
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
-						oRow.checked = oRow.checked || (oRow.state == 1 || oRow.state == 'Applied');
+						oRow.checked = oRow.checked || (oRow.state == 'Confirmed' || oRow.state == 'Applied');
 							
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
 							checked: oRow.checked,
-							disabled: (oRow.state == 'PretrialFail' || oRow.state == 6)
+							disabled: (oRow.state == 'PretrialFail')
 						}));
 					}
 				},
@@ -229,7 +229,7 @@ var BizReport = BizReport || {};
 					var aRows = oDataTable.data();
 					
 					that.selectedItems = aRows.filter(function(oRow){
-						return oRow.state == 1;
+						return oRow.state == 'Applied' || oRow.state == 'Confirmed';
 					});
 					
 					if (that.selectedItems.length == aRows.length && that.selectedItems.length > 0) {

@@ -115,7 +115,7 @@ var BizReport = BizReport || {};
 					sWidth: "30px",
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
-						oRow.checked = oRow.checked || oRow.state == 1;
+						oRow.checked = oRow.checked || oRow.state == 'Applied';
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
@@ -227,7 +227,7 @@ var BizReport = BizReport || {};
 					var aRows = oDataTable.data();
 					
 					that.selectedItems = aRows.filter(function(oRow){
-						return oRow.state == 1;
+						return oRow.state == 'Applied';
 					});
 					
 					if (that.selectedItems.length == aRows.length && that.selectedItems.length > 0) {
