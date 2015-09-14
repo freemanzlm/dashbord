@@ -184,9 +184,9 @@ var BizReport = BizReport || {};
 							case 'PretrialFail':
 								return locale.getText('listing.state.PretrialFail');
 							case 'Applied':
-								return locale.getText('listing.state.Confirmed');
+								return locale.getText('listing.state.Applied');
 							case 'NonApplied':
-								return locale.getText('listing.state.Nonsubmitted');
+								return locale.getText('listing.state.Nonapplied');
 							case 'Confirmed':
 								return locale.getText('listing.state.Confirmed');
 							case 'Nonsubmitted':
