@@ -1,9 +1,10 @@
 $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
+	var alertDialog = BizReport.alertDialog;
 	var locale = BizReport.locale;
 	var confirmDialog = new BizReport.ConfirmDialog();
 	
-	var listingCountJ = $(".my-listing h3 small span");
+	var listingCountJ = $(".my-listing h3 small span"), form = $("#listing-form");
 	
 	var listingTable = new DealsListingTable();
 	listingTable.init({
@@ -25,20 +26,47 @@ $(function(){
 	}, listingTable);
 	listingTable.update({promoId:pageData.promoId});
 	
-	var form = $("#listing-form").submit(function(){
-		// if user doesn't select a item, form can't be submitted.
-		listings = listingTable.getData();
+//	var form = $("#listing-form").submit(function(){
+//		// if user doesn't select a item, form can't be submitted.
+//		listings = listingTable.getData();
+//		form.find("input[name=listings]").val("[" + listings.map(function(item){
+//			return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
+//		}).join(",") + "]");
+//		
+//		return true;
+//	});
+	
+	function submitListings() {
+		var listings = listingTable.getData();
 		form.find("input[name=listings]").val("[" + listings.map(function(item){
 			return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
 		}).join(",") + "]");
 		
-		return true;
-	});
+		var data = form.serialize();
+		$.ajax({
+			url: form.prop('action'),
+			type: 'POST',
+			data: data,
+			contentType: 'application/json',
+			dataType : 'json',
+			success : function(json){
+				if (json && json.status) {
+					location.reload();
+				} else {
+					alertDialog.alert(locale.getText('promo.request.fail'));
+				}
+			},
+			error: function(){
+				alertDialog.alert(locale.getText('promo.request.fail'));
+			}
+		});
+	}
 	
 	confirmDialog.init();
 	confirmDialog.subscribe({
 		confirm: function() {
-			form.submit();
+			submitListings();
+//			form.submit();
 		}
 	});
 	
@@ -62,7 +90,8 @@ $(function(){
 	previewDialog.init();
 	previewDialog.subscribe({
 		ok: function(){
-			form.submit();
+			submitListings();
+//			form.submit();
 		}
 	});
 	

@@ -1,6 +1,7 @@
 $(function(){
 	
 	var DealsListingTable = BizReport.DealsListingTable;
+	var alertDialog = BizReport.alertDialog;
 	var confirmDialog = new BizReport.ConfirmDialog();
 	var locale = BizReport.locale;
 	
@@ -40,7 +41,25 @@ $(function(){
 	confirmDialog.init();
 	confirmDialog.subscribe({
 		confirm: function() {
-			form.submit();
+			var data = form.serialize();
+			$.ajax({
+				url: 'preview',
+				type: 'POST',
+				data: data,
+				contentType: 'application/json',
+				dataType : 'json',
+				success : function(json){
+					if (json && json.status) {
+						location.reload();
+					} else {
+						alertDialog.alert(locale.getText('promo.request.fail'));
+					}
+				},
+				error: function(){
+					alertDialog.alert(locale.getText('promo.request.fail'));
+				}
+			});
+//			form.submit();
 		}
 	});
 	
