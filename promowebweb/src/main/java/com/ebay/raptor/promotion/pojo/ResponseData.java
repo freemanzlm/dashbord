@@ -2,12 +2,6 @@ package com.ebay.raptor.promotion.pojo;
 
 public class ResponseData <T> {
 
-	public boolean isResult() {
-		return result;
-	}
-	public void setResult(boolean result) {
-		this.result = result;
-	}
 	public String getMessage() {
 		return message;
 	}
@@ -21,7 +15,14 @@ public class ResponseData <T> {
 		this.data = data;
 	}
 
-	private boolean result;
+	public Boolean getResult() {
+		return result;
+	}
+	public void setResult(Boolean result) {
+		this.result = result;
+	}
+
+	private Boolean result;
 	private String message;
 	private T data;
 	

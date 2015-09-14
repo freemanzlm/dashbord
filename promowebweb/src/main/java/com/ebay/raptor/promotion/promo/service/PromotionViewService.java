@@ -111,7 +111,6 @@ public class PromotionViewService {
 				case CREATED:
 					view = ViewResource.DU_APPLICABLE;
 					break;
-				case APPLIED:
 				case SUBMITTED:
 					context.put("expired", pro.getRegEnded());
 					view = ViewResource.DU_APPLIED;
@@ -119,6 +118,8 @@ public class PromotionViewService {
 				case VERIFY_FAILED:
 				case VERIFYING:
 				case PROMOTION_APPROVED:
+				case APPLIED:
+					context.put("expired", pro.getRegEnded());
 					view = ViewResource.DU_LISTING;
 					break;
 				case STARTED:

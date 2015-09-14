@@ -31,6 +31,8 @@ public class Promotion {
 	private Float reward;
 	
 	private Integer rewardType;
+	
+	private String rewardUrl;
 
 	private String state;
 	
@@ -130,6 +132,14 @@ public class Promotion {
 
 	public void setRegEnded(Boolean regEnded) {
 		this.regEnded = regEnded;
+	}
+
+	public String getRewardUrl() {
+		return rewardUrl;
+	}
+
+	public void setRewardUrl(String rewardUrl) {
+		this.rewardUrl = rewardUrl;
 	}
 
 }
