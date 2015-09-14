@@ -127,33 +127,23 @@ public class DealsListingController extends AbstractListingController{
 	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.confirmDealsListings)
-	public ModelAndView confirmDealsListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
-		ModelAndView model = new ModelAndView();
+	@ResponseBody
+	public ResponseData <String> confirmDealsListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
+		ResponseData <String> responseData = new ResponseData <String>();
+
 		if(null != listings){
 			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class, false);
 			try {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
-				if(result){
-					Promotion promotion = this.promoService.getPromotionById(listings.getPromoId(), userData.getUserId());
-					model.addObject(ViewContext.Promotion.getAttr(), promotion);
-					switch(PMPromotionType.valueOfPMType(promotion.getType())){
-						case DEALS_DASHBOARD_UPLOAD:
-							model.setViewName(ViewResource.DU_APPLIED.getPath());
-							break;
-						case DEALS_AM_UPLOAD:
-							model.setViewName(ViewResource.DP_APPLIED.getPath());
-							break;
-						default:
-							model.setViewName(ViewResource.ERROR.getPath());
-							break;
-					}
-				}
+				responseData.setResult(result);
 			} catch (PromoException | MissingArgumentException e) {
-				model.setViewName(ViewResource.ERROR.getPath());
+				// do not throw but set the error status.
+				responseData.setResult(false);
+				responseData.setMessage("Internal Error happens.");
 			}
 		}
-		return model;
+		return responseData;
 	}
 
 	@GET
