@@ -84,7 +84,7 @@
 						<div class="steps-wrapper">
 							<div class="steps clr">
 								<c:choose>
-									<c:when test="${ state eq 'Created' or state eq 'Unknow' }">
+									<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
 										<div class="step"><span>活动进行中</span></div>
 										<div class="step"><span>奖励确认中</span></div>
 										<div class="step"><span>申领奖励</span></div>

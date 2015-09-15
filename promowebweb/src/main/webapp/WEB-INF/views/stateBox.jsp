@@ -1,10 +1,6 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
-<%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
-<%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
@@ -62,20 +58,20 @@
 			</c:if>
 
 			<c:choose>
-				<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
+				<c:when test="${ (rewardType eq 1 or rewardType eq 4) and not empty promo.rewardUrl }">
 					<menu>
 						<li><c:choose>
 								<c:when test="${ state eq 'SubsidySubmitted' }">
-									<a href="#" class="btn">上传奖励申请协议</a>
+									<a href="${promo.rewardUrl}" class="btn">上传奖励申请协议</a>
 								</c:when>
 								<c:when test="${ state eq 'SubsidyRetrievable' }">
-									<a href="#" class="btn">申领奖励</a>
+									<a href="${promo.rewardUrl}" class="btn">申领奖励</a>
 								</c:when>
 								<c:when test="${ state eq 'SubsidyResubmittable' }">
-									<a href="#" class="btn">重新申领奖励</a>
+									<a href="${promo.rewardUrl}" class="btn">重新申领奖励</a>
 								</c:when>
 								<c:otherwise>
-									<a href="#" class="btn">填写奖励申请协议</a>
+									<a href="${promo.rewardUrl}" class="btn">填写奖励申请协议</a>
 								</c:otherwise>
 							</c:choose></li>
 					</menu>

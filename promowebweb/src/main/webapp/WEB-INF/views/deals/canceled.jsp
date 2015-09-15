@@ -45,7 +45,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals ${promo.name}</h2>
+				<h2>Deals招募 ${promo.name}</h2>
 				
 				<div class="active-status-box">
 					<h3>活动已取消</h3>

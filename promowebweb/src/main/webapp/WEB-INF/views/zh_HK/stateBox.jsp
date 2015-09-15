@@ -1,20 +1,14 @@
-<%@ page trimDirectiveWhitespaces="true"
-	contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
-<%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
-<%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<c:set var="categoryId" value="6000" />
-<c:set var="rewarding"
-	value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
+
+<!-- this module should only be used when promotion has started -->
+<c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<fmt:formatDate value="${promo.promoSdt}" var="promoStart"
-	pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.promoEdt}" var="promoEnd"
-	pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline"
-	pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
+
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardType" value="加油卡" />
@@ -37,27 +31,13 @@
 	<c:choose>
 		<c:when test="${state eq 'Started' }">
 			<h3>恭喜您的報名已完成稽核！</h3>
-			<p class="desc">
-				活動時間為${ promoStart }到${ promoEnd }，<br />我們將在活動結束後儘快公佈統計結果，請耐心等待！
-			</p>
-			<menu>
-				<li><a href="../index" class="btn">返回活動清單</a></li>
-			</menu>
+			<p class="desc">活動時間為${ promoStart }到${ promoEnd }，<br />我們將在活動結束後儘快公佈統計結果，請耐心等待！</p>
+			<menu><li><a href="../index" class="btn">返回活動清單</a></li></menu>
 		</c:when>
 		<c:when test="${state eq 'SubsidyCounting' }">
 			<h3>恭喜您已完成活動！</h3>
-
 			<p class="desc">獎勵結果統計中，請耐心等待！</p>
-
-			<menu>
-				<li><a href="../index" class="btn">返回活動清單</a></li>
-			</menu>
-		</c:when>
-		<c:when test="${state eq 'SubsidyRetrieved' }">
-			<h3>您已成功領取等值${promo.reward }元的${rewardType }</h3>
-			<menu>
-				<li><a href="../index" class="btn">返回活動清單</a></li>
-			</menu>
+			<menu><li><a href="../index" class="btn">返回活動清單</a></li></menu>
 		</c:when>
 		<c:otherwise>
 			<c:choose>
@@ -74,23 +54,23 @@
 			</c:if>
 
 			<c:choose>
-				<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
-					<menu>
-						<li><c:choose>
-								<c:when test="${ state eq 'SubsidySubmitted' }">
-									<a href="../index" class="btn">上傳獎勵申請協定</a>
-								</c:when>
-								<c:when test="${ state eq 'SubsidyRetrievable' }">
-									<a href="#" class="btn">申領獎勵</a>
-								</c:when>
-								<c:when test="${ state eq 'SubsidyResubmittable' }">
-									<a href="#" class="btn">重新申領獎勵</a>
-								</c:when>
-								<c:otherwise>
-									<a href="../index" class="btn">填寫獎勵申請協定</a>
-								</c:otherwise>
-							</c:choose></li>
-					</menu>
+				<c:when test="${ (rewardType eq 1 or rewardType eq 4) and not empty promo.rewardUrl }">
+					<menu><li>
+						<c:choose>
+							<c:when test="${ state eq 'SubsidySubmitted' }">
+								<a href="${promo.rewardUrl}" class="btn">上傳獎勵申請協定</a>
+							</c:when>
+							<c:when test="${ state eq 'SubsidyRetrievable' }">
+								<a href="${promo.rewardUrl}" class="btn">申領獎勵</a>
+							</c:when>
+							<c:when test="${ state eq 'SubsidyResubmittable' }">
+								<a href="${promo.rewardUrl}" class="btn">重新申領獎勵</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${promo.rewardUrl}" class="btn">填寫獎勵申請協定</a>
+							</c:otherwise>
+						</c:choose>
+					</li></menu>
 				</c:when>
 				<c:otherwise>
 					<menu>
