@@ -14,8 +14,6 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var states = ['Applicable', 'Nonapplied', 'Applied'];
-	
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],

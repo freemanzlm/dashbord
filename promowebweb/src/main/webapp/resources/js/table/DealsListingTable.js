@@ -14,8 +14,6 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var states = ['Applicable', 'Nonapplied', 'Applied', 'Pretrial', 'PretrialPass', 'ApplyConfirm', 'PretrialFail', 'NotSubmitted'];
-	
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
