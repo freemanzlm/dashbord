@@ -49,7 +49,7 @@ $(function(){
 					var response = uploadIFrame.contents().find("body").find("pre").text();
 					var responseData = $.parseJSON(response);
 					// verification returns no error 
-					if (responseData.result) {
+					if (responseData.status) {
 						window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId);
 					}
 					// handle error
