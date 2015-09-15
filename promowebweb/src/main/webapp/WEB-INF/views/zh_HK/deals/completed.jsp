@@ -1,12 +1,32 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
+<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
+<c:choose>
+	<c:when test="${ promo.rewardType eq 1 }">
+		<c:set var="rewardType" value="加油卡" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 2 }">
+		<c:set var="rewardType" value="京東卡" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 3 }">
+		<c:set var="rewardType" value="萬邑通" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 4 }">
+		<c:set var="rewardType" value="ebay萬裏通積分" />
+	</c:when>
+	<c:when test="${ promo.rewardType eq 5 }">
+		<c:set var="rewardType" value="郵票" />
+	</c:when>
+</c:choose>
 
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -15,8 +35,7 @@
 <html>
 <head>
 	<title>Deals招募</title>
-	<meta name="description" content="Deals招募">
-	<meta name="author" content="eBay: Apps">
+	<meta name="description" content="Deals招募 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	
@@ -31,10 +50,8 @@
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.icon_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
-	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
@@ -44,15 +61,13 @@
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
-	
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_applicable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_state.js']}" target="page-js"></res:useJs>
 </head>
 
 <body>
@@ -67,33 +82,42 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可報名</span></div>
-						<div class="step"><span>已提交預審</span></div>
-						<div class="step"><span>報名預審中</span></div>
-						<div class="step"><span>確認報名刊登</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
-						<c:if test="${ rewarding }">
-							<div class="step"><span>獎勵確認中</span></div>
-							<div class="step"><span>申領獎勵</span></div>
-							<div class="step last"><span>活動完成</span></div>
-						</c:if>
+						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>已提交預審</span></div>
+						<div class="step done"><span>報名預審中</span></div>
+						<div class="step done"><span>確認報名刊登</span></div>
+						<div class="step done"><span>活動進行中</span></div>
+						<div class="step done"><span>獎勵確認中</span></div>
+						<div class="step done"><span>申領獎勵</span></div>
+						<div class="step current-step last"><span>活動完成</span></div>
 					</div>
 				</div>  <!-- steps end -->
 				
+				<div class="active-status-box success">
+					<c:choose>
+						<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
+							<h3>您已成功領取等值${promo.reward }元的${rewardType }</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>活動已結束，感謝您的參與！</h3>
+						</c:otherwise>
+					</c:choose>
+					
+					<menu>
+						<li>
+							<a href="../index" class="btn">返回活動清單</a>
+						</li>
+					</menu>
+				</div> <!-- active status box end -->
+				
 				<%@ include file="activity.jsp" %>
 				
-				<div class="mt20">
-					<%@ include file="../table/skuList.jsp" %>
-				</div>
-				
-				<div class="mt20">
-					<%@ include file="upload_listings.jsp" %>
-				</div>
-				
-				<div class="mt20 page-bottom-actions">
-					<button id="upload-btn" class="btn" disabled>上传</button>
-				</div>
+				<div class="mt20 my-listing">
+					<h3>我提交的刊登</h3>
+					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+				</div>	
 			</div>
+			
 		</div>
 	</div>
 

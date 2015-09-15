@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>其他活動</title>
+	<title>其它活動</title>
 	<meta name="description" content="其他活動 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -51,7 +51,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>其他活動 ${promo.name}</h2>
+				<h2>其它活動 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step last"><span>活動已取消</span></div>

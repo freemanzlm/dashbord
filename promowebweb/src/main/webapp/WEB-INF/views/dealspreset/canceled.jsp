@@ -45,7 +45,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals ${promo.name}</h2>
+				<h2>Deals预置 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step last"><span>活动已取消</span></div>

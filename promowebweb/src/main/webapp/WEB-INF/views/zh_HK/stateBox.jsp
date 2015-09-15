@@ -54,7 +54,7 @@
 			</menu>
 		</c:when>
 		<c:when test="${state eq 'SubsidyRetrieved' }">
-			<h3>您已成功领取等值${promo.reward }元的${rewardType }</h3>
+			<h3>您已成功領取等值${promo.reward }元的${rewardType }</h3>
 			<menu>
 				<li><a href="../index" class="btn">返回活動清單</a></li>
 			</menu>

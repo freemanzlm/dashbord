@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>其他活动</title>
+	<title>其它活动 </title>
 	<meta name="author" content="其他活动">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -54,7 +54,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>其他活动 ${promo.name}</h2>
+				<h2>其它活动  ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step last"><span>活动已结束</span></div>

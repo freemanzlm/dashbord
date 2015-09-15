@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>其他活動</title>
+	<title>其它活動</title>
 	<meta name="author" content="其他活動">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />

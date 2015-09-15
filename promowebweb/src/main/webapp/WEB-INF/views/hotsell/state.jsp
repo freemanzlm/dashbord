@@ -36,7 +36,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>暴款促销</title>
+	<title>爆款促销</title>
 	<meta name="description" content="爆款促销 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />

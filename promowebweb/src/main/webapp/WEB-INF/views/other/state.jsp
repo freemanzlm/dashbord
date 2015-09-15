@@ -34,7 +34,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>其他活动</title>
+	<title>其它活动 </title>
 	<meta name="description" content="其它活动">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />

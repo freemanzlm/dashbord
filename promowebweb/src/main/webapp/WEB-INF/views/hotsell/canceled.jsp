@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>暴款促销</title>
+	<title>爆款促销</title>
 	<meta name="description" content="暴款促销 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -51,7 +51,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals ${promo.name}</h2>
+				<h2>爆款促销 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step last"><span>活动已取消</span></div>
