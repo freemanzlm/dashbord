@@ -139,7 +139,7 @@
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
-				<c:if test="${(state eq 'PromotionApproved') && (expired eq false) }">
+				<c:if test="${((state eq 'PromotionApproved') or (state eq 'Applied')) && (expired eq false) }">
 					<div class="mt20 page-bottom-actions">
 						<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
