@@ -34,10 +34,12 @@ public class PromotionViewService {
 				case SUBSIDY_UPLOADED:
 				case SUBSIDY_RETRIEVABLE:
 				case SUBSIDY_RESUBMITTABLE:
-				case SUBSIDY_RETRIEVED:
 				case SUBSIDY_EXPIRED:
 				case SUBSIDY_RETRIEVE_FAILED:
 					view = ViewResource.HV_DETAIL;
+					break;
+				case SUBSIDY_RETRIEVED:
+					view = ViewResource.HV_COMPLETED;
 					break;
 				case CANCELLED:
 					view = ViewResource.HV_CANCELLED;
@@ -78,11 +80,12 @@ public class PromotionViewService {
 				case SUBSIDY_UPLOADED:
 				case SUBSIDY_RETRIEVABLE:
 				case SUBSIDY_RESUBMITTABLE:
-				case SUBSIDY_RETRIEVED:
 				case SUBSIDY_EXPIRED:
 				case SUBSIDY_RETRIEVE_FAILED:
 					view = ViewResource.DP_DETAIL;
 					break;
+				case SUBSIDY_RETRIEVED:
+					view = ViewResource.DP_COMPLETED;
 				case CANCELLED:
 					view = ViewResource.DP_CANCELLED;
 					break;
@@ -130,11 +133,12 @@ public class PromotionViewService {
 				case SUBSIDY_UPLOADED:
 				case SUBSIDY_RETRIEVABLE:
 				case SUBSIDY_RESUBMITTABLE:
-				case SUBSIDY_RETRIEVED:
 				case SUBSIDY_EXPIRED:
 				case SUBSIDY_RETRIEVE_FAILED:
 					view = ViewResource.DU_DETAIL;
 					break;
+				case SUBSIDY_RETRIEVED:
+					view = ViewResource.DU_COMPLETED;
 				case CANCELLED:
 					view = ViewResource.DU_CANCELLED;
 					break;
@@ -169,11 +173,12 @@ public class PromotionViewService {
 				case SUBSIDY_UPLOADED:
 				case SUBSIDY_RETRIEVABLE:
 				case SUBSIDY_RESUBMITTABLE:
-				case SUBSIDY_RETRIEVED:
 				case SUBSIDY_EXPIRED:
 				case SUBSIDY_RETRIEVE_FAILED:
 					view = ViewResource.OTHER_DETAIL;
 					break;
+				case SUBSIDY_RETRIEVED:
+					view = ViewResource.OTHER_COMPLETED;
 				case CANCELLED:
 					view = ViewResource.OTHER_CANCELLED;
 					break;

@@ -1,6 +1,5 @@
 package com.ebay.raptor.promotion.promo.service;
 
-import com.ebay.raptor.promotion.service.ResourceProvider;
 
 public enum ViewResource {
 
@@ -10,6 +9,7 @@ public enum ViewResource {
 	HV_END("hotsell/end"),
 	HV_DETAIL("hotsell/state"),
 	HV_AGGREMENT("terms/hotsell"),
+	HV_COMPLETED("hotsell/completed"),
 	
 	DP_APPLICABLE("dealspreset/applicable"),
 	DP_APPLIED("dealspreset/applied"),
@@ -17,6 +17,7 @@ public enum ViewResource {
 	DP_END("dealspreset/end"),
 	DP_DETAIL("dealspreset/state"),
 	DP_AGGREMENT("terms/dealsPreset"),
+	DP_COMPLETED("dealspreset/completed"),
 	
 	DU_APPLICABLE("deals/applicable"),
 	DU_APPLIED("deals/applied"),
@@ -27,11 +28,13 @@ public enum ViewResource {
 	DU_DETAIL("deals/state"),
 	DU_CONFIRM_LISTING("/promotion/deals/confirmDealsListings"),
 	DU_AGGREMENT("terms/deals"),
+	DU_COMPLETED("deals/completed"),
 	
 	OTHER_CANCELLED("other/canceled"),
 	OTHER_END("other/end"),
 	OTHER_DETAIL("other/state"),
 	OTHER_AGGREMENT("terms/other"),
+	OTHER_COMPLETED("other/completed"),
 
 	ERROR("error");
 
