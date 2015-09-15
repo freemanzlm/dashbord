@@ -156,28 +156,38 @@
 							</menu>
 						</c:when>
 						<c:otherwise>
-							<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
-							<p class="desc">
-								請在${ rewardDeadline }前點擊進入領獎流程完成申領。
-							</p>
-							<menu>
-								<li>
-									<c:choose>
-										<c:when test="${ state eq 'SubsidySubmitted' }">
-											<a href="../index" class="btn">上傳獎勵申請協定</a>
-										</c:when>
-										<c:when test="${ state eq 'SubsidyRetrievable' }">
-											<a href="#" class="btn">申領獎勵</a>
-										</c:when>
-										<c:when test="${ state eq 'SubsidyResubmittable' }">
-											<a href="#" class="btn">重新申領獎勵</a>
-										</c:when>
-										<c:otherwise>
-											<a href="../index" class="btn">填寫獎勵申請協定</a>
-										</c:otherwise>
-									</c:choose>
-								</li>
-							</menu>
+							<c:choose>
+								<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
+									<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
+									<p class="desc">
+										請在${ rewardDeadline }前點擊進入領獎流程完成申領。
+									</p>
+									<menu>
+										<li>
+											<c:choose>
+												<c:when test="${ state eq 'SubsidySubmitted' }">
+													<a href="../index" class="btn">上傳獎勵申請協定</a>
+												</c:when>
+												<c:when test="${ state eq 'SubsidyRetrievable' }">
+													<a href="#" class="btn">申領獎勵</a>
+												</c:when>
+												<c:when test="${ state eq 'SubsidyResubmittable' }">
+													<a href="#" class="btn">重新申領獎勵</a>
+												</c:when>
+												<c:otherwise>
+													<a href="../index" class="btn">填寫獎勵申請協定</a>
+												</c:otherwise>
+											</c:choose>
+										</li>
+									</menu>
+								</c:when>
+								<c:otherwise>
+									<h3>恭喜您已完成本活動！</h3>
+									<p class="desc">
+										接下來我們的客戶經理會聯系您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!
+									</p>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 									

@@ -23,7 +23,7 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[5, 'asc'], [3, 'asc']],
+				'aaSorting': [[4, 'asc'], [3, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': true,
@@ -76,7 +76,7 @@ var BizReport = BizReport || {};
 					{data: 'type'},
 					{data: 'promoDlDt'},
 					{data: 'promoEdt'},
-					{data: 'reward'},
+					/*{data: 'reward'},*/
 					{data: 'state'}
 				],
 				aoColumnDefs: [{
@@ -252,7 +252,7 @@ var BizReport = BizReport || {};
 					});
 					
 					that.container.parents(".pane-table").find(".state-filter").change(function(){
-						oDataTable.column(5).search(this.value).draw();
+						oDataTable.column(4).search(this.value).draw();
 					});
 				}, 
 				ajaxbegin: function() {

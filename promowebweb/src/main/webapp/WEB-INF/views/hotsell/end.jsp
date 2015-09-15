@@ -71,22 +71,28 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box ${ state == 'VerifyFailed' ? 'fail' : 'success' }">
+				<div class="active-status-box ${ state == 'VerifyFailed' ? 'fail' : '' }">
 					<c:choose>
 						<c:when test="${ state == 'VerifyFailed' }">
 							<h3>很遗憾，您的报名未通过审核</h3>
 							<p class="desc">感谢您的参与！</p>
 						</c:when>
 						<c:otherwise>
-							<h3>活动已结束，感谢您的参与！</h3>
+							<c:choose>
+								<c:when test="${ rewarding and (empty promo.reward or promo.reward le 0) }">
+									<h3>很遗憾！您的活动表现未达到奖励标准，感谢您对活动的支持！希望下次努力！</h3>
+								</c:when>
+								<c:otherwise>
+									<h3>活动已结束，感谢您的参与！</h3>
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
-					
 					<menu>
 						<li>
 							<a href="../index" class="btn">返回活动列表</a>
 						</li>
-					</menu>					
+					</menu>
 				</div> <!-- active status box end -->
 				
 				<%@ include file="activity.jsp" %>

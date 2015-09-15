@@ -6,6 +6,7 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="state" value="${ promo.state }" />
+<c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 
 <r:includeJquery jsSlot="body" />
 <r:client />
@@ -61,12 +62,20 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box">
-					<h3>活動已結束，感謝您的參與！</h3>
+					<c:choose>
+						<c:when test="${ rewarding and (empty promo.reward or promo.reward le 0) }">
+							<h3> 很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>活動已結束，感謝您的參與！</h3>
+						</c:otherwise>
+					</c:choose>
+					
 					<menu>
 						<li>
 							<a href="../index" class="btn">返回活動清單</a>
 						</li>
-					</menu>					
+					</menu>
 				</div> <!-- active status box end -->
 				
 				<%@ include file="activity.jsp" %>

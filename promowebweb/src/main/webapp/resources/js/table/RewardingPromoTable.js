@@ -231,6 +231,9 @@ var BizReport = BizReport || {};
 					that.container.parents(".pane-table").find(".state-filter").change(function(){
 						oDataTable.column(5).search(this.value).draw();
 					});
+					
+					that.publish("initialized");
+					that.publish("selectChange");
 				}, 
 				ajaxbegin: function() {
 					$(that.pane).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
@@ -273,6 +276,10 @@ var BizReport = BizReport || {};
 		
 		getDataSize: function() {
 			return this.oDataTable.data().length;
+		},
+		
+		hideReward: function() {
+			this.oDataTable.column(4).visible(false);
 		}
 	});
 	

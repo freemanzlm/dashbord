@@ -12,24 +12,29 @@ $(function(){
 		}});
 	onGogingTable.update();
 	
-	var rwardingPromoTable = new RewardingPromoTable();
-	rwardingPromoTable.init({
+	var rewardingPromoTable = new RewardingPromoTable();
+	rewardingPromoTable.init({
 		dataTableConfig: {
 			tableId: "rewarding-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getSubsidyPromotions", //'js/data/reward.json'
-//				sAjaxSource: 'js/data/reward.json'
+				sAjaxSource: "promotion/getSubsidyPromotions",
 			}
 		}});
-	rwardingPromoTable.update();
+	rewardingPromoTable.subscribe({
+		initialized: function() {
+			if (pageData && (pageData.region == 'HK' || page.region == 'TW')) {
+				rewardingPromoTable.hideReward();
+			}
+		}
+	}, rewardingPromoTable);
+	rewardingPromoTable.update();
 	
 	var endPromoTable = new EndPromoTable();
 	endPromoTable.init({
 		dataTableConfig: {
 			tableId: "end-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getEndPromotions", //'js/data/end.json'
-//				sAjaxSource: 'js/data/end.json'
+				sAjaxSource: "promotion/getEndPromotions",
 			}
 		}});
 	endPromoTable.update();
