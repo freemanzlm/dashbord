@@ -167,6 +167,7 @@ var BizReport = BizReport || {};
 								case 'PromotionApproved':
 									return "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + data) + "</a>";
 								case 'Applied':
+								case 'Verifying':
 								case 'Submitted':
 								case 'Started':
 								case 'SubsidyCounting':

@@ -159,7 +159,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (full.sellerPrice) {
+							if (full.sellerPrice > 0 && full.sellerPrice != full.price) {
 								return "<span class='red'>" + parseFloat(data).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.sellerPrice).toUSFixed(2) + " " + full.currency + ")</del>";
 							} else {
 								return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
