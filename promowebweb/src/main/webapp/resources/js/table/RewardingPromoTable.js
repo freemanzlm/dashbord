@@ -87,7 +87,7 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
+							return "<a target='_blank' href='" + getLink(full.promoId) + "'>" + data + "</a>";
 						}
 						
 						return data;
@@ -165,14 +165,14 @@ var BizReport = BizReport || {};
 							case 'SubsidyResubmittable':
 								if (full.rewardUrl) {
 									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
-									display += "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+									display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								} else {
-									display = "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+									display = "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
 								
 								return display;
 							default:
-								return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+								return locale.getText('promo.state.' + data) + "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 							}
 						}
 						
