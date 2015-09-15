@@ -80,7 +80,7 @@
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活動類型</option>
 							<option value="0">爆款促銷</option>
-							<option value="1">Deals</option>
+							<option value="1">Deals招募</option>
 							<option value="2">Deals招募</option>
 							<option value="3">其它活動</option>
 						</select>
@@ -103,8 +103,8 @@
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活動類型</option>
 							<option value="0">爆款促銷</option>
-							<option value="1">Deals</option>
-							<option value="2">Deals招募</option>
+							<option value="1">Deals招募</option>
+							<option value="2">Deals預置</option>
 							<option value="3">其它活動</option>
 						</select>
 					</div>
@@ -124,8 +124,8 @@
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活動類型</option>
 							<option value="0">爆款促銷</option>
-							<option value="1">Deals</option>
-							<option value="2">Deals招募</option>
+							<option value="1">Deals招募</option>
+							<option value="2">Deals預置</option>
 							<option value="3">其它活動</option>
 						</select>
 					</div>
