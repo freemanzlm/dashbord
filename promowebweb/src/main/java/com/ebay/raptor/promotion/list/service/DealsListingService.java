@@ -17,6 +17,7 @@ import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
+import com.ebay.raptor.promotion.pojo.service.resp.UploadListingResponse;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 
@@ -39,11 +40,18 @@ public class DealsListingService extends BaseService {
 		req.setPromoId(promoId);
 		req.setUid(uid);
 		GingerClientResponse resp = httpPost(uri, req);
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			return Boolean.TRUE;
-		} else {
+		try{
+			GenericType<UploadListingResponse<Listing>> type = new GenericType<UploadListingResponse<Listing>>(){};
+			if(null != resp){
+				UploadListingResponse<Listing> respEntity = resp.getEntity(type);
+				if(null != respEntity && respEntity.getAckValue() == AckValue.SUCCESS){
+					return Boolean.TRUE;
+				}
+			}
+		} catch(Throwable e){
 			throw new PromoException("Internal Error Happens.");
 		}
+		return Boolean.FALSE;
 	}
 	
 	public List<DealsListing> getPromotionListings(String promoId, Long uid) throws PromoException{
@@ -172,28 +180,28 @@ public class DealsListingService extends BaseService {
 		}
 	}
 	
-	public boolean confirmDealsListings(List<Listing> listings, String promoId, String uid) throws PromoException {
-		String uri = url(ResourceProvider.ListingRes.confirmDealsListings);
-		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
-		req.setListings(listings);
-		req.setPromoId(promoId);
-		req.setUid(Long.parseLong(uid));
-		GingerClientResponse resp = httpPost(uri, req);
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			System.out.println(resp.getEntity(String.class));
-//			GenericType<ListDataServiceResponse<HotSellListing>> type = new GenericType<ListDataServiceResponse<HotSellListing>>(){};
-//			ListDataServiceResponse<HotSellListing> listing = resp.getEntity(type);
-//			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
-//				return listing.getData();
-//			} else {
-//				if(null != listing){
-//					throw new PromoException(listing.getErrorMessage().getError().toString());
-//				}
-//			}
-		} else {
-			throw new PromoException("Internal Error Happens.");
-		}
-		return Boolean.FALSE;
-	}
+//	public boolean confirmDealsListings(List<Listing> listings, String promoId, String uid) throws PromoException {
+//		String uri = url(ResourceProvider.ListingRes.confirmDealsListings);
+//		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
+//		req.setListings(listings);
+//		req.setPromoId(promoId);
+//		req.setUid(Long.parseLong(uid));
+//		GingerClientResponse resp = httpPost(uri, req);
+//		if(Status.OK.getStatusCode() == resp.getStatus()){
+//			System.out.println(resp.getEntity(String.class));
+////			GenericType<ListDataServiceResponse<HotSellListing>> type = new GenericType<ListDataServiceResponse<HotSellListing>>(){};
+////			ListDataServiceResponse<HotSellListing> listing = resp.getEntity(type);
+////			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
+////				return listing.getData();
+////			} else {
+////				if(null != listing){
+////					throw new PromoException(listing.getErrorMessage().getError().toString());
+////				}
+////			}
+//		} else {
+//			throw new PromoException("Internal Error Happens.");
+//		}
+//		return Boolean.FALSE;
+//	}
 	
 }

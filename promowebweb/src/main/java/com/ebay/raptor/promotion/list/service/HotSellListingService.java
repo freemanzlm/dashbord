@@ -14,6 +14,7 @@ import com.ebay.raptor.promotion.pojo.business.HotSellListing;
 import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
+import com.ebay.raptor.promotion.pojo.service.resp.UploadListingResponse;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 
@@ -93,11 +94,18 @@ public class HotSellListingService extends BaseService {
 		req.setPromoId(promoId);
 		req.setUid(uid);
 		GingerClientResponse resp = httpPost(uri, req);
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			return Boolean.TRUE;
-		} else {
+		try{
+			GenericType<UploadListingResponse<HotSellListing>> type = new GenericType<UploadListingResponse<HotSellListing>>(){};
+			if(null != resp){
+				UploadListingResponse<HotSellListing> respEntity = resp.getEntity(type);
+				if(null != respEntity && respEntity.getAckValue() == AckValue.SUCCESS){
+					return Boolean.TRUE;
+				}
+			}
+		} catch(Throwable e){
 			throw new PromoException("Internal Error Happens.");
 		}
+		return Boolean.FALSE;
 	}
 	
 }

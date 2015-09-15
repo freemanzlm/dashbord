@@ -47,7 +47,7 @@ $(function(){
 			url: form.prop('action'),
 			type: 'POST',
 			data: data,
-			contentType: 'application/json',
+//			contentType: 'application/json',
 			dataType : 'json',
 			success : function(json){
 				if (json && json.status) {
