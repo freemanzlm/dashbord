@@ -20,7 +20,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[6, 'asc']],
+				'aaSortingFixed': [[6, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -185,9 +185,9 @@ var BizReport = BizReport || {};
 								return 3;
 							case 'PretrialPass':
 								return 2;
-							case 'PretrialFail':
-								return 1;
 							case 'Nonsubmitted':
+								return 1;
+							case 'PretrialFail':
 								return 0;
 							default: return -1;
 							}
