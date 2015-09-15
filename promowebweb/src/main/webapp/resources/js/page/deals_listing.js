@@ -14,7 +14,7 @@ $(function(){
 	listingTable = new DealsListingTable();
 	listingTable.subscribe({
 		initialized: function() {
-			if (pageData && (pageData.state != "PromotionApproved" || pageData.expired)) {
+			if (pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired)) {
 				listingTable.hideCheckbox();
 			} else {
 				listingCountJ.text(this.selectedItems.length);
