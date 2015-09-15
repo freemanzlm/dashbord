@@ -187,26 +187,31 @@
 								<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
 							</c:if>
 							
-							<c:if test="${ rewardType eq 1 or rewardType eq 4 }">
-								<menu>
-									<li>
-										<c:choose>
-											<c:when test="${ state eq 'SubsidySubmitted' }">
-												<a href="#" class="btn">上传奖励申请协议</a>
-											</c:when>
-											<c:when test="${ state eq 'SubsidyRetrievable' }">
-												<a href="#" class="btn">申领奖励</a>
-											</c:when>
-											<c:when test="${ state eq 'SubsidyResubmittable' }">
-												<a href="#" class="btn">重新申领奖励</a>
-											</c:when>
-											<c:otherwise>
-												<a href="#" class="btn">填写奖励申请协议</a>
-											</c:otherwise>
-										</c:choose>
-									</li>
-								</menu>
-							</c:if>
+							<c:choose>
+								<c:when test="${ (rewardType eq 1 or rewardType eq 4) and not empty promo.rewardUrl }">
+									<menu>
+										<li>
+											<c:choose>
+												<c:when test="${ state eq 'SubsidySubmitted' }">
+													<a href="${promo.rewardUrl}" class="btn">上传奖励申请协议</a>
+												</c:when>
+												<c:when test="${ state eq 'SubsidyRetrievable' }">
+													<a href="${promo.rewardUrl}" class="btn">申领奖励</a>
+												</c:when>
+												<c:when test="${ state eq 'SubsidyResubmittable' }">
+													<a href="${promo.rewardUrl}" class="btn">重新申领奖励</a>
+												</c:when>
+												<c:otherwise>
+													<a href="${promo.rewardUrl}" class="btn">填写奖励申请协议</a>
+												</c:otherwise>
+											</c:choose>
+										</li>
+									</menu>
+								</c:when>
+								<c:otherwise>
+									<menu><li><a href="../index" class="btn">返回活动列表</a></li></menu>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</c:otherwise>
 				</c:choose>

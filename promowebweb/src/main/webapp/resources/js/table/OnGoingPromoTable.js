@@ -172,48 +172,50 @@ var BizReport = BizReport || {};
 								case 'SubsidyCounting':
 									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
+							} else {
+								switch (data) {
+								case 'Started':
+								case 'SubsidyCounting':
+									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+								}
 							}
 							
 							return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 						}
 						
 						if (type == "filter") {
-							if (full.type != 3) {
-								switch (data) {
-								case 'Created':
-									return 'Created';
-								case 'PromotionApproved':
-									return 'PromotionApproved';
-								case 'Applied':
-									return 'Applied';
-								case 'Submitted':
-									return 'Submitted';
-								case 'Started':
-									return 'Started';
-								case 'SubsidyCounting':
-									return 'SubsidyCounting';
-								}
+							switch (data) {
+							case 'Created':
+								return 'Created';
+							case 'PromotionApproved':
+								return 'PromotionApproved';
+							case 'Applied':
+								return 'Applied';
+							case 'Submitted':
+								return 'Submitted';
+							case 'Started':
+								return 'Started';
+							case 'SubsidyCounting':
+								return 'SubsidyCounting';
 							}
 							
 							return 'Detailed';
 						}
 						
 						if (type == "sort") {
-							if (full.type != 3) {
-								switch (data) {
-								case 'Created':
-									return 0;
-								case 'PromotionApproved':
-									return 1;
-								case 'Applied':
-									return 2;
-								case 'Submitted':
-									return 3;
-								case 'Started':
-									return 4;
-								case 'SubsidyCounting':
-									return 5;
-								}
+							switch (data) {
+							case 'Created':
+								return 0;
+							case 'PromotionApproved':
+								return 1;
+							case 'Applied':
+								return 2;
+							case 'Submitted':
+								return 3;
+							case 'Started':
+								return 4;
+							case 'SubsidyCounting':
+								return 5;
 							}
 							
 							return 20;

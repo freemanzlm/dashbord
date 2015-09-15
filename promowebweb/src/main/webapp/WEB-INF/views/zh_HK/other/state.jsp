@@ -125,7 +125,7 @@
 									</div>
 								</div>
 							</c:when>
-							<c:when test="${ state eq 'Starged' }">
+							<c:when test="${ state eq 'Started' }">
 								<div class="steps-wrapper">
 									<div class="steps clr">
 										<div class="step current-step last"><span>活动进行中</span></div>
@@ -187,26 +187,31 @@
 								請在${ rewardDeadline }前點擊進入領獎流程完成申領。
 							</c:if>
 							
-							<c:if test="${ rewardType eq 1 or rewardType eq 4 }">
-								<menu>
-									<li>
-										<c:choose>
-											<c:when test="${ state eq 'SubsidySubmitted' }">
-												<a href="../index" class="btn">上傳獎勵申請協定</a>
-											</c:when>
-											<c:when test="${ state eq 'SubsidyRetrievable' }">
-												<a href="#" class="btn">申領獎勵</a>
-											</c:when>
-											<c:when test="${ state eq 'SubsidyResubmittable' }">
-												<a href="#" class="btn">重新申領獎勵</a>
-											</c:when>
-											<c:otherwise>
-												<a href="../index" class="btn">填寫獎勵申請協定</a>
-											</c:otherwise>
-										</c:choose>
-									</li>
-								</menu>
-							</c:if>
+							<c:choose>
+								<c:when test="${ (rewardType eq 1 or rewardType eq 4) and not empty promo.rewardUrl }">
+									<menu>
+										<li>
+											<c:choose>
+												<c:when test="${ state eq 'SubsidySubmitted' }">
+													<a href="${promo.rewardUrl}" class="btn">上傳獎勵申請協定</a>
+												</c:when>
+												<c:when test="${ state eq 'SubsidyRetrievable' }">
+													<a href="${promo.rewardUrl}" class="btn">申領獎勵</a>
+												</c:when>
+												<c:when test="${ state eq 'SubsidyResubmittable' }">
+													<a href="${promo.rewardUrl}" class="btn">重新申領獎勵</a>
+												</c:when>
+												<c:otherwise>
+													<a href="${promo.rewardUrl}" class="btn">填寫獎勵申請協定</a>
+												</c:otherwise>
+											</c:choose>
+										</li>
+									</menu>
+								</c:when>
+								<c:otherwise>
+									<menu><li><a href="../index" class="btn">返回活動清單</a></li></menu>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</c:otherwise>
 				</c:choose>
