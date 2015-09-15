@@ -170,24 +170,16 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							switch (data) {
-							case 5: // applied
-							case 'Applied':
-								return locale.getText('listing.state.Applied');
-							case 6: // not applied
-							case 'Nonapplied':
-								return locale.getText('listing.state.Nonapplied');
-							default: '';
-							}
+							return locale.getText('listing.state.' + data);
 						}
 						
 						if (type == "sort") {
 							switch (data) {
-							case 5: // applied
 							case 'Applied':
+							case 'AuditSuccess':
 								return 1;
-							case 6: // not applied
 							case 'Nonapplied':
+							case 'Nonsubmitted':
 								return 0;
 							default: return -1;
 							}

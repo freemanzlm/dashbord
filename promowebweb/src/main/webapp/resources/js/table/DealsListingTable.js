@@ -176,23 +176,21 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							switch(data) {
-							case 'Pretrial':
-								return locale.getText('listing.state.Pretrial');
-							case 'PretrialPass':
-								return locale.getText('listing.state.PretrialPass');
-							case 'PretrialFail':
-								return locale.getText('listing.state.PretrialFail');
-							case 'Applied':
-								return locale.getText('listing.state.Applied');
-							case 'Nonapplied':
-								return locale.getText('listing.state.Nonapplied');
+							return locale.getText('listing.state.' + data);
+						}
+						
+						if (type == "sort") {
+							switch (data) {
 							case 'Confirmed':
-								return locale.getText('listing.state.Confirmed');
+								return 3;
+							case 'PretrialPass':
+								return 2;
+							case 'PretrialFail':
+								return 1;
 							case 'Nonsubmitted':
-								return locale.getText('listing.state.Nonsubmitted');
+								return 0;
+							default: return -1;
 							}
-							return locale.getText('listing.state.' + states[data]);
 						}
 
 						return data;

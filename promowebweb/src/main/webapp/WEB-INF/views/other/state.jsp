@@ -127,7 +127,7 @@
 									</div>
 								</div>
 							</c:when>
-							<c:when test="${ state eq 'Starged' }">
+							<c:when test="${ state eq 'Started' }">
 								<div class="steps-wrapper">
 									<div class="steps clr">
 										<div class="step current-step last"><span>活动进行中</span></div>
@@ -138,89 +138,78 @@
 					</c:otherwise>
 				</c:choose>
 				
-				<c:if test="${ rewarding }">
-					<c:choose>
-						<c:when test="${state eq 'Created' or state eq 'Unknow' }">
-							<div class="active-status-box">
-								<h3>活动还没开始，请耐心等待活动开始！</h3>
+				<c:choose>
+					<c:when test="${state eq 'Created' or state eq 'Unknow' }">
+						<div class="active-status-box">
+							<h3>活动还没开始，请耐心等待活动开始！</h3>
+							<menu>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
+							</menu>
+						</div>
+					</c:when>
+					<c:when test="${state eq 'Started' }">
+						<div class="active-status-box success">
+							<h3>活动正在进行中！</h3>
+							<menu>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
+							</menu>
+						</div>
+					</c:when>
+					<c:when test="${state eq 'SubsidyCounting' }">
+						<div class="active-status-box success">
+							<h3>恭喜您已完成活动！</h3>
+							<p class="desc">
+								奖励结果统计中，请耐心等待！
+							</p>
+							<menu>
+								<li>
+									<a href="../index" class="btn">返回活动列表</a>
+								</li>
+							</menu>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="active-status-box success">
+							<c:choose>
+								<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
+									<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
+								</c:when>
+								<c:otherwise>
+									<h3>恭喜您已完成本活动！接下来我们的客户经理会联系您关于奖励的相关事宜，请注意接收相关的邮件通知。感谢您的参与!</h3>
+								</c:otherwise>
+							</c:choose>
+							
+							<c:if test="${ not empty rewardDeadline }">
+								<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
+							</c:if>
+							
+							<c:if test="${ rewardType eq 1 or rewardType eq 4 }">
 								<menu>
 									<li>
-										<a href="../index" class="btn">返回活动列表</a>
+										<c:choose>
+											<c:when test="${ state eq 'SubsidySubmitted' }">
+												<a href="#" class="btn">上传奖励申请协议</a>
+											</c:when>
+											<c:when test="${ state eq 'SubsidyRetrievable' }">
+												<a href="#" class="btn">申领奖励</a>
+											</c:when>
+											<c:when test="${ state eq 'SubsidyResubmittable' }">
+												<a href="#" class="btn">重新申领奖励</a>
+											</c:when>
+											<c:otherwise>
+												<a href="#" class="btn">填写奖励申请协议</a>
+											</c:otherwise>
+										</c:choose>
 									</li>
 								</menu>
-							</div>
-						</c:when>
-						<c:when test="${state eq 'Started' }">
-							<div class="active-status-box success">
-								<h3>活动正在进行中！</h3>
-								<menu>
-									<li>
-										<a href="../index" class="btn">返回活动列表</a>
-									</li>
-								</menu>
-							</div>
-						</c:when>
-						<c:when test="${state eq 'SubsidyCounting' }">
-							<div class="active-status-box success">
-								<h3>恭喜您已完成活动！</h3>
-								<p class="desc">
-									奖励结果统计中，请耐心等待！
-								</p>
-								<menu>
-									<li>
-										<a href="../index" class="btn">返回活动列表</a>
-									</li>
-								</menu>
-							</div>
-						</c:when>
-						<c:when test="${state eq 'SubsidyRetrieved' }">
-							<div class="active-status-box success">
-								<h3>您已成功领取等值${promo.reward }元的${rewardType }</h3>
-								<menu>
-									<li>
-										<a href="../index" class="btn">返回活动列表</a>
-									</li>
-								</menu>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="active-status-box success">
-								<c:choose>
-									<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
-										<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
-										<p class="desc">
-											请在${ rewardDeadline }前点击进入领奖流程完成申领。
-										</p>
-										<menu>
-											<li>
-												<c:choose>
-													<c:when test="${ state eq 'SubsidySubmitted' }">
-														<a href="#" class="btn">上传奖励申请协议</a>
-													</c:when>
-													<c:when test="${ state eq 'SubsidyRetrievable' }">
-														<a href="#" class="btn">申领奖励</a>
-													</c:when>
-													<c:when test="${ state eq 'SubsidyResubmittable' }">
-														<a href="#" class="btn">重新申领奖励</a>
-													</c:when>
-													<c:otherwise>
-														<a href="#" class="btn">填写奖励申请协议</a>
-													</c:otherwise>
-												</c:choose>
-											</li>
-										</menu>
-									</c:when>
-									<c:otherwise>
-										<h3>恭喜您已完成本活动！</h3>
-										<p class="desc">
-											接下来我们的客户经理会联系您关于奖励的相关事宜，请注意接收相关的邮件通知。感谢您的参与!
-										</p>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</c:otherwise>
-					</c:choose>
-				</c:if>
+							</c:if>
+						</div>
+					</c:otherwise>
+				</c:choose>
 
 				<%@ include file="activity.jsp" %>
 				

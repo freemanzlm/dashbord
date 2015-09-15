@@ -55,7 +55,7 @@ BizReport.locale = {
 		'type': {
 			'deals': 'Deals招募',
 			'dealsPreset': 'Deals招募預置',
-			'hotsell': '暴款促銷',
+			'hotsell': '爆款促銷',
 			'other': '其它活動'
 		},
 		'state': {

@@ -5,6 +5,7 @@ $(function(){
 	
 	var listingCountJ = $(".my-listing h3 small span");
 	var formBtn = document.getElementById("form-btn");
+	var form = $("#listing-form");
 	
 	var listingTable = new DealsListingTable();
 	listingTable.subscribe({
@@ -21,7 +22,7 @@ $(function(){
 		}});
 	listingTable.update({promoId:pageData.promoId});
 	
-	var form = $("#listing-form").submit(function(){
+	/*var form = $("#listing-form").submit(function(){
 		// if user doesn't select a item, form can't be submitted.
 		var listing = listingTable.selectedItems;
 		if (listing && listing.length > 0) {
@@ -33,7 +34,33 @@ $(function(){
 		}
 		
 		return false;
-	});
+	});*/
+	
+	function submitListings() {
+		var listings = listingTable.getData();
+		form.find("input[name=listings]").val("[" + listings.map(function(item){
+			return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
+		}).join(",") + "]");
+		
+		var data = form.serialize();
+		$.ajax({
+			url: form.prop('action'),
+			type: 'POST',
+			data: data,
+//			contentType: 'application/json',
+			dataType : 'json',
+			success : function(json){
+				if (json && json.status) {
+					location.reload();
+				} else {
+					alertDialog.alert(locale.getText('promo.request.fail'));
+				}
+			},
+			error: function(){
+				alertDialog.alert(locale.getText('promo.request.fail'));
+			}
+		});
+	}
 	
 /*	$(formBtn).click(function(event){
 		var listing = listingTable.selectedItems;
@@ -55,7 +82,8 @@ $(function(){
 	previewDialog.init();
 	previewDialog.subscribe({
 		ok: function(){
-			form.submit();
+			submitListings();
+//			form.submit();
 		}
 	});
 	

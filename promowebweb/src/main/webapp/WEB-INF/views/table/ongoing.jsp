@@ -6,7 +6,7 @@
 	<table id="ongoing-promo-table" class="dataTable">
 		<thead>
 			<tr>
-				<th class="name">${promo.name}</th>
+				<th class="name">活动名称</th>
 				<th class="type">活动类型</th>
 				<th class="promoDlDt">报名截止日期</th>
 				<th class="promoDt">活动时间</th>

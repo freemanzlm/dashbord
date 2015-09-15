@@ -6,7 +6,7 @@
 	<table id="rewarding-promo-table" class="dataTable">
 		<thead>
 			<tr>
-				<th class="name">${promo.name}</th>
+				<th class="name">活动名称</th>
 				<th class="type">活动类型</th>
 				<th class="rewardDlDt">奖励申领截止时间</th>
 				<th class="promoDt">活动时间</th>				

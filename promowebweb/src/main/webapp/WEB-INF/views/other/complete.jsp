@@ -1,15 +1,15 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
+<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
+
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardType" value="加油卡" />
@@ -34,8 +34,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals招募</title>
-	<meta name="description" content="Deals招募 ">
+	<title>其他活动</title>
+	<meta name="description" content="其它活动">
+	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	
@@ -63,11 +64,8 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['deals_state.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
+	
 </head>
 
 <body>
@@ -79,53 +77,48 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step done"><span>可报名</span></div>
-						<div class="step done"><span>已提交预审</span></div>
-						<div class="step done"><span>报名预审中</span></div>
-						<div class="step done"><span>确认报名刊登</span></div>
-						<c:choose>
-							<c:when test="${ rewarding }">
-								<c:choose>
-									<c:when test="${ state eq 'Started' }">
-										<div class="step current-step"><span>活动进行中</span></div>
-										<div class="step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
-									</c:when>
-									<c:when test="${ state eq 'SubsidyCounting' }">
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step current-step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
-									</c:when>
-									<c:otherwise>
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step done"><span>奖励确认中</span></div>
-										<div class="step current-step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
-									</c:otherwise>
-								</c:choose>
-							</c:when>
-							<c:otherwise>
-								<div class="step ${ rewarding ? 'current-step' : '' } last"><span>活动进行中</span></div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>  <!-- steps end -->
+				<h2>其它活动 ${promo.name}</h2>
 				
-				<%@ include file="../stateBox.jsp" %>
+				<c:choose>
+					<c:when test="${ rewarding }">
+						<div class="steps-wrapper">
+							<div class="steps clr">
+								<div class="step done"><span>活动进行中</span></div>
+								<div class="step done"><span>奖励确认中</span></div>
+								<div class="step done"><span>申领奖励</span></div>
+								<div class="step current-step last"><span>活动完成</span></div>
+							</div>
+						</div>  <!-- steps end -->
+					</c:when>
+					<c:otherwise>
+						<div class="steps-wrapper">
+							<div class="steps clr">
+								<div class="step current-step last"><span>活动已结束</span></div>
+							</div>
+						</div>  <!-- steps end -->
+					</c:otherwise>
+				</c:choose>
+				
+				<div class="active-status-box success">
+					<c:choose>
+						<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
+							<h3>您已成功领取等值${promo.reward }元的${rewardType }</h3>
+						</c:when>
+						<c:otherwise>
+							<h3>活动已结束，感谢您的参与！</h3>
+						</c:otherwise>
+					</c:choose>
+					
+					<menu>
+						<li>
+							<a href="../index" class="btn">返回活动列表</a>
+						</li>
+					</menu>
+				</div> <!-- active status box end -->
 				
 				<%@ include file="activity.jsp" %>
-				
-				<div class="mt20 my-listing">
-					<h3>我提交的刊登</h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
-				</div>	
+
 			</div>
-			
 		</div>
 	</div>
 
@@ -135,15 +128,15 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
-
-<script type="text/javascript">
-	var pageData = {
-		promoId: '${promo.promoId}'
-	};
-</script>
+<%@ include file="../dialog/terms.jsp" %>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />
+<script type="text/javascript">
+	$(".terms-conditions").click(function(event){
+		BizReport.termsDialog.show();
+	});
+</script>
 </body>
 </html>

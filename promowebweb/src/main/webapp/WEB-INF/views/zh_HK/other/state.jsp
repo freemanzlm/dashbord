@@ -136,71 +136,80 @@
 					</c:otherwise>
 				</c:choose>
 				
-				<c:if test="${ rewarding }">
-					<div class="active-status-box success">
-						<c:choose>
-							<c:when test="${state eq 'Started' }">
-								<h3>活動正在進行中！</h3>
+				<c:choose>
+					<c:when test="${state eq 'Created' or state eq 'Unknow' }">
+						<div class="active-status-box">
+							<h3>活動還沒開始，請耐心等待活動開始！</h3>
+							<menu>
+								<li>
+									<a href="../index" class="btn">返回活動清單</a>
+								</li>
+							</menu>
+						</div>
+					</c:when>
+					<c:when test="${state eq 'Started' }">
+						<h3>活動正在進行中！</h3>
+						<menu>
+							<li>
+								<a href="../index" class="btn">返回活動清單</a>
+							</li>
+						</menu>
+					</c:when>
+					<c:when test="${state eq 'SubsidyCounting' }">
+						<h3>恭喜您已完成活動！</h3>
+						<p class="desc">獎勵結果統計中，請耐心等待！</p>
+						<menu>
+							<li>
+								<a href="../index" class="btn">返回活動清單</a>
+							</li>
+						</menu>
+					</c:when>
+					<c:when test="${state eq 'SubsidyRetrieved' }">
+						<<h3>您已成功领取等值${promo.reward }元的${rewardType }</h3>
+						<menu>
+							<li>
+								<a href="../index" class="btn">返回活動清單</a>
+							</li>
+						</menu>
+					</c:when>
+					<c:otherwise>
+						<div class="active-status-box success">
+							<c:choose>
+								<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
+									<h3>恭喜，您的獎勵為等值${promo.reward }元的${rewardType }</h3>
+								</c:when>
+								<c:otherwise>
+									<h3>恭喜您已完成本活動！接下來我們的客戶經理會聯系您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!</h3>
+								</c:otherwise>
+							</c:choose>
+							
+							<c:if test="${ not empty rewardDeadline }">
+								請在${ rewardDeadline }前點擊進入領獎流程完成申領。
+							</c:if>
+							
+							<c:if test="${ rewardType eq 1 or rewardType eq 4 }">
 								<menu>
 									<li>
-										<a href="../index" class="btn">返回活動清單</a>
+										<c:choose>
+											<c:when test="${ state eq 'SubsidySubmitted' }">
+												<a href="../index" class="btn">上傳獎勵申請協定</a>
+											</c:when>
+											<c:when test="${ state eq 'SubsidyRetrievable' }">
+												<a href="#" class="btn">申領獎勵</a>
+											</c:when>
+											<c:when test="${ state eq 'SubsidyResubmittable' }">
+												<a href="#" class="btn">重新申領獎勵</a>
+											</c:when>
+											<c:otherwise>
+												<a href="../index" class="btn">填寫獎勵申請協定</a>
+											</c:otherwise>
+										</c:choose>
 									</li>
 								</menu>
-							</c:when>
-							<c:when test="${state eq 'SubsidyCounting' }">
-								<h3>恭喜您已完成活動！</h3>
-								<p class="desc">獎勵結果統計中，請耐心等待！</p>
-								<menu>
-									<li>
-										<a href="../index" class="btn">返回活動清單</a>
-									</li>
-								</menu>
-							</c:when>
-							<c:when test="${state eq 'SubsidyRetrieved' }">
-								<<h3>您已成功领取等值${promo.reward }元的${rewardType }</h3>
-								<menu>
-									<li>
-										<a href="../index" class="btn">返回活動清單</a>
-									</li>
-								</menu>
-							</c:when>
-							<c:otherwise>
-								<c:choose>
-									<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
-										<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
-										<p class="desc">
-											請在${ rewardDeadline }前點擊進入領獎流程完成申領。
-										</p>
-										<menu>
-											<li>
-												<c:choose>
-													<c:when test="${ state eq 'SubsidySubmitted' }">
-														<a href="../index" class="btn">上傳獎勵申請協定</a>
-													</c:when>
-													<c:when test="${ state eq 'SubsidyRetrievable' }">
-														<a href="#" class="btn">申領獎勵</a>
-													</c:when>
-													<c:when test="${ state eq 'SubsidyResubmittable' }">
-														<a href="#" class="btn">重新申領獎勵</a>
-													</c:when>
-													<c:otherwise>
-														<a href="../index" class="btn">填寫獎勵申請協定</a>
-													</c:otherwise>
-												</c:choose>
-											</li>
-										</menu>
-									</c:when>
-									<c:otherwise>
-										<h3>恭喜您已完成本活動！</h3>
-										<p class="desc">
-											接下來我們的客戶經理會聯系您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!
-										</p>
-									</c:otherwise>
-								</c:choose>
-							</c:otherwise>
-						</c:choose>
-					</div>			
-				</c:if>
+							</c:if>
+						</div>
+					</c:otherwise>
+				</c:choose>
 
 				<%@ include file="activity.jsp" %>
 				

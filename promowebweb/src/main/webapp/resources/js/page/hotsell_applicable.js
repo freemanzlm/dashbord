@@ -3,7 +3,7 @@ $(function(){
 	var alertDialog = BizReport.alertDialog;
 	var locale = BizReport.locale;
 	
-	var listingCountJ = $(".my-listing h3 small span");
+	var listingCountJ = $(".my-listing h3 small span"), form = $("#listing-form");
 	
 	var listingTable = new HotsellListingTable();
 	listingTable.subscribe({
@@ -26,6 +26,32 @@ $(function(){
 		}});
 	listingTable.update({promoId:pageData.promoId});
 	
+	function submitListings() {
+		var listings = listingTable.getData();
+		form.find("input[name=listings]").val("[" + listings.map(function(item){
+			return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
+		}).join(",") + "]");
+		
+		var data = form.serialize();
+		$.ajax({
+			url: form.prop('action'),
+			type: 'POST',
+			data: data,
+//			contentType: 'application/json',
+			dataType : 'json',
+			success : function(json){
+				if (json && json.status) {
+					location.reload();
+				} else {
+					alertDialog.alert(locale.getText('promo.request.fail'));
+				}
+			},
+			error: function(){
+				alertDialog.alert(locale.getText('promo.request.fail'));
+			}
+		});
+	}
+	
 	var formBtn = document.getElementById("form-btn");
 	var acceptCheckbox = $("#accept").change(function(){
 		if (this.checked) {
@@ -35,7 +61,7 @@ $(function(){
 		}
 	});
 	
-	var form = $("form").submit(function(){
+	/*var form = $("form").submit(function(){
 		// if user doesn't select a item, form can't be submitted.
 		var listings = listingTable.selectedItems;
 		if (listings && listings.length > 0) {
@@ -48,7 +74,7 @@ $(function(){
 		}
 		
 		return false;
-	});
+	});*/
 	
 //	$(formBtn).click(function(event){
 //		var listing = listingTable.selectedItems;
@@ -72,7 +98,8 @@ $(function(){
 	previewDialog.init();
 	previewDialog.subscribe({
 		ok: function(){
-			form.submit();
+			submitListings();
+//			form.submit();
 		}
 	});
 	
