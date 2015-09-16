@@ -163,7 +163,7 @@ var BizReport = BizReport || {};
 							case 'SubsidySubmmitted':
 							case 'SubsidyRetrievable':
 							case 'SubsidyResubmittable':
-								if (full.rewardUrl) {
+								if ((full.rewardType == 1 || full.rewardType == 4) && full.rewardUrl) {
 									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
 									display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								} else {
@@ -178,19 +178,21 @@ var BizReport = BizReport || {};
 						
 						if (type == "sort") {
 							
-							switch (data) {
-							case 'SubsidyWaiting':
-								return 8;
-							case 'SubsidyResubmittable':
-								return 9;
-							case 'SubsidyRetrievable':
-								return 10;
-							case 'SubsidyAccessed':
-								return 11;
-							case 'SubsidySubmmitted':
-								return 12;
-							case 'SubsidyUploaded':
-								return 13;
+							if ((full.rewardType == 1 || full.rewardType == 4) && full.rewardUrl){
+								switch (data) {
+								case 'SubsidyWaiting':
+									return 8;
+								case 'SubsidyResubmittable':
+									return 9;
+								case 'SubsidyRetrievable':
+									return 10;
+								case 'SubsidyAccessed':
+									return 11;
+								case 'SubsidySubmmitted':
+									return 12;
+								case 'SubsidyUploaded':
+									return 13;
+								}
 							}
 							
 							return 20;

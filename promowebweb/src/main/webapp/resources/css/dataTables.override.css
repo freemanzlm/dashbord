@@ -75,6 +75,11 @@ table.dataTable tbody tr.selected {
   background-color: #EAEFF5;
 }
 
+table.dataTable tbody tr.selectable td,
+table.dataTable tbody tr.selected td {
+  border-bottom: 1px solid #ccc;
+}
+
 .datatable_header .dataTables_info {
 	padding-top: 0;
 	padding-bottom: 0.755em;

@@ -22,7 +22,10 @@ $(function(){
 	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "hotsell-listing-table"
+			tableId: "hotsell-listing-table",
+			customTableConfig: {
+				asStripeClasses: ['selectable']
+			}
 		}});
 	listingTable.update({promoId:pageData.promoId});
 	

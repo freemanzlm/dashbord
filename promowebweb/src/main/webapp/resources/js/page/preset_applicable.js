@@ -18,7 +18,10 @@ $(function(){
 	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "deals-listing-table"
+			tableId: "deals-listing-table",
+			customTableConfig: {
+				asStripeClasses: ['selectable']
+			}
 		}});
 	listingTable.update({promoId:pageData.promoId});
 	

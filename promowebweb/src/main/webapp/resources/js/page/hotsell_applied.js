@@ -5,12 +5,17 @@ $(function(){
 	var locale = BizReport.locale;	
 	var confirmDialog = new BizReport.ConfirmDialog();
 	
+	var customTableConfig = pageData && pageData.expired ? {} : {
+		asStripeClasses: ['selectable']
+	};
+	
 	var listingCountJ = $(".my-listing h3 small span");
 	
 	var listingTable = new HotsellListingTable();
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "hotsell-listing-table"
+			tableId: "hotsell-listing-table",
+			customTableConfig: customTableConfig
 		}});
 	listingTable.subscribe({
 		initialized: function() {

@@ -4,15 +4,17 @@ $(function(){
 	var locale = BizReport.locale;
 	var confirmDialog = new BizReport.ConfirmDialog();
 	
+	var customTableConfig = pageData && pageData.expired ? {} : {
+		asStripeClasses: ['selectable']
+	};
+	
 	var listingCountJ = $(".my-listing h3 small span"), form = $("#listing-form");
 	
 	var listingTable = new DealsListingTable();
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "deals-listing-table"
-//			customTableConfig: {
-//				asStripeClasses: []
-//			}
+			tableId: "deals-listing-table",
+			customTableConfig: customTableConfig
 		}});
 	listingTable.subscribe({
 		initialized: function() {

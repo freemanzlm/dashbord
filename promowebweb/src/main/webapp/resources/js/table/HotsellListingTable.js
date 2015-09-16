@@ -70,7 +70,9 @@ var BizReport = BizReport || {};
 					// update checkbox status
 					if (settings.aoColumns[0].bVisible) {
 						settings.aoData.forEach(function(oRow){
-							$(oRow.nTr).find("input[type=checkbox]").prop("checked", oRow._aData.checked);
+							var jTr = $(oRow.nTr);
+							jTr.find("input[type=checkbox]:enabled").prop("checked", oRow._aData.checked);
+							oRow._aData.checked ? jTr.addClass("selected") : jTr.removeClass('selected');
 						});
 					}
 				},
@@ -256,13 +258,15 @@ var BizReport = BizReport || {};
 					item.checked = checkbox.checked;
 				});
 				
+				var enabledBoxes = that.dataTable.table.find("input[name=item]:enabled").prop("checked", this.checked);
+				
 				if (this.checked) {
-					that.selectedItems = Array.prototype.slice.apply(aRows) || [];					
+					that.selectedItems = Array.prototype.slice.apply(aRows) || [];
+					enabledBoxes.parents('tr').addClass("selected");
 				} else {
 					that.selectedItems.splice(0); // empty selectedItems
+					enabledBoxes.parents('tr').removeClass("selected");
 				}
-				
-				that.dataTable.table.find("input[name=item]").prop("checked", this.checked);
 				
 				that.publish("selectChange");
 			});
@@ -270,14 +274,17 @@ var BizReport = BizReport || {};
 			$("input[name=item]", this.container.get(0)).live("click", function(){
 				if (!oDataTable) return;
 				
+				var parentTr = $(this).parents("tr");
 				var oData = oDataTable.row(this.getAttribute("rowindex")).data();
 				oData.checked = this.checked;
 				
 				if (this.checked) {
 					that.selectedItems.push(oData);
+					parentTr.addClass("selected");
 					that.checkAllBox.prop("checked", that.selectedItems.length == that.getDataSize());
 				} else {
 					that.checkAllBox.removeAttr("checked");
+					parentTr.removeClass("selected");
 					that.removeItem(oData);
 				}
 				

@@ -5,6 +5,10 @@ $(function(){
 	var confirmDialog = new BizReport.ConfirmDialog();
 	var locale = BizReport.locale;
 	
+	var customTableConfig = pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired) ? {} : {
+		asStripeClasses: ['selectable']
+	};
+	
 	var listingCountJ, listingTable, form;
 	
 	listingCountJ = $(".my-listing h3 small span");
@@ -26,7 +30,8 @@ $(function(){
 	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "deals-listing-table"
+			tableId: "deals-listing-table",
+			customTableConfig: customTableConfig
 		},
 		fnDataUpdatedCallback: function(data){
 			var listings = data.data;

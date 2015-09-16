@@ -134,6 +134,7 @@
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
+<res:jsSlot id="page-js2" />
 <res:jsSlot id="exec-js" />
 </body>
 </html>
