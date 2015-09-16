@@ -10,23 +10,6 @@
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
-<c:choose>
-	<c:when test="${ promo.rewardType eq 1 }">
-		<c:set var="rewardType" value="加油卡" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardType" value="京東卡" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 3 }">
-		<c:set var="rewardType" value="萬邑通" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 4 }">
-		<c:set var="rewardType" value="ebay萬裏通積分" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 5 }">
-		<c:set var="rewardType" value="郵票" />
-	</c:when>
-</c:choose>
 
 <r:includeJquery jsSlot="body" />
 <r:client />

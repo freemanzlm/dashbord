@@ -70,7 +70,8 @@ table.dataTable tbody tr.even {
   background-color: #fdfdfd;
 }
 
-table.dataTable tbody tr.odd {
+table.dataTable tbody tr.odd,
+table.dataTable tbody tr.selected {
   background-color: #EAEFF5;
 }
 

@@ -12,19 +12,19 @@
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">
-		<c:set var="rewardType" value="加油卡" />
+		<c:set var="rewardName" value="加油卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardType" value="京東卡" />
+		<c:set var="rewardName" value="京東卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 3 }">
-		<c:set var="rewardType" value="萬邑通" />
+		<c:set var="rewardName" value="萬邑通" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 4 }">
-		<c:set var="rewardType" value="ebay萬裏通積分" />
+		<c:set var="rewardName" value="ebay萬裏通積分" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 5 }">
-		<c:set var="rewardType" value="郵票" />
+		<c:set var="rewardName" value="郵票" />
 	</c:when>
 </c:choose>
 
@@ -93,8 +93,8 @@
 				
 				<div class="active-status-box success">
 					<c:choose>
-						<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
-							<h3>您已成功領取等值${promo.reward }元的${rewardType }</h3>
+						<c:when test="${ promo.rewardType eq 1 or promo.rewardType eq 4 }">
+							<h3>您已成功領取等值${promo.reward }元的${rewardName }</h3>
 						</c:when>
 						<c:otherwise>
 							<h3>活動已結束，感謝您的參與！</h3>

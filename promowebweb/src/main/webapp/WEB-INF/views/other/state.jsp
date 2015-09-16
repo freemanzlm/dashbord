@@ -12,19 +12,19 @@
 
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">
-		<c:set var="rewardType" value="加油卡" />
+		<c:set var="rewardName" value="加油卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardType" value="京东卡" />
+		<c:set var="rewardName" value="京东卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 3 }">
-		<c:set var="rewardType" value="万邑通" />
+		<c:set var="rewardName" value="万邑通" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 4 }">
-		<c:set var="rewardType" value="ebay万里通积分" />
+		<c:set var="rewardName" value="ebay万里通积分" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 5 }">
-		<c:set var="rewardType" value="邮票" />
+		<c:set var="rewardName" value="邮票" />
 	</c:when>
 </c:choose>
 
@@ -169,8 +169,8 @@
 					<c:otherwise>
 						<div class="active-status-box success">
 							<c:choose>
-								<c:when test="${ rewardType eq 1 or rewardType eq 4 }">
-									<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardType }</h3>
+								<c:when test="${ promo.rewardType eq 1 or promo.rewardType eq 4 }">
+									<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardName }</h3>
 								</c:when>
 								<c:otherwise>
 									<h3>恭喜您已完成本活动！接下来我们的客户经理会联系您关于奖励的相关事宜，请注意接收相关的邮件通知。感谢您的参与!</h3>
@@ -182,7 +182,7 @@
 							</c:if>
 							
 							<c:choose>
-								<c:when test="${ (rewardType eq 1 or rewardType eq 4) and not empty promo.rewardUrl }">
+								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 4) and not empty promo.rewardUrl }">
 									<menu>
 										<li>
 											<c:choose>
