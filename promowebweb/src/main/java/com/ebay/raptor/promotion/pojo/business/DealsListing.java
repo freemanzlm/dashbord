@@ -5,36 +5,42 @@ import com.ebay.app.raptor.promocommon.export.Header;
 
 public class DealsListing {
 	
+	@Header(name = "招募SKU编号", order=1, format=ColumnFormat.String)
 	private String skuId;
 
-	@Header(name = "招募SKU名称", order=1, format=ColumnFormat.String)
+	@Header(name = "招募SKU名称", order=2, format=ColumnFormat.String)
 	private String skuName;
 
-	@Header(name = "刊登编号", order=2, format=ColumnFormat.IntNum)
+	@Header(name = "刊登编号", order=3, format=ColumnFormat.IntNum)
 	private Long itemId;
 
-	@Header(name = "刊登名称", order=3, format=ColumnFormat.String)
-	private String itemName;
+	@Header(name = "刊登名称", order=4, format=ColumnFormat.String)
+	private String itemTitle;
 
-	@Header(name = "刊登当前单价（USD）", order=4, format=ColumnFormat.FltNum)
-	private Float price;
+	@Header(name = "刊登当前单价（USD）", order=5, format=ColumnFormat.FltNum)
+	private Float currPrice;
+	
+	@Header(name = "刊登活动单价（USD）", order=6, format=ColumnFormat.FltNum)
+	private Float dealsPrice;
+
+	@Header(name = "刊登库存量", order=7, format=ColumnFormat.IntNum)
+	private Long stockNum;
+	
+	@Header(name = "备货完成时间", order=8, format=ColumnFormat.String)
+	private String stockReadyDate;
+	
+	private Float proposePrice;
 
 	private String currency;
 
-	@Header(name = "刊登刊登库存量", order=6, format=ColumnFormat.IntNum)
-	private Float inventory;
-
-	@Header(name = "刊登活动单价（USD）", order=5, format=ColumnFormat.FltNum)
-	private Float actPrice;
-
 	private String state;
 
-	public Long getItemId() {
-		return itemId;
+	public String getSkuId() {
+		return skuId;
 	}
 
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
+	public void setSkuId(String skuId) {
+		this.skuId = skuId;
 	}
 
 	public String getSkuName() {
@@ -45,20 +51,52 @@ public class DealsListing {
 		this.skuName = skuName;
 	}
 
-	public String getItemName() {
-		return itemName;
+	public Long getItemId() {
+		return itemId;
 	}
 
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
+	public void setItemId(Long itemId) {
+		this.itemId = itemId;
 	}
 
-	public Float getPrice() {
-		return price;
+	public String getItemTitle() {
+		return itemTitle;
 	}
 
-	public void setPrice(Float price) {
-		this.price = price;
+	public void setItemTitle(String itemTitle) {
+		this.itemTitle = itemTitle;
+	}
+
+	public Float getCurrPrice() {
+		return currPrice;
+	}
+
+	public void setCurrPrice(Float currPrice) {
+		this.currPrice = currPrice;
+	}
+
+	public Float getDealsPrice() {
+		return dealsPrice;
+	}
+
+	public void setDealsPrice(Float dealsPrice) {
+		this.dealsPrice = dealsPrice;
+	}
+
+	public Long getStockNum() {
+		return stockNum;
+	}
+
+	public void setStockNum(Long stockNum) {
+		this.stockNum = stockNum;
+	}
+
+	public String getStockReadyDate() {
+		return stockReadyDate;
+	}
+
+	public void setStockReadyDate(String stockReadyDate) {
+		this.stockReadyDate = stockReadyDate;
 	}
 
 	public String getCurrency() {
@@ -69,22 +107,6 @@ public class DealsListing {
 		this.currency = currency;
 	}
 
-	public Float getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(Float inventory) {
-		this.inventory = inventory;
-	}
-
-	public Float getActPrice() {
-		return actPrice;
-	}
-
-	public void setActPrice(Float actPrice) {
-		this.actPrice = actPrice;
-	}
-
 	public String getState() {
 		return state;
 	}
@@ -93,12 +115,11 @@ public class DealsListing {
 		this.state = state;
 	}
 
-	public String getSkuId() {
-		return skuId;
+	public Float getProposePrice() {
+		return proposePrice;
 	}
 
-	public void setSkuId(String skuId) {
-		this.skuId = skuId;
+	public void setProposePrice(Float proposePrice) {
+		this.proposePrice = proposePrice;
 	}
-
 }
