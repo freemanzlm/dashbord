@@ -17,7 +17,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "rewarding-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getSubsidyPromotions",
+				sAjaxSource: "promotion/getSubsidyPromotions"
 			}
 		}});
 	rewardingPromoTable.subscribe({
@@ -34,7 +34,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "end-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getEndPromotions",
+				sAjaxSource: "promotion/getEndPromotions"
 			}
 		}});
 	endPromoTable.update();

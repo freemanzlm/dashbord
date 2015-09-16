@@ -77,15 +77,15 @@ var BizReport = BizReport || {};
 				    {data: 'itemId'},
 				    {data: 'itemId'},
 					{data: 'skuName'},
-					{data: 'price'},
-					{data: 'actPrice'},
+					{data: 'currPrice'},
+					{data: 'dealsPrice'},
 					{data: 'inventory'},
 					{data: 'state'}
 				],
 				aoColumnDefs: [{
 					aTargets: ["itemId"],
 					bSortable: false,
-					sDefaultContent: "",					
+					sDefaultContent: "",
 					sType: "string",
 					sWidth: "30px",
 					sClass: "text-center",
@@ -105,7 +105,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",					
 					sType: "string",
 					sWidth: "150px",
-					sClass: "item-title",
+					sClass: "pic-id",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
 							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + data + ".jpg' height='50' width='50'/>";
@@ -120,7 +120,6 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",					
 					sType: "string",
 					sWidth: "300px",
-					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						return data;
 					}					
@@ -157,8 +156,8 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (full.sellerPrice > 0 && full.sellerPrice != full.price) {
-								return "<span class='red'>" + parseFloat(data).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.sellerPrice).toUSFixed(2) + " " + full.currency + ")</del>";
+							if (full.proposePrice > 0 && full.proposePrice != full.dealsPrice) {
+								return "<span class='red'>" + parseFloat(full.proposePrice).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.dealsPrice).toUSFixed(2) + " " + full.currency + ")</del>";
 							} else {
 								return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
 							}

@@ -10,6 +10,9 @@ $(function(){
 	listingTable.init({
 		dataTableConfig: {
 			tableId: "deals-listing-table"
+//			customTableConfig: {
+//				asStripeClasses: []
+//			}
 		}});
 	listingTable.subscribe({
 		initialized: function() {
