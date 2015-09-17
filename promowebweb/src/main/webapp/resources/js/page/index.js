@@ -44,7 +44,7 @@ $(function(){
 			dataTableConfig: {
 				tableId: "pending-promo-table",
 				customTableConfig: {
-					sAjaxSource: "promotion/getSubsidyPromotions"
+					sAjaxSource: "promotion/getUnconfirmedPromotions"
 				}
 			}});
 		pendingPromoTable.update();

@@ -1,7 +1,6 @@
 package com.ebay.raptor.promotion.list.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 

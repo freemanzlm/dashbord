@@ -6,7 +6,8 @@ public enum ViewContext {
 	FormURL(2, "formUrl"),
 	PromotionId(3, "promoId"),
 	ErrorMsg(4, "errorMsg"),
-	Agreement(5, "agreement");
+	Agreement(5, "agreement"),
+	IsUnconfirmedVisable(6, "invisible");
 	
 	private Integer id;
 

@@ -1,6 +1,5 @@
 package com.ebay.raptor.promotion.pojo;
 
-import com.ebay.app.raptor.promocommon.util.CommonConstant;
 
 public class UserData {
     public UserData(){}

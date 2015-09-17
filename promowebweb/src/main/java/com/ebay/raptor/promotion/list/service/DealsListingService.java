@@ -180,28 +180,4 @@ public class DealsListingService extends BaseService {
 		}
 	}
 	
-//	public boolean confirmDealsListings(List<Listing> listings, String promoId, String uid) throws PromoException {
-//		String uri = url(ResourceProvider.ListingRes.confirmDealsListings);
-//		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
-//		req.setListings(listings);
-//		req.setPromoId(promoId);
-//		req.setUid(Long.parseLong(uid));
-//		GingerClientResponse resp = httpPost(uri, req);
-//		if(Status.OK.getStatusCode() == resp.getStatus()){
-//			System.out.println(resp.getEntity(String.class));
-////			GenericType<ListDataServiceResponse<HotSellListing>> type = new GenericType<ListDataServiceResponse<HotSellListing>>(){};
-////			ListDataServiceResponse<HotSellListing> listing = resp.getEntity(type);
-////			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
-////				return listing.getData();
-////			} else {
-////				if(null != listing){
-////					throw new PromoException(listing.getErrorMessage().getError().toString());
-////				}
-////			}
-//		} else {
-//			throw new PromoException("Internal Error Happens.");
-//		}
-//		return Boolean.FALSE;
-//	}
-	
 }

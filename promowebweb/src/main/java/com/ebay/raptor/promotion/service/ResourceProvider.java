@@ -15,6 +15,8 @@ public class ResourceProvider {
 
 		String _getPromotions = "/getPromotions";
 		String getPromotions = "/getPromotions/uid/{uid}";
+		String _getUnconfirmedPromotions = "/getUnconfirmedPromotions";
+		String getUnconfirmedPromotions = "/getUnconfirmedPromotions/uid/{uid}";
 		String _getIngPromotions = "/getIngPromotions";
 		String getIngPromotions = "/getIngPromotions/uid/{uid}";
 		String _getSubsidyPromotions = "/getSubsidyPromotions";
@@ -23,7 +25,7 @@ public class ResourceProvider {
 		String getEndPromotions = "/getEndPromotions/uid/{uid}";
 		
 		String _getPromotionById = "/getPromotionById";
-		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}";
+		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}/isAdmin/{isAdmin}";
 	}
 	
 	public interface UserPromotionRes {

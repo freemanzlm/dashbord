@@ -20,6 +20,8 @@ import com.ebay.app.raptor.promocommon.service.CSApiService;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
+import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
@@ -38,6 +40,7 @@ public class IndexController {
             HttpServletResponse response) throws MissingArgumentException {
         String hackId = request.getParameter("hack_id");   // name
         String userId = request.getParameter("user_id");   // id
+        String admin = request.getParameter("admin");
 
         String ip = request.getRemoteAddr();
 
@@ -52,6 +55,12 @@ public class IndexController {
         if (StringUtil.isEmpty(hackId)) {
             hackId = userId;
         }
+        
+        //Add admin cookie
+        Cookie adminCookie = new Cookie(CookieUtil.ADMIN_COOKIE_NAME, !StringUtil.isEmpty(admin) + "");
+	   	adminCookie.setMaxAge(CookieUtil.COOKIE_LIFESPAN);
+	   	adminCookie.setPath(CookieUtil.COOKIE_PATH_ROOT);
+        response.addCookie(adminCookie);
 
         if (!StringUtil.isEmpty(userId)) {
 
@@ -93,6 +102,10 @@ public class IndexController {
             HttpServletResponse response,
             @ModelAttribute RequestParameter param) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
+        //Set unconfirmed status
+        UserData userDt = CookieUtil.getUserDataFromCookie(request);
+        mav.addObject(ViewContext.IsUnconfirmedVisable.getAttr(), userDt.getAdmin());
+        
         if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(param.getLang())) {
         	mav.setViewName("zh_HK/index");
         } else {

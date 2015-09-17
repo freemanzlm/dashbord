@@ -58,7 +58,7 @@ public class PromotionDataController{
 		UserData userData = CookieUtil.getUserDataFromCookie(request);
 
 		try {
-			Promotion promo = service.getPromotionById(promoId, userData.getUserId());
+			Promotion promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 
 			if(null != promo){
 				ContextViewRes res = handleViewBasedOnPromotion(promo);
@@ -95,6 +95,22 @@ public class PromotionDataController{
 		return result;
 	}
 	
+	
+	@GET
+	@RequestMapping(ResourceProvider.PromotionRes._getUnconfirmedPromotions)
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getUnconfirmedPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
+
+		try {
+			resp.setData(service.getUnconfirmedPromotions(userData.getUserId()));
+		} catch (PromoException e) {
+			logger.error("Unable to get unconfirmed promotions of user " + userData.getUserId(), e);
+			resp.setStatus(Boolean.FALSE);
+		}
+		return resp;
+	}
 
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getIngPromotions)
@@ -121,7 +137,7 @@ public class PromotionDataController{
 		try {
 			resp.setData(service.getSubsidyPromotions(userData.getUserId()));
 		} catch (PromoException e) {
-			logger.error("Unable to get subsidy promotion of user " + userData.getUserId(), e);
+			logger.error("Unable to get subsidy promotions of user " + userData.getUserId(), e);
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
@@ -136,33 +152,23 @@ public class PromotionDataController{
 		try {
 			resp.setData(service.getEndPromotions(userData.getUserId()));
 		} catch (PromoException e) {
+			logger.error("Unable to get end promotions of user " + userData.getUserId(), e);
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
 	}
 	
-//	@GET
-//	@RequestMapping(ResourceProvider.PromotionRes._getPromotions)
-//	@ResponseBody
-//	public ListDataWebResponse<Promotion> getPromotions(HttpServletRequest request) throws MissingArgumentException {
-//		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-//		UserData userData = CookieUtil.getUserDataFromCookie(request);
-//		try {
-//			resp.setData(service.getPromotions(userData.getUserId()));
-//		} catch (PromoException e) {
-//			logger.error("Unable to get promotions of user " + userData.getUserId(), e);
-//			resp.setStatus(Boolean.FALSE);
-//		}
-//		return resp;
-//	}
 	
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getPromotionById)
 	@ResponseBody
-	public DataWebResponse<Promotion> getPromotionById(@RequestParam("promoId")String promoId, @RequestParam("uid") Long uid) {
+	public DataWebResponse<Promotion> getPromotionById(HttpServletRequest request, 
+			@RequestParam("promoId")String promoId, 
+			@RequestParam("uid") Long uid) throws MissingArgumentException {
 		DataWebResponse<Promotion> resp = new DataWebResponse<Promotion>();
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
 		try {
-			resp.setData(service.getPromotionById(promoId, uid));
+			resp.setData(service.getPromotionById(promoId, uid, userData.getAdmin()));
 		} catch (PromoException e) {
 			logger.error("Unable to get promotion of user " + uid + " and promotionID " + promoId, e);
 			resp.setStatus(Boolean.FALSE);
