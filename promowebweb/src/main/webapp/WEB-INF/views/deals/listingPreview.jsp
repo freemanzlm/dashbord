@@ -68,9 +68,9 @@
 				
 				<div class="mt20 page-bottom-actions">
 					<form action="${formUrl }" method="post">
-						<input type="hidden" name="promoId" value="4324324"/>
+						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<!-- TODO put selected listing ids here -->
-						<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
+						<input type="hidden" name="listings" value="[]" />
 						<a href="applicable">返回修改</a>
 						<button type="submit" class="btn">提交报名信息</button>
 					</form>

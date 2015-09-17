@@ -81,7 +81,7 @@ var BizReport = BizReport || {};
 					{data: 'skuName'},
 					{data: 'currPrice'},
 					{data: 'dealsPrice'},
-					{data: 'inventory'},
+					{data: 'stockNum'},
 					{data: 'state'}
 				],
 				aoColumnDefs: [{
