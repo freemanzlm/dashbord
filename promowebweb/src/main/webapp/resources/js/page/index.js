@@ -1,9 +1,8 @@
 $(function(){
-	console.log("world");
-	
 	var OnGoingPromoTable = BizReport.OnGoingPromoTable;
 	var RewardingPromoTable = BizReport.RewardingPromoTable;
 	var EndPromoTable = BizReport.EndPromoTable;
+	var PendingPromoTable = BizReport.PendingPromoTable;
 	
 	var onGogingTable = new OnGoingPromoTable();
 	onGogingTable.init({
@@ -39,5 +38,15 @@ $(function(){
 		}});
 	endPromoTable.update();
 	
-	console.log("hello");
+	if (document.getElementById('pending-promo-table')) {
+		var pendingPromoTable = new PendingPromoTable();
+		pendingPromoTable.init({
+			dataTableConfig: {
+				tableId: "pending-promo-table",
+				customTableConfig: {
+					sAjaxSource: "promotion/getSubsidyPromotions"
+				}
+			}});
+		pendingPromoTable.update();
+	}
 });

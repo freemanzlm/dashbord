@@ -49,6 +49,7 @@
 	<res:useJs value="${res.js.local.js.table['OnGoingPromoTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['RewardingPromoTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['EndPromoTable.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['PendingPromoTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['index.js']}" target="exec-js"></res:useJs>
 	
 </head>
@@ -64,6 +65,24 @@
 			<div class="clr" style="margin-bottom: 15px;">
 				<h2>活动促销</h2>
 			</div>
+			
+			<c:if test="${ invisible eq true }">
+				<div class="pane pane-table">
+					<div class="header">
+						<div class="fr cl">
+							<select name="" id="" class="fr type-filter">
+								<option value="">全部活动类型</option>
+								<option value="0">爆款促销</option>
+								<option value="1">Deals招募</option>
+								<option value="2">Deals预置</option>
+								<option value="3">其它活动</option>
+							</select>
+						</div>
+						<h3>等待开放的活动</h3>
+					</div>
+					<jsp:include page="table/pending.jsp"></jsp:include>
+				</div>
+			</c:if>			
 			
 			<div class="pane pane-table">
 				<div class="header">
