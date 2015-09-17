@@ -153,9 +153,10 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["target-price", "compensate", "target-sales"],
+					aTargets: ["target-price", "compensate", "target-sales", 'compensate-per'],
 					sClass: "text-right",
 					sDefaultContent: "",
+					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
@@ -238,6 +239,7 @@ var BizReport = BizReport || {};
 				    if (data && data.status) {
 				        that.container.find(".datatable_pager").show();
 				    } else {
+				    	that.initDataTable();
 				        that.container.find(".datatable_pager").hide();
 				    }
 				    

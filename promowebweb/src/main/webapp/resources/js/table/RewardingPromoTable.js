@@ -167,6 +167,7 @@ var BizReport = BizReport || {};
 									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
 									display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								} else {
+									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.SubsidyWaiting') + "</a>";
 									display = "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
 								
@@ -246,6 +247,7 @@ var BizReport = BizReport || {};
 				    if (data && data.status) {
 				        that.container.find(".datatable_pager").show();
 				    } else {
+				    	that.initDataTable();
 				        that.container.find(".datatable_pager").hide();
 				    }
 				    
@@ -266,14 +268,6 @@ var BizReport = BizReport || {};
 		
 		update: function(param) {
 			this.dataTable.update(param);
-		},
-		
-		fnOpenCallback: function(nTr) {
-			var html = null;
-			if (this.config.fnOpenCallback) {
-				html = this.config.fnOpenCallback.call(this);
-			}
-			return this.dataTable.$dataTable.fnOpen(nTr, html || "", "open-tr");
 		},
 		
 		getDataSize: function() {
