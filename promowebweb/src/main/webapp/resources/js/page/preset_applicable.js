@@ -20,7 +20,8 @@ $(function(){
 		dataTableConfig: {
 			tableId: "deals-listing-table",
 			customTableConfig: {
-				asStripeClasses: ['selectable']
+				asStripeClasses: ['selectable'],
+				aoColumnDefs: [{bVisible: true}]
 			}
 		}});
 	listingTable.update({promoId:pageData.promoId});

@@ -87,6 +87,7 @@ var BizReport = BizReport || {};
 				aoColumnDefs: [{
 					aTargets: ["itemId"],
 					bSortable: false,
+					bVisible: false,
 					sDefaultContent: "",
 					sType: "string",
 					sWidth: "30px",
@@ -202,9 +203,9 @@ var BizReport = BizReport || {};
 		init: function(config) {
 			var that = this;
 
-			this.dataTableConfig = $.extend({}, defaultDataTableConfigs, config.dataTableConfig);
+			this.dataTableConfig = $.extend(true, {}, defaultDataTableConfigs, config.dataTableConfig);
 
-			this.dataTableConfig.tableConfig = $.extend({}, this.dataTableConfig.tableConfig, this.dataTableConfig.customTableConfig);
+			this.dataTableConfig.tableConfig = $.extend(true, {}, this.dataTableConfig.tableConfig, this.dataTableConfig.customTableConfig);
 	
 			this.config = $.extend({}, config);
 			this.dataTable = new namespace.DataTable(this.dataTableConfig);

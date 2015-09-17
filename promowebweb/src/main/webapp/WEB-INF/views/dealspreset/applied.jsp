@@ -97,7 +97,11 @@
 				<%@ include file="activity.jsp" %>
 		
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登<small>（已选 <span>0</span> 项）</small></h3>
+					<h3>我提交的刊登
+						<c:if test="${ not expired }">
+							<small>（已选 <span>0</span> 项）</small>
+						</c:if>
+					</h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 				

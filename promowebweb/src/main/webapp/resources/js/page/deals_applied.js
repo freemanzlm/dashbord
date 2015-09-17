@@ -74,15 +74,4 @@ $(function(){
 		}
 	});
 	
-
-	/*var termsDialog = BizReport.termsDialog;
-	termsDialog.subscribe({
-		"scrollEnd": function() {
-			acceptCheckbox.removeAttr("disabled");
-		}
-	});
-	$(".terms-conditions").click(function(event){
-		termsDialog.show();
-	});*/
-	
 });

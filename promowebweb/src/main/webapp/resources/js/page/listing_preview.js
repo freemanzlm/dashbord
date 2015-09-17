@@ -23,5 +23,4 @@ $(function(){
 		}});
 	listingTable.update();
 	
-	
 });

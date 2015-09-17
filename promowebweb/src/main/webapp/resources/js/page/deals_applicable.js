@@ -79,14 +79,4 @@ $(function(){
 	/*var activityDetail = $("#activity-detail");
 	activityDetail.html(activityDetail.html().replace(/&lt;/g, "<").replace(/&gt;/g, ">"));*/
 	
-	/*var termsDialog = BizReport.termsDialog;
-	termsDialog.subscribe({
-		"scrollEnd": function() {
-			acceptCheckbox.removeAttr("disabled");
-		}
-	});
-	$(".terms-conditions").click(function(event){
-		termsDialog.show();
-	});*/
-	
 });

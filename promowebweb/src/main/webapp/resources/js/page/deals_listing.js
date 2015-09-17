@@ -6,24 +6,17 @@ $(function(){
 	var locale = BizReport.locale;
 	
 	var customTableConfig = pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired) ? {} : {
-		asStripeClasses: ['selectable']
+		asStripeClasses: ['selectable'],
+		aoColumnDefs: [{bVisible: true}]
 	};
 	
 	var listingCountJ, listingTable, form;
 	
 	listingCountJ = $(".my-listing h3 small span");
-	
 	form = $("#listing-form");
 	
 	listingTable = new DealsListingTable();
 	listingTable.subscribe({
-		initialized: function() {
-			if (pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired)) {
-				listingTable.hideCheckbox();
-			} else {
-				listingCountJ.text(this.selectedItems.length);
-			}
-		},
 		selectChange: function(){
 			listingCountJ.text(this.selectedItems.length);
 		}
@@ -54,7 +47,6 @@ $(function(){
 			url: form.prop('action'),
 			type: 'POST',
 			data: data,
-//			contentType: 'application/json',
 			dataType : 'json',
 			success : function(json){
 				if (json && json.status) {
@@ -73,26 +65,8 @@ $(function(){
 	confirmDialog.subscribe({
 		confirm: function() {
 			submitListings();
-//			form.submit();
 		}
 	});
-	
-/*	$("#form-btn").click(function(event){
-		var listing = listingTable.getData();
-		form.find("input[name=listings]").val("[" + listing.map(function(item){
-			return "{itemId: " + item.itemId + ", selected: " + (item.checked ? 1 : 0) + "}";
-		}).join(",") + "]");
-		
-		listing = listingTable.selectedItems;
-		
-		if (listing && listing.length > 0) {
-			// collect item ids into form hidden input and separated by comma.
-			form.submit();
-		} else {
-			event.preventDefault();
-			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
-		}
-	});*/
 	
 	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
 	var previewDialog = new ListingPreviewDialog();
@@ -100,7 +74,6 @@ $(function(){
 	previewDialog.subscribe({
 		ok: function(){
 			submitListings();
-//			form.submit();
 		}
 	});
 	
@@ -114,16 +87,6 @@ $(function(){
 			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
 		}
 	});
-	
-	/*var termsDialog = BizReport.termsDialog;
-	termsDialog.subscribe({
-		"scrollEnd": function() {
-			acceptCheckbox.removeAttr("disabled");
-		}
-	});
-	$(".terms-conditions").click(function(event){
-		termsDialog.show();
-	});	*/
 	
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();

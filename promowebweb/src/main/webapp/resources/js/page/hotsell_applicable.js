@@ -9,10 +9,8 @@ $(function(){
 	listingTable.subscribe({
 		initialized: function() {
 			listingTable.hideStateColumn();
-			if (pageData && pageData.expired) {
-				// if it has passed the apply deadline date, user can't select listings and submit again.
-				listingTable.hideCheckbox();
-			} else {
+			if (!(pageData && pageData.expired)) {
+				// display selected items count when promotion application deadline is not expired.
 				listingCountJ.text(this.selectedItems.length);
 			}
 		},
@@ -24,7 +22,8 @@ $(function(){
 		dataTableConfig: {
 			tableId: "hotsell-listing-table",
 			customTableConfig: {
-				asStripeClasses: ['selectable']
+				asStripeClasses: ['selectable'],
+				aoColumnDefs: [{bVisible: true}]
 			}
 		}});
 	listingTable.update({promoId:pageData.promoId});
@@ -40,7 +39,6 @@ $(function(){
 			url: form.prop('action'),
 			type: 'POST',
 			data: data,
-//			contentType: 'application/json',
 			dataType : 'json',
 			success : function(json){
 				if (json && json.status) {
@@ -64,37 +62,6 @@ $(function(){
 		}
 	});
 	
-	/*var form = $("form").submit(function(){
-		// if user doesn't select a item, form can't be submitted.
-		var listings = listingTable.selectedItems;
-		if (listings && listings.length > 0) {
-			listings = listingTable.getData();
-			form.find("input[name=listings]").val("[" + listings.map(function(item){
-				return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
-			}).join(",") + "]");
-			
-			return true;
-		}
-		
-		return false;
-	});*/
-	
-//	$(formBtn).click(function(event){
-//		var listing = listingTable.selectedItems;
-//		if (listing && listing.length > 0) {
-//			// collect item ids into form hidden input and separated by comma.
-//			listing = listingTable.getData();
-//			form.find("input[name=listings]").val("[" + listing.map(function(item){
-//				return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
-//			}).join(",") + "]");
-//			
-//			form.submit();
-//		} else {
-//			event.preventDefault();
-//			alertDialog.alert(locale.getText('promo.hotsell.applyCondition'));
-//		}
-//	});
-	
 	// for test
 	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
 	var previewDialog = new ListingPreviewDialog();
@@ -102,7 +69,6 @@ $(function(){
 	previewDialog.subscribe({
 		ok: function(){
 			submitListings();
-//			form.submit();
 		}
 	});
 	

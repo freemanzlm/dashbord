@@ -2,7 +2,6 @@ $(function(){
 	
 	var DealsListingTable = BizReport.DealsListingTable;
 	
-	
 	var listingTable = new DealsListingTable();
 	listingTable.subscribe({
 		initialized: function() {
@@ -16,10 +15,5 @@ $(function(){
 			tableId: "deals-listing-table"
 		}});
 	listingTable.update({promoId:pageData.promoId});	
-	
-	/*var termsDialog = BizReport.termsDialog;
-	$(".terms-conditions").click(function(event){
-		termsDialog.show();
-	});*/
 	
 });
