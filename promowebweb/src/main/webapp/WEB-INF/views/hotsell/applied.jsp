@@ -81,15 +81,9 @@
 				<div class="active-status-box">
 					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
 					
-					<c:choose>
-						<c:when test="${not expired }">
-							<%-- <p class="desc">您总共提交了 ${listingNum } 条刊登 </p> --%>
-							<p class="desc green">在报名有效期内您可以修改后重新提交。报名有效期内不做审核操作。</p> 
-						</c:when>
-						<c:otherwise>
-							<p class="desc gray">已超过报名有效期，您无法再修改刊登内容</p>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${expired eq true}">
+						<p class="desc gray">已超过报名有效期，您无法再修改刊登内容</p>
+					</c:if>
 						
 					<menu>
 						<li>
