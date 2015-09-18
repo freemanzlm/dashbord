@@ -128,7 +128,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["reward"],
 					sClass: "text-right",
-					sDefaultContent: "",
+					sDefaultContent: "-",
 					mRender: function(data, type, full) {
 						var val = parseFloat(data);
 						if (type == "display") {

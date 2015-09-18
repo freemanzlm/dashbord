@@ -16,16 +16,10 @@ $(function(){
 		dataTableConfig: {
 			tableId: "rewarding-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getSubsidyPromotions"
+				sAjaxSource: "promotion/getSubsidyPromotions",
+				aoColumnDefs: [,,,, {bVisible: !(pageData && (pageData.region == 'HK' || page.region == 'TW'))}]
 			}
 		}});
-	rewardingPromoTable.subscribe({
-		initialized: function() {
-			if (pageData && (pageData.region == 'HK' || page.region == 'TW')) {
-				rewardingPromoTable.hideReward();
-			}
-		}
-	}, rewardingPromoTable);
 	rewardingPromoTable.update();
 	
 	var endPromoTable = new EndPromoTable();
@@ -44,7 +38,8 @@ $(function(){
 			dataTableConfig: {
 				tableId: "pending-promo-table",
 				customTableConfig: {
-					sAjaxSource: "promotion/getUnconfirmedPromotions"
+					sAjaxSource: "promotion/getUnconfirmedPromotions",
+					aoColumnDefs: [,,,, {bVisible: !(pageData && (pageData.region == 'HK' || page.region == 'TW'))}]
 				}
 			}});
 		pendingPromoTable.update();

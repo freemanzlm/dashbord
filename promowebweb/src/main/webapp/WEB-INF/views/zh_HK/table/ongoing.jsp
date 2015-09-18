@@ -10,7 +10,7 @@
 				<th class="type">活動類型</th>
 				<th class="promoDlDt">報名截止日期</th>
 				<th class="promoDt">活動時間</th>				
-				<th class="reward">獎勵金額</th>
+				<!-- <th class="reward">獎勵金額</th> -->
 				<th class="state">活動狀態</th>
 			</tr>
 		</thead>
