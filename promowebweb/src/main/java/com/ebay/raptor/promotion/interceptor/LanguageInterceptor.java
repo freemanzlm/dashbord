@@ -34,7 +34,6 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		if(1 == i){
 			return;
 		}
-		
 		System.err.println("Set page language.");
 		UserData user = CookieUtil.getUserDataFromCookie(req);
 		Boolean isTrad = langCache.get(user.getUserId());
@@ -48,7 +47,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		}
 		
 		//Call the API CS api to get user
-		String country = service.getUserCountryByID(user.getUserId());
+//		String country = service.getUserCountryByID(user.getUserId());
+		String country = "";
 		if(null != country){
 			if(!(CountryEnum.CN.getId()+"").equals(country)){
 				if(null != model && null != model.getViewName() && -1 == model.getViewName().indexOf(tradLang)){
