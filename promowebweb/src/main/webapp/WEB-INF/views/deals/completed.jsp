@@ -94,11 +94,11 @@
 				
 				<div class="active-status-box success">
 					<c:choose>
-						<c:when test="${ promo.rewardType eq 1 or promo.rewardType eq 4 }">
+						<c:when test="${ promo.rewardType eq 1 or promo.rewardType eq 4 or promo.rewardType eq 6 }">
 							<h3>您已成功领取等值${promo.reward }元的${rewardName }</h3>
 						</c:when>
 						<c:otherwise>
-							<h3>活动已结束，感谢您的参与！</h3>
+							<h3>恭喜您已完成本活动！感谢您的参与!</h3>
 						</c:otherwise>
 					</c:choose>
 					
