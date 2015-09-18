@@ -81,8 +81,8 @@ var BizReport = BizReport || {};
 					{data: 'name'},
 					{data: 'price'},
 					{data: 'volume'},
-					{data: 'sales'},
-					{data: 'comp'},
+					{data: 'compCost'},
+					{data: 'maxComp'},
 					{data: 'state'},
 					{data: 'currency'}
 				],
