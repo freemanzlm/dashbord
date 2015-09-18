@@ -163,12 +163,13 @@ var BizReport = BizReport || {};
 							case 'SubsidySubmmitted':
 							case 'SubsidyRetrievable':
 							case 'SubsidyResubmittable':
-								if ((full.rewardType == 1 || full.rewardType == 4) && full.rewardUrl) {
+								if ((full.rewardType == 1 || full.rewardType == 4 || full.rewardType == 6) && full.rewardUrl) {
+									// Gas card, WLT, JD card
 									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
 									display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								} else {
-									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.SubsidyWaiting') + "</a>";
-									display = "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+									display = locale.getText('promo.state.SubsidyWaiting') + "<br/>";
+									display += "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
 								
 								return display;

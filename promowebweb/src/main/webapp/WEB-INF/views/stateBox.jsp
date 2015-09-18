@@ -42,7 +42,7 @@
 		</c:when>
 		<c:otherwise>
 			<c:choose>
-				<c:when test="${ promo.rewardType eq 1 or promo.rewardType eq 4 }">
+				<c:when test="${ promo.rewardType eq 1 or promo.rewardType eq 4 or promo.rewardType eq 6}">
 					<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardName }</h3>
 				</c:when>
 				<c:otherwise>

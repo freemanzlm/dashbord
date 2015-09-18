@@ -134,7 +134,7 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							if (full.rewardType != 0) {
 								if (val > 0) {
-									return val.toUSFixed(2) + " (人名币)";
+									return val.toUSFixed(2) + " (人民币)";
 								}
 							}
 							
