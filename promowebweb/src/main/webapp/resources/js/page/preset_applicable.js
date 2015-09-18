@@ -14,6 +14,11 @@ $(function(){
 		},
 		selectChange: function(){
 			listingCountJ.text(this.selectedItems.length);
+			if (this.selectedItems.length > 0) {
+				formBtn.removeAttribute('disabled');
+			} else {
+				formBtn.setAttribute('disabled', 'disabled');
+			}
 		}
 	}, listingTable);
 	listingTable.init({
@@ -26,20 +31,6 @@ $(function(){
 		}});
 	listingTable.update({promoId:pageData.promoId});
 	
-	/*var form = $("#listing-form").submit(function(){
-		// if user doesn't select a item, form can't be submitted.
-		var listing = listingTable.selectedItems;
-		if (listing && listing.length > 0) {
-			listings = listingTable.getData();
-			form.find("input[name=listings]").val("[" + listings.map(function(item){
-				return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
-			}).join(",") + "]");
-			return true;
-		}
-		
-		return false;
-	});*/
-	
 	function submitListings() {
 		var listings = listingTable.getData();
 		form.find("input[name=listings]").val("[" + listings.map(function(item){
@@ -51,7 +42,6 @@ $(function(){
 			url: form.prop('action'),
 			type: 'POST',
 			data: data,
-//			contentType: 'application/json',
 			dataType : 'json',
 			success : function(json){
 				if (json && json.status) {
@@ -65,21 +55,6 @@ $(function(){
 			}
 		});
 	}
-	
-/*	$(formBtn).click(function(event){
-		var listing = listingTable.selectedItems;
-		if (listing && listing.length > 0) {
-			// collect item ids into form hidden input and separated by comma.
-			form.find("input[name=listings]").val("[" + listings.map(function(item){
-				return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
-			}).join(",") + "]");
-			
-			form.submit();
-		} else {
-			event.preventDefault();
-			alertDialog.alert(locale.getText('promo.hotsell.applyCondition'));
-		}
-	});*/
 	
 	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
 	var previewDialog = new ListingPreviewDialog();
@@ -101,16 +76,6 @@ $(function(){
 			alertDialog.alert(locale.getText('promo.hotsell.applyCondition'));
 		}
 	});
-	
-	/*var termsDialog = BizReport.termsDialog;
-	termsDialog.subscribe({
-		"scrollEnd": function() {
-			acceptCheckbox.removeAttr("disabled");
-		}
-	});
-	$(".terms-conditions").click(function(event){
-		termsDialog.show();
-	});	*/
 	
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();
