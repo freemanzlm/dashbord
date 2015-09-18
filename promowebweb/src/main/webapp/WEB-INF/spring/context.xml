@@ -40,6 +40,7 @@
 	
 	<mvc:interceptors>
        <beans:bean class="com.ebay.raptor.promotion.interceptor.AuthInterceptor"></beans:bean>
+       <beans:bean class="com.ebay.raptor.promotion.interceptor.LanguageInterceptor"></beans:bean>
     </mvc:interceptors>
     
     <beans:bean id="multipartResolver"

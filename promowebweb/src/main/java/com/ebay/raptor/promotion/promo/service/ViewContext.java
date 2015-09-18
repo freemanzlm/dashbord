@@ -1,13 +1,14 @@
 package com.ebay.raptor.promotion.promo.service;
 
 public enum ViewContext {
-
+	
 	Promotion(1, "promo"),
 	FormURL(2, "formUrl"),
 	PromotionId(3, "promoId"),
 	ErrorMsg(4, "errorMsg"),
 	Agreement(5, "agreement"),
-	IsUnconfirmedVisable(6, "invisible");
+	IsUnconfirmedVisable(6, "invisible"),
+	Region(7, "region");
 	
 	private Integer id;
 
