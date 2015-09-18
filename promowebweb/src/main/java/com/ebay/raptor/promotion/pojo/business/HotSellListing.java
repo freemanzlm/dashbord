@@ -3,7 +3,7 @@ package com.ebay.raptor.promotion.pojo.business;
 public class HotSellListing {
 
 	private String skuId;
-	
+
 	private Long itemId;
 
 	private String name;
@@ -16,7 +16,9 @@ public class HotSellListing {
 
 	private Float sales;
 
-	private Float comp;
+	private Float compCast;
+
+	private Float maxComp;
 
 	private String state;
 
@@ -68,14 +70,6 @@ public class HotSellListing {
 		this.sales = sales;
 	}
 
-	public Float getComp() {
-		return comp;
-	}
-
-	public void setComp(Float comp) {
-		this.comp = comp;
-	}
-
 	public String getState() {
 		return state;
 	}
@@ -90,6 +84,22 @@ public class HotSellListing {
 
 	public void setSkuId(String skuId) {
 		this.skuId = skuId;
+	}
+
+	public Float getCompCast() {
+		return compCast;
+	}
+
+	public void setCompCast(Float compCast) {
+		this.compCast = compCast;
+	}
+
+	public Float getMaxComp() {
+		return maxComp;
+	}
+
+	public void setMaxComp(Float maxComp) {
+		this.maxComp = maxComp;
 	}
 
 }

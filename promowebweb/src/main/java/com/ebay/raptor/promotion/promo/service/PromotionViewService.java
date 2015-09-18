@@ -86,6 +86,7 @@ public class PromotionViewService {
 					break;
 				case SUBSIDY_RETRIEVED:
 					view = ViewResource.DP_COMPLETED;
+					break;
 				case CANCELLED:
 					view = ViewResource.DP_CANCELLED;
 					break;
@@ -139,6 +140,7 @@ public class PromotionViewService {
 					break;
 				case SUBSIDY_RETRIEVED:
 					view = ViewResource.DU_COMPLETED;
+					break;
 				case CANCELLED:
 					view = ViewResource.DU_CANCELLED;
 					break;
@@ -179,6 +181,7 @@ public class PromotionViewService {
 					break;
 				case SUBSIDY_RETRIEVED:
 					view = ViewResource.OTHER_COMPLETED;
+					break;
 				case CANCELLED:
 					view = ViewResource.OTHER_CANCELLED;
 					break;
