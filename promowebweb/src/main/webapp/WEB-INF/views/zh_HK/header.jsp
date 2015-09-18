@@ -21,6 +21,7 @@
 </div>
 
 <div class="top-nav clr">
+	<button class='btn white' id="btn-lang" type='button' lang='zh_CN'>切换至简体中文</button>
 	<ul class="links-nav clr">
 		<li><a href="${sdurl}">買家體驗報告</a><small><a class="icon help" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
 		<li class="separator">|</li>
@@ -29,3 +30,46 @@
 		<li class="active"><a href="">活動促銷</a></li>
 	</ul>
 </div>
+
+<script type="text/javascript">
+function updateLocationParameter (l, a, p) {
+	if (!a || !p) return e;
+
+	var href = l.href;
+	var search = l.search ? (l.search.indexOf('?') > 0 && l.search.substr(1)) : '';
+
+	var hasSearch = !!search, parameters = [], found;
+	href = hasSearch ? href.substr(href.indexOf('?')) : (href + '?');
+
+	if (hasSearch){
+		parameters = search.split('&');
+
+		for (var i = 0; i < parameters.length ; i++){
+			var parameter = parameters[i].split('=');
+			var key = parameter[0];
+			if (key == a){
+				parameters[i] = a + '=' + encodeURIComponent(p);
+				found = true;
+			}
+		}
+	}
+	
+	if (!found){
+		parameters.push(a + '=' + encodeURIComponent(p));
+	}
+
+	return href + parameters.join('&');
+}
+
+/* language switch begin */
+if (document.addEventListener) {
+	document.getElementById('btn-lang').addEventListener('click', function(){
+		location.href = updateLocationParameter(location, 'lang', this.getAttribute('lang'));
+	});
+} else {
+	document.getElementById('btn-lang').attachEvent('onclick', function(){
+		location.href = updateLocationParameter(location, 'lang', this.getAttribute('lang'));
+	});
+}
+/* language switch end */
+</script>
