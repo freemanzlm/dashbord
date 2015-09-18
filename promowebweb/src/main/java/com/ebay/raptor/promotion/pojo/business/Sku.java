@@ -5,6 +5,8 @@ public class Sku {
 	private String skuId;
 
 	private String name;
+	
+	private String currency;
 
 	public String getName() {
 		return name;
@@ -20,6 +22,14 @@ public class Sku {
 
 	public void setSkuId(String skuId) {
 		this.skuId = skuId;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 
 }
