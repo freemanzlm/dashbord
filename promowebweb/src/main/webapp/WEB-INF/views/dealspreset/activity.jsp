@@ -39,12 +39,12 @@ $(function(){
 	try {
 		descIframe.on('load', function(){
 			$(this.contentDocument.body).html(activityDetail.html());
-			descIframe.height(this.contentDocument.documentElement.scrollHeight);
+			descIframe.height(this.contentDocument.documentElement.offsetHeight);
 		});
 		
 		// iframe may have been loaded before load event listener registration.
 		$(descIframe.contents()[0].body).html(activityDetail.html());
-		descIframe.height(descIframe.contents()[0].documentElement.scrollHeight);
+		descIframe.height(descIframe.contents()[0].documentElement.offsetHeight);
 	} catch(e) {
 		
 	}

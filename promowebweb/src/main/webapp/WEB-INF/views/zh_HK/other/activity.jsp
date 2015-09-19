@@ -27,7 +27,4 @@
 			</div>
 		</div>
 	</div>
-	<div class="activity-law">
-		<strong>法律協定：點擊查看<a href="javascript:void(0)" class="terms-conditions">法律協定</a></strong>
-	</div>
 </div>

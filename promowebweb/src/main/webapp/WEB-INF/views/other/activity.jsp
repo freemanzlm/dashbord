@@ -31,9 +31,6 @@
 	<div class="" id="activity-desc" style="display: none;">
 		${ activityContent }
 	</div>
-	<div class="activity-law">
-		<strong>法律协议：点击查看 <a href="javascript:void(0)" class="terms-conditions">法律协议</a></strong>
-	</div>
 </div>
 
 <script type="text/javascript">
@@ -42,12 +39,12 @@ $(function(){
 	try {
 		descIframe.on('load', function(){
 			$(this.contentDocument.body).html(activityDetail.html());
-			descIframe.height(this.contentDocument.documentElement.scrollHeight);
+			descIframe.height(this.contentDocument.documentElement.offsetHeight);
 		});
 		
 		// iframe may have been loaded before load event listener registration.
 		$(descIframe.contents()[0].body).html(activityDetail.html());
-		descIframe.height(descIframe.contents()[0].documentElement.scrollHeight);
+		descIframe.height(descIframe.contents()[0].documentElement.offsetHeight);
 	} catch(e) {
 		
 	}
