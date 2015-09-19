@@ -11,7 +11,7 @@
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 
-<r:includeJquery jsSlot="body" />
+<r:includeJquery jsSlot="head" />
 <r:client />
 
 <!DOCTYPE html>

@@ -12,7 +12,7 @@
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 
 <c:set var="listingNum" value="2" />
-<r:includeJquery jsSlot="body" />
+<r:includeJquery jsSlot="head" />
 <r:client />
 
 <!DOCTYPE html>

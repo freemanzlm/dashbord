@@ -8,7 +8,7 @@
 <c:set var="listingNum" value="2" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 
-<r:includeJquery jsSlot="body" />
+<r:includeJquery jsSlot="head" />
 <r:client />
 
 <!DOCTYPE html>

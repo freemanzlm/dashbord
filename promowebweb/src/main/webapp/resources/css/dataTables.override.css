@@ -80,6 +80,11 @@ table.dataTable tbody tr.selected td {
   border-bottom: 1px solid #ccc;
 }
 
+table.dataTable tbody tr.selectable:last-child td,
+table.dataTable tbody tr.selected:last-child td {
+  border-bottom: none;
+}
+
 .datatable_header .dataTables_info {
 	padding-top: 0;
 	padding-bottom: 0.755em;

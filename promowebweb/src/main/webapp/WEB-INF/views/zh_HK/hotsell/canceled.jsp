@@ -7,7 +7,7 @@
 <c:set var="categoryId" value="6000" />
 <c:set var="state" value="${ promo.state }" />
 
-<r:includeJquery jsSlot="body" />
+<r:includeJquery jsSlot="head" />
 <r:client />
 
 <!DOCTYPE html>

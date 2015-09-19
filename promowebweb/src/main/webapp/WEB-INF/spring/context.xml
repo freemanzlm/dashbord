@@ -37,6 +37,7 @@
 	     in the corresponding directory -->
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/css/**" location="/resources/css/" />
+	<resources mapping="/static/**" location="/resources/static/" />
 	
 	<mvc:interceptors>
        <beans:bean class="com.ebay.raptor.promotion.interceptor.AuthInterceptor"></beans:bean>

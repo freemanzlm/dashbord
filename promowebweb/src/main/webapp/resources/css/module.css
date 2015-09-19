@@ -155,11 +155,16 @@
 
 .activity-detail .activity-brief {
 	margin-bottom: 10px;
+	width: 100%;
 }
 
 .activity-detail .activity-brief p {
 	margin: 8px 0;
 	line-height: 1.333;
+}
+
+.activity-detail .activity-brief .table-cell {
+	vertical-align: top;
 }
 /* active detail end */
 

@@ -26,7 +26,7 @@
 	</c:when>
 </c:choose>
 
-<r:includeJquery jsSlot="body" />
+<r:includeJquery jsSlot="head" />
 <r:client />
 
 <!DOCTYPE html>

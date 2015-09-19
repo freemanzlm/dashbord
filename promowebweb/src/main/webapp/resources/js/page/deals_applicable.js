@@ -76,7 +76,6 @@ $(function(){
 		}
 	});	
 	
-	/*var activityDetail = $("#activity-detail");
-	activityDetail.html(activityDetail.html().replace(/&lt;/g, "<").replace(/&gt;/g, ">"));*/
+//	activityDetail.html(activityDetail.html().replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
 	
 });
