@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.excel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,17 +15,16 @@ import com.ebay.app.raptor.promocommon.excel.EmptyCellValueException;
 import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
 import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
 import com.ebay.app.raptor.promocommon.excel.InvalidDateCellValueException;
+import com.ebay.app.raptor.promocommon.util.DateUtil;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
-import com.ebay.raptor.promotion.util.PromotionUtil;
 
 public class UploadListingSheetHandler implements IExcelSheetHandler {
 	private static CommonLogger logger =
             CommonLogger.getInstance(UploadListingSheetHandler.class);
-	private static final String DATE_FORMAT_REG = "\\d{4}-\\d{2}-\\d{2}";
 	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd";
 	
 	public UploadListingSheetHandler(DealsListingService dealsListingService,
@@ -72,6 +72,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			Cell dealsPriceCell = row.getCell(5);
 			Cell stockNumCell = row.getCell(6);
 			Cell stockReadyDateCell = row.getCell(7);
+			Cell currencyCell = row.getCell(8);
 	
 			Object skuIdObj = getCellValue(skuIdCell);
 			Object skuNameObj = getCellValue(skuNameCell);
@@ -81,12 +82,14 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			Object dealsPriceObj = getCellValue(dealsPriceCell);
 			Object stockNumObj = getCellValue(stockNumCell);
 			Object stockReadyDateObj = getCellValue(stockReadyDateCell);
+			Object currencyObj = getCellValue(currencyCell);
 			
 			DealsListing listing = new DealsListing();
 			
 			// check if the sku is in the list
 			String skuId = skuIdObj == null ? "" : skuIdObj.toString();
 			String skuName = skuNameObj == null ? "" : skuNameObj.toString();
+			String currency = currencyObj == null ? "" : currencyObj.toString();
 			boolean foundSku = false;
 			for (Sku sku : skus) {
 				String storedSkuId = sku.getSkuId();
@@ -107,6 +110,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			} else {
 				listing.setSkuName(skuName);
 				listing.setSkuId(skuId);
+				listing.setCurrency(currency);
 			}
 			
 			// check if the list is set
@@ -121,7 +125,6 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 				listing.setDealsPrice(validateNumberData(dealsPriceObj, dealsPriceCell).floatValue());
 				listing.setStockNum(validateNumberData(stockNumObj, stockNumCell).longValue());
 				listing.setStockReadyDate(validateStringDateData(stockReadyDateObj, stockReadyDateCell));
-				listing.setCurrency(PromotionUtil.USD_CURRENCY);
 				uploadedListings.add(listing);
 			}
 		}
@@ -140,6 +143,10 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			String cellValue = cell.getStringCellValue();
 			return StringUtil.isEmpty(cellValue) ? null : cellValue;
 		} else if (cellType == Cell.CELL_TYPE_NUMERIC) {
+			if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) {
+				 return cell.getDateCellValue();
+			}
+
 			return cell.getNumericCellValue();
 		} else {
 			return null;
@@ -177,23 +184,15 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			throw new EmptyCellValueException(rowIndex, colIndex);
 		}
 
-		String value = "";
+		Date value = null;
 
 		try {
-			value = (String)cellValue;
+			value = (Date)cellValue;
 		} catch (Exception e) {
-			throw new InvalidCellValueException(rowIndex, colIndex, cellValue.toString(), e);
+			throw new InvalidDateCellValueException(rowIndex, colIndex, cellValue.toString(), DATE_FORMAT_STRING, e);
 		}
 		
-		if (value.length() > 200 || value.length() <= 0) {
-			throw new InvalidCellValueException(rowIndex, colIndex, value);
-		}
-
-		if (!value.matches(DATE_FORMAT_REG)) {
-			throw new InvalidDateCellValueException(rowIndex, colIndex, value, DATE_FORMAT_STRING);
-		}
-		
-		return value;
+		return value == null ? "" : DateUtil.formatSimpleDateWithDash(value);
 	}
 	
 	private Double validateNumberData (Object cellValue, Cell cell) throws InvalidCellValueException {

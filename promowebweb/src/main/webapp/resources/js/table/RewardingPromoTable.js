@@ -168,8 +168,7 @@ var BizReport = BizReport || {};
 									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
 									display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								} else {
-									display = locale.getText('promo.state.SubsidyWaiting') + "<br/>";
-									display += "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+									display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.SubsidyWaiting') + "</a>";
 								}
 								
 								return display;
