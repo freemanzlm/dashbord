@@ -160,7 +160,7 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 'SubsidyWaiting':
 							case 'SubsidyAccessed':
-							case 'SubsidySubmmitted':
+							case 'SubsidySubmitted':
 							case 'SubsidyRetrievable':
 							case 'SubsidyResubmittable':
 								if ((full.rewardType == 1 || full.rewardType == 4 || full.rewardType == 6) && full.rewardUrl) {
@@ -189,7 +189,7 @@ var BizReport = BizReport || {};
 									return 10;
 								case 'SubsidyAccessed':
 									return 11;
-								case 'SubsidySubmmitted':
+								case 'SubsidySubmitted':
 									return 12;
 								case 'SubsidyUploaded':
 									return 13;
