@@ -13,6 +13,7 @@ import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
+import com.ebay.raptor.promotion.pojo.service.req.SubmitListingRequest;
 import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
@@ -36,7 +37,7 @@ public class DealsListingService extends BaseService {
 		String uri = url(ResourceProvider.ListingRes.confirmDealsListings);
 		List<Listing> listingList = Arrays.asList(listings);
 		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
-		req.setListings(listingList);;
+		req.setListings(listingList);
 		req.setPromoId(promoId);
 		req.setUid(uid);
 		GingerClientResponse resp = httpPost(uri, req);
@@ -177,6 +178,25 @@ public class DealsListingService extends BaseService {
 			}
 		} else {
 			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
+		}
+	}
+	
+	public boolean submitDealsListings(String promoId, Long uid) throws PromoException {
+		String uri = url(ResourceProvider.ListingRes.submitDealsListings);
+		SubmitListingRequest req = new SubmitListingRequest();
+		req.setPromoId(promoId);
+		req.setUid(uid);
+		GingerClientResponse resp = httpPost(uri, req);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
+			GeneralDataResponse<Boolean> general = resp.getEntity(type);
+			if(null != general && AckValue.SUCCESS == general.getAckValue()){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
 	}
 	

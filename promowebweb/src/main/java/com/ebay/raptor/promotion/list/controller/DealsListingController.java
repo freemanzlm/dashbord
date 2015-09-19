@@ -112,11 +112,29 @@ public class DealsListingController extends AbstractListingController{
 		return responseData;
 	}
 	
+	@POST
+	@RequestMapping(ResourceProvider.ListingRes.submitDealsListings)
+	public @ResponseBody ResponseData <String> submitDealsListings(HttpServletRequest req, HttpServletResponse resp) throws MissingArgumentException{
+		ResponseData <String> responseData = new ResponseData <String>();
+		String promoId = req.getParameter("promoId");
+
+		try {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			boolean result = service.submitDealsListings(promoId, userData.getUserId());
+			responseData.setStatus(result);
+		} catch (PromoException | MissingArgumentException e) {
+			// do not throw but set the error status.
+			responseData.setStatus(false);
+			responseData.setMessage("Internal Error happens.");
+		}
+		return responseData;
+	}
+	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
 	public ModelAndView reviewUploadedListings(@RequestParam String promoId) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("formUrl", "/promotion/promotion/"+promoId);
+		mav.addObject("formUrl", "/promotion/deals/submitDealsListings");
 		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
 		mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
 		return mav;
