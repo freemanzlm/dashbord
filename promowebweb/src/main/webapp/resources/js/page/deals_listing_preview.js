@@ -28,6 +28,26 @@ $(function(){
 			
 		}});
 	listingTable.update({promoId: pageData.promoId});
+
+	var submitBtn = document.getElementById("submit-btn"),
+		data = {promoId: pageData.promoId};
 	
-	
+	$(submitBtn).click(function(){
+		$.ajax({
+			url: "/promotion/deals/submitDealsListings",
+			type: 'POST',
+			data: data,
+			dataType : 'json',
+			success : function(json){
+				if (json && json.status) {
+					window.location.replace("/promotion/promotion/"+pageData.promoId);
+				} else {
+					alertDialog.alert(locale.getText('promo.request.fail'));
+				}
+			},
+			error: function(){
+				alertDialog.alert(locale.getText('promo.request.fail'));
+			}
+		});
+	});	
 });

@@ -25,7 +25,7 @@ import com.ebay.raptor.promotion.pojo.business.Sku;
 public class UploadListingSheetHandler implements IExcelSheetHandler {
 	private static CommonLogger logger =
             CommonLogger.getInstance(UploadListingSheetHandler.class);
-	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd";
+	private static final String DATE_FORMAT_STRING = "yyyy/MM/dd";
 	
 	public UploadListingSheetHandler(DealsListingService dealsListingService,
 			String promoId, Long userId) {
@@ -44,7 +44,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 		Row row = sheet.getRow(0);
 		int cellNum = row.getPhysicalNumberOfCells();
 		
-		if (cellNum != 9) {
+		if (cellNum != 8) {
 			throw new InvalidCellValueException(ErrorType.InvalidHeaderCellValue,
 					0, 0, "");
 		}
@@ -69,20 +69,21 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 		for (int i = 1; i < rowNum; i++) {
 			Row row = sheet.getRow(i);
 
-			Cell skuIdCell = row.getCell(0);
-			Cell skuNameCell = row.getCell(1);
-			Cell itemIdCell = row.getCell(2);
-			Cell itemTitleCell = row.getCell(3);
-			Cell currPriceCell = row.getCell(4);
-			Cell dealsPriceCell = row.getCell(5);
-			Cell stockNumCell = row.getCell(6);
-			Cell stockReadyDateCell = row.getCell(7);
-			Cell currencyCell = row.getCell(8);
+			int cellIndex = 0;
+			Cell skuIdCell = row.getCell(cellIndex++);
+			Cell skuNameCell = row.getCell(cellIndex++);
+			Cell itemIdCell = row.getCell(cellIndex++);
+//			Cell itemTitleCell = row.getCell(cellIndex++);
+			Cell currPriceCell = row.getCell(cellIndex++);
+			Cell dealsPriceCell = row.getCell(cellIndex++);
+			Cell stockNumCell = row.getCell(cellIndex++);
+			Cell stockReadyDateCell = row.getCell(cellIndex++);
+			Cell currencyCell = row.getCell(cellIndex++);
 	
 			Object skuIdObj = getCellValue(skuIdCell);
 			Object skuNameObj = getCellValue(skuNameCell);
 			Object itemIdObj = getCellValue(itemIdCell);
-			Object itemTitleObj = getCellValue(itemTitleCell);
+//			Object itemTitleObj = getCellValue(itemTitleCell);
 			Object currPriceObj = getCellValue(currPriceCell);
 			Object dealsPriceObj = getCellValue(dealsPriceCell);
 			Object stockNumObj = getCellValue(stockNumCell);
@@ -119,13 +120,12 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			}
 			
 			// check if the list is set
-			if (itemIdObj == null && itemTitleObj == null
-					&& currPriceObj == null && dealsPriceObj == null
+			if (itemIdObj == null && currPriceObj == null && dealsPriceObj == null
 					&& stockNumObj == null && stockReadyDateObj == null) {
 				continue;
 			} else {
 				listing.setItemId(validateNumberData(itemIdObj, itemIdCell).longValue());
-				listing.setItemTitle(validateStringData(itemTitleObj, itemTitleCell));
+//				listing.setItemTitle(validateStringData(itemTitleObj, itemTitleCell));
 				listing.setCurrPrice(validateNumberData(currPriceObj, currPriceCell).floatValue());
 				listing.setDealsPrice(validateNumberData(dealsPriceObj, dealsPriceCell).floatValue());
 				listing.setStockNum(validateNumberData(stockNumObj, stockNumCell).longValue());
@@ -197,7 +197,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			throw new InvalidDateCellValueException(rowIndex, colIndex, cellValue.toString(), DATE_FORMAT_STRING, e);
 		}
 		
-		return value == null ? "" : DateUtil.formatSimpleDateWithDash(value);
+		return value == null ? "" : DateUtil.formatSimpleDateWithSlash(value);
 	}
 	
 	private Double validateNumberData (Object cellValue, Cell cell) throws InvalidCellValueException {
