@@ -101,6 +101,8 @@
 								<p class="mt10">您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
 								<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
 								
+								<p id="upload-error-msg" class="error-msg hide"><span class="icon error mb-25"></span><em ></em></p>
+								
 								<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
 									选择上传您的刊登列表 
 									<input type="hidden" name="promoId" value="${promo.promoId}"/>

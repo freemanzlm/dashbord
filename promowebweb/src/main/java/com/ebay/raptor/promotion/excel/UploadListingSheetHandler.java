@@ -40,9 +40,14 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 		readContent(sheet);
 	}
 	
-	private void readHeader (XSSFSheet sheet) {
+	private void readHeader (XSSFSheet sheet) throws InvalidCellValueException {
 		Row row = sheet.getRow(0);
 		int cellNum = row.getPhysicalNumberOfCells();
+		
+		if (cellNum != 9) {
+			throw new InvalidCellValueException(ErrorType.InvalidHeaderCellValue,
+					0, 0, "");
+		}
 
 		StringBuilder headerStr = new StringBuilder();
 		
