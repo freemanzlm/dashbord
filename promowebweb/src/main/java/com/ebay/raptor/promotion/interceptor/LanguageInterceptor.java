@@ -30,15 +30,11 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	public void postHandle(HttpServletRequest req,
 			HttpServletResponse resp, Object handler, ModelAndView model) throws Exception {
 		
-		int i = 1;
-		if(1 == i){
-			return;
-		}
 		System.err.println("Set page language.");
 		UserData user = CookieUtil.getUserDataFromCookie(req);
-		Boolean isTrad = langCache.get(user.getUserId());
-		if(null != isTrad){
-			if(isTrad){
+		Boolean isTradionalLang = langCache.get(user.getUserId());
+		if(null != isTradionalLang){
+			if(isTradionalLang){
 				if(null != model && null != model.getViewName() && -1 == model.getViewName().indexOf(tradLang)){
 					model.setViewName(tradLang + model.getViewName());
 				}
@@ -47,10 +43,9 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		}
 		
 		//Call the API CS api to get user
-//		String country = service.getUserCountryByID(user.getUserId());
-		String country = "";
+		String country = service.getUserCountryByName(user.getUserName());
 		if(null != country){
-			if(!(CountryEnum.CN.getId()+"").equals(country)){
+			if(!(CountryEnum.CN.getName()).equals(country)){
 				if(null != model && null != model.getViewName() && -1 == model.getViewName().indexOf(tradLang)){
 					model.setViewName(tradLang + model.getViewName());
 				}
