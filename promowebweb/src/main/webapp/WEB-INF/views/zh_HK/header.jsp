@@ -35,11 +35,10 @@
 function updateLocationParameter (l, a, p) {
 	if (!a || !p) return e;
 
-	var href = l.href;
-	var search = l.search ? (l.search.indexOf('?') > 0 && l.search.substr(1)) : '';
+	var href = l.href.substring(0, l.href.indexOf('?')) + "?";
+	var search = l.search ? (l.search.indexOf('?') == 0 && l.search.substr(1)) : '';
 
-	var hasSearch = !!search, parameters = [], found;
-	href = hasSearch ? href.substr(href.indexOf('?')) : (href + '?');
+	var hasSearch = !!search, parameters = [], found = false;
 
 	if (hasSearch){
 		parameters = search.split('&');
@@ -50,6 +49,7 @@ function updateLocationParameter (l, a, p) {
 			if (key == a){
 				parameters[i] = a + '=' + encodeURIComponent(p);
 				found = true;
+				break;
 			}
 		}
 	}

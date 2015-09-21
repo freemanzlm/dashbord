@@ -14,7 +14,7 @@
 				context : this,
 				success : this.processResp,
 				error: this.error,
-				timeout: 5000
+				timeout: 15000
 			};
 		
 		this.initialized = false;
