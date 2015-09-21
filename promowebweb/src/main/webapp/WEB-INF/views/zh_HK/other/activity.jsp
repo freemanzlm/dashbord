@@ -22,9 +22,31 @@
 	<div class="table activity-brief">
 		<div class="table-row">
 			<div class="table-cell" style="width: 64px;">活動簡介：</div>
-			<div class="table-cell">
-				${ activityContent }
+			<div class="table-cell" style="width: 1014px;">
+				<iframe id="activity-desc-iframe" src="/promotion/static/activityDesc.html" style="width: 100%;" frameborder="0"></iframe>
 			</div>
 		</div>
 	</div>
+	
+	<div class="" id="activity-desc" style="display: none;">
+		${ activityContent }
+	</div>
 </div>
+
+<script type="text/javascript">
+$(function(){
+	var activityDetail = $("#activity-desc"), descIframe = $('#activity-desc-iframe');
+	try {
+		descIframe.on('load', function(){
+			$(this.contentDocument.body).html(activityDetail.html());
+			descIframe.height(this.contentDocument.documentElement.offsetHeight);
+		});
+		
+		// iframe may have been loaded before load event listener registration.
+		$(descIframe.contents()[0].body).html(activityDetail.html());
+		descIframe.height(descIframe.contents()[0].documentElement.offsetHeight);
+	} catch(e) {
+		
+	}
+});
+</script>	
