@@ -98,6 +98,7 @@
 							<option value="">顯示所有活動</option>
 							<option value="SubsidyWaiting">可申領獎勵的活動</option>
 							<option value="ClaimFail">需要重新申領獎勵的活動</option>
+							<option value="SubsidyRetrievable">可領取獎勵的活動</option>
 							<option value="NeedAgreement">待上傳協定的活動</option>
 							<option value="SubsidyVerifying">申領稽核中的活動</option>
 						</select>

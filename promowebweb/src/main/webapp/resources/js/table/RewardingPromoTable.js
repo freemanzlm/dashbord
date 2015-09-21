@@ -156,30 +156,31 @@ var BizReport = BizReport || {};
 					sType: "numeric",
 					mRender: function(data, type, full) {
 						var display ;
+						
 						if (type == "display") {
-							switch (data) {
-							case 'SubsidyWaiting':
-							case 'SubsidyAccessed':
-							case 'SubsidySubmitted':
-							case 'SubsidyRetrievable':
-							case 'SubsidyResubmittable':
-								if ((full.rewardType == 1 || full.rewardType == 4 || full.rewardType == 6) && full.rewardUrl) {
-									// Gas card, WLT, JD card
-									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
-									display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
-								} else {
-									display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.SubsidyWaiting') + "</a>";
+							if ((full.rewardType == 1 || full.rewardType == 4 || full.rewardType == 6)) {
+								// Gas card, WLT, JD card
+								switch (data) {
+								case 'SubsidyWaiting':
+								case 'SubsidyAccessed':
+								case 'SubsidySubmitted':
+								case 'SubsidyRetrievable':
+								case 'SubsidyResubmittable':
+										display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
+										display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+									return display;
+								default:
+									return locale.getText('promo.state.' + data) + "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
-								
+							} else {
+								display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.SubsidyRetrievable') + "</a>";
 								return display;
-							default:
-								return locale.getText('promo.state.' + data) + "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 							}
 						}
 						
 						if (type == "sort") {
 							
-							if ((full.rewardType == 1 || full.rewardType == 4) && full.rewardUrl){
+							if ((full.rewardType == 1 || full.rewardType == 4 || full.rewardType == 6)){
 								switch (data) {
 								case 'SubsidyWaiting':
 									return 8;
@@ -194,9 +195,15 @@ var BizReport = BizReport || {};
 								case 'SubsidyUploaded':
 									return 13;
 								}
+							} else if (full.rewardType != 0) {
+								return 10; // SubsidyRetrievable
 							}
 							
 							return 20;
+						}
+						
+						if (!(full.rewardType == 1 || full.rewardType == 4 || full.rewardType == 6) && full.rewardType != 0) {
+							data = 'SubsidyRetrievable'; // filter
 						}
 						
 						return data;
