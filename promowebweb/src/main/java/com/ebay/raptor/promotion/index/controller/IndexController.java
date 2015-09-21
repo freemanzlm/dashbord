@@ -63,31 +63,11 @@ public class IndexController {
         response.addCookie(adminCookie);
 
         if (!StringUtil.isEmpty(userId)) {
-
-            Cookie hackIdCookie = new Cookie (CookieUtil.HACKID_COOKIE_KEY,
-                    hackId);
-            hackIdCookie.setMaxAge(CookieUtil.COOKIE_LIFESPAN);
-            hackIdCookie.setPath(CookieUtil.COOKIE_PATH_ROOT);
-
-            Cookie userIdCookie = new Cookie (CookieUtil.USERID_COOKIE_KEY,
-                    userId);
-            userIdCookie.setMaxAge(CookieUtil.COOKIE_LIFESPAN);
-            userIdCookie.setPath(CookieUtil.COOKIE_PATH_ROOT);
-
-            Cookie userNameCookie = new Cookie (CookieUtil.USERNAME_COOKIE_KEY,
-                    hackId);
-            userNameCookie.setMaxAge(CookieUtil.COOKIE_LIFESPAN);
-            userNameCookie.setPath(CookieUtil.COOKIE_PATH_ROOT);
-
-            if (CookieUtil.COOKIE_DOMAIN != null) {
-                hackIdCookie.setDomain(CookieUtil.COOKIE_DOMAIN);
-                userIdCookie.setDomain(CookieUtil.COOKIE_DOMAIN);
-                userNameCookie.setDomain(CookieUtil.COOKIE_DOMAIN);
-            }
-
-            response.addCookie(hackIdCookie);
-            response.addCookie(userIdCookie);
-            response.addCookie(userNameCookie);
+        	// add hack_id in order to avoid login checking
+        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.HACKID_COOKIE_KEY, hackId);
+        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.USERID_COOKIE_KEY, userId);
+        	// hack_id is the user name.
+        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.USERNAME_COOKIE_KEY, hackId);
         }
 
         try {

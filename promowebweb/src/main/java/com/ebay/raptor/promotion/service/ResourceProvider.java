@@ -49,6 +49,8 @@ public class ResourceProvider {
 		String getSKUsByPromotionId = "/getSKUsByPromotionId/promoId/{promoId}/uid/{uid}";
 		String _getUploadedListings = "/getUploadedListings";
 		String getUploadedListings = "/getUploadedListings/promoId/{promoId}/uid/{uid}";
+		String _getSubmittedListings = "/getSubmittedListings";
+		String getSubmittedListings = "/getSubmittedListings/promoId/{promoId}/uid/{uid}";
 
 		String reviewUploadedListings = "/reviewUploadedListings";
 		String getSKUListingsByPromotionId = "/getSKUListingsByPromotionId/promoId/{promoId}/uid/{uid}";
