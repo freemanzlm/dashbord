@@ -62,7 +62,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="clr" style="margin-bottom: 15px;">
-				<h2>活动促销</h2>
+				<h2>活動促銷</h2>
 			</div>
 			
 			<div class="pane pane-table">
@@ -86,7 +86,7 @@
 							<option value="3">其它活動</option>
 						</select>
 					</div>
-					<h3>进行中的活动</h3>
+					<h3>進行中的活動</h3>
 				</div>
 				<jsp:include page="table/ongoing.jsp"></jsp:include>
 			</div>
@@ -110,7 +110,7 @@
 							<option value="3">其它活動</option>
 						</select>
 					</div>
-					<h3>领取活动奖励</h3>
+					<h3>領取活動獎勵</h3>
 				</div>
 				<jsp:include page="table/rewarding.jsp"></jsp:include>
 			</div>
@@ -131,7 +131,7 @@
 							<option value="3">其它活動</option>
 						</select>
 					</div>
-					<h3>已结束的活动</h3>
+					<h3>已結束的活動</h3>
 				</div>
 				<jsp:include page="table/end.jsp"></jsp:include>
 			</div>
