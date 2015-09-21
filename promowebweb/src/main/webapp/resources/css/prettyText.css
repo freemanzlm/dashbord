@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+.pretty-text {
+	font-size: 12px;
+}
+
+.pretty-text > div {
+	margin-top: 1em;
+}
+
+.pretty-text strong {
+	font-weight: bold;
+}
+
+.pretty-text i {
+	font-style: italic;
+}
+
+.pretty-text del {
+	text-decoration: line-through;
+}
+
+.pretty-text u {
+	text-decoration: underline;
+}
+
+.pretty-text p {
+	margin: 1em 0;
+}
+
+.pretty-text ul {
+	margin: 1em 0;
+	padding-left: 40px;
+	list-style: disc outside none;
+}
+
+.pretty-text ol {
+	margin: 1em 0;
+	padding-left: 40px;
+	list-style: numeric outside none;	
+}

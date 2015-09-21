@@ -38,6 +38,7 @@
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>

@@ -3,7 +3,7 @@
 <div id="listing-preview-dialog" class="dialog">
 	<a class="close"></a>
 	<div class="dialog-header">
-		<h2>已选择的刊登预览</h2>
+		<h2>已選擇的刊登預覽</h2>
 	</div>
 	<div class="dialog-pane">
 		<div class="dialog-body">

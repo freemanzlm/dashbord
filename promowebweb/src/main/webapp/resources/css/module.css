@@ -158,9 +158,9 @@
 	width: 100%;
 }
 
-.activity-detail .activity-brief p {
-	margin: 8px 0;
-	line-height: 1.333;
+.activity-detail .activity-brief .brief-title {
+	width: 64px;
+	padding-top: 1em;
 }
 
 .activity-detail .activity-brief .table-cell {
