@@ -21,7 +21,7 @@
 	<div class="table activity-brief">
 		<div class="table-row">
 			<div class="table-cell brief-title">活动简介：</div>
-			<div class="table-cell pretty-text" style="width: 1014px;">
+			<div class="table-cell pretty-text" style=";">
 				<div>${ activityContent }</div>
 			</div>
 		</div>
