@@ -13,7 +13,6 @@
 
 <div class="activity-detail">
 	<div class="activity-time">
-		<strong>報名截止時間：${ deadline }</strong>
 		<strong style="margin-left: 90px;">活動時間：${ timeSlot }</strong>
 		<c:if test="${ state == 'rewarding' }">
 			<strong style="margin-left: 90px;">獎勵領取截止時間：${ rewardDeadline }</strong>

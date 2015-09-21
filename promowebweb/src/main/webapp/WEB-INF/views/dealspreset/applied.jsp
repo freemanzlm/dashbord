@@ -78,7 +78,7 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box">
-					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
+					<h3>您已成功提交报名！请耐心等待审核结果。</h3>
 					
 					<c:if test="${expired eq true}">
 						<p class="desc gray">已超过报名有效期，您无法再修改刊登内容</p>

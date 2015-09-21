@@ -19,6 +19,7 @@ button:disabled {
 	background-image: -ms-linear-gradient(bottom, #CCCCCC 0%, #FFFFFF 50%, #CCCCCC 100%);
 	background-image: linear-gradient(to bottom, #CCCCCC 0%, #FFFFFF 50%, #CCCCCC 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(enabled=’false’, startColorstr='#CCCCCC', endColorstr='#CCCCCC', GradientType='0'); /* IE5.5-9*/
+	color: #999;
 }
 
 .btn {

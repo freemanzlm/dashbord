@@ -181,6 +181,10 @@ var BizReport = BizReport || {};
 						
 						if (type == "sort") {
 							switch (data) {
+							case 'Applied':
+								return 1;
+							case 'Nonapplied':
+								return 0;
 							case 'Confirmed':
 								return 3;
 							case 'PretrialPass':
@@ -318,7 +322,7 @@ var BizReport = BizReport || {};
 			// search from backmost to headmost
 			var i = this.selectedItems.length;
 			while (--i >= 0) {
-				if (this.selectedItems[i] = item) {
+				if (this.selectedItems[i] == item) {
 					this.selectedItems.splice(i, 1);
 					break;
 				}
