@@ -16,7 +16,10 @@ $(function(){
 	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "deals-listing-table"
+			tableId: "deals-listing-table",
+			customTableConfig: {
+                'sAjaxSource': '/promotion/deals/getSubmittedListings'
+            }
 		}});
 	listingTable.update({promoId:pageData.promoId});	
 	

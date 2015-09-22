@@ -16,7 +16,8 @@
 								<th class="name">刊登</th>
 								<th class="target-price">目标单价</th>
 								<th class="target-volume">目标销量</th>
-								<th class="target-sales">目标销售额</th>
+								<!-- <th class="target-sales">目标销售额</th> -->
+								<th class="compensate-per">补偿单价</th>
 								<th class="compensate">最大补偿幅度</th>
 								<th class="state">状态</th>
 								<th class="currency"></th>

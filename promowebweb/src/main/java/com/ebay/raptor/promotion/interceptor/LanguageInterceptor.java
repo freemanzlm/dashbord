@@ -36,6 +36,11 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public void postHandle(HttpServletRequest req,
 			HttpServletResponse resp, Object handler, ModelAndView model) throws Exception {
+		int i = 1;
+		if(i == 1){
+			return;
+		}
+		System.err.println("Set page language.");
 		//Check lang param, if yes then take as first priority
 		String langParam = (null != req.getParameter(lang)) ? req.getParameter(lang).toString() : "";
 		if(!StringUtil.isEmpty(langParam)){

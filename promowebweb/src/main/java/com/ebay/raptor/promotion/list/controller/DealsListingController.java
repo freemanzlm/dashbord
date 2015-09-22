@@ -204,6 +204,27 @@ public class DealsListingController extends AbstractListingController{
 	}
 	
 	@GET
+	@RequestMapping(ResourceProvider.ListingRes._getSubmittedListings)
+	@ResponseBody
+	public ListDataWebResponse<DealsListing> getSubmittedListings(HttpServletRequest req,
+			@ModelAttribute ListingWebParam param)  {
+		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
+		try {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			List<DealsListing> listings = service.getSubmitedListings(param.getPromoId(), userData.getUserId());
+			if (listings != null && listings.size() > 0) {
+				resp.setData(listings);
+			} else {
+				logger.error("No submitted listings found.");
+			}
+		} catch (PromoException | MissingArgumentException e) {
+			logger.error("Unable to get submitted listings, with error", e);
+			resp.setStatus(Boolean.FALSE);
+		}
+		return resp;
+	}
+	
+	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getApplicableListings)
 	@ResponseBody
 	public ListDataWebResponse<DealsListing> getApplicableListings(HttpServletRequest req,
