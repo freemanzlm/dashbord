@@ -29,7 +29,10 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public void postHandle(HttpServletRequest req,
 			HttpServletResponse resp, Object handler, ModelAndView model) throws Exception {
-		
+		int i = 1;
+		if(i == 1){
+			return;
+		}
 		System.err.println("Set page language.");
 		UserData user = CookieUtil.getUserDataFromCookie(req);
 		Boolean isTradionalLang = langCache.get(user.getUserId());
