@@ -1,6 +1,7 @@
 @CHARSET "UTF-8";
 .pretty-text {
 	font-size: 12px;
+	line-height: 1.25em;
 }
 
 .pretty-text > div {

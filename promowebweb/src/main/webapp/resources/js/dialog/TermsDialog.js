@@ -48,7 +48,7 @@
 			this.dialog.wrapper.find(".dialog-body").html(text);
 			this.dialog.show();
 			
-			var frame = this.dialog.wrapper.find("iframe");
+			/*var frame = this.dialog.wrapper.find("iframe");
 			var iframe = frame[0];
 			frame.width(this.dialog.body[0].scrollWidth);
 			
@@ -65,7 +65,7 @@
 				}
 			}
 			
-			setFrameSize();
+			setFrameSize();*/
 		},
 		
 		close: function() {
