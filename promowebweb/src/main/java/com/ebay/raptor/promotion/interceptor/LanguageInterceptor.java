@@ -12,6 +12,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ebay.app.raptor.promocommon.service.CSApiService;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
+import com.ebay.app.raptor.promocommon.util.EnviromentUtil;
 import com.ebay.app.raptor.promocommon.util.trans.ZHConverter;
 import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -36,8 +37,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public void postHandle(HttpServletRequest req,
 			HttpServletResponse resp, Object handler, ModelAndView model) throws Exception {
-		int i = 1;
-		if(i == 1){
+		//TODO Only call the service in prod.
+		if(!EnviromentUtil.isProduction()){
 			return;
 		}
 		System.err.println("Set page language.");
