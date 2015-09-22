@@ -87,6 +87,11 @@ $(function(){
 	termsDialog.subscribe({
 		"scrollEnd": function() {
 			acceptCheckbox.removeAttr("disabled");
+			$.ajax({
+				url: '',
+				type: 'get',
+				data: {termsAccpted: true, promoId: pageData && pageData.promoId}
+			});
 		}
 	});
 	$(".terms-conditions").click(function(event){
