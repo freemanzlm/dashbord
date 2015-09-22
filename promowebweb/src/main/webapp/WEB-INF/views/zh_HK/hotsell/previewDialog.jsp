@@ -16,7 +16,8 @@
 								<th class="name">刊登</th>
 								<th class="target-price">目標單價</th>
 								<th class="target-volume">目標銷量</th>
-								<th class="target-sales">目標銷售額</th>
+								<!-- <th class="target-sales">目標銷售額</th> -->
+								<th class="compensate-per">補償單價</th>
 								<th class="compensate">最大補償幅度</th>
 								<th class="state">狀態</th>
 								<th class="currency"></th>
