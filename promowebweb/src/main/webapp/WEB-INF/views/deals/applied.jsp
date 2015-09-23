@@ -98,7 +98,7 @@
 						<div class="listings-upload">
 							<h3>重新上传我要提交的刊登</h3>
 							
-							<div class="body mt20"  style="width: 420px;">
+							<div class="body mt20"  style="width: 490px;">
 								<p class="mt10">您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
 								<p class="mt10">您新上传的数据将完全替换原数据。提交数据需再次接受Deals招募法律协议。</p>
 								

@@ -85,7 +85,7 @@ $(function(){
 	
 	var termsDialog = BizReport.termsDialog;
 	termsDialog.subscribe({
-		"scrollEnd": function() {
+		"ok": function() {
 			acceptCheckbox.removeAttr("disabled");
 		}
 	});
