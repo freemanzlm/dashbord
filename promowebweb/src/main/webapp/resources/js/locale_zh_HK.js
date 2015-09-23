@@ -90,7 +90,7 @@ BizReport.locale = {
 		},
 		'request': {
 			'fail': '請求提交失敗',
-			'sending': '請求已發送，請稍後。。。'
+			'sending': '請求已發送，請稍候。。。'
 		}
 	},
 	'listing': {
