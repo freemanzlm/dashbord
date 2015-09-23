@@ -76,7 +76,6 @@ var BizReport = BizReport || {};
 					{data: 'type'},
 					{data: 'promoDlDt'},
 					{data: 'promoEdt'},
-					/*{data: 'reward'},*/
 					{data: 'state'}
 				],
 				aoColumnDefs: [{
@@ -146,28 +145,83 @@ var BizReport = BizReport || {};
 								}
 							}
 							
-							switch(data) {
-							case 'Started':
-							case 'SubsidyCounting':
-							case 'SubsidyRetrieved':
-								return locale.getText('promo.state.' + data) + "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
-							case 'SubsidyWaiting':
-							case 'SubsidyAccessed':
-							case 'SubsidySubmmitted':
-							case 'SubsidyRetrievable':
-							case 'SubsidyResubmittable':
-								if ((full.rewardType == 1 || full.rewardType == 4) && full.rewardUrl) {
-									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
-									display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
-								} else {
-									display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.SubsidyWaiting') + "</a>";
-									display = "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+							if (pageData && pageData.region == 'CN') {
+								if ((full.rewardType == 1 || full.rewardType == 2)) {
+									// Gas card, WLT, JD card
+									switch (data) {
+									case 'SubsidyWaiting':
+									case 'SubsidyAccessed':
+									case 'SubsidySubmitted':
+									case 'SubsidyRetrievable':
+									case 'SubsidyResubmittable':
+											display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
+											display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+										return display;
+									default:
+										return locale.getText('promo.state.' + data) + "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+									}
 								}
-								
-								return display;
 							}
 							
+							if (data == 'SubsidyRetrieved') { // complete
+								return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a target='_blank' href='" + getLink(full.promoId)  + "'>查看详情</a>";
+							}
+							
+							if (full.rewardType != 0 && data != 'End') {
+								display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.SubsidyRetrievable') + "</a>";
+								return display;
+							}						
+							
 							return "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+						}
+						
+						if (type == "sort") {
+							if (full.type != 3) {
+								switch (data) {
+								case 'Created':
+									return 0;
+								case 'PromotionApproved':
+									return 1;
+								case 'Applied':
+									return 2;
+								case 'Submitted':
+									return 3;
+								case 'Started':
+									return 4;
+								case 'SubsidyCounting':
+									return 5;
+								}
+							}
+							
+							if (pageData && pageData.region == 'CN') {
+								if ((full.rewardType == 1 || full.rewardType == 2)){
+									switch (data) {
+									case 'SubsidyWaiting':
+										return 8;
+									case 'SubsidyResubmittable':
+										return 9;
+									case 'SubsidyRetrievable':
+										return 10;
+									case 'SubsidyAccessed':
+										return 11;
+									case 'SubsidySubmitted':
+										return 12;
+									case 'SubsidyUploaded':
+										return 13;
+									}
+								}
+							}
+							
+							if (data == 'SubsidyRetrieved') {
+								return 11;
+							}
+							
+							if (full.rewardType != 0) {
+								return 10; // SubsidyRetrievable
+							}
+							
+							
+							return 20;
 						}
 						
 						return data;

@@ -38,8 +38,7 @@ $(function(){
 			dataTableConfig: {
 				tableId: "pending-promo-table",
 				customTableConfig: {
-					sAjaxSource: "promotion/getUnconfirmedPromotions",
-					aoColumnDefs: [,,,, {bVisible: !(pageData && (pageData.region == 'HK' || pageData.region == 'TW'))}]
+					sAjaxSource: "promotion/getUnconfirmedPromotions"
 				}
 			}});
 		pendingPromoTable.update();
