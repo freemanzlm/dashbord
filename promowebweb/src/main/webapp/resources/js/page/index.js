@@ -17,7 +17,7 @@ $(function(){
 			tableId: "rewarding-promo-table",
 			customTableConfig: {
 				sAjaxSource: "promotion/getSubsidyPromotions",
-				aoColumnDefs: [,,,, {bVisible: !(pageData && (pageData.region == 'HK' || pageData.region == 'TW'))}]
+				aoColumnDefs: [,,,, {bVisible: (pageData && pageData.region == 'CN')}]
 			}
 		}});
 	rewardingPromoTable.update();
@@ -38,7 +38,8 @@ $(function(){
 			dataTableConfig: {
 				tableId: "pending-promo-table",
 				customTableConfig: {
-					sAjaxSource: "promotion/getUnconfirmedPromotions"
+					sAjaxSource: "promotion/getUnconfirmedPromotions",
+					aoColumnDefs: [,,,, {bVisible: (pageData && pageData.region == 'CN')}]
 				}
 			}});
 		pendingPromoTable.update();
