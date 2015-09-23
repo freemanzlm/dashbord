@@ -16,13 +16,10 @@ import com.ebay.app.raptor.promocommon.util.EnviromentUtil;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.app.raptor.promocommon.xml.XmlParseException;
 import com.ebay.app.raptor.promocommon.xml.XmlParser;
-import com.ebay.domain.core.biz.UserBOF;
-import com.ebay.domain.core.biz.UserBo;
-import com.ebay.domain.core.biz.UserReadsetEnum;
-import com.ebay.integ.account.common.CountryEnum;
 import com.ebay.integ.dal.dao.FinderException;
 import com.ebay.integ.user.User;
 import com.ebay.integ.user.UserDAO;
+import com.ebay.raptor.geo.utils.CountryEnum;
 
 public class CSApiService {
 

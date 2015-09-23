@@ -6,8 +6,7 @@ import com.ebay.kernel.initialization.ModuleInterface;
 public class InitializationManager extends BaseInitializationManager {
 
 	 final static ModuleInterface [] DEPENDENT_MODULES = {
-     	com.ebay.integ.user.common.Module.getInstance(),
-     	
+     	com.ebay.integ.user.common.Module.getInstance()
      };
 	 
 	public InitializationManager() {
