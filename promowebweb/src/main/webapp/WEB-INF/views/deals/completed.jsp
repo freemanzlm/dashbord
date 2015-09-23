@@ -12,16 +12,16 @@
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardName" value="加油卡" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 2 }">
+	<c:when test="${ promo.rewardType eq 6 }">
 		<c:set var="rewardName" value="京东卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 3 }">
 		<c:set var="rewardName" value="万邑通" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 4 }">
+	<c:when test="${ promo.rewardType eq 2 }">
 		<c:set var="rewardName" value="ebay万里通积分" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 5 }">
+	<c:when test="${ promo.rewardType eq 4 }">
 		<c:set var="rewardName" value="邮票" />
 	</c:when>
 </c:choose>
@@ -95,7 +95,7 @@
 				
 				<div class="active-status-box success">
 					<c:choose>
-						<c:when test="${ promo.rewardType eq 1 or promo.rewardType eq 4 or promo.rewardType eq 6 }">
+						<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && region eq 'CN' }">
 							<h3>您已成功领取等值${promo.reward }元的${rewardName }</h3>
 						</c:when>
 						<c:otherwise>

@@ -15,16 +15,16 @@
 		<c:set var="rewardName" value="加油卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 6 }">
-		<c:set var="rewardName" value="京东卡" />
+		<c:set var="rewardName" value="京東卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 3 }">
-		<c:set var="rewardName" value="万邑通" />
+		<c:set var="rewardName" value="萬邑通" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardName" value="ebay万里通积分" />
+		<c:set var="rewardName" value="ebay萬裏通積分" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 4 }">
-		<c:set var="rewardName" value="邮票" />
+		<c:set var="rewardName" value="郵票" />
 	</c:when>
 </c:choose>
 
@@ -75,17 +75,17 @@
 					<c:when test="${ rewarding }">
 						<div class="steps-wrapper">
 							<div class="steps clr">
-								<div class="step done"><span>活动进行中</span></div>
-								<div class="step done"><span>奖励确认中</span></div>
-								<div class="step done"><span>申领奖励</span></div>
-								<div class="step current-step last"><span>活动完成</span></div>
+								<div class="step done"><span>活動進行中</span></div>
+								<div class="step done"><span>獎勵確認中</span></div>
+								<div class="step done"><span>申領獎勵</span></div>
+								<div class="step current-step last"><span>活動完成</span></div>
 							</div>
 						</div>  <!-- steps end -->
 					</c:when>
 					<c:otherwise>
 						<div class="steps-wrapper">
 							<div class="steps clr">
-								<div class="step current-step last"><span>活动已结束</span></div>
+								<div class="step current-step last"><span>活動已結束</span></div>
 							</div>
 						</div>  <!-- steps end -->
 					</c:otherwise>
@@ -94,16 +94,16 @@
 				<div class="active-status-box success">
 					<c:choose>
 						<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && region eq 'CN' }">
-							<h3>您已成功领取等值${promo.reward }元的${rewardName }</h3>
+							<h3>您已成功領取等值${promo.reward }元的${rewardName }</h3>
 						</c:when>
 						<c:otherwise>
-							<h3>恭喜您已完成本活动！感谢您的参与!</h3>
+							<h3>恭喜您已完成本活動！感謝您的參與！</h3>
 						</c:otherwise>
 					</c:choose>
 					
 					<menu>
 						<li>
-							<a href="../index" class="btn">返回活动列表</a>
+							<a href="../index" class="btn">返回活動清單</a>
 						</li>
 					</menu>
 				</div> <!-- active status box end -->
