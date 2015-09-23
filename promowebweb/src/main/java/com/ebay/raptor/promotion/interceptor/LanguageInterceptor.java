@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.service.CSApiService;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.EnviromentUtil;
@@ -22,6 +23,8 @@ import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
 
 public class LanguageInterceptor extends HandlerInterceptorAdapter{
+	
+	private CommonLogger logger = CommonLogger.getInstance(LanguageInterceptor.class);
 
 	private String tradLang = "zh_HK/";
 	
@@ -52,6 +55,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			region = getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName());
 		} catch(Throwable e){
 			isTimeout = true;
+			e.printStackTrace();
+			logger.error("Failed to retrieved the region for seller  " + user.getUserId() + ", error: " + e.getMessage());
 		}
 		
 		System.err.println("Set page language.");
@@ -92,13 +97,14 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	 */
 	private String getRegionFromCacheOrAPI(ModelAndView model, long uid , String userName){
 		if(!StringUtil.isEmpty(userName)){
-			String region = service.getUserCountryByName(userName, !EnviromentUtil.isProduction());
+			String region = service.getUserCountryByName(userName);
 			if(!StringUtil.isEmpty(region)){
+				logger.error("Retrieved the region for seller  " + uid + ", region: " + region);
 				//Cache the region
 				regionCache.put(uid, region);
 				model.addObject(ViewContext.Region.getAttr(), region);
 				return region;
-			}
+			} 
 		}
 		//TODO need to put into enum.
 		return "CN";
