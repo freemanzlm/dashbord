@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.service.CSApiService;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.EnviromentUtil;
@@ -22,6 +23,8 @@ import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
 
 public class LanguageInterceptor extends HandlerInterceptorAdapter{
+	
+	private CommonLogger logger = CommonLogger.getInstance(LanguageInterceptor.class);
 
 	private String tradLang = "zh_HK/";
 	
@@ -31,16 +34,31 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	//FALSE: User is from CN, use Simplified Chinese
 	private Map<Long, Boolean> langCache = new ConcurrentHashMap<Long, Boolean>();
 	
+	private Map<Long, String> regionCache = new ConcurrentHashMap<Long, String>(); 
+	
 	@Autowired
 	private CSApiService service;
 	
 	@Override
 	public void postHandle(HttpServletRequest req,
 			HttpServletResponse resp, Object handler, ModelAndView model) throws Exception {
-		//TODO Only call the service in prod.
-		if(!EnviromentUtil.isProduction()){
+		//TODO timeout issue.
+		boolean isTimeout = false;
+		if(isTimeout){
 			return;
 		}
+		
+		//Call the API CS api to get user
+		UserData user = CookieUtil.getUserDataFromCookie(req);
+		String region = "CN";
+		try{
+			region = getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName());
+		} catch(Throwable e){
+			isTimeout = true;
+			e.printStackTrace();
+			logger.error("Failed to retrieved the region for seller  " + user.getUserId() + ", error: " + e.getMessage());
+		}
+		
 		System.err.println("Set page language.");
 		//Check lang param, if yes then take as first priority
 		String langParam = (null != req.getParameter(lang)) ? req.getParameter(lang).toString() : "";
@@ -53,7 +71,6 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			}
 		}
 		
-		UserData user = CookieUtil.getUserDataFromCookie(req);
 		Boolean isTradionalLang = langCache.get(user.getUserId());
 		if(null != isTradionalLang){
 			if(isTradionalLang){
@@ -62,18 +79,35 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			return;
 		}
 		
-		//Call the API CS api to get user
-		String country = service.getUserCountryByName(user.getUserName());
-		if(null != country){
-			if(!(CountryEnum.CN.getName()).equals(country)){
+		if(null != region){
+			if(!(CountryEnum.CN.getName()).equals(region)){
 				updateApplicationContext(model);
-				
 				//Cache the user
 				langCache.put(user.getUserId(), Boolean.TRUE);
 			} else {
 				langCache.put(user.getUserId(), Boolean.FALSE);
 			}
 		}
+	}
+	
+	/**
+	 * Load the user region from cache first, if fail then retrieve from API.
+	 * If API still fails, then return CN by default.
+	 * @param userName
+	 */
+	private String getRegionFromCacheOrAPI(ModelAndView model, long uid , String userName){
+		if(!StringUtil.isEmpty(userName)){
+			String region = service.getUserCountryByName(userName);
+			if(!StringUtil.isEmpty(region)){
+				logger.error("Retrieved the region for seller  " + uid + ", region: " + region);
+				//Cache the region
+				regionCache.put(uid, region);
+				model.addObject(ViewContext.Region.getAttr(), region);
+				return region;
+			} 
+		}
+		//TODO need to put into enum.
+		return "CN";
 	}
 	
 	/**

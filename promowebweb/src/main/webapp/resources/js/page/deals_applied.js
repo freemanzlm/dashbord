@@ -48,8 +48,8 @@ $(function(){
 	$(uploadBtn).click(function(){
 		if (!this.hasAttribute("disabled")) {
 			uploadIFrame.on("load", function(){
-				if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").find("pre").length > 0) {
-					var response = uploadIFrame.contents().find("body").find("pre").text();
+				if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").html().length > 0) {
+					var response = uploadIFrame.contents().find("body").text();
 					var responseData = $.parseJSON(response);
 					// verification returns no error 
 					if (responseData.status) {
@@ -64,12 +64,12 @@ $(function(){
 						}
 						// redirect to error page
 						else {
-							window.location.replace("error");
+							window.location.replace("promotion/error");
 						}
 					}
 				} else {
 					// redirect to error page
-					window.location.replace("error");
+					window.location.replace("promotion/error");
 				}
 			});
 			

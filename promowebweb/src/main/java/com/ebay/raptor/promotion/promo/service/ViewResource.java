@@ -29,6 +29,7 @@ public enum ViewResource {
 	DU_CONFIRM_LISTING("/promotion/deals/confirmDealsListings"),
 	DU_AGGREMENT("terms/deals"),
 	DU_COMPLETED("deals/completed"),
+	DU_UPLOAD_RESPONSE("deals/uploadResponse"),
 	
 	OTHER_CANCELLED("other/canceled"),
 	OTHER_END("other/end"),

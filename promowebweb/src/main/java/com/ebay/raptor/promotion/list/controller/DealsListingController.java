@@ -80,8 +80,9 @@ public class DealsListingController extends AbstractListingController{
 	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadDealsListings)
-	public @ResponseBody ResponseData <String> uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
+	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile dealsListings, @RequestParam String promoId) throws MissingArgumentException{
+		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 
@@ -109,7 +110,9 @@ public class DealsListingController extends AbstractListingController{
 				} catch (IOException e) {}
 			}
 		}
-		return responseData;
+
+		mav.addObject("response", PojoConvertor.convertToJson(responseData));
+		return mav;
 	}
 	
 	@POST

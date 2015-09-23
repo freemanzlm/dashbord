@@ -60,6 +60,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				String cookieValue = cookie.getValue();
 
 				if (CookieUtil.HACKID_COOKIE_KEY.equalsIgnoreCase(cookieName)) {
+					// found hack_id which means the access is by hack mode, and no session stored
                     return true;
                 }
 
@@ -68,7 +69,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 					userFound = true;
 				}
 				
-				if (CookieUtil.SESSIONID_COOKIE_KEY.endsWith(cookieName)) {
+				if (CookieUtil.SESSIONID_COOKIE_KEY.equalsIgnoreCase(cookieName)) {
 					sessionId = cookieValue;
 					sessionFound = true;
 				}
@@ -92,7 +93,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private void redirectToLogin (HttpServletRequest request, HttpServletResponse response) {
-		String loginUrl = "http://www.ebay.cn"; //TODO
+		String loginUrl = "http://www.ebay.cn/auth/";
 		// TODO empty cookie
 		try {
 			response.sendRedirect(loginUrl);

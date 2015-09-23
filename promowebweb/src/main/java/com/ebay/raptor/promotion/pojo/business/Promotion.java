@@ -37,6 +37,28 @@ public class Promotion {
 	private String state;
 	
 	private Boolean regEnded;
+	
+	@JsonSerialize(using=WebDateSerializer.class)
+	private Date regEndDate;
+	
+	@JsonSerialize(using=WebDateSerializer.class)
+	private Date submitDeadline;
+	
+	public Date getRegEndDate() {
+		return regEndDate;
+	}
+
+	public void setRegEndDate(Date regEndDate) {
+		this.regEndDate = regEndDate;
+	}
+
+	public Date getSubmitDeadline() {
+		return submitDeadline;
+	}
+
+	public void setSubmitDeadline(Date submitDeadline) {
+		this.submitDeadline = submitDeadline;
+	}
 
 	public String getDesc() {
 		return desc;

@@ -24,6 +24,7 @@ public class PromotionViewService {
 					view = ViewResource.HV_APPLICABLE;
 					break;
 				case APPLIED:
+					context.put("expired", pro.getRegEnded());
 					view = ViewResource.HV_APPLIED;
 					break;
 				case STARTED:

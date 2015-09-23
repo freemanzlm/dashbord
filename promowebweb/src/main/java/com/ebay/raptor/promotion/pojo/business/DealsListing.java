@@ -11,7 +11,7 @@ public class DealsListing {
 	@Header(name = "招募SKU名称", order=2, format=ColumnFormat.String)
 	private String skuName;
 
-	@Header(name = "刊登编号", order=3, format=ColumnFormat.IntNum, writable=true)
+	@Header(name = "刊登编号", order=4, format=ColumnFormat.IntNum, writable=true)
 	private Long itemId;
 
 //	@Header(name = "刊登名称", order=4, format=ColumnFormat.String, writable=true)
@@ -26,10 +26,10 @@ public class DealsListing {
 	@Header(name = "刊登库存量", order=7, format=ColumnFormat.IntNum, writable=true)
 	private Long stockNum;
 	
-	@Header(name = "备货完成时间(yyyy/MM/dd)", order=8, format=ColumnFormat.String, writable=true)
+	@Header(name = "备货完成时间(yyyy/MM/dd)", order=8, format=ColumnFormat.Date, writable=true)
 	private String stockReadyDate;
 	
-	@Header(name = "货币单位", order=9, format=ColumnFormat.String)
+	@Header(name = "货币单位", order=3, format=ColumnFormat.String)
 	private String currency;
 	
 	private Float proposePrice;

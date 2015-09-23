@@ -72,13 +72,14 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			int cellIndex = 0;
 			Cell skuIdCell = row.getCell(cellIndex++);
 			Cell skuNameCell = row.getCell(cellIndex++);
+			Cell currencyCell = row.getCell(cellIndex++);
 			Cell itemIdCell = row.getCell(cellIndex++);
 //			Cell itemTitleCell = row.getCell(cellIndex++);
 			Cell currPriceCell = row.getCell(cellIndex++);
 			Cell dealsPriceCell = row.getCell(cellIndex++);
 			Cell stockNumCell = row.getCell(cellIndex++);
 			Cell stockReadyDateCell = row.getCell(cellIndex++);
-			Cell currencyCell = row.getCell(cellIndex++);
+			
 	
 			Object skuIdObj = getCellValue(skuIdCell);
 			Object skuNameObj = getCellValue(skuNameCell);
@@ -136,6 +137,8 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 		
 		if (uploadedListings.size() > 0) {
 			dealsListingService.uploadDealsListings(uploadedListings, promoId, userId);
+		} else {
+			throw new InvalidCellValueException(ErrorType.EmptyListingInExcel, 0, 0, "");
 		}
 	}
 
