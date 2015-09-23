@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
-import com.ebay.app.raptor.promocommon.service.CSApiService;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.trans.ZHConverter;
 import com.ebay.kernel.context.AppBuildConfig;
@@ -19,6 +18,7 @@ import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
+import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
 

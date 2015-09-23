@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ebay:config-category-file xmlns:ebay="http://www.ebay.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<config-category id="ebay.domain.search.integ.SearchDriverConfig.General" alias="SDConfig.General" group="ebay.domain.search.integ.SearchDriverConfig" site-ops-command="true" initializable="false" persist-updates="true">
+        <attribute name="TwoTripLimit" value="200"/>
+        <attribute name="HttpConnectTimeout" value="5000"/>
+        <attribute name="HttpRecvTimeout" value="40000"/>
+        <attribute name="RetryCount" value="0"/>
+        <attribute name="QueryPath" value="/query"/>
+        <attribute name="ItemsPath" value="/items"/>
+    </config-category>
+
+</ebay:config-category-file>

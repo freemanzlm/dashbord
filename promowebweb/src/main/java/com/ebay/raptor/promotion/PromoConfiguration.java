@@ -6,7 +6,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 import com.ebay.app.raptor.promocommon.concurrent.CommonExecutorService;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestService;
-import com.ebay.app.raptor.promocommon.service.CSApiService;
+import com.ebay.raptor.promotion.service.CSApiService;
 
 @Configuration
 public class PromoConfiguration {
