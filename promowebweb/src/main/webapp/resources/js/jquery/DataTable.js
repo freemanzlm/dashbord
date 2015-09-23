@@ -91,6 +91,7 @@
 				this.table.fnDraw();
 			} else {
 				this.ajaxConfig.data = param || {};
+				this.ajaxConfig.data.timestamp = Date.now();
 				$.ajax(this.ajaxConfig);
 				this.publish("ajaxbegin");
 			}
