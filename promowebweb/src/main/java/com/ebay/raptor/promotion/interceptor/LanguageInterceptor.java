@@ -13,7 +13,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.service.CSApiService;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
-import com.ebay.app.raptor.promocommon.util.EnviromentUtil;
 import com.ebay.app.raptor.promocommon.util.trans.ZHConverter;
 import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -46,6 +45,10 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		boolean isTimeout = false;
 		if(isTimeout){
 			return;
+		}
+		
+		if(null == model){
+			model = new ModelAndView();
 		}
 		
 		//Call the API CS api to get user
