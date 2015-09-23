@@ -21,13 +21,13 @@
 	</div>
 	<div class="table activity-brief">
 		<div class="table-row">
-			<div class="table-cell brief-title">活动简介：</div>
+			<div class="table-cell brief-title">活动条款：</div>
 			<div class="table-cell pretty-text">
 				<div>${ activityContent }</div>
 			</div>
 		</div>
 	</div>
 	<div class="activity-law">
-		<strong>法律协议：点击查看 <a href="javascript:void(0)" class="terms-conditions">法律协议</a></strong>
+		<strong>其他条款：</strong>每次提交前请 <a href="javascript:void(0)" class="terms-conditions">点击阅读《其他条款》</a>。其他条款为本活动条款的一部分，具有不可分割性。
 	</div>
 </div>

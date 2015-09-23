@@ -13,8 +13,7 @@
 				data : null,
 				context : this,
 				success : this.processResp,
-				error: this.error,
-				timeout: 15000
+				error: this.error
 			};
 		
 		this.initialized = false;

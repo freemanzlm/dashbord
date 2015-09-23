@@ -172,6 +172,10 @@
 .activity-detail .activity-law {
 	margin-top: 1em;
 }
+
+.activity-detail .activity-law a {
+	color: red;
+}
 /* active detail end */
 
 /* active status box begin */

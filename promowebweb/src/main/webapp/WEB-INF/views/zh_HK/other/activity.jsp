@@ -20,7 +20,7 @@
 	</div>
 	<div class="table activity-brief">
 		<div class="table-row">
-			<div class="table-cell brief-title">活動簡介：</div>
+			<div class="table-cell brief-title">活動條款：</div>
 			<div class="table-cell pretty-text">
 				<div>${ activityContent }</div>
 			</div>
