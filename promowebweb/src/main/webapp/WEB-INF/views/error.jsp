@@ -4,6 +4,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <c:set var="categoryId" value="6000" />
 
+<r:includeJquery jsSlot="head" />
 <r:client />
 
 <!DOCTYPE html>
