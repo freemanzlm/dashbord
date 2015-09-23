@@ -13,16 +13,16 @@
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardName" value="加油卡" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 2 }">
+	<c:when test="${ promo.rewardType eq 6 }">
 		<c:set var="rewardName" value="京東卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 3 }">
 		<c:set var="rewardName" value="萬邑通" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 4 }">
+	<c:when test="${ promo.rewardType eq 2 }">
 		<c:set var="rewardName" value="ebay萬裏通積分" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 5 }">
+	<c:when test="${ promo.rewardType eq 4 }">
 		<c:set var="rewardName" value="郵票" />
 	</c:when>
 </c:choose>
@@ -41,7 +41,7 @@
 		</c:when>
 		<c:otherwise>
 			<c:choose>
-				<c:when test="${ promo.rewardType eq 1 or promo.rewardType eq 4 or promo.rewardType eq 6 }">
+				<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && region eq 'CN' }">
 					<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardName }</h3>
 				</c:when>
 				<c:otherwise>
@@ -54,7 +54,7 @@
 			</c:if>
 
 			<c:choose>
-				<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 4) and not empty promo.rewardUrl }">
+				<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2) and (not empty promo.rewardUrl) and region eq 'CN' }">
 					<menu><li>
 						<c:choose>
 							<c:when test="${ state eq 'SubsidySubmitted' }">
