@@ -16,7 +16,7 @@ public class HotSellListing {
 
 	private Float sales;
 
-	private Float compCast;
+	private Float compCost;
 
 	private Float maxComp;
 
@@ -86,20 +86,20 @@ public class HotSellListing {
 		this.skuId = skuId;
 	}
 
-	public Float getCompCast() {
-		return compCast;
-	}
-
-	public void setCompCast(Float compCast) {
-		this.compCast = compCast;
-	}
-
 	public Float getMaxComp() {
 		return maxComp;
 	}
 
 	public void setMaxComp(Float maxComp) {
 		this.maxComp = maxComp;
+	}
+
+	public Float getCompCost() {
+		return compCost;
+	}
+
+	public void setCompCost(Float compCost) {
+		this.compCost = compCost;
 	}
 
 }
