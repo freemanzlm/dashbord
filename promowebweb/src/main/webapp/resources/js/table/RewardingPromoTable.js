@@ -14,7 +14,7 @@ var BizReport = BizReport || {};
 	
 	var locale = namespace.locale;
 	
-	var promos = ['hotsell', 'deals', 'dealsPreset', 'other'];
+	var promos = ['hotsell', 'deals', 'deals', 'other'];
 	
 	function getLink(promoId) {
 		return "promotion/" + promoId;
@@ -100,6 +100,12 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							return locale.getText('promo.type.' + promos[data]); 
+						}
+						
+						if (type == 'sort' || type == 'filter') {
+							if (data == '2') {
+								return 1;
+							}
 						}
 						
 						return data;

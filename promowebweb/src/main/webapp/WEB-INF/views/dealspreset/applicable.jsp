@@ -14,8 +14,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals预置</title>
-	<meta name="description" content="Deals预置">
+	<title>Deals招募</title>
+	<meta name="description" content="Deals招募">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -63,7 +63,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals预置 ${promo.name}</h2>
+				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step"><span>可报名</span></div>

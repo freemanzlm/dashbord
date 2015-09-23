@@ -66,6 +66,23 @@
 				<h2>活動促銷</h2>
 			</div>
 			
+			<c:if test="${ invisible eq true }">
+				<div class="pane pane-table">
+					<div class="header">
+						<div class="fr cl">
+							<select name="" id="" class="fr type-filter">
+								<option value="">全部活動類型</option>
+							<option value="0">爆款促銷</option>
+							<option value="1">Deals招募</option>
+							<option value="3">其它活動</option>
+							</select>
+						</div>
+						<h3>等待開放的活動</h3>
+					</div>
+					<jsp:include page="table/pending.jsp"></jsp:include>
+				</div>
+			</c:if>
+			
 			<div class="pane pane-table">
 				<div class="header">
 					<div class="fr cl">
@@ -83,7 +100,6 @@
 							<option value="">全部活動類型</option>
 							<option value="0">爆款促銷</option>
 							<option value="1">Deals招募</option>
-							<option value="2">Deals招募</option>
 							<option value="3">其它活動</option>
 						</select>
 					</div>
@@ -107,7 +123,6 @@
 							<option value="">全部活動類型</option>
 							<option value="0">爆款促銷</option>
 							<option value="1">Deals招募</option>
-							<option value="2">Deals預置</option>
 							<option value="3">其它活動</option>
 						</select>
 					</div>
@@ -128,7 +143,6 @@
 							<option value="">全部活動類型</option>
 							<option value="0">爆款促銷</option>
 							<option value="1">Deals招募</option>
-							<option value="2">Deals預置</option>
 							<option value="3">其它活動</option>
 						</select>
 					</div>
@@ -145,6 +159,12 @@
 </div>
 
 <%@ include file="dialog/alert.jsp" %>
+
+<script type="text/javascript">
+	var pageData = {
+		region: '${ region }'
+	};
+</script>
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />

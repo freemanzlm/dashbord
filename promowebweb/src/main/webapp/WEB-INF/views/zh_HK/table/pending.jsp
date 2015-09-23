@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="dataTable-container">
-	<table id="ongoing-promo-table" class="dataTable">
+	<table id="pending-promo-table" class="dataTable">
 		<thead>
 			<tr>
 				<th class="name">活動名稱</th>
