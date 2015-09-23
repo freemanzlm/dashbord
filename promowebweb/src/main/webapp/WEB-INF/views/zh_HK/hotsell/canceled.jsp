@@ -5,7 +5,6 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="state" value="${ promo.state }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -14,7 +13,7 @@
 <html>
 <head>
 	<title>爆款促銷</title>
-	<meta name="description" content="爆款促銷 ">
+	<meta name="description" content="爆款促銷">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	
@@ -36,7 +35,7 @@
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
-	<res:useJs value="${res.js.local.js['locale_zh_CN.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['locale_zh_HK.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>

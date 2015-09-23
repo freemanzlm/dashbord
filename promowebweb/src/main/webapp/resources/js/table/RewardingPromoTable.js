@@ -178,13 +178,13 @@ var BizReport = BizReport || {};
 											display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 										return display;
 									default:
-										return locale.getText('promo.state.' + data) + "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+										return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 									}
 								}
 							}
 							
 							if (full.rewardType != 0) {
-								display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.SubsidyRetrievable') + "</a>";
+								display = "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.SubsidyRetrievable') + "</a>";
 								return display;
 							}
 						}

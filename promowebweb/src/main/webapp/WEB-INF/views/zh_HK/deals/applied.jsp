@@ -31,8 +31,8 @@
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
-	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
+	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
@@ -102,6 +102,17 @@
 								<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登</a>修改並重新上傳您的刊登參與本活動。</p>
 								<p class="mt10">您新上傳的數據將完全替換原數據。提交數據需再次接受Deals招募法律協定。</p>
 								
+								<div class="mt10">
+									<span style="float: left; font-weight: bold;">注：</span>
+									<ul>
+										<li>請勿修改下載範本的檔案格式。</li>
+										<li>請勿修改、增减範本中的原有資訊</li>
+										<li>請填寫完整報名的刊登資訊，包括：您的刊登編號，當前刊登單價，活動單價，刊登庫存量。價格請按活動對應網站的貨幣計算。</li>
+										<li>備貨完成時間格式為YYYYMMDD，如2015.08.08</li>
+										<li>不報名的SKU請留空填寫內容，不填寫任何待填寫資訊，範本自帶資訊請勿修改。</li>
+									</ul>
+								</div>
+								
 								<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
 									選擇上傳您的刊登清單
 									<input type="hidden" name="promoId" value="${promo.promoId}"/>
@@ -113,7 +124,7 @@
 					</div>
 					
 					<div class="mt20 page-bottom-actions">
-						<button id="upload-btn" class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>預覽修改報名資訊</button>
+						<button id="upload-btn" class="btn" title="在報名截止之前，您可以重新勾選報名的刊登。" disabled>預覽修改報名資訊</button>
 					</div>	
 				</c:if>
 						

@@ -7,7 +7,6 @@
 <c:set var="categoryId" value="6000" />
 <c:set var="listingNum" value="2" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
-<c:set var="state" value="${ promo.state }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -82,16 +81,11 @@
 				
 				<div class="active-status-box">
 					<h3>您已成功提交報名！請耐心等待稽核結果。</h3>
-					<p class="desc">
-						<c:choose>
-							<c:when test="${not expired }">
-								在報名有效期內，您可以重新選擇預報名的刊登，並重新提交
-							</c:when>
-							<c:otherwise>
-								已超過報名有效期，您無法再修改刊登內容
-							</c:otherwise>
-						</c:choose>
-					</p>
+					
+					<c:if test="${expired eq true}">
+						<p class="desc gray">已超過報名有效期，您無法再修改刊登內容</p>
+					</c:if>
+					
 					<menu>
 						<li><a href="../index" class="btn">返回活動清單</a></li>
 					</menu>
@@ -100,14 +94,18 @@
 				<%@ include file="activity.jsp" %>
 		
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登<small>（已選<span>0</span>項）</small></h3>
+					<h3>我提交的刊登
+						<c:if test="${ not expired }">
+							<small>（已选 <span>0</span> 项）</small>
+						</c:if>
+					</h3>
 					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
 				</div>	
 				
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
-						<form id="listing-form" action="applied" method="post">
-							<input type="hidden" name="promoId" value=""/>
+						<form id="listing-form" action="/promotion/hotsell/confirmHotSellListings" method="post">
+							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<button class="btn" id="form-btn" type="button" title="在报名截止之前，您可以重新勾选报名的刊登。">预览修改报名信息</button>
 						</form>

@@ -143,11 +143,11 @@ var BizReport = BizReport || {};
 								switch (data) {
 								case 'Created':
 								case 'PromotionApproved':
-									return "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + data) + "</a>";
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + data) + "</a>";
 								case 'Applied':
 								case 'Verifying':
 								case 'Submitted':
-									return locale.getText('promo.state.' + data) + "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 								}
 							}
 							
@@ -164,21 +164,21 @@ var BizReport = BizReport || {};
 											display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
 										return display;
 									default:
-										return locale.getText('promo.state.' + data) + "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+										return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 									}
 								}
 							}
 							
 							if (data == 'SubsidyRetrieved') { // complete
-								return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a target='_blank' href='" + getLink(full.promoId)  + "'>查看详情</a>";
+								return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							}
 							
 							if (full.rewardType != 0 && data != 'End') {
-								display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.SubsidyRetrievable') + "</a>";
+								display = "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.SubsidyRetrievable') + "</a>";
 								return display;
 							}						
 							
-							return "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+							return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 						}
 						
 						if (type == "sort") {

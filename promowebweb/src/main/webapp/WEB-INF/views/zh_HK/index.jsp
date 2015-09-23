@@ -91,6 +91,7 @@
 							<option value="Created">可報名的活動</option>
 							<option value="PromotionApproved">待確認報名刊登的活動</option>
 							<option value="Submitted">已提交預審的活動</option>
+							<option value="Verifying">預審中的活動</option>
 							<option value="Applied">已提交報名的活動</option>
 							<option value="Started">進行中的活動</option>
 							<option value="SubsidyCounting">獎勵確認中的活動</option>

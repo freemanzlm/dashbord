@@ -13,7 +13,7 @@
 <html>
 <head>
 	<title>其它活動</title>
-	<meta name="description" content="其他活動 ">
+	<meta name="description" content="其它活動 ">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	

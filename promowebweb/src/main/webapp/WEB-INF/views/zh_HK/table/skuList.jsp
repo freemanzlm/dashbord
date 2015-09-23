@@ -9,10 +9,5 @@
 				<th class="name">招募中的SKU清單</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr>
-				<td><p style="text-align: center;">沒有相關資料，如正在加載，請等待。</p></td>
-			</tr>
-		</tbody>
 	</table>
 </div>

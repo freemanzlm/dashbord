@@ -92,7 +92,7 @@
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
-					<button id="upload-btn" class="btn" disabled>上传</button>
+					<button id="upload-btn" class="btn" disabled>上傳</button>
 				</div>
 			</div>
 		</div>

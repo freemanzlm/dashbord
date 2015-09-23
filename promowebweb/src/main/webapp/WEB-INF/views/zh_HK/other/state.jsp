@@ -13,16 +13,16 @@
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardName" value="加油卡" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 2 }">
+	<c:when test="${ promo.rewardType eq 6 }">
 		<c:set var="rewardName" value="京東卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 3 }">
 		<c:set var="rewardName" value="萬邑通" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 4 }">
+	<c:when test="${ promo.rewardType eq 2 }">
 		<c:set var="rewardName" value="ebay萬裏通積分" />
 	</c:when>
-	<c:when test="${ promo.rewardType eq 5 }">
+	<c:when test="${ promo.rewardType eq 4 }">
 		<c:set var="rewardName" value="郵票" />
 	</c:when>
 </c:choose>
@@ -93,12 +93,6 @@
 										<div class="step"><span>申领奖励</span></div>
 										<div class="step last"><span>活动完成</span></div>
 									</c:when>
-									<c:when test="${ state eq 'SubsidyRetrieved' }">
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step done"><span>奖励确认中</span></div>
-										<div class="step done"><span>申领奖励</span></div>
-										<div class="step current-step last"><span>活动完成</span></div>
-									</c:when>
 									<c:otherwise>
 										<div class="step done"><span>活动进行中</span></div>
 										<div class="step done"><span>奖励确认中</span></div>
@@ -141,21 +135,25 @@
 						</div>
 					</c:when>
 					<c:when test="${state eq 'Started' }">
-						<h3>活動正在進行中！</h3>
-						<menu>
-							<li>
-								<a href="../index" class="btn">返回活動清單</a>
-							</li>
-						</menu>
+						<div class="active-status-box success">
+							<h3>活動正在進行中！</h3>
+							<menu>
+								<li>
+									<a href="../index" class="btn">返回活動清單</a>
+								</li>
+							</menu>
+						</div>
 					</c:when>
 					<c:when test="${state eq 'SubsidyCounting' }">
-						<h3>恭喜您已完成活動！</h3>
-						<p class="desc">獎勵結果統計中，請耐心等待！</p>
-						<menu>
-							<li>
-								<a href="../index" class="btn">返回活動清單</a>
-							</li>
-						</menu>
+						<div class="active-status-box success">
+							<h3>恭喜您已完成活動！</h3>
+							<p class="desc">獎勵結果統計中，請耐心等待！</p>
+							<menu>
+								<li>
+									<a href="../index" class="btn">返回活動清單</a>
+								</li>
+							</menu>
+						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="active-status-box success">

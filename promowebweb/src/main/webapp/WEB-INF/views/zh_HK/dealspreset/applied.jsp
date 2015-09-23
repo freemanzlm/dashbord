@@ -98,13 +98,17 @@
 				<%@ include file="activity.jsp" %>
 		
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登<small>（已選<span>0</span>項）</small></h3>
+					<h3>我提交的刊登
+						<c:if test="${ not expired }">
+							<small>（已選<span>0</span> 項）</small>
+						</c:if>
+					</h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 				
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
-						<form id="listing-form" action="applied" method="post">
+						<form id="listing-form" action="applied" action="/promotion/deals/confirmDealsListings" method="post">
 							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
 							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">預覽修改報名資訊</button>

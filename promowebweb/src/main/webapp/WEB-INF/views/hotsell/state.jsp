@@ -12,8 +12,6 @@
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 
 <c:set var="listingNum" value="2" />
-<c:set var="promoStartDate" value="2015-08-01" />
-<c:set var="promoEndDate" value="2015-09-01" />
 <r:includeJquery jsSlot="head" />
 <r:client />
 

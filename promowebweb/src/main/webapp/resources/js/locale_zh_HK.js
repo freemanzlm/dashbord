@@ -45,8 +45,8 @@ BizReport.locale = {
 			'info': '當前顯示_START_至_END_，總共_TOTAL_條SKU'
 		},
 		'promo': {
-			'SubsidyCounting': '待评估',
-			'noReward': '无奖励',
+			'SubsidyCounting': '待評估',
+			'noReward': '無獎勵',
 			'emptyTable': '<p>沒有符合篩選條件的活動。</p>',
 			'zeroRecords': '<p>沒有符合篩選條件的活動。</p>',
 		}
@@ -73,7 +73,7 @@ BizReport.locale = {
 			'SubsidyUploaded': '獎勵稽核中',
 			'SubsidyRetrievable': '領取獎勵',
 			'SubsidyResubmittable': '重新申領獎勵',
-			'SubsidyRetrieved': '领取奖励成功',
+			'SubsidyRetrieved': '領取獎勵成功',
 			'SubsidyRetrieveFailed': '獎勵領取失敗',	
 			'SubsidyExpired': '獎勵領取過期',
 			'Canceled': '活動已取消',

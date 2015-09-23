@@ -86,7 +86,7 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a target='_blank' href='" + getLink(full.promoId) + "'>" + data + "</a>";
+							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
 						}
 						
 						return data;
@@ -159,9 +159,9 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (data == 'SubsidyRetrieved') { // complete
-								return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a target='_blank' href='" + getLink(full.promoId)  + "'>查看详情</a>";
+								return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							} else {
-								return "<a target='_blank' href='" + getLink(full.promoId)  + "'>查看详情</a>";
+								return "<a href='" + getLink(full.promoId)  + "'>查看详情</a>";
 							}
 						}
 						

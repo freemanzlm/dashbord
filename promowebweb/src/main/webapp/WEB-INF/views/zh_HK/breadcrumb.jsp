@@ -3,6 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <ul class="breadcrumb clr">
-	<li><a href="http://www.ebay.cn">首页</a><span class="separator">&gt;</span></li>
+	<li><a href="http://www.ebay.cn">首頁</a><span class="separator">&gt;</span></li>
 	<li>賣家中心</li>
 </ul>

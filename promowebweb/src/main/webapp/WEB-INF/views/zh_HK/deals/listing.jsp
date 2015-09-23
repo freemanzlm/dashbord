@@ -144,7 +144,7 @@
 				<c:if test="${(state eq 'PromotionApproved') && (expired eq false) }">
 					<div class="mt20 page-bottom-actions">
 						<form id="listing-form" action="preview" method="post">
-							<input type="hidden" name="promoId" value=""/>
+							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<button id="form-btn" class="btn" type="button">預覽報名資訊</button>
 						</form>
