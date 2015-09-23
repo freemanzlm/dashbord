@@ -14,6 +14,7 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.service.CSApiService;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.trans.ZHConverter;
+import com.ebay.kernel.context.AppBuildConfig;
 import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
@@ -41,25 +42,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public void postHandle(HttpServletRequest req,
 			HttpServletResponse resp, Object handler, ModelAndView model) throws Exception {
-		//TODO timeout issue.
-		boolean isTimeout = false;
-		if(isTimeout){
-			return;
-		}
-		
 		if(null == model){
 			model = new ModelAndView();
-		}
-		
-		//Call the API CS api to get user
-		UserData user = CookieUtil.getUserDataFromCookie(req);
-		String region = "CN";
-		try{
-			region = getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName());
-		} catch(Throwable e){
-			isTimeout = true;
-			e.printStackTrace();
-			logger.error("Failed to retrieved the region for seller  " + user.getUserId() + ", error: " + e.getMessage());
 		}
 		
 		System.err.println("Set page language.");
@@ -72,6 +56,20 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 				//If language is not tradional lang, then no need to set
 				return;
 			}
+		}
+		
+		//Currently QATE env cannot call the CS API to fetch user region, so skip this env.
+		if(AppBuildConfig.getInstance().isQATE()){
+			return;
+		}
+		
+		//Call the API CS api to get user
+		UserData user = CookieUtil.getUserDataFromCookie(req);
+		String region = null;
+		try{
+			region = getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName());
+		} catch(Throwable e){
+			logger.error("Failed to retrieved the region for seller  " + user.getUserId() + ", error: " + e.getMessage());
 		}
 		
 		Boolean isTradionalLang = langCache.get(user.getUserId());
