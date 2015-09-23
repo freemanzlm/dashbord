@@ -132,7 +132,7 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							var display = "<img src='http://thumbs.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
+							var display = "<img src='http://thumbs2.ebaystatic.com/pict/" + full.itemId + ".jpg' height='50' width='50'/>";
 							return display += "<p><a href='http://www.ebay.com/itm/" + full.itemId
 							    + "' data-item-id='" + full.itemId + "'>" + data + "</a></p>";
 						}
