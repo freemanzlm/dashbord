@@ -10,6 +10,7 @@
 				type : 'GET',
 				contentType : 'application/json',
 				dataType : 'json',
+				headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
 				data : null,
 				context : this,
 				success : this.processResp,

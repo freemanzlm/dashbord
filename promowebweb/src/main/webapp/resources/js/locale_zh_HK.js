@@ -87,6 +87,10 @@ BizReport.locale = {
 		'deals': {
 			'upload': '提交刊登報名前請先閱讀法律協定，並<strong>全部讀完</strong>，然後點擊確認接受該法律協定後方可提交報名。',
 			'onlyXls': '您選擇提交的不是Excel檔案，請重新選擇刊登檔案.'
+		},
+		'request': {
+			'fail': '請求提交失敗',
+			'sending': '請求已發送，請稍後。。。'
 		}
 	},
 	'listing': {

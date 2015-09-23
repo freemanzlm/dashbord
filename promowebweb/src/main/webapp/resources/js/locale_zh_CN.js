@@ -90,7 +90,8 @@ BizReport.locale = {
 			'onlyXls': '您选择提交的不是Excel文件，请重新选择刊登文件.'
 		},
 		'request': {
-			'fail': '请求提交失败'
+			'fail': '请求提交失败',
+			'sending': '请求已发送，请稍后。。。'
 		}
 	},
 	'listing': {

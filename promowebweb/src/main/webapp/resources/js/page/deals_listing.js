@@ -37,6 +37,7 @@ $(function(){
 	listingTable.update({promoId:pageData.promoId});
 	
 	function submitListings() {
+		$(document.body).isLoading({text: locale.getText('promo.request.sending'), position: "overlay"});
 		var listings = listingTable.getData();
 		form.find("input[name=listings]").val("[" + listings.map(function(item){
 			return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
@@ -49,6 +50,7 @@ $(function(){
 			data: data,
 			dataType : 'json',
 			success : function(json){
+				$(document.body).isLoading('hide');
 				if (json && json.status) {
 					location.reload();
 				} else {
@@ -56,6 +58,7 @@ $(function(){
 				}
 			},
 			error: function(){
+				$(document.body).isLoading('hide');
 				alertDialog.alert(locale.getText('promo.request.fail'));
 			}
 		});
