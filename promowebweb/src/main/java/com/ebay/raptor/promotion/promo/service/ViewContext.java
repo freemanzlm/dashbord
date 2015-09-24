@@ -8,7 +8,9 @@ public enum ViewContext {
 	ErrorMsg(4, "errorMsg"),
 	Agreement(5, "agreement"),
 	IsUnconfirmedVisable(6, "invisible"),
-	Region(7, "region");
+	Region(7, "region"),
+	UserName(8, "unm"),
+	SDUrl(9, "sdurl");
 	
 	private Integer id;
 

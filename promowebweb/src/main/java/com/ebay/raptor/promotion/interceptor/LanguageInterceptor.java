@@ -80,6 +80,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			return;
 		}
 		
+		addPageParameters(model, user);
+
 		if(null != region){
 			if(!(CountryEnum.CN.getName()).equals(region)){
 				updateApplicationContext(model);
@@ -89,6 +91,11 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 				langCache.put(user.getUserId(), Boolean.FALSE);
 			}
 		}
+	}
+	
+	private void addPageParameters(ModelAndView model, UserData userData) {
+		model.addObject(ViewContext.UserName.getAttr(), userData.getUserName());
+		model.addObject(ViewContext.SDUrl.getAttr(), "");//TODO - 
 	}
 	
 	/**

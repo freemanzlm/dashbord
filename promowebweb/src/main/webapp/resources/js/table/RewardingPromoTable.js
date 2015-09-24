@@ -17,7 +17,7 @@ var BizReport = BizReport || {};
 	var promos = ['hotsell', 'deals', 'deals', 'other'];
 	
 	function getLink(promoId) {
-		return "promotion/" + promoId;
+		return "/promotion/" + promoId;
 	}
 	
 	var defaultDataTableConfigs = {
