@@ -76,28 +76,28 @@
 							<div class="steps clr">
 								<c:choose>
 									<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
-										<div class="step"><span>活动进行中</span></div>
-										<div class="step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
+										<div class="step"><span>活動進行中</span></div>
+										<div class="step"><span>獎勵確認中</span></div>
+										<div class="step"><span>申領獎勵</span></div>
+										<div class="step last"><span>活動完成</span></div>
 									</c:when>
 									<c:when test="${ state eq 'Started' }">
-										<div class="step current-step"><span>活动进行中</span></div>
-										<div class="step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
+										<div class="step current-step"><span>活動進行中</span></div>
+										<div class="step"><span>獎勵確認中</span></div>
+										<div class="step"><span>申領獎勵</span></div>
+										<div class="step last"><span>活動完成</span></div>
 									</c:when>
 									<c:when test="${ state eq 'SubsidyCounting' }">
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step current-step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
+										<div class="step done"><span>活動進行中</span></div>
+										<div class="step current-step"><span>獎勵確認中</span></div>
+										<div class="step"><span>申領獎勵</span></div>
+										<div class="step last"><span>活動完成</span></div>
 									</c:when>
 									<c:otherwise>
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step done"><span>奖励确认中</span></div>
-										<div class="step current-step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
+										<div class="step done"><span>活動進行中</span></div>
+										<div class="step done"><span>獎勵確認中</span></div>
+										<div class="step current-step"><span>申領獎勵</span></div>
+										<div class="step last"><span>活動完成</span></div>
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -108,14 +108,14 @@
 							<c:when test="${ state eq 'Created' or state eq 'Unknow' }">
 								<div class="steps-wrapper">
 									<div class="steps clr">
-										<div class="step last"><span>活动进行中</span></div>
+										<div class="step last"><span>活動進行中</span></div>
 									</div>
 								</div>
 							</c:when>
 							<c:when test="${ state eq 'Started' }">
 								<div class="steps-wrapper">
 									<div class="steps clr">
-										<div class="step current-step last"><span>活动进行中</span></div>
+										<div class="step current-step last"><span>活動進行中</span></div>
 									</div>
 								</div>
 							</c:when>
