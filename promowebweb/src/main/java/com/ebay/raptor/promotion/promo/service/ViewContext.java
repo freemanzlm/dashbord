@@ -10,7 +10,8 @@ public enum ViewContext {
 	IsUnconfirmedVisable(6, "invisible"),
 	Region(7, "region"),
 	UserName(8, "unm"),
-	SDUrl(9, "sdurl");
+	SDUrl(9, "sdurl"),
+	BizUrl(10, "bizurl");
 	
 	private Integer id;
 

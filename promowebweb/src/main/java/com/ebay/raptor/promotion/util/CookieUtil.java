@@ -26,7 +26,7 @@ public class CookieUtil {
 	public final static int COOKIE_LIFESPAN = 3600 * 24; // 24h
 	
 	public final static String COOKIE_DOMAIN;
-	public final static String COOKIE_PATH_ROOT = "/promotion"; // TODO - set the path
+	public final static String COOKIE_PATH_ROOT = "/"; // TODO - set the path
 
 	static {
 		if (CommonUtil.isProduction()) {
