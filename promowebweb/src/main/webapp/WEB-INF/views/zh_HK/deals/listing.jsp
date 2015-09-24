@@ -68,7 +68,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可報名</span></div>
-						<div class="step done"><span>返回活動清單</span></div>
+						<div class="step done"><span>已提交預審</span></div>
 						<c:if test="${ state eq 'Verifying' }">
 							<div class="step current-step"><span>報名預審中</span></div>
 							<div class="step"><span>確認報名刊登</span></div>

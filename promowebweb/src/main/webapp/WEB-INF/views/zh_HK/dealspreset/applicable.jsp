@@ -80,7 +80,7 @@
 				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">
-					<h3>選擇我的刊登報名<small>（已選<span>0</span>項）</small></h3>
+					<h3>選擇我的刊登報名<small>（已選  <span>0</span> 項）</small></h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
