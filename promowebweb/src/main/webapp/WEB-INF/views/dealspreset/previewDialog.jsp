@@ -19,6 +19,7 @@
 								<th class="activity-price">活动单价</th>
 								<th class="inventory">刊登库存量</th>
 								<th class="state">状态</th>
+								<th class="currency"></th>
 							</tr>
 						</thead>
 						<tbody>

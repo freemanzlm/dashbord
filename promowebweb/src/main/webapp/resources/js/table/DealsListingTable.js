@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[6, 'desc']],
+				'aaSortingFixed': [[6, 'desc'], [7, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -82,7 +82,8 @@ var BizReport = BizReport || {};
 					{data: 'currPrice'},
 					{data: 'dealsPrice'},
 					{data: 'stockNum'},
-					{data: 'state'}
+					{data: 'state'},
+					{data: 'currency'}
 				],
 				aoColumnDefs: [{
 					aTargets: ["itemId"],
@@ -197,6 +198,28 @@ var BizReport = BizReport || {};
 							}
 						}
 
+						return data;
+					}
+				}, {
+					aTargets: ["currency"],
+					bVisible: false,
+					sDefaultContent: "",					
+					sType: "string",
+					sSortDataType: 'string',
+					mRender: function(data, type, full, meta) {
+						if (type == "sort") {
+							switch(data) {
+							case 'GBP':
+								return '1';
+							case 'EUR':
+								return '2';
+							case 'USD':
+								return '3';							
+							case 'AUD':
+								return '4';
+							}
+						}
+						
 						return data;
 					}
 				}] 
