@@ -97,7 +97,7 @@
 							<p class="desc">需要您確認通過預審的刊登完成報名！</p>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活動清單</a>
+									<a href="index" class="btn">返回活動清單</a>
 								</li>
 							</menu>	
 						</div> <!-- active status box end -->		
@@ -108,7 +108,7 @@
 							<p class="desc">請於YYYY-MM-DD前在如下刊登中選擇您要參加活動的刊登並提交報名。</p>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活動清單</a>
+									<a href="index" class="btn">返回活動清單</a>
 								</li>
 							</menu>	
 						</div> <!-- active status box end -->
@@ -121,7 +121,7 @@
 							</c:if>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活動清單</a>
+									<a href="index" class="btn">返回活動清單</a>
 								</li>
 							</menu>	
 						</div> <!-- active status box end -->

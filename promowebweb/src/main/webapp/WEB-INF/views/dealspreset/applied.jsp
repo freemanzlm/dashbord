@@ -86,7 +86,7 @@
 					</c:if>
 					
 					<menu>
-						<li><a href="../index" class="btn">返回活动列表</a></li>
+						<li><a href="index" class="btn">返回活动列表</a></li>
 					</menu>					
 				</div> <!-- active status box end -->
 				

@@ -4,9 +4,11 @@
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
-<c:set var="categoryId" value="6000" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
+<fmt:formatDate value="${promo.submitDeadline}" var="submitDeadline" pattern="yyyy-MM-dd" type="date" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -97,7 +99,7 @@
 							<p class="desc">需要您确认通过预审的刊登完成报名！</p>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活动列表</a>
+									<a href="index" class="btn">返回活动列表</a>
 								</li>
 							</menu>	
 						</div> <!-- active status box end -->		
@@ -105,10 +107,10 @@
 					<c:when test="${state eq 'PromotionApproved' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已成功通过预审！</h3>
-							<p class="desc">请于YYYY-MM-DD前在如下刊登中选择您要参加活动的刊登并提交报名。</p>
+							<p class="desc">请于${ submitDeadline }前在如下刊登中选择您要参加活动的刊登并提交报名。</p>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活动列表</a>
+									<a href="index" class="btn">返回活动列表</a>
 								</li>
 							</menu>	
 						</div> <!-- active status box end -->
@@ -121,7 +123,7 @@
 							</c:if>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活动列表</a>
+									<a href="index" class="btn">返回活动列表</a>
 								</li>
 							</menu>	
 						</div> <!-- active status box end -->

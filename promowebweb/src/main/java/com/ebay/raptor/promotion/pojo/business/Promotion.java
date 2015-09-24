@@ -26,6 +26,9 @@ public class Promotion {
 	private Date promoEdt;
 
 	@JsonSerialize(using=WebDateSerializer.class)
+	private Date rewardDlDt;
+	
+	@JsonSerialize(using=WebDateSerializer.class)
 	private Date rewardClmDt;
 
 	private Float reward;
@@ -44,6 +47,14 @@ public class Promotion {
 	@JsonSerialize(using=WebDateSerializer.class)
 	private Date submitDeadline;
 	
+	public Date getRewardDlDt() {
+		return rewardDlDt;
+	}
+
+	public void setRewardDlDt(Date rewardDlDt) {
+		this.rewardDlDt = rewardDlDt;
+	}
+
 	public Date getRegEndDate() {
 		return regEndDate;
 	}

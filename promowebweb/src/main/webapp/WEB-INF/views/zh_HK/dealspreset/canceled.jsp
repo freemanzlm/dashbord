@@ -58,7 +58,7 @@
 					<p class="desc">如有疑問請聯系您的客戶經理或客服，感謝您的參與！</p>
 					<menu>
 						<li>
-							<a href="../index" class="btn">返回活動清單</a>
+							<a href="index" class="btn">返回活動清單</a>
 						</li>
 					</menu>					
 				</div> <!-- active status box end -->

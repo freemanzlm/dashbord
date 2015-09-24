@@ -32,12 +32,12 @@
 		<c:when test="${state eq 'Started' }">
 			<h3>恭喜您的報名已完成稽核！</h3>
 			<p class="desc">活動時間為${ promoStart }到${ promoEnd }，<br />我們將在活動結束後儘快公佈統計結果，請耐心等待！</p>
-			<menu><li><a href="../index" class="btn">返回活動清單</a></li></menu>
+			<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
 		</c:when>
 		<c:when test="${state eq 'SubsidyCounting' }">
 			<h3>恭喜您已完成活動！</h3>
 			<p class="desc">獎勵結果統計中，請耐心等待！</p>
-			<menu><li><a href="../index" class="btn">返回活動清單</a></li></menu>
+			<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
 		</c:when>
 		<c:otherwise>
 			<c:choose>
@@ -74,7 +74,7 @@
 				</c:when>
 				<c:otherwise>
 					<menu>
-						<li><a href="../index" class="btn">返回活動清單</a></li>
+						<li><a href="index" class="btn">返回活動清單</a></li>
 					</menu>
 				</c:otherwise>
 			</c:choose>

@@ -6,7 +6,7 @@ public abstract class BasePromoInitConfig extends DefaultInitGingerClientConfig{
 
 	@Override
 	public int getConnectTimeout() {
-		return 50000;
+		return 500000;
 	}
 	
 	@Override
@@ -16,7 +16,7 @@ public abstract class BasePromoInitConfig extends DefaultInitGingerClientConfig{
 
 	@Override
 	public int getReadTimeout() {
-		return 50000;
+		return 500000;
 	}
 
 	@Override

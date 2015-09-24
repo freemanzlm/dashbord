@@ -91,7 +91,7 @@
 					</c:choose>
 					<menu>
 						<li>
-							<a href="../index" class="btn">返回活動清單</a>
+							<a href="index" class="btn">返回活動清單</a>
 						</li>
 					</menu>
 				</div> <!-- active status box end -->

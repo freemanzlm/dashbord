@@ -7,15 +7,12 @@ import javax.ws.rs.GET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
@@ -23,11 +20,8 @@ import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
-import com.ebay.raptor.promotion.promo.service.ContextViewRes;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
-import com.ebay.raptor.promotion.promo.service.ViewContext;
-import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
@@ -49,52 +43,6 @@ public class PromotionDataController{
 	@Autowired DealsListingService dealsListingService;
 	
 	@Autowired ResourceBundleMessageSource messageSource;
-	
-	@GET
-	@RequestMapping("/{promoId}")
-	public ModelAndView promotion(HttpServletRequest request,
-			@PathVariable("promoId") String promoId) throws MissingArgumentException {
-		ModelAndView model = new ModelAndView();
-		UserData userData = CookieUtil.getUserDataFromCookie(request);
-
-		try {
-			Promotion promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-
-			if(null != promo){
-				ContextViewRes res = handleViewBasedOnPromotion(promo);
-				model.setViewName(res.getView().getPath());
-				model.addAllObjects(res.getContext());
-				model.addObject(ViewContext.Promotion.getAttr(), promo);
-			}
-		} catch (PromoException e) {
-			logger.error("Unable to get promotion for " + promoId, e);
-			model.setViewName(ViewResource.ERROR.getPath());
-		}
-		return model;
-	}
-	
-	private ContextViewRes handleViewBasedOnPromotion(Promotion promo) throws PromoException{
-		ContextViewRes result = new ContextViewRes();
-		switch(PMPromotionType.valueOfPMType(promo.getType())){
-			case HIGH_VELOCITY:
-				result = view.highVelocityView(promo);
-				break;
-			case DEALS_DASHBOARD_UPLOAD:
-				result = view.dealsUpload(promo);
-				break;
-			case DEALS_AM_UPLOAD:
-				result = view.dealsPresetView(promo);
-				break;
-			case STANDARD:
-				result = view.standard(promo);
-				break;
-			case PM_UNKNOWN_TYPE:
-				result.setView(ViewResource.ERROR);
-				break;
-		}
-		return result;
-	}
-	
 	
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getUnconfirmedPromotions)

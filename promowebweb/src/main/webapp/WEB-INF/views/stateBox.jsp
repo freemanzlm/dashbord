@@ -30,12 +30,12 @@
 				活动时间为${ promoStart } 到 ${ promoEnd }, <br />
 				我们将在活动结束后尽快公布统计结果，请耐心等待！
 			</p>
-			<menu><li><a href="../index" class="btn">返回活动列表</a></li></menu>
+			<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
 		</c:when>
 		<c:when test="${state eq 'SubsidyCounting' }">
 			<h3>恭喜您已完成活动！</h3>
 			<p class="desc">奖励结果统计中，请耐心等待！</p>
-			<menu><li><a href="../index" class="btn">返回活动列表</a></li></menu>
+			<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
 		</c:when>
 		<c:otherwise>
 			<c:choose>
@@ -72,7 +72,7 @@
 				</c:when>
 				<c:otherwise>
 					<menu>
-						<li><a href="../index" class="btn">返回活动列表</a></li>
+						<li><a href="index" class="btn">返回活动列表</a></li>
 					</menu>
 				</c:otherwise>
 			</c:choose>

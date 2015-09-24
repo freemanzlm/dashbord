@@ -21,6 +21,7 @@ import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
+import com.ebay.raptor.promotion.util.TokenUtil;
 
 public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	
@@ -46,6 +47,9 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			model = new ModelAndView();
 		}
 		
+		UserData user = CookieUtil.getUserDataFromCookie(req);
+		addPageParameters(req, model, user);
+		
 		System.err.println("Set page language.");
 		//Check lang param, if yes then take as first priority
 		String langParam = (null != req.getParameter(lang)) ? req.getParameter(lang).toString() : "";
@@ -64,7 +68,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		}
 		
 		//Call the API CS api to get user
-		UserData user = CookieUtil.getUserDataFromCookie(req);
+
 		String region = null;
 		try{
 			region = getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName());
@@ -79,7 +83,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			}
 			return;
 		}
-		
+
 		if(null != region){
 			if(!(CountryEnum.CN.getName()).equals(region)){
 				updateApplicationContext(model);
@@ -89,6 +93,17 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 				langCache.put(user.getUserId(), Boolean.FALSE);
 			}
 		}
+	}
+	
+	private void addPageParameters(HttpServletRequest req, ModelAndView model, UserData userData) {
+		model.addObject(ViewContext.UserName.getAttr(), userData.getUserName());
+		model.addObject(ViewContext.BizUrl.getAttr(), CommonConstant.BIZ_REPORT_URL);
+		
+		// add the seller dashboard url
+		model.addObject(ViewContext.SDUrl.getAttr(), CommonConstant.SELLER_DASHBOARD_URL + "?token="
+                + TokenUtil.generateSDToken(userData.getUserName(),
+                        userData.getUserId(), req.getRemoteHost(),
+                        userData.getLang(), userData.getAdmin()));
 	}
 	
 	/**

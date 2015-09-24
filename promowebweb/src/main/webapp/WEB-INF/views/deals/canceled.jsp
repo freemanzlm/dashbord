@@ -53,7 +53,7 @@
 					<p class="desc">如有疑问请联系您的客户经理或客服，感谢您的参与！</p>
 					<menu>
 						<li>
-							<a href="../index" class="btn">返回活动列表</a>
+							<a href="index" class="btn">返回活动列表</a>
 						</li>
 					</menu>					
 				</div> <!-- active status box end -->				
