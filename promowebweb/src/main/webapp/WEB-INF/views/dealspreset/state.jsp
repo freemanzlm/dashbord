@@ -94,7 +94,7 @@
 								</c:choose>
 							</c:when>
 							<c:otherwise>
-								<div class="step ${ rewarding ? 'current-step' : '' } last"><span>活动进行中</span></div>
+								<div class="step current-step last"><span>活动进行中</span></div>
 							</c:otherwise>
 						</c:choose>
 					</div>
