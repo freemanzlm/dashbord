@@ -96,7 +96,8 @@ table.dataTable td.pic-id p {
 
 #rewarding-promo-table td .btn,
 #ongoing-promo-table td .btn,
-#end-promo-table td .btn {
+#end-promo-table td .btn,
+#pending-promo-table td .btn {
 	width: 76px;
 	font-size: 12px;
 	display: inline-block;
