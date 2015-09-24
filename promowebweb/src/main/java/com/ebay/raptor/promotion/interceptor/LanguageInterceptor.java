@@ -26,7 +26,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	
 	private CommonLogger logger = CommonLogger.getInstance(LanguageInterceptor.class);
 
-	private String tradLang = "zh_HK/";
+	private String tradLang = "zh_HK";
 	
 	private String lang = "lang";
 	
@@ -152,7 +152,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	 */
 	private void setLanguage(ModelAndView model){
 		if(null != model && null != model.getViewName() && -1 == model.getViewName().indexOf(tradLang)){
-			model.setViewName(tradLang + model.getViewName());
+			model.setViewName(tradLang + "/" + model.getViewName());
 		}
 	}
 
