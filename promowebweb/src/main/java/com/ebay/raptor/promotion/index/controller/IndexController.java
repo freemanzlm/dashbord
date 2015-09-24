@@ -68,7 +68,7 @@ public class IndexController {
         }
         
         //Add admin cookie
-        Cookie adminCookie = new Cookie(CookieUtil.ADMIN_COOKIE_NAME, !StringUtil.isEmpty(admin) + "");
+        Cookie adminCookie = new Cookie(CookieUtil.ADMIN_COOKIE_NAME, Boolean.parseBoolean(admin) + "");
 	   	adminCookie.setMaxAge(CookieUtil.COOKIE_LIFESPAN);
 	   	adminCookie.setPath(CookieUtil.COOKIE_PATH_ROOT);
         response.addCookie(adminCookie);

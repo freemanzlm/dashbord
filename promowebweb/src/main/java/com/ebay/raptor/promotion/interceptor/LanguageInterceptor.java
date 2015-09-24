@@ -3,6 +3,7 @@ package com.ebay.raptor.promotion.interceptor;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,47 +47,88 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		if(null == model){
 			model = new ModelAndView();
 		}
+		if(null != model){
+			return;
+		}
 		
 		UserData user = CookieUtil.getUserDataFromCookie(req);
 		addPageParameters(req, model, user);
 		
-		System.err.println("Set page language.");
-		//Check lang param, if yes then take as first priority
-		String langParam = (null != req.getParameter(lang)) ? req.getParameter(lang).toString() : "";
-		if(!StringUtil.isEmpty(langParam)){
-			if(CommonConstant.ZHHK_LANGUAGE.equals(tradLang)){
-				updateApplicationContext(model);
-			} else {
-				//If language is not tradional lang, then no need to set
-				return;
-			}
-		}
+		parameterAndCookieBasedLanguage(req, resp, model);
 		
-		//Currently QATE env cannot call the CS API to fetch user region, so skip this env.
+		//Currently QATE env cannot call the CS API to fetch user region, so skip all region related function.
 		if(AppBuildConfig.getInstance().isQATE()){
 			return;
 		}
 		
+		regionBasedLanguageSetting(model, user);
+		model.addObject(ViewContext.Region.getAttr(),
+				getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName()));
+	}
+	
+	/**
+	 * Read / Write the language settings from parameter first, then from cookie.
+	 * @param req
+	 * @param resp
+	 * @param model
+	 */
+	private void parameterAndCookieBasedLanguage(HttpServletRequest req, HttpServletResponse resp, ModelAndView model){
+		//Check lang param, if yes then take as first priority
+		String langParam = (null != req.getParameter(lang)) ? req.getParameter(lang).toString() : "";
+		if(!StringUtil.isEmpty(langParam)){
+			if(tradLang.equalsIgnoreCase(langParam)){
+				updateApplicationContextForNonCNRegion(model);
+			}
+			
+			//Write to cookie.
+			Cookie langCookie = new Cookie(lang, langParam);
+			resp.addCookie(langCookie);
+		}
+		
+		Cookie[] cookies = req.getCookies();
+		for(Cookie cookie : cookies){
+			if(cookie.getName().equals(lang) && !StringUtil.isEmpty(cookie.getValue())){
+				String langCookie = cookie.getValue();
+				try{
+					switch(LangEnum.valueOf(langCookie)){
+						case zh_HK:
+							updateApplicationContextForNonCNRegion(model);
+							break;
+						case zh_CN:
+							break;
+					}
+				} catch(Throwable e){
+					logger.error("No such language, skip settings. Error: " + e.getMessage());
+				}; 
+			}
+		}
+	}
+	
+	
+	/**
+	 * If user does not specify lang, then set user lang based on region.
+	 */
+	private void regionBasedLanguageSetting(ModelAndView model, UserData user){
+		//Load language from cache first.
+		Boolean isTradionalLang = langCache.get(user.getUserId());
+		if(null != isTradionalLang){
+			if(isTradionalLang){
+				updateApplicationContextForNonCNRegion(model);
+			}
+			return;
+		}
+		
 		//Call the API CS api to get user
-
 		String region = null;
 		try{
 			region = getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName());
 		} catch(Throwable e){
 			logger.error("Failed to retrieved the region for seller  " + user.getUserId() + ", error: " + e.getMessage());
 		}
-		
-		Boolean isTradionalLang = langCache.get(user.getUserId());
-		if(null != isTradionalLang){
-			if(isTradionalLang){
-				updateApplicationContext(model);
-			}
-			return;
-		}
 
 		if(null != region){
 			if(!(CountryEnum.CN.getName()).equals(region)){
-				updateApplicationContext(model);
+				updateApplicationContextForNonCNRegion(model);
 				//Cache the user
 				langCache.put(user.getUserId(), Boolean.TRUE);
 			} else {
@@ -125,19 +167,17 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 				logger.error("Retrieved the region for seller  " + uid + ", region: " + region);
 				//Cache the region
 				regionCache.put(uid, region);
-				model.addObject(ViewContext.Region.getAttr(), region);
 				return region;
 			} 
 		}
-		//TODO need to put into enum.
-		return "CN";
+		return "";
 	}
 	
 	/**
 	 * Update tasks to set or update the context.
 	 * @param model
 	 */
-	private void updateApplicationContext(ModelAndView model){
+	private void updateApplicationContextForNonCNRegion(ModelAndView model){
 		translatePromotionDescription(model);
 		setLanguage(model);
 	}
@@ -169,6 +209,10 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		if(null != model && null != model.getViewName() && -1 == model.getViewName().indexOf(tradLang)){
 			model.setViewName(tradLang + "/" + model.getViewName());
 		}
+	}
+	
+	private enum LangEnum {
+		zh_HK, zh_CN
 	}
 
 }
