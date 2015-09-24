@@ -226,8 +226,8 @@ var BizReport = BizReport || {};
 				    if (data && data.status) {
 				        that.container.find(".datatable_pager").show();
 				    } else {
-				    	that.initDataTable();
 				        that.container.find(".datatable_pager").hide();
+				        that.initDataTable();
 				    }
 				    
 				    if (config.fnDataUpdatedCallback) {config.fnDataUpdatedCallback.call(that, data);}

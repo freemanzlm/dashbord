@@ -30,10 +30,10 @@ $(function(){
 			}
 			
 		}});
-	listingTable.update({promoId: pageData.promoId});
+	listingTable.update({promoId: pageData && pageData.promoId});
 
 	var submitBtn = document.getElementById("submit-btn"),
-		data = {promoId: pageData.promoId};
+		data = {promoId: pageData && pageData.promoId};
 	
 	$(submitBtn).click(function(){
 		$.ajax({

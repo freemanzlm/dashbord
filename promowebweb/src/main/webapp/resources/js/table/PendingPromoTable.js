@@ -272,6 +272,7 @@ var BizReport = BizReport || {};
 				        that.container.find(".datatable_pager").show();
 				    } else {
 				        that.container.find(".datatable_pager").hide();
+				        that.initDataTable();
 				    }
 				    
 				    if (config.fnDataUpdatedCallback) {config.fnDataUpdatedCallback.call(that, data);}
