@@ -100,7 +100,7 @@
 				<div class="mt20 my-listing">
 					<h3>我提交的刊登
 						<c:if test="${ not expired }">
-							<small>（已選<span>0</span> 項）</small>
+							<small>（已選 <span>0</span> 項）</small>
 						</c:if>
 					</h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>

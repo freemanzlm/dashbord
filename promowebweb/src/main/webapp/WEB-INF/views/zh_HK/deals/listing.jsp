@@ -134,7 +134,7 @@
 					<h3>
 						我提交的刊登
 						<c:if test="${state eq 'PromotionApproved' and not expired }">
-							<small>（已選<span>0</span>項）</small>
+							<small>（已選 <span>0</span> 項）</small>
 						</c:if>
 					</h3>						
 					

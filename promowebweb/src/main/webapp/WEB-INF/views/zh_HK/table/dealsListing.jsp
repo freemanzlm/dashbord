@@ -13,6 +13,7 @@
 				<th class="activity-price">活動單價</th>
 				<th class="inventory">刊登庫存量</th>
 				<th class="state">狀態</th>
+				<th class="currency"></th>
 			</tr>
 		</thead>
 		<tbody>
