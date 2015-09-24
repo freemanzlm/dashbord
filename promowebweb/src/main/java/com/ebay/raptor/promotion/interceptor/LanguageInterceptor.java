@@ -47,9 +47,6 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		if(null == model){
 			model = new ModelAndView();
 		}
-		if(null != model){
-			return;
-		}
 		
 		UserData user = CookieUtil.getUserDataFromCookie(req);
 		addPageParameters(req, model, user);
@@ -83,6 +80,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			//Write to cookie.
 			Cookie langCookie = new Cookie(lang, langParam);
 			resp.addCookie(langCookie);
+			return;
 		}
 		
 		Cookie[] cookies = req.getCookies();
