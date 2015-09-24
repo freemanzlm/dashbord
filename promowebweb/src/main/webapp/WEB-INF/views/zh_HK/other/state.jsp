@@ -129,7 +129,7 @@
 							<h3>活動還沒開始，請耐心等待活動開始！</h3>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活動清單</a>
+									<a href="index" class="btn">返回活動清單</a>
 								</li>
 							</menu>
 						</div>
@@ -139,7 +139,7 @@
 							<h3>活動正在進行中！</h3>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活動清單</a>
+									<a href="index" class="btn">返回活動清單</a>
 								</li>
 							</menu>
 						</div>
@@ -150,7 +150,7 @@
 							<p class="desc">獎勵結果統計中，請耐心等待！</p>
 							<menu>
 								<li>
-									<a href="../index" class="btn">返回活動清單</a>
+									<a href="index" class="btn">返回活動清單</a>
 								</li>
 							</menu>
 						</div>
@@ -192,7 +192,7 @@
 									</menu>
 								</c:when>
 								<c:otherwise>
-									<menu><li><a href="../index" class="btn">返回活動清單</a></li></menu>
+									<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -203,7 +203,7 @@
 				
 				<c:if test="${ not rewarding }">
 					<div class="mt20" style="text-align: center;">
-						<a href="../index" class="btn">返回活動清單</a>
+						<a href="index" class="btn">返回活動清單</a>
 					</div>
 				</c:if>
 			</div>
