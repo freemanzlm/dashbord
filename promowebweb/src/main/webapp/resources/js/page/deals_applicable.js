@@ -12,7 +12,7 @@ $(function(){
 	skuList.subscribe({
 		initialized: function() {
 			// if file upload fail, show the error message to user.
-			window.scrollTo(window.scrollX, $('.error-msg').offset().top);
+			window.scrollTo(document.documentElement.scrollLeft, $('.error-msg').offset().top);
 		}
 	});
 	skuList.init({
