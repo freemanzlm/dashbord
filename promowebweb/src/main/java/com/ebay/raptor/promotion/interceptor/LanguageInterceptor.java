@@ -97,8 +97,15 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	 * @param userName
 	 */
 	private String getRegionFromCacheOrAPI(ModelAndView model, long uid , String userName){
+		String region = regionCache.get(uid);
+		//Load from cache
+		if(!StringUtil.isEmpty(region)){
+			logger.error("Retrieved the region from cache for seller  " + uid + ", region: " + region);
+			return region;
+		}
+		
 		if(!StringUtil.isEmpty(userName)){
-			String region = service.getUserCountryByName(userName);
+			region = service.getUserCountryByName(userName);
 			if(!StringUtil.isEmpty(region)){
 				logger.error("Retrieved the region for seller  " + uid + ", region: " + region);
 				//Cache the region
