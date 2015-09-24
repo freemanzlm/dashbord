@@ -43,7 +43,7 @@ $(function(){
 			dataType : 'json',
 			success : function(json){
 				if (json && json.status) {
-					window.location.replace("/promotion/promotion/"+pageData.promoId);
+					window.location.replace("/promotion/"+pageData.promoId);
 				} else {
 					alertDialog.alert(locale.getText('promo.request.fail'));
 				}

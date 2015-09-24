@@ -15,6 +15,7 @@ import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.util.CookieUtil;
+import com.ebay.raptor.promotion.util.PromotionUtil;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 	
@@ -93,12 +94,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private void redirectToLogin (HttpServletRequest request, HttpServletResponse response) {
-		String loginUrl = "http://www.ebay.cn/auth/";
-		// TODO empty cookie
 		try {
-			response.sendRedirect(loginUrl);
+			response.sendRedirect(PromotionUtil.LOGIN_URL);
 		} catch (IOException e) {
-			_logger.error(ErrorType.UnableRedirectToUrl, e, loginUrl);
+			_logger.error(ErrorType.UnableRedirectToUrl, e, PromotionUtil.LOGIN_URL);
 		}
 	}
 }
