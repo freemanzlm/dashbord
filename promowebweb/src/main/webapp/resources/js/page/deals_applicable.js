@@ -9,17 +9,18 @@ $(function(){
 	uploadIFrame = $("iframe[name=uploadIframe]");
 	
 	skuList = new SKUListTable();
-	skuList.subscribe({
-		initialized: function() {
-			// if file upload fail, show the error message to user.
-			window.scrollTo(document.documentElement.scrollLeft, $('.error-msg').offset().top);
-		}
-	});
 	skuList.init({
 		dataTableConfig: {
 			tableId: "sku-list-table"
 		}});
-	skuList.update({promoId:pageData.promoId});
+	
+	try {
+		skuList.update({promoId: pageData && pageData.promoId});
+	} catch(e) {
+		skuList.initDataTable();
+		console.log('sku list failed to get data');
+	}
+	
 	
 	uploadForm = $("#upload-form").submit(function(){
 		var fileName = fileInput.val();

@@ -14,6 +14,6 @@ $(function(){
 		dataTableConfig: {
 			tableId: "deals-listing-table"
 		}});
-	listingTable.update({promoId:pageData.promoId});
+	listingTable.update({promoId:pageData && pageData.promoId});
 	
 });

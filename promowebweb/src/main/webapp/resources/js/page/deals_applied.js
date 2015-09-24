@@ -21,7 +21,7 @@ $(function(){
                 'sAjaxSource': '/promotion/deals/getSubmittedListings'
             }
 		}});
-	listingTable.update({promoId:pageData.promoId});	
+	listingTable.update({promoId:pageData && pageData.promoId});
 	
 	uploadForm = $("#upload-form").submit(function(){
 		var fileName = fileInput.val();

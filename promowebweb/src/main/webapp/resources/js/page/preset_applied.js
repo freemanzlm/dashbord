@@ -22,7 +22,7 @@ $(function(){
 			listingCountJ.text(this.selectedItems.length);
 		}
 	}, listingTable);
-	listingTable.update({promoId:pageData.promoId});
+	listingTable.update({promoId:pageData && pageData.promoId});
 	
 	function submitListings() {
 		$(document.body).isLoading({text: locale.getText('promo.request.sending'), position: "overlay"});
