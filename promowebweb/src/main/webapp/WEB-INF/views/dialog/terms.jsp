@@ -4,12 +4,11 @@
 <div class="dialog" id="terms-dialog">
 	<a class="close"></a>
 	<div class="dialog-header">
-		<h2>法律协议</h2>
+		<h2>其他條款</h2>
 	</div>
 	<div class="dialog-pane">
 		<div class="dialog-body">
 			<div class="pretty-text">
-				其他条款：
 				<ul>
 					<li>除非另有规定，此推广不可与eBay其他的推广活动同时使用。</li>
 					<li>参加者的参加活动eBay账户及其其他eBay账户均必须保持良好运作，于活动期间避免被暂停使用或被冻结，或逾期缴费，否则eBay有 权取消参加资格或作其他决定。</li>

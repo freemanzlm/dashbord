@@ -4,12 +4,11 @@
 <div class="dialog" id="terms-dialog">
 	<a class="close"></a>
 	<div class="dialog-header">
-		<h2>法律協定</h2>
+		<h2>其他條款</h2>
 	</div>
 	<div class="dialog-pane">
 		<div class="dialog-body">
 			<div class="pretty-text">
-				其他條款：
 				<ul>
 					<li>參加者的參加活動eBay帳戶及其其他eBay帳戶均必須保持良好運作，於活動期間避免被暫停使用或被凍結，或逾期繳費，否則eBay有 權取消參加資格或作其他決定。</li>
 					<li>參加者的eBay帳戶不能於活動時間期間被暫停使用或被凍結。</li>

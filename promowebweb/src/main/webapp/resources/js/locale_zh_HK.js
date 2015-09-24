@@ -85,7 +85,7 @@ BizReport.locale = {
 			'applyCondition': '申請參與活動需要選擇至少一條刊登報名。'
 		},
 		'deals': {
-			'upload': '提交刊登報名前請先閱讀法律協定，並<strong>全部讀完</strong>，然後點擊確認接受該法律協定後方可提交報名。',
+			'upload': '提交刊登報名前請先閱讀其他條款，並<strong>全部讀完</strong>，然後點擊確認接受該其他條款後方可提交報名。',
 			'onlyXls': '您選擇提交的不是Excel檔案，請重新選擇刊登檔案.'
 		},
 		'request': {

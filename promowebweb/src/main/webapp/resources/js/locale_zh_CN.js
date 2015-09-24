@@ -86,7 +86,7 @@ BizReport.locale = {
 			'applyCondition': '申请参与活动需要选择至少一条刊登报名。'
 		},
 		'deals': {
-			'upload': '提交刊登报名前请先阅读法律协议，并<strong>全部读完</strong>，然后点击确认接受该法律协议后方可提交报名。',
+			'upload': '提交刊登报名前请先阅读其他条款，并<strong>全部读完</strong>，然后点击确认接受该其他条款后方可提交报名。',
 			'onlyXls': '您选择提交的不是Excel文件，请重新选择刊登文件.'
 		},
 		'request': {

@@ -100,7 +100,7 @@
 							
 							<div class="body mt20"  style="width: 420px;">
 								<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登</a>修改並重新上傳您的刊登參與本活動。</p>
-								<p class="mt10">您新上傳的數據將完全替換原數據。提交數據需再次接受Deals招募法律協定。</p>
+								<p class="mt10">您新上傳的數據將完全替換原數據。</p>
 								
 								<div class="mt10">
 									<span style="float: left; font-weight: bold;">注：</span>

@@ -182,14 +182,14 @@ var BizReport = BizReport || {};
 						
 						if (type == "sort") {
 							switch (data) {
-							case 'Applied':
-								return 1;
-							case 'Nonapplied':
-								return 0;
 							case 'Confirmed':
-								return 3;
+								return 6;
+							case 'Applied':
+								return 5;
 							case 'PretrialPass':
 								return 2;
+							case 'Nonapplied':
+								return 1;
 							case 'Nonsubmitted':
 								return 1;
 							case 'PretrialFail':

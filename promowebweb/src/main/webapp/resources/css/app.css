@@ -74,6 +74,10 @@
 }
 
 /* table styles */
+.dataTable-container {
+	min-height: 60px;
+}
+
 .pane-table .dataTables_wrapper {
 	border-top: none;
 }
