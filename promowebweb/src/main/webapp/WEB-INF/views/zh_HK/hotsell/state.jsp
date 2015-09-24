@@ -69,8 +69,8 @@
 				<h2>爆款促销 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可报名</span></div>
-						<div class="step done"><span>已提交报名</span></div>
+						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>已提交報名</span></div>
 						<c:choose>
 							<c:when test="${ rewarding }">
 								<c:choose>
