@@ -45,8 +45,16 @@ public class Promotion {
 	private Date regEndDate;
 	
 	@JsonSerialize(using=WebDateSerializer.class)
-	private Date submitDeadline;
+	private Date uploadDeadline;
 	
+	public Date getUploadDeadline() {
+		return uploadDeadline;
+	}
+
+	public void setUploadDeadline(Date uploadDeadline) {
+		this.uploadDeadline = uploadDeadline;
+	}
+
 	public Date getRewardDlDt() {
 		return rewardDlDt;
 	}
@@ -61,14 +69,6 @@ public class Promotion {
 
 	public void setRegEndDate(Date regEndDate) {
 		this.regEndDate = regEndDate;
-	}
-
-	public Date getSubmitDeadline() {
-		return submitDeadline;
-	}
-
-	public void setSubmitDeadline(Date submitDeadline) {
-		this.submitDeadline = submitDeadline;
 	}
 
 	public String getDesc() {

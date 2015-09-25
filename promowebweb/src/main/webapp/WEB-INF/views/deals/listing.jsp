@@ -8,7 +8,7 @@
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<fmt:formatDate value="${promo.submitDeadline}" var="submitDeadline" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.promoDlDt}" var="promoDlDt" pattern="yyyy-MM-dd" type="date" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -108,7 +108,7 @@
 					<c:when test="${state eq 'PromotionApproved' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已成功通过预审！</h3>
-							<p class="desc">请于${ submitDeadline }前在如下刊登中选择您要参加活动的刊登并提交报名。</p>
+							<p class="desc">请于${ promoDlDt }前在如下刊登中选择您要参加活动的刊登并提交报名。</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活动列表</a>
