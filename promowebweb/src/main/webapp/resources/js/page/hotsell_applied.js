@@ -71,7 +71,16 @@ $(function(){
 		}
 	});
 	
-	$("#form-btn").click(function(event){
+	var formBtn = document.getElementById("form-btn");
+	$("#accept").change(function(){
+		if (this.checked) {
+			formBtn.removeAttribute("disabled");
+		} else {
+			formBtn.setAttribute("disabled", "disabled");
+		}
+	});
+	
+	$(formBtn).click(function(event){
 		event.preventDefault();
 		var listings = listingTable.selectedItems;
 		if (listings && listings.length > 0) {
