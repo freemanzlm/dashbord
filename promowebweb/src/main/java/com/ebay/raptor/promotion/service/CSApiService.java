@@ -62,9 +62,10 @@ public class CSApiService {
 	public String getUserIdByNameDAL(String userName){
 		try {
 			User usr = UserDAO.getInstance().findCompactUserByName(userName, true, true);
+			_logger.error("Load user ID by user name via DAL, uname: " + userName);
 			return usr.getUserId() + "";
 		} catch (FinderException e) {
-			e.printStackTrace();
+			_logger.error("Failed to load user ID by user name via DAL, uname: " + userName);
 		}
 		return "";
 	}
@@ -72,9 +73,10 @@ public class CSApiService {
 	public String getUserCountryByNameDAL(String userName){
 		try {
 			User usr = UserDAO.getInstance().findCompactUserByName(userName, true, true);
+			_logger.error("Load user COUNTRY by user name via DAL, uname: " + userName);
 			return CountryEnum.get(usr.getCountryId()).getName();
 		} catch (FinderException e) {
-			e.printStackTrace();
+			_logger.error("Failed to load user COUNTRY by user name via DAL, uname: " + userName);
 		}
 		return "";
 	}
