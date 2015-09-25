@@ -27,7 +27,7 @@
 		<li class="separator">|</li>
 		<li><a href="${bizurl}">业务分析报告</a><small><a class="icon help" href="#" target="_blank"></a></small></li>
 		<li class="separator">|</li>
-		<li class="active"><a href="">活动促销</a></li>
+		<li class="active"><a href="/promotion/index">活动促销</a></li>
 	</ul>
 </div>
 

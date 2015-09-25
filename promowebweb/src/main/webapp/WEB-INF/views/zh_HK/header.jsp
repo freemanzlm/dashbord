@@ -27,7 +27,7 @@
 		<li class="separator">|</li>
 		<li><a href="">業務分析報告</a><small><a class="icon help" href="#" target="_blank"></a></small></li>
 		<li class="separator">|</li>
-		<li class="active"><a href="">活動促銷</a></li>
+		<li class="active"><a href="/promotion/index">活動促銷</a></li>
 	</ul>
 </div>
 
