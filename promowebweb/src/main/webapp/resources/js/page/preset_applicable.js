@@ -69,6 +69,14 @@ $(function(){
 		}
 	});
 	
+	var acceptCheckbox = $("#accept").change(function(){
+		if (this.checked) {
+			formBtn.removeAttribute("disabled");
+		} else {
+			formBtn.setAttribute("disabled", "disabled");
+		}
+	});
+	
 	$(formBtn).click(function(event){
 		event.preventDefault();
 		var listings = listingTable.selectedItems;
@@ -79,6 +87,16 @@ $(function(){
 			alertDialog.alert(locale.getText('promo.hotsell.applyCondition'));
 		}
 	});
+	
+	var termsDialog = BizReport.termsDialog;
+	termsDialog.subscribe({
+		"ok": function() {
+			acceptCheckbox.removeAttr("disabled");
+		}
+	});
+	$(".terms-conditions").click(function(event){
+		termsDialog.show();
+	});	
 	
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();

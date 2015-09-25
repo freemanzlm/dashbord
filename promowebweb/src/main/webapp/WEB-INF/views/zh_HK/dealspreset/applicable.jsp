@@ -48,6 +48,7 @@
 	
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
@@ -88,6 +89,7 @@
 					<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
+						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已閱讀並接受 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 						<button id="form-btn" class="btn" type="button">預覽報名資訊</button>
 					</form>
 				</div>
@@ -101,6 +103,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 <%@ include file="previewDialog.jsp" %>
 
 <script type="text/javascript">

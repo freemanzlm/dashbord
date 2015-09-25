@@ -270,14 +270,16 @@ var BizReport = BizReport || {};
 				        that.container.find(".datatable_pager").show();
 				    } else {
 				        that.container.find(".datatable_pager").hide();
-				        that.initDataTable();
+				        that.dataTable.again && that.initDataTable();
+				        that.dataTable.updateAgain();
 				    }
 				    
 				    if (config.fnDataUpdatedCallback) {config.fnDataUpdatedCallback.call(that, data);}
 				},
 				error: function(data) {
 				    that.pane.isLoading('hide');
-				    that.initDataTable();
+				    that.dataTable.again && that.initDataTable();
+			        that.dataTable.updateAgain();
 //					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);

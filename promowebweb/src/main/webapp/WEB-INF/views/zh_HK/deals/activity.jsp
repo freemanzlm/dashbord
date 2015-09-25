@@ -27,4 +27,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="activity-law">
+		<strong>其他條款：</strong>每次提交前請 <a href="javascript:void(0)" class="terms-conditions">點擊閱讀《其他條款》</a>。其他條款為本活動條款的一部分，具有不可分割性。
+	</div>
 </div>

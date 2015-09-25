@@ -51,6 +51,7 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
@@ -148,6 +149,7 @@
 						<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
+							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 							<button id="form-btn" class="btn" type="button">预览报名信息</button>
 						</form>
 					</div>	
@@ -164,6 +166,7 @@
 
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/confirm.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 <%@ include file="previewDialog.jsp" %>
 
 <script type="text/javascript">

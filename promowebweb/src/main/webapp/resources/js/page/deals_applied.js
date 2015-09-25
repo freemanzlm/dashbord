@@ -32,16 +32,24 @@ $(function(){
 		return true;
 	});
 	
+	uploadBtn = document.getElementById("upload-btn");
+	acceptCheckbox = document.getElementById("accept");
+	
 	fileInput = uploadForm.find("input[type=file]").change(function(){
 		checkUploadBtnStatus();
 	});
 	
-	uploadBtn = document.getElementById("upload-btn");
+	$(acceptCheckbox).change(function(){
+		checkUploadBtnStatus();
+	});
+	
 	function checkUploadBtnStatus() {
-		if (fileInput.val()) {
-			uploadBtn.removeAttribute("disabled");
-		} else {
-			uploadBtn.setAttribute("disabled", "disabled");
+		function checkUploadBtnStatus() {
+			if (fileInput.val() && acceptCheckbox.checked) {
+				uploadBtn.removeAttribute("disabled");
+			} else {
+				uploadBtn.setAttribute("disabled", "disabled");
+			}
 		}
 	}
 	
@@ -76,5 +84,10 @@ $(function(){
 			uploadForm.submit();
 		}
 	});
+	
+	var termsDialog = BizReport.termsDialog;
+	$(".terms-conditions").click(function(event){
+		termsDialog.show();
+	});	
 	
 });

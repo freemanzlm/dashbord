@@ -50,6 +50,7 @@
 	
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>	
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
@@ -92,6 +93,7 @@
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
+					<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已閱讀並接受 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 					<button id="upload-btn" class="btn" disabled>上傳</button>
 				</div>
 			</div>
@@ -104,6 +106,7 @@
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 
 <script type="text/javascript">
 	var pageData = {

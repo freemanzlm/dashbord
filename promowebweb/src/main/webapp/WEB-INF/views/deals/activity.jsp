@@ -27,4 +27,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="activity-law">
+		<strong>其他条款：</strong>每次提交前请 <a href="javascript:void(0)" class="terms-conditions">点击阅读《其他条款》</a>。其他条款为本活动条款的一部分，具有不可分割性。
+	</div>
 </div>

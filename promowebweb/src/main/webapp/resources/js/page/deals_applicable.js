@@ -4,7 +4,7 @@ $(function(){
 	var alertDialog = BizReport.alertDialog;
 	var locale = BizReport.locale;
 	
-	var skuList, uploadForm, fileInput, uploadBtn, uploadIFrame;
+	var skuList, uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox;
 	
 	uploadIFrame = $("iframe[name=uploadIframe]");
 	
@@ -21,7 +21,6 @@ $(function(){
 		console.log('sku list failed to get data');
 	}
 	
-	
 	uploadForm = $("#upload-form").submit(function(){
 		var fileName = fileInput.val();
 		if (!fileName || fileName.indexOf(".xls") < 0) {
@@ -36,8 +35,14 @@ $(function(){
 	});
 	
 	uploadBtn = document.getElementById("upload-btn");
+	acceptCheckbox = document.getElementById("accept");
+	
+	$(acceptCheckbox).change(function(){
+		checkUploadBtnStatus();
+	});
+	
 	function checkUploadBtnStatus() {
-		if (fileInput.val()) {
+		if (fileInput.val() && acceptCheckbox.checked) {
 			uploadBtn.removeAttribute("disabled");
 		} else {
 			uploadBtn.setAttribute("disabled", "disabled");
@@ -75,6 +80,16 @@ $(function(){
 			
 			uploadForm.submit();
 		}
+	});	
+	
+	var termsDialog = BizReport.termsDialog;
+	termsDialog.subscribe({
+		"ok": function() {
+			acceptCheckbox.removeAttribute("disabled");
+		}
+	});
+	$(".terms-conditions").click(function(event){
+		termsDialog.show();
 	});	
 	
 //	activityDetail.html(activityDetail.html().replace(/&lt;/g, "<").replace(/&gt;/g, ">"));

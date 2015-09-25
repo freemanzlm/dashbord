@@ -94,8 +94,21 @@
 				this.ajaxConfig.data = param || {};
 				this.ajaxConfig.data.timestamp = Date.now();
 				$.ajax(this.ajaxConfig);
-				this.publish("ajaxbegin");
 			}
+			
+			this.again = false;
+			this.publish("ajaxbegin");
+		},
+		
+		updateAgain: function() {
+			if (this.again) {
+				return;
+			}
+			
+			this.again = true;
+			this.ajaxConfig.data.timestamp = Date.now();
+			$.ajax(this.ajaxConfig);
+			this.publish("ajaxbegin");
 		},
 	
 		error : function() {

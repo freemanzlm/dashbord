@@ -69,7 +69,16 @@ $(function(){
 		}
 	});
 	
-	$("#form-btn").click(function(event){
+	var formBtn = document.getElementById("form-btn");
+	$("#accept").change(function(){
+		if (this.checked) {
+			formBtn.removeAttribute("disabled");
+		} else {
+			formBtn.setAttribute("disabled", "disabled");
+		}
+	});
+	
+	$(formBtn).click(function(event){
 		event.preventDefault();
 		var listings = listingTable.selectedItems;
 		if (listings && listings.length > 0) {
@@ -79,6 +88,11 @@ $(function(){
 			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
 		}
 	});
+	
+	var termsDialog = BizReport.termsDialog;
+	$(".terms-conditions").click(function(event){
+		termsDialog.show();
+	});	
 	
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();	

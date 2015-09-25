@@ -10,7 +10,7 @@ $(function(){
 		aoColumnDefs: [{bVisible: true}]
 	};
 	
-	var listingCountJ, listingTable, form;
+	var listingCountJ, listingTable, form, formBtn;
 	
 	listingCountJ = $(".my-listing h3 small span");
 	form = $("#listing-form");
@@ -80,7 +80,16 @@ $(function(){
 		}
 	});
 	
-	$("#form-btn").click(function(event){
+	formBtn = document.getElementById("form-btn");
+	var acceptCheckbox = $("#accept").change(function(){
+		if (this.checked) {
+			formBtn.removeAttribute("disabled");
+		} else {
+			formBtn.setAttribute("disabled", "disabled");
+		}
+	});
+	
+	$(formBtn).click(function(event){
 		event.preventDefault();
 		var listings = listingTable.selectedItems;
 		if (listings && listings.length > 0) {
@@ -90,6 +99,16 @@ $(function(){
 			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
 		}
 	});
+	
+	var termsDialog = BizReport.termsDialog;
+	termsDialog.subscribe({
+		"ok": function() {
+			acceptCheckbox.removeAttr("disabled");
+		}
+	});
+	$(".terms-conditions").click(function(event){
+		termsDialog.show();
+	});	
 	
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();

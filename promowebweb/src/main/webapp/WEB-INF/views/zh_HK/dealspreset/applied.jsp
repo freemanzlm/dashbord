@@ -49,6 +49,7 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
@@ -111,7 +112,8 @@
 						<form id="listing-form" action="applied" action="/promotion/deals/confirmDealsListings" method="post">
 							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
-							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">預覽修改報名資訊</button>
+							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>預覽修改報名資訊</button>
 						</form>
 					</div>	 
 				</c:if>
@@ -127,6 +129,7 @@
 
 <%@ include file="../dialog/alert.jsp" %>
 <%@ include file="../dialog/confirm.jsp" %>
+<%@ include file="../dialog/terms.jsp" %>
 <%@ include file="previewDialog.jsp" %>
 
 <script type="text/javascript">

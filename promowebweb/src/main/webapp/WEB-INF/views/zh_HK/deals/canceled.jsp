@@ -34,6 +34,13 @@
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	
+	<res:useJs value="${res.js.local.js['locale_zh_HK.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 
 </head>
 
@@ -68,8 +75,15 @@
 	<!-- End: Global Footer -->
 </div>
 
+<%@ include file="../dialog/terms.jsp" %>
+
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
 <res:jsSlot id="exec-js" />
+<script type="text/javascript">
+	$(".terms-conditions").click(function(event){
+		BizReport.termsDialog.show();
+	});
+</script>
 </body>
 </html>
