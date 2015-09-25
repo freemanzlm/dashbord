@@ -39,6 +39,9 @@ $(function(){
 	function submitListings() {
 		$(document.body).isLoading({text: locale.getText('promo.request.sending'), position: "overlay"});
 		var listings = listingTable.getData();
+		listings = listings.filter(function(listing){
+			return !(listing.state == 'PretrialFail');
+		});
 		form.find("input[name=listings]").val("[" + listings.map(function(item){
 			return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
 		}).join(",") + "]");
