@@ -7,6 +7,8 @@
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
+<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -106,7 +108,11 @@
 					<c:when test="${state eq 'PromotionApproved' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已成功通過預審！</h3>
-							<p class="desc">請於YYYY-MM-DD前在如下刊登中選擇您要參加活動的刊登並提交報名。</p>
+							<p class="desc">
+								請於${ promoDlDt }前向活動網站正是提交您您要參加的刊登品並完成正式報名。<br />
+								活動時間為${ promoStart }到${ promoEnd } <br />
+								活動如有更改，以最終通知為准。
+							</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活動清單</a>

@@ -81,7 +81,7 @@
 				
 				<div class="active-status-box">
 					<h3>您已成功提交報名！請耐心等待預審結果。</h3>
-					<p class="desc green">需要您確認通過預審的刊登完成報名！</p>
+					<p class="desc green">我們已經完整地收到您的刊登物品清單，並會及時回饋到活動網站，請您耐心等待最終確認。</p>
 					<menu>
 						<li><a href="" class="btn">返回活動清單</a></li>
 					</menu>					
@@ -100,8 +100,8 @@
 							<h3>重新上傳我要提交的刊登</h3>
 							
 							<div class="body mt20"  style="width: 420px;">
-								<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登</a>修改並重新上傳您的刊登參與本活動。</p>
-								<p class="mt10">您新上傳的數據將完全替換原數據。</p>
+								<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改並重新上傳。</p>
+								<p class="mt10">請注意：您新上傳的刊登物品將完全替換之前的清單，並需要重新進行預審且接受活動條款。</p>
 								
 								<div class="mt10">
 									<span style="float: left; font-weight: bold;">注：</span>

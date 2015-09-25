@@ -30,19 +30,19 @@
 <div class="active-status-box success">
 	<c:choose>
 		<c:when test="${state eq 'Started' }">
-			<h3>恭喜您的報名已完成稽核！</h3>
+			<h3>經網站通知，我們很高興地通知您，您已經正式通過活動報名。</h3>
 			<p class="desc">活動時間為${ promoStart }到${ promoEnd }，<br />我們將在活動結束後儘快公佈統計結果，請耐心等待！</p>
 			<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
 		</c:when>
 		<c:when test="${state eq 'SubsidyCounting' }">
 			<h3>恭喜您已完成活動！</h3>
-			<p class="desc">獎勵結果統計中，請耐心等待！</p>
+			<p class="desc">我們的獎勵結果正在統計中，請耐心等待！</p>
 			<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
 		</c:when>
 		<c:otherwise>
 			<c:choose>
 				<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && region eq 'CN' }">
-					<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardName }</h3>
+					<h3>恭喜!您的奖励为等值${promo.reward }元的${rewardName }</h3>
 				</c:when>
 				<c:otherwise>
 					<h3>恭喜您已完成本活動！接下來我們的客戶經理會聯系您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!</h3>

@@ -80,8 +80,8 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box">
-					<h3>您已成功提交报名！请耐心等待预审结果。</h3>
-					<p class="desc green">需要您确认通过预审的刊登完成报名！</p>
+					<h3>您已成功提交预审！请耐心等待预审结果。</h3>
+					<p class="desc green">我们已经完整地收到您的刊登物品列表，并会及时反馈到活动站点，请您耐心等待最终确认。</p>
 					<menu>
 						<li><a href="index" class="btn">返回活动列表</a></li>
 					</menu>					
@@ -100,8 +100,8 @@
 							<h3>重新上传我要提交的刊登</h3>
 							
 							<div class="body mt20"  style="width: 490px;">
-								<p class="mt10">您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登</a>修改并重新上传您的刊登参与本活动。</p>
-								<p class="mt10">您新上传的数据将完全替换原数据。</p>
+								<p class="mt10">您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改并重新上传。</p>
+								<p class="mt10">请注意：您新上传的刊登物品将完全替换之前的列表，并需要重新进行预审且接受活动条款。</p>
 								
 								<div class="mt10">
 									<span style="float: left; font-weight: bold;">注：</span>

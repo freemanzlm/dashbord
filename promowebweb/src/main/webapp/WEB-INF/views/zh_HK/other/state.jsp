@@ -136,7 +136,8 @@
 					</c:when>
 					<c:when test="${state eq 'Started' }">
 						<div class="active-status-box success">
-							<h3>活動正在進行中！</h3>
+							<h3>經網站通知，我們很高興地通知您，您已經正式通過活動報名。</h3>
+							<p class="desc">活動時間為${ promoStart }到${ promoEnd }，<br />我們將在活動結束後儘快公佈統計結果，請耐心等待！</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活動清單</a>
@@ -147,7 +148,7 @@
 					<c:when test="${state eq 'SubsidyCounting' }">
 						<div class="active-status-box success">
 							<h3>恭喜您已完成活動！</h3>
-							<p class="desc">獎勵結果統計中，請耐心等待！</p>
+							<p class="desc">我們的獎勵結果正在統計中，請耐心等待！</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活動清單</a>
