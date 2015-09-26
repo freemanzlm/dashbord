@@ -14,7 +14,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.trans.ZHConverter;
-import com.ebay.kernel.context.AppBuildConfig;
 import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
@@ -50,17 +49,16 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		
 		UserData user = CookieUtil.getUserDataFromCookie(req);
 		addPageParameters(req, model, user);
-		
 		parameterAndCookieBasedLanguage(req, resp, model);
-		
+
 		//Currently QATE env cannot call the CS API to fetch user region, so skip all region related function.
-		if(AppBuildConfig.getInstance().isQATE()){
-			return;
-		}
+//		if(AppBuildConfig.getInstance().isQATE()){
+//			return;
+//		}
 		
-		regionBasedLanguageSetting(model, user);
-		model.addObject(ViewContext.Region.getAttr(),
-				getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName()));
+//		regionBasedLanguageSetting(model, user);
+//		model.addObject(ViewContext.Region.getAttr(),
+//				getRegionFromCacheOrAPI(model, user.getUserId(), user.getUserName()));
 	}
 	
 	/**
@@ -106,6 +104,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	/**
 	 * If user does not specify lang, then set user lang based on region.
 	 */
+	@Deprecated //Now region is from promotion & uid, so no need to call DAL to retrieve.
 	private void regionBasedLanguageSetting(ModelAndView model, UserData user){
 		//Load language from cache first.
 		Boolean isTradionalLang = langCache.get(user.getUserId());
@@ -135,22 +134,12 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		}
 	}
 	
-	private void addPageParameters(HttpServletRequest req, ModelAndView model, UserData userData) {
-		model.addObject(ViewContext.UserName.getAttr(), userData.getUserName());
-		model.addObject(ViewContext.BizUrl.getAttr(), CommonConstant.BIZ_REPORT_URL);
-		
-		// add the seller dashboard url
-		model.addObject(ViewContext.SDUrl.getAttr(), CommonConstant.SELLER_DASHBOARD_URL + "?token="
-                + TokenUtil.generateSDToken(userData.getUserName(),
-                        userData.getUserId(), req.getRemoteHost(),
-                        userData.getLang(), userData.getAdmin()));
-	}
-	
 	/**
 	 * Load the user region from cache first, if fail then retrieve from API.
 	 * If API still fails, then return CN by default.
 	 * @param userName
 	 */
+	@Deprecated //No need to call API get region, directly fetch from DB.
 	private String getRegionFromCacheOrAPI(ModelAndView model, long uid , String userName){
 		String region = regionCache.get(uid);
 		//Load from cache
@@ -169,6 +158,17 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			} 
 		}
 		return "";
+	}
+	
+	private void addPageParameters(HttpServletRequest req, ModelAndView model, UserData userData) {
+		model.addObject(ViewContext.UserName.getAttr(), userData.getUserName());
+		model.addObject(ViewContext.BizUrl.getAttr(), CommonConstant.BIZ_REPORT_URL);
+		
+		// add the seller dashboard url
+		model.addObject(ViewContext.SDUrl.getAttr(), CommonConstant.SELLER_DASHBOARD_URL + "?token="
+                + TokenUtil.generateSDToken(userData.getUserName(),
+                        userData.getUserId(), req.getRemoteHost(),
+                        userData.getLang(), userData.getAdmin()));
 	}
 	
 	/**
