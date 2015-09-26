@@ -32,4 +32,15 @@ public abstract class AbstractListingController {
 		return messageSource.getMessage(key, null, Locale.SIMPLIFIED_CHINESE);
 	}
 	
+	/**
+	 * Accept the agreement after finish upload or confirm listings.
+	 * 
+	 * @param promoId
+	 * @param uid
+	 */
+	@Deprecated
+	protected void acceptAgreement(String promoId, long uid){
+//		promoService.acceptAgreement(promoId, uid);
+	}
+	
 }

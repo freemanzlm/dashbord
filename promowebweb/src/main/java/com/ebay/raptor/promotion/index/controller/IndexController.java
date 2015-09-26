@@ -116,7 +116,7 @@ public class IndexController {
 			Promotion promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 
 			if(null != promo){
-				ContextViewRes res = handleViewBasedOnPromotion(promo);
+				ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
 				model.setViewName(res.getView().getPath());
 				model.addAllObjects(res.getContext());
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
@@ -149,17 +149,17 @@ public class IndexController {
         return mav;
     }
 	
-	private ContextViewRes handleViewBasedOnPromotion(Promotion promo) throws PromoException{
+	private ContextViewRes handleViewBasedOnPromotion(Promotion promo, long uid) throws PromoException{
 		ContextViewRes result = new ContextViewRes();
 		switch(PMPromotionType.valueOfPMType(promo.getType())){
 			case HIGH_VELOCITY:
-				result = view.highVelocityView(promo);
+				result = view.highVelocityView(promo, uid);
 				break;
 			case DEALS_DASHBOARD_UPLOAD:
-				result = view.dealsUpload(promo);
+				result = view.dealsUpload(promo, uid);
 				break;
 			case DEALS_AM_UPLOAD:
-				result = view.dealsPresetView(promo);
+				result = view.dealsPresetView(promo, uid);
 				break;
 			case STANDARD:
 				result = view.standard(promo);

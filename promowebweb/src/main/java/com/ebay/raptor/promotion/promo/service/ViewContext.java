@@ -11,7 +11,9 @@ public enum ViewContext {
 	Region(7, "region"),
 	UserName(8, "unm"),
 	SDUrl(9, "sdurl"),
-	BizUrl(10, "bizurl");
+	BizUrl(10, "bizurl"),
+	TermsAccept(11, "termsAccpted"),
+	Expired(12, "expired");
 	
 	private Integer id;
 

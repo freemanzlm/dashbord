@@ -11,7 +11,10 @@ public class ResourceProvider {
 	public interface PromotionRes {
 		String base = "promotion";
 		
-		String isUserAccessable = "/isUserAccessable";
+		String _isAcceptAgreement = "/isAcceptAgreement";
+		String isAcceptAgreement = "/isAcceptAgreement/promoId/{promoId}/uid/{uid}";
+		String _acceptAgreement = "/acceptAgreement";
+		String acceptAgreement = "/acceptAgreement/promoId/{promoId}/uid/{uid}";
 
 		String _getPromotions = "/getPromotions";
 		String getPromotions = "/getPromotions/uid/{uid}";
