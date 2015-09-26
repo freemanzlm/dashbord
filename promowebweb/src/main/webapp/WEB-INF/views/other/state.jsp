@@ -165,7 +165,7 @@
 					<c:otherwise>
 						<div class="active-status-box success">
 							<c:choose>
-								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && region eq 'CN' }">
+								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
 									<h3>恭喜，您的奖励为等值${promo.reward }元的${rewardName }</h3>
 								</c:when>
 								<c:otherwise>
@@ -178,7 +178,7 @@
 							</c:if>
 							
 							<c:choose>
-								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2) and (not empty promo.rewardUrl) and region eq 'CN' }">
+								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2) and (not empty promo.rewardUrl) and promo.region eq 'CN' }">
 									<menu>
 										<li>
 											<c:choose>
