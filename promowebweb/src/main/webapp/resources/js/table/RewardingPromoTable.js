@@ -87,7 +87,7 @@ var BizReport = BizReport || {};
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							return "<a target='_blank' href='" + getLink(full.promoId) + "'>" + data + "</a>";
+							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
 						}
 						
 						return data;
