@@ -137,11 +137,13 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "-",
 					mRender: function(data, type, full) {
+						data = full.region == 'CN' ? data : '-';
 						var val = parseFloat(data);
-						if (type == "display") {
+						
+						if (type == "display" && full.region == 'CN') {
 							if (full.rewardType != 0) {
 								if (val > 0) {
-									return val.toUSFixed(2) + " (人民币)";
+									return val.toUSFixed(2) + ' (' + locale.getText('currency.RMB') + ')';
 								}
 							}
 							
@@ -165,7 +167,7 @@ var BizReport = BizReport || {};
 						
 						if (type == "display") {
 							
-							if (pageData && pageData.region == 'CN') {
+							if (full.region == 'CN') {
 								if ((full.rewardType == 1 || full.rewardType == 2)) {
 									// Gas card, WLT, JD card
 									switch (data) {
@@ -191,7 +193,7 @@ var BizReport = BizReport || {};
 						
 						if (type == "sort") {
 							
-							if (pageData && pageData.region == 'CN') {
+							if (full.region == 'CN') {
 								if ((full.rewardType == 1 || full.rewardType == 2)){
 									switch (data) {
 									case 'SubsidyWaiting':

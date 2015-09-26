@@ -84,7 +84,7 @@ $(function(){
 	});
 	
 	formBtn = document.getElementById("form-btn");
-	var acceptCheckbox = $("#accept").change(function(){
+	$("#accept").change(function(){
 		if (this.checked) {
 			formBtn.removeAttribute("disabled");
 		} else {
@@ -104,11 +104,6 @@ $(function(){
 	});
 	
 	var termsDialog = BizReport.termsDialog;
-	termsDialog.subscribe({
-		"ok": function() {
-			acceptCheckbox.removeAttr("disabled");
-		}
-	});
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
 	});	

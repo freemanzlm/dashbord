@@ -16,8 +16,8 @@ $(function(){
 		dataTableConfig: {
 			tableId: "rewarding-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getSubsidyPromotions",
-				aoColumnDefs: [,,,, {bVisible: (pageData && pageData.region == 'CN')}]
+				sAjaxSource: "promotion/getSubsidyPromotions"
+//				aoColumnDefs: [,,,, {bVisible: (pageData && pageData.region == 'CN')}]
 			}
 		}});
 	rewardingPromoTable.update();
@@ -27,8 +27,8 @@ $(function(){
 		dataTableConfig: {
 			tableId: "end-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getEndPromotions",
-				aoColumnDefs: [,,,, {bVisible: (pageData && pageData.region == 'CN')}]
+				sAjaxSource: "promotion/getEndPromotions"
+//				aoColumnDefs: [,,,, {bVisible: (pageData && pageData.region == 'CN')}]
 			}
 		}});
 	endPromoTable.update();

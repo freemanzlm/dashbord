@@ -136,11 +136,13 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "-",
 					mRender: function(data, type, full) {
+						data = full.region == 'CN' ? data : '-';
 						var val = parseFloat(data);
-						if (type == "display") {
+						
+						if (type == "display" && full.region == 'CN') {
 							if (full.rewardType != 0) {
 								if (val > 0) {
-									return val.toUSFixed(2) + " (人民币)";
+									return val.toUSFixed(2) + ' (' + locale.getText('currency.RMB') + ')';
 								}
 							}
 							
@@ -150,6 +152,8 @@ var BizReport = BizReport || {};
 						if (type == "sort") {
 							return isNaN(val) ? -1 : val;
 						}
+
+						return data;
 					}
 				},
 				{

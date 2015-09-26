@@ -151,7 +151,7 @@ var BizReport = BizReport || {};
 								}
 							}
 							
-							if (pageData && pageData.region == 'CN') {
+							if (full.region == 'CN') {
 								if ((full.rewardType == 1 || full.rewardType == 2) && data != 'Created') {
 									// Gas card, WLT, JD card
 									switch (data) {
@@ -199,7 +199,7 @@ var BizReport = BizReport || {};
 								}
 							}
 							
-							if (pageData && pageData.region == 'CN') {
+							if (full.region == 'CN') {
 								if ((full.rewardType == 1 || full.rewardType == 2)){
 									switch (data) {
 									case 'SubsidyWaiting':

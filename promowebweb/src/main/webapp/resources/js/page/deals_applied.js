@@ -44,12 +44,10 @@ $(function(){
 	});
 	
 	function checkUploadBtnStatus() {
-		function checkUploadBtnStatus() {
-			if (fileInput.val() && acceptCheckbox.checked) {
-				uploadBtn.removeAttribute("disabled");
-			} else {
-				uploadBtn.setAttribute("disabled", "disabled");
-			}
+		if (fileInput.val() && acceptCheckbox.checked) {
+			uploadBtn.removeAttribute("disabled");
+		} else {
+			uploadBtn.setAttribute("disabled", "disabled");
 		}
 	}
 	

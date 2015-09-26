@@ -18,6 +18,9 @@ BizReport.locale = {
 	'highchart': {
 		'noData': '当前分类暂时没有分析数据，请尝试浏览其它分类。'
 	},
+	'currency': {
+		'RMB': '人民币'
+	},
 	'dataTable': {
 		'emptyTable': '<p>没有相关数据，如果是网络问题，请稍后再试。</p>',
 		'zeroRecords': '<p>没有相关数据。</p>',
