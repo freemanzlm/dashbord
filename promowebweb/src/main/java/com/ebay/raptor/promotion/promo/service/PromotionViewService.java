@@ -3,6 +3,7 @@ package com.ebay.raptor.promotion.promo.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.businesstype.PMPromotionStatus;
@@ -12,7 +13,10 @@ import com.ebay.raptor.promotion.pojo.business.Promotion;
 @Component
 public class PromotionViewService {
 	
-	public ContextViewRes highVelocityView(Promotion pro) throws PromoException{
+	@Autowired
+	private PromotionService service;
+	
+	public ContextViewRes highVelocityView(Promotion pro, long uid) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(ViewContext.Agreement.getAttr(), ViewResource.HV_AGGREMENT.getPath());
@@ -21,10 +25,12 @@ public class PromotionViewService {
 		try {
 			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
+					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.HV_APPLICABLE;
 					break;
 				case APPLIED:
-					context.put("expired", pro.getRegEnded());
+					context.put(ViewContext.Expired.getAttr(), pro.getRegEnded());
+					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.HV_APPLIED;
 					break;
 				case STARTED:
@@ -58,7 +64,7 @@ public class PromotionViewService {
 		return res;
 	}
 	
-	public ContextViewRes dealsPresetView(Promotion pro) throws PromoException{
+	public ContextViewRes dealsPresetView(Promotion pro, long uid) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(ViewContext.Agreement.getAttr(), ViewResource.DP_AGGREMENT.getPath());
@@ -67,10 +73,12 @@ public class PromotionViewService {
 			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
 					context.put(ViewContext.FormURL.getAttr(), ViewResource.DU_CONFIRM_LISTING.getPath());
+					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.DP_APPLICABLE;
 					break;
 				case APPLIED:
 					context.put(ViewContext.FormURL.getAttr(), ViewResource.DU_CONFIRM_LISTING.getPath());
+					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.DP_APPLIED;
 					break;
 				case STARTED:
@@ -105,7 +113,7 @@ public class PromotionViewService {
 		return res;
 	}
 	
-	public ContextViewRes dealsUpload(Promotion pro) throws PromoException{
+	public ContextViewRes dealsUpload(Promotion pro, long uid) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(ViewContext.Agreement.getAttr(), ViewResource.DU_AGGREMENT.getPath());
@@ -114,10 +122,12 @@ public class PromotionViewService {
 		try {
 			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
+					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.DU_APPLICABLE;
 					break;
 				case SUBMITTED:
 					context.put("expired", pro.getRegEnded());
+					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.DU_APPLIED;
 					break;
 				case VERIFY_FAILED:
@@ -125,6 +135,7 @@ public class PromotionViewService {
 				case PROMOTION_APPROVED:
 				case APPLIED:
 					context.put("expired", pro.getRegEnded());
+					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.DU_LISTING;
 					break;
 				case STARTED:

@@ -92,6 +92,7 @@ public class DealsListingController extends AbstractListingController{
 			ExcelReader.readWorkbook(workbook, 0, new UploadListingSheetHandler(service,
 							promoId, userData.getUserId()));
 			responseData.setStatus(true);
+			this.acceptAgreement(promoId, userData.getUserId());
 		} catch (IOException | PromoException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
 			logger.error("Upload listings got error.", e);
@@ -155,6 +156,7 @@ public class DealsListingController extends AbstractListingController{
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
 				responseData.setStatus(result);
+				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
 			} catch (PromoException | MissingArgumentException e) {
 				// do not throw but set the error status.
 				responseData.setStatus(false);

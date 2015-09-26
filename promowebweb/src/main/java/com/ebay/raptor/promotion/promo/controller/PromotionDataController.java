@@ -45,6 +45,38 @@ public class PromotionDataController{
 	@Autowired ResourceBundleMessageSource messageSource;
 	
 	@GET
+	@RequestMapping(ResourceProvider.PromotionRes._isAcceptAgreement)
+	@ResponseBody
+	public ListDataWebResponse<Promotion> isAcceptAgreement(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
+
+		try {
+			resp.setData(service.getIngPromotion(userData.getUserId()));
+		} catch (PromoException e) {
+			logger.error("Unable to get in-progress promotion of user " + userData.getUserId(), e);
+			resp.setStatus(Boolean.FALSE);
+		}
+		return resp;
+	}
+	
+	@GET
+	@RequestMapping(ResourceProvider.PromotionRes._acceptAgreement)
+	@ResponseBody
+	public ListDataWebResponse<Promotion> acceptAgreement(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = CookieUtil.getUserDataFromCookie(request);
+
+		try {
+			resp.setData(service.getIngPromotion(userData.getUserId()));
+		} catch (PromoException e) {
+			logger.error("Unable to get in-progress promotion of user " + userData.getUserId(), e);
+			resp.setStatus(Boolean.FALSE);
+		}
+		return resp;
+	}
+	
+	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getUnconfirmedPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getUnconfirmedPromotions(HttpServletRequest request) throws MissingArgumentException {

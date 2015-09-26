@@ -9,7 +9,6 @@ import javax.ws.rs.POST;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -56,6 +55,7 @@ public class HotSellListingController extends AbstractListingController{
 				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), userData.getUserId())){
 					responseData.setStatus(Boolean.TRUE);
 				}
+				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
 			} catch (PromoException | MissingArgumentException e) {
 				responseData.setMessage("Internal Error Happens.");
 				responseData.setStatus(Boolean.FALSE);
