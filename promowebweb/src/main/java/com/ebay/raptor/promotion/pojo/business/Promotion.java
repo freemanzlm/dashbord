@@ -47,6 +47,16 @@ public class Promotion {
 	@JsonSerialize(using=WebDateSerializer.class)
 	private Date uploadDeadline;
 	
+	private String region;
+	
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
 	public Date getUploadDeadline() {
 		return uploadDeadline;
 	}
