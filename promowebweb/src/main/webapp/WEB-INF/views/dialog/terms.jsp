@@ -5,7 +5,14 @@
 <div class="dialog" id="terms-dialog">
 	<a class="close"></a>
 	<div class="dialog-header">
-		<h2>法律协议</h2>
+		<c:choose>
+			<c:when test="${promo.region eq 'HK' or promo.region eq 'TW' }">
+				<h2>法律協定</h2>
+			</c:when>
+			<c:otherwise>
+				<h2>法律协议</h2>
+			</c:otherwise>
+		</c:choose>		
 	</div>
 	<div class="dialog-pane">
 		<div class="dialog-body">
