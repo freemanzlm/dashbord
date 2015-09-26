@@ -14,11 +14,6 @@ $(function(){
 		},
 		selectChange: function(){
 			listingCountJ.text(this.selectedItems.length);
-			if (this.selectedItems.length > 0) {
-				formBtn.removeAttribute('disabled');
-			} else {
-				formBtn.setAttribute('disabled', 'disabled');
-			}
 		}
 	}, listingTable);
 	listingTable.init({

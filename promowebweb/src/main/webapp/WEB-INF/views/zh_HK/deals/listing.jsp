@@ -141,7 +141,7 @@
 				<div class="mt20 my-listing">
 					<h3>
 						我提交的刊登
-						<c:if test="${state eq 'PromotionApproved' and not expired }">
+						<c:if test="${(state eq 'PromotionApproved'  or  (state eq 'Applied')) and not expired }">
 							<small>（已選 <span>0</span> 項）</small>
 						</c:if>
 					</h3>						
@@ -149,7 +149,7 @@
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
-				<c:if test="${(state eq 'PromotionApproved') && (expired eq false) }">
+				<c:if test="${(state eq 'PromotionApproved' or (state eq 'Applied')) && (expired eq false) }">
 					<div class="mt20 page-bottom-actions">
 						<form id="listing-form" action="preview" method="post">
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
