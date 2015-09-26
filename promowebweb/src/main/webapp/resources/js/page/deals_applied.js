@@ -88,4 +88,5 @@ $(function(){
 		termsDialog.show();
 	});	
 	
+	uploadForm.length && uploadForm.get(0).reset();
 });

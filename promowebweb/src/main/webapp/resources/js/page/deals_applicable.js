@@ -92,6 +92,7 @@ $(function(){
 		termsDialog.show();
 	});	
 	
+	uploadForm.get(0).reset();
 //	activityDetail.html(activityDetail.html().replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
 	
 });
