@@ -109,10 +109,12 @@
 										<li>請勿修改下載範本的檔案格式。</li>
 										<li>請勿修改、增减範本中的原有資訊</li>
 										<li>請填寫完整報名的刊登資訊，包括：您的刊登編號，當前刊登單價，活動單價，刊登庫存量。價格請按活動對應網站的貨幣計算。</li>
-										<li>備貨完成時間格式為YYYYMMDD，如2015.08.08</li>
+										<li>備貨完成時間格式為YYYYMMDD，如2015/08/08</li>
 										<li>不報名的SKU請留空填寫內容，不填寫任何待填寫資訊，範本自帶資訊請勿修改。</li>
 									</ul>
 								</div>
+								
+								<p id="upload-error-msg" class="error-msg hide"><span class="icon error mb-25"></span><em ></em></p>
 								
 								<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
 									選擇上傳您的刊登清單

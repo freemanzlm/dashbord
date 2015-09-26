@@ -18,9 +18,7 @@
 			</ul>
 		</div>
 		
-		<c:if test="${ not empty errorMsg }">
-			<p class="error-msg"><span class="icon error"></span>${ errorMsg }</p>
-		</c:if>
+		<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><em ></em></p>
 		
 		<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
 			選擇上傳您的刊登清單
