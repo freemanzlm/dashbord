@@ -102,7 +102,7 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<%@ include file="../stateBox.jsp" %>
+				<%@ include file="stateBox.jsp" %>
 				
 				<%@ include file="activity.jsp" %>
 				
