@@ -165,8 +165,18 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var display ;
 						
+						if (type == 'filter') {
+							if (full.region == 'CN') {
+								if (!(full.rewardType == 1 || full.rewardType == 2) && full.rewardType != 0) {
+									data = 'SubsidyRetrievable'; // filter
+								}
+							} else {
+								data = 'SubsidyRetrievable'; // filter
+							}
+						}
+						
+						
 						if (type == "display") {
-							
 							if (full.region == 'CN') {
 								if ((full.rewardType == 1 || full.rewardType == 2)) {
 									// Gas card, WLT, JD card
@@ -176,8 +186,13 @@ var BizReport = BizReport || {};
 									case 'SubsidySubmitted':
 									case 'SubsidyRetrievable':
 									case 'SubsidyResubmittable':
+										if (full.rewardUrl) {
 											display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
 											display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+										} else {
+											display = locale.getText('promo.state.' + data);
+											display += "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+										}
 										return display;
 									default:
 										return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
@@ -194,7 +209,7 @@ var BizReport = BizReport || {};
 						if (type == "sort") {
 							
 							if (full.region == 'CN') {
-								if ((full.rewardType == 1 || full.rewardType == 2)){
+								if ((full.rewardType == 1 || full.rewardType == 2) && full.rewardUrl){
 									switch (data) {
 									case 'SubsidyWaiting':
 										return 8;
@@ -217,10 +232,6 @@ var BizReport = BizReport || {};
 							}
 							
 							return 20;
-						}
-						
-						if (!(full.rewardType == 1 || full.rewardType == 2) && full.rewardType != 0) {
-							data = 'SubsidyRetrievable'; // filter
 						}
 						
 						return data;

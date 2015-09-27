@@ -110,7 +110,7 @@
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已成功通過預審！</h3>
 							<p class="desc">
-								請於${ promoDlDt }前向活動網站正是提交您您要參加的刊登品並完成正式報名。<br />
+								請於${ promoDlDt }前向活動網站正式提交您您要參加的刊登品並完成正式報名。<br />
 								活動時間為${ promoStart }到${ promoEnd } <br />
 								活動如有更改，以最終通知為准。
 							</p>
