@@ -243,8 +243,8 @@
 
 .listings-upload .body ul {
 	line-height: 1.333;
-	margin-left: 40px;
-	list-style: inside;
+	margin-left: 55px;
+	list-style: outside;
 }
 
 .listings-upload .error-msg {
