@@ -35,10 +35,10 @@ public class PromotionService extends BaseService {
 	 */
 	public boolean isAcceptAgreement(String promoId, long uid){
 		//Accept agreement.
-		//As requirement states, no need to accept the agreement after submit. 
+		//By default the value is disabled, will re-enable this function for business.
 		int i = 0;
 		if(0 == i){
-			return Boolean.TRUE;
+			return Boolean.FALSE;
 		}
 		try{
 			String uri = url(params(ResourceProvider.PromotionRes.isAcceptAgreement, new Object[]{"{promoId}", promoId, "{uid}", uid}));
