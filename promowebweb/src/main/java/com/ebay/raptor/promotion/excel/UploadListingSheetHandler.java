@@ -25,7 +25,7 @@ import com.ebay.raptor.promotion.pojo.business.Sku;
 public class UploadListingSheetHandler implements IExcelSheetHandler {
 	private static CommonLogger logger =
             CommonLogger.getInstance(UploadListingSheetHandler.class);
-	private static final String DATE_FORMAT_STRING = "yyyy/MM/dd";
+	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd";
 	
 	public UploadListingSheetHandler(DealsListingService dealsListingService,
 			String promoId, Long userId) {
@@ -200,7 +200,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			throw new InvalidDateCellValueException(rowIndex, colIndex, cellValue.toString(), DATE_FORMAT_STRING, e);
 		}
 		
-		return value == null ? "" : DateUtil.formatSimpleDateWithSlash(value);
+		return value == null ? "" : DateUtil.formatSimpleDateWithDash(value);
 	}
 	
 	private Double validateNumberData (Object cellValue, Cell cell) throws InvalidCellValueException {
