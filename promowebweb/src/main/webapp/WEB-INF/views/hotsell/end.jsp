@@ -77,7 +77,7 @@
 					<c:choose>
 						<c:when test="${ state == 'VerifyFailed' }">
 							<h3>很遗憾，您的报名未通过审核</h3>
-							<p class="desc">感谢您的积极参与！期待下次合作。</p>
+							<p class="desc">感谢您的参与！</p>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
