@@ -76,6 +76,8 @@ $(function(){
 		} else {
 			formBtn.setAttribute("disabled", "disabled");
 		}
+	}).parent().each(function(){
+		$(this).popup({"trigger": "hover", html: this.title});
 	});
 	
 	$(formBtn).click(function(event){

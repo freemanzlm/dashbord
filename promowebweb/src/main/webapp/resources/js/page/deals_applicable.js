@@ -39,7 +39,9 @@ $(function(){
 	
 	$(acceptCheckbox).change(function(){
 		checkUploadBtnStatus();
-	});
+	}).parent().each(function(){
+		$(this).popup({"trigger": "hover", html: this.title});
+	});	;
 	
 	function checkUploadBtnStatus() {
 		if (fileInput.val() && acceptCheckbox.checked) {
@@ -94,5 +96,4 @@ $(function(){
 	
 	uploadForm.get(0).reset();
 //	activityDetail.html(activityDetail.html().replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
-	
 });

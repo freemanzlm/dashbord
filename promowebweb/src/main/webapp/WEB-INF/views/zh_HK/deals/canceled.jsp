@@ -55,7 +55,13 @@
 			<div class="pane">
 				<h2>Deals招募 ${promo.name}</h2>
 				
-				<div class="active-status-box">
+				<div class="steps-wrapper">
+					<div class="steps clr">
+						<div class="step current-step last"><span>活動已取消</span></div>
+					</div>
+				</div>  <!-- steps end -->
+				
+				<div class="active-status-box fail">
 					<h3>活動已取消</h3>
 					<p class="desc">如有疑問請聯系您的客戶經理或客服，感謝您的參與！</p>
 					<menu>

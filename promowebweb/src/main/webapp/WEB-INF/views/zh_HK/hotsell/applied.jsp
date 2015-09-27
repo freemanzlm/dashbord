@@ -35,6 +35,7 @@
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -50,6 +51,7 @@
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ConfirmDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>	
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['HotsellListingTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
@@ -79,7 +81,7 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box">
+				<div class="active-status-box success">
 					<h3>您已成功提交報名！請耐心等待稽核結果。</h3>
 					
 					<c:if test="${expired eq true}">

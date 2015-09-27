@@ -13,9 +13,9 @@
 
 <div class="activity-detail">
 	<div class="activity-time">
-		<strong>活動時間：${ timeSlot }</strong>
+		<strong>活動時間（北京时間）：${ timeSlot }</strong>
 		<c:if test="${ state == 'rewarding' }">
-			<strong style="margin-left: 90px;">獎勵領取截止時間：${ rewardDeadline }</strong>
+			<strong style="margin-left: 90px;">獎勵領取截止時間（北京时間）：${ rewardDeadline }</strong>
 		</c:if>
 	</div>
 	<div class="table activity-brief">

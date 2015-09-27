@@ -35,6 +35,7 @@
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -49,6 +50,7 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>	
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
@@ -89,7 +91,7 @@
 					<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
-						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
+						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 						<button id="form-btn" class="btn" type="button" disabled>预览报名信息</button>
 					</form>
 				</div>

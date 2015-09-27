@@ -34,6 +34,7 @@
 	<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -48,6 +49,7 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>	
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
@@ -79,9 +81,9 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box">
+				<div class="active-status-box success">
 					<h3>您已成功提交预审！请耐心等待预审结果。</h3>
-					<p class="desc green">我们已经完整地收到您的刊登物品列表，并会及时反馈到活动站点，请您耐心等待最终确认。</p>
+					<p class="desc">我们已经完整地收到您的刊登物品列表，并会及时反馈到活动站点，请您耐心等待最终确认。</p>
 					<menu>
 						<li><a href="index" class="btn">返回活动列表</a></li>
 					</menu>					
@@ -109,7 +111,7 @@
 										<li>请勿修改下载模板的文件格式。</li>
 										<li>请勿修改、增减模板中的原有信息</li>
 										<li>请填写完整报名的刊登信息，包括：您的刊登编号，当前刊登单价，活动单价，刊登库存量。价格请按活动对应站点的货币计算。</li>
-										<li>备货完成时间格式为yyyy/MM/dd，如2015/08/08</li>
+										<li>备货完成时间格式为YYYY/MM/DD，如2015/08/08</li>
 										<li>不报名的SKU请留空填写内容，不填写任何待填写信息，模板自带信息请勿修改。</li>
 									</ul>
 								</div>

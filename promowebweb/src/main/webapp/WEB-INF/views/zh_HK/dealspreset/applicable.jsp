@@ -35,6 +35,7 @@
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
@@ -49,6 +50,7 @@
 	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>	
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>

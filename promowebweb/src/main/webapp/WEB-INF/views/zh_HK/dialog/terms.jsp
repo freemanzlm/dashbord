@@ -8,10 +8,10 @@
 	<div class="dialog-header">
 		<c:choose>
 			<c:when test="${promo.region eq 'HK' or promo.region eq 'TW' }">
-				<h2>法律協定</h2>
+				<h2>其他條款</h2>
 			</c:when>
 			<c:otherwise>
-				<h2>法律协议</h2>
+				<h2>其他条款</h2>
 			</c:otherwise>
 		</c:choose>		
 	</div>
