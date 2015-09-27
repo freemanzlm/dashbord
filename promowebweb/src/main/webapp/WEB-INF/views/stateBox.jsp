@@ -67,7 +67,9 @@
 								<c:otherwise>
 									<a href="${promo.rewardUrl}" class="btn">填写奖励申请协议</a>
 								</c:otherwise>
-							</c:choose></li>
+							</c:choose>
+							 <br /><br /><a href="index">返回活动列表</a>
+						</li>
 					</menu>
 				</c:when>
 				<c:otherwise>

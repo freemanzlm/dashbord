@@ -70,6 +70,7 @@
 								<a href="${promo.rewardUrl}" class="btn">填寫獎勵申請協定</a>
 							</c:otherwise>
 						</c:choose>
+						<br /><br /><a href="index">返回活動清單</a>
 					</li></menu>
 				</c:when>
 				<c:otherwise>
