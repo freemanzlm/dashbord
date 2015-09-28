@@ -114,7 +114,7 @@
 						<form id="listing-form" action="applied" action="/promotion/deals/confirmDealsListings" method="post">
 							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
-							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>預覽修改報名資訊</button>
 						</form>
 					</div>	 

@@ -95,7 +95,7 @@
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
-					<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled/>我已阅读并接受 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
+					<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 					<button id="upload-btn" class="btn" disabled>上传</button>
 				</div>
 			</div>
