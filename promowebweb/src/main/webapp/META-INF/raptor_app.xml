@@ -24,6 +24,7 @@
 	      	<authentication>NONE_REQUIRED</authentication>
 	      	<authorization>true</authorization>
 	      	<roleId>true</roleId>
+	      	<supportOpenRedirects>true</supportOpenRedirects>
 	      </security>
 	      <parameters-Map>
 	  		<parameters key="xss.requestParameterCheck">false</parameters>
