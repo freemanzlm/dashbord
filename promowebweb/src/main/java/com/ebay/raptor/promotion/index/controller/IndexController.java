@@ -21,6 +21,7 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
+import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -88,6 +89,7 @@ public class IndexController {
         }
     }
 
+    @AuthNeed
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView handleIndexRequest(HttpServletRequest request,
             HttpServletResponse response,
@@ -105,6 +107,7 @@ public class IndexController {
         return mav;
     }
 	
+    @AuthNeed
 	@GET
 	@RequestMapping("/{promoId}")
 	public ModelAndView promotion(HttpServletRequest request,
