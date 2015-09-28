@@ -205,11 +205,6 @@
 
 				<%@ include file="activity.jsp" %>
 				
-				<c:if test="${ not rewarding }">
-					<div class="mt20" style="text-align: center;">
-						<a href="index" class="btn">返回活動清單</a>
-					</div>
-				</c:if>
 			</div>
 		</div>
 	</div>
