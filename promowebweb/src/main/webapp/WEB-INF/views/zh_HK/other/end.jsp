@@ -48,7 +48,7 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>其他活動 ${promo.name}</h2>
+				<h2>其它活動 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step last"><span>活動已結束</span></div>
