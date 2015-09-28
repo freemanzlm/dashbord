@@ -91,7 +91,7 @@
 					<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
-						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" ${ termsAccpted ? '' : 'disabled' }/>我已閱讀並接受 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled/>我已閱讀並接受 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 						<button id="form-btn" class="btn" type="button" disabled>預覽報名資訊</button>
 					</form>
 				</div>
