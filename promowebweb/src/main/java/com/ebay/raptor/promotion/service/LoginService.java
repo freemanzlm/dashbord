@@ -30,7 +30,7 @@ public class LoginService {
                 return true;
             }
         }
-
+        logger.error(String.format("Unable to load IP for current accessed user with IP: %s", ip));
         return false;
     }
 

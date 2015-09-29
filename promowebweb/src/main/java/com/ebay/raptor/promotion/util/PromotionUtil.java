@@ -13,11 +13,11 @@ public class PromotionUtil {
 	static {
 		if (CommonUtil.isProduction()) {
 		    // TODO -
-		    _promoUrlPrefix = "http://somehost";
+		    _promoUrlPrefix = "http://cbtpromo.ebay.com.hk";
 			_promoServicePrefix = "http://somehost";
 			_sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		} else {
-		    _promoUrlPrefix = "http://somehost";
+		    _promoUrlPrefix = "http://localhost:8080";
             _promoServicePrefix = "http://somehost";
             _sellerDashboardServicePrefix = "http://phx5qa01c-8a26.stratus.phx.qa.ebay.com:8080/sdt/secureResource/v1/";
 		}

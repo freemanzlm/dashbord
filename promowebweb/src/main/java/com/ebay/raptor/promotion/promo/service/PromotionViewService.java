@@ -22,6 +22,7 @@ public class PromotionViewService {
 		context.put(ViewContext.Agreement.getAttr(), ViewResource.HV_AGGREMENT.getPath());
 		res.setContext(context);
 		ViewResource view = ViewResource.HV_DETAIL;
+		context.put(ViewContext.Expired.getAttr(), pro.getRegEnded());
 		try {
 			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
@@ -29,7 +30,6 @@ public class PromotionViewService {
 					view = ViewResource.HV_APPLICABLE;
 					break;
 				case APPLIED:
-					context.put(ViewContext.Expired.getAttr(), pro.getRegEnded());
 					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.HV_APPLIED;
 					break;
@@ -68,6 +68,7 @@ public class PromotionViewService {
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(ViewContext.Agreement.getAttr(), ViewResource.DP_AGGREMENT.getPath());
+		context.put(ViewContext.Expired.getAttr(), pro.getRegEnded());
 		ViewResource view = ViewResource.DP_DETAIL;
 		try {
 			switch(PMPromotionStatus.getByName(pro.getState())){
@@ -117,6 +118,7 @@ public class PromotionViewService {
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(ViewContext.Agreement.getAttr(), ViewResource.DU_AGGREMENT.getPath());
+		context.put(ViewContext.Expired.getAttr(), pro.getRegEnded());
 		res.setContext(context);
 		ViewResource view = ViewResource.DU_DETAIL;
 		try {
@@ -126,7 +128,6 @@ public class PromotionViewService {
 					view = ViewResource.DU_APPLICABLE;
 					break;
 				case SUBMITTED:
-					context.put("expired", pro.getRegEnded());
 					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.DU_APPLIED;
 					break;
@@ -134,7 +135,6 @@ public class PromotionViewService {
 				case VERIFYING:
 				case PROMOTION_APPROVED:
 				case APPLIED:
-					context.put("expired", pro.getRegEnded());
 					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.DU_LISTING;
 					break;
