@@ -19,7 +19,6 @@ import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.CommonUtil;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.kernel.util.FastURLEncoder;
-import com.ebay.raptor.promotion.service.bean.PromoConfigBean;
 import com.ebay.raptor.promotion.util.PromotionUtil;
 import com.google.gson.reflect.TypeToken;
 
@@ -29,10 +28,10 @@ public class BaseDataService {
     protected static final String GET_METHOD = "GET";
     protected static final String NO_ENCRIPTION_PARAM = "?encrypt=false";
 
-    protected static String selectParameterUrl = ""; // TODO - 
-    protected static String updateParameterUrl = "";
-    protected static String selectAuditUrl = "";
-    protected static String insertAuditUrl = "";
+    protected static String selectSdParameterUrl = "listing/parameter/";
+    protected static String updateSdParameterUrl = "listing/parameter/save";
+    protected static String selectSdAuditUrl = "listing/audit/";
+    protected static String insertSdAuditUrl = "listing/audit/save";
     protected static String authorization;
     
     protected static final CommonLogger logger = CommonLogger
@@ -47,11 +46,6 @@ public class BaseDataService {
         } else {
             authorization = "IAF v^1.1#i^1#I^2#f^0#p^1#d^2016-10-25T09:50:56.462Z#r^0#t^H4sIAAAAAAAAAKVUXWgcVRTO7E8kTVOLfxGpsk6t2NSZuXd2ZrJzySzdbBtcbPrjpukP+nB35m4yZueHuXdJQlG2QSoq+FIQFakBlYAQRLC1pS8VjPigqBRtHwTFJ6nQB0Hto3cnm+3uSqPgPNzh3vOde77znXMPaPQPjJx56sxfQ8JdieUGaCQEAQ6Cgf70nm3JxEPpPtABEJYbjzVSS8lfxyj2aiF6htAw8CnJlPZZYs7BOhjVCXAcDaqmI2ZK/gZgKrDEUYPYOQJNFejQqBhZbqe0Tko+ZdhnlqgCqEtAk1RjCqpIB0g3ZM1QT4qZaRJRN/A5RAZiZsGr+RTFBCyxHvkowNSlyMceoYjZqFyYPIA4EoVRwAI7qIn5mC6Kw0Ud/pu7Y0pJxHhcMV8qTBTLY0rHLfmWAmWGWZ1274qBQzLTuFYnmwegMRqV67ZNKBWV/HqE7ktRYYNGLHIVa7aJTcOBwDZ18/9r+J816NJwIog8zDb3bZ64jlSNoYj4zGWLd5aSy1B5ntistTvInUv7Ms3fkTquuVWXRJa4f7xwonD4sJhvxiUVvCh5OJojLKxhm0g277S6RyLXQVwbUhkdrUg5u2pIWhbmJDPHF5zN2VolqzuGo7dIrEdqad/Dohj4jttMn2YOBmyc8FxIr8hah8gcdMg/FBWqrMmW4wwJAknVp4DZWQxlo7R1Nus3i008Lk8m3v57KdvejEVupc5I+4ZeQyyfJeIwdB2x1xg3aKsRFqglzjIWIkWZn5+X57NyEM0oKgCp01egcnzyQNmeJR4W23D3DvgOsOTGmdiEe1EXscWQU1ngTcfj+zNiXjOyZq6lejepfO/pPw46Mla6H0n7DW1Mnnxf/MElwQJLgsmnG8gBGT4JRvqTR1PJrTupy4js4qpsU5m6Mz5/ehGR58hiiN0IITNrqol+oTD2sv5tx1Rcfg482J6LA0k42DEkwY7bljS8e3gI6kBTDajqQDdOgp23rSn4QOq+cA7+uf2RUxNfnvvupnjt7PaVN++5DIbaIEFI96VON148tTKd//rdo1+cn9wr/1De+tt15fhaefgdvfLjiceveL+/9f0T2xqfDd7Y8vM3CUu7eqv40se18yupsY/2v3/p892v/bS2540jz3517d7XVy+cffSFq+O5qV1p+cPhva+uGm//kvzklfeW2adrpR3WscveH6tLIwM3PzhX3OLe2rX7wsMXwxtP378u49+iJ9FVLgYAAA==";
         }
-    }
-
-    protected String buildUrl(String baseUrl, Object... args){
-        String host = PromoConfigBean.getInstance().getPromoServiceEndpoint();
-        return buildServiceUrl(host, baseUrl, args);
     }
 
     protected String buildServiceUrl(String host, String baseUrl, Object... args){
@@ -84,12 +78,12 @@ public class BaseDataService {
      * @return
      * @throws HttpException
      */
-    public Parameter getParameter(ParameterType paramType, int paramStatus,
+    public Parameter getSdParameter(ParameterType paramType, int paramStatus,
             String paramKey) throws HttpRequestException {
     	Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authorization);
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._promoServicePrefix, selectParameterUrl)
+                buildServiceUrl(PromotionUtil._sellerDashboardServicePrefix, selectSdParameterUrl)
                 + paramType.getType() + '/' + paramStatus + '/' + paramKey,
                 GET_METHOD, null, headers);
 
@@ -119,12 +113,12 @@ public class BaseDataService {
      * @return
      * @throws HttpException
      */
-    public List<Parameter> getParameters(ParameterType paramType,
+    public List<Parameter> getSdParameters(ParameterType paramType,
             int paramStatus) throws HttpRequestException {
     	Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authorization);
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._promoServicePrefix, selectParameterUrl)
+                buildServiceUrl(PromotionUtil._sellerDashboardServicePrefix, selectSdParameterUrl)
                 + paramType.getType() + '/' + paramStatus, GET_METHOD, null,
                 headers);
 
@@ -146,11 +140,11 @@ public class BaseDataService {
         return null;
     }
 
-    public String getParamterValue(ParameterType paramType, int paramStatus,
+    public String getSdParamterValue(ParameterType paramType, int paramStatus,
             String paramKey) {
         Parameter param = null;
         try {
-            param = getParameter(paramType, paramStatus, paramKey);
+            param = getSdParameter(paramType, paramStatus, paramKey);
         } catch (HttpRequestException e) {
             logger.warn(String.format(
                     "Unable to get the parameter [type=%d, key=%s]",
@@ -164,7 +158,7 @@ public class BaseDataService {
         return null;
     }
 
-    public void putParameter(Parameter p) throws HttpRequestException {
+    public void putSdParameter(Parameter p) throws HttpRequestException {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authorization);
 
@@ -175,7 +169,7 @@ public class BaseDataService {
                         FastURLEncoder.encode(p.getValue()));
 
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._promoServicePrefix, updateParameterUrl),
+                buildServiceUrl(PromotionUtil._sellerDashboardServicePrefix, updateSdParameterUrl),
                 POST_METHOD, content, headers);
 
         TypeToken<HttpResponseData<String>> type = new TypeToken<HttpResponseData<String>>() {
@@ -191,7 +185,7 @@ public class BaseDataService {
         }
     }
 
-    public void insertAudit(Audit audit) throws HttpRequestException {
+    public void insertPromoAudit(Audit audit) throws HttpRequestException {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authorization);
 
@@ -206,7 +200,7 @@ public class BaseDataService {
         }
 
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._promoServicePrefix, insertAuditUrl),
+                buildServiceUrl(PromotionUtil._promoServicePrefix, insertSdAuditUrl),
                 POST_METHOD, content, headers, false);
 
         TypeToken<HttpResponseData<String>> type = new TypeToken<HttpResponseData<String>>() {
@@ -222,12 +216,12 @@ public class BaseDataService {
         }
     }
 
-    public List<Audit> getAudits(AuditType auditType, String startDate,
+    public List<Audit> getPromoAudits(AuditType auditType, String startDate,
             String endDate) throws HttpRequestException {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authorization);
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._promoServicePrefix, selectAuditUrl)
+                buildServiceUrl(PromotionUtil._promoServicePrefix, selectSdAuditUrl)
                 + auditType.getType() + '/' + startDate + '/' + endDate,
                 GET_METHOD, null, headers);
 

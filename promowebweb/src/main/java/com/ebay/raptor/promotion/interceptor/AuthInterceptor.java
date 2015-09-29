@@ -6,20 +6,26 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
+import com.ebay.app.raptor.promocommon.pojo.db.ParameterType;
+import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.AuthNeed;
+import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PromotionUtil;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 	
 	private static final CommonLogger _logger = CommonLogger.getInstance(AuthInterceptor.class);
+	
+	@Autowired protected BaseDataService dataService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -81,7 +87,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			}
 			
 			if (userId != null) {
-				String storedSession = sessionId; // TODO - get session from DB
+				String storedSession = dataService.getSdParamterValue(ParameterType.BIZSession,
+						CommonConstant.DEFAULT_PARAMETER_STATUS, userId + "");
 
 				if (!StringUtil.isEmpty(sessionId) && sessionId.equalsIgnoreCase(storedSession)) {
 					return true;

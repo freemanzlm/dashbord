@@ -31,14 +31,14 @@ public class LoginService {
             }
         }
 
-        return true; // TODO - Change to false
+        return false;
     }
 
     private List <String> loadValidIps () {
         List<String> ips = new ArrayList<String>();
         try {
             List<Parameter> params =
-            		baseDataService.getParameters(ParameterType.PromoBackendUserIp,
+            		baseDataService.getSdParameters(ParameterType.BIZBackendIp,
                             CommonConstant.PARAMETER_ENABLE);
 
             if (params != null && params.size() > 0) {
