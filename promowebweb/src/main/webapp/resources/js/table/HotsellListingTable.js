@@ -221,7 +221,8 @@ var BizReport = BizReport || {};
 					var aRows = oDataTable.data();
 					
 					that.selectedItems = aRows.filter(function(oRow){
-						return oRow.state == 'Applied';
+						oRow.checked = oRow.state == 'Applied';
+						return oRow.checked;
 					});
 					
 					if (that.selectedItems.length == aRows.length && that.selectedItems.length > 0) {

@@ -263,7 +263,8 @@ var BizReport = BizReport || {};
 					var aRows = oDataTable.data();
 					
 					that.selectedItems = aRows.filter(function(oRow){
-						return oRow.state == 'Applied' || oRow.state == 'Confirmed';
+						oRow.checked = oRow.state == 'Applied' || oRow.state == 'Confirmed';
+						return oRow.checked;
 					});
 					
 					if (that.selectedItems.length == aRows.length && that.selectedItems.length > 0) {
