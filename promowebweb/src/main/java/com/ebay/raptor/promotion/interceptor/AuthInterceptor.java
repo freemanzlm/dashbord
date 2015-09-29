@@ -16,6 +16,7 @@ import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.pojo.db.ParameterType;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
+import com.ebay.kernel.util.FastURLEncoder;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.util.CookieUtil;
@@ -102,7 +103,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 	private void redirectToLogin (HttpServletRequest request, HttpServletResponse response) {
 		try {
-			response.sendRedirect(PromotionUtil.LOGIN_URL);
+			String url = PromotionUtil.LOGIN_URL + "?referurl=" + FastURLEncoder.encode(PromotionUtil._promoUrlPrefix + request.getRequestURI());
+			_logger.log("redirect to url: " + url);
+			response.sendRedirect(url);
 		} catch (IOException e) {
 			_logger.error(ErrorType.UnableRedirectToUrl, e, PromotionUtil.LOGIN_URL);
 		}
