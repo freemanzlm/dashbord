@@ -164,7 +164,7 @@ var BizReport = BizReport || {};
 							if (full.proposePrice > 0 && value > 0 && full.proposePrice != full.dealsPrice) {
 								return "<span class='red'>" + parseFloat(full.proposePrice).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.dealsPrice).toUSFixed(2) + " " + full.currency + ")</del>";
 							} else {
-								value = value <= 0 ? parseFloat(full.proposePrice) : value;
+								value = (isNaN(value) || value <= 0) ? parseFloat(full.proposePrice) : value;
 								return (!isNaN(value) ? value.toUSFixed(2) : '0.00')  + " (" + full.currency + ")";
 //								return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
 							}
