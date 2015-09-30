@@ -10,10 +10,16 @@ $(function(){
 		aoColumnDefs: [{bVisible: true}]
 	};
 	
-	var listingCountJ, listingTable, form, formBtn;
+	var listingCountJ, listingTable, form, formBtn, acceptCheckbox;
 	
+	formBtn = document.getElementById("form-btn");
+	acceptCheckbox = document.getElementById('accept');
 	listingCountJ = $(".my-listing h3 small span");
 	form = $("#listing-form");
+	
+	var acceptPopup = $(acceptCheckbox).parent().each(function(){
+		$(this).popup({"trigger": "mannual", html: this.title});
+	});	
 	
 	listingTable = new DealsListingTable();
 	listingTable.subscribe({
@@ -83,20 +89,18 @@ $(function(){
 		}
 	});
 	
-	formBtn = document.getElementById("form-btn");
-	$("#accept").change(function(){
-		if (this.checked) {
-			formBtn.removeAttribute("disabled");
-		} else {
-			formBtn.setAttribute("disabled", "disabled");
-		}
-	}).parent().each(function(){
-		$(this).popup({"trigger": "hover", html: this.title});
-	});	;
+	
 	
 	$(formBtn).click(function(event){
 		event.preventDefault();
+		
+		if (!acceptCheckbox.checked) {
+			acceptPopup.popup('show');
+			return false;
+		}
+		
 		var listings = listingTable.selectedItems;
+		
 		if (listings && listings.length > 0) {
 			previewDialog.show();
 			previewDialog.listingTable.setData(listings);

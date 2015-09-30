@@ -130,7 +130,7 @@
 					
 					<div class="mt20 page-bottom-actions">
 						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-						<button id="upload-btn" class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>预览并重新提交预审</button>
+						<button id="upload-btn" class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。">预览并重新提交预审</button>
 					</div>	
 				</c:if>
 						

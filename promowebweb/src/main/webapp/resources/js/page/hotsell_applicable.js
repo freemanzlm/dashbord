@@ -3,7 +3,12 @@ $(function(){
 	var alertDialog = BizReport.alertDialog;
 	var locale = BizReport.locale;
 	
+	var formBtn = document.getElementById("form-btn");
+	var acceptCheckbox = document.getElementById('accept');
 	var listingCountJ = $(".my-listing h3 small span"), form = $("#listing-form");
+	var acceptPopup = $(acceptCheckbox).parent().each(function(){
+		$(this).popup({"trigger": "mannual", html: this.title});
+	});	
 	
 	var listingTable = new HotsellListingTable();
 	listingTable.subscribe({
@@ -56,15 +61,6 @@ $(function(){
 		});
 	}
 	
-	var formBtn = document.getElementById("form-btn");
-	var acceptCheckbox = $("#accept").change(function(){
-		if (this.checked) {
-			formBtn.removeAttribute("disabled");
-		} else {
-			formBtn.setAttribute("disabled", "disabled");
-		}
-	});
-	
 	// for test
 	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
 	var previewDialog = new ListingPreviewDialog();
@@ -76,6 +72,11 @@ $(function(){
 	});
 	
 	$(formBtn).click(function(event){
+		if (!acceptCheckbox.checked) {
+			acceptPopup.popup('show');
+			return false;
+		}
+		
 		var listings = listingTable.selectedItems;
 		if (listings && listings.length > 0) {
 			previewDialog.show();
@@ -89,7 +90,7 @@ $(function(){
 	var termsDialog = BizReport.termsDialog;
 	termsDialog.subscribe({
 		"ok": function() {
-			acceptCheckbox.removeAttr("disabled");
+			acceptCheckbox.removeAttribute("disabled");
 		}
 	});
 	$(".terms-conditions").click(function(event){
@@ -99,7 +100,4 @@ $(function(){
 	// prevent form remembering while user using history.back().
 	form.length && form[0].reset();
 	
-	acceptCheckbox.parent().each(function(){
-		$(this).popup({"trigger": "hover", html: this.title});
-	});	
 });

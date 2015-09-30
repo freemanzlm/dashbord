@@ -10,6 +10,12 @@ $(function(){
 	};
 	
 	var listingCountJ = $(".my-listing h3 small span"), form = $("#listing-form");
+	var formBtn = document.getElementById("form-btn");
+	var acceptCheckbox = document.getElementById('accept');
+	
+	var acceptPopup = $(acceptCheckbox).parent().each(function(){
+		$(this).popup({"trigger": "mannual", html: this.title});
+	});	
 	
 	var listingTable = new DealsListingTable();
 	listingTable.init({
@@ -68,20 +74,15 @@ $(function(){
 			submitListings();
 		}
 	});
-	
-	var formBtn = document.getElementById("form-btn");
-	$("#accept").change(function(){
-		if (this.checked) {
-			formBtn.removeAttribute("disabled");
-		} else {
-			formBtn.setAttribute("disabled", "disabled");
-		}
-	}).parent().each(function(){
-		$(this).popup({"trigger": "hover", html: this.title});
-	});
-	
+		
 	$(formBtn).click(function(event){
 		event.preventDefault();
+		
+		if (!acceptCheckbox.checked) {
+			acceptPopup.popup('show');
+			return false;
+		}
+		
 		var listings = listingTable.selectedItems;
 		if (listings && listings.length > 0) {
 			previewDialog.show();

@@ -7,6 +7,12 @@ $(function(){
 	var skuList, uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox;
 	
 	uploadIFrame = $("iframe[name=uploadIframe]");
+	uploadBtn = document.getElementById("upload-btn");
+	acceptCheckbox = document.getElementById("accept");
+	
+	var acceptPopup = $(acceptCheckbox).parent().each(function(){
+		$(this).popup({"trigger": "mannual", html: this.title});
+	});	
 	
 	skuList = new SKUListTable();
 	skuList.init({
@@ -22,66 +28,53 @@ $(function(){
 	}
 	
 	uploadForm = $("#upload-form").submit(function(){
+		if (!acceptCheckbox.checked) {
+			acceptPopup.popup('show');
+			return false;
+		}
+		
 		var fileName = fileInput.val();
 		if (!fileName || fileName.indexOf(".xls") < 0) {
 			alertDialog.alert(locale.getText("promo.deals.onlyXls"));
 			return false;
 		}
+		
+		uploadIFrame.on("load", function(){
+			// check the response
+			if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").html().length > 0) {
+				var response = uploadIFrame.contents().find("body").text();
+				var responseData = $.parseJSON(response);
+				// verification returns no error 
+				if (responseData && responseData.status) {
+					window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId);
+				}
+				// handle error
+				else {
+					// show error infor
+					if (responseData.message.length > 0) {
+						$("#upload-error-msg").removeClass("hide");
+						$("#upload-error-msg").find("em").text(responseData.message);
+					}
+					// redirect to error page
+					else {
+						window.location.replace("promotion/error");
+					}
+				}
+			} else {
+				// redirect to error page
+				window.location.replace("promotion/error");
+			}
+		});
+		
 		return !!$(this).find("input[type=file]").attr("value");
 	});
 	
-	fileInput = uploadForm.find("input[type=file]").change(function(){
-		checkUploadBtnStatus();
-	});
+	fileInput = uploadForm.find("input[type=file]");
 	
-	uploadBtn = document.getElementById("upload-btn");
-	acceptCheckbox = document.getElementById("accept");
-	
-	$(acceptCheckbox).change(function(){
-		checkUploadBtnStatus();
-	}).parent().each(function(){
-		$(this).popup({"trigger": "hover", html: this.title});
-	});	;
-	
-	function checkUploadBtnStatus() {
-		if (fileInput.val() && acceptCheckbox.checked) {
-			uploadBtn.removeAttribute("disabled");
-		} else {
-			uploadBtn.setAttribute("disabled", "disabled");
-		}
-	}
-	
-	$(uploadBtn).click(function(){
-		if (!this.hasAttribute("disabled")) {
-			uploadIFrame.on("load", function(){
-				// check the response
-				if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").html().length > 0) {
-					var response = uploadIFrame.contents().find("body").text();
-					var responseData = $.parseJSON(response);
-					// verification returns no error 
-					if (responseData && responseData.status) {
-						window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId);
-					}
-					// handle error
-					else {
-						// show error infor
-						if (responseData.message.length > 0) {
-							$("#upload-error-msg").removeClass("hide");
-							$("#upload-error-msg").find("em").text(responseData.message);
-						}
-						// redirect to error page
-						else {
-							window.location.replace("promotion/error");
-						}
-					}
-				} else {
-					// redirect to error page
-					window.location.replace("promotion/error");
-				}
-			});
-			
-			uploadForm.submit();
-		}
+	$(uploadBtn).click(function(event){
+		event.preventDefault();
+		
+		uploadForm.submit();
 	});	
 	
 	var termsDialog = BizReport.termsDialog;
