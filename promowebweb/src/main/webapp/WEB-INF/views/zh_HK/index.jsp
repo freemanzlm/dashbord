@@ -89,7 +89,7 @@
 						<select name="" id="" class="fr state-filter">
 							<option value="">顯示所有活動</option>
 							<option value="Created">可報名的活動</option>
-							<option value="PromotionApproved">待確認報名刊登的活動</option>
+							<option value="PromotionApproved">待正式報名的活動</option>
 							<option value="Submitted">已提交預審的活動</option>
 							<option value="Verifying">預審中的活動</option>
 							<option value="Applied">已提交報名的活動</option>

@@ -73,15 +73,15 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>報名</span></div>
 						<div class="step done"><span>已提交預審</span></div>
 						<c:if test="${ state eq 'Verifying' }">
 							<div class="step current-step"><span>報名預審中</span></div>
-							<div class="step"><span>確認報名刊登</span></div>
+							<div class="step"><span>正式報名</span></div>
 						</c:if>
 						<c:if test="${ state eq 'PromotionApproved' }">
 							<div class="step done"><span>報名預審中</span></div>
-							<div class="step current-step"><span>確認報名刊登</span></div>
+							<div class="step current-step"><span>正式報名</span></div>
 						</c:if>
 						<c:if test="${ state eq 'Applied' }">
 							<div class="step done"><span>報名預審中</span></div>
@@ -100,7 +100,7 @@
 					<c:when test="${state eq 'Verifying' }">
 						<div class="active-status-box">
 							<h3>您已成功提交預審！請耐心等待預審結果。</h3>
-							<p class="desc">需要您確認通過預審的刊登完成報名！</p>
+							<p class="desc">我們已經完整地收到您的刊登物品清單，並會及時回饋到活動網站，請您耐心等待最終確認。</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活動清單</a>
@@ -142,7 +142,7 @@
 				
 				<div class="mt20 my-listing">
 					<h3>
-						我提交的刊登
+						選擇報名刊登
 						<c:if test="${(state eq 'PromotionApproved'  or  (state eq 'Applied')) and not expired }">
 							<small>（已選 <span>0</span> 項）</small>
 						</c:if>
@@ -157,7 +157,7 @@
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
-							<button id="form-btn" class="btn" type="button" disabled>預覽報名資訊</button>
+							<button id="form-btn" class="btn" type="button" disabled>預覽並提交正式報名</button>
 						</form>
 					</div>	
 				</c:if>

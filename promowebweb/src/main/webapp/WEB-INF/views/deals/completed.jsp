@@ -83,10 +83,10 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可报名</span></div>
+						<div class="step done"><span>报名</span></div>
 						<div class="step done"><span>已提交预审</span></div>
 						<div class="step done"><span>报名预审中</span></div>
-						<div class="step done"><span>确认报名刊登</span></div>
+						<div class="step done"><span>正式报名</span></div>
 						<div class="step done"><span>活动进行中</span></div>
 						<div class="step done"><span>奖励确认中</span></div>
 						<div class="step done"><span>申领奖励</span></div>
@@ -114,7 +114,7 @@
 				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登</h3>
+					<h3>报名刊登列表</h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 			</div>

@@ -168,6 +168,7 @@ var BizReport = BizReport || {};
 					aTargets: ["state"],
 					sClass: "text-center",
 					sDefaultContent: "",
+					bSortable: false,
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {

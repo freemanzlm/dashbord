@@ -68,10 +68,10 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>報名</span></div>
 						<div class="step current-step"><span>已提交預審</span></div>
 						<div class="step"><span>報名預審中</span></div>
-						<div class="step"><span>確認報名刊登</span></div>
+						<div class="step"><span>正式報名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
 							<div class="step"><span>獎勵確認中</span></div>
@@ -82,7 +82,7 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box success">
-					<h3>您已成功提交報名！請耐心等待預審結果。</h3>
+					<h3>您已成功提交預審！請耐心等待預審結果並提交正式報名。</h3>
 					<p class="desc">我們已經完整地收到您的刊登物品清單，並會及時回饋到活動網站，請您耐心等待最終確認。</p>
 					<menu>
 						<li><a href="" class="btn">返回活動清單</a></li>
@@ -92,14 +92,14 @@
 				<%@ include file="activity.jsp" %>
 
 				<div class="mt20 my-listing">
-					<h3><strong>我提交的刊登</strong></h3>
+					<h3><strong>提交预审的刊登</strong></h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 				
 				<c:if test="${ not expired }">
 					<div class="mt20">
 						<div class="listings-upload">
-							<h3>重新上傳我要提交的刊登</h3>
+							<h3>重新提交預審</h3>
 							
 							<div class="body mt20"  style="width: 420px;">
 								<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改並重新上傳。</p>
@@ -130,7 +130,7 @@
 					
 					<div class="mt20 page-bottom-actions">
 						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
-						<button id="upload-btn" class="btn" title="在報名截止之前，您可以重新勾選報名的刊登。" disabled>預覽修改報名資訊</button>
+						<button id="upload-btn" class="btn" title="在報名截止之前，您可以重新勾選報名的刊登。" disabled>預覽並重新提交預審</button>
 					</div>	
 				</c:if>
 						

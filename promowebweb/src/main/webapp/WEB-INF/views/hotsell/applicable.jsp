@@ -70,7 +70,7 @@
 				<h2>爆款促销 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可报名</span></div>
+						<div class="step current-step"><span>报名</span></div>
 						<div class="step"><span>已提交报名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
 						<c:if test="${ rewarding }">
@@ -84,7 +84,7 @@
 				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">
-					<h3>选择我的刊登报名 <small>（已选 <span>0</span> 项）</small></h3>
+					<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
 					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
 				</div>
 				
@@ -93,7 +93,7 @@
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
 						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-						<button id="form-btn" class="btn" type="button" disabled>预览报名信息</button>
+						<button id="form-btn" class="btn" type="button" disabled>预览并提交报名</button>
 					</form>
 				</div>
 			</div>

@@ -69,7 +69,7 @@
 				<div class="mt20 page-bottom-actions">
 					<div id="submit-form">
 						<a href="/promotion/${promoId}">返回修改</a>
-						<button id="submit-btn" class="btn">提交刊登物品进行预审</button>
+						<button id="submit-btn" class="btn">提交预审</button>
 					</div>
 				</div>
 			</div>			

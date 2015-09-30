@@ -72,7 +72,7 @@
 						<!-- TODO put selected listing ids here -->
 						<input type="hidden" name="listings" value="100000, 4324324324, 4389234, 3432430" />
 						<a href="applicable">返回修改</a>
-						<button type="submit" class="btn">提交刊登物品进行预审</button>
+						<button type="submit" class="btn">提交預審</button>
 					</form>
 					
 				</div>

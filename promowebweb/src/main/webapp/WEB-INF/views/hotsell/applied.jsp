@@ -70,7 +70,7 @@
 				<h2>爆款促销 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可报名</span></div>
+						<div class="step done"><span>报名</span></div>
 						<div class="step current-step"><span>已提交报名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
 						<c:if test="${ rewarding }">
@@ -82,11 +82,16 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box success">
-					<h3>您已成功提交报名！请耐心等待审核结果。</h3>
-					
-					<c:if test="${expired eq true}">
-						<p class="desc gray">已超过报名有效期，您无法再修改刊登内容</p>
-					</c:if>
+					<h3>您已成功提交报名！请耐心等待活动开始。
+						<c:choose>
+							<c:when test="${ expired eq true }">
+								已超过报名有效期，您无法再修改报名刊登。
+							</c:when>
+							<c:otherwise>
+								在报名截止时间前您可以随时修改您选择的刊登。
+							</c:otherwise>
+						</c:choose>
+					</h3>
 						
 					<menu>
 						<li>
@@ -98,7 +103,7 @@
 				<%@ include file="activity.jsp" %>
 		
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登
+					<h3>选择报名刊登
 						<c:if test="${ not expired }">
 							<small>（已选 <span>0</span> 项）</small>
 						</c:if>
@@ -112,7 +117,7 @@
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-							<button class="btn" id="form-btn" type="button" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>预览修改报名信息</button>
+							<button class="btn" id="form-btn" type="button" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>预览并修改报名</button>
 						</form>
 					</div>	 
 				</c:if>

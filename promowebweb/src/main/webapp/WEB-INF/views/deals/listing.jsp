@@ -74,15 +74,15 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可报名</span></div>
+						<div class="step done"><span>报名</span></div>
 						<div class="step done"><span>已提交预审</span></div>
 						<c:if test="${ state eq 'Verifying' }">
 							<div class="step current-step"><span>报名预审中</span></div>
-							<div class="step"><span>确认报名刊登</span></div>
+							<div class="step"><span>正式报名</span></div>
 						</c:if>
 						<c:if test="${ state eq 'PromotionApproved' }">
 							<div class="step done"><span>报名预审中</span></div>
-							<div class="step current-step"><span>确认报名刊登</span></div>
+							<div class="step current-step"><span>正式报名</span></div>
 						</c:if>
 						<c:if test="${ state eq 'Applied' }">
 							<div class="step done"><span>报名预审中</span></div>
@@ -101,7 +101,7 @@
 					<c:when test="${state eq 'Verifying' }">
 						<div class="active-status-box">
 							<h3>您已成功提交预审！请耐心等待预审结果。</h3>
-							<p class="desc">需要您确认通过预审的刊登完成报名！</p>
+							<p class="desc">我们已经完整地收到您的刊登物品列表，并会及时反馈到活动站点，请您耐心等待最终确认。</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活动列表</a>
@@ -143,7 +143,7 @@
 				
 				<div class="mt20 my-listing">
 					<h3>
-						我提交的刊登
+						选择报名刊登
 						<c:if test="${(state eq 'PromotionApproved' or state eq 'Applied' ) and (not expired) }">
 							<small>（已选 <span>0</span> 项）</small>
 						</c:if>

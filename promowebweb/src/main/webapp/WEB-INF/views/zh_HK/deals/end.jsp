@@ -60,7 +60,7 @@
 					<div class="steps clr">
 						<c:choose>
 							<c:when test="${ state == 'VerifyFailed' }">
-								<div class="step done"><span>可報名</span></div>
+								<div class="step done"><span>報名</span></div>
 								<div class="step done"><span>已提交預審</span></div>
 								<div class="step current-step last"><span>预审失敗</span></div>
 							</c:when>

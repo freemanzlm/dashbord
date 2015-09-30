@@ -3,10 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="listings-upload">
-	<h3>批量上傳我要提交的刊登</h3>
+	<h3>批量上傳預審刊登</h3>
 	
 	<div class="body mt20" style="width: 545px;">
 		<p>您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">批量提交範本</a>按格式填寫並上傳您的刊登參與本活動。</p>
+		
+		<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><em ></em></p>
+		
+		<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
+			選擇上傳您的刊登清單
+			<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇檔案" /> <input type="file" name="dealsListings" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">選擇</button></span>
+			<input type="hidden" name="promoId" value="${promo.promoId}"/>
+		</form>
+		<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
+		
 		<div class="clr" style="margin-top: 30px; ">
 			<span style="float: left; font-weight: bold;">注：</span>
 			<ul>
@@ -18,13 +28,5 @@
 			</ul>
 		</div>
 		
-		<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><em ></em></p>
-		
-		<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
-			選擇上傳您的刊登清單
-			<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇檔案" /> <input type="file" name="dealsListings" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">選擇</button></span>
-			<input type="hidden" name="promoId" value="${promo.promoId}"/>
-		</form>
-		<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
 	</div>	
 </div>

@@ -32,7 +32,7 @@
 
 		<div class="page-bottom-actions">
 			<a class="cancel" href="javascript:void(0)">返回修改</a>
-			<button type="button" class="btn btn-s btn-prim ok">提交報名資訊</button>
+			<button type="button" class="btn btn-s btn-prim ok">提交報名</button>
 		</div>
 	</div>
 </div>

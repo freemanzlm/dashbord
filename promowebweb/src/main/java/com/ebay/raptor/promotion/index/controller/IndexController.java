@@ -56,9 +56,9 @@ public class IndexController {
 
         String ip = request.getRemoteAddr();
 
-        if(!loginService.isLoginIPValid(ip)) {
+/*        if(!loginService.isLoginIPValid(ip)) {
             throw new MissingArgumentException(ip);
-        }
+        }*/
 
         if (StringUtil.isEmpty(userId)) {
             userId = csApiService.getUserIdByName(hackId);

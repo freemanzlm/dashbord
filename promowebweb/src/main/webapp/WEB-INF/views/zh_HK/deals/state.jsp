@@ -68,10 +68,10 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>報名</span></div>
 						<div class="step done"><span>已提交預審</span></div>
 						<div class="step done"><span>報名預審中</span></div>
-						<div class="step done"><span>確認報名刊登</span></div>
+						<div class="step done"><span>正式報名</span></div>
 						<c:choose>
 							<c:when test="${ rewarding }">
 								<c:choose>
@@ -113,7 +113,7 @@
 				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登</h3>
+					<h3>報名刊登清單</h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 			</div>

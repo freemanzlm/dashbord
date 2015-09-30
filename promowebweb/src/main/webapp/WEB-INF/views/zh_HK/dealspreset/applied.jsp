@@ -82,17 +82,17 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box success">
-					<h3>您已成功提交報名！請耐心等待稽核結果。</h3>
-					<p class="desc">
+					<h3>您已成功提交報名！請耐心等待活動開始。
 						<c:choose>
-							<c:when test="${not expired }">
-								在報名有效期內，您可以重新選擇預報名的刊登，並重新提交
+							<c:when test="${ expired eq true }">
+								已超過報名有效期，您無法再修改報名刊登。
 							</c:when>
 							<c:otherwise>
-								已超過報名有效期，您無法再修改刊登內容
+								在報名截止時間前您可以隨時修改您選擇的刊登。
 							</c:otherwise>
 						</c:choose>
-					</p>
+					</h3>
+					
 					<menu>
 						<li><a href="index" class="btn">返回活動清單</a></li>
 					</menu>					
@@ -101,7 +101,7 @@
 				<%@ include file="activity.jsp" %>
 		
 				<div class="mt20 my-listing">
-					<h3>我提交的刊登
+					<h3>選擇報名刊登
 						<c:if test="${ not expired }">
 							<small>（已選 <span>0</span> 項）</small>
 						</c:if>
@@ -115,7 +115,7 @@
 							<input type="hidden" name="promoId" value=""/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
-							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>預覽修改報名資訊</button>
+							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>預覽並修改報名</button>
 						</form>
 					</div>	 
 				</c:if>

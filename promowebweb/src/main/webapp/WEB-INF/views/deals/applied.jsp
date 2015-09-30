@@ -68,10 +68,10 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可报名</span></div>
+						<div class="step done"><span>报名</span></div>
 						<div class="step current-step"><span>已提交预审</span></div>
 						<div class="step"><span>报名预审中</span></div>
-						<div class="step"><span>确认报名刊登</span></div>
+						<div class="step"><span>正式报名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
 						<c:if test="${ rewarding }">
 							<div class="step"><span>奖励确认中</span></div>
@@ -82,7 +82,7 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box success">
-					<h3>您已成功提交预审！请耐心等待预审结果。</h3>
+					<h3>您已成功提交预审！请耐心等待预审结果并提交正式报名。</h3>
 					<p class="desc">我们已经完整地收到您的刊登物品列表，并会及时反馈到活动站点，请您耐心等待最终确认。</p>
 					<menu>
 						<li><a href="index" class="btn">返回活动列表</a></li>
@@ -92,14 +92,14 @@
 				<%@ include file="activity.jsp" %>
 
 				<div class="mt20 my-listing">
-					<h3><strong>我提交的刊登</strong></h3>
+					<h3><strong>提交预审的刊登</strong></h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 				
 				<c:if test="${ not expired }">
 					<div class="mt20">
 						<div class="listings-upload">
-							<h3>重新上传我要提交的刊登</h3>
+							<h3>重新提交预审</h3>
 							
 							<div class="body mt20"  style="width: 490px;">
 								<p class="mt10">您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改并重新上传。</p>
@@ -130,7 +130,7 @@
 					
 					<div class="mt20 page-bottom-actions">
 						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-						<button id="upload-btn" class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>预览修改报名信息</button>
+						<button id="upload-btn" class="btn" title="在报名截止之前，您可以重新勾选报名的刊登。" disabled>预览并重新提交预审</button>
 					</div>	
 				</c:if>
 						

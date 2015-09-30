@@ -71,10 +71,10 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可報名</span></div>
+						<div class="step current-step"><span>報名</span></div>
 						<div class="step"><span>已提交預審</span></div>
 						<div class="step"><span>報名預審中</span></div>
-						<div class="step"><span>確認報名刊登</span></div>
+						<div class="step"><span>正式報名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
 							<div class="step"><span>獎勵確認中</span></div>
@@ -96,7 +96,7 @@
 				
 				<div class="mt20 page-bottom-actions">
 					<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
-					<button id="upload-btn" class="btn" disabled>上傳</button>
+					<button id="upload-btn" class="btn" disabled>預覽並提交預審</button>
 				</div>
 			</div>
 		</div>
