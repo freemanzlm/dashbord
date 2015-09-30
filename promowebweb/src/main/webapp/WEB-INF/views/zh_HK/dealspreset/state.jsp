@@ -105,7 +105,8 @@
 				
 				<%@ include file="activity.jsp" %>
 				
-				<div class="mt20">
+				<div class="mt20 my-listing">
+					<h3>報名刊登清單</h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 			</div>
