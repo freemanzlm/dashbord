@@ -84,7 +84,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>报名</span></div>
-						<div class="step done"><span>已提交报名</span></div>
+						<div class="step done"><span>已报名</span></div>
 						<div class="step done"><span>活动进行中</span></div>
 						<div class="step done"><span>奖励确认中</span></div>
 						<div class="step done"><span>申领奖励</span></div>

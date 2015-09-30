@@ -71,7 +71,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>报名</span></div>
-						<div class="step current-step"><span>已提交报名</span></div>
+						<div class="step current-step"><span>已报名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
 						<c:if test="${ rewarding }">
 							<div class="step"><span>奖励确认中</span></div>

@@ -62,7 +62,7 @@
 						<c:choose>
 							<c:when test="${ state == 'VerifyFailed' }">
 								<div class="step done"><span>报名</span></div>
-								<div class="step done"><span>已提交报名</span></div>
+								<div class="step done"><span>已报名</span></div>
 								<div class="step current-step last"><span>审核失败</span></div>
 							</c:when>
 							<c:otherwise>

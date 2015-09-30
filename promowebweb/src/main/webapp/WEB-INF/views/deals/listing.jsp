@@ -86,7 +86,7 @@
 						</c:if>
 						<c:if test="${ state eq 'Applied' }">
 							<div class="step done"><span>报名预审中</span></div>
-							<div class="step current-step"><span>已提交报名</span></div>
+							<div class="step current-step"><span>已报名</span></div>
 						</c:if>
 						<div class="step"><span>活动进行中</span></div>
 						<c:if test="${ rewarding }">

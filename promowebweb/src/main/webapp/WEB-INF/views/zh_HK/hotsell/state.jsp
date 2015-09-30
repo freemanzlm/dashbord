@@ -70,7 +70,7 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step done"><span>可報名</span></div>
-						<div class="step done"><span>已提交報名</span></div>
+						<div class="step done"><span>已報名</span></div>
 						<c:choose>
 							<c:when test="${ rewarding }">
 								<c:choose>
