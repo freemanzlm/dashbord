@@ -140,13 +140,15 @@ var BizReport = BizReport || {};
 						var val = parseFloat(data);
 						
 						if (type == "display" && full.region == 'CN') {
-							if (full.rewardType != 0) {
+							if ((full.rewardType == 1 || full.rewardType == 2 || full.rewardType == 6)) {
 								if (val > 0) {
 									return val.toUSFixed(2) + ' (' + locale.getText('currency.RMB') + ')';
 								}
+							} else if (full.rewardType != 0) {
+								data = '';
+							} else {
+								return locale.getText('dataTable.promo.noReward');
 							}
-							
-							return locale.getText('dataTable.promo.noReward');
 						}
 						
 						if (type == "sort") {
