@@ -135,21 +135,19 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["reward"],
 					sClass: "text-right",
-					sDefaultContent: "",
+					sDefaultContent: " ",
 					mRender: function(data, type, full) {
-						data = full.region == 'CN' ? data : '-';
+						data = full.region == 'CN' ? data : ' ';
 						var val = parseFloat(data);
 						
 						if (type == "display" && full.region == 'CN') {
-							if ((full.rewardType == 1 || full.rewardType == 2 || full.rewardType == 6)) {
+							if ((full.rewardType != 0)) {
 								if (val > 0) {
 									return val.toUSFixed(2) + ' (' + locale.getText('currency.RMB') + ')';
 								}
-							} else if (full.rewardType != 0) {
-								data = '';
-							} else {
-								return locale.getText('dataTable.promo.noReward');
 							}
+							
+							return locale.getText('dataTable.promo.noReward');
 						}
 						
 						if (type == "sort") {

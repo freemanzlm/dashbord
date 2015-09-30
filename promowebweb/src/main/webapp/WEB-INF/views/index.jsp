@@ -92,7 +92,7 @@
 							<option value="PromotionApproved">待正式报名的活动</option>
 							<option value="Submitted">已提交预审的活动</option>
 							<option value="Verifying">预审中的活动</option>
-							<option value="Applied">已提交报名的活动</option>
+							<option value="Applied">已报名的活动</option>
 							<option value="Started">进行中的活动</option>
 							<option value="SubsidyCounting">奖励确认中的活动</option>
 							<option value="Detailed">只能查看详情的活动</option>
