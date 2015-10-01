@@ -4,7 +4,7 @@ import com.ebay.app.raptor.promocommon.util.CommonUtil;
 
 public class PromotionUtil {
 	public static final String USD_CURRENCY = "USD";
-	public static final String LOGIN_URL = "http://www.ebay.cn/maisha/sellercenter/performancetool/test.php";
+	public static final String LOGIN_URL = "http://www.ebay.cn/sellercenter/performancetool/forward.php";
 
 	public static String _promoUrlPrefix = "";
 	public static String _promoServicePrefix = "";
