@@ -54,11 +54,12 @@ public class IndexController {
         String userId = request.getParameter("user_id");   // id
         String admin = request.getParameter("admin");
 
-        String ip = request.getRemoteAddr();
-
-        if(!loginService.isLoginIPValid(ip)) {
-            throw new MissingArgumentException(ip);
-        }
+        //@TODO Disable IP validation for the moment.
+//        String ip = request.getRemoteAddr();
+//
+//        if(!loginService.isLoginIPValid(ip)) {
+//            throw new MissingArgumentException(ip);
+//        }
 
         if (StringUtil.isEmpty(userId)) {
             userId = csApiService.getUserIdByName(hackId);
