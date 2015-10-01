@@ -73,7 +73,7 @@ BizReport.locale = {
 			'SubsidyWaiting': '申領獎勵',
 			'SubsidyAccessed': '待填寫協定',
 			'SubsidySubmitted': '待上傳協定',
-			'SubsidyUploaded': '獎勵稽核中',
+			'SubsidyUploaded': '申領稽核中',
 			'SubsidyRetrievable': '領取獎勵',
 			'SubsidyResubmittable': '重新申領獎勵',
 			'SubsidyRetrieved': '領取獎勵成功',

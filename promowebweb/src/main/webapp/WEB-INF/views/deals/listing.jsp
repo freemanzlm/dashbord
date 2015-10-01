@@ -125,10 +125,16 @@
 					</c:when>
 					<c:when test="${state eq 'Applied' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
-							<h3>您已成功提交！请耐心等待审核结果。</h3>
-							<c:if test="${ not expired }">
-								<p class="desc">在报名有效期内您可以修改后重新提交。</p>
-							</c:if>
+							<h3>您已成功提交报名！请耐心等待活动开始。
+								<c:choose>
+									<c:when test="${ expired eq true }">
+										已超过报名有效期，您无法再修改报名刊登。
+									</c:when>
+									<c:otherwise>
+										在报名截止时间前您可以随时修改您选择的刊登。
+									</c:otherwise>
+								</c:choose>
+							</h3>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活动列表</a>
@@ -157,7 +163,15 @@
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-							<button id="form-btn" class="btn" type="button">预览并提交正式报名</button>
+							<c:choose>
+								<c:when test="${ state eq 'Applied' }">
+									<button id="form-btn" class="btn" type="button">预览并修改正式报名</button>
+								</c:when>
+								<c:otherwise>
+									<button id="form-btn" class="btn" type="button">预览并提交正式报名</button>
+								</c:otherwise>
+							</c:choose>
+							
 						</form>
 					</div>	
 				</c:if>
