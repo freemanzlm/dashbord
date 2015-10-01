@@ -89,8 +89,6 @@ $(function(){
 		}
 	});
 	
-	
-	
 	$(formBtn).click(function(event){
 		event.preventDefault();
 		

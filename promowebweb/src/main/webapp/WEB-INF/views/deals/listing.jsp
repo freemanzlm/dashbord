@@ -111,15 +111,14 @@
 					</c:when>
 					<c:when test="${state eq 'PromotionApproved' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
-							<h3>您已成功通过预审！</h3>
+							<h3>您已成功通过预审！请于${ promoDlDt }前<a href="#listing">选择并提交</a>如下通过预审的刊登完成正式报名。</h3>
 							<p class="desc">
-								请于${ promoDlDt }前向活动站点正式提交您要参加的刊登品并完成正式报名。 <br />
 								活动时间为${ promoStart } 到 ${ promoEnd }<br />
 								活动如有更改，以最终通知为准。
 							</p>
 							<menu>
 								<li>
-									<a href="index" class="btn">返回活动列表</a>
+									<a href="#listing" class="btn">正式报名</a>
 								</li>
 							</menu>	
 						</div> <!-- active status box end -->
@@ -143,7 +142,7 @@
 				
 				<div class="mt20 my-listing">
 					<h3>
-						选择报名刊登
+						<a name="listing" id="listing"></a>选择报名刊登
 						<c:if test="${(state eq 'PromotionApproved' or state eq 'Applied' ) and (not expired) }">
 							<small>（已选 <span>0</span> 项）</small>
 						</c:if>
@@ -158,7 +157,7 @@
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-							<button id="form-btn" class="btn" type="button">预览报名信息</button>
+							<button id="form-btn" class="btn" type="button">预览并提交正式报名</button>
 						</form>
 					</div>	
 				</c:if>

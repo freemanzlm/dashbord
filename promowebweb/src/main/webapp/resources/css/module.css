@@ -189,6 +189,10 @@
 	font-weight: bold;	
 }
 
+.active-status-box h3 a {
+	text-decoration: underline;
+}
+
 .active-status-box p {
 	line-height: 1.333;
 }
@@ -200,11 +204,13 @@
 	width: 100%;
 }
 
-.active-status-box.fail h3 {
+.active-status-box.fail h3,
+.active-status-box.fail h3 a {
 	color: #f00;
 }
 
-.active-status-box.success h3 {
+.active-status-box.success h3,
+.active-status-box.success h3 a {
 	color: #83B841;
 }
 /* active status box end */

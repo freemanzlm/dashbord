@@ -110,15 +110,14 @@
 					</c:when>
 					<c:when test="${state eq 'PromotionApproved' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
-							<h3>您已成功通過預審！</h3>
+							<h3>您已成功通過預審！請於${ promoDlDt }前<a href="#listing">選擇並提交</a>如下通過預審的刊登完成正式報名。</h3>
 							<p class="desc">
-								請於${ promoDlDt }前向活動網站正式提交您要參加的刊登品並完成正式報名。<br />
 								活動時間為${ promoStart }到${ promoEnd } <br />
 								活動如有更改，以最終通知為准。
 							</p>
 							<menu>
 								<li>
-									<a href="index" class="btn">返回活動清單</a>
+									<a href="#listing" class="btn">正式報名</a>
 								</li>
 							</menu>	
 						</div> <!-- active status box end -->
@@ -142,7 +141,7 @@
 				
 				<div class="mt20 my-listing">
 					<h3>
-						選擇報名刊登
+						<a name="listing" id="listing"></a>選擇報名刊登
 						<c:if test="${(state eq 'PromotionApproved'  or  (state eq 'Applied')) and not expired }">
 							<small>（已選 <span>0</span> 項）</small>
 						</c:if>
