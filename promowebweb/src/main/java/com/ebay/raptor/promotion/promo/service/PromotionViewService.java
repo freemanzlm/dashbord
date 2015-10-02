@@ -125,7 +125,11 @@ public class PromotionViewService {
 			switch(PMPromotionStatus.getByName(pro.getState())){
 				case CREATED:
 					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
-					view = ViewResource.DU_APPLICABLE;
+					if (pro.getRegEnded()) {
+						view = ViewResource.DU_END;
+					} else {
+						view = ViewResource.DU_APPLICABLE;
+					}
 					break;
 				case SUBMITTED:
 					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
