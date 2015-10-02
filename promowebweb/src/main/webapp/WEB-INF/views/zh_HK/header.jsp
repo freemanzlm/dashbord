@@ -14,7 +14,7 @@
 			value="/img/ebay.png" alt="ebay logo" width="250" height="200"
 			style="clip: rect(47px, 118px, 95px, 0px); position: absolute;"></res:img></a>
 		<h1>賣家中心</h1>
-		<p class="nav">歡迎您，<bdi>${unm}</bdi> &nbsp;&nbsp; <a href="http://www.ebay.cn/auth/?action=logout" style="font-weight: 400;">退出</a></p>
+		<p class="nav">歡迎您，<bdi>${unm}</bdi> &nbsp;&nbsp; <a href="http://cbtreport.ebay.com.hk/dashboard/logout" target="_self" style="font-weight: 400;">退出</a></p>
 	</div>
 	
 	<jsp:include page="breadcrumb.jsp"></jsp:include>
