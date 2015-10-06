@@ -25,7 +25,7 @@ import com.ebay.raptor.promotion.pojo.business.Sku;
 public class UploadListingSheetHandler implements IExcelSheetHandler {
 	private static CommonLogger logger =
             CommonLogger.getInstance(UploadListingSheetHandler.class);
-	private static final String DATE_FORMAT_STRING = "yyyy-MM-dd";
+	private static final String DATE_FORMAT_STRING = "YYYY-MM-DD";
 	
 	public UploadListingSheetHandler(DealsListingService dealsListingService,
 			String promoId, Long userId) {

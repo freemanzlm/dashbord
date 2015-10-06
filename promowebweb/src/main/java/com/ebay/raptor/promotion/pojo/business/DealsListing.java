@@ -26,7 +26,7 @@ public class DealsListing {
 	@Header(name = "刊登库存量", order=7, format=ColumnFormat.IntNum, writable=true)
 	private Long stockNum;
 	
-	@Header(name = "备货完成时间(yyyy-MM-dd)", order=8, format=ColumnFormat.Date, writable=true)
+	@Header(name = "备货完成时间(YYYY-MM-DD)", order=8, format=ColumnFormat.Date, writable=true)
 	private String stockReadyDate;
 	
 	@Header(name = "货币单位", order=3, format=ColumnFormat.String)

@@ -45,6 +45,7 @@ import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PojoConvertor;
+import com.ebay.raptor.promotion.util.PromotionUtil;
 
 @Controller
 @RequestMapping(ResourceProvider.ListingRes.dealsBase)
@@ -71,7 +72,7 @@ public class DealsListingController extends AbstractListingController{
         	XSSFWorkbook workBook = new XSSFWorkbook();
         	ExcelSheetWriter<DealsListing> writer = new ExcelSheetWriter<DealsListing>(DealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName);
             writer.resetHeaders();
-            writer.build(skuListings);
+            writer.build(skuListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
             workBook.write(resp.getOutputStream());
         } catch (IOException | PromoException | MissingArgumentException e) {
         	logger.error("Unable to download deals listing.", e);
