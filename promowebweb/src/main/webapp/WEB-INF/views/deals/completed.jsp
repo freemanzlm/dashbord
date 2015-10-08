@@ -85,7 +85,7 @@
 					<div class="steps clr">
 						<div class="step done"><span>报名</span></div>
 						<div class="step done"><span>已提交预审</span></div>
-						<div class="step done"><span>报名预审中</span></div>
+						<div class="step done"><span>预审进行中</span></div>
 						<div class="step done"><span>正式报名</span></div>
 						<div class="step done"><span>活动进行中</span></div>
 						<div class="step done"><span>奖励确认中</span></div>

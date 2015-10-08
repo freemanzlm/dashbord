@@ -82,7 +82,7 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box success">
-					<h3>您已成功提交报名！请耐心等待活动开始。
+					<h3>您已正式报名成功！请耐心等待活动开始。
 						<c:choose>
 							<c:when test="${ expired eq true }">
 								已超过报名有效期，您无法再修改报名刊登。

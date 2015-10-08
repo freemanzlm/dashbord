@@ -70,7 +70,7 @@
 					<div class="steps clr">
 						<div class="step done"><span>報名</span></div>
 						<div class="step current-step"><span>已提交預審</span></div>
-						<div class="step"><span>報名預審中</span></div>
+						<div class="step"><span>預審進行中</span></div>
 						<div class="step"><span>正式報名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">

@@ -77,15 +77,15 @@
 						<div class="step done"><span>报名</span></div>
 						<div class="step done"><span>已提交预审</span></div>
 						<c:if test="${ state eq 'Verifying' }">
-							<div class="step current-step"><span>报名预审中</span></div>
+							<div class="step current-step"><span>预审进行中</span></div>
 							<div class="step"><span>正式报名</span></div>
 						</c:if>
 						<c:if test="${ state eq 'PromotionApproved' }">
-							<div class="step done"><span>报名预审中</span></div>
+							<div class="step done"><span>预审进行中</span></div>
 							<div class="step current-step"><span>正式报名</span></div>
 						</c:if>
 						<c:if test="${ state eq 'Applied' }">
-							<div class="step done"><span>报名预审中</span></div>
+							<div class="step done"><span>预审进行中</span></div>
 							<div class="step current-step"><span>已报名</span></div>
 						</c:if>
 						<div class="step"><span>活动进行中</span></div>
@@ -125,7 +125,7 @@
 					</c:when>
 					<c:when test="${state eq 'Applied' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
-							<h3>您已成功提交报名！请耐心等待活动开始。
+							<h3>您已正式报名成功！请耐心等待活动开始。
 								<c:choose>
 									<c:when test="${ expired eq true }">
 										已超过报名有效期，您无法再修改报名刊登。

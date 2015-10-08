@@ -70,7 +70,7 @@
 					<div class="steps clr">
 						<div class="step done"><span>报名</span></div>
 						<div class="step done"><span>已提交预审</span></div>
-						<div class="step done"><span>报名预审中</span></div>
+						<div class="step done"><span>预审进行中</span></div>
 						<div class="step done"><span>正式报名</span></div>
 						<c:choose>
 							<c:when test="${ rewarding }">
