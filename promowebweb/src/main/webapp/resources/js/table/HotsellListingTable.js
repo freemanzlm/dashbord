@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[5, 'desc']],
-				'aaSortingFixed': [[6, 'desc'], [7, 'asc']],
+				'aaSortingFixed': [[6, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -78,10 +78,11 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
-					{data: 'name'},{data: 'price'},
+					{data: 'name'},
+					{data: 'price', aDataSort: [7, 2]},
 					{data: 'volume'},
-					{data: 'compCost'},
-					{data: 'maxComp'},
+					{data: 'compCost', aDataSort: [7, 4]},
+					{data: 'maxComp', aDataSort: [7, 5]},
 					{data: 'state'},
 					{data: 'currency'}
 				],

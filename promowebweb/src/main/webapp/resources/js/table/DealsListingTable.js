@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[6, 'desc'], [7, 'asc']],
+				'aaSortingFixed': [[6, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -79,8 +79,8 @@ var BizReport = BizReport || {};
 				    {data: 'itemId'},
 				    {data: 'itemId'},
 					{data: 'skuName'},
-					{data: 'currPrice'},
-					{data: 'dealsPrice'},
+					{data: 'currPrice', aDataSort: [7, 3]},
+					{data: 'dealsPrice', aDataSort: [7, 4]},
 					{data: 'stockNum'},
 					{data: 'state'},
 					{data: 'currency'}
@@ -149,7 +149,7 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
 						}
-
+						
 						return data;
 					}
 				},
@@ -174,6 +174,7 @@ var BizReport = BizReport || {};
 							if (full.proposePrice > 0) {
 								return full.proposePrice;
 							}
+							return value;
 						}
 
 						return data;
@@ -212,7 +213,8 @@ var BizReport = BizReport || {};
 				}, {
 					aTargets: ["currency"],
 					bVisible: false,
-					sDefaultContent: "",					
+					bSortable: true,
+					sDefaultContent: "",		
 					sType: "string",
 					sSortDataType: 'string',
 					mRender: function(data, type, full, meta) {
