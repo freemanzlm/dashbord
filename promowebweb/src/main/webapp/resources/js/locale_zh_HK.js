@@ -22,8 +22,8 @@ BizReport.locale = {
 		'RMB': '人民幣'
 	},
 	'dataTable': {
-		'emptyTable': '<p>沒有相關資料，如果是網絡問題，請稍後再試。</p>',
-		'zeroRecords': '<p>沒有相關資料。</p>',
+		'emptyTable': '<p>沒有相關數據，如果是網絡問題，請稍後再試。</p>',
+		'zeroRecords': '<p>沒有相關數據。</p>',
 		'open': '展開',
 		'close': '收起',
 		'info': '當前顯示 _START_ 至 _END_，總共_TOTAL_條',

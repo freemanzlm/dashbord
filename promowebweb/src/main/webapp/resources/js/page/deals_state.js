@@ -16,4 +16,9 @@ $(function(){
 		}});
 	listingTable.update({promoId:pageData && pageData.promoId});	
 	
+	var termsDialog = BizReport.termsDialog;
+	$(".terms-conditions").click(function(event){
+		termsDialog.show();
+	});	
+	
 });

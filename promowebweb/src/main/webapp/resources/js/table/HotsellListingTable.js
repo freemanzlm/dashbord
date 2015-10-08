@@ -141,7 +141,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["target-volume"],
-					sType: "date",
+					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {

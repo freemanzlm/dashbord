@@ -143,7 +143,7 @@ var BizReport = BizReport || {};
 						if (type == "display" && full.region == 'CN') {
 							if ((full.rewardType != 0)) {
 								if (val > 0) {
-									return val.toUSFixed(2) + ' (' + locale.getText('currency.RMB') + ')';
+									return val.toUSFixed(2) + ' (RMB)';
 								}
 							}
 							

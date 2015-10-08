@@ -59,18 +59,24 @@
 						<c:choose>
 							<c:when test="${ state eq 'SubsidySubmitted' }">
 								<a href="${promo.rewardUrl}" class="btn">上傳獎勵申請協定</a>
+								<br /><br /><a href="index">返回活動清單</a>
 							</c:when>
 							<c:when test="${ state eq 'SubsidyRetrievable' }">
 								<a href="${promo.rewardUrl}" class="btn">申領獎勵</a>
+								<br /><br /><a href="index">返回活動清單</a>
 							</c:when>
 							<c:when test="${ state eq 'SubsidyResubmittable' }">
 								<a href="${promo.rewardUrl}" class="btn">重新申領獎勵</a>
+								<br /><br /><a href="index">返回活動清單</a>
 							</c:when>
-							<c:otherwise>
+							<c:when test="${ state eq 'SubsidyUploaded' }">
+								<a href="index" class="btn">返回活動清單</a>
+							</c:when>
+							<c:when test="${ state eq 'SubsidyWaiting' or state eq 'SubsidyAccessed' }">
 								<a href="${promo.rewardUrl}" class="btn">填寫獎勵申請協定</a>
-							</c:otherwise>
+								<br /><br /><a href="index">返回活動清單</a>
+							</c:when>
 						</c:choose>
-						<br /><br /><a href="index">返回活動清單</a>
 					</li></menu>
 				</c:when>
 				<c:otherwise>
