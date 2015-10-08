@@ -39,6 +39,18 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 	
 	@Autowired
 	private CSApiService service;
+
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+			Object handler) throws Exception {
+		String language = request.getParameter(lang);
+		
+		if (!StringUtil.isEmpty(language)) {
+			CookieUtil.setCBTPromotionCookie(response, CookieUtil.LANG_COOKIE_NAME, language);
+		}
+		
+		return true;
+	}
 	
 	@Override
 	public void postHandle(HttpServletRequest req,

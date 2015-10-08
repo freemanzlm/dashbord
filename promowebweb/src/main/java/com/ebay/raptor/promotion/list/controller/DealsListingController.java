@@ -27,6 +27,8 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.ExcelReader;
 import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
+import com.ebay.app.raptor.promocommon.util.CommonConstant;
+import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -101,10 +103,18 @@ public class DealsListingController extends AbstractListingController{
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
 			logger.error("The uploaded listings are invalid.", e);
+			
+			Locale locale = Locale.SIMPLIFIED_CHINESE;
+			
+			if (!StringUtil.isEmpty(userData.getLang())
+					&& CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(userData.getLang())) {
+				locale = new Locale("zh", "HK");
+			}
+
 			ErrorType errorType = e.getErrorType();
 			responseData.setStatus(false);
 			responseData.setMessage(messageSource.getMessage("err-"+ errorType.getCode(),
-									e.getArgs(), Locale.SIMPLIFIED_CHINESE));
+									e.getArgs(), locale));
 		} finally {
 			if (workbook != null) {
 				try {
