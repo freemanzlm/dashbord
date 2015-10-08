@@ -62,7 +62,7 @@
 								<br /><br /><a href="index">返回活動清單</a>
 							</c:when>
 							<c:when test="${ state eq 'SubsidyRetrievable' }">
-								<a href="${promo.rewardUrl}" class="btn">申領獎勵</a>
+								<a href="${promo.rewardUrl}" class="btn">領取獎勵</a>
 								<br /><br /><a href="index">返回活動清單</a>
 							</c:when>
 							<c:when test="${ state eq 'SubsidyResubmittable' }">
