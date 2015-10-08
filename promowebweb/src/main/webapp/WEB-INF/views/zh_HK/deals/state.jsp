@@ -87,12 +87,6 @@
 										<div class="step"><span>申領獎勵</span></div>
 										<div class="step last"><span>活動完成</span></div>
 									</c:when>
-									<c:when test="${ state eq 'SubsidyRetrieved' }">
-										<div class="step done"><span>活動進行中</span></div>
-										<div class="step done"><span>獎勵確認中</span></div>
-										<div class="step done"><span>申領獎勵</span></div>
-										<div class="step current-step last"><span>活動完成</span></div>
-									</c:when>
 									<c:otherwise>
 										<div class="step done"><span>活動進行中</span></div>
 										<div class="step done"><span>獎勵確認中</span></div>

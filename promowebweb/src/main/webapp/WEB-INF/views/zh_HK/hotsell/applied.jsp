@@ -70,7 +70,7 @@
 				<h2>爆款促銷 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>報名</span></div>
 						<div class="step current-step"><span>已報名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
@@ -94,7 +94,9 @@
 					</h3>
 					
 					<menu>
-						<li><a href="index" class="btn">返回活動清單</a></li>
+						<li>
+							<a href="index" class="btn">返回活動清單</a>
+						</li>
 					</menu>
 				</div> <!-- active status box end -->
 				

@@ -72,9 +72,9 @@
 						<div class="fr cl">
 							<select name="" id="" class="fr type-filter">
 								<option value="">全部活動類型</option>
-							<option value="0">爆款促銷</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活動</option>
+								<option value="0">爆款促銷</option>
+								<option value="1">Deals招募</option>
+								<option value="3">其它活動</option>
 							</select>
 						</div>
 						<h3>等待開放的活動</h3>

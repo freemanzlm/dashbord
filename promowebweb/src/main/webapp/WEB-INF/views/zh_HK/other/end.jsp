@@ -58,7 +58,7 @@
 				<div class="active-status-box">
 					<c:choose>
 						<c:when test="${ rewarding and (empty promo.reward or promo.reward le 0) }">
-							<h3> 很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
+							<h3>很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
 						</c:when>
 						<c:otherwise>
 							<h3>活動已結束，感謝您的參與！</h3>

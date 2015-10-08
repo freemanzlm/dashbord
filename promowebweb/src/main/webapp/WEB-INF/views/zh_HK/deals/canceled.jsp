@@ -34,14 +34,15 @@
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
-	
+
+	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['locale_zh_HK.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
 
+	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 </head>
 
 <body>
@@ -54,7 +55,6 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>Deals招募 ${promo.name}</h2>
-				
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<div class="step current-step last"><span>活動已取消</span></div>
@@ -85,6 +85,7 @@
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
+<res:jsSlot id="page-js2" />
 <res:jsSlot id="exec-js" />
 <script type="text/javascript">
 	$(".terms-conditions").click(function(event){

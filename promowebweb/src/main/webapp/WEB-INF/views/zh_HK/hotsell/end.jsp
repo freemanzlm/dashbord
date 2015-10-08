@@ -61,11 +61,12 @@
 					<div class="steps clr">
 						<c:choose>
 							<c:when test="${ state == 'VerifyFailed' }">
-								<div class="step done"><span>可報名</span></div>
+								<div class="step done"><span>報名</span></div>
 								<div class="step done"><span>已報名</span></div>
 								<div class="step current-step last"><span>稽核失敗</span></div>
 							</c:when>
 							<c:otherwise>
+								<!-- 未报名、未申领奖励  -->
 								<div class="step current-step last"><span>活動已結束</span></div>
 							</c:otherwise>
 						</c:choose>
@@ -81,7 +82,7 @@
 						<c:otherwise>
 							<c:choose>
 								<c:when test="${ rewarding and (empty promo.reward or promo.reward le 0) }">
-									<h3> 很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
+									<h3>很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
 								</c:when>
 								<c:otherwise>
 									<h3>活動已結束，感謝您的參與！</h3>

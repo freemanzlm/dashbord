@@ -38,12 +38,14 @@
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
+	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['locale_zh_HK.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js"></res:useJs>
+
+	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 	
 </head>
 
@@ -56,12 +58,12 @@
 	<div id="page">
 		<div id="page-pane">
 			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
+				<h2>Deals招募  ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<c:choose>
 							<c:when test="${ state == 'VerifyFailed' }">
-								<div class="step done"><span>可報名</span></div>
+								<div class="step done"><span>報名</span></div>
 								<div class="step done"><span>已報名</span></div>
 								<div class="step current-step last"><span>稽核失敗</span></div>
 							</c:when>
@@ -81,7 +83,7 @@
 						<c:otherwise>
 							<c:choose>
 								<c:when test="${ rewarding and (empty promo.reward or promo.reward le 0) }">
-									<h3> 很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
+									<h3>很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
 								</c:when>
 								<c:otherwise>
 									<h3>活動已結束，感謝您的參與！</h3>
@@ -110,6 +112,7 @@
 
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
+<res:jsSlot id="page-js2" />
 <res:jsSlot id="exec-js" />
 <script type="text/javascript">
 	$(".terms-conditions").click(function(event){

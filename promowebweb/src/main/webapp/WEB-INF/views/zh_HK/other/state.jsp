@@ -11,6 +11,7 @@
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
+
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardName" value="加油卡" />
@@ -139,7 +140,10 @@
 					<c:when test="${state eq 'Started' }">
 						<div class="active-status-box success">
 							<h3>活動進行中</h3>
-							<p class="desc">活動時間為${ promoStart }到${ promoEnd }，<br />我們將在活動結束後儘快公佈統計結果，請耐心等待！</p>
+							<p class="desc">
+								活動時間為${ promoStart }到${ promoEnd }，<br />
+								我們將在活動結束後儘快公佈統計結果，請耐心等待！
+							</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活動清單</a>
@@ -150,7 +154,9 @@
 					<c:when test="${state eq 'SubsidyCounting' }">
 						<div class="active-status-box success">
 							<h3>恭喜您已完成活動！</h3>
-							<p class="desc">我們的獎勵結果正在統計中，請耐心等待！</p>
+							<p class="desc">
+								我們的獎勵結果正在統計中，請耐心等待！
+							</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活動清單</a>
@@ -170,7 +176,7 @@
 							</c:choose>
 							
 							<c:if test="${ not empty rewardDeadline }">
-								請在${ rewardDeadline }前點擊進入領獎流程完成申領。
+								<p class="desc">請在${ rewardDeadline }前點擊進入領獎流程完成申領。</p>
 							</c:if>
 							
 							<c:choose>

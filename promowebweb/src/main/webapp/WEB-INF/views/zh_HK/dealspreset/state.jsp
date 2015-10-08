@@ -69,7 +69,7 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>報名</span></div>
 						<div class="step done"><span>已報名</span></div>
 						<c:choose>
 							<c:when test="${ rewarding }">

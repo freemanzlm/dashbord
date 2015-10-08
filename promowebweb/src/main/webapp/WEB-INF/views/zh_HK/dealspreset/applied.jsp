@@ -5,7 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
-<c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
+<c:set var="rewarding" value="${!(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
 
 <r:includeJquery jsSlot="head" />
@@ -70,7 +70,7 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>報名</span></div>
 						<div class="step current-step"><span>已報名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
@@ -111,8 +111,8 @@
 				
 				<c:if test="${not expired }">
 					<div class="page-bottom-actions">
-						<form id="listing-form" action="applied" action="/promotion/deals/confirmDealsListings" method="post">
-							<input type="hidden" name="promoId" value=""/>
+						<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
+							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">預覽並修改報名</button>

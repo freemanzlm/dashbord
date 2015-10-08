@@ -5,11 +5,12 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="categoryId" value="6000" />
+
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.promoDlDt}" var="promoDlDt" pattern="yyyy-MM-dd" type="date" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -112,7 +113,7 @@
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已成功通過預審！請於${ promoDlDt }前<a href="#listing">選擇並提交</a>如下通過預審的刊登完成正式報名。</h3>
 							<p class="desc">
-								活動時間為${ promoStart }到${ promoEnd } <br />
+								活動時間為${ promoStart } 到 ${ promoEnd } <br />
 								活動如有更改，以最終通知為准。
 							</p>
 							<menu>
@@ -148,7 +149,7 @@
 				<div class="mt20 my-listing">
 					<h3>
 						<a name="listing" id="listing"></a>選擇報名刊登
-						<c:if test="${(state eq 'PromotionApproved'  or  (state eq 'Applied')) and not expired }">
+						<c:if test="${(state eq 'PromotionApproved' or state eq 'Applied' ) and (not expired) }">
 							<small>（已選 <span>0</span> 項）</small>
 						</c:if>
 					</h3>						
@@ -156,9 +157,9 @@
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>
 				
-				<c:if test="${(state eq 'PromotionApproved' or (state eq 'Applied')) && (expired eq false) }">
+				<c:if test="${((state eq 'PromotionApproved') or (state eq 'Applied')) and (not expired) }">
 					<div class="mt20 page-bottom-actions">
-						<form id="listing-form" action="preview" method="post">
+						<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
@@ -170,6 +171,7 @@
 									<button id="form-btn" class="btn" type="button">預覽並提交正式報名</button>
 								</c:otherwise>
 							</c:choose>
+							
 						</form>
 					</div>	
 				</c:if>
