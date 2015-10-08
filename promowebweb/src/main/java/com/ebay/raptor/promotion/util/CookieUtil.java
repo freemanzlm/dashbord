@@ -77,6 +77,7 @@ public class CookieUtil {
 			boolean idFound = false;
 			boolean nameFound = false;
 			boolean adminFound = false;
+			boolean langFound = false;
 
 			for (Cookie cookie : cookies) {
 				String cookieName = cookie.getName();
@@ -103,9 +104,10 @@ public class CookieUtil {
 				
 				if (CookieUtil.LANG_COOKIE_NAME.equalsIgnoreCase(cookieName)) {
 					lang = cookieVal;
+					langFound = true;
                 }
 
-				if (idFound && nameFound && adminFound) {
+				if (idFound && nameFound && adminFound && langFound) {
 					break;
 				}
 			}
