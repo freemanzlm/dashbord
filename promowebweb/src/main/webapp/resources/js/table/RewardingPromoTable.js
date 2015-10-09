@@ -188,10 +188,10 @@ var BizReport = BizReport || {};
 									case 'SubsidyResubmittable':
 										if (full.rewardUrl) {
 											display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
-											display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+											display += "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 										} else {
 											display = locale.getText('promo.state.' + data);
-											display += "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+											display += "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
 										}
 										return display;
 									default:
