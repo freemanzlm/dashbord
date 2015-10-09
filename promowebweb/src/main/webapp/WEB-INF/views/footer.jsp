@@ -13,5 +13,5 @@
 	</div>
 </div> -->
 
-
+<p style="text-align: right; margin-bottom: -20px; padding-top: 10px; padding-right: 20px;"><strong>IE用户请使用IE9及以上版本</strong></p>
 <ghs:footer layoutType="MIN" />

@@ -40,14 +40,14 @@
     }
     
     if (!Number.prototype.toUSFixed) {
-    	Number.prototype.toUSFixed = function(miniFractions) {
+    	Number.prototype.toUSFixed = function(miniFractions, separator) {
     		miniFractions = miniFractions || 0;
-    		var result = this.toLocaleString('en-US', {minimumFractionDigits: miniFractions, maximumFractionDigits: miniFractions});
-    		if (result.indexOf('.') == 0) {
-    			result = '0' + result;
-			}
-        	return result;
-        };
+    		var n = this.toFixed(miniFractions) + "", separator = separator || ",";
+    		var arr = n.split(".");
+    		var re = /(\d{1,3})(?=(\d{3})+$)/g;
+    	 	
+    		return arr[0].replace(re,"$1" + separator) + (arr.length == 2 ? "."+arr[1] : "");
+    	};
     }
 
 	/**

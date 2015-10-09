@@ -63,6 +63,11 @@
 .top-nav .links-nav {
 	margin: 0 0 0 250px;
 }
+
+.top-nav .links-nav li {
+	font-size: 14px;
+	font-weight:bold;
+}
 /* top navigation end*/
 
 #page h2 {
