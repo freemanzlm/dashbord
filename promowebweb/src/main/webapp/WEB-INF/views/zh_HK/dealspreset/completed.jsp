@@ -83,7 +83,7 @@
 				<h2>Deals招募 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step done"><span>可報名</span></div>
+						<div class="step done"><span>報名</span></div>
 						<div class="step done"><span>已報名</span></div>
 						<div class="step done"><span>活動進行中</span></div>
 						<div class="step done"><span>獎勵確認中</span></div>

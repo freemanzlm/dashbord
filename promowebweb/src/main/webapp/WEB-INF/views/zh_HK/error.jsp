@@ -1,9 +1,7 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
-<%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 
 <r:includeJquery jsSlot="head" />
@@ -12,8 +10,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>其它活動</title>
-	<meta name="description" content="其它活動 ">
+	<title>錯誤</title>
+	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
 	
@@ -25,52 +23,36 @@
 	
 	<%--module "ebay.page" add Resets and Global css --%>
 	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head" />
+	<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
-	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.error_css}" target="head-css"/>
 	
 </head>
 
 <body>
 <div class="container">
 	<!--  Global Header -->
-	<jsp:include page="../header.jsp"></jsp:include>
+	<jsp:include page="header.jsp"></jsp:include>
 	<!-- end: Global Header -->
 	
-	<div id="page">
+	<div id="page" class='error-page'>
 		<div id="page-pane">
-			<div class="pane">
-				<h2>其它活動 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step current-step last"><span>活動已取消</span></div>
-					</div>
-				</div>  <!-- steps end -->
-				
-				<div class="active-status-box fail">
-					<h3>活動已取消</h3>
-					<p class="desc">如有疑問請聯系您的客戶經理或客服，感謝您的參與！</p>
-					<menu>
-						<li>
-							<a href="index" class="btn">返回活動清單</a>
-						</li>
-					</menu>					
-				</div> <!-- active status box end -->
-				
-				<%@ include file="activity.jsp" %>
-				
+			<div class="error clr" style="margin-bottom: 15px;">
+				<h2><i class="fa fa-times"></i>錯誤</h2>
 			</div>
+			<p>很抱歉，分析異常，請稍後再試</p>			
 		</div>
 	</div>
 
 	<!-- Global Footer -->
-		<jsp:include page="../footer.jsp"></jsp:include>
+		<jsp:include page="footer.jsp"></jsp:include>
 	<!-- End: Global Footer -->
 </div>
 

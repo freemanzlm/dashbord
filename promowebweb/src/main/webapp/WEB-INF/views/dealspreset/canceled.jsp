@@ -84,6 +84,7 @@
 <%@ include file="../dialog/terms.jsp" %>
 <res:jsSlot id="body" />
 <res:jsSlot id="page-js" />
+<res:jsSlot id="page-js2" />
 <res:jsSlot id="exec-js" />
 <script type="text/javascript">
 	$(".terms-conditions").click(function(event){

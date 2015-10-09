@@ -25,7 +25,7 @@
 	<ul class="links-nav clr">
 		<li><a href="${sdurl}">買家體驗報告</a><small><a class="icon help" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
 		<li class="separator">|</li>
-		<li><a href="">業務分析報告</a><small><a class="icon help" href="#" target="_blank"></a></small></li>
+		<li><a href="${bizurl}">業務分析報告</a><small><a class="icon help" href="#" target="_blank"></a></small></li>
 		<li class="separator">|</li>
 		<li class="active"><a href="/promotion/index">活動促銷</a></li>
 	</ul>

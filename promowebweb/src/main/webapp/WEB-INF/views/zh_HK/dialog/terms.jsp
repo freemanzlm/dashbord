@@ -1,6 +1,5 @@
 <%@ page trimDirectiveWhitespaces="true"
 	contentType="text/html; charset=UTF-8"%>
-	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="dialog" id="terms-dialog">
@@ -107,6 +106,7 @@
 						</c:if>
 					</c:otherwise>
 				</c:choose>
+
 			</div>
 			<%-- <iframe src="${agreement}" frameborder="0" width="810" style="overflow: hidden;"></iframe> --%>
 		</div>

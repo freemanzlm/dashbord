@@ -5,7 +5,7 @@ $(function(){
 	var confirmDialog = new BizReport.ConfirmDialog();
 	var locale = BizReport.locale;
 	
-	var customTableConfig = pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired) ? {} : {
+	var customTableConfig = pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied' && pageData.state != 'Verifying') || pageData.expired) ? {} : {
 		asStripeClasses: ['selectable'],
 		aoColumnDefs: [{bVisible: true}]
 	};

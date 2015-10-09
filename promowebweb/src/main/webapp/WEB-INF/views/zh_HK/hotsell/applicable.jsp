@@ -70,7 +70,7 @@
 				<h2>爆款促銷 ${promo.name}</h2>
 				<div class="steps-wrapper">
 					<div class="steps clr">
-						<div class="step current-step"><span>可報名</span></div>
+						<div class="step current-step"><span>報名</span></div>
 						<div class="step"><span>已報名</span></div>
 						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
 						<c:if test="${ rewarding }">
@@ -89,7 +89,7 @@
 				</div>
 				
 				<div class="mt20" style="text-align: center;">
-					<form action="/promotion/hotsell/confirmHotSellListings" method="post">
+					<form id="listing-form" action="/promotion/hotsell/confirmHotSellListings" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
 						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />

@@ -202,7 +202,7 @@ public class DealsListingService extends BaseService {
 	public boolean uploadDealsListings(List<DealsListing> uploadListings, String promoId, Long uid) throws PromoException {
 		String uri = url(ResourceProvider.ListingRes.uploadDealsListings);
 		UploadListingRequest<DealsListing> req = new UploadListingRequest<DealsListing>();
-		req.setListings(uploadListings);;
+		req.setListings(uploadListings);
 		req.setPromoId(promoId);
 		req.setUid(uid);
 		GingerClientResponse resp = httpPost(uri, req);

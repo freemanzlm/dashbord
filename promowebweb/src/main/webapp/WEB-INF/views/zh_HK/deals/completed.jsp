@@ -19,7 +19,7 @@
 		<c:set var="rewardName" value="萬邑通" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardType" value="ebay萬裏通積分" />
+		<c:set var="rewardName" value="ebay萬裏通積分" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 4 }">
 		<c:set var="rewardName" value="郵票" />
