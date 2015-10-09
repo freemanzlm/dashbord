@@ -221,13 +221,13 @@ var BizReport = BizReport || {};
 						if (type == "sort") {
 							switch(data) {
 							case 'GBP':
-								return '1';
+								return 'z';
 							case 'EUR':
-								return '2';
+								return 'y';
 							case 'USD':
-								return '3';							
+								return 'x';							
 							case 'AUD':
-								return '4';
+								return 'w';
 							}
 						}
 						

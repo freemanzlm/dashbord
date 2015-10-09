@@ -104,20 +104,20 @@ var BizReport = BizReport || {};
 					}
 				},{
 					aTargets: ["currency"],
-					bVisible: false,
+//					bVisible: false,
 					sDefaultContent: "",					
 					sType: "string",
 					mRender: function(data, type, full, meta) {
 						if (type == "sort") {
 							switch(data) {
 							case 'GBP':
-								return '1';
+								return 'z';
 							case 'EUR':
-								return '2';
+								return 'y';
 							case 'USD':
-								return '3';							
+								return 'x';							
 							case 'AUD':
-								return '4';
+								return 'w';
 							}
 						}
 						
