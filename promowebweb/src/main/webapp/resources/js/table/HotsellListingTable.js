@@ -104,7 +104,7 @@ var BizReport = BizReport || {};
 					}
 				},{
 					aTargets: ["currency"],
-//					bVisible: false,
+					bVisible: false,
 					sDefaultContent: "",					
 					sType: "string",
 					mRender: function(data, type, full, meta) {
