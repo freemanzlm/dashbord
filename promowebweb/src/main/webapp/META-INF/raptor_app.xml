@@ -30,6 +30,15 @@
 	  		<parameters key="xss.requestParameterCheck">false</parameters>
 	  	  </parameters-Map>
     	</page>
+    	<page>
+          <name>index</name>
+          <description>Allow to redirect</description>      
+          <isDefault>false</isDefault>
+          <lifecycleState>Deployed</lifecycleState>
+          <security>
+		        <supportOpenRedirects>true</supportOpenRedirects>       
+		  </security>
+        </page>
     <!-- Add new page entries here. For siteCatalystID, provide a value or leave as blank to generate one. Sample: -->
    <!-- <page>
       <name>New page name</name>
