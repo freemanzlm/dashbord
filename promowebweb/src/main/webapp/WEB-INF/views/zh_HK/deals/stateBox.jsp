@@ -1,6 +1,6 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
@@ -22,24 +22,42 @@
 	</c:when>
 </c:choose>
 
-<div class="active-status-box success">
-	<c:choose>
-		<c:when test="${state eq 'Started' }">
+
+<c:choose>
+	<c:when test="${state eq 'Started' }">
+		<div class="active-status-box success">
 			<h3>經網站通知，我們很高興地通知您，您已經正式通過活動報名。</h3>
 			<p class="desc">
-				活動時間為${ promoStart } 到 ${ promoEnd }，<br />
-				我們將在活動結束後儘快公佈統計結果，請耐心等待！
+				活動時間為${ promoStart } 到 ${ promoEnd }，<br /> 我們將在活動結束後儘快公佈統計結果，請耐心等待！
 			</p>
-			<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-		</c:when>
-		<c:when test="${state eq 'SubsidyCounting' }">
+			<menu>
+				<li><a href="index" class="btn">返回活動清單</a></li>
+			</menu>
+		</div>
+	</c:when>
+	<c:when test="${state eq 'SubsidyCounting' }">
+		<div class="active-status-box success">
 			<h3>恭喜您已完成活動！</h3>
 			<p class="desc">我們的獎勵結果正在統計中，請耐心等待！</p>
-			<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-		</c:when>
-		<c:otherwise>
+			<menu>
+				<li><a href="index" class="btn">返回活動清單</a></li>
+			</menu>
+		</div>
+	</c:when>
+	<c:when test="${state eq 'SubsidyRetrieveFailed' }">
+		<div class="active-status-box fail">
+			<h3>領取失敗</h3>
+			<p class="desc">請通過郵件聯繫ebay-CC@ebay.com反映該問題。會有專門人員協助您解决。</p>
+			<menu>
+				<li><a href="index" class="btn">返回活动列表</a></li>
+			</menu>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="active-status-box success">
 			<c:choose>
-				<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
+				<c:when
+					test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
 					<h3>恭喜!您的奖励为等值${promo.reward }元的${rewardName }</h3>
 				</c:when>
 				<c:otherwise>
@@ -52,30 +70,38 @@
 			</c:if>
 
 			<c:choose>
-				<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2) and (not empty promo.rewardUrl) and promo.region == 'CN'}">
+				<c:when
+					test="${ (promo.rewardType eq 1 or promo.rewardType eq 2) and (not empty promo.rewardUrl) and promo.region == 'CN'}">
 					<menu>
 						<li><c:choose>
 								<c:when test="${ state eq 'SubsidySubmitted' }">
 									<a href="${promo.rewardUrl}" class="btn">上傳獎勵申請協定</a>
-									<br /><br /><a href="index">返回活動清單</a>
+									<br />
+									<br />
+									<a href="index">返回活動清單</a>
 								</c:when>
 								<c:when test="${ state eq 'SubsidyRetrievable' }">
 									<a href="${promo.rewardUrl}" class="btn">領取獎勵</a>
-									<br /><br /><a href="index">返回活動清單</a>
+									<br />
+									<br />
+									<a href="index">返回活動清單</a>
 								</c:when>
 								<c:when test="${ state eq 'SubsidyResubmittable' }">
 									<a href="${promo.rewardUrl}" class="btn">重新申領獎勵</a>
-									<br /><br /><a href="index">返回活動清單</a>
+									<br />
+									<br />
+									<a href="index">返回活動清單</a>
 								</c:when>
 								<c:when test="${ state eq 'SubsidyUploaded' }">
 									<a href="index" class="btn">返回活動清單</a>
 								</c:when>
 								<c:when test="${ state eq 'SubsidyWaiting' or state eq 'SubsidyAccessed' }">
 									<a href="${promo.rewardUrl}" class="btn">填寫獎勵申請協定</a>
-									<br /><br /><a href="index">返回活動清單</a>
+									<br />
+									<br />
+									<a href="index">返回活動清單</a>
 								</c:when>
-							</c:choose>
-						</li>
+							</c:choose></li>
 					</menu>
 				</c:when>
 				<c:otherwise>
@@ -84,9 +110,9 @@
 					</menu>
 				</c:otherwise>
 			</c:choose>
+		</div>
+	</c:otherwise>
+</c:choose>
 
-		</c:otherwise>
-	</c:choose>
 
-</div>
 <!-- active status box end -->

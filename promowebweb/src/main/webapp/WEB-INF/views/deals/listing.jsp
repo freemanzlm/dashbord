@@ -148,7 +148,16 @@
 				
 				<div class="mt20 my-listing">
 					<h3>
-						<a name="listing" id="listing"></a>选择报名刊登
+						<a name="listing" id="listing"></a>
+						<c:choose>
+							<c:when test="${ state eq 'Verifying' }">
+								提交预审的刊登
+							</c:when>
+							<c:otherwise>
+								选择报名刊登
+							</c:otherwise>
+						</c:choose>
+						
 						<c:if test="${(state eq 'PromotionApproved' or state eq 'Applied' ) and (not expired) }">
 							<small>（已选 <span>0</span> 项）</small>
 						</c:if>

@@ -92,7 +92,7 @@
 				<%@ include file="activity.jsp" %>
 
 				<div class="mt20 my-listing">
-					<h3><strong>提交预审的刊登</strong></h3>
+					<h3><strong>提交預審的刊登</strong></h3>
 					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 				</div>	
 				
