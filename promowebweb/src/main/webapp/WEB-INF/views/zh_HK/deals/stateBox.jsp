@@ -47,7 +47,11 @@
 	<c:when test="${state eq 'SubsidyRetrieveFailed' }">
 		<div class="active-status-box fail">
 			<h3>領取失敗</h3>
-			<p class="desc">請通過郵件聯繫ebay-CC@ebay.com反映該問題。會有專門人員協助您解决。</p>
+			<c:if test="${ promo.rewardType eq 2 }">
+				<p class="desc">領取：等值於${promo.reward }元的${rewardName }
+					<br />（注：每一元人民幣的獎勵，將獲得500ebay萬裏通積分的充值資格）
+					<br />抱歉！對萬裏通的充值遇到問題。請通過郵件聯繫<a href="mailto:ebay-CC@ebay.com">ebay-CC@ebay.com</a>反映該問題。會有專門人員協助您解决。</p>
+			</c:if>
 			<menu>
 				<li><a href="index" class="btn">返回活动列表</a></li>
 			</menu>

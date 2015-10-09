@@ -50,7 +50,11 @@
 	<c:when test="${state eq 'SubsidyRetrieveFailed' }">
 		<div class="active-status-box fail">
 			<h3>领取失败</h3>
-			<p class="desc">请通过邮件联系ebay-CC@ebay.com反映该问题。会有专门人员协助您解决。</p>
+			<c:if test="${ promo.rewardType eq 2 }">
+				<p class="desc">领取：等值于${promo.reward }元的${rewardName }
+				<br />(注：每一元人民币的奖励，将获得500ebay万里通积分的充值资格)
+				<br />抱歉！对万里通的充值遇到问题。请通过邮件联系<a href="mailto:ebay-CC@ebay.com">ebay-CC@ebay.com</a>反映该问题。会有专门人员协助您解决。</p>
+			</c:if>
 			<menu>
 				<li><a href="index" class="btn">返回活动列表</a></li>
 			</menu>
