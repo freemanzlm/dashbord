@@ -45,9 +45,11 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			Object handler) throws Exception {
 		String language = request.getParameter(lang);
 		
-		if (!StringUtil.isEmpty(language)) {
-			CookieUtil.setCBTPromotionCookie(response, CookieUtil.LANG_COOKIE_NAME, language);
+		if (StringUtil.isEmpty(language)) {
+			language = CommonConstant.ZHCN_LANGUAGE;
 		}
+		
+		CookieUtil.setCBTPromotionCookie(response, CookieUtil.LANG_COOKIE_NAME, language);
 		
 		return true;
 	}
