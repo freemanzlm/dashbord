@@ -135,7 +135,6 @@ public class PromotionViewService {
 					context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 					view = ViewResource.DU_APPLIED;
 					break;
-				case VERIFY_FAILED:
 				case VERIFYING:
 				case PROMOTION_APPROVED:
 				case APPLIED:
@@ -160,6 +159,7 @@ public class PromotionViewService {
 				case CANCELLED:
 					view = ViewResource.DU_CANCELLED;
 					break;
+				case VERIFY_FAILED:
 				case END:
 					view = ViewResource.DU_END;
 					break;
