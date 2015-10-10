@@ -141,7 +141,7 @@ var BizReport = BizReport || {};
 						
 						if (type == "display" && full.region == 'CN') {
 							if ((full.rewardType != 0)) {
-								if (val > 0) {
+								if (!isNaN(val)) {
 									return val.toUSFixed(2) + ' (RMB)';
 								}
 							}

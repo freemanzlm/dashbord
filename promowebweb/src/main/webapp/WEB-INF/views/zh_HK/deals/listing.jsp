@@ -174,7 +174,6 @@
 							<c:choose>
 								<c:when test="${ state eq 'Applied' }">
 									<button id="form-btn" class="btn" type="button">預覽並修改正式報名</button>
-									<br /><br /> <a href="index">返回活動清單</a>
 								</c:when>
 								<c:otherwise>
 									<button id="form-btn" class="btn" type="button">預覽並提交正式報名</button>
