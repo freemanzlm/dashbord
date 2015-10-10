@@ -97,7 +97,7 @@ public class IndexController {
             @ModelAttribute RequestParameter param) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
         //Set unconfirmed status
-        UserData userDt = CookieUtil.getUserDataFromCookie(request);
+        UserData userDt = CookieUtil.getUserDataFromCookieOverrideLang(request);
         mav.addObject(ViewContext.IsUnconfirmedVisable.getAttr(), userDt.getAdmin());
         
         if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(param.getLang())) {
