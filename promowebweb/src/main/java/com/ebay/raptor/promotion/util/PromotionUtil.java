@@ -6,6 +6,7 @@ public class PromotionUtil {
 	public static final String USD_CURRENCY = "USD";
 	public static final String LOGIN_URL = "http://www.ebay.cn/sellercenter/performancetool/forward.php";
 	public static final String LISTING_TEMP_PASS = "password";
+	public static final String LANG_REQUEST_PARAMETER_KEY = "lang";
 
 	public static String _promoUrlPrefix = "";
 	public static String _promoServicePrefix = "";

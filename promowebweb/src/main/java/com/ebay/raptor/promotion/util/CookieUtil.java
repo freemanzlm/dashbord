@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.CommonUtil;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -64,13 +65,25 @@ public class CookieUtil {
 		setCookie(response, cookieName, cookieVal,
 				COOKIE_LIFESPAN, COOKIE_PATH_ROOT, COOKIE_DOMAIN, false);
 	}
+
+	public static UserData getUserDataFromCookieOverrideLang (
+	        HttpServletRequest request) throws MissingArgumentException {
+		UserData user = getUserDataFromCookie(request);
+		String paramLang = request.getParameter(PromotionUtil.LANG_REQUEST_PARAMETER_KEY);
+
+		if (!StringUtil.isEmpty(paramLang)) {
+			user.setLang(paramLang);
+		}
+
+		return user;
+	}
 	
 	public static UserData getUserDataFromCookie (
 	        HttpServletRequest request) throws MissingArgumentException {
 		long userid = -1;
 		String userName = "";
 		boolean admin = false;
-		String lang = "";
+		String lang = CommonConstant.ZHCN_LANGUAGE;
 		Cookie [] cookies = request.getCookies();
 
 		if (cookies != null && cookies.length > 0) {
