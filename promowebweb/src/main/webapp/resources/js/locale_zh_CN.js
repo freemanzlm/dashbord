@@ -42,9 +42,6 @@ BizReport.locale = {
 		    'au': '澳大利亚',
 		    'other': '其他站点'
 		},
-		'promo': {
-			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_项活动'
-		},
 		'listing': {
 			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条刊登'
 		},
@@ -52,6 +49,7 @@ BizReport.locale = {
 			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条SKU'
 		},
 		'promo': {
+			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_项活动',
 			'SubsidyCounting': '待评估',
 			'noReward': '无奖励',
 			'emptyTable': '<p>没有符合筛选条件的活动。</p>',
