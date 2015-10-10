@@ -42,6 +42,9 @@ BizReport.locale = {
 		    'au': '澳大利亚',
 		    'other': '其他站点'
 		},
+		'promo': {
+			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_项活动'
+		},
 		'listing': {
 			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条刊登'
 		},
