@@ -144,6 +144,8 @@ var BizReport = BizReport || {};
 							if ((full.rewardType != 0)) {
 								if (!isNaN(val)) {
 									return val.toUSFixed(2) + ' (RMB)';
+								} else {
+									return '0.00 (RMB)';
 								}
 							}
 							
