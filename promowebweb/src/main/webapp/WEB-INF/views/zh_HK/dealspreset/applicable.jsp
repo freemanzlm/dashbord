@@ -80,6 +80,12 @@
 					</div>
 				</div>  <!-- steps end -->
 				
+				<c:if test="${promoUpdated }">
+					<div class="active-status-box">
+						<h3>活動時間已調整為<span class="cyan">${ promoStart }</span>到<span class="cyan">${ promoEnd }</span>，請在<span class="cyan">${promoDlDt}</span>前重新確認你參加活動的刊登！</h3>
+					</div>
+				</c:if>
+				
 				<%@ include file="activity.jsp" %>
 				
 				<div class="mt20 my-listing">

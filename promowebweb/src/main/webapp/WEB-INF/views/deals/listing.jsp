@@ -109,20 +109,25 @@
 							</menu>	
 						</div> <!-- active status box end -->		
 					</c:when>
+					
 					<c:when test="${state eq 'PromotionApproved' }">
-						<div class="active-status-box ${ not expired ? 'success' : '' }">
-							<h3>您已成功通过预审！请于${ promoDlDt }前<a href="#listing">选择并提交</a>如下通过预审的刊登完成正式报名。</h3>
-							<p class="desc">
-								活动时间为${ promoStart } 到 ${ promoEnd }<br />
-								活动如有更改，以最终通知为准。
-							</p>
-							<menu>
-								<li>
-									<a href="#listing" class="btn">正式报名</a>
-								</li>
-							</menu>	
-						</div> <!-- active status box end -->
+						<c:choose>
+							<c:when test="${promoUpdated }">
+								<div class="active-status-box">
+									<h3>活动时间已调整为<span class="cyan">${ promoStart }</span>到<span class="cyan">${ promoEnd }</span>，请在<span class="cyan">${promoDlDt}</span>前重新确认你参加活动的刊登！</h3>
+									<menu><li><a href="#listing" class="btn">正式报名</a></li></menu>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="active-status-box ${ not expired ? 'success' : '' }">
+									<h3>您已成功通过预审！请于<span class="cyan">${ promoDlDt }</span>前<a href="#listing">选择并提交</a>如下通过预审的刊登完成正式报名。</h3>
+									<p class="desc">活动时间为<span class="cyan">${ promoStart } </span>到 <span class="cyan">${ promoEnd }</span><br />活动如有更改，以最终通知为准。</p>
+									<menu><li><a href="#listing" class="btn">正式报名</a></li></menu>	
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
+					
 					<c:when test="${state eq 'Applied' }">
 						<div class="active-status-box ${ not expired ? 'success' : '' }">
 							<h3>您已正式报名成功！请耐心等待活动开始。
