@@ -72,6 +72,13 @@
 	font-size: 14px;
 	font-weight:bold;
 }
+
+.top-nav .links-nav li a>small {
+	margin-left: 5px;
+	padding: 0 5px;
+	background-color: red;
+	color: #fff;
+}
 /* top navigation end*/
 
 #page h2 {

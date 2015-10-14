@@ -129,17 +129,15 @@
 					</c:when>
 					
 					<c:when test="${state eq 'Applied' }">
-						<div class="active-status-box ${ not expired ? 'success' : '' }">
-							<h3>您已正式报名成功！请耐心等待活动开始。
+						<div class="active-status-box success">
+							<h3>您已正式报名成功！请耐心等待活动开始。</h3>
+							
+							<p class="desc">
 								<c:choose>
-									<c:when test="${ expired eq true }">
-										已超过报名有效期，您无法再修改报名刊登。
-									</c:when>
-									<c:otherwise>
-										在报名截止时间前您可以随时修改您选择的刊登。
-									</c:otherwise>
+									<c:when test="${ expired eq true }">已超过报名有效期，您无法再修改报名刊登。</c:when>
+									<c:otherwise>在报名截止时间前您可以随时修改您选择的刊登。</c:otherwise>
 								</c:choose>
-							</h3>
+							</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活动列表</a>

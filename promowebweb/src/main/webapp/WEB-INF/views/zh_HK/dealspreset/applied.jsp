@@ -86,16 +86,13 @@
 				</div>  <!-- steps end -->
 				
 				<div class="active-status-box success">
-					<h3>您已正式報名成功！請耐心等待活動開始。
+					<h3>您已正式報名成功！請耐心等待活動開始。</h3>
+					<p class="desc">
 						<c:choose>
-							<c:when test="${ expired eq true }">
-								已超過報名有效期，您無法再修改報名刊登。
-							</c:when>
-							<c:otherwise>
-								在報名截止時間前您可以隨時修改您選擇的刊登。
-							</c:otherwise>
+							<c:when test="${ expired eq true }">已超過報名有效期，您無法再修改報名刊登。</c:when>
+							<c:otherwise>在報名截止時間前您可以隨時修改您選擇的刊登。</c:otherwise>
 						</c:choose>
-					</h3>
+					</p>
 					
 					<menu>
 						<li><a href="index" class="btn">返回活動清單</a></li>
