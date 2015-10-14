@@ -51,7 +51,7 @@
 		<div class="active-status-box fail">
 			<h3>领取失败</h3>
 			<c:if test="${ promo.rewardType eq 2 }">
-				<p class="desc">领取：等值于${promo.reward }元的${rewardName }
+				<p class="desc">领取：等值于${promo.reward gt 0 ? promo.reward : '0.00' }元的${rewardName }
 				<br />(注：每一元人民币的奖励，将获得500ebay万里通积分的充值资格)
 				<br />抱歉！对万里通的充值遇到问题。请通过邮件联系<a href="mailto:ebay-CC@ebay.com">ebay-CC@ebay.com</a>反映该问题。会有专门人员协助您解决。</p>
 			</c:if>
@@ -65,7 +65,7 @@
 			<c:choose>
 				<c:when
 					test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
-					<h3>恭喜!您的奖励为等值${promo.reward }元的${rewardName }</h3>
+					<h3>恭喜!您的奖励为等值${promo.reward gt 0 ? promo.reward : '0.00' }元的${rewardName }</h3>
 				</c:when>
 				<c:otherwise>
 					<h3>恭喜您已完成本活动！接下来我们的客户经理会联系您关于奖励的相关事宜，请注意接收相关的邮件通知。感谢您的参与!</h3>

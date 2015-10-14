@@ -168,7 +168,7 @@
 						<div class="active-status-box success">
 							<c:choose>
 								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
-									<h3>恭喜，您的獎勵為等值${promo.reward }元的${rewardName }</h3>
+									<h3>恭喜，您的獎勵為等值${promo.reward gt 0 ? promo.reward : '0.00' }元的${rewardName }</h3>
 								</c:when>
 								<c:otherwise>
 									<h3>恭喜您已完成本活動！接下來我們的客戶經理會聯系您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!</h3>
