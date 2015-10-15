@@ -82,7 +82,7 @@ var BizReport = BizReport || {};
 					aTargets: ["name"],
 					sDefaultContent: "",					
 					sType: "string",
-					sWidth: "250px",
+					sWidth: "350px",
 					sClass: "item-title",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
@@ -114,6 +114,7 @@ var BizReport = BizReport || {};
 					aTargets: ["promoDlDt"],
 					sType: "date",
 					sClass: "text-center",
+					sWidth: "120px",
 					sDefaultContent: " ",
 					mRender: function(data, type, full) {
 						return data;
@@ -123,6 +124,7 @@ var BizReport = BizReport || {};
 					aTargets: ["promoDt"],
 					sType: "date",
 					sClass: "text-center",
+					sWidth: "200px",
 					sDefaultContent: "-",
 					mRender: function(data, type, full) {
 						if (type == "display") {
