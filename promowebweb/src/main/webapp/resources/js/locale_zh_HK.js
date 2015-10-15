@@ -49,6 +49,7 @@ BizReport.locale = {
 		},
 		'promo': {
 			'info': '當前顯示_START_至_END_，總共_TOTAL_項活動',
+			'infoFiltered': ' ',
 			'SubsidyCounting': '待評估',
 			'noReward': '無獎勵',
 			'emptyTable': '<p>沒有符合篩選條件的活動。</p>',

@@ -34,10 +34,11 @@ var BizReport = BizReport || {};
 				'bSort': true,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
-				'sDom': '<"datatable_header">t<"datatable_pager"p>',
+				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.promo.emptyTable'),
-					sInfo: locale.getText('dataTable.info'),
+					sInfo: locale.getText('dataTable.promo.info'),
+					sInfoFiltered: locale.getText('dataTable.promo.infoFiltered'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
 					sZeroRecords: locale.getText('dataTable.promo.zeroRecords'),

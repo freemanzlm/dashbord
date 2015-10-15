@@ -38,6 +38,7 @@ var BizReport = BizReport || {};
 				'oLanguage': {
 					sEmptyTable: locale.getText('dataTable.promo.emptyTable'),
 					sInfo: locale.getText('dataTable.promo.info'),
+					sInfoFiltered: locale.getText('dataTable.promo.infoFiltered'),
 					sInfoEmpty: "",
 					sLoadingRecords: locale.getText('dataTable.loading'),
 					sZeroRecords: locale.getText('dataTable.promo.zeroRecords'),
