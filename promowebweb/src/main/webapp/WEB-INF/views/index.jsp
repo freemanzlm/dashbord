@@ -95,7 +95,7 @@
 							<option value="Applied">已报名的活动</option>
 							<option value="Started">进行中的活动</option>
 							<option value="SubsidyCounting">奖励确认中的活动</option>
-							<!-- <option value="Detailed">只能查看详情的活动</option> -->
+							<option value="Detailed">只能查看详情的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>
@@ -139,7 +139,7 @@
 						<select name="" id="" class="fr state-filter">
 							<option value="">显示所有活动</option>
 							<option value="SubsidyRetrieved">领取奖励成功的活动</option>
-							<!-- <option value="Detailed">只能查看详情的活动</option> -->
+							<option value="Detailed">只能查看详情的活动</option>
 						</select>
 						<select name="" id="" class="fr type-filter">
 							<option value="">全部活动类型</option>

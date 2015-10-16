@@ -165,7 +165,7 @@ var BizReport = BizReport || {};
 								return "<span class='cyan'>" + parseFloat(full.proposePrice).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.dealsPrice).toUSFixed(2) + " " + full.currency + ")</del>";
 							} else {
 								value = (isNaN(value) || value <= 0) ? parseFloat(full.proposePrice) : value;
-								return (!isNaN(value) ? value.toUSFixed(2) : '0.00')  + " (" + full.currency + ")";
+								return (!isNaN(value) && value > 0 ? value.toUSFixed(2) : '0')  + " (" + full.currency + ")";
 //								return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
 							}
 						}

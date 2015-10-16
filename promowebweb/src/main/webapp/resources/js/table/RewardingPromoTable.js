@@ -145,10 +145,10 @@ var BizReport = BizReport || {};
 						
 						if (type == "display" && full.region == 'CN') {
 							if ((full.rewardType != 0)) {
-								if (!isNaN(val)) {
+								if (!isNaN(val) && val > 0) {
 									return val.toUSFixed(2) + ' (RMB)';
 								} else {
-									return '0.00 (RMB)';
+									return '0';
 								}
 							}
 							

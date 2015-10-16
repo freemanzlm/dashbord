@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
-<c:set var="state" value="${ promo.state }" />
+<c:set var="state" value="Created" />
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
@@ -129,7 +129,11 @@
 				<c:choose>
 					<c:when test="${state eq 'Created' or state eq 'Unknow' }">
 						<div class="active-status-box">
-							<h3>活动还没开始，请耐心等待活动开始！</h3>
+							<h3>&nbsp;</h3>
+							<p class="desc">
+								活动时间为${ promoStart } 到 ${ promoEnd }, <br />
+								我们将在活动结束后尽快公布统计结果，请耐心等待！
+							</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活动列表</a>
@@ -168,7 +172,7 @@
 						<div class="active-status-box success">
 							<c:choose>
 								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
-									<h3>恭喜，您的奖励为等值${promo.reward gt 0 ? promo.reward : '0.00' }元的${rewardName }</h3>
+									<h3>恭喜，您的奖励为等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
 								</c:when>
 								<c:otherwise>
 									<h3>恭喜您已完成本活动！接下来我们的客户经理会联系您关于奖励的相关事宜，请注意接收相关的邮件通知。感谢您的参与!</h3>

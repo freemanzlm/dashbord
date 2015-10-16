@@ -48,7 +48,7 @@
 		<div class="active-status-box fail">
 			<h3>領取失敗</h3>
 			<c:if test="${ promo.rewardType eq 2 }">
-				<p class="desc">領取：等值於${promo.reward gt 0 ? promo.reward : '0.00' }元的${rewardName }
+				<p class="desc">領取：等值於${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }
 					<br />（注：每一元人民幣的獎勵，將獲得500ebay萬裏通積分的充值資格）
 					<br />抱歉！對萬裏通的充值遇到問題。請通過郵件聯繫<a href="mailto:ebay-CC@ebay.com">ebay-CC@ebay.com</a>反映該問題。會有專門人員協助您解决。</p>
 			</c:if>
@@ -62,7 +62,7 @@
 			<c:choose>
 				<c:when
 					test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
-					<h3>恭喜!您的奖励为等值${promo.reward gt 0 ? promo.reward : '0.00' }元的${rewardName }</h3>
+					<h3>恭喜!您的奖励为等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
 				</c:when>
 				<c:otherwise>
 					<h3>恭喜您已完成本活動！接下來我們的客戶經理會聯系您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!</h3>

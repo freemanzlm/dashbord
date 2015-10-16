@@ -129,7 +129,11 @@
 				<c:choose>
 					<c:when test="${state eq 'Created' or state eq 'Unknow' }">
 						<div class="active-status-box">
-							<h3>活動還沒開始，請耐心等待活動開始！</h3>
+							<h3>&nbsp;</h3>
+							<p class="desc">
+								活動時間為${ promoStart }到${ promoEnd }， <br />
+								我们将在活动结束后尽快公布统计结果，请耐心等待！
+							</p>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活動清單</a>
@@ -168,7 +172,7 @@
 						<div class="active-status-box success">
 							<c:choose>
 								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
-									<h3>恭喜，您的獎勵為等值${promo.reward gt 0 ? promo.reward : '0.00' }元的${rewardName }</h3>
+									<h3>恭喜，您的獎勵為等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
 								</c:when>
 								<c:otherwise>
 									<h3>恭喜您已完成本活動！接下來我們的客戶經理會聯系您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!</h3>
