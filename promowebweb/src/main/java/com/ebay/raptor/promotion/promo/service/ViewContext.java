@@ -15,7 +15,8 @@ public enum ViewContext {
 	TermsAccept(11, "termsAccpted"),
 	Expired(12, "expired"),
 	PromoUpdatedNum(13, "promoUpdatedNum"),
-	PromoUpdatedDetail(14, "promoUpdatedDetail");
+	PromoUpdatedDetail(14, "promoUpdatedDetail"),
+	IsAdmin(15, "isAdmin");
 	
 	private Integer id;
 
