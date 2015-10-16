@@ -70,7 +70,23 @@
 			</c:choose>
 
 			<c:if test="${ not empty rewardDeadline }">
-				<p class="desc">請在${ rewardDeadline }前點擊進入領獎流程完成申領。</p>
+				<c:choose>
+					<c:when test="${ promo.rewardType eq 1}">
+						<div class="note">
+							<p>再次感謝您參與了我們的活動。我們將通知協力廠商服務商“澳捷實業有限公司”發放獎勵。請予10個工作日以後及時領取，獎勵發放地址和時間如下：</p>
+							<ol>
+								<li>深圳深圳市福田區深南中路3018號世紀匯廣場23/F</li>
+								<li>上海上海市長寧區仙霞路317號遠東國際廣場B座1509</li>
+								<li>北京北京市海澱區花園東路10號高德塔樓803室</li>
+								<li>西安西安市高新一路正信塔樓B座203室</li>
+							</ol>
+							<p>工作時間為：AM9:00--PM6:00</p>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<p class="desc">請在${ rewardDeadline }前點擊進入領獎流程完成申領。</p>
+					</c:otherwise>
+				</c:choose>
 			</c:if>
 
 			<c:choose>

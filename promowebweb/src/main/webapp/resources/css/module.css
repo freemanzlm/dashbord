@@ -179,8 +179,8 @@
 .active-status-box {
 	background-color: #ECF1F7;
 	margin-bottom: 20px;
-	padding-bottom: 18px;
-	min-height: 167px;
+	padding-bottom: 56px;
+	min-height: 129px;
 	text-align: center;
 	
 	position: relative;
@@ -214,6 +214,22 @@
 .active-status-box.success h3,
 .active-status-box.success h3 a {
 	color: #83B841;
+}
+
+.active-status-box .note {
+	margin: 0 auto 10px;
+	width: 800px;
+	text-align: left;
+}
+
+.active-status-box .note ol {
+	margin: 10px 0;
+	padding-left: 40px;
+	list-style: decimal outside none;
+}
+
+.active-status-box .note ol li {
+	padding: 2px 0;
 }
 /* active status box end */
 
