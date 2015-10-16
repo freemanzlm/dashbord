@@ -84,7 +84,7 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<c:if test="${promoUpdated }">
+				<c:if test="${promo.isReversed }">
 					<div class="active-status-box">
 						<h3>活动时间已调整为<span class="cyan">${ promoStart }</span>到<span class="cyan">${ promoEnd }</span>，请在<span class="cyan">${promoDlDt}</span>前重新确认你参加活动的刊登！</h3>
 						<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>	

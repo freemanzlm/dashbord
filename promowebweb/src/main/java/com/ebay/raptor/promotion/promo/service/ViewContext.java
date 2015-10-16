@@ -13,7 +13,9 @@ public enum ViewContext {
 	SDUrl(9, "sdurl"),
 	BizUrl(10, "bizurl"),
 	TermsAccept(11, "termsAccpted"),
-	Expired(12, "expired");
+	Expired(12, "expired"),
+	PromoUpdatedNum(13, "promoUpdatedNum"),
+	PromoUpdatedDetail(14, "promoUpdatedDetail");
 	
 	private Integer id;
 

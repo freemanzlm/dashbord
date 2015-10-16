@@ -49,6 +49,16 @@ public class Promotion {
 	
 	private String region;
 	
+	private boolean isReversed;
+	
+	public boolean getIsReversed() {
+		return isReversed;
+	}
+
+	public void setIsReversed(boolean isReversed) {
+		this.isReversed = isReversed;
+	}
+
 	public String getRegion() {
 		return region;
 	}

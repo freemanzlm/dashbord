@@ -26,6 +26,8 @@ public class ResourceProvider {
 		String getSubsidyPromotions = "/getSubsidyPromotions/uid/{uid}";
 		String _getEndPromotions = "/getEndPromotions";
 		String getEndPromotions = "/getEndPromotions/uid/{uid}";
+		String _getUpdatedPromotions = "/getUpdatedPromotions";
+		String getUpdatedPromotions = "/getUpdatedPromotions/uid/{uid}"; 
 		
 		String _getPromotionById = "/getPromotionById";
 		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}/isAdmin/{isAdmin}";

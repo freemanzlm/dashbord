@@ -75,6 +75,10 @@ public class PromotionService extends BaseService {
 		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getUnconfirmedPromotions, uid);
 	}
 	
+	public List<Promotion> getUpdatedPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getUpdatedPromotions, uid);
+	}
+	
 	public List<Promotion> getIngPromotion(Long uid) throws PromoException{
 		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getIngPromotions, uid);
 	}
