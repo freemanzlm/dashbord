@@ -133,6 +133,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		// add username & biz report link
 		model.addObject(ViewContext.UserName.getAttr(), userName);
 		model.addObject(ViewContext.BizUrl.getAttr(), CommonConstant.BIZ_REPORT_URL);
+		model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
 
 		// add the seller dashboard url
 		model.addObject(ViewContext.SDUrl.getAttr(), CommonConstant.SELLER_DASHBOARD_URL + "?token="
