@@ -27,8 +27,11 @@
 		<li class="separator">|</li>
 		<li><a href="${bizurl}">業務分析報告</a><small><a class="icon help" href="#" target="_blank"></a></small></li>
 		<li class="separator">|</li>
-		<li class="active"><a href="/promotion/index">活動促銷<c:if test="${ promoCount gt 0 }"><small>${promoCount}</small></c:if></a></li>
+		<li class="active"><a href="/promotion/index">活動促銷<c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a></li>
 	</ul>
+	<div style="display:none;">
+		${promoUpdatedDetail}
+	</div>
 </div>
 
 <script type="text/javascript">
