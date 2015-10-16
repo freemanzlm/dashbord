@@ -195,7 +195,7 @@ var BizReport = BizReport || {};
 						if (type == "filter") {
 							switch (data) {
 							case 'Created':
-								return 'Created';
+								return full.type == 3 ? 'Detailed' : 'Created';
 							case 'PromotionApproved':
 								return 'PromotionApproved';
 							case 'Applied':
@@ -214,7 +214,7 @@ var BizReport = BizReport || {};
 						if (type == "sort") {
 							switch (data) {
 							case 'Created':
-								return 0;
+								return full.type == 3 ? 20 : 0;
 							case 'PromotionApproved':
 								return 1;
 							case 'Applied':
