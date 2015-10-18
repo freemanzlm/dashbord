@@ -179,17 +179,17 @@ var BizReport = BizReport || {};
 								case 'Submitted':
 								case 'Started':
 								case 'SubsidyCounting':
-									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 								}
 							} else {
 								switch (data) {
 								case 'Started':
 								case 'SubsidyCounting':
-									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 								}
 							}
 							
-							return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+							return "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 						}
 						
 						if (type == "filter") {

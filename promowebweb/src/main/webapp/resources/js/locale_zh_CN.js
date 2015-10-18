@@ -84,7 +84,8 @@ BizReport.locale = {
 			'SubsidyExpired': '奖励领取过期',
 			'Canceled': '活动已取消',
 			'End': '活动已结束',
-			'Claimed': '我已领取奖励'
+			'Claimed': '我已领取奖励',
+			'Detailed': '查看详情'
 		},
 		'hotsell': {
 			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，确认吗？',

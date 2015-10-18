@@ -177,10 +177,10 @@
 							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 							<c:choose>
 								<c:when test="${ state eq 'Applied' }">
-									<button id="form-btn" class="btn" type="button">预览并修改正式报名</button>
+									<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并修改正式报名</button>
 								</c:when>
 								<c:otherwise>
-									<button id="form-btn" class="btn" type="button">预览并提交正式报名</button>
+									<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并提交正式报名</button>
 									<br /><br /> <a href="index">返回活动列表</a>
 								</c:otherwise>
 							</c:choose>

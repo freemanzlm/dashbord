@@ -116,7 +116,7 @@
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。">预览并修改报名</button>
+							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。" ${ isAdmin ? 'disabled' : '' }>预览并修改报名</button>
 						</form>
 					</div>	 
 				</c:if>

@@ -142,89 +142,89 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var display ;
 						if (type == "display") {
-							if (full.type != 3) {
-								switch (data) {
-								case 'Created':
-								case 'PromotionApproved':
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + data) + "</a>";
-								case 'Applied':
-								case 'Verifying':
-								case 'Submitted':
-									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
-								}
-							}
+//							if (full.type != 3) {
+//								switch (data) {
+//								case 'Created':
+//								case 'PromotionApproved':
+//									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + data) + "</a>";
+//								case 'Applied':
+//								case 'Verifying':
+//								case 'Submitted':
+//									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+//								}
+//							}
+//							
+//							if (full.region == 'CN') {
+//								if ((full.rewardType == 1 || full.rewardType == 2) && data != 'Created') {
+//									// Gas card, WLT, JD card
+//									switch (data) {
+//									case 'SubsidyWaiting':
+//									case 'SubsidyAccessed':
+//									case 'SubsidySubmitted':
+//									case 'SubsidyRetrievable':
+//									case 'SubsidyResubmittable':
+//											display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
+//											display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
+//										return display;
+//									default:
+//										return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+//									}
+//								}
+//								
+//								if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
+//									return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
+//								}
+//							}
 							
-							if (full.region == 'CN') {
-								if ((full.rewardType == 1 || full.rewardType == 2) && data != 'Created') {
-									// Gas card, WLT, JD card
-									switch (data) {
-									case 'SubsidyWaiting':
-									case 'SubsidyAccessed':
-									case 'SubsidySubmitted':
-									case 'SubsidyRetrievable':
-									case 'SubsidyResubmittable':
-											display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
-											display += "<br/>" + "<a target='_blank' href='" + getLink(full.promoId) + "'>查看详情</a>";
-										return display;
-									default:
-										return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
-									}
-								}
-								
-								if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
-									return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
-								}
-							}
-							
-							return "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+							return "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 						}
 						
 						if (type == "sort") {
-							if (full.type != 3) {
-								switch (data) {
-								case 'Created':
-									return 0;
-								case 'PromotionApproved':
-									return 1;
-								case 'Applied':
-									return 2;
-								case 'Submitted':
-									return 3;
-								case 'Started':
-									return 4;
-								case 'SubsidyCounting':
-									return 5;
-								}
-							}
-							
-							if (full.region == 'CN') {
-								if ((full.rewardType == 1 || full.rewardType == 2)){
-									switch (data) {
-									case 'SubsidyWaiting':
-										return 8;
-									case 'SubsidyResubmittable':
-										return 9;
-									case 'SubsidyRetrievable':
-										return 10;
-									case 'SubsidyAccessed':
-										return 11;
-									case 'SubsidySubmitted':
-										return 12;
-									case 'SubsidyUploaded':
-										return 13;
-									}
-								}
-							}
-							
-							if (full.region == 'CN') {
-								if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
-									return 11;
-								}
-							}
-							
-							if (full.rewardType != 0) {
-								return 10; // SubsidyRetrievable
-							}
+//							if (full.type != 3) {
+//								switch (data) {
+//								case 'Created':
+//									return 0;
+//								case 'PromotionApproved':
+//									return 1;
+//								case 'Applied':
+//									return 2;
+//								case 'Submitted':
+//									return 3;
+//								case 'Started':
+//									return 4;
+//								case 'SubsidyCounting':
+//									return 5;
+//								}
+//							}
+//							
+//							if (full.region == 'CN') {
+//								if ((full.rewardType == 1 || full.rewardType == 2)){
+//									switch (data) {
+//									case 'SubsidyWaiting':
+//										return 8;
+//									case 'SubsidyResubmittable':
+//										return 9;
+//									case 'SubsidyRetrievable':
+//										return 10;
+//									case 'SubsidyAccessed':
+//										return 11;
+//									case 'SubsidySubmitted':
+//										return 12;
+//									case 'SubsidyUploaded':
+//										return 13;
+//									}
+//								}
+//							}
+//							
+//							if (full.region == 'CN') {
+//								if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
+//									return 11;
+//								}
+//							}
+//							
+//							if (full.rewardType != 0) {
+//								return 10; // SubsidyRetrievable
+//							}
 							
 							return 20;
 						}

@@ -156,7 +156,17 @@ var BizReport = BizReport || {};
 						}
 						
 						if (type == "sort") {
-							return isNaN(val) ? -1 : val;
+							if (full.region == 'CN') {
+								if (full.rewardType != 0) {
+									if (!isNaN(val) && val > 0) {
+										return val;
+									} else {
+										return 0;
+									}
+								}
+								return -1;
+							}
+							return -2;
 						}
 
 						return data;
@@ -193,14 +203,14 @@ var BizReport = BizReport || {};
 									case 'SubsidyResubmittable':
 										if (full.rewardUrl) {
 											display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + locale.getText('promo.state.' + data) + "</a>";
-											display += "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+											display += "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 										} else {
 											display = locale.getText('promo.state.' + data);
-											display += "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+											display += "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 										}
 										return display;
 									default:
-										return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>查看详情</a>";
+										return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 									}
 								}
 							}

@@ -155,7 +155,17 @@ var BizReport = BizReport || {};
 						}
 						
 						if (type == "sort") {
-							return isNaN(val) ? -1 : val;
+							if (full.region == 'CN') {
+								if (full.rewardType != 0) {
+									if (!isNaN(val) && val > 0) {
+										return val;
+									} else {
+										return 0;
+									}
+								}
+								return -1;
+							}
+							return -2;
 						}
 
 						return data;
@@ -169,11 +179,11 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							if (full.region == 'CN') {
 								if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
-									return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId)  + "'>查看详情</a>";
+									return locale.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId)  + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 								}
 							}
 							
-							return "<a href='" + getLink(full.promoId)  + "'>查看详情</a>";
+							return "<a href='" + getLink(full.promoId)  + "'>" + locale.getText('promo.state.Detailed') + "</a>";
 						}
 						
 						if (type == "sort") {

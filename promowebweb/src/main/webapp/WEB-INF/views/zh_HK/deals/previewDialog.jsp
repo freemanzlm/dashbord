@@ -16,7 +16,7 @@
 								<th class="item-id">刊登編號</th>
 								<th class="name">SKU名稱</th>
 								<th class="price">當前刊登單價</th>
-								<th class="activity-price">活動單價</th>
+								<th class="activity-price">建議活動單價</th>
 								<th class="inventory">刊登庫存量</th>
 								<th class="state">狀態</th>
 								<th class="currency"></th>

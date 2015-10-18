@@ -175,10 +175,10 @@
 							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 							<c:choose>
 								<c:when test="${ state eq 'Applied' }">
-									<button id="form-btn" class="btn" type="button">預覽並修改正式報名</button>
+									<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>預覽並修改正式報名</button>
 								</c:when>
 								<c:otherwise>
-									<button id="form-btn" class="btn" type="button">預覽並提交正式報名</button>
+									<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>預覽並提交正式報名</button>
 									<br /><br /> <a href="index">返回活動清單</a>
 								</c:otherwise>
 							</c:choose>
