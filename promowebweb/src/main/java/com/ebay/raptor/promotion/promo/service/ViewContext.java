@@ -8,6 +8,8 @@ public enum ViewContext {
 	ErrorMsg(4, "errorMsg"),
 	Agreement(5, "agreement"),
 	IsUnconfirmedVisable(6, "invisible"),
+	//If user has promotion, then take region from the latest one, 
+	//used to identify whether show Subsidy Amount column.
 	Region(7, "region"),
 	UserName(8, "unm"),
 	SDUrl(9, "sdurl"),

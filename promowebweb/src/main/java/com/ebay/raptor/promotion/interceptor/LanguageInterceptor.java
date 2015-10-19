@@ -56,6 +56,9 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		}
 
 		addPageParameters(req, model, user);
+		
+		//TODO Add CN by default.
+		model.addObject(ViewContext.Region.getAttr(), "CN");
 
 		//Currently QATE env cannot call the CS API to fetch user region, so skip all region related function.
 //		if(AppBuildConfig.getInstance().isQATE()){
