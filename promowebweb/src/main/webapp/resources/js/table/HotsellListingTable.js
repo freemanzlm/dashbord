@@ -108,16 +108,18 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",					
 					sType: "string",
 					mRender: function(data, type, full, meta) {
+						data = data && data.toUpperCase();
+						
 						if (type == "sort") {
 							switch(data) {
 							case 'GBP':
-								return 'z';
+								return 'zzzz';
 							case 'EUR':
-								return 'y';
+								return 'zzzy';
 							case 'USD':
-								return 'x';							
+								return 'zzzx';							
 							case 'AUD':
-								return 'w';
+								return 'zzza';
 							}
 						}
 						
