@@ -67,7 +67,7 @@ BizReport.locale = {
 		'state': {
 			'Created': '报名',
 			'Submitted': '已提交预审',
-			'Verifying': '报名审核中',
+			'Verifying': '预审进行中',
 			'PromotionApproved': '正式报名',
 			'VerifyFailed': '审核失败',
 			'Applied': '已报名',
