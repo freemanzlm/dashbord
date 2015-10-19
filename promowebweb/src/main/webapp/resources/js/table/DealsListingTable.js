@@ -273,9 +273,9 @@ var BizReport = BizReport || {};
 						return oRow.checked;
 					});
 					
-					if (that.selectedItems.length == aRows.length && that.selectedItems.length > 0) {
-						that.checkAllBox.prop("checked", true);
-					}
+					that.checkAllBox.prop("indeterminate", that.selectedItems.length > 0 && that.selectedItems.length < aRows.length);
+					that.checkAllBox.prop("checked", that.selectedItems.length == aRows.length && that.selectedItems.length > 0);
+					
 					that.publish("initialized");
 					that.publish("selectChange");
 				}, 
@@ -349,6 +349,8 @@ var BizReport = BizReport || {};
 					parentTr.removeClass("selected");
 					that.removeItem(oData);
 				}
+				
+				that.checkAllBox.prop("indeterminate", that.selectedItems.length > 0 && that.selectedItems.length < that.getDataSize());
 				
 				that.publish("selectChange");
 			});
