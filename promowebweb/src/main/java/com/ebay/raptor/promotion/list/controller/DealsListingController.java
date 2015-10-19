@@ -96,9 +96,14 @@ public class DealsListingController extends AbstractListingController{
 							promoId, userData.getUserId()));
 			responseData.setStatus(true);
 			this.acceptAgreement(promoId, userData.getUserId());
-		} catch (IOException | PromoException e) {
+		} catch (IOException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
 			logger.error("Upload listings got error.", e);
+			responseData.setStatus(false);
+		} catch (PromoException e) {
+			// Got IO or PromoException exception -> means app level error -> show error page.
+			logger.error("Upload listings got error.", e);
+			responseData.setData(e.getErrorType().getCode() + "");
 			responseData.setStatus(false);
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
@@ -141,6 +146,7 @@ public class DealsListingController extends AbstractListingController{
 			// do not throw but set the error status.
 			responseData.setStatus(false);
 			responseData.setMessage("Internal Error happens.");
+			responseData.setData(e.getErrorType().getCode() + "");
 		}
 		return responseData;
 	}

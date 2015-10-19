@@ -209,8 +209,17 @@ public class DealsListingService extends BaseService {
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
 			GeneralDataResponse<Boolean> general = resp.getEntity(type);
-			if(null != general && AckValue.SUCCESS == general.getAckValue()){
-				return true;
+			if(null != general){
+				if (AckValue.SUCCESS == general.getAckValue()) {
+					return true;
+				} else {
+					int errorCode = general.getResponseStatus();
+	
+					if (errorCode == ErrorType.DateExpiredException.getCode()) {
+						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
+					}
+					return false;
+				}
 			} else {
 				return false;
 			}
@@ -228,9 +237,19 @@ public class DealsListingService extends BaseService {
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
 			GeneralDataResponse<Boolean> general = resp.getEntity(type);
-			if(null != general && AckValue.SUCCESS == general.getAckValue()){
-				return true;
+			if(null != general){
+				if (AckValue.SUCCESS == general.getAckValue()) {
+					return true;
+				} else {
+					int errorCode = general.getResponseStatus();
+	
+					if (errorCode == ErrorType.DateExpiredException.getCode()) {
+						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
+					}
+					return false;
+				}
 			} else {
+				
 				return false;
 			}
 		} else {

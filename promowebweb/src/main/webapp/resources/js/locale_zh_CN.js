@@ -112,6 +112,9 @@ BizReport.locale = {
 			'Confirmed': '已确认报名',
 			'Nonsubmitted': '未提交'
 		}
+	},
+	'errorMsg': {
+		'regDateExpired': '很遗憾，报名已经截止，如需继续报名，请联系客服！',
 	}
 };
 

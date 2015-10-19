@@ -51,9 +51,12 @@ $(function(){
 				// handle error
 				else {
 					// show error infor
-					if (responseData.message.length > 0) {
+					if (responseData.message && responseData.message.length > 0) {
 						$("#upload-error-msg").removeClass("hide");
 						$("#upload-error-msg").find("em").text(responseData.message);
+					} else if (responseData.data && responseData.data.length > 0) {
+						alertDialog.alert(locale.getText("errorMsg.regDateExpired"));
+						window.location.replace("/promotion/" + pageData.promoId);
 					}
 					// redirect to error page
 					else {
