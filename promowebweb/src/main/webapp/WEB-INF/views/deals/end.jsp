@@ -74,6 +74,12 @@
 				</div>  <!-- steps end -->
 				
 				<c:choose>
+					<c:when test="${endReason == 'noUpload' }">
+						<div class="active-status-box fail">
+							<h3>已过报名有效期，您未上传任何刊登，期待您的下次参与！</h3>
+							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
+						</div>
+					</c:when>
 					<c:when test="${endReason == 'preFail' }">
 						<div class="active-status-box fail">
 							<h3>很遗憾，您的报名未通过预审</h3>
@@ -85,6 +91,12 @@
 						<div class="active-status-box fail">
 							<h3>很遗憾，您的报名未通过审核</h3>
 							<p class="desc">感谢您的积极参与！期待下次合作。</p>
+							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
+						</div>
+					</c:when>
+					<c:when test="${endReason == 'noReg' }">
+						<div class="active-status-box fail">
+							<h3>以超过报名有效期，您未提交报名，期待您的下次参与！</h3>
 							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
 						</div>
 					</c:when>
