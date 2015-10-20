@@ -175,6 +175,9 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
+							if (pageData && !pageData.expired && data == 'Nonapplied') {
+								return locale.getText('listing.state.Applicable');
+							}
 							return locale.getText('listing.state.' + data);
 						}
 						
