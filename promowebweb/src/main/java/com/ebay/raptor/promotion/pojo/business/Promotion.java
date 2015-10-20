@@ -51,6 +51,16 @@ public class Promotion {
 	
 	private boolean isReversed;
 	
+	private String endReason;
+	
+	public String getEndReason() {
+		return endReason;
+	}
+
+	public void setEndReason(String endReason) {
+		this.endReason = endReason;
+	}
+
 	public boolean getIsReversed() {
 		return isReversed;
 	}
