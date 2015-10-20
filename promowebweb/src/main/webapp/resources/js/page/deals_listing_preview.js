@@ -1,6 +1,7 @@
 $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
 	var alertDialog = BizReport.alertDialog;
+	var locale = BizReport.locale;
 	
 	var confirmForm = $("form");
 	
