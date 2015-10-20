@@ -6,6 +6,7 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="state" value="${ promo.state }" />
+<c:set var="endReason" value="${ promo.endReason }" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 
 <r:includeJquery jsSlot="head" />
@@ -60,10 +61,10 @@
 				<div class="steps-wrapper">
 					<div class="steps clr">
 						<c:choose>
-							<c:when test="${ state == 'VerifyFailed' }">
+							<c:when test="${ endReason == 'preFail' }">
 								<div class="step done"><span>報名</span></div>
 								<div class="step done"><span>已提交預審</span></div>
-								<div class="step current-step last"><span>预审失敗</span></div>
+								<div class="step current-step last"><span>預審失敗</span></div>
 							</c:when>
 							<c:otherwise>
 								<div class="step current-step last"><span>活動已結束</span></div>
@@ -72,29 +73,40 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<div class="active-status-box ${ state == 'VerifyFailed' ? 'fail' : '' }">
-					<c:choose>
-						<c:when test="${ state == 'VerifyFailed' }">
-							<h3>很遺憾，您的報名未通過審核</h3>
+				<c:choose>
+					<c:when test="${endReason == 'preFail' }">
+						<div class="active-status-box fail">
+							<h3>很遺憾，您的報名未通過預審</h3>
 							<p class="desc">感謝您的積極參與！期待下次合作。</p>
-						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test="${ rewarding and (empty promo.reward or promo.reward le 0) }">
-									<h3> 很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
-								</c:when>
-								<c:otherwise>
-									<h3>活動已結束，感謝您的參與！</h3>
-								</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
-					<menu>
-						<li>
-							<a href="index" class="btn">返回活動清單</a>
-						</li>
-					</menu>
-				</div> <!-- active status box end -->
+							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
+						</div>
+					</c:when>
+					<c:when test="${endReason == 'auFail' }">
+						<div class="active-status-box fail">
+							<h3>很遺憾，您的報名未通過審核</h3>
+							<p class="desc">感谢您的积极参与！期待下次合作。</p>
+							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
+						</div>
+					</c:when>
+					<c:when test="${endReason == 'claimExpired' }">
+						<div class="active-status-box">
+							<h3>您的活動獎勵申領已過期</h3>
+							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
+						</div>
+					</c:when>
+					<c:when test="${endReason == 'noSub' or (rewarding and (empty promo.reward or promo.reward le 0)) }">
+						<div class="active-status-box">
+							<h3> 很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
+							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="active-status-box">
+							<h3>活動已結束，感謝您的參與！</h3>
+							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
+						</div>
+					</c:otherwise>
+				</c:choose>				
 				
 				<%@ include file="activity.jsp" %>
 			</div>
