@@ -77,7 +77,7 @@
 				<c:choose>
 					<c:when test="${endReason == 'noReg' }">
 						<div class="active-status-box fail">
-							<h3>以超過報名有效期，您未提交報名，期待您的下次參與！</h3>
+							<h3>已超過報名有效期，您未提交報名，期待您的下次參與！</h3>
 							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
 						</div>
 					</c:when>
