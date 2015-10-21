@@ -6,7 +6,6 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <c:set var="categoryId" value="6000" />
 <c:set var="state" value="${ promo.state }" />
-<c:set var="endReason" value="${ promo.endReason }" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 
 <r:includeJquery jsSlot="head" />
@@ -73,66 +72,7 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<c:choose>
-					<c:when test="${endReason == 'noUpload' }">
-						<div class="active-status-box fail">
-							<div class="message-content">
-								<h3>已過報名有效期，您未上傳任何刊登，期待您的下次參與！</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-						</div>
-					</c:when>
-					<c:when test="${endReason == 'noReg' }">
-						<div class="active-status-box fail">
-							<div class="message-content">
-								<h3>已超過報名有效期，您未提交報名，期待您的下次參與！</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-						</div>
-					</c:when>
-					<c:when test="${endReason == 'preFail' }">
-						<div class="active-status-box fail">
-							<div class="message-content">
-								<h3>很遺憾，您的報名未通過預審</h3>
-								<p class="desc">感謝您的積極參與！期待下次合作。</p>
-							</div>
-							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-						</div>
-					</c:when>
-					<c:when test="${endReason == 'auFail' }">
-						<div class="active-status-box fail">
-							<div class="message-content">
-								<h3>很遺憾，您的報名未通過審核</h3>
-								<p class="desc">感谢您的积极参与！期待下次合作。</p>
-							</div>
-							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-						</div>
-					</c:when>
-					<c:when test="${endReason == 'claimExpired' }">
-						<div class="active-status-box">
-							<div class="message-content">
-								<h3>您的活動獎勵申領已過期</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-						</div>
-					</c:when>
-					<c:when test="${endReason == 'noSub' or (rewarding and (empty promo.reward or promo.reward le 0)) }">
-						<div class="active-status-box">
-							<div class="message-content">
-								<h3> 很遺憾！您的活動表現未達到獎勵標准，感謝您對活動的支持！希望下次努力！</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="active-status-box">
-							<div class="message-content">
-								<h3>活動已結束，感謝您的參與！</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活動清單</a></li></menu>
-						</div>
-					</c:otherwise>
-				</c:choose>				
+				<%@ include file="../stateMessages/forEnd.jsp" %>		
 				
 				<%@ include file="activity.jsp" %>
 			</div>

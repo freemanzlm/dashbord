@@ -176,7 +176,7 @@
 /* active detail end */
 
 /* active status box begin */
-.active-status-box {
+.promo-state-message {
 	background-color: #ECF1F7;
 	margin-bottom: 20px;
 	padding-bottom: 30px;
@@ -186,53 +186,53 @@
 	position: relative;
 }
 
-.active-status-box .message-content {
+.promo-state-message .message-content {
 	min-height: 129px;
 }
 
-.active-status-box h3 {
+.promo-state-message h3 {
 	padding: 30px 0 20px 0;
 	font-weight: bold;	
 }
 
-.active-status-box h3 a {
+.promo-state-message h3 a {
 	text-decoration: underline;
 }
 
-.active-status-box p {
+.promo-state-message p {
 	line-height: 1.333;
 }
 
-.active-status-box menu {
+.promo-state-message menu {
 	/* position: absolute;
 	bottom: 30px; */
 	
 	width: 100%;
 }
 
-.active-status-box.fail h3,
-.active-status-box.fail h3 a {
+.promo-state-message.fail h3,
+.promo-state-message.fail h3 a {
 	color: #f00;
 }
 
-.active-status-box.success h3,
-.active-status-box.success h3 a {
+.promo-state-message.success h3,
+.promo-state-message.success h3 a {
 	color: #83B841;
 }
 
-.active-status-box .note {
+.promo-state-message .note {
 	margin: 0 auto 10px;
 	width: 800px;
 	text-align: left;
 }
 
-.active-status-box .note ol {
+.promo-state-message .note ol {
 	margin: 10px 0;
 	padding-left: 40px;
 	list-style: decimal outside none;
 }
 
-.active-status-box .note ol li {
+.promo-state-message .note ol li {
 	padding: 2px 0;
 }
 /* active status box end */

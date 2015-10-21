@@ -72,25 +72,11 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>Deals招募 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step current-step"><span>報名</span></div>
-						<div class="step"><span>已報名</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
-						<c:if test="${ rewarding }">
-							<div class="step"><span>獎勵確認中</span></div>
-							<div class="step"><span>申領獎勵</span></div>
-							<div class="step last"><span>活動完成</span></div>
-						</c:if>
-					</div>
-				</div>  <!-- steps end -->
 				
-				<c:if test="${promoUpdated }">
-					<div class="active-status-box">
-						<div class="message-content">
-							<h3>活動時間已調整為<span class="cyan">${ promoStart }</span>到<span class="cyan">${ promoEnd }</span>，請在<span class="cyan">${promoDlDt}</span>前重新確認你參加活動的刊登！</h3>
-						</div>
-					</div>
+				<%@ include file="../steps.jsp" %>
+				
+				<c:if test="${promo.isReversed }">				
+					<%@ include file="../stateMessages/forReversed.jsp" %>
 				</c:if>
 				
 				<%@ include file="activity.jsp" %>

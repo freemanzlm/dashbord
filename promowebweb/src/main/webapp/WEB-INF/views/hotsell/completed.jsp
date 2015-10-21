@@ -80,35 +80,10 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>爆款促销 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step done"><span>报名</span></div>
-						<div class="step done"><span>已报名</span></div>
-						<div class="step done"><span>活动进行中</span></div>
-						<div class="step done"><span>奖励确认中</span></div>
-						<div class="step done"><span>申领奖励</span></div>
-						<div class="step current-step last"><span>活动完成</span></div>
-					</div>
-				</div>  <!-- steps end -->
 				
-				<div class="active-status-box success">
-					<div class="message-content">
-						<c:choose>
-							<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
-								<h3>您已成功领取等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
-							</c:when>
-							<c:otherwise>
-								<h3>恭喜您已完成本活动！感谢您的参与!</h3>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					
-					<menu>
-						<li>
-							<a href="index" class="btn">返回活动列表</a>
-						</li>
-					</menu>
-				</div> <!-- active status box end -->
+				<%@ include file="../steps.jsp" %>
+				
+				<%@ include file="../stateMessages/forCompleted.jsp" %>
 				
 				<%@ include file="activity.jsp" %>
 				

@@ -8,9 +8,6 @@
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.promoDlDt}" var="promoDlDt" pattern="yyyy-MM-dd" type="date" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -77,59 +74,15 @@
 				
 				<c:choose>
 					<c:when test="${state eq 'Verifying' }">
-						<div class="active-status-box">
-							<div class="message-content">
-								<h3>您已成功提交预审！请耐心等待预审结果并提交正式报名。</h3>
-								<p class="desc">我们已经完整地收到您的刊登物品列表，并会及时反馈到活动站点，请您耐心等待最终确认。</p>
-							</div>
-							<menu>
-								<li>
-									<a href="index" class="btn">返回活动列表</a>
-								</li>
-							</menu>	
-						</div> <!-- active status box end -->		
+						<%@ include file="../stateMessages/forPretrialing.jsp" %>
 					</c:when>
 					
 					<c:when test="${state eq 'PromotionApproved' }">
-						<c:choose>
-							<c:when test="${promo.isReversed }">
-								<div class="active-status-box">
-									<div class="message-content">
-										<h3>活动时间已调整为<span class="cyan">${ promoStart }</span>到<span class="cyan">${ promoEnd }</span>，请在<span class="cyan">${promoDlDt}</span>前重新确认你参加活动的刊登！</h3>
-									</div>
-									<menu><li><a href="#listing" class="btn">正式报名</a></li></menu>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<div class="active-status-box ${ not expired ? 'success' : '' }">
-									<div class="message-content">
-										<h3>您已成功通过预审！请于<span class="cyan">${ promoDlDt }</span>前<a href="#listing">选择并提交</a>如下通过预审的刊登完成正式报名。</h3>
-										<p class="desc">活动时间为<span class="cyan">${ promoStart } </span>到 <span class="cyan">${ promoEnd }</span><br />活动如有更改，以最终通知为准。</p>
-									</div>
-									<menu><li><a href="#listing" class="btn">正式报名</a></li></menu>	
-								</div>
-							</c:otherwise>
-						</c:choose>
+						<%@ include file="../stateMessages/forPretrialApproved.jsp" %>
 					</c:when>
 					
 					<c:when test="${state eq 'Applied' }">
-						<div class="active-status-box success">
-							<div class="message-content">
-								<h3>您已正式报名成功！请耐心等待活动开始。</h3>
-								
-								<p class="desc">
-									<c:choose>
-										<c:when test="${ expired eq true }">已超过报名有效期，您无法再修改报名刊登。</c:when>
-										<c:otherwise>在报名截止时间前您可以随时修改您选择的刊登。</c:otherwise>
-									</c:choose>
-								</p>
-							</div>
-							<menu>
-								<li>
-									<a href="index" class="btn">返回活动列表</a>
-								</li>
-							</menu>	
-						</div> <!-- active status box end -->
+						<%@ include file="../stateMessages/forDealsApplied.jsp" %>
 					</c:when>
 				</c:choose>
 				

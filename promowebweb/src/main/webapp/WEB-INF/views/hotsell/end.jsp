@@ -74,49 +74,7 @@
 					</div>
 				</div>  <!-- steps end -->
 				
-				<c:choose>
-					<c:when test="${endReason == 'auFail' }">
-						<div class="active-status-box fail">
-							<div class="message-content">
-								<h3>很遗憾，您的报名未通过审核</h3>
-								<p class="desc">感谢您的积极参与！期待下次合作。</p>
-							</div>
-							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
-						</div>
-					</c:when>
-					<c:when test="${endReason == 'noReg' }">
-						<div class="active-status-box fail">
-							<div class="message-content">
-								<h3>已超过报名有效期，您未提交报名，期待您的下次参与！</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
-						</div>
-					</c:when>
-					<c:when test="${endReason == 'claimExpired' }">
-						<div class="active-status-box">
-							<div class="message-content">
-								<h3>您的活动奖励申领已过期</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
-						</div>
-					</c:when>
-					<c:when test="${endReason == 'noSub' or (rewarding and (empty promo.reward or promo.reward le 0)) }">
-						<div class="active-status-box">
-							<div class="message-content">
-								<h3>很遗憾！您的活动表现未达到奖励标准，感谢您对活动的支持！希望下次努力！</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
-						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="active-status-box">
-							<div class="message-content">
-								<h3>活动已结束，感谢您的参与！</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
-						</div>
-					</c:otherwise>
-				</c:choose>
+				<%@ include file="../stateMessages/forEnd.jsp" %>
 				
 				<%@ include file="activity.jsp" %>
 			</div>

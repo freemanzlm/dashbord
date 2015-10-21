@@ -69,7 +69,23 @@
 				
 				<%@ include file="steps.jsp" %>
 				
-				<%@ include file="stateBox.jsp" %>
+				<c:choose>
+					<c:when test="${state eq 'Started' }">
+						<%@ include file="../stateMessages/forDealsStarted.jsp" %>
+					</c:when>
+					
+					<c:when test="${state eq 'SubsidyCounting' }">
+						<%@ include file="../stateMessages/forSubsidyCounting.jsp" %>
+					</c:when>
+					
+					<c:when test="${state eq 'SubsidyRetrieveFailed' }">
+						<%@ include file="../stateMessages/forSubsidyRetrieveFailed.jsp" %>
+					</c:when>
+					
+					<c:otherwise>
+						<%@ include file="../stateMessages/forSubsidyClaim.jsp" %>
+					</c:otherwise>
+				</c:choose>
 				
 				<%@ include file="activity.jsp" %>
 				

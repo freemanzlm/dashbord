@@ -68,36 +68,10 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>爆款促銷 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step done"><span>報名</span></div>
-						<div class="step current-step"><span>已報名</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
-						<c:if test="${ rewarding }">
-							<div class="step"><span>獎勵確認中</span></div>
-							<div class="step"><span>申領獎勵</span></div>
-							<div class="step last"><span>活動完成</span></div>
-						</c:if>
-					</div>
-				</div>  <!-- steps end -->
 				
-				<div class="active-status-box success">
-					<div class="message-content">
-						<h3>您已成功提交報名！請耐心等待活動開始。</h3>
-						<p class="desc">
-							<c:choose>
-								<c:when test="${ expired eq true }">已超過報名有效期，您無法再修改報名刊登。</c:when>
-								<c:otherwise>在報名截止時間前您可以隨時修改您選擇的刊登。</c:otherwise>
-							</c:choose>
-						</p>
-					</div>
-					
-					<menu>
-						<li>
-							<a href="index" class="btn">返回活動清單</a>
-						</li>
-					</menu>
-				</div> <!-- active status box end -->
+				<%@ include file="../steps.jsp" %>
+				
+				<%@ include file="../stateMessages/forHotsellApplied.jsp" %>
 				
 				<%@ include file="activity.jsp" %>
 		

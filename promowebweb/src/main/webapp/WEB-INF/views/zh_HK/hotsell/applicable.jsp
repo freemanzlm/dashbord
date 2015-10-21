@@ -68,18 +68,12 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>爆款促銷 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step current-step"><span>報名</span></div>
-						<div class="step"><span>已報名</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活動進行中</span></div>
-						<c:if test="${ rewarding }">
-							<div class="step"><span>獎勵確認中</span></div>
-							<div class="step"><span>申領獎勵</span></div>
-							<div class="step last"><span>活動完成</span></div>
-						</c:if>
-					</div>
-				</div>  <!-- steps end -->
+				
+				<%@ include file="../steps.jsp" %>
+				
+				<c:if test="${promo.isReversed }">		
+					<%@ include file="../stateMessages/forReversed.jsp" %>
+				</c:if>
 				
 				<%@ include file="activity.jsp" %>
 				

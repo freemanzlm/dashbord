@@ -67,41 +67,26 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>爆款促销 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step done"><span>報名</span></div>
-						<div class="step done"><span>已報名</span></div>
-						<c:choose>
-							<c:when test="${ rewarding }">
-								<c:choose>
-									<c:when test="${ state eq 'Started' }">
-										<div class="step current-step"><span>活動進行中</span></div>
-										<div class="step"><span>獎勵確認中</span></div>
-										<div class="step"><span>申領獎勵</span></div>
-										<div class="step last"><span>活動完成</span></div>
-									</c:when>
-									<c:when test="${ state eq 'SubsidyCounting' }">
-										<div class="step done"><span>活動進行中</span></div>
-										<div class="step current-step"><span>獎勵確認中</span></div>
-										<div class="step"><span>申領獎勵</span></div>
-										<div class="step last"><span>活動完成</span></div>
-									</c:when>
-									<c:otherwise>
-										<div class="step done"><span>活動進行中</span></div>
-										<div class="step done"><span>獎勵確認中</span></div>
-										<div class="step current-step"><span>申領獎勵</span></div>
-										<div class="step last"><span>活動完成</span></div>
-									</c:otherwise>
-								</c:choose>
-							</c:when>
-							<c:otherwise>
-								<div class="step current-step last"><span>活動進行中</span></div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>  <!-- steps end -->
 				
-				<%@ include file="../stateBox.jsp" %>
+				<%@ include file="../steps.jsp" %>
+				
+				<c:choose>
+					<c:when test="${state eq 'Started' }">
+						<%@ include file="../stateMessages/forStarted.jsp" %>
+					</c:when>
+					
+					<c:when test="${state eq 'SubsidyCounting' }">
+						<%@ include file="../stateMessages/forSubsidyCounting.jsp" %>
+					</c:when>
+					
+					<c:when test="${state eq 'SubsidyRetrieveFailed' }">
+						<%@ include file="../stateMessages/forSubsidyRetrieveFailed.jsp" %>
+					</c:when>
+					
+					<c:otherwise>
+						<%@ include file="../stateMessages/forSubsidyClaim.jsp" %>
+					</c:otherwise>
+				</c:choose>
 				
 				<%@ include file="activity.jsp" %>
 				

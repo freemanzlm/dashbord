@@ -91,24 +91,7 @@
 					</c:otherwise>
 				</c:choose>
 				
-				<div class="active-status-box success">
-					<div class="message-content">
-						<c:choose>
-							<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
-								<h3>您已成功領取等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
-							</c:when>
-							<c:otherwise>
-								<h3>恭喜您已完成本活動！感謝您的參與！</h3>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					
-					<menu>
-						<li>
-							<a href="index" class="btn">返回活動清單</a>
-						</li>
-					</menu>
-				</div> <!-- active status box end -->
+				<%@ include file="../stateMessages/forCompleted.jsp" %>
 				
 				<%@ include file="activity.jsp" %>
 
