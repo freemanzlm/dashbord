@@ -179,11 +179,15 @@
 .active-status-box {
 	background-color: #ECF1F7;
 	margin-bottom: 20px;
-	padding-bottom: 56px;
+	padding-bottom: 30px;
 	min-height: 129px;
 	text-align: center;
 	
 	position: relative;
+}
+
+.active-status-box .message-content {
+	min-height: 129px;
 }
 
 .active-status-box h3 {
@@ -200,8 +204,8 @@
 }
 
 .active-status-box menu {
-	position: absolute;
-	bottom: 30px;
+	/* position: absolute;
+	bottom: 30px; */
 	
 	width: 100%;
 }

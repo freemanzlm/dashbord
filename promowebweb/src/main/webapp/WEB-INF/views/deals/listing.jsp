@@ -72,36 +72,16 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>Deals招募 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step done"><span>报名</span></div>
-						<div class="step done"><span>已提交预审</span></div>
-						<c:if test="${ state eq 'Verifying' }">
-							<div class="step current-step"><span>预审进行中</span></div>
-							<div class="step"><span>正式报名</span></div>
-						</c:if>
-						<c:if test="${ state eq 'PromotionApproved' }">
-							<div class="step done"><span>预审进行中</span></div>
-							<div class="step current-step"><span>正式报名</span></div>
-						</c:if>
-						<c:if test="${ state eq 'Applied' }">
-							<div class="step done"><span>预审进行中</span></div>
-							<div class="step current-step"><span>已报名</span></div>
-						</c:if>
-						<div class="step"><span>活动进行中</span></div>
-						<c:if test="${ rewarding }">
-							<div class="step"><span>奖励确认中</span></div>
-							<div class="step"><span>申领奖励</span></div>
-							<div class="step last"><span>活动完成</span></div>
-						</c:if>
-					</div>
-				</div>  <!-- steps end -->
+				
+				<%@ include file="steps.jsp" %>
 				
 				<c:choose>
 					<c:when test="${state eq 'Verifying' }">
 						<div class="active-status-box">
-							<h3>您已成功提交预审！请耐心等待预审结果并提交正式报名。</h3>
-							<p class="desc">我们已经完整地收到您的刊登物品列表，并会及时反馈到活动站点，请您耐心等待最终确认。</p>
+							<div class="message-content">
+								<h3>您已成功提交预审！请耐心等待预审结果并提交正式报名。</h3>
+								<p class="desc">我们已经完整地收到您的刊登物品列表，并会及时反馈到活动站点，请您耐心等待最终确认。</p>
+							</div>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活动列表</a>
@@ -114,14 +94,18 @@
 						<c:choose>
 							<c:when test="${promo.isReversed }">
 								<div class="active-status-box">
-									<h3>活动时间已调整为<span class="cyan">${ promoStart }</span>到<span class="cyan">${ promoEnd }</span>，请在<span class="cyan">${promoDlDt}</span>前重新确认你参加活动的刊登！</h3>
+									<div class="message-content">
+										<h3>活动时间已调整为<span class="cyan">${ promoStart }</span>到<span class="cyan">${ promoEnd }</span>，请在<span class="cyan">${promoDlDt}</span>前重新确认你参加活动的刊登！</h3>
+									</div>
 									<menu><li><a href="#listing" class="btn">正式报名</a></li></menu>
 								</div>
 							</c:when>
 							<c:otherwise>
 								<div class="active-status-box ${ not expired ? 'success' : '' }">
-									<h3>您已成功通过预审！请于<span class="cyan">${ promoDlDt }</span>前<a href="#listing">选择并提交</a>如下通过预审的刊登完成正式报名。</h3>
-									<p class="desc">活动时间为<span class="cyan">${ promoStart } </span>到 <span class="cyan">${ promoEnd }</span><br />活动如有更改，以最终通知为准。</p>
+									<div class="message-content">
+										<h3>您已成功通过预审！请于<span class="cyan">${ promoDlDt }</span>前<a href="#listing">选择并提交</a>如下通过预审的刊登完成正式报名。</h3>
+										<p class="desc">活动时间为<span class="cyan">${ promoStart } </span>到 <span class="cyan">${ promoEnd }</span><br />活动如有更改，以最终通知为准。</p>
+									</div>
 									<menu><li><a href="#listing" class="btn">正式报名</a></li></menu>	
 								</div>
 							</c:otherwise>
@@ -130,14 +114,16 @@
 					
 					<c:when test="${state eq 'Applied' }">
 						<div class="active-status-box success">
-							<h3>您已正式报名成功！请耐心等待活动开始。</h3>
-							
-							<p class="desc">
-								<c:choose>
-									<c:when test="${ expired eq true }">已超过报名有效期，您无法再修改报名刊登。</c:when>
-									<c:otherwise>在报名截止时间前您可以随时修改您选择的刊登。</c:otherwise>
-								</c:choose>
-							</p>
+							<div class="message-content">
+								<h3>您已正式报名成功！请耐心等待活动开始。</h3>
+								
+								<p class="desc">
+									<c:choose>
+										<c:when test="${ expired eq true }">已超过报名有效期，您无法再修改报名刊登。</c:when>
+										<c:otherwise>在报名截止时间前您可以随时修改您选择的刊登。</c:otherwise>
+									</c:choose>
+								</p>
+							</div>
 							<menu>
 								<li>
 									<a href="index" class="btn">返回活动列表</a>

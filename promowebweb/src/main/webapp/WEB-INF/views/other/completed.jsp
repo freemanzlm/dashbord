@@ -92,14 +92,16 @@
 				</c:choose>
 				
 				<div class="active-status-box success">
-					<c:choose>
-						<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
-							<h3>您已成功领取等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
-						</c:when>
-						<c:otherwise>
-							<h3>恭喜您已完成本活动！感谢您的参与!</h3>
-						</c:otherwise>
-					</c:choose>
+					<div class="message-content">
+						<c:choose>
+							<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
+								<h3>您已成功领取等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
+							</c:when>
+							<c:otherwise>
+								<h3>恭喜您已完成本活动！感谢您的参与!</h3>
+							</c:otherwise>
+						</c:choose>
+					</div>
 					
 					<menu>
 						<li>

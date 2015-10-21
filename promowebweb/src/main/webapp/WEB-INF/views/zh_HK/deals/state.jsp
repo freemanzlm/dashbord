@@ -66,41 +66,8 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>Deals招募 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step done"><span>報名</span></div>
-						<div class="step done"><span>已提交預審</span></div>
-						<div class="step done"><span>預審進行中</span></div>
-						<div class="step done"><span>正式報名</span></div>
-						<c:choose>
-							<c:when test="${ rewarding }">
-								<c:choose>
-									<c:when test="${ state eq 'Started' }">
-										<div class="step current-step"><span>活動進行中</span></div>
-										<div class="step"><span>獎勵確認中</span></div>
-										<div class="step"><span>申領獎勵</span></div>
-										<div class="step last"><span>活動完成</span></div>
-									</c:when>
-									<c:when test="${ state eq 'SubsidyCounting' }">
-										<div class="step done"><span>活動進行中</span></div>
-										<div class="step current-step"><span>獎勵確認中</span></div>
-										<div class="step"><span>申領獎勵</span></div>
-										<div class="step last"><span>活動完成</span></div>
-									</c:when>
-									<c:otherwise>
-										<div class="step done"><span>活動進行中</span></div>
-										<div class="step done"><span>獎勵確認中</span></div>
-										<div class="step current-step"><span>申領獎勵</span></div>
-										<div class="step last"><span>活動完成</span></div>
-									</c:otherwise>
-								</c:choose>
-							</c:when>
-							<c:otherwise>
-								<div class="step current-step last"><span>活動進行中</span></div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>  <!-- steps end -->
+				
+				<%@ include file="steps.jsp" %>
 				
 				<%@ include file="stateBox.jsp" %>
 				

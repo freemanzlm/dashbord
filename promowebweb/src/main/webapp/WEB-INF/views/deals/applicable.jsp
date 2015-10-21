@@ -69,20 +69,8 @@
 		<div id="page-pane">
 			<div class="pane">
 				<h2>Deals招募 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps clr">
-						<div class="step current-step"><span>报名</span></div>
-						<div class="step"><span>已提交预审</span></div>
-						<div class="step"><span>预审进行中</span></div>
-						<div class="step"><span>正式报名</span></div>
-						<div class="step ${ rewarding ? '' : 'last' }"><span>活动进行中</span></div>
-						<c:if test="${ rewarding }">
-							<div class="step"><span>奖励确认中</span></div>
-							<div class="step"><span>申领奖励</span></div>
-							<div class="step last"><span>活动完成</span></div>
-						</c:if>
-					</div>
-				</div>  <!-- steps end -->
+				
+				<%@ include file="steps.jsp" %>
 				
 				<%@ include file="activity.jsp" %>
 				
