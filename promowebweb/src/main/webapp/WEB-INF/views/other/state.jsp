@@ -158,30 +158,55 @@
 					<c:when test="${state eq 'SubsidyCounting' }">
 						<div class="active-status-box success">
 							<h3>恭喜您已完成活动！</h3>
-							<p class="desc">
-								我们的奖励结果正在统计中， 请耐心等待！
-							</p>
+							<p class="desc">我们的奖励结果正在统计中， 请耐心等待！</p>
 							<menu>
-								<li>
-									<a href="index" class="btn">返回活动列表</a>
-								</li>
+								<li><a href="index" class="btn">返回活动列表</a></li>
+							</menu>
+						</div>
+					</c:when>
+					<c:when test="${state eq 'SubsidyRetrieveFailed' }">
+						<div class="active-status-box fail">
+							<h3>领取失败</h3>
+							<c:if test="${ promo.rewardType eq 2 }">
+								<p class="desc">领取：等值于${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }
+								<br />(注：每一元人民币的奖励，将获得500ebay万里通积分的充值资格)
+								<br />抱歉！对万里通的充值遇到问题。请通过邮件联系<a href="mailto:ebay-CC@ebay.com">ebay-CC@ebay.com</a>反映该问题。会有专门人员协助您解决。</p>
+							</c:if>
+							<menu>
+								<li><a href="index" class="btn">返回活动列表</a></li>
 							</menu>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="active-status-box success">
 							<c:choose>
-								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
-									<h3>恭喜，您的奖励为等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
+								<c:when
+									test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
+									<h3>恭喜!您的奖励为等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
+									<c:choose>
+										<c:when test="${ promo.rewardType eq 1}">
+											<div class="note">
+												<p>再次感谢您参与了我们的活动。我们将通知第三方服务商“澳捷实业有限公司”发放奖励。请予10个工作日以后及时领取，奖励发放地址和时间如下：</p>
+												<ol>
+													<li>深圳 深圳市福田区深南中路3018号世纪汇广场23/F</li>
+													<li>上海 上海市长宁区仙霞路317号远东国际广场B座1509</li>
+													<li>北京 北京市海淀区花园东路10号高德大厦803室</li>
+													<li>西安 西安市高新一路正信大厦B座203室</li>
+												</ol>	
+												<p>工作时间为： AM9:00--PM6:00</p>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<c:if test="${ not empty rewardDeadline }">
+												<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
+											</c:if>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
 									<h3>恭喜您已完成本活动！接下来我们的客户经理会联系您关于奖励的相关事宜，请注意接收相关的邮件通知。感谢您的参与!</h3>
 								</c:otherwise>
 							</c:choose>
-							
-							<c:if test="${ not empty rewardDeadline }">
-								<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
-							</c:if>
 							
 							<c:choose>
 								<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2) and (not empty promo.rewardUrl) and promo.region eq 'CN' }">
