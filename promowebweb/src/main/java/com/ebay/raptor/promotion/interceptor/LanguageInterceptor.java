@@ -17,6 +17,7 @@ import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
+import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PromotionUtil;
@@ -35,6 +36,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 
 	@Autowired
 	private CSApiService service;
+	@Autowired
+	BaseDataService baseService;
 
 	@Override
 	public void postHandle(HttpServletRequest req,
@@ -135,8 +138,25 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 
 		// add username & biz report link
 		model.addObject(ViewContext.UserName.getAttr(), userName);
-		model.addObject(ViewContext.BizUrl.getAttr(), CommonConstant.BIZ_REPORT_URL);
 		model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
+		
+		try {
+			boolean accessBizReport = false;
+
+			if (userData.getAdmin()) {
+				accessBizReport = true;
+			} else {
+				// check if user is able to visit business report?
+				accessBizReport = baseService.isUserAbleToAccessBizReport(userData.getUserId());
+			}
+
+			model.addObject("accessBiz", accessBizReport);
+			if (accessBizReport) {
+				model.addObject(ViewContext.BizUrl.getAttr(), CommonConstant.BIZ_REPORT_URL + "?lang" + language);
+			}
+		} catch (Exception e) {
+			// ignore
+		}
 
 		// add the seller dashboard url
 		model.addObject(ViewContext.SDUrl.getAttr(), CommonConstant.SELLER_DASHBOARD_URL + "?token="

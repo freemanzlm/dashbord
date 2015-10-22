@@ -24,8 +24,10 @@
 	<button class='btn white' id="btn-lang" type='button' lang='zh_HK'>切換至繁體中文</button>
 	<ul class="links-nav clr">
 		<li><a href="${sdurl}">买家体验报告</a><small><a class="icon help" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
-		<li class="separator">|</li>
-		<li><a href="${bizurl}">业务分析报告</a><small><a class="icon help" href="#" target="_blank"></a></small></li>
+		<c:if test="${accessBiz == true}">
+			<li class="separator">|</li>
+			<li><a href="${bizurl}">业务分析报告</a><small><a class="icon help" href="#" target="_blank"></a></small></li>
+		</c:if>
 		<li class="separator">|</li>
 		<li class="active"><a href="/promotion/index">活动促销<c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a></li>
 	</ul>

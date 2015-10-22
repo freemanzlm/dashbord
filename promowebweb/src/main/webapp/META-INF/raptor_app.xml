@@ -36,7 +36,8 @@
           <isDefault>false</isDefault>
           <lifecycleState>Deployed</lifecycleState>
           <security>
-		        <supportOpenRedirects>true</supportOpenRedirects>       
+		        <supportOpenRedirects>true</supportOpenRedirects>
+		        <xFrameOptions><allowFrom>http://www.ebay.cn/</allowFrom></xFrameOptions>     
 		  </security>
         </page>
     <!-- Add new page entries here. For siteCatalystID, provide a value or leave as blank to generate one. Sample: -->
