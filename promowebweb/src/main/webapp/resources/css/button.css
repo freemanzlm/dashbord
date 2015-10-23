@@ -62,6 +62,10 @@ a.btn:hover {
 	background: #00509d;
 }
 
+button:disabled:hover {
+	background: #ccc;
+}
+
 .btn.white {
 	background-image: -webkit-gradient(
 		linear,
