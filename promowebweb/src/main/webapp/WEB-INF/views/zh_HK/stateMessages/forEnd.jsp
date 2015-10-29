@@ -40,7 +40,7 @@
 		<div class="promo-state-message fail">
 			<div class="message-content">
 				<h3>很遺憾，您的報名未通過審核</h3>
-				<p class="desc">感谢您的积极参与！期待下次合作。</p>
+				<p class="desc">感謝您的積極參與！期待下次合作。</p>
 			</div>
 			<menu>
 				<li><a href="index" class="btn">返回活動清單</a></li>

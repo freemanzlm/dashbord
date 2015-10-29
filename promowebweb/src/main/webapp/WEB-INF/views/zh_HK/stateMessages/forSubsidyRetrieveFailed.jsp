@@ -29,6 +29,6 @@
 		</c:if>
 	</div>
 	<menu>
-		<li><a href="index" class="btn">返回活动列表</a></li>
+		<li><a href="index" class="btn">返回活動清單</a></li>
 	</menu>
 </div>

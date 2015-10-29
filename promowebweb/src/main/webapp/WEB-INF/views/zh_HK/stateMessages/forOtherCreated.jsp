@@ -9,7 +9,7 @@
 	<div class="message-content">
 		<h3>&nbsp;</h3>
 		<p class="desc">
-			活動時間為${ promoStart }到${ promoEnd }， <br /> 我们将在活动结束后尽快公布统计结果，请耐心等待！
+			活動時間為${ promoStart }到${ promoEnd }， <br /> 我們將在活動結束後儘快公佈統計結果，請耐心等待！
 		</p>
 	</div>
 	<menu>
