@@ -175,7 +175,7 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (pageData && !pageData.expired && data == 'Nonapplied') {
+							if (pageData && pageData.expired === false && data == 'Nonapplied') {
 								return locale.getText('listing.state.Applicable');
 							}
 							return locale.getText('listing.state.' + data);
@@ -189,7 +189,7 @@ var BizReport = BizReport || {};
 							case 'Applicable':
 								return 1;
 							case 'Nonapplied':
-								return (pageData && !pageData.expired) ? 1 : 0;
+								return (pageData && pageData.expired === false) ? 1 : 0;
 							case 'Nonsubmitted':
 								return 0;
 							default: return -1;
