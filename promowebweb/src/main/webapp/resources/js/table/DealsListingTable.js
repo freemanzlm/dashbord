@@ -90,7 +90,7 @@ var BizReport = BizReport || {};
 					bSortable: false,
 					bVisible: false,
 					sDefaultContent: "",
-					sType: "string",
+					sType: "numeric",
 					sWidth: "30px",
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
@@ -107,7 +107,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["item-id"],
 					sDefaultContent: "",					
-					sType: "string",
+					sType: "numeric",
 					sWidth: "150px",
 					sClass: "pic-id",
 					mRender: function(data, type, full, meta) {
@@ -121,7 +121,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["name"],
-					sDefaultContent: "",					
+					sDefaultContent: "",			
 					sType: "string",
 					sWidth: "300px",
 					mRender: function(data, type, full, meta) {
@@ -196,11 +196,13 @@ var BizReport = BizReport || {};
 						if (type == "sort") {
 							switch (data) {
 							case 'Confirmed':
-								return 5;
+								return 6;
 							case 'Applied':
+								return 5;
+							case 'Applicable':
 								return 4;
 							case 'Nonapplied':
-								return 3;
+								return (pageData && !pageData.expired) ? 4 : 3;
 							case 'PretrialPass':
 								return 2;
 							case 'Nonsubmitted':

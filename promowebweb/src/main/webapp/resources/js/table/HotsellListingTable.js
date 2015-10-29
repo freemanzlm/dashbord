@@ -185,8 +185,11 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 'Applied':
 							case 'AuditSuccess':
+								return 2;
+							case 'Applicable':
 								return 1;
 							case 'Nonapplied':
+								return (pageData && !pageData.expired) ? 1 : 0;
 							case 'Nonsubmitted':
 								return 0;
 							default: return -1;
