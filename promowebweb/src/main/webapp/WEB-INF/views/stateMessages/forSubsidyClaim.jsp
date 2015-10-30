@@ -24,19 +24,23 @@
 		<c:choose>
 			<c:when
 				test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
+				
 				<h3>恭喜!您的奖励为等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
+				
 				<c:choose>
-					<c:when test="${ promo.rewardType eq 1}">
-						<div class="note">
-							<p>再次感谢您参与了我们的活动。我们将通知第三方服务商“澳捷实业有限公司”发放奖励。请予10个工作日以后及时领取，奖励发放地址和时间如下：</p>
-							<ol>
-								<li>深圳 深圳市福田区深南中路3018号世纪汇广场23/F</li>
-								<li>上海 上海市长宁区仙霞路317号远东国际广场B座1509</li>
-								<li>北京 北京市海淀区花园东路10号高德大厦803室</li>
-								<li>西安 西安市高新一路正信大厦B座203室</li>
-							</ol>	
-							<p>工作时间为： AM9:00--PM6:00</p>
-						</div>
+					<c:when test="${ state eq 'SubsidyRetrievable' }">
+						<c:if test="${ promo.rewardType eq 1}">
+							<div class="note">
+								<p>再次感谢您参与了我们的活动。我们将通知第三方服务商“澳捷实业有限公司”发放奖励。请予10个工作日以后及时领取，奖励发放地址和时间如下：</p>
+								<ol>
+									<li>深圳 深圳市福田区深南中路3018号世纪汇广场23/F</li>
+									<li>上海 上海市长宁区仙霞路317号远东国际广场B座1509</li>
+									<li>北京 北京市海淀区花园东路10号高德大厦803室</li>
+									<li>西安 西安市高新一路正信大厦B座203室</li>
+								</ol>	
+								<p>工作时间为： AM9:00--PM6:00</p>
+							</div>
+						</c:if>
 					</c:when>
 					<c:otherwise>
 						<c:if test="${ not empty rewardDeadline }">
