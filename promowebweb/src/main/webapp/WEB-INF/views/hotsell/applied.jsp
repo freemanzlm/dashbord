@@ -110,6 +110,7 @@
 <%@ include file="previewDialog.jsp" %>
 <script type="text/javascript">
 	var pageData = {
+		state: '${ promo.state }',
 		expired: ${ expired == true },
 		promoId: '${ promo.promoId }'
 	};

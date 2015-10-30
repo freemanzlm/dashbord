@@ -115,6 +115,7 @@
 
 <script type="text/javascript">
 	var pageData = {
+		state: '${ state }',
 		expired: ${ expired == true },
 		promoId: '${ promo.promoId }'
 	};

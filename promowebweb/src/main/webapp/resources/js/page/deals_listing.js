@@ -103,7 +103,11 @@ $(function(){
 			previewDialog.show();
 			previewDialog.listingTable.setData(listings);
 		} else {
-			confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
+			if (pageData && pageData.state == 'Applied') {
+				confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
+			} else {
+				alertDialog.alert(locale.getText('promo.hotsell.applyCondition'));
+			}
 		}
 	});
 	
