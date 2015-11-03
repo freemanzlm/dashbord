@@ -14,7 +14,7 @@
 		</h3>
 	</div>
 	<menu>
-		<li><a href="index" class="btn">返回活动列表</a></li>
+		<li><a href="#listing" class="btn">正式報名</a></li>
 	</menu>
 </div>
 <!-- active status box end -->
