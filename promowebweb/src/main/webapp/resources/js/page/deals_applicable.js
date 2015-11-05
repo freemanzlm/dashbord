@@ -39,7 +39,11 @@ $(function(){
 			return false;
 		}
 		
+		$(document.body).isLoading({text: locale.getText('promo.request.sending'), position: "overlay"});
+		
 		uploadIFrame.on("load", function(){
+			$(document.body).isLoading('hide');
+			
 			// check the response
 			if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").html().length > 0) {
 				var response = uploadIFrame.contents().find("body").text();
