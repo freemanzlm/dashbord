@@ -49,7 +49,7 @@ public class Promotion {
 	
 	private String region;
 	
-	private boolean isReversed;
+	private Boolean isReversed;
 	
 	private String endReason;
 	
@@ -61,11 +61,11 @@ public class Promotion {
 		this.endReason = endReason;
 	}
 
-	public boolean getIsReversed() {
+	public Boolean getIsReversed() {
 		return isReversed;
 	}
 
-	public void setIsReversed(boolean isReversed) {
+	public void setIsReversed(Boolean isReversed) {
 		this.isReversed = isReversed;
 	}
 
