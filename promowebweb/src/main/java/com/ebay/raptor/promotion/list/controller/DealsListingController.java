@@ -88,6 +88,7 @@ public class DealsListingController extends AbstractListingController{
 		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
+		resp.addHeader(FRAME_OPTIONS_HEADER_KEY, SAMEORIGIN_FRAME_OPTIONS);
 
 		XSSFWorkbook workbook = null;
 		try {
