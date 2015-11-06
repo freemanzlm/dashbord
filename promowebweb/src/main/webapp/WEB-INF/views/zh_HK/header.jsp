@@ -21,7 +21,7 @@
 </div>
 
 <div class="top-nav clr">
-	<button class='btn white' id="btn-lang" type='button' lang='zh_CN'>切换至简体中文</button>
+	<button class='btn btn-white' id="btn-lang" type='button' lang='zh_CN'>切换至简体中文</button>
 	<ul class="links-nav clr">
 		<li><a href="${sdurl}">買家體驗報告</a><small><a class="icon help" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
 		<c:if test="${accessBiz == true}">
