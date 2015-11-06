@@ -41,6 +41,16 @@
 		        <xFrameOptions><allowFrom>http://www.ebay.cn/</allowFrom></xFrameOptions>     
 		  </security>
         </page>
+        <page>
+          <name>uploadDealsListings</name>
+          <description>Upload deals listings</description>      
+          <isDefault>false</isDefault>
+          <lifecycleState>Deployed</lifecycleState>
+          <security>
+		        <supportOpenRedirects>true</supportOpenRedirects>
+		        <xFrameOptions><sameorigin/></xFrameOptions>     
+		  </security>
+        </page>
     <!-- Add new page entries here. For siteCatalystID, provide a value or leave as blank to generate one. Sample: -->
    <!-- <page>
       <name>New page name</name>
