@@ -12,10 +12,6 @@ import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 
 public abstract class AbstractListingController {
-	public final static String FRAME_OPTIONS_HEADER_KEY = "x-frame-options";
-	public final static String DENY_FRAME_OPTIONS = "DENY";
-	public final static String SAMEORIGIN_FRAME_OPTIONS = "SAMEORIGIN";
-	public final static String ALLOW_FROM_FRAME_OPTIONS = "ALLOW-FROM";
 
 	@Autowired
 	PromotionService promoService;

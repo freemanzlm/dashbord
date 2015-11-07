@@ -25,7 +25,7 @@
 	      	<authorization>true</authorization>
 	      	<roleId>true</roleId>
 	      	<supportOpenRedirects>true</supportOpenRedirects>
-	      	<xFrameOptions><allowFrom>http://www.ebay.cn/</allowFrom></xFrameOptions> 
+	      	<xFrameOptions><sameorigin/></xFrameOptions> 
 	      </security>
 	      <parameters-Map>
 	  		<parameters key="xss.requestParameterCheck">false</parameters>
