@@ -1,7 +1,7 @@
 $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
 	var alertDialog = BizReport.alertDialog;
-	var locale = BizReport.locale;
+	var local = BizReport.local;
 	
 	var listingCountJ = $(".my-listing h3 small span");
 	var formBtn = document.getElementById("form-btn");
@@ -31,7 +31,7 @@ $(function(){
 	listingTable.update({promoId:pageData && pageData.promoId});
 	
 	function submitListings() {
-		$(document.body).isLoading({text: locale.getText('promo.request.sending'), position: "overlay"});
+		$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
 		var listings = listingTable.getData();
 		form.find("input[name=listings]").val("[" + listings.map(function(item){
 			return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
@@ -48,12 +48,12 @@ $(function(){
 				if (json && json.status) {
 					location.reload();
 				} else {
-					alertDialog.alert(locale.getText('promo.request.fail'));
+					alertDialog.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
 				$(document.body).isLoading('hide');
-				alertDialog.alert(locale.getText('promo.request.fail'));
+				alertDialog.alert(local.getText('promo.request.fail'));
 			}
 		});
 	}
@@ -82,7 +82,7 @@ $(function(){
 			previewDialog.show();
 			previewDialog.listingTable.setData(listings);
 		} else {
-			alertDialog.alert(locale.getText('promo.hotsell.applyCondition'));
+			alertDialog.alert(local.getText('promo.hotsell.applyCondition'));
 		}
 	});
 	

@@ -12,7 +12,7 @@ var BizReport = BizReport || {};
 	var HotsellListingTable = function() {};
 	HotsellListingTable.prototype = new namespace.Widget();
 	
-	var locale = namespace.locale;
+	var local = namespace.local;
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
@@ -31,15 +31,15 @@ var BizReport = BizReport || {};
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'oLanguage': {
-					sEmptyTable: locale.getText('dataTable.emptyTable'),
-					sInfo: locale.getText('dataTable.listing.info'),
+					sEmptyTable: local.getText('dataTable.emptyTable'),
+					sInfo: local.getText('dataTable.listing.info'),
 					sInfoEmpty: "",
-					sLoadingRecords: locale.getText('dataTable.loading'),
+					sLoadingRecords: local.getText('dataTable.loading'),
 					oPaginate: {
-						sFirst: locale.getText('dataTable.firstPage'),
-						sLast: locale.getText('dataTable.lastPage'),
-						sPrevious: locale.getText('dataTable.previousPage'),
-						sNext: locale.getText('dataTable.nextPage')
+						sFirst: local.getText('dataTable.firstPage'),
+						sLast: local.getText('dataTable.lastPage'),
+						sPrevious: local.getText('dataTable.previousPage'),
+						sNext: local.getText('dataTable.nextPage')
 					}
 				},
 				'bScrollCollapse': true,
@@ -176,9 +176,9 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (pageData && pageData.expired === false && data == 'Nonapplied') {
-								return locale.getText('listing.state.Applicable');
+								return local.getText('listing.state.Applicable');
 							}
-							return locale.getText('listing.state.' + data);
+							return local.getText('listing.state.' + data);
 						}
 						
 						if (type == "sort") {
@@ -241,7 +241,7 @@ var BizReport = BizReport || {};
 					that.publish("selectChange");
 				}, 
 				ajaxbegin: function() {
-					$(that.container).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
+					$(that.container).isLoading({text: local.getText('dataTable.loading'), position: "inside"});
 				},
 				ajaxfinished: function(data) {
 				    that.container.isLoading('hide');
@@ -264,7 +264,7 @@ var BizReport = BizReport || {};
 				    // initialize the empty table only when it's updated the second time.
 				    that.dataTable.again && that.initDataTable();				 
 				    that.dataTable.updateAgain();
-//					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
+//					namespace.alertDialog.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);	
 			
