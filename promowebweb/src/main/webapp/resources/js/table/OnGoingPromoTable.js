@@ -135,34 +135,6 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["reward"],
-					bSortable: false,
-					sClass: "text-right",
-					sDefaultContent: "-",
-					mRender: function(data, type, full) {
-						var val = parseFloat(data);
-						if (type == "display") {
-							if (full.rewardType != 0) {
-								if (full.state > 7) { // After subsidy counting
-									if (val > 0) {
-										return val.toUSFixed(2) + " (" + full.currency + ")";
-									}
-								}  else {
-									return local.getText('dataTable.promo.SubsidyCounting');
-								}
-							}
-							
-							return local.getText('dataTable.promo.noReward');
-						}
-						
-						if (type == "sort") {
-							return isNaN(val) ? -1 : val;
-						}
-
-						return data;
-					}
-				},
-				{
 					aTargets: ["state"],
 					sClass: "text-center state",
 					sDefaultContent: "",

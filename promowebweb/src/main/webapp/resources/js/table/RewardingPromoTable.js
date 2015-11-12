@@ -12,7 +12,7 @@ var BizReport = BizReport || {};
 	var RewardingPromoTable = function() {};
 	RewardingPromoTable.prototype = new namespace.Widget();
 	
-	var local = namespace.local;
+	var local = namespace.local, util = namespace.util;
 	
 	var promos = ['hotsell', 'deals', 'deals', 'other'];
 	
@@ -140,13 +140,12 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: " ",
 					mRender: function(data, type, full) {
-						data = full.region == 'CN' ? data : ' ';
 						var val = parseFloat(data);
 						
 						if (type == "display") {
 							if ((full.rewardType != 0)) {
 								if (!isNaN(val) && val > 0) {
-									return val.toUSFixed(2) + ' (' + full.currency + ') ';
+									return val.toUSFixed(2) + '(' + util.getRegionCurrency(full.region) + ')';
 								} else {
 									return '0';
 								}
