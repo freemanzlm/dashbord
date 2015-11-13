@@ -226,20 +226,20 @@ var BizReport = BizReport || {};
 										return 8;
 									case 'SubsidyResubmittable':
 										return 9;
-									case 'SubsidyRetrievable':
-										return 10;
 									case 'SubsidyAccessed':
-										return 11;
+										return 10;
 									case 'SubsidySubmitted':
-										return 12;
+										return 11;
 									case 'SubsidyUploaded':
+										return 12;
+									case 'SubsidyRetrievable':
 										return 13;
 									}
 								}
 							}
 							
 							if (full.rewardType != 0) {
-								return 10; // SubsidyRetrievable
+								return 13; // SubsidyRetrievable
 							}
 							
 							return 20;

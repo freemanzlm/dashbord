@@ -16,7 +16,8 @@ $(function(){
 		dataTableConfig: {
 			tableId: "rewarding-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getSubsidyPromotions"
+				sAjaxSource: "promotion/getSubsidyPromotions",
+				columns: [,, {bVisible: (pageData && pageData.region == 'CN')}]
 			}
 		}});
 	rewardingPromoTable.update();
@@ -26,7 +27,8 @@ $(function(){
 		dataTableConfig: {
 			tableId: "end-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/getEndPromotions"
+				sAjaxSource: "promotion/getEndPromotions",
+				columns: [,,{bVisible: (pageData && pageData.region == 'CN')}]
 			}
 		}});
 	endPromoTable.update();
