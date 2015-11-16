@@ -260,7 +260,6 @@ var BizReport = BizReport || {};
 				    
 				    that.dataTable.again && that.initDataTable();
 			        that.dataTable.updateAgain();
-//					namespace.alertDialog.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);			
 		},
