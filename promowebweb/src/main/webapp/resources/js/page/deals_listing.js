@@ -3,7 +3,7 @@ $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
 	var alertDialog = BizReport.alertDialog;
 	var confirmDialog = new BizReport.ConfirmDialog();
-	var locale = BizReport.locale;
+	var local = BizReport.local;
 	
 	var customTableConfig = pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired) ? {} : {
 		asStripeClasses: ['selectable'],
@@ -43,7 +43,7 @@ $(function(){
 	listingTable.update({promoId:pageData && pageData.promoId});
 	
 	function submitListings() {
-		$(document.body).isLoading({text: locale.getText('promo.request.sending'), position: "overlay"});
+		$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
 		var listings = listingTable.getData();
 		listings = listings.filter(function(listing){
 			return !(listing.state == 'PretrialFail');
@@ -63,12 +63,12 @@ $(function(){
 				if (json && json.status) {
 					location.reload();
 				} else {
-					alertDialog.alert(locale.getText('promo.request.fail'));
+					alertDialog.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
 				$(document.body).isLoading('hide');
-				alertDialog.alert(locale.getText('promo.request.fail'));
+				alertDialog.alert(local.getText('promo.request.fail'));
 			}
 		});
 	}
@@ -104,9 +104,9 @@ $(function(){
 			previewDialog.listingTable.setData(listings);
 		} else {
 			if (pageData && pageData.state == 'Applied') {
-				confirmDialog.confirm(locale.getText('promo.hotsell.zeroSubmitted'));
+				confirmDialog.confirm(local.getText('promo.hotsell.zeroSubmitted'));
 			} else {
-				alertDialog.alert(locale.getText('promo.hotsell.applyCondition'));
+				alertDialog.alert(local.getText('promo.hotsell.applyCondition'));
 			}
 		}
 	});

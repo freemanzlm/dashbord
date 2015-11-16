@@ -1,7 +1,7 @@
 $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
 	var alertDialog = BizReport.alertDialog;
-	var locale = BizReport.locale;
+	var local = BizReport.local;
 	
 	var confirmForm = $("form");
 	
@@ -46,14 +46,14 @@ $(function(){
 				if (json && json.status) {
 					window.location.replace("/promotion/"+pageData.promoId);
 				} else if (json.data && json.data.length > 0) {
-					alertDialog.alert(locale.getText("errorMsg.regDateExpired"));
+					alertDialog.alert(local.getText("errorMsg.regDateExpired"));
 					window.location.replace("/promotion/"+pageData.promoId);
 				} else {
-					alertDialog.alert(locale.getText('promo.request.fail'));
+					alertDialog.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
-				alertDialog.alert(locale.getText('promo.request.fail'));
+				alertDialog.alert(local.getText('promo.request.fail'));
 			}
 		});
 	});	

@@ -2,7 +2,7 @@ $(function(){
 	
 	var SKUListTable = BizReport.SKUListTable;
 	var alertDialog = BizReport.alertDialog;
-	var locale = BizReport.locale;
+	var local = BizReport.local;
 	
 	var skuList, uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox;
 	
@@ -35,11 +35,11 @@ $(function(){
 		
 		var fileName = fileInput.val();
 		if (!fileName || fileName.indexOf(".xls") < 0) {
-			alertDialog.alert(locale.getText("promo.deals.onlyXls"));
+			alertDialog.alert(local.getText("promo.deals.onlyXls"));
 			return false;
 		}
 		
-		$(document.body).isLoading({text: locale.getText('promo.request.sending'), position: "overlay"});
+		$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
 		
 		uploadIFrame.on("load", function(){
 			$(document.body).isLoading('hide');
@@ -59,7 +59,7 @@ $(function(){
 						$("#upload-error-msg").removeClass("hide");
 						$("#upload-error-msg").find("em").text(responseData.message);
 					} else if (responseData.data && responseData.data.length > 0) {
-						alertDialog.alert(locale.getText("errorMsg.regDateExpired"));
+						alertDialog.alert(local.getText("errorMsg.regDateExpired"));
 						window.location.replace("/promotion/" + pageData.promoId);
 					}
 					// redirect to error page

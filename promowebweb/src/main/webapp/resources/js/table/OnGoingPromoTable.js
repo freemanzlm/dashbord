@@ -12,7 +12,7 @@ var BizReport = BizReport || {};
 	var OnGoingPromoTable = function() {};
 	OnGoingPromoTable.prototype = new namespace.Widget();
 	
-	var locale = namespace.locale;
+	var local = namespace.local;
 	
 	var promos = ['hotsell', 'deals', 'deals', 'other'];
 	
@@ -36,17 +36,17 @@ var BizReport = BizReport || {};
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header">t<"datatable_pager"ip>',
 				'oLanguage': {
-					sEmptyTable: locale.getText('dataTable.promo.emptyTable'),
-					sInfoFiltered: locale.getText('dataTable.promo.infoFiltered'),
-					sInfo: locale.getText('dataTable.promo.info'),
+					sEmptyTable: local.getText('dataTable.promo.emptyTable'),
+					sInfoFiltered: local.getText('dataTable.promo.infoFiltered'),
+					sInfo: local.getText('dataTable.promo.info'),
 					sInfoEmpty: "",
-					sLoadingRecords: locale.getText('dataTable.loading'),
-					sZeroRecords: locale.getText('dataTable.promo.zeroRecords'),
+					sLoadingRecords: local.getText('dataTable.loading'),
+					sZeroRecords: local.getText('dataTable.promo.zeroRecords'),
 					oPaginate: {
-						sFirst: locale.getText('dataTable.firstPage'),
-						sLast: locale.getText('dataTable.lastPage'),
-						sPrevious: locale.getText('dataTable.previousPage'),
-						sNext: locale.getText('dataTable.nextPage')
+						sFirst: local.getText('dataTable.firstPage'),
+						sLast: local.getText('dataTable.lastPage'),
+						sPrevious: local.getText('dataTable.previousPage'),
+						sNext: local.getText('dataTable.nextPage')
 					}
 				},
 //				'sScrollX': "100%",
@@ -99,7 +99,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return locale.getText('promo.type.' + promos[data]); 
+							return local.getText('promo.type.' + promos[data]); 
 						}
 						
 						if (type == 'sort' || type == 'filter') {
@@ -135,34 +135,6 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["reward"],
-					bSortable: false,
-					sClass: "text-right",
-					sDefaultContent: "-",
-					mRender: function(data, type, full) {
-						var val = parseFloat(data);
-						if (type == "display") {
-							if (full.rewardType != 0) {
-								if (full.state > 7) { // After subsidy counting
-									if (val > 0) {
-										return val.toUSFixed(2) + " (" + full.currency + ")";
-									}
-								}  else {
-									return locale.getText('dataTable.promo.SubsidyCounting');
-								}
-							}
-							
-							return locale.getText('dataTable.promo.noReward');
-						}
-						
-						if (type == "sort") {
-							return isNaN(val) ? -1 : val;
-						}
-
-						return data;
-					}
-				},
-				{
 					aTargets: ["state"],
 					sClass: "text-center state",
 					sDefaultContent: "",
@@ -173,23 +145,23 @@ var BizReport = BizReport || {};
 								switch (data) {
 								case 'Created':
 								case 'PromotionApproved':
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.' + data) + "</a>";
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a>";
 								case 'Applied':
 								case 'Verifying':
 								case 'Submitted':
 								case 'Started':
 								case 'SubsidyCounting':
-									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
+									return local.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
 								}
 							} else {
 								switch (data) {
 								case 'Started':
 								case 'SubsidyCounting':
-									return locale.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
+									return local.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
 								}
 							}
 							
-							return "<a href='" + getLink(full.promoId) + "'>" + locale.getText('promo.state.Detailed') + "</a>";
+							return "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
 						}
 						
 						if (type == "filter") {
@@ -267,7 +239,7 @@ var BizReport = BizReport || {};
 					});
 				}, 
 				ajaxbegin: function() {
-					$(that.pane).isLoading({text: locale.getText('dataTable.loading'), position: "inside"});
+					$(that.pane).isLoading({text: local.getText('dataTable.loading'), position: "inside"});
 				},
 				ajaxfinished: function(data) {
 				    that.pane.isLoading('hide');
@@ -286,7 +258,7 @@ var BizReport = BizReport || {};
 				    that.pane.isLoading('hide');
 				    that.dataTable.again && that.initDataTable();
 			        that.dataTable.updateAgain();
-//					namespace.alertDialog.alert(locale.getText('dataTable.requestFail'));
+//					namespace.alertDialog.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);			
 		},

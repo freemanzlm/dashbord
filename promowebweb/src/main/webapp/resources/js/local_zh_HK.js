@@ -1,6 +1,6 @@
 BizReport = BizReport || {};
 
-BizReport.locale = {
+BizReport.local = {
 	'export': {
 		'exporting': '<p>後臺正在生成導出文件，可能需要一點時間，請耐心等待。<br/>文件開始下載，此潭出對話框會自動關閉，您也可以選擇直接關閉。</p>',
 		'fail': '<p>導出失敗，請稍后再試。</p>'
@@ -117,9 +117,9 @@ BizReport.locale = {
 	}
 };
 
-BizReport.locale.getText = function(key, params) {
+BizReport.local.getText = function(key, params) {
     var names = key.split(".");
-    var value = BizReport.locale;
+    var value = BizReport.local;
     for (var i = 0; i < names.length; i++) {
         value = value[names[i]];
         if (!value) break;
