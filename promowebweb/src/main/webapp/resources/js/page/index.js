@@ -1,10 +1,8 @@
 $(function(){
-	alert("1. come to the head");
 	var OnGoingPromoTable = BizReport.OnGoingPromoTable;
 	var RewardingPromoTable = BizReport.RewardingPromoTable;
 	var EndPromoTable = BizReport.EndPromoTable;
 	var PendingPromoTable = BizReport.PendingPromoTable;
-	alert("2. finish init...");
 	
 	var onGogingTable = new OnGoingPromoTable();
 	onGogingTable.init({
