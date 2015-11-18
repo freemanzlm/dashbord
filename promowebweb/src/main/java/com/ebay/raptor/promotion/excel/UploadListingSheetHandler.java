@@ -3,6 +3,8 @@ package com.ebay.raptor.promotion.excel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -64,6 +66,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			throws InvalidCellValueException, PromoException {
 		List<Sku> skus = dealsListingService.getSkusByPromotionId(promoId, userId);
 		List<DealsListing> uploadedListings = new ArrayList<DealsListing>();
+		Set<Long> itemIds = new TreeSet<Long>();
 		int rowNum = sheet.getPhysicalNumberOfRows();
 		
 		for (int i = 1; i < rowNum; i++) {
@@ -97,7 +100,9 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			String skuId = skuIdObj == null ? "" : skuIdObj.toString();
 			String skuName = skuNameObj == null ? "" : skuNameObj.toString();
 			String currency = currencyObj == null ? "" : currencyObj.toString();
+			Long itemId = itemIdObj == null ? -1 : ((Double)itemIdObj).longValue();
 			boolean foundSku = false;
+
 			for (Sku sku : skus) {
 				String storedSkuId = sku.getSkuId();
 				String storedSkuName = sku.getName();
@@ -112,12 +117,18 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 				// sku id is for internal using only, and user cares about sku name actually.
 				throw new InvalidCellValueException(ErrorType.InvalidSkuCellValue,
 						skuNameCell.getRowIndex() + 1,
-						skuNameCell.getColumnIndex() + 1,
+						skuNameCell.getColumnIndex(),
 						skuName);
 			} else {
 				listing.setSkuName(skuName);
 				listing.setSkuId(skuId);
 				listing.setCurrency(currency);
+			}
+			
+			// duplicate item id was set, stop...
+			if (itemId != -1 && !itemIds.add(itemId)) {
+				throw new InvalidCellValueException(ErrorType.DuplicateItemFound,
+						itemIdCell.getRowIndex() + 1, itemIdCell.getColumnIndex(), itemId + "");
 			}
 			
 			// check if the list is set
@@ -163,7 +174,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 	
 	private String validateStringData (Object cellValue, Cell cell) throws InvalidCellValueException {
 		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex() + 1;
+		int colIndex = cell.getColumnIndex();
 
 		if (cellValue == null) {
 			throw new EmptyCellValueException(rowIndex, colIndex);
@@ -186,7 +197,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 
 	private String validateStringDateData (Object cellValue, Cell cell) throws InvalidCellValueException {
 		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex() + 1;
+		int colIndex = cell.getColumnIndex();
 
 		if (cellValue == null) {
 			throw new EmptyCellValueException(rowIndex, colIndex);
@@ -205,7 +216,7 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 	
 	private Double validateNumberData (Object cellValue, Cell cell) throws InvalidCellValueException {
 		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex() + 1;
+		int colIndex = cell.getColumnIndex();
 
 		if (cellValue == null) {
 			throw new EmptyCellValueException(rowIndex, colIndex);
