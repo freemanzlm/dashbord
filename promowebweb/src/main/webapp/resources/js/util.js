@@ -156,7 +156,7 @@
 	
 	function getRegionCurrency(region) {
 		switch (region) {
-		case 'HK': return 'UKD';
+		case 'HK': return 'HKD';
 		case 'TW': return 'TWD';
 		default: return 'RMB';
 		}
