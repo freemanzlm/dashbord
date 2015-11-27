@@ -8,6 +8,9 @@
 	<c:when test="${ promo.rewardType eq 2 }">
 		<c:set var="rewardName" value="ebay万里通积分" />
 	</c:when>
+	<c:when test="${ promo.rewardType eq 3 }">
+		<c:set var="rewardName" value="万邑通礼品卡" />
+	</c:when>
 	<c:when test="${ promo.rewardType eq 6 }">
 		<c:set var="rewardName" value="京东卡" />
 	</c:when>

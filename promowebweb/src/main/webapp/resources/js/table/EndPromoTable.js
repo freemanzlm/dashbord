@@ -182,30 +182,27 @@ var BizReport = BizReport || {};
 					sDefaultContent : "",
 					mRender : function (data, type, full) {
 						if (type == "display") {
-							if (full.region == 'CN') {
-								if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
-									return local.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
-								}
+							
+							if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
+								return local.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
 							}
 
 							return "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
 						}
 
 						if (type == "sort") {
-							if (full.region == 'CN') {
-								if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
-									return 11;
-								}
+
+							if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
+								return 11;
 							}
 
 							return 20;
 						}
 
 						if (type == "filter") {
-							if (full.region == 'CN') {
-								if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
-									return 'SubsidyRetrieved';
-								}
+							
+							if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
+								return 'SubsidyRetrieved';
 							}
 
 							return 'Detailed';

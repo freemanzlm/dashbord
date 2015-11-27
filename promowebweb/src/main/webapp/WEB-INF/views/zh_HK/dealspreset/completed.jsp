@@ -8,23 +8,6 @@
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
-<c:choose>
-	<c:when test="${ promo.rewardType eq 1 }">
-		<c:set var="rewardName" value="加油卡" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 6 }">
-		<c:set var="rewardName" value="京東卡" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 3 }">
-		<c:set var="rewardName" value="萬邑通" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardName" value="ebay萬裏通積分" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 4 }">
-		<c:set var="rewardName" value="郵票" />
-	</c:when>
-</c:choose>
 
 <r:includeJquery jsSlot="head" />
 <r:client />

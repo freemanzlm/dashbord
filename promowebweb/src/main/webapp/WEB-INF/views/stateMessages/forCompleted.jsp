@@ -8,6 +8,9 @@
 	<c:when test="${ promo.rewardType eq 2 }">
 		<c:set var="rewardName" value="ebay万里通积分" />
 	</c:when>
+	<c:when test="${ promo.rewardType eq 3 }">
+		<c:set var="rewardName" value="万邑通礼品卡" />
+	</c:when>
 	<c:when test="${ promo.rewardType eq 6 }">
 		<c:set var="rewardName" value="京东卡" />
 	</c:when>
@@ -19,7 +22,8 @@
 <div class="promo-state-message success">
 	<div class="message-content">
 		<c:choose>
-			<c:when test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN' }">
+			<c:when test="${ ((promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region eq 'CN')
+				or  promo.rewardType eq 3}">
 				<h3>您已成功领取等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
 			</c:when>
 			<c:otherwise>
