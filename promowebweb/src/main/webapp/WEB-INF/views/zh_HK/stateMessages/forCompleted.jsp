@@ -24,7 +24,7 @@
 		<c:choose>
 			<c:when test="${ ((promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) && promo.region eq 'CN')
 				or promo.rewardType eq 3 }">
-				<h3>您已成功領取等值${promo.reward gt 0 ? promo.reward : '0' } 元的${rewardName }</h3>
+				<h3>您已成功領取等值${promo.reward gt 0 ? promo.reward : '0' } {promo.currency}的${rewardName }</h3>
 			</c:when>
 			<c:otherwise>
 				<h3>恭喜您已完成本活動！感謝您的參與！</h3>

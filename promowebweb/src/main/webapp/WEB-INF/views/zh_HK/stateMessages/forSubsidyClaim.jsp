@@ -31,7 +31,7 @@
 				test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
 
 				<h3>恭喜!您的奖励为等值${promo.reward gt 0 ? promo.reward : '0' }
-					元的${rewardName }</h3>
+					{promo.currency}的${rewardName }</h3>
 
 				<c:choose>
 					<c:when test="${ state eq 'SubsidyRetrievable' }">
@@ -59,7 +59,7 @@
 			
 			<c:when test="${ promo.rewardType eq 3}">
 				<h3>恭喜!您的奖励为等值${promo.reward gt 0 ? promo.reward : '0' }
-					元的${rewardName }</h3>
+					{promo.currency}的${rewardName }</h3>
 					
 				<c:choose>
 					<c:when test="${ state eq 'SubsidyRetrievable' }">

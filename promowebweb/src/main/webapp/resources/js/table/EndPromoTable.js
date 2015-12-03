@@ -154,7 +154,7 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							if ((full.rewardType != 0)) {
 								if (!isNaN(val) && val > 0) {
-									return val.toUSFixed(2) + '(' + util.getRegionCurrency(full.region) + ')';
+									return val.toUSFixed(2) + '(' + full.currency + ')';
 								} else {
 									return '0';
 								}

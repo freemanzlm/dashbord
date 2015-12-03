@@ -154,14 +154,6 @@
 		return true;
 	};
 	
-	function getRegionCurrency(region) {
-		switch (region) {
-		case 'HK': return 'HKD';
-		case 'TW': return 'TWD';
-		default: return 'RMB';
-		}
-	}
-	
 	namespace.util = {
 		eachProp: eachProp,
 		hasOwnProperty: hasOwnProperty,
@@ -169,7 +161,6 @@
 		mixin: mixin,
 		getPositionInViewPort: getPositionInViewPort,
 		getPositionInPage: getPositionInPage,
-		getPageSize: getPageSize,
-		getRegionCurrency:getRegionCurrency 
+		getPageSize: getPageSize 
 	};
 })(BizReport = BizReport || {});
