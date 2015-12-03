@@ -33,6 +33,8 @@ public class Promotion {
 
 	private Float reward;
 	
+	private String currency;
+	
 	private Integer rewardType;
 	
 	private String rewardUrl;
@@ -203,6 +205,14 @@ public class Promotion {
 
 	public void setRewardUrl(String rewardUrl) {
 		this.rewardUrl = rewardUrl;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 
 }
