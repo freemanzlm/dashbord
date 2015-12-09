@@ -40,6 +40,7 @@
 	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
@@ -67,6 +68,8 @@
 	<!--  Global Header -->
 	<jsp:include page="../header.jsp"></jsp:include>
 	<!-- end: Global Header -->
+
+	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
 	<div id="page">
 		<div id="page-pane">

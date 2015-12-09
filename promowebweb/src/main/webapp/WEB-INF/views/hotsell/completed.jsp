@@ -61,6 +61,8 @@
 	<!--  Global Header -->
 	<jsp:include page="../header.jsp"></jsp:include>
 	<!-- end: Global Header -->
+
+	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
 	<div id="page">
 		<div id="page-pane">
