@@ -25,21 +25,26 @@
 	<res:jsSlot id="head-js" />
 	
 	<%--module "ebay.page" add Resets and Global css --%>
-	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head" />
+	<res:useCss value="${res.css.local.css['normalize.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
 	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['dropdown.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	
@@ -59,6 +64,8 @@
 	<!--  Global Header -->
 	<jsp:include page="header.jsp"></jsp:include>
 	<!-- end: Global Header -->
+	
+	<jsp:include page="topNavigator.jsp"></jsp:include>
 	
 	<div id="page">
 		<div id="page-pane">

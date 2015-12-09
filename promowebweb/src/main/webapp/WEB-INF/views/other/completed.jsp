@@ -29,16 +29,19 @@
 	<res:jsSlot id="head-js" />
 	
 	<%--module "ebay.page" add Resets and Global css --%>
-	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head" />
+	<res:useCss value="${res.css.local.css['normalize.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
 </head>
 
@@ -56,7 +59,7 @@
 				<c:choose>
 					<c:when test="${ rewarding }">
 						<div class="steps-wrapper">
-							<div class="steps clr">
+							<div class="steps">
 								<div class="step done"><span>活动进行中</span></div>
 								<div class="step done"><span>奖励确认中</span></div>
 								<div class="step done"><span>申领奖励</span></div>
@@ -66,7 +69,7 @@
 					</c:when>
 					<c:otherwise>
 						<div class="steps-wrapper">
-							<div class="steps clr">
+							<div class="steps">
 								<div class="step current-step last"><span>活动已结束</span></div>
 							</div>
 						</div>  <!-- steps end -->

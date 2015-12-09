@@ -1,0 +1,21 @@
+#header .logo {
+	margin: -27px 0 0 20px;
+	display: block;
+}
+
+#header .head-nav {
+	position: absolute;
+	top: 70px;
+	right: 20px;
+}
+
+#header .head-nav .fa-globe {
+	margin: 0 10px 0 20px;
+	font-size: 18px;
+	vertical-align: middle;
+}
+
+#header .dropdown input[type=text] {
+	border: none;
+	box-shadow: none;
+}

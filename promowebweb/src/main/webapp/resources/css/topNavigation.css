@@ -1,0 +1,145 @@
+.navigator-top {
+	position: relative;
+}
+
+.navigator-top .navigator-bar {
+	background: #fff;
+	border-bottom: 4px solid #9cc3e3;
+	line-height: 44px;
+}
+
+.navigator-bar .navigator-title {
+	padding: 0 0 0 42px;
+	width: 178px;
+	
+	font-size: 24px;
+	font-weight: bold;
+	color: #555;
+	
+	float: left;
+}
+
+.navigator-top ul {
+	list-style: none;
+}
+
+.navigator-top ul.navigation-list {
+	padding-left: 4px;	
+	
+	background: #fff;
+	float: left;
+	
+	position: relative;
+	bottom: -4px;
+}
+
+.navigator-top ul.navigation-list li {
+	width: 200px;
+	
+	margin-right: 4px;
+	border-bottom: 4px solid #9cc3e3;
+	
+	display: inline-block;
+	
+	text-align: center;
+	vertical-align: bottom;
+	font-size: 14px;
+}
+
+.navigator-top ul.navigation-list li a>small {
+	margin-left: 5px;
+    padding: 0 5px;
+    background-color: red;
+    color: #fff;
+}
+
+.navigator-top ul.navigation-list li.active {
+	border-bottom-color: #e2f2f9;
+	background: #e2f2f9;
+	font-weight: bold;
+}
+
+.navigator-top ul.navigation-list li.no-sub-menu.active {
+	border-bottom-color: #007ab0;
+}
+
+.navigator-top ul.navigation-list li a {
+	color: #555;
+}
+
+.navigator-top ul.navigation-list li.active a {
+	color: #3365b0;
+}
+
+.navigator-top .secondary-nav-list {
+	padding: 0 0 0 220px;
+	background: #e2f2f9;
+	line-height: 40px;
+	font-size: 14px;
+}
+
+.navigator-top .secondary-nav-list li {
+	margin-right: 48px;
+	display: inline-block;
+	
+	position: relative;
+}
+
+.navigator-top .secondary-nav-list li.active {
+	font-weight: bold;
+}
+
+.navigator-top .secondary-nav-list li.active:after {
+	font: normal normal normal 14px/1 FontAwesome;
+	content:"\f0d8";
+	
+	position: absolute;
+    bottom: -7px;
+    left: 48%;
+    
+    color: #fff;
+    font-size: 24px;
+}
+
+.navigator-top .secondary-nav-list li.no-sub-menu.active:after {
+	content:"";
+}
+
+.navigator-top [role=menu] {
+	border-bottom: 2px solid #3365b0;
+	padding: 0 0 0 20px;
+	background: #fff;
+	display: none;
+}
+
+.navigator-top [role=menu].active {
+	display: block;
+}
+
+
+.navigator-top [role=menu] [role=menuitem] {
+	margin: 0;
+	padding: 14px 10px 10px;
+	
+	float: left;
+	list-style: none inside none;
+}
+
+.navigator-top [role=menu] [role=menuitem].active {
+	  border-bottom: 4px solid #007ab0;
+	  font-weight: bold;
+}
+
+.navigator-top .site-data {
+	position: absolute;
+	right: 20px;
+	bottom: 7px;
+}
+
+.navigator-top .site-data select {
+	padding: 3px 8px;
+}
+
+.navigator-top .site-data a {
+	margin-left: 20px;
+}

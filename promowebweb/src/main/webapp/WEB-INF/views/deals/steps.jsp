@@ -9,7 +9,7 @@
 <c:set var="state" value="${ promo.state }" />
 
 <div class="steps-wrapper">
-	<div class="steps clr">
+	<div class="steps">
 		<c:choose>
 			<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
 				<div class="step current-step"><span>报名</span></div>

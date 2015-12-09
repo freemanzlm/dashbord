@@ -24,7 +24,7 @@
 	<res:jsSlot id="head-js" />
 	
 	<%--module "ebay.page" add Resets and Global css --%>
-	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head" />
+	<res:useCss value="${res.css.local.css['normalize.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
@@ -34,7 +34,7 @@
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/><res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
 	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="page-js"></res:useJs>

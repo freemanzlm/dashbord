@@ -27,16 +27,19 @@
 	<res:jsSlot id="head-js" />
 	
 	<%--module "ebay.page" add Resets and Global css --%>
-	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head" />
+	<res:useCss value="${res.css.local.css['normalize.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
 	<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
@@ -58,7 +61,7 @@
 			<div class="pane">
 				<h2>爆款促销 ${promo.name}</h2>
 				<div class="steps-wrapper">
-					<div class="steps clr">
+					<div class="steps">
 						<c:choose>
 							<c:when test="${ endReason == 'auFail' }">
 								<div class="step done"><span>報名</span></div>

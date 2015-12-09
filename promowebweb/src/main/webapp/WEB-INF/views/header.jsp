@@ -7,33 +7,22 @@
 
 <div id="header">
 	<div class="main"> 
-		<%-- <div class="header">
-	    	<ghs:header layoutType="FULL" categoryId="${categoryId}" jsSlot="page-js" cssSlot="head-css" />	    
-		</div> --%>
 		<a href="http://www.ebay.com" class="logo"><res:img
 			value="/img/ebay.png" alt="ebay logo" width="250" height="200"
 			style="clip: rect(47px, 118px, 95px, 0px); position: absolute;"></res:img></a>
-		<h1>卖家中心</h1>
-		<p class="nav">欢迎您，<bdi>${unm}</bdi> &nbsp;&nbsp; <a href="http://cbtreport.ebay.com.hk/dashboard/logout" target="_self" style="font-weight: 400;">退出</a></p>
+
+		<div class="head-nav">
+			欢迎您，<bdi>${unm}</bdi> &nbsp;&nbsp; <a href="http://www.ebay.cn/auth/?action=logout" style="font-weight: 400;">退出</a>
+			<i class="fa fa-globe"></i>
+			<span id="lang-switch" class="select-control">
+				<select name="lang" id="lang">
+					<option value="zh_CN" ${lang eq 'zh_CN' ? 'selected' : '' }>简体中文</option>
+					<option value="zh_HK" ${lang eq 'zh_HK' ? 'selected' : '' }>繁體中文</option>					
+				</select>
+			</span>
+		</div>		
 	</div>
 	
-	<jsp:include page="breadcrumb.jsp"></jsp:include>
-</div>
-
-<div class="top-nav clr">
-	<button class='btn btn-white' id="btn-lang" type='button' lang='zh_HK'>切換至繁體中文</button>
-	<ul class="links-nav clr">
-		<li><a href="${sdurl}">买家体验报告</a><small><a class="icon help" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
-		<c:if test="${accessBiz == true}">
-			<li class="separator">|</li>
-			<li><a href="${bizurl}">业务分析报告</a><small><a class="icon help" href="#" target="_blank"></a></small></li>
-		</c:if>
-		<li class="separator">|</li>
-		<li class="active"><a href="/promotion/index">活动促销<c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a></li>
-	</ul>
-	<div style="display:none;">
-		${promoUpdatedDetail}
-	</div>
 </div>
 
 <script type="text/javascript">
@@ -67,14 +56,10 @@ function updateLocationParameter (l, a, p) {
 }
 
 /* language switch begin */
-if (document.addEventListener) {
-	document.getElementById('btn-lang').addEventListener('click', function(){
-		location.href = updateLocationParameter(location, 'lang', this.getAttribute('lang'));
+$(function(){
+	$('#lang-switch').dropdown().change(function(e, data) {
+		window.location.href = updateLocationParameter(location, 'lang', data.value);
 	});
-} else {
-	document.getElementById('btn-lang').attachEvent('onclick', function(){
-		location.href = updateLocationParameter(location, 'lang', this.getAttribute('lang'));
-	});
-}
+});
 /* language switch end */
 </script>

@@ -22,7 +22,7 @@
 	<res:jsSlot id="head-js" />
 	
 	<%--module "ebay.page" add Resets and Global css --%>
-	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head" />
+	<res:useCss value="${res.css.local.css['normalize.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
@@ -31,7 +31,7 @@
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/><res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.error_css}" target="head-css"/>
 	
 </head>

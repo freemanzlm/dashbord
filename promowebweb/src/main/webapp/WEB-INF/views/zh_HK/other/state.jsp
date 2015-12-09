@@ -31,16 +31,19 @@
 	<res:jsSlot id="head-js" />
 	
 	<%--module "ebay.page" add Resets and Global css --%>
-	<r:includeModule name="ebay.UIComponentsResource.page" cssSlot="head" />
+	<res:useCss value="${res.css.local.css['normalize.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['jquery.dataTables.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
 </head>
 
@@ -58,7 +61,7 @@
 				<c:choose>
 					<c:when test="${ rewarding }">
 						<div class="steps-wrapper">
-							<div class="steps clr">
+							<div class="steps">
 								<c:choose>
 									<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
 										<div class="step"><span>活動進行中</span></div>
@@ -92,14 +95,14 @@
 						<c:choose>
 							<c:when test="${ state eq 'Created' or state eq 'Unknow' }">
 								<div class="steps-wrapper">
-									<div class="steps clr">
+									<div class="steps">
 										<div class="step last"><span>活動進行中</span></div>
 									</div>
 								</div>
 							</c:when>
 							<c:when test="${ state eq 'Started' }">
 								<div class="steps-wrapper">
-									<div class="steps clr">
+									<div class="steps">
 										<div class="step current-step last"><span>活動進行中</span></div>
 									</div>
 								</div>
