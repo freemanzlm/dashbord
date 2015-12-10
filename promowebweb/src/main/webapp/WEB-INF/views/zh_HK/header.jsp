@@ -56,7 +56,7 @@ function updateLocationParameter (l, a, p) {
 
 /* language switch begin */
 $(function(){
-	$('#lang-switch').dropdown().change(function(e, data) {
+	$('#lang-switch').dropdown('select', cbt.cookie.read('eBayCBTLang')).change(function(e, data) {
 		window.location.href = updateLocationParameter(location, 'lang', data.value);
 	});
 });

@@ -42,6 +42,9 @@
 	<res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
+
+	<res:useJs value="${res.js.local.js['cookie.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['dropdown.js']}" target="page-js"></res:useJs>
 	
 </head>
 

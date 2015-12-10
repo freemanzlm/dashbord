@@ -342,7 +342,7 @@
 				// call dropdown method
 				data[option].apply(data, args);
 			}				
-		})
+		});
 	}
 
 	$.fn.dropdown.Constructor = Dropdown
