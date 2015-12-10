@@ -38,14 +38,14 @@
 	
 	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.lib['Widget.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js.lib['MaskManager.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	
-	<res:useJs value="${res.js.local.js.dialog['Dialog.js']}" target="page-js2"></res:useJs>
-	<res:useJs value="${res.js.local.js.dialog['AlertDialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['deals_listing_preview.js']}" target="page-js2"></res:useJs>	

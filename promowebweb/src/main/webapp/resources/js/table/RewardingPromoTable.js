@@ -10,7 +10,7 @@ var BizReport = BizReport || {};
 
 (function (namespace) {
 	var RewardingPromoTable = function () {};
-	RewardingPromoTable.prototype = new namespace.Widget();
+	RewardingPromoTable.prototype = new cbt.Widget();
 
 	var local = namespace.local,
 	util = namespace.util;

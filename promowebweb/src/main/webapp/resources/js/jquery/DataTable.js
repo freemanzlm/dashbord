@@ -21,7 +21,7 @@
 		this.init(cfg);
 	};
 
-	DataTable.prototype = new namespace.Widget();
+	DataTable.prototype = new cbt.Widget();
 
 	$.extend(DataTable.prototype, {
 		/**

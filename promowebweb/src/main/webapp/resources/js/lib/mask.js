@@ -1,17 +1,20 @@
-(function(namespace) {
-	var defaultConfig = {
+(function($) {
+	var namespace = window.cbt = window.cbt || {};
+
+	var defaultMaskConfig = {
 		clazz : 'mask',
 		alpha : 0.6,
 		color : "#000",
 		zIndex : 10000
 	};
 
-	var MaskManager = function() {
+	var Mask = function(config) {
+		this.init(config);
 	};
 
-	MaskManager.prototype = {
+	Mask.prototype = {
 		init : function(config) {
-			this.config = $.extend({}, defaultConfig, config);
+			this.config = $.extend({}, defaultMaskConfig, config);
 			this.mask = $("<div class='" + this.config.clazz + "'><div>");
 			$("body").append(this.mask);
 		},
@@ -41,5 +44,5 @@
 		}
 	};
 
-	namespace.MaskManager = MaskManager;
-})(BizReport = BizReport || {});
+	namespace.Mask = Mask;
+})(window.jQuery);

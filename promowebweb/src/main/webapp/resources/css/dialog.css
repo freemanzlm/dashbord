@@ -1,16 +1,23 @@
 @CHARSET "UTF-8";
 
 /* dialog style */
-.dialog {
-	position: absolute;
+.dialog,
+.overlay {
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+	box-sizing: border-box;
+
+	position: absolute;	
+
 	display: none;
 }
 
-.dialog.open {
+.dialog.open,
+.overlay.open {
 	display: block;
 }
 
-.dialog .close {
+.dialog .close,
+.overlay .close {
 	background: url("${res.img.local.img.icon.close_png}") no-repeat scroll;
 	height: 12px;
 	position: absolute;
@@ -22,9 +29,9 @@
 }
 
 .dialog .dialog-header {
-	border-top: 1px solid #3AA7E9;
-	border-left: 1px solid #3AA7E9;
-	border-right: 1px solid #3AA7E9;
+	border-top: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
 	background: #fff;
 	border-radius: 5px 5px 0 0;
 	padding: 10px;
@@ -38,9 +45,9 @@
 }
 
 .dialog .dialog-pane {
-	border-left: 1px solid #3AA7E9;
-	border-right: 1px solid #3AA7E9;
-	border-bottom: 1px solid #3AA7E9;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 	background: #fff;
 	border-radius: 0 0 5px 5px;
 	padding: 10px;
@@ -64,25 +71,37 @@
 	color: #666;
 }
 
-.confirm h1 {
-	font-size: 17px;
-	text-align: left;
-}
-
-.alert h1 {
-	font-size: 18px;
-	text-align: left;
-}
-
 .dialog p {
 	margin-bottom: 8px;
 	line-height: 1.33;
 }
 
 .dialog .btns {
-	margin: 15px 0 5px;
+	margin-top: 1em;
 	border-top: 1px solid #ccc;
 	padding: 10px 0 0;
 	
 	text-align: right;
+}
+
+/**************OVERLAY ************************/
+.overlay {
+	border-radius: 5px;
+}
+
+.overlay .dialog-header,
+.overlay .dialog-pane {
+	border: none;
+}
+
+.overlay .dialog-header {
+	display: none;
+}
+
+.overlay .dialog-pane {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+
+	background: #fff;
+	padding: 10px;
 }

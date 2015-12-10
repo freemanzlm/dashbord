@@ -2,7 +2,6 @@ $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
 	var alertDialog = BizReport.alertDialog;
 	var local = BizReport.local;
-	var confirmDialog = new BizReport.ConfirmDialog();
 	
 	var customTableConfig = pageData && pageData.expired ? {} : {
 		asStripeClasses: ['selectable'],
@@ -59,16 +58,14 @@ $(function(){
 		});
 	}
 	
-	confirmDialog.init();
-	confirmDialog.subscribe({
-		confirm: function() {
-			submitListings();
-		}
-	});
-	
 	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
-	var previewDialog = new ListingPreviewDialog();
-	previewDialog.init();
+	var previewDialog = new ListingPreviewDialog(null, {wrapper: "#listing-preview-dialog", zIndex: 20000, width: 850, body: {
+		style: {
+			'max-height': "530px",
+			overflow: 'auto'
+		}
+	}});
+	
 	previewDialog.subscribe({
 		ok: function(){
 			submitListings();
@@ -88,11 +85,11 @@ $(function(){
 			previewDialog.show();
 			previewDialog.listingTable.setData(listings);
 		} else {
-			confirmDialog.confirm(local.getText('promo.hotsell.zeroSubmitted'));
+			cbt.confirm(local.getText('promo.hotsell.zeroSubmitted'), submitListings);
 		}
 	});
 	
-	var termsDialog = BizReport.termsDialog;
+	var termsDialog = cbt.termsDialog;
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
 	});	

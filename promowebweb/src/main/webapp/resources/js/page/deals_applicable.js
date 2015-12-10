@@ -84,7 +84,7 @@ $(function(){
 		uploadForm.submit();
 	});	
 	
-	var termsDialog = BizReport.termsDialog;
+	var termsDialog = cbt.termsDialog;
 	termsDialog.subscribe({
 		"ok": function() {
 			acceptCheckbox.removeAttribute("disabled");

@@ -3,7 +3,7 @@
 		this.init(element, options);
 	};
 
-	Popup.prototype = new namespace.Widget();
+	Popup.prototype = new cbt.Widget();
 	
 	var defaults = {
 		template: '<div class="popup"><div class="anchor"></div><div class="popup-content"></div></div>',

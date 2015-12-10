@@ -59,8 +59,13 @@ $(function(){
 	}
 	
 	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
-	var previewDialog = new ListingPreviewDialog();
-	previewDialog.init();
+	var previewDialog = new ListingPreviewDialog(null, {wrapper: "#listing-preview-dialog", zIndex: 20000, width: 850, body: {
+		style: {
+			'max-height': "530px",
+			overflow: 'auto'
+		}
+	}});
+	
 	previewDialog.subscribe({
 		ok: function(){
 			submitListings();
@@ -86,7 +91,7 @@ $(function(){
 		}
 	});
 	
-	var termsDialog = BizReport.termsDialog;
+	var termsDialog = cbt.termsDialog;
 	termsDialog.subscribe({
 		"ok": function() {
 			acceptCheckbox.removeAttribute("disabled");

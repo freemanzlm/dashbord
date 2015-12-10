@@ -51,20 +51,25 @@ $(function(){
 				if (json && json.status) {
 					location.reload();
 				} else {
-					alertDialog.alert(local.getText('promo.request.fail'));
+					cbt.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
 				$(document.body).isLoading('hide');
-				alertDialog.alert(local.getText('promo.request.fail'));
+				cbt.alert(local.getText('promo.request.fail'));
 			}
 		});
 	}
 	
 	// for test
 	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
-	var previewDialog = new ListingPreviewDialog();
-	previewDialog.init();
+	var previewDialog = new ListingPreviewDialog(null, {wrapper: "#listing-preview-dialog", zIndex: 20000, width: 850, body: {
+		style: {
+			'max-height': "530px",
+			overflow: 'auto'
+		}
+	}});
+	
 	previewDialog.subscribe({
 		ok: function(){
 			submitListings();
@@ -83,11 +88,11 @@ $(function(){
 			previewDialog.listingTable.setData(listings);
 		} else {
 			event.preventDefault();
-			alertDialog.alert(local.getText('promo.hotsell.applyCondition'));
+			cbt.alert(local.getText('promo.hotsell.applyCondition'));
 		}
 	});
 	
-	var termsDialog = BizReport.termsDialog;
+	var termsDialog = cbt.termsDialog;
 	termsDialog.subscribe({
 		"ok": function() {
 			acceptCheckbox.removeAttribute("disabled");

@@ -10,7 +10,7 @@ var BizReport = BizReport || {};
 
 (function(namespace){
 	var SKUListTable = function() {};
-	SKUListTable.prototype = new namespace.Widget();
+	SKUListTable.prototype = new cbt.Widget();
 	
 	var local = namespace.local, alertDialog = namespace.alertDialog;
 	

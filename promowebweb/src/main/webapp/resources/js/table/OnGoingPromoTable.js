@@ -10,7 +10,7 @@ var BizReport = BizReport || {};
 
 (function (namespace) {
 	var OnGoingPromoTable = function () {};
-	OnGoingPromoTable.prototype = new namespace.Widget();
+	OnGoingPromoTable.prototype = new cbt.Widget();
 
 	var local = namespace.local;
 

@@ -10,7 +10,7 @@ var BizReport = BizReport || {};
 
 (function(namespace){
 	var DealsListingTable = function() {};
-	DealsListingTable.prototype = new namespace.Widget();
+	DealsListingTable.prototype = new cbt.Widget();
 	
 	var local = namespace.local;
 	

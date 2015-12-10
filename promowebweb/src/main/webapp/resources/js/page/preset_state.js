@@ -16,7 +16,7 @@ $(function(){
 		}});
 	listingTable.update({promoId:pageData && pageData.promoId});
 	
-	var termsDialog = BizReport.termsDialog;
+	var termsDialog = cbt.termsDialog;
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
 	});	

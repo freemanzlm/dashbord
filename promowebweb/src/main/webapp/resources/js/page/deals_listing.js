@@ -2,7 +2,6 @@ $(function(){
 	
 	var DealsListingTable = BizReport.DealsListingTable;
 	var alertDialog = BizReport.alertDialog;
-	var confirmDialog = new BizReport.ConfirmDialog();
 	var local = BizReport.local;
 	
 	var customTableConfig = pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired) ? {} : {
@@ -73,16 +72,14 @@ $(function(){
 		});
 	}
 	
-	confirmDialog.init();
-	confirmDialog.subscribe({
-		confirm: function() {
-			submitListings();
-		}
-	});
-	
 	var ListingPreviewDialog = BizReport.ListingPreviewDialog;
-	var previewDialog = new ListingPreviewDialog();
-	previewDialog.init();
+	var previewDialog = new ListingPreviewDialog(null, {wrapper: "#listing-preview-dialog", zIndex: 20000, width: 850, body: {
+		style: {
+			'max-height': "530px",
+			overflow: 'auto'
+		}
+	}});
+	
 	previewDialog.subscribe({
 		ok: function(){
 			submitListings();
@@ -104,14 +101,14 @@ $(function(){
 			previewDialog.listingTable.setData(listings);
 		} else {
 			if (pageData && pageData.state == 'Applied') {
-				confirmDialog.confirm(local.getText('promo.hotsell.zeroSubmitted'));
+				cbt.confirm(local.getText('promo.hotsell.zeroSubmitted'), submitListings);
 			} else {
 				alertDialog.alert(local.getText('promo.hotsell.applyCondition'));
 			}
 		}
 	});
 	
-	var termsDialog = BizReport.termsDialog;
+	var termsDialog = cbt.termsDialog;
 	$(".terms-conditions").click(function(event){
 		termsDialog.show();
 	});	
