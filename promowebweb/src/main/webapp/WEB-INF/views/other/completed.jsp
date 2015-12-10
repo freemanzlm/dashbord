@@ -34,6 +34,7 @@
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.signpost_css3_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
@@ -63,19 +64,19 @@
 			
 			<c:choose>
 				<c:when test="${ rewarding }">
-					<div class="steps-wrapper">
-						<div class="steps">
-							<div class="step done"><span>活动进行中</span></div>
-							<div class="step done"><span>奖励确认中</span></div>
-							<div class="step done"><span>申领奖励</span></div>
-							<div class="step current-step last"><span>活动完成</span></div>
+					<div class="signpost mb20">
+						<div class="signpost-posts">
+							<div class="post done"><span class="label">活动进行中</span></div>
+							<div class="post done"><span class="label">奖励确认中</span></div>
+							<div class="post done"><span class="label">申领奖励</span></div>
+							<div class="post current-post last"><span class="label">活动完成</span></div>
 						</div>
 					</div>  <!-- steps end -->
 				</c:when>
 				<c:otherwise>
-					<div class="steps-wrapper">
-						<div class="steps">
-							<div class="step current-step last"><span>活动已结束</span></div>
+					<div class="signpost mb20">
+						<div class="signpost-posts">
+							<div class="post current-post last"><span class="label">活动已结束</span></div>
 						</div>
 					</div>  <!-- steps end -->
 				</c:otherwise>

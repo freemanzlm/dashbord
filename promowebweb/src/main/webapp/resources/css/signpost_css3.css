@@ -1,0 +1,74 @@
+.signpost {
+	margin-top: 20px;
+	border: 1px solid #ccc;
+	display: table;
+	width: 100%;
+	font-size: 12px;
+}
+
+.signpost-posts {
+	display: table-row;
+}
+
+.signpost-posts .post {
+	padding: 0 20px 0 0px;
+	background: #F9FAFB;
+	display: table-cell;
+	text-align: center;
+	line-height: 36px;
+	color: #808282;
+	position: relative;
+	overflow: hidden;
+}
+
+.signpost-posts .post:after {
+	content: '';
+	display: inline-block;
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	background: #F9FAFB;
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	right: 7px;
+	top: 2px;
+	transform: rotate(45deg);
+}
+
+.signpost-posts .post .label {
+	background-color: #F9FAFB;
+	display: block;
+	position: relative;
+	z-index: 2;
+}
+
+.signpost-posts .post.done {
+	background-color: #3365B0;
+	color: #fff;
+}
+
+.signpost-posts .post.done:after,
+.signpost-posts .post.current-post:after{
+	background: #3365B0;
+	border-top: 2px solid #fff;
+	border-right: 2px solid #fff;
+}
+
+.signpost-posts .post.done .label {
+	background-color: #3365B0;
+}
+
+.signpost-posts .post.current-post {
+	color: #fff;
+}
+
+.signpost-posts .post.current-post .label {
+	background-color: #3365B0;
+	font-weight: bold;
+}
+
+.signpost-posts .post:last-child,
+.signpost-posts .post.last {
+	background-image: none;
+	padding-right: 0;
+}

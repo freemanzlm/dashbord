@@ -37,6 +37,8 @@
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.signpost_css3_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.signpost_css3_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
@@ -64,50 +66,50 @@
 			
 			<c:choose>
 				<c:when test="${ rewarding }">
-					<div class="steps-wrapper">
-						<div class="steps">
+					<div class="signpost mb20">
+						<div class="signpost-posts">
 							<c:choose>
 								<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
-									<div class="step"><span>活動進行中</span></div>
-									<div class="step"><span>獎勵確認中</span></div>
-									<div class="step"><span>申領獎勵</span></div>
-									<div class="step last"><span>活動完成</span></div>
+									<div class="post"><span class="label">活動進行中</span></div>
+									<div class="post"><span class="label">獎勵確認中</span></div>
+									<div class="post"><span class="label">申領獎勵</span></div>
+									<div class="post last"><span class="label">活動完成</span></div>
 								</c:when>
 								<c:when test="${ state eq 'Started' }">
-									<div class="step current-step"><span>活動進行中</span></div>
-									<div class="step"><span>獎勵確認中</span></div>
-									<div class="step"><span>申領獎勵</span></div>
-									<div class="step last"><span>活動完成</span></div>
+									<div class="post current-post"><span class="label">活動進行中</span></div>
+									<div class="post"><span class="label">獎勵確認中</span></div>
+									<div class="post"><span class="label">申領獎勵</span></div>
+									<div class="post last"><span class="label">活動完成</span></div>
 								</c:when>
 								<c:when test="${ state eq 'SubsidyCounting' }">
-									<div class="step done"><span>活動進行中</span></div>
-									<div class="step current-step"><span>獎勵確認中</span></div>
-									<div class="step"><span>申領獎勵</span></div>
-									<div class="step last"><span>活動完成</span></div>
+									<div class="post done"><span class="label">活動進行中</span></div>
+									<div class="post current-post"><span class="label">獎勵確認中</span></div>
+									<div class="post"><span class="label">申領獎勵</span></div>
+									<div class="post last"><span class="label">活動完成</span></div>
 								</c:when>
 								<c:otherwise>
-									<div class="step done"><span>活動進行中</span></div>
-									<div class="step done"><span>獎勵確認中</span></div>
-									<div class="step current-step"><span>申領獎勵</span></div>
-									<div class="step last"><span>活動完成</span></div>
+									<div class="post done"><span class="label">活動進行中</span></div>
+									<div class="post done"><span class="label">獎勵確認中</span></div>
+									<div class="post current-post"><span class="label">申領獎勵</span></div>
+									<div class="post last"><span class="label">活動完成</span></div>
 								</c:otherwise>
 							</c:choose>
 						</div>
-					</div>  <!-- steps end -->
+					</div>  <!-- posts end -->
 				</c:when>
 				<c:otherwise>
 					<c:choose>
 						<c:when test="${ state eq 'Created' or state eq 'Unknow' }">
-							<div class="steps-wrapper">
-								<div class="steps">
-									<div class="step last"><span>活動進行中</span></div>
+							<div class="signpost mb20">
+								<div class="signpost-posts">
+									<div class="post last"><span class="label">活動進行中</span></div>
 								</div>
 							</div>
 						</c:when>
 						<c:when test="${ state eq 'Started' }">
-							<div class="steps-wrapper">
-								<div class="steps">
-									<div class="step current-step last"><span>活動進行中</span></div>
+							<div class="signpost mb20">
+								<div class="signpost-posts">
+									<div class="post current-post last"><span class="label">活動進行中</span></div>
 								</div>
 							</div>
 						</c:when>

@@ -34,6 +34,7 @@
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.signpost_css3_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
@@ -66,17 +67,17 @@
 	<div id="page-pane">
 		<div class="pane">
 			<h2>爆款促销 ${promo.name}</h2>
-			<div class="steps-wrapper">
-				<div class="steps">
+			<div class="signpost mb20">
+				<div class="signpost-posts">
 					<c:choose>
 						<c:when test="${ state == 'auFail' }">
-							<div class="step done"><span>报名</span></div>
-							<div class="step done"><span>已报名</span></div>
-							<div class="step current-step last"><span>审核失败</span></div>
+							<div class="post done"><span class="label">报名</span></div>
+							<div class="post done"><span class="label">已报名</span></div>
+							<div class="post current-post last"><span class="label">审核失败</span></div>
 						</c:when>
 						<c:otherwise>
 							<!-- 未报名、未申领奖励  -->
-							<div class="step current-step last"><span>活动已结束</span></div>
+							<div class="post current-post last"><span class="label">活动已结束</span></div>
 						</c:otherwise>
 					</c:choose>
 				</div>

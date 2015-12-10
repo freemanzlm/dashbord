@@ -87,60 +87,6 @@
 	display: table-cell;
 }
 
-/* steps module begin */
-
-.steps-wrapper {
-	margin-bottom: 20px;
-	display: table;
-	width: 100%;
-}
-
-.steps {
-	display: table-row;
-}
-
-.steps .step {
-	padding: 0 17px 0 0px;
-	background: url(../img/step.png) no-repeat scroll right center #F9FAFB;
-	display: table-cell;
-	text-align: center;
-	line-height: 28px;
-	color: #808282;
-}
-
-.steps .step span {
-	background-color: #F9FAFB;
-	display: block;
-}
-
-.steps .step.done {
-	background-image: url(../img/done.png);
-	background-color: #DEDEDF;
-	color: #333;
-}
-
-.steps .step.done span {
-	background-color: #DEDEDF;
-}
-
-.steps .step.current-step {
-	background-image: url(../img/done.png);
-	color: #333;
-}
-
-.steps .step.current-step span {
-	background-color: #DEDEDF;
-	font-weight: bold;
-}
-
-.steps .step:last-child,
-.steps .step.last {
-	background-image: none;
-	padding-right: 0;
-}
-
-/* steps module end */
-
 /* active detail begin */
 .activity-detail {
 	border-top: 1px solid #ccc;

@@ -8,56 +8,56 @@
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
 
-<div class="steps-wrapper">
-	<div class="steps">
+<div class="signpost mb20">
+	<div class="signpost-posts">
 		<c:choose>
 			<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
-				<div class="step current-step"><span>報名</span></div>
-				<div class="step"><span>已提交預審</span></div>
-				<div class="step"><span>預審進行中</span></div>
-				<div class="step"><span>正式報名</span></div>
-				<div class="step ${rewarding ? '':'last'}"><span>活動進行中</span></div>
+				<div class="post current-post"><span class="label">報名</span></div>
+				<div class="post"><span class="label">已提交預審</span></div>
+				<div class="post"><span class="label">預審進行中</span></div>
+				<div class="post"><span class="label">正式報名</span></div>
+				<div class="post ${rewarding ? '':'last'}"><span class="label">活動進行中</span></div>
 			</c:when>
 			<c:when test="${ state eq 'Applied' }">
-				<div class="step done"><span>報名</span></div>
-				<div class="step current-step"><span>已報名</span></div>
-				<div class="step ${rewarding ? '':'last'}"><span>活動進行中</span></div>
+				<div class="post done"><span class="label">報名</span></div>
+				<div class="post current-post"><span class="label">已報名</span></div>
+				<div class="post ${rewarding ? '':'last'}"><span class="label">活動進行中</span></div>
 			</c:when>
 			<c:when test="${ state eq 'Started' }">
-				<div class="step done"><span>報名</span></div>
-				<div class="step done"><span>已報名</span></div>
-				<div class="step current-step ${rewarding ? '':'last'}"><span>活動進行中</span></div>
+				<div class="post done"><span class="label">報名</span></div>
+				<div class="post done"><span class="label">已報名</span></div>
+				<div class="post current-post ${rewarding ? '':'last'}"><span class="label">活動進行中</span></div>
 			</c:when>
 			<c:otherwise>
-				<div class="step done"><span>報名</span></div>
-				<div class="step done"><span>已報名</span></div>
-				<div class="step done"><span>活動進行中</span></div>
+				<div class="post done"><span class="label">報名</span></div>
+				<div class="post done"><span class="label">已報名</span></div>
+				<div class="post done"><span class="label">活動進行中</span></div>
 			</c:otherwise>
 		</c:choose>
 		
 		<c:if test="${ rewarding }">
 			<c:choose>
 				<c:when test="${ state eq 'SubsidyCounting' }">
-					<div class="step current-step"><span>獎勵確認中</span></div>
-					<div class="step"><span>申領獎勵</span></div>
-					<div class="step last"><span>活動完成</span></div>
+					<div class="post current-post"><span class="label">獎勵確認中</span></div>
+					<div class="post"><span class="label">申領獎勵</span></div>
+					<div class="post last"><span class="label">活動完成</span></div>
 				</c:when>
 				<c:when test="${ (state eq 'SubsidyWaiting') or (state eq 'SubsidyAccessed') or 
 					(state eq 'SubsidySubmitted') or (state eq 'SubsidyUploaded') or (state eq 'SubsidyRetrievable') or
 					(state eq 'SubsidyResubmittable') or (state eq 'SubsidyRetrieveFailed')}">
-					<div class="step done"><span>獎勵確認中</span></div>
-					<div class="step current-step"><span>申領獎勵</span></div>
-					<div class="step last"><span>活動完成</span></div>
+					<div class="post done"><span class="label">獎勵確認中</span></div>
+					<div class="post current-post"><span class="label">申領獎勵</span></div>
+					<div class="post last"><span class="label">活動完成</span></div>
 				</c:when>
 				<c:when test="${state eq 'SubsidyRetrieved'}">
-					<div class="step done"><span>獎勵確認中</span></div>
-					<div class="step done"><span>申領獎勵</span></div>
-					<div class="step current-step last"><span>活動完成</span></div>
+					<div class="post done"><span class="label">獎勵確認中</span></div>
+					<div class="post done"><span class="label">申領獎勵</span></div>
+					<div class="post current-post last"><span class="label">活動完成</span></div>
 				</c:when>
 				<c:otherwise>
-					<div class="step"><span>獎勵確認中</span></div>
-					<div class="step"><span>申領獎勵</span></div>
-					<div class="step last"><span>活動完成</span></div>
+					<div class="post"><span class="label">獎勵確認中</span></div>
+					<div class="post"><span class="label">申領獎勵</span></div>
+					<div class="post last"><span class="label">活動完成</span></div>
 				</c:otherwise>
 			</c:choose>
 		</c:if>		

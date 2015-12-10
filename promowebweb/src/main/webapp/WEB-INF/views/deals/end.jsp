@@ -33,6 +33,7 @@
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.signpost_css3_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
@@ -66,16 +67,16 @@
 	<div id="page-pane">
 		<div class="pane">
 			<h2>Deals招募 ${promo.name}</h2>
-			<div class="steps-wrapper">
-				<div class="steps">
+			<div class="signpost mb20">
+				<div class="signpost-posts">
 					<c:choose>
 						<c:when test="${ endReason == 'preFail' }">
-							<div class="step done"><span>报名</span></div>
-							<div class="step done"><span>已提交预审</span></div>
-							<div class="step current-step last"><span>预审失败</span></div>
+							<div class="post done"><span class="label">报名</span></div>
+							<div class="post done"><span class="label">已提交预审</span></div>
+							<div class="post current-post last"><span class="label">预审失败</span></div>
 						</c:when>
 						<c:otherwise>
-							<div class="step current-step last"><span>活动已结束</span></div>
+							<div class="post current-post last"><span class="label">活动已结束</span></div>
 						</c:otherwise>
 					</c:choose>
 				</div>
