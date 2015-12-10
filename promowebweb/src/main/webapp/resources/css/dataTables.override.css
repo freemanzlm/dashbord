@@ -67,12 +67,12 @@ table.dataTable thead .sorting_desc_disabled {
 }
 
 table.dataTable tbody tr.even {
-  background-color: #fdfdfd;
+  background-color: #f8f8f8;
 }
 
 table.dataTable tbody tr.odd,
 table.dataTable tbody tr.selected {
-  background-color: #EAEFF5;
+  background-color: #E8e8e8;
 }
 
 table.dataTable tbody tr.selectable td,

@@ -22,7 +22,13 @@ input, select {
 }
 
 a {
+	color: #007ab0;
 	text-decoration: none;
+}
+
+a:focus, a:hover {
+    color: #007ab0;
+    text-decoration: none;
 }
 
 a:visited {
@@ -31,11 +37,6 @@ a:visited {
 
 em {
 	font-weight: bold;
-}
-
-a:focus, a:hover {
-    color: #002398;
-    text-decoration: none;
 }
 
 menu li {
