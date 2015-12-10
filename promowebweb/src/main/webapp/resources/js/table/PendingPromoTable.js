@@ -174,8 +174,8 @@ var BizReport = BizReport || {};
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
 					
-					that.container.parents(".pane-table").find(".type-filter").change(function(){
-						oDataTable.column(1).search(this.value).draw();
+					that.container.parents(".pane-table").find(".type-filter").dropdown().change(function(e, data){
+						oDataTable.column(1).search(data.value).draw();
 					});
 				}, 
 				ajaxbegin: function() {

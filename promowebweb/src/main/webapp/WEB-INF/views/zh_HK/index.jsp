@@ -79,6 +79,7 @@
 				<div class="pane pane-table mt20">
 					<div class="header">
 						<div class="fr cl">
+							
 							<select name="" id="" class="fr type-filter">
 								<option value="">全部活動類型</option>
 								<option value="0">爆款促銷</option>
@@ -95,22 +96,26 @@
 			<div class="pane pane-table mt20">
 				<div class="header">
 					<div class="fr cl">
-						<select name="" id="" class="fr state-filter">
-							<option value="">顯示所有活動</option>
-							<option value="Created">可報名的活動</option>
-							<option value="PromotionApproved">待正式報名的活動</option>
-							<option value="Submitted">已提交預審的活動</option>
-							<option value="Verifying">預審中的活動</option>
-							<option value="Applied">已報名的活動</option>
-							<option value="Started">進行中的活動</option>
-							<option value="SubsidyCounting">獎勵確認中的活動</option>
-							<option value="Detailed">只能查看詳情的活動</option>
-						</select> <select name="" id="" class="fr type-filter">
-							<option value="">全部活動類型</option>
-							<option value="0">爆款促銷</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活動</option>
-						</select>
+						<span class="select-control state-filter fr">
+							<select name="" id="" class="">
+								<option value="">顯示所有活動</option>
+								<option value="Created">可報名的活動</option>
+								<option value="PromotionApproved">待正式報名的活動</option>
+								<option value="Submitted">已提交預審的活動</option>
+								<option value="Verifying">預審中的活動</option>
+								<option value="Applied">已報名的活動</option>
+								<option value="Started">進行中的活動</option>
+								<option value="SubsidyCounting">獎勵確認中的活動</option>
+								<option value="Detailed">只能查看詳情的活動</option>
+							</select></span>
+						<span class="select-control type-filter fr">
+							 <select name="" id="">
+								<option value="">全部活動類型</option>
+								<option value="0">爆款促銷</option>
+								<option value="1">Deals招募</option>
+								<option value="3">其它活動</option>
+							</select>
+						</span>
 					</div>
 					<h3>進行中的活動</h3>
 				</div>
@@ -120,20 +125,25 @@
 			<div class="pane pane-table mt20">
 				<div class="header">
 					<div class="fr cl">
-						<select name="" id="" class="fr state-filter">
-							<option value="">顯示所有活動</option>
-							<option value="SubsidyWaiting">可申領獎勵的活動</option>
-							<option value="SubsidyAccessed">待填寫協定的活動</option>
-							<option value="SubsidyResubmittable">需要重新申領獎勵的活動</option>
-							<option value="SubsidyRetrievable">可領取獎勵的活動</option>
-							<option value="SubsidySubmitted">待上傳協定的活動</option>
-							<option value="SubsidyUploaded">申領稽核中的活動</option>
-						</select> <select name="" id="" class="fr type-filter">
-							<option value="">全部活動類型</option>
-							<option value="0">爆款促銷</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活動</option>
-						</select>
+						<span class="select-control state-filter fr">
+							<select name="" id="">
+								<option value="">顯示所有活動</option>
+								<option value="SubsidyWaiting">可申領獎勵的活動</option>
+								<option value="SubsidyAccessed">待填寫協定的活動</option>
+								<option value="SubsidyResubmittable">需要重新申領獎勵的活動</option>
+								<option value="SubsidyRetrievable">可領取獎勵的活動</option>
+								<option value="SubsidySubmitted">待上傳協定的活動</option>
+								<option value="SubsidyUploaded">申領稽核中的活動</option>
+							</select>
+						</span>
+						<span class="select-control type-filter fr">
+							<select name="" id="" class="fr type-filter">
+								<option value="">全部活動類型</option>
+								<option value="0">爆款促銷</option>
+								<option value="1">Deals招募</option>
+								<option value="3">其它活動</option>
+							</select>
+						</span>
 					</div>
 					<h3>領取活動獎勵</h3>
 				</div>
@@ -143,16 +153,21 @@
 			<div class="pane pane-table mt20">
 				<div class="header">
 					<div class="fr cl">
-						<select name="" id="" class="fr state-filter">
-							<option value="">顯示所有活動</option>
-							<option value="SubsidyRetrieved">領取獎勵成功的活動</option>
-							<option value="Detailed">只能查看詳情的活動</option>
-						</select> <select name="" id="" class="fr type-filter">
-							<option value="">全部活動類型</option>
-							<option value="0">爆款促銷</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活動</option>
-						</select>
+						<span class="select-control state-filter fr">
+							<select name="" id="" class="fr state-filter">
+								<option value="">顯示所有活動</option>
+								<option value="SubsidyRetrieved">領取獎勵成功的活動</option>
+								<option value="Detailed">只能查看詳情的活動</option>
+							</select>
+						</span>
+						<span class="select-control type-filter fr">
+							<select name="" id="" class="fr type-filter">
+								<option value="">全部活動類型</option>
+								<option value="0">爆款促銷</option>
+								<option value="1">Deals招募</option>
+								<option value="3">其它活動</option>
+							</select>
+						</span>
 					</div>
 					<h3>已結束的活動</h3>
 				</div>

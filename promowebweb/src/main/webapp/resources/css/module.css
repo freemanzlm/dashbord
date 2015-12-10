@@ -70,7 +70,7 @@
 	margin-bottom: 0;
 }
 
-.pane-table .header select.fr {
+.pane-table .header .select-control {
 	margin-left: 20px;
 }
 /* pane end */
