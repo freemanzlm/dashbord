@@ -74,35 +74,33 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
-				
-				<%@ include file="../steps.jsp" %>
-				
-				<c:if test="${promo.isReversed }">				
-					<%@ include file="../stateMessages/forReversed.jsp" %>
-				</c:if>
-				
-				<%@ include file="activity.jsp" %>
-				
-				<div class="mt20 my-listing">
-					<h3>選擇報名刊登<small>（已選  <span>0</span> 項）</small></h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
-				</div>
-				
-				<div class="mt20" style="text-align: center;">
-					<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
-						<input type="hidden" name="promoId" value="${promo.promoId}"/>
-						<input type="hidden" name="listings" value="[]" />
-						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
-						<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>預覽並提交報名</button>
-						<br /><br /> <a href="index">返回活動清單</a>
-					</form>
-				</div>
-
+	<div id="page-pane">
+		<div class="pane">
+			<h2>Deals招募 ${promo.name}</h2>
+			
+			<%@ include file="../steps.jsp" %>
+			
+			<c:if test="${promo.isReversed }">				
+				<%@ include file="../stateMessages/forReversed.jsp" %>
+			</c:if>
+			
+			<%@ include file="activity.jsp" %>
+			
+			<div class="mt20 my-listing">
+				<h3>選擇報名刊登<small>（已選  <span>0</span> 項）</small></h3>
+				<jsp:include page="../table/dealsListing.jsp"></jsp:include>
 			</div>
+			
+			<div class="mt20" style="text-align: center;">
+				<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
+					<input type="hidden" name="promoId" value="${promo.promoId}"/>
+					<input type="hidden" name="listings" value="[]" />
+					<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+					<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>預覽並提交報名</button>
+					<br /><br /> <a href="index">返回活動清單</a>
+				</form>
+			</div>
+
 		</div>
 	</div>
 

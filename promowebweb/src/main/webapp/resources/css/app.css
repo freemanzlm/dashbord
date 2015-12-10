@@ -109,11 +109,11 @@
 }
 /* top navigation end*/
 
-#page h2 {
+#page-pane h2 {
 	font-weight: bold;
 }
 
-#page .pane h2 {
+#page-pane .pane h2 {
 	margin-bottom: 25px;
 }
 

@@ -66,24 +66,22 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
-				
-				<%@ include file="steps.jsp" %>
-				
-				<%@ include file="../stateMessages/forCompleted.jsp" %>
-				
-				<%@ include file="activity.jsp" %>
-				
-				<div class="mt20 my-listing">
-					<h3>報名刊登清單</h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
-				</div>	
-			</div>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>Deals招募 ${promo.name}</h2>
 			
+			<%@ include file="steps.jsp" %>
+			
+			<%@ include file="../stateMessages/forCompleted.jsp" %>
+			
+			<%@ include file="activity.jsp" %>
+			
+			<div class="mt20 my-listing">
+				<h3>報名刊登清單</h3>
+				<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+			</div>	
 		</div>
+		
 	</div>
 
 	<!-- Global Footer -->

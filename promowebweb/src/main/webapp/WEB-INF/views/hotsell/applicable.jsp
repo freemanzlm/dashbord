@@ -70,31 +70,29 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>爆款促销 ${promo.name}</h2>
-				
-				<%@ include file="../steps.jsp" %>
-				
-				<%@ include file="activity.jsp" %>
-				
-				<div class="mt20 my-listing">
-					<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
-					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
-				</div>
-				
-				<div class="mt20" style="text-align: center;">
-					<form id="listing-form" action="/promotion/hotsell/confirmHotSellListings" method="post">
-						<input type="hidden" name="promoId" value="${promo.promoId}"/>
-						<input type="hidden" name="listings" value="[]" />
-						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-						<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并提交报名</button>
-						<br /><br /> <a href="index">返回活动列表</a>
-					</form>
-				</div>
-
+	<div id="page-pane">
+		<div class="pane">
+			<h2>爆款促销 ${promo.name}</h2>
+			
+			<%@ include file="../steps.jsp" %>
+			
+			<%@ include file="activity.jsp" %>
+			
+			<div class="mt20 my-listing">
+				<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
+				<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
 			</div>
+			
+			<div class="mt20" style="text-align: center;">
+				<form id="listing-form" action="/promotion/hotsell/confirmHotSellListings" method="post">
+					<input type="hidden" name="promoId" value="${promo.promoId}"/>
+					<input type="hidden" name="listings" value="[]" />
+					<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
+					<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并提交报名</button>
+					<br /><br /> <a href="index">返回活动列表</a>
+				</form>
+			</div>
+
 		</div>
 	</div>
 

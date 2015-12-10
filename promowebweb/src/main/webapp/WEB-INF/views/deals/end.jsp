@@ -60,29 +60,27 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps">
-						<c:choose>
-							<c:when test="${ endReason == 'preFail' }">
-								<div class="step done"><span>报名</span></div>
-								<div class="step done"><span>已提交预审</span></div>
-								<div class="step current-step last"><span>预审失败</span></div>
-							</c:when>
-							<c:otherwise>
-								<div class="step current-step last"><span>活动已结束</span></div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>  <!-- steps end -->
-				
-				<%@ include file="../stateMessages/forEnd.jsp" %>				
-				
-				<%@ include file="activity.jsp" %>
-			</div>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>Deals招募 ${promo.name}</h2>
+			<div class="steps-wrapper">
+				<div class="steps">
+					<c:choose>
+						<c:when test="${ endReason == 'preFail' }">
+							<div class="step done"><span>报名</span></div>
+							<div class="step done"><span>已提交预审</span></div>
+							<div class="step current-step last"><span>预审失败</span></div>
+						</c:when>
+						<c:otherwise>
+							<div class="step current-step last"><span>活动已结束</span></div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>  <!-- steps end -->
+			
+			<%@ include file="../stateMessages/forEnd.jsp" %>				
+			
+			<%@ include file="activity.jsp" %>
 		</div>
 	</div>
 

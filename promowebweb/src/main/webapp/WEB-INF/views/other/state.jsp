@@ -53,89 +53,87 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>其它活动 ${promo.name}</h2>
-				
-				<c:choose>
-					<c:when test="${ rewarding }">
-						<div class="steps-wrapper">
-							<div class="steps">
-								<c:choose>
-									<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
-										<div class="step"><span>活动进行中</span></div>
-										<div class="step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
-									</c:when>
-									<c:when test="${ state eq 'Started' }">
-										<div class="step current-step"><span>活动进行中</span></div>
-										<div class="step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
-									</c:when>
-									<c:when test="${ state eq 'SubsidyCounting' }">
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step current-step"><span>奖励确认中</span></div>
-										<div class="step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
-									</c:when>
-									<c:otherwise>
-										<div class="step done"><span>活动进行中</span></div>
-										<div class="step done"><span>奖励确认中</span></div>
-										<div class="step current-step"><span>申领奖励</span></div>
-										<div class="step last"><span>活动完成</span></div>
-									</c:otherwise>
-								</c:choose>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>其它活动 ${promo.name}</h2>
+			
+			<c:choose>
+				<c:when test="${ rewarding }">
+					<div class="steps-wrapper">
+						<div class="steps">
+							<c:choose>
+								<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
+									<div class="step"><span>活动进行中</span></div>
+									<div class="step"><span>奖励确认中</span></div>
+									<div class="step"><span>申领奖励</span></div>
+									<div class="step last"><span>活动完成</span></div>
+								</c:when>
+								<c:when test="${ state eq 'Started' }">
+									<div class="step current-step"><span>活动进行中</span></div>
+									<div class="step"><span>奖励确认中</span></div>
+									<div class="step"><span>申领奖励</span></div>
+									<div class="step last"><span>活动完成</span></div>
+								</c:when>
+								<c:when test="${ state eq 'SubsidyCounting' }">
+									<div class="step done"><span>活动进行中</span></div>
+									<div class="step current-step"><span>奖励确认中</span></div>
+									<div class="step"><span>申领奖励</span></div>
+									<div class="step last"><span>活动完成</span></div>
+								</c:when>
+								<c:otherwise>
+									<div class="step done"><span>活动进行中</span></div>
+									<div class="step done"><span>奖励确认中</span></div>
+									<div class="step current-step"><span>申领奖励</span></div>
+									<div class="step last"><span>活动完成</span></div>
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</div>  <!-- steps end -->
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${ state eq 'Created' or state eq 'Unknow' }">
+							<div class="steps-wrapper">
+								<div class="steps">
+									<div class="step last"><span>活动进行中</span></div>
+								</div>
 							</div>
-						</div>  <!-- steps end -->
-					</c:when>
-					<c:otherwise>
-						<c:choose>
-							<c:when test="${ state eq 'Created' or state eq 'Unknow' }">
-								<div class="steps-wrapper">
-									<div class="steps">
-										<div class="step last"><span>活动进行中</span></div>
-									</div>
+						</c:when>
+						<c:when test="${ state eq 'Started' }">
+							<div class="steps-wrapper">
+								<div class="steps">
+									<div class="step current-step last"><span>活动进行中</span></div>
 								</div>
-							</c:when>
-							<c:when test="${ state eq 'Started' }">
-								<div class="steps-wrapper">
-									<div class="steps">
-										<div class="step current-step last"><span>活动进行中</span></div>
-									</div>
-								</div>
-							</c:when>
-						</c:choose>
-					</c:otherwise>
-				</c:choose>
+							</div>
+						</c:when>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:choose>
+				<c:when test="${state eq 'Created' or state eq 'Unknow' }">
+					<%@ include file="../stateMessages/forOtherCreated.jsp" %>
+				</c:when>
 				
-				<c:choose>
-					<c:when test="${state eq 'Created' or state eq 'Unknow' }">
-						<%@ include file="../stateMessages/forOtherCreated.jsp" %>
-					</c:when>
-					
-					<c:when test="${state eq 'Started' }">
-						<%@ include file="../stateMessages/forStarted.jsp" %>
-					</c:when>
-					
-					<c:when test="${state eq 'SubsidyCounting' }">
-						<%@ include file="../stateMessages/forSubsidyCounting.jsp" %>
-					</c:when>
-					
-					<c:when test="${state eq 'SubsidyRetrieveFailed' }">
-						<%@ include file="../stateMessages/forSubsidyRetrieveFailed.jsp" %>
-					</c:when>
-					
-					<c:otherwise>
-						<%@ include file="../stateMessages/forSubsidyClaim.jsp" %>
-					</c:otherwise>
-				</c:choose>
+				<c:when test="${state eq 'Started' }">
+					<%@ include file="../stateMessages/forStarted.jsp" %>
+				</c:when>
+				
+				<c:when test="${state eq 'SubsidyCounting' }">
+					<%@ include file="../stateMessages/forSubsidyCounting.jsp" %>
+				</c:when>
+				
+				<c:when test="${state eq 'SubsidyRetrieveFailed' }">
+					<%@ include file="../stateMessages/forSubsidyRetrieveFailed.jsp" %>
+				</c:when>
+				
+				<c:otherwise>
+					<%@ include file="../stateMessages/forSubsidyClaim.jsp" %>
+				</c:otherwise>
+			</c:choose>
 
-				<%@ include file="activity.jsp" %>
-				
-			</div>
+			<%@ include file="activity.jsp" %>
+			
 		</div>
 	</div>
 

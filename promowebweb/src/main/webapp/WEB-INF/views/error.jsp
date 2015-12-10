@@ -28,11 +28,15 @@
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/><res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.error_css}" target="head-css"/>
+	
+	<res:useJs value="${res.js.local.js.dropdown_js}" target="page-js"/>
 	
 </head>
 
@@ -42,14 +46,12 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<!-- end: Global Header -->
 	
-	<div id="page" class='error-page'>
-		<div id="page-pane">
-			<div class="error clr" style="margin-bottom: 15px;">
-				<h2><i class="fa fa-times"></i>错误</h2>
-			</div>
-			<p>很抱歉，请求发生异常，请稍后再试。</p>			
+	<div id="page-pane">
+		<div class="error mb15 clr">
+			<h2><i class="fa fa-times"></i>错误</h2>
 		</div>
-	</div>
+		<p>很抱歉，请求发生异常，请稍后再试。</p>			
+	</div>	
 
 	<!-- Global Footer -->
 		<jsp:include page="footer.jsp"></jsp:include>

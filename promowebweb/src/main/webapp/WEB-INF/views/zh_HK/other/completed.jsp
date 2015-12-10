@@ -54,36 +54,34 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>其它活動 ${promo.name}</h2>
-				
-				<c:choose>
-					<c:when test="${ rewarding }">
-						<div class="steps-wrapper">
-							<div class="steps">
-								<div class="step done"><span>活動進行中</span></div>
-								<div class="step done"><span>獎勵確認中</span></div>
-								<div class="step done"><span>申領獎勵</span></div>
-								<div class="step current-step last"><span>活動完成</span></div>
-							</div>
-						</div>  <!-- steps end -->
-					</c:when>
-					<c:otherwise>
-						<div class="steps-wrapper">
-							<div class="steps">
-								<div class="step current-step last"><span>活動已結束</span></div>
-							</div>
-						</div>  <!-- steps end -->
-					</c:otherwise>
-				</c:choose>
-				
-				<%@ include file="../stateMessages/forCompleted.jsp" %>
-				
-				<%@ include file="activity.jsp" %>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>其它活動 ${promo.name}</h2>
+			
+			<c:choose>
+				<c:when test="${ rewarding }">
+					<div class="steps-wrapper">
+						<div class="steps">
+							<div class="step done"><span>活動進行中</span></div>
+							<div class="step done"><span>獎勵確認中</span></div>
+							<div class="step done"><span>申領獎勵</span></div>
+							<div class="step current-step last"><span>活動完成</span></div>
+						</div>
+					</div>  <!-- steps end -->
+				</c:when>
+				<c:otherwise>
+					<div class="steps-wrapper">
+						<div class="steps">
+							<div class="step current-step last"><span>活動已結束</span></div>
+						</div>
+					</div>  <!-- steps end -->
+				</c:otherwise>
+			</c:choose>
+			
+			<%@ include file="../stateMessages/forCompleted.jsp" %>
+			
+			<%@ include file="activity.jsp" %>
 
-			</div>
 		</div>
 	</div>
 

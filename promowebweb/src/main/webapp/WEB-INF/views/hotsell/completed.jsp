@@ -38,6 +38,7 @@
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
@@ -64,25 +65,24 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>爆款促销 ${promo.name}</h2>
-				
-				<%@ include file="../steps.jsp" %>
-				
-				<%@ include file="../stateMessages/forCompleted.jsp" %>
-				
-				<%@ include file="activity.jsp" %>
-				
-				<div class="mt20 my-listing">
-					<h3>报名刊登列表</h3>
-					<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
-				</div>	
-			</div>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>爆款促销 ${promo.name}</h2>
 			
+			<%@ include file="../steps.jsp" %>
+			
+			<%@ include file="../stateMessages/forCompleted.jsp" %>
+			
+			<%@ include file="activity.jsp" %>
+			
+			<div class="mt20 my-listing">
+				<h3>报名刊登列表</h3>
+				<jsp:include page="../table/hotsellListing.jsp"></jsp:include>
+			</div>	
 		</div>
+		
 	</div>
+
 
 	<!-- Global Footer -->
 		<jsp:include page="../footer.jsp"></jsp:include>

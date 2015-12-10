@@ -57,20 +57,18 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
-				<div class="steps-wrapper">
-					<div class="steps">
-						<div class="step current-step last"><span>活动已取消</span></div>
-					</div>
-				</div>  <!-- steps end -->
-				
-				<%@ include file="../stateMessages/forCancelled.jsp" %>				
-				
-				<%@ include file="activity.jsp" %>
-			</div>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>Deals招募 ${promo.name}</h2>
+			<div class="steps-wrapper">
+				<div class="steps">
+					<div class="step current-step last"><span>活动已取消</span></div>
+				</div>
+			</div>  <!-- steps end -->
+			
+			<%@ include file="../stateMessages/forCancelled.jsp" %>				
+			
+			<%@ include file="activity.jsp" %>
 		</div>
 	</div>
 

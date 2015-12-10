@@ -68,40 +68,38 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
-				
-				<%@ include file="steps.jsp" %>
-				
-				<c:choose>
-					<c:when test="${state eq 'Started' }">
-						<%@ include file="../stateMessages/forDealsStarted.jsp" %>
-					</c:when>
-					
-					<c:when test="${state eq 'SubsidyCounting' }">
-						<%@ include file="../stateMessages/forSubsidyCounting.jsp" %>
-					</c:when>
-					
-					<c:when test="${state eq 'SubsidyRetrieveFailed' }">
-						<%@ include file="../stateMessages/forSubsidyRetrieveFailed.jsp" %>
-					</c:when>
-					
-					<c:otherwise>
-						<%@ include file="../stateMessages/forSubsidyClaim.jsp" %>
-					</c:otherwise>
-				</c:choose>
-				
-				<%@ include file="activity.jsp" %>
-				
-				<div class="mt20 my-listing">
-					<h3>报名刊登列表</h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
-				</div>	
-			</div>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>Deals招募 ${promo.name}</h2>
 			
+			<%@ include file="steps.jsp" %>
+			
+			<c:choose>
+				<c:when test="${state eq 'Started' }">
+					<%@ include file="../stateMessages/forDealsStarted.jsp" %>
+				</c:when>
+				
+				<c:when test="${state eq 'SubsidyCounting' }">
+					<%@ include file="../stateMessages/forSubsidyCounting.jsp" %>
+				</c:when>
+				
+				<c:when test="${state eq 'SubsidyRetrieveFailed' }">
+					<%@ include file="../stateMessages/forSubsidyRetrieveFailed.jsp" %>
+				</c:when>
+				
+				<c:otherwise>
+					<%@ include file="../stateMessages/forSubsidyClaim.jsp" %>
+				</c:otherwise>
+			</c:choose>
+			
+			<%@ include file="activity.jsp" %>
+			
+			<div class="mt20 my-listing">
+				<h3>报名刊登列表</h3>
+				<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+			</div>	
 		</div>
+		
 	</div>
 
 	<!-- Global Footer -->

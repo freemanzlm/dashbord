@@ -71,70 +71,68 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>Deals招募 ${promo.name}</h2>
+			
+			<%@ include file="steps.jsp" %>
+			
+			<c:choose>
+				<c:when test="${state eq 'Verifying' }">
+					<%@ include file="../stateMessages/forPretrialing.jsp" %>
+				</c:when>
 				
-				<%@ include file="steps.jsp" %>
+				<c:when test="${state eq 'PromotionApproved' }">
+					<%@ include file="../stateMessages/forPretrialApproved.jsp" %>
+				</c:when>
 				
-				<c:choose>
-					<c:when test="${state eq 'Verifying' }">
-						<%@ include file="../stateMessages/forPretrialing.jsp" %>
-					</c:when>
+				<c:when test="${state eq 'Applied' }">
+					<%@ include file="../stateMessages/forDealsApplied.jsp" %>
+				</c:when>
+			</c:choose>
+			
+			<%@ include file="activity.jsp" %>
+			
+			<div class="mt20 my-listing">
+				<h3>
+					<a name="listing" id="listing"></a>
+					<c:choose>
+						<c:when test="${ state eq 'Verifying' }">
+							提交预审的刊登
+						</c:when>
+						<c:otherwise>
+							选择报名刊登
+						</c:otherwise>
+					</c:choose>
 					
-					<c:when test="${state eq 'PromotionApproved' }">
-						<%@ include file="../stateMessages/forPretrialApproved.jsp" %>
-					</c:when>
-					
-					<c:when test="${state eq 'Applied' }">
-						<%@ include file="../stateMessages/forDealsApplied.jsp" %>
-					</c:when>
-				</c:choose>
+					<c:if test="${(state eq 'PromotionApproved' or state eq 'Applied' ) and (not expired) }">
+						<small>（已选 <span>0</span> 项）</small>
+					</c:if>
+				</h3>						
 				
-				<%@ include file="activity.jsp" %>
-				
-				<div class="mt20 my-listing">
-					<h3>
-						<a name="listing" id="listing"></a>
+				<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+			</div>
+			
+			<c:if test="${((state eq 'PromotionApproved') or (state eq 'Applied')) and (not expired) }">
+				<div class="mt20 page-bottom-actions">
+					<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
+						<input type="hidden" name="promoId" value="${promo.promoId}"/>
+						<input type="hidden" name="listings" value="[]" />
+						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 						<c:choose>
-							<c:when test="${ state eq 'Verifying' }">
-								提交预审的刊登
+							<c:when test="${ state eq 'Applied' }">
+								<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并修改正式报名</button>
 							</c:when>
 							<c:otherwise>
-								选择报名刊登
+								<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并提交正式报名</button>
+								<br /><br /> <a href="index">返回活动列表</a>
 							</c:otherwise>
 						</c:choose>
 						
-						<c:if test="${(state eq 'PromotionApproved' or state eq 'Applied' ) and (not expired) }">
-							<small>（已选 <span>0</span> 项）</small>
-						</c:if>
-					</h3>						
-					
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
-				</div>
-				
-				<c:if test="${((state eq 'PromotionApproved') or (state eq 'Applied')) and (not expired) }">
-					<div class="mt20 page-bottom-actions">
-						<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
-							<input type="hidden" name="promoId" value="${promo.promoId}"/>
-							<input type="hidden" name="listings" value="[]" />
-							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-							<c:choose>
-								<c:when test="${ state eq 'Applied' }">
-									<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并修改正式报名</button>
-								</c:when>
-								<c:otherwise>
-									<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并提交正式报名</button>
-									<br /><br /> <a href="index">返回活动列表</a>
-								</c:otherwise>
-							</c:choose>
-							
-						</form>
-					</div>	
-				</c:if>
-				
-			</div>
+					</form>
+				</div>	
+			</c:if>
+			
 		</div>
 	</div>
 

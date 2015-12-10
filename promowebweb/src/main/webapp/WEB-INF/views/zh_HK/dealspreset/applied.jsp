@@ -74,38 +74,36 @@
 
 	<jsp:include page="../topNavigator.jsp"></jsp:include>
 	
-	<div id="page">
-		<div id="page-pane">
-			<div class="pane">
-				<h2>Deals招募 ${promo.name}</h2>
-				
-				<%@ include file="../steps.jsp" %>
-				
-				<%@ include file="../stateMessages/forDealsApplied.jsp" %>
-				
-				<%@ include file="activity.jsp" %>
-		
-				<div class="mt20 my-listing">
-					<h3>選擇報名刊登
-						<c:if test="${ not expired }">
-							<small>（已選 <span>0</span> 項）</small>
-						</c:if>
-					</h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
-				</div>	
-				
-				<c:if test="${not expired }">
-					<div class="page-bottom-actions">
-						<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
-							<input type="hidden" name="promoId" value="${promo.promoId}"/>
-							<input type="hidden" name="listings" value="[]" />
-							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
-							<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。" ${ isAdmin ? 'disabled' : '' }>預覽並修改報名</button>
-						</form>
-					</div>	 
-				</c:if>
-				
-			</div>
+	<div id="page-pane">
+		<div class="pane">
+			<h2>Deals招募 ${promo.name}</h2>
+			
+			<%@ include file="../steps.jsp" %>
+			
+			<%@ include file="../stateMessages/forDealsApplied.jsp" %>
+			
+			<%@ include file="activity.jsp" %>
+	
+			<div class="mt20 my-listing">
+				<h3>選擇報名刊登
+					<c:if test="${ not expired }">
+						<small>（已選 <span>0</span> 項）</small>
+					</c:if>
+				</h3>
+				<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+			</div>	
+			
+			<c:if test="${not expired }">
+				<div class="page-bottom-actions">
+					<form id="listing-form" action="/promotion/deals/confirmDealsListings" method="post">
+						<input type="hidden" name="promoId" value="${promo.promoId}"/>
+						<input type="hidden" name="listings" value="[]" />
+						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+						<button class="btn" id="form-btn"  title="在报名截止之前，您可以重新勾选报名的刊登。" ${ isAdmin ? 'disabled' : '' }>預覽並修改報名</button>
+					</form>
+				</div>	 
+			</c:if>
+			
 		</div>
 	</div>
 
