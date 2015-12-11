@@ -53,7 +53,8 @@
 			if (this.selectElement.length > 0){
 				self.setDropdownWidth(this.selectElement.outerWidth());
 			} else {
-				self.setDropdownWidth(this.label.outerWidth() + this.caret.outerWidth());
+				// 26 is left for caret
+				self.setDropdownWidth(this.label.outerWidth() + 26);
 			}
 
 			this.menu = $('<ul class="dropdown-menu">');
