@@ -18,6 +18,7 @@ table {
 
 input, select {
 	box-sizing: content-box;
+	vertical-align: middle;
 	outline: none;
 }
 
