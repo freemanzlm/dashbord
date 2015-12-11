@@ -28,6 +28,7 @@
 
 <%--module "ebay.page" add Resets and Global css --%>
 <res:useCss value="${res.css.local.css['normalize.css']}" target="head-css" />
+<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css"/>
 <res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css.reset_css}" target="head-css" />

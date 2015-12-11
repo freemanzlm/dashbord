@@ -17,4 +17,5 @@
 
 .error {
 	background-image: url("../img/icon/error.png");
+	color: #f00;
 }
