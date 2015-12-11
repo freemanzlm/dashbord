@@ -63,6 +63,7 @@
 .dropdown .dropdown-caret {
 	position: absolute;
 	right: 6px;
+	top: 1px;
 
 	cursor: pointer;
 }

@@ -47,7 +47,7 @@
 			});
 			this.dropdown.append(this.label);
 			
-			this.caret = $('<i class="dropdown-caret">');
+			this.caret = $('<i class="dropdown-caret"></i>');
 			this.dropdown.append(this.caret);
 
 			if (this.selectElement.length > 0){
@@ -57,7 +57,7 @@
 				self.setDropdownWidth(this.label.outerWidth() + 26);
 			}
 
-			this.menu = $('<ul class="dropdown-menu">');
+			this.menu = $('<ul class="dropdown-menu"></ul>');
 			this.dropdown.append(this.menu);
 			
 			this.initOptions.each(function() {
