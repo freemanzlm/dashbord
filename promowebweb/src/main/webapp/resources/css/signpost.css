@@ -1,0 +1,50 @@
+.signpost {
+	margin-bottom: 20px;
+	border: 1px solid #ccc;
+	display: table;
+	width: 100%;
+}
+
+.signpost-posts {
+	display: table-row;
+}
+
+.signpost-posts .post {
+	padding: 0 24px 0 0px;
+	background: url(../img/signpost/post.png) no-repeat scroll right center #F9FAFB;
+	display: table-cell;
+	text-align: center;
+	line-height: 36px;
+	color: #808282;
+}
+
+.signpost-posts .post .label {
+	background-color: #F9FAFB;
+	display: block;
+}
+
+.signpost-posts .post.done {
+	background-image: url(../img/signpost/curr.png);
+	background-color: #3365B0;
+	color: #fff;
+}
+
+.signpost-posts .post.done .label {
+	background-color: #3365B0;
+}
+
+.signpost-posts .post.current-post {
+	background-image: url(../img/signpost/curr.png);
+	color: #fff;
+}
+
+.signpost-posts .post.current-post .label {
+	background-color: #3365B0;
+	font-weight: bold;
+}
+
+.signpost-posts .post:last-child,
+.signpost-posts .post.last {
+	background-image: none;
+	padding-right: 0;
+}

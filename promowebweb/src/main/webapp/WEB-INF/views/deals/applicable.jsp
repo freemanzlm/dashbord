@@ -33,7 +33,7 @@
 <res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
-<res:useCss value="${res.css.local.css.signpost_css3_css}" target="head-css"/>
+<res:useCss value="${res.css.local.css.signpost_css}" target="head-css"/>
 <res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.form_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
