@@ -10,8 +10,12 @@
 
 .file-input input[type=file] {
 	position: absolute;
+	
 	opacity: 0;
+	filter:Alpha(opacity=0); /* ie 6-8 */
+	
 	left: 0;
 	top: 0;
+	width: 100%;
 	z-index: 1;
 }
