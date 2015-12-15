@@ -194,9 +194,8 @@ var BizReport = BizReport || {};
 						}
 
 						if (type == "display") {
-							// For oil card, WLT point/coin, only CN user can get. For WinIT Coupon, CN, HK and TW users all can get.
-							if (((full.rewardType == 1 || full.rewardType == 2) && full.region == 'CN') || full.rewardType == 3) {
-								// Gas card, WLT, JD card
+							// For WLT point/coin, only CN user can get.
+							if (full.rewardType == 2 && full.region == 'CN') {
 								switch (data) {
 								case 'SubsidyWaiting':
 								case 'SubsidyAccessed':
@@ -211,6 +210,28 @@ var BizReport = BizReport || {};
 										display += "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
 									}
 									return display;
+								default:
+									return local.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
+								}
+							}
+							
+							// For oil card, only CN user can get. For WinIT Coupon, CN, HK and TW users all can get.
+							if ((full.rewardType == 1 && full.region == 'CN') || full.rewardType == 3) {
+								// Gas card, JD card
+								switch (data) {
+								case 'SubsidyWaiting':
+								case 'SubsidyAccessed':
+								case 'SubsidySubmitted':
+								case 'SubsidyResubmittable':
+									if (full.rewardUrl) {
+										display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + local.getText('promo.state.' + data) + "</a>";
+										display += "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
+									} else {
+										display = local.getText('promo.state.' + data);
+										display += "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
+									}
+									return display;
+								case 'SubsidyRetrievable':
 								default:
 									return local.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
 								}
