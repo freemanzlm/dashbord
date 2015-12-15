@@ -11,8 +11,10 @@
 
 #header .head-nav .fa-globe {
 	margin: 0 10px 0 20px;
-	font-size: 18px;
+
 	vertical-align: middle;
+	font-size: 18px;
+	color: #000;
 }
 
 #header .dropdown input[type=text] {

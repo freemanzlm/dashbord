@@ -1,6 +1,8 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
+
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardName" value="加油卡" />
@@ -24,7 +26,7 @@
 		<c:choose>
 			<c:when test="${ ((promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region eq 'CN')
 				or  promo.rewardType eq 3}">
-				<h3>您已成功领取等值${promo.reward gt 0 ? promo.reward : '0' } ${promo.currency}的${rewardName }</h3>
+				<h3>您已成功领取等值&nbsp;${reward} ${promo.currency}&nbsp;的${rewardName }</h3>
 			</c:when>
 			<c:otherwise>
 				<h3>恭喜您已完成本活动！感谢您的参与!</h3>
