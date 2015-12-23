@@ -1,7 +1,6 @@
 $(function(){
 	var HotsellListingTable = BizReport.HotsellListingTable;
 	var termsDialog = cbt.termsDialog;
-	var alertDialog = BizReport.alertDialog;
 	var local = BizReport.local;	
 	
 	var customTableConfig = pageData && pageData.expired ? {} : {
@@ -50,12 +49,12 @@ $(function(){
 				if (json && json.status) {
 					location.reload();
 				} else {
-					alertDialog.alert(local.getText('promo.request.fail'));
+					cbt.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
 				$(document.body).isLoading('hide');
-				alertDialog.alert(local.getText('promo.request.fail'));
+				cbt.alert(local.getText('promo.request.fail'));
 			}
 		});
 	}

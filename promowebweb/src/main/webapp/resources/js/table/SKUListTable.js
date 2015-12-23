@@ -120,7 +120,7 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 				    that.dataTable.again && that.initDataTable();
 			        that.dataTable.updateAgain();
-//					alertDialog.alert(local.getText('dataTable.requestFail'));
+//					cbt.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);
 		},

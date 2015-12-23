@@ -1,6 +1,5 @@
 $(function(){
 	var ListingSubmittedTable = BizReport.ListingSubmittedTable;
-	var alertDialog = BizReport.alertDialog;
 	
 	var confirmForm = $("form");
 	
@@ -16,7 +15,7 @@ $(function(){
 					return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
 				}).join(",") + "]");
 			} else {
-				alertDialog.alert("对不起，您没有上传任何刊登，或者上传刊登失败。");
+				cbt.alert("对不起，您没有上传任何刊登，或者上传刊登失败。");
 				confirmForm.find("button").attr("disabled", "disabled");
 			}
 			

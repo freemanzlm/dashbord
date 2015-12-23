@@ -1,6 +1,5 @@
 $(function(){
 	var DealsListingTable = BizReport.DealsListingTable || BizReport.GBHListingTable;
-	var alertDialog = BizReport.alertDialog;
 	var local = BizReport.local;
 	
 	var confirmForm = $("form");
@@ -26,7 +25,7 @@ $(function(){
 					return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
 				}).join(",") + "]");
 			} else {
-				alertDialog.alert("对不起，您没有上传任何刊登，或者上传刊登失败。");
+				cbt.alert("对不起，您没有上传任何刊登，或者上传刊登失败。");
 				confirmForm.find("button").attr("disabled", "disabled");
 			}
 			
@@ -46,14 +45,14 @@ $(function(){
 				if (json && json.status) {
 					window.location.replace("/promotion/"+pageData.promoId);
 				} else if (json.data && json.data.length > 0) {
-					alertDialog.alert(local.getText("errorMsg.regDateExpired"));
+					cbt.alert(local.getText("errorMsg.regDateExpired"));
 					window.location.replace("/promotion/"+pageData.promoId);
 				} else {
-					alertDialog.alert(local.getText('promo.request.fail'));
+					cbt.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
-				alertDialog.alert(local.getText('promo.request.fail'));
+				cbt.alert(local.getText('promo.request.fail'));
 			}
 		});
 	});	

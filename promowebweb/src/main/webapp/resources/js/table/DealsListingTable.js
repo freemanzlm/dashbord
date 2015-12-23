@@ -305,7 +305,7 @@ var BizReport = BizReport || {};
 				 // initialize the empty table only when it's updated the second time.
 				    that.dataTable.again && that.initDataTable();				 
 				    that.dataTable.updateAgain();
-//					namespace.alertDialog.alert(local.getText('dataTable.requestFail'));
+//					namespace.cbt.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);		
 			

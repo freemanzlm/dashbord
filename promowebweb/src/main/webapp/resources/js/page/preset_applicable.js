@@ -1,6 +1,5 @@
 $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
-	var alertDialog = BizReport.alertDialog;
 	var local = BizReport.local;
 	
 	var listingCountJ = $(".my-listing h3 small span");
@@ -48,12 +47,12 @@ $(function(){
 				if (json && json.status) {
 					location.reload();
 				} else {
-					alertDialog.alert(local.getText('promo.request.fail'));
+					cbt.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
 				$(document.body).isLoading('hide');
-				alertDialog.alert(local.getText('promo.request.fail'));
+				cbt.alert(local.getText('promo.request.fail'));
 			}
 		});
 	}
@@ -87,7 +86,7 @@ $(function(){
 			previewDialog.show();
 			previewDialog.listingTable.setData(listings);
 		} else {
-			alertDialog.alert(local.getText('promo.hotsell.applyCondition'));
+			cbt.alert(local.getText('promo.hotsell.applyCondition'));
 		}
 	});
 	
