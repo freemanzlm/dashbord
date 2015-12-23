@@ -59,7 +59,17 @@
 <res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+
+<c:choose>
+	<c:when test="${ promo.type eq 1}">
+		<!-- dashboard upload -->
+		<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
+	</c:when>
+	<c:otherwise>
+		<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+	</c:otherwise>
+</c:choose>
+	
 <res:useJs value="${res.js.local.js.page['deals_state.js']}" target="page-js2"></res:useJs>
 </head>
 

@@ -3,6 +3,9 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
+
+<%@ page import="com.ebay.app.raptor.promocommon.businesstype.PMPromotionType" %>
+
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
@@ -86,7 +89,15 @@
 
 				<div class="mt20 my-listing">
 					<h3><strong>提交预审的刊登</strong></h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+					<c:choose>
+						<c:when test="${promo.type eq PMPromotionType.DEALS_AM_UPLOAD }">
+							<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+						</c:otherwise>
+					</c:choose>
+					
 				</div>	
 				
 				<c:if test="${ not expired }">

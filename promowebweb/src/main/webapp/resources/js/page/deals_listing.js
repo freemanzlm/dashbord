@@ -1,6 +1,6 @@
 $(function(){
 	
-	var DealsListingTable = BizReport.DealsListingTable;
+	var DealsListingTable = BizReport.DealsListingTable || BizReport.GBHListingTable;
 	var alertDialog = BizReport.alertDialog;
 	var local = BizReport.local;
 	

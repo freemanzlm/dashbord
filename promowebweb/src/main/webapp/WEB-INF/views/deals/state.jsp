@@ -4,6 +4,9 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
+
+<%@ page import="com.ebay.app.raptor.promocommon.businesstype.PMPromotionType" %>
+
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
@@ -61,7 +64,17 @@
 	<res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+	
+	<c:choose>
+		<c:when test="${ promo.type eq 1}">
+			<!-- dashboard upload -->
+			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:otherwise>
+			<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+		</c:otherwise>
+	</c:choose>
+	
 	<res:useJs value="${res.js.local.js.page['deals_state.js']}" target="page-js2"></res:useJs>
 </head>
 
@@ -101,15 +114,20 @@
 			
 			<div class="mt20 my-listing">
 				<h3>报名刊登列表</h3>
-				<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+				<c:choose>
+					<c:when test="${promo.type eq 1 }">
+						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+					</c:when>
+					<c:otherwise>
+						<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+					</c:otherwise>
+				</c:choose>
 			</div>	
 		</div>
 		
 	</div>
 
-	<!-- Global Footer -->
-		<jsp:include page="../footer.jsp"></jsp:include>
-	<!-- End: Global Footer -->
+	<jsp:include page="../footer.jsp"></jsp:include>
 </div>
 
 <%@ include file="../dialog/alert.jsp" %>
