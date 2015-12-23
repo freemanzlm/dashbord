@@ -1,7 +1,6 @@
 $(function(){
 	
 	var DealsListingTable = BizReport.DealsListingTable;
-	var alertDialog = BizReport.alertDialog;
 	var local = BizReport.local;
 	
 	var listingTable,  uploadForm, fileInput, uploadBtn, uploadIFrame;
@@ -38,7 +37,7 @@ $(function(){
 		
 		var fileName = fileInput.val();
 		if (!fileName || fileName.indexOf(".xls") < 0) {
-			alertDialog.alert(local.getText("promo.deals.onlyXls"));
+			cbt.alert(local.getText("promo.deals.onlyXls"));
 			return false;
 		}
 		
@@ -61,7 +60,7 @@ $(function(){
 						$("#upload-error-msg").removeClass("hide");
 						$("#upload-error-msg").find("em").text(responseData.message);
 					} else if (responseData.data && responseData.data.length > 0) {
-						alertDialog.alert(local.getText("errorMsg.regDateExpired"));
+						cbt.alert(local.getText("errorMsg.regDateExpired"));
 						window.location.replace("/promotion/" + pageData.promoId);
 					}
 					// redirect to error page

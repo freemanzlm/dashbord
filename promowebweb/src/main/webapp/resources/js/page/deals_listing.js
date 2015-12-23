@@ -1,7 +1,6 @@
 $(function(){
 	
 	var DealsListingTable = BizReport.DealsListingTable;
-	var alertDialog = BizReport.alertDialog;
 	var local = BizReport.local;
 	
 	var customTableConfig = pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired) ? {} : {
@@ -62,12 +61,12 @@ $(function(){
 				if (json && json.status) {
 					location.reload();
 				} else {
-					alertDialog.alert(local.getText('promo.request.fail'));
+					cbt.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
 				$(document.body).isLoading('hide');
-				alertDialog.alert(local.getText('promo.request.fail'));
+				cbt.alert(local.getText('promo.request.fail'));
 			}
 		});
 	}
@@ -103,7 +102,7 @@ $(function(){
 			if (pageData && pageData.state == 'Applied') {
 				cbt.confirm(local.getText('promo.hotsell.zeroSubmitted'), submitListings);
 			} else {
-				alertDialog.alert(local.getText('promo.hotsell.applyCondition'));
+				cbt.alert(local.getText('promo.hotsell.applyCondition'));
 			}
 		}
 	});

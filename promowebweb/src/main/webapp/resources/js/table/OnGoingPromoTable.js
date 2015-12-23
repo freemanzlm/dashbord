@@ -272,7 +272,7 @@ var BizReport = BizReport || {};
 					that.pane.isLoading('hide');
 					that.dataTable.again && that.initDataTable();
 					that.dataTable.updateAgain();
-					//					namespace.alertDialog.alert(local.getText('dataTable.requestFail'));
+					//					namespace.cbt.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);
 		},
