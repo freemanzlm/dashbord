@@ -30,6 +30,7 @@
 	<res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.icon_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
@@ -77,7 +78,7 @@
 		
 		<c:if test="${ invisible eq true }">
 			<div class="pane pane-table mt20">
-				<div class="header">
+				<div class="header clr">
 					<div class="fr cl">
 						<span class="select-control type-filter fr">
 							<select name="" id="">
@@ -95,7 +96,7 @@
 		</c:if>			
 		
 		<div class="pane pane-table mt20">
-			<div class="header">
+			<div class="header clr">
 				<div class="fr cl">
 					<span class="select-control state-filter fr">
 						<select name="" id="">
@@ -125,7 +126,7 @@
 		</div>
 		
 		<div class="pane pane-table mt20">
-			<div class="header">
+			<div class="header clr">
 				<div class="fr cl">
 					<span class="select-control state-filter fr">
 						<select name="" id="">
@@ -153,7 +154,7 @@
 		</div>
 		
 		<div class="pane pane-table mt20">
-			<div class="header">
+			<div class="header clr">
 				<div class="fr cl">
 					<span class="select-control state-filter fr">
 						<select name="" id="">

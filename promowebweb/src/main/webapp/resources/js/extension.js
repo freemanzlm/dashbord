@@ -4,6 +4,11 @@
 // @copyright lyan2@ebay.com, linus.yan@hotmail.com
 ///////////////////////////////////////////////////////////////////////
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Function
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 /*
 Class multi-inheritance implementation and demo. 
 
@@ -87,6 +92,30 @@ c.hello();
 	};
 })();
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Number
+/////////////////////////////////////////////////////////////////////////////////////////////
+if (!Number.prototype.toPercent) {
+	Number.prototype.toPercent = function(miniFractions) {
+		return (this * 100).toFixed(miniFractions) + '%';
+	};
+}
+
+if (!Number.prototype.toUSFixed) {
+	Number.prototype.toUSFixed = function(miniFractions, separator) {
+		miniFractions = miniFractions || 0;
+		var n = this.toFixed(miniFractions) + "", separator = separator || ",";
+		var arr = n.split(".");
+		var re = /(\d{1,3})(?=(\d{3})+$)/g;
+		
+		return arr[0].replace(re,"$1" + separator) + (arr.length == 2 ? "."+arr[1] : "");
+	};
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// Date
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
  * Get a formatted date string.
  * 
@@ -114,16 +143,5 @@ if (!Date.prototype.format) {
 				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k])
 						: (("00" + o[k]).substr(("" + o[k]).length)));
 		return fmt;
-	};
-}
-
-/**
- * Returns the milliseconds elapsed since 1 January 1970 00:00:00 UTC up until now as a Number.
- * 
- * @returns Number 
- */
-if (!Date.now) {
-	Date.now = function() {
-		return new Date().getTime();
 	};
 }

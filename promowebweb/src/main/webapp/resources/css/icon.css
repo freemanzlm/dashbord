@@ -1,4 +1,9 @@
 @CHARSET "UTF-8";
+a.fa-question-circle {
+	color: #999 !important;
+	font-size: 14px;
+}
+
 .icon {
 	background: transparent no-repeat scroll left center;
 	margin: 0;
