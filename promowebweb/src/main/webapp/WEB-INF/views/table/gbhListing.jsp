@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="dataTable-container">
-	<table id="deals-listing-table" class="dataTable">
+	<table id="deals-listing-table" class="dataTable header-no-wrap">
 		<thead>
 			<tr>
 				<th class="check"><input type="checkbox" class="check-all" /></th>
