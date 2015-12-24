@@ -46,8 +46,8 @@
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
-	<res:useJs value="${res.js.local.js['extension.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
+	<res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
 	<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['cookie.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
