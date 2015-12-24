@@ -36,8 +36,8 @@
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/><res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	
-	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
+	<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="head"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
