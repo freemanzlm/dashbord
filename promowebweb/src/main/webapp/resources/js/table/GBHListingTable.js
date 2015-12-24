@@ -158,7 +158,7 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["last-price",  "worldwide-charge", "russia-charge", "china-charge", "mexico-charge", "brazil-charge", "israel-charge"],
+					aTargets: ["last-price",  "worldwide-charge", "russia-charge", "china-charge", "latin-charge", "mexico-charge", "brazil-charge", "israel-charge"],
 					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "",
@@ -171,6 +171,12 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
+					aTargets: ["worldwide",  "russia", "china", "latin", "mexico", "brazil", "israel"],
+					sType: "string",
+					sClass: "text-center",
+					sDefaultContent: "No"
+				},
+				{
 					aTargets: ["deal-price"],
 					sType: "numeric",
 					sClass: "text-right",
@@ -179,11 +185,10 @@ var BizReport = BizReport || {};
 						var value = parseFloat(data);
 						if (type == "display") {
 							if (full.proposePrice > 0 && value > 0 && full.proposePrice != full.dealsPrice) {
-								return "<span class='cyan'>" + parseFloat(full.proposePrice).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.dealsPrice).toUSFixed(2) + " " + full.currency + ")</del>";
+								return "<span class='color-cyan'>" + parseFloat(full.proposePrice).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.dealsPrice).toUSFixed(2) + " " + full.currency + ")</del>";
 							} else {
 								value = (isNaN(value) || value <= 0) ? parseFloat(full.proposePrice) : value;
 								return (!isNaN(value) && value > 0 ? value.toUSFixed(2) : '0')  + " (" + full.currency + ")";
-//								return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
 							}
 						}
 						
@@ -242,6 +247,7 @@ var BizReport = BizReport || {};
 						data = data && data.toUpperCase();
 						
 						if (type == "sort") {
+							// sort by character, zzzy < zzzz;
 							switch(data) {
 							case 'GBP':
 								return 'zzzz';

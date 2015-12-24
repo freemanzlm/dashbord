@@ -67,8 +67,16 @@
 	
 	<c:choose>
 		<c:when test="${ promo.type eq 1}">
-			<!-- dashboard upload -->
+			<!-- china, brazil -->
 			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ promo.type eq 2}">
+			<!-- French and spain -->
+			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ promo.type eq 3}">
+			<!-- French and spain -->
+			<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
 		<c:otherwise>
 			<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
@@ -117,6 +125,12 @@
 				<c:choose>
 					<c:when test="${promo.type eq 1 }">
 						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+					</c:when>
+					<c:when test="${promo.type eq 2 }">
+						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+					</c:when>
+					<c:when test="${promo.type eq 3 }">
+						<jsp:include page="../table/usListing.jsp"></jsp:include>
 					</c:when>
 					<c:otherwise>
 						<jsp:include page="../table/dealsListing.jsp"></jsp:include>

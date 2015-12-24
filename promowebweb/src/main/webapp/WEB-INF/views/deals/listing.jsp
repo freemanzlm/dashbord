@@ -46,8 +46,8 @@
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
-	<res:useJs value="${res.js.local.js['extension.js']}" target="page-js"></res:useJs>
-	<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
+	<res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
 	<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['cookie.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
@@ -125,7 +125,20 @@
 					</c:if>
 				</h3>						
 				
-				<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+				<c:choose>
+					<c:when test="${promo.type eq 1 }">
+						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+					</c:when>
+					<c:when test="${promo.type eq 2 }">
+						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+					</c:when>
+					<c:when test="${promo.type eq 3 }">
+						<jsp:include page="../table/usListing.jsp"></jsp:include>
+					</c:when>
+					<c:otherwise>
+						<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			
 			<c:if test="${((state eq 'PromotionApproved') or (state eq 'Applied')) and (not expired) }">

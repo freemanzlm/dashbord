@@ -28,13 +28,13 @@
 
 <%--module "ebay.page" add Resets and Global css --%>
 <res:useCss value="${res.css.local.css['normalize.css']}" target="head-css" />
-<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css"/>
+<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css.reset_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
-<res:useCss value="${res.css.local.css.signpost_css}" target="head-css"/>
+<res:useCss value="${res.css.local.css.signpost_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dialog_css}" target="head-css" />
@@ -69,7 +69,7 @@
 		<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
 	</c:otherwise>
 </c:choose>
-	
+
 <res:useJs value="${res.js.local.js.page['deals_state.js']}" target="page-js2"></res:useJs>
 </head>
 
@@ -93,7 +93,20 @@
 
 				<div class="mt20 my-listing">
 					<h3>报名刊登列表</h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+					<c:choose>
+						<c:when test="${promo.type eq 1 }">
+							<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+						</c:when>
+						<c:when test="${promo.type eq 2 }">
+							<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+						</c:when>
+						<c:when test="${promo.type eq 3 }">
+							<jsp:include page="../table/usListing.jsp"></jsp:include>
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 

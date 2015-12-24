@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[6, 'desc']],
+				'aaSortingFixed': [[23, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -31,7 +31,8 @@ var BizReport = BizReport || {};
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'bScrollCollapse': true,
-				'sScrollY': "600",
+				'sScrollX': "100%",
+				'sScrollY': "600",				
 				'oLanguage': {
 					sEmptyTable: local.getText('dataTable.emptyTable'),
 					sInfo: local.getText('dataTable.listing.info'),
@@ -77,16 +78,18 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
+				    {data: 'skuName'},
+				    {data: 'skuID'},
+				    {data: 'category'},
 				    {data: 'itemId'},
-					{data: 'skuName'},
-					{data: 'currPrice', aDataSort: [7, 3]},
-					{data: 'dealsPrice', aDataSort: [7, 4]},
-					{data: 'stockNum'},
-					{data: 'state'},
-					{data: 'currency'}
+				    {data: 'lastPrice', aDataSort: [9, 5]},
+				    {data: 'dealPrice', aDataSort: [9, 6]},
+				    {data: 'quantity'},
+				    {data: 'rrpLink'},
+				    {data: 'currency'}
 				],
 				aoColumnDefs: [{
-					aTargets: ["itemId"],
+					aTargets: ["check"],
 					bSortable: false,
 					bVisible: false,
 					sDefaultContent: "",
@@ -120,7 +123,7 @@ var BizReport = BizReport || {};
 					}					
 				},
 				{
-					aTargets: ["name"],
+					aTargets: ["sku-name"],
 					sDefaultContent: "",			
 					sType: "string",
 					sWidth: "300px",
@@ -129,19 +132,19 @@ var BizReport = BizReport || {};
 					}					
 				},
 				{
-					aTargets: ["inventory"],
+					aTargets: ["quantity"],
 					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(0);
+							return parseFloat(data).toUSFixed(2);
 						}
 						return data;
 					}
 				},
 				{
-					aTargets: ["price"],
+					aTargets: ["last-price",  "ship-price"],
 					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "",
@@ -154,7 +157,7 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["activity-price"],
+					aTargets: ["deal-price"],
 					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "",
@@ -305,7 +308,7 @@ var BizReport = BizReport || {};
 				 // initialize the empty table only when it's updated the second time.
 				    that.dataTable.again && that.initDataTable();				 
 				    that.dataTable.updateAgain();
-//					namespace.cbt.alert(local.getText('dataTable.requestFail'));
+//					namespace.alertDialog.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);		
 			

@@ -12,48 +12,8 @@
     overflow:visible;
 }
 
-.red {
-	color: red;
-}
-
-.green {
-	color: #5A960D;
-}
-
-.gray {
-	color: #808282;
-}
-
-.cyan {
-	color: #007ab0;
-}
-
-.mt10{
-	margin-top:10px;	
-}
-
-.mt20{
-	margin-top:20px;	
-}
-
-.mt30{
-	margin-top:30px;	
-}
-
 .mb-25{
 	margin-bottom:-25px;	
-}
-
-.text-left {
-	text-align: left;
-}
-
-.text-right {
-	text-align: right;
-}
-
-.text-center {
-	text-align: center;
 }
 
 #page-pane h2 {
@@ -83,6 +43,11 @@ table.dataTable thead th {
 
 div.dataTables_scrollHead thead th {
 	border-bottom: none;
+}
+
+.header-no-wrap thead th {
+	white-space: nowrap;
+	line-height: 1.5;
 }
 
 .dataTable-container {
