@@ -29,6 +29,7 @@
 	<res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
