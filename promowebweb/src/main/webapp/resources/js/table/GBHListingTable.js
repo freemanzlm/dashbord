@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[23, 'desc']],
+				'aaSortingFixed': [[24, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -100,7 +100,8 @@ var BizReport = BizReport || {};
 				    {data: 'braCharge', aDataSort: [23, 20]},
 				    {data: 'israel'},
 				    {data: 'israelCharge', aDataSort: [23, 22]},
-				    {data: 'currency'}
+				    {data: 'currency'},
+				    {data: 'state'}
 				],
 				aoColumnDefs: [{
 					aTargets: ["check"],
@@ -207,6 +208,7 @@ var BizReport = BizReport || {};
 					bSortable: false,
 					sClass: "text-center",
 					sDefaultContent: "",
+					sWidth: 50,
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (pageData && pageData.expired === false && data == 'Nonapplied') {
@@ -239,8 +241,8 @@ var BizReport = BizReport || {};
 					}
 				}, {
 					aTargets: ["currency"],
-					bVisible: false,
 					bSortable: true,
+					sClass: "text-center",
 					sDefaultContent: "",		
 					sType: "string",
 					mRender: function(data, type, full, meta) {
@@ -422,7 +424,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(6).visible(false);
+			this.oDataTable.column(24).visible(false);
 		}
 	});
 	

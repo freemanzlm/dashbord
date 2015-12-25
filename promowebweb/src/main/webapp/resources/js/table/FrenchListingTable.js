@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[23, 'desc']],
+				'aaSortingFixed': [[15, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -91,7 +91,8 @@ var BizReport = BizReport || {};
 				    {data: 'delivery'},
 				    {data: 'shipPrice', aDataSort: [14, 12]},
 				    {data: 'rrpLink'},
-				    {data: 'currency'}
+				    {data: 'currency'},
+				    {data: 'state'}
 				],
 				aoColumnDefs: [{
 					aTargets: ["check"],
@@ -192,6 +193,7 @@ var BizReport = BizReport || {};
 					bSortable: false,
 					sClass: "text-center",
 					sDefaultContent: "",
+					sWidth: 50,
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (pageData && pageData.expired === false && data == 'Nonapplied') {
@@ -224,8 +226,8 @@ var BizReport = BizReport || {};
 					}
 				}, {
 					aTargets: ["currency"],
-					bVisible: false,
 					bSortable: true,
+					sClass: "text-center",
 					sDefaultContent: "",		
 					sType: "string",
 					mRender: function(data, type, full, meta) {
@@ -243,6 +245,18 @@ var BizReport = BizReport || {};
 							case 'AUD':
 								return 'zzza';
 							}
+						}
+						
+						return data;
+					}
+				},{
+					aTargets: ["rrp-link"],
+					bSortable: true,
+					sDefaultContent: "",
+					sType: "string",
+					mRender: function(data, type, full, meta) {
+						if (type == 'display' && data !== undefined) {
+							return '<a target="_blank" href="' + data + '">' + data + '</a>';
 						}
 						
 						return data;
@@ -407,7 +421,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(6).visible(false);
+			this.oDataTable.column(15).visible(false);
 		}
 	});
 	

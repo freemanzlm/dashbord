@@ -16,6 +16,7 @@
 				<th class="quantity">数量<br/>Quantity</th>
 				<th class="rrp-link">产品全网最低价<br/>RRP Link</th>
 				<th class="currency">刊登币种<br/>Currency</th>
+				<th class="state">状态<br/>State</th>
 			</tr>
 		</thead>
 		<tbody>

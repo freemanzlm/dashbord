@@ -86,7 +86,7 @@ var BizReport = BizReport || {};
 					{data: 'currency'}
 				],
 				aoColumnDefs: [{
-					aTargets: ["itemId"],
+					aTargets: ["check"],
 					bSortable: false,
 					bVisible: false,
 					sDefaultContent: "",
@@ -247,6 +247,7 @@ var BizReport = BizReport || {};
 		init: function(config) {
 			var that = this;
 
+			// deep copy, objects in array will also be extended by their appeared order. 
 			this.dataTableConfig = $.extend(true, {}, defaultDataTableConfigs, config.dataTableConfig);
 
 			this.dataTableConfig.tableConfig = $.extend(true, {}, this.dataTableConfig.tableConfig, this.dataTableConfig.customTableConfig);

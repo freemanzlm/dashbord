@@ -9,8 +9,7 @@
 <c:set var="state" value="${ promo.state }" />
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 
-<r:includeJquery jsSlot="head" />
-<r:client />
+
 
 <!DOCTYPE html>
 <html>
@@ -32,6 +31,7 @@
 <res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css.reset_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.signpost_css}" target="head-css" />
@@ -44,6 +44,8 @@
 <res:useCss value="${res.css.local.css.app_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.base_css}" target="head-css" />
 
+<r:includeJquery jsSlot="head" />
+<r:client />
 <res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
 <res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
 <res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head"></res:useJs>

@@ -15,16 +15,12 @@ $(function(){
 	});
 	
 	listingTable = new DealsListingTable();
-	listingTable.subscribe({
-		initialized: function() {
-			listingTable.hideCheckbox();
-		}
-	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
 			tableId: "deals-listing-table",
 			customTableConfig: {
-                'sAjaxSource': '/promotion/deals/getSubmittedListings'
+                'sAjaxSource': '/promotion/deals/getSubmittedListings',
+                columns: [{bVisible: false}] // hide the first column which has checkbox
             }
 		}});
 	listingTable.update({promoId:pageData && pageData.promoId});

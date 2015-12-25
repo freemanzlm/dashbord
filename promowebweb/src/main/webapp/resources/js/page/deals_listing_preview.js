@@ -7,7 +7,6 @@ $(function(){
 	var listingTable = new DealsListingTable();
 	listingTable.subscribe({
 		initialized: function() {
-			listingTable.hideCheckbox();
 			listingTable.hideStateColumn();
 		}
 	}, listingTable);
@@ -15,7 +14,8 @@ $(function(){
 		dataTableConfig: {
 			tableId: "deals-listing-table",
 			customTableConfig: {
-                'sAjaxSource': '/promotion/deals/getUploadedListings'
+                'sAjaxSource': '/promotion/deals/getUploadedListings',
+                aoColumnDefs: [{bVisible: false}] // hide checkbox column
             }
 		},
 		fnDataUpdatedCallback: function(data){

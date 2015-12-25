@@ -8,6 +8,8 @@
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
+<c:set var="dealsType" value="${ 2 }" />
+
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoDlDt}" var="promoDlDt" pattern="yyyy-MM-dd" type="date" />
@@ -36,6 +38,7 @@
 	<res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.signpost_css}" target="head-css"/>
@@ -66,7 +69,23 @@
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>	
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+	<c:choose>
+		<c:when test="${ dealsType eq 1}">
+			<!-- china, brazil -->
+			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ dealsType eq 2}">
+			<!-- French and spain -->
+			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ dealsType eq 3}">
+			<!-- French and spain -->
+			<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:otherwise>
+			<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+		</c:otherwise>
+	</c:choose>
 	<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.page['deals_listing.js']}" target="page-js2"></res:useJs>
 </head>
@@ -117,7 +136,20 @@
 					</c:if>
 				</h3>						
 				
-				<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+				<c:choose>
+					<c:when test="${dealsType eq 1 }">
+						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+					</c:when>
+					<c:when test="${dealsType eq 2 }">
+						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+					</c:when>
+					<c:when test="${dealsType eq 3 }">
+						<jsp:include page="../table/usListing.jsp"></jsp:include>
+					</c:when>
+					<c:otherwise>
+						<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			
 			<c:if test="${((state eq 'PromotionApproved') or (state eq 'Applied')) and (not expired) }">
