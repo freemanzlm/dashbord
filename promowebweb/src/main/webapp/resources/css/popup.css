@@ -18,7 +18,7 @@
 }
 
 .popup.left .anchor {
-	background: url(../img/anchor_right.png) no-repeat scroll transparent left top;
+	background: url(../img/popup/anchor_right.png) no-repeat scroll transparent left top;
 	width: 13px;
 	height: 24px;
 	right: -12px;
@@ -26,7 +26,7 @@
 }
 
 .popup.right .anchor {
-	background: url(../img/anchor_left.png) no-repeat scroll transparent left top;
+	background: url(../img/popup/anchor_left.png) no-repeat scroll transparent left top;
 	width: 13px;
 	height: 24px;
 	left: -12px;
@@ -34,7 +34,7 @@
 }
 
 .popup.top .anchor {
-	background: url(../img/anchor_down.png) no-repeat scroll transparent left top;
+	background: url(../img/popup/anchor_down.png) no-repeat scroll transparent left top;
 	width: 24px;
 	height: 13px;
 	bottom: -12px;
@@ -42,7 +42,7 @@
 }
 
 .popup.bottom .anchor {
-	background: url(../img/anchor_up.png) no-repeat scroll transparent left top;
+	background: url(../img/popup/anchor_up.png) no-repeat scroll transparent left top;
 	width: 24px;
 	height: 13px;
 	top: -12px;
@@ -52,7 +52,7 @@
 .popup .popup-content {
 	border-radius: 5px;
 	background: #fff;
-	padding: 10px;
+	padding: .3em .5em;
 	
-	line-height: 1.5;
+	line-height: 1.333;
 }

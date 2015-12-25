@@ -30,6 +30,7 @@
 <res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css.reset_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.module_css}" target="head-css" />
@@ -40,10 +41,10 @@
 <res:useCss value="${res.css.local.css.app_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.base_css}" target="head-css" />
 
-<res:useJs value="${res.js.local.js['extension.js']}" target="page-js"></res:useJs>
-<res:useJs value="${res.js.local.js['util.js']}" target="page-js"></res:useJs>
-<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="page-js"></res:useJs>
-<res:useJs value="${res.js.local.js['cookie.js']}" target="page-js"></res:useJs>
+<res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
+<res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
+<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="head"></res:useJs>
+<res:useJs value="${res.js.local.js['cookie.js']}" target="head"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
@@ -78,7 +79,7 @@
 
 			<c:if test="${ invisible eq true }">
 				<div class="pane pane-table mt20">
-					<div class="header">
+					<div class="header clr">
 						<div class="fr cl">
 							
 							<select name="" id="" class="fr type-filter">
@@ -95,7 +96,7 @@
 			</c:if>
 
 			<div class="pane pane-table mt20">
-				<div class="header">
+				<div class="header clr">
 					<div class="fr cl">
 						<span class="select-control state-filter fr">
 							<select name="" id="" class="">
@@ -124,7 +125,7 @@
 			</div>
 
 			<div class="pane pane-table mt20">
-				<div class="header">
+				<div class="header clr">
 					<div class="fr cl">
 						<span class="select-control state-filter fr">
 							<select name="" id="">
@@ -152,7 +153,7 @@
 			</div>
 
 			<div class="pane pane-table mt20">
-				<div class="header">
+				<div class="header clr">
 					<div class="fr cl">
 						<span class="select-control state-filter fr">
 							<select name="" id="" class="fr state-filter">

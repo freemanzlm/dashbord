@@ -1,4 +1,6 @@
-(function(namespace){
+(function(){
+	var namespace = window.cbt = window.cbt || {};
+	
 	/**
 	 * JavaScript does not protect the property name hasOwnProperty; thus, 
 	 * if the possibility exists that an object might have a property with this name,
@@ -33,23 +35,6 @@
     	};
 	}
     
-    if (!Number.prototype.toPercent) {
-    	Number.prototype.toPercent = function(miniFractions) {
-        	return (this * 100).toFixed(miniFractions) + '%';
-        };
-    }
-    
-    if (!Number.prototype.toUSFixed) {
-    	Number.prototype.toUSFixed = function(miniFractions, separator) {
-    		miniFractions = miniFractions || 0;
-    		var n = this.toFixed(miniFractions) + "", separator = separator || ",";
-    		var arr = n.split(".");
-    		var re = /(\d{1,3})(?=(\d{3})+$)/g;
-    	 	
-    		return arr[0].replace(re,"$1" + separator) + (arr.length == 2 ? "."+arr[1] : "");
-    	};
-    }
-
 	/**
 	 * Simple function to mix in properties from source into target,
 	 * but only if target does not already have a property of the same name.
@@ -161,6 +146,6 @@
 		mixin: mixin,
 		getPositionInViewPort: getPositionInViewPort,
 		getPositionInPage: getPositionInPage,
-		getPageSize: getPageSize 
+		getPageSize: getPageSize
 	};
-})(BizReport = BizReport || {});
+})();

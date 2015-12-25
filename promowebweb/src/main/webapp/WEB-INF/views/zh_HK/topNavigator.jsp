@@ -5,7 +5,7 @@
 	<div class="navigator-bar clr">
 		<div class="navigator-title">賣家中心</div>
 		<ul class="navigation-list">	
-			<li class="no-sub-menu"><a href="${sdurl}">買家體驗報告</a><small><a class="icon help" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
+			<li class="no-sub-menu"><a href="${sdurl}">買家體驗報告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
 			<c:if test="${accessBiz == true}">
 				<li class=""><a href="${bizurl}">業務分析報告</a><small><a class="icon newTextIcon" href="#" target="_blank"></a></small></li>
 			</c:if>

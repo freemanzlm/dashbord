@@ -36,7 +36,7 @@
 	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.error_css}" target="head-css"/>
 	
-	<res:useJs value="${res.js.local.js['cookie.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js['cookie.js']}" target="head"></res:useJs>
 	<res:useJs value="${res.js.local.js.dropdown_js}" target="page-js"/>
 	
 </head>
