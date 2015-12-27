@@ -55,7 +55,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			user.setLang(language);
 
 			// change the language cookie according to the "lang" request parameter.
-			CookieUtil.setCBTPromotionCookie(resp, CookieUtil.LANG_COOKIE_NAME, language);
+			CookieUtil.setCBTPromotionCookie(resp, CookieUtil.EBAY_CBT_LANGUAGE_COOKIE_NAME, language);
 		}
 
 		addPageParameters(req, model, user);

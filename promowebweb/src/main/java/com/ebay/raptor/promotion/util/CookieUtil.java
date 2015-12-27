@@ -1,7 +1,7 @@
 package com.ebay.raptor.promotion.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +16,34 @@ import com.ebay.raptor.promotion.pojo.UserData;
 public class CookieUtil {
     // *Start--Note: used the same cookie as bizreport, in order
     //               to support switch between 2 APPs without re-login.
-	public final static String USERNAME_COOKIE_KEY = "eBayBizUserName";
-	public final static String USERID_COOKIE_KEY = "eBayBizUserId";
+	public final static String USERNAME_COOKIE_KEY = "eBayCBTUserName";
+	public final static String USERID_COOKIE_KEY = "eBayCBTUserId";
 	public final static String HACKID_COOKIE_KEY = "eBayBizHackId";
-	public final static String SESSIONID_COOKIE_KEY = "eBayBizSession";
+	public final static String SESSIONID_COOKIE_KEY = "eBayCBTSession";
 	public final static String ADMIN_COOKIE_NAME = "eBayCBTAdmin";
 	public final static String LANG_COOKIE_NAME = "eBayCBTLang";
+	
+	public final static String EBAY_CBT_ADMIN_USER_COOKIE_NAME = "eBayCBTAdminUser";
+	public final static String EBAY_CBT_USER_ID_COOKIE_NAME = "eBayCBTUserId";
+	public final static String EBAY_CBT_USER_NAME_COOKIE_NAME = "eBayCBTUserName";
+	public final static String EBAY_CBT_SESSION_ID_COOKIE_NAME = "eBayCBTSession";
+	public final static String EBAY_CBT_LANGUAGE_COOKIE_NAME = "eBayCBTLang";
+	
+	public final static String EBAY_CBT_LOGIN_SESSION_COOKIE_NAME = "eBayCBTLoginSession";
+	public final static String EBAY_CBT_REFERURL_COOKIE_NAME = "eBayCBTRedirectUrl";
+	
+	public final static String EBAY_TMP_ADMIN_USER_COOKIE_NAME = "eBayTMPAdminUser";
+	public final static String EBAY_TMP_MAIN_ACCOUNT_COOKIE_NAME = "eBayTmpMainAccount";
+	public final static String EBAY_TMP_SUB_ACCOUNT_COOKIE_NAME = "eBayTmpSubAccount";
+	public final static String EBAY_TMP_SUB_ACCOUNT_ID_COOKIE_NAME = "eBayTmpSubAccountId";
+	public final static String EBAY_TMP_SESSION_ID_COOKIE_NAME = "eBayTmpSession";
+	public final static String EBAY_TMP_LANGUAGE_COOKIE_NAME = "eBayTMPLang";
+	
+	public final static String EBAY_TMP_LOGIN_SESSION_COOKIE_NAME = "eBayTMPLoginSession";
+	public final static String EBAY_TMP_REFERURL_COOKIE_NAME = "eBayTMPRedirectUrl";
+
+	public final static int ONE_DAY_COOKIE_LIFESPAN = 3600 * 24; // 1 Day
+	public final static int TEN_MIN_COOKIE_LIFESPAN = 600; // 10 min
 	// *End--Note
 	
 	public final static int COOKIE_LIFESPAN = 3600 * 24; // 24h
@@ -80,65 +102,44 @@ public class CookieUtil {
 	
 	public static UserData getUserDataFromCookie (
 	        HttpServletRequest request) throws MissingArgumentException {
-		long userid = -1;
-		String userName = "";
-		boolean admin = false;
-		String lang = CommonConstant.ZHCN_LANGUAGE;
-		Cookie [] cookies = request.getCookies();
+		Map <String, String> cookieMap =  convertCookieToMap(request.getCookies());
+		
+		long userId = -1;
 
-		if (cookies != null && cookies.length > 0) {
-			boolean idFound = false;
-			boolean nameFound = false;
-			boolean adminFound = false;
-			boolean langFound = false;
-
-			for (Cookie cookie : cookies) {
-				String cookieName = cookie.getName();
-				String cookieVal = cookie.getValue();
-
-				if (CookieUtil.USERID_COOKIE_KEY.equalsIgnoreCase(cookieName)) {
-					try {
-						userid = Long.parseLong(cookieVal);
-						idFound = true;
-					} catch (NumberFormatException e) {
-						// handle later
-					}
-				}
-
-				if (CookieUtil.USERNAME_COOKIE_KEY.equalsIgnoreCase(cookieName)) {
-					userName = cookieVal;
-					nameFound = true;
-				}
-				
-				if (CookieUtil.ADMIN_COOKIE_NAME.equalsIgnoreCase(cookieName)) {
-				    admin = Boolean.parseBoolean(cookieVal);
-				    adminFound = true;
-                }
-				
-				if (CookieUtil.LANG_COOKIE_NAME.equalsIgnoreCase(cookieName)) {
-					lang = cookieVal;
-					langFound = true;
-                }
-
-				if (idFound && nameFound && adminFound && langFound) {
-					break;
-				}
-			}
+		try {
+			userId = Long.parseLong(cookieMap.get(EBAY_CBT_USER_ID_COOKIE_NAME));
+		} catch (NumberFormatException e) {
+			throw new MissingArgumentException(EBAY_CBT_USER_ID_COOKIE_NAME);
 		}
-
-		List <String> missedArguments = new ArrayList<String>();
-		if (userid == -1) {
-			missedArguments.add(CookieUtil.USERID_COOKIE_KEY);
-		}
+		
+		String userName = cookieMap.get(EBAY_CBT_USER_NAME_COOKIE_NAME);
+		
 		if (StringUtil.isEmpty(userName)) {
-			missedArguments.add(CookieUtil.USERNAME_COOKIE_KEY);
+			throw new MissingArgumentException(EBAY_CBT_USER_NAME_COOKIE_NAME);
 		}
-		if (missedArguments.size() > 0) {
-			throw new MissingArgumentException(missedArguments.toArray());
+		
+		String lang = cookieMap.get(EBAY_CBT_LANGUAGE_COOKIE_NAME);
+		
+		if (StringUtil.isEmpty(lang)) {
+			lang = CommonConstant.ZHCN_LANGUAGE;
 		}
+		
+		boolean admin = !StringUtil.isEmpty(cookieMap.get(EBAY_CBT_ADMIN_USER_COOKIE_NAME));
+		
+		return new UserData(userId, userName, admin, lang);
+	}
 
-		UserData user = new UserData(userid, userName, admin, lang);
-
-		return user;
+	public static Map <String, String> convertCookieToMap (Cookie [] cookies) {
+		if (cookies == null || cookies.length <= 0) {
+			return null;
+		}
+		
+		Map <String, String> cookieMap = new HashMap <String, String> ();
+		
+		for (Cookie c : cookies) {
+			cookieMap.put(c.getName(), c.getValue());
+		}
+		
+		return cookieMap;
 	}
 }
