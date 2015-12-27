@@ -39,9 +39,19 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 			// check the annotated method
 			if (annotation != null) {
-			    boolean success = authenticate(request, response);
+				Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
+			    boolean success = authenticate(request, response, cookieMap);
                 if (!success) {
-                    redirectToLogin(request, response);
+                	if (StringUtil.isEmpty(cookieMap.get(CookieUtil.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
+                		redirectToLogin(request, response);
+                	} else {
+                		try {
+                			response.sendRedirect("error");
+                		} catch (IOException e) {
+                			_logger.error(ErrorType.UnableRedirectToUrl, e, "error");
+                		}
+                	}
+                    
                     return false;
                 }
 			}
@@ -56,8 +66,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// reset session in cookie?
 	}
 	
-	private boolean authenticate (HttpServletRequest request, HttpServletResponse response) {
-		Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
+	private boolean authenticate (HttpServletRequest request,
+			HttpServletResponse response, Map <String, String> cookieMap) {
+		
 		String userName = null;
 		String sessionId = null;
 		ParameterType type = null;
