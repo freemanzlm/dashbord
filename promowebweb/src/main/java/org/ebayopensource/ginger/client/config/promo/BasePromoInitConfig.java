@@ -11,7 +11,7 @@ public abstract class BasePromoInitConfig extends DefaultInitGingerClientConfig{
 	
 	@Override
 	public String getEndPoint() {
-		return "http://localhost:9080/";
+		return "http://localhost:8080/";
 	}
 
 	@Override
