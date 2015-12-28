@@ -79,11 +79,11 @@ var BizReport = BizReport || {};
 				columns: [
 				    {data: 'itemId'},
 				    {data: 'skuName'},
-				    {data: 'skuID'},
+				    {data: 'skuId'},
 				    {data: 'category'},
 				    {data: 'itemId'},
-				    {data: 'lastPrice', aDataSort: [9, 5]},
-				    {data: 'dealPrice', aDataSort: [9, 6]},
+				    {data: 'currPrice', aDataSort: [9, 5]},
+				    {data: 'dealsPrice', aDataSort: [9, 6]},
 				    {data: 'quantity'},
 				    {data: 'rrpLink'},
 				    {data: 'currency'},
@@ -138,8 +138,9 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
+						var value = parseFloat(data);
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(2);
+							return isNaN(value) ? "" : value.toUSFixed();
 						}
 						return data;
 					}
@@ -150,8 +151,9 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
+						var value = parseFloat(data);
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
+							return isNaN(value) ? "" : (value.toUSFixed(2) + " (" + full.currency + ")");
 						}
 						
 						return data;
@@ -322,7 +324,6 @@ var BizReport = BizReport || {};
 				 // initialize the empty table only when it's updated the second time.
 				    that.dataTable.again && that.initDataTable();				 
 				    that.dataTable.updateAgain();
-//					namespace.alertDialog.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);		
 			

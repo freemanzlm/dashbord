@@ -79,14 +79,14 @@ var BizReport = BizReport || {};
 				columns: [
 				    {data: 'itemId'},
 				    {data: 'skuName'},
-				    {data: 'skuID'},
+				    {data: 'skuId'},
 				    {data: 'category'},
 				    {data: 'itemId'},
 				    {data: 'spainItemId'},
 				    {data: 'fvf'},
-				    {data: 'lastPrice', aDataSort: [14, 7]},
-				    {data: 'dealPrice', aDataSort: [14, 8]},
-				    {data: 'quantity'},
+				    {data: 'currPrice', aDataSort: [14, 7]},
+				    {data: 'dealsPrice', aDataSort: [14, 8]},
+				    {data: 'stockNum'},
 				    {data: 'location'},
 				    {data: 'delivery'},
 				    {data: 'shipPrice', aDataSort: [14, 12]},
@@ -143,8 +143,9 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
+						var value = parseFloat(data);
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(2);
+							return isNaN(value) ? "" : value.toUSFixed(0);
 						}
 						return data;
 					}
@@ -155,8 +156,9 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
+						var value = parseFloat(data);
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
+							return isNaN(value) ? "" : (value.toUSFixed(2) + " (" + full.currency + ")");
 						}
 						
 						return data;
@@ -327,7 +329,6 @@ var BizReport = BizReport || {};
 				 // initialize the empty table only when it's updated the second time.
 				    that.dataTable.again && that.initDataTable();				 
 				    that.dataTable.updateAgain();
-//					namespace.alertDialog.alert(local.getText('dataTable.requestFail'));
 				}
 			}, this.dataTable);		
 			
