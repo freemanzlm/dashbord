@@ -5,8 +5,6 @@
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 
-<%@ page import="com.ebay.app.raptor.promocommon.businesstype.PMPromotionType" %>
-
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
@@ -36,6 +34,7 @@
 	<res:useCss value="${res.css.local.css['normalize.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css"/>
+	<res:useCss value="${res.css.local.css['fixedColumns.dataTables.3.2.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
@@ -60,6 +59,7 @@
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js['dropdown.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.jquery['dataTables.fixedColumns.3.2.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 	
 	<res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>

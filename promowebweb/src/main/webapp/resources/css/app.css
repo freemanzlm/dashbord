@@ -26,24 +26,6 @@
 
 /* table styles */
 /* concrete table style begin */
-table.dataTable thead {
-	background-image: none;
-}
-
-table.dataTable thead th {
-	border-left: none;
-	border-right: none;
-	border-bottom: 1px solid #ccc;
-	text-align: center;
-}
-
-.dataTables_wrapper.no-footer div.dataTables_scrollHeadInner {
-	border-bottom: 1px solid #ccc;
-}
-
-div.dataTables_scrollHead thead th {
-	border-bottom: none;
-}
 
 .header-no-wrap thead th {
 	white-space: nowrap;
@@ -57,20 +39,6 @@ div.dataTables_scrollHead thead th {
 
 table.dataTable thead th.text-left {
 	text-align: left;
-}
-
-table.dataTable {
-	border-collapse: separate;
-}
-
-table.dataTable tbody td {
-	border-left: none;
-	border-right: none;
-}
-
-table.dataTable td.dataTables_empty {
-	text-align: center;
-	padding: 50px 0;
 }
 
 table.dataTable tbody td.open-tr,

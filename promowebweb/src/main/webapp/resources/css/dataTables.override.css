@@ -2,42 +2,25 @@
 
 table.dataTable {
 	margin: 0;
-	border-collapse: collapse;
-}
-
-.dataTables_wrapper.no-footer .dataTables_scrollBody {
-	border-bottom: none;
+	border-collapse: separate;
 }
 
 /* table.dataTable tr.odd { background-color: #E2E4FF; } */
 table.dataTable tr.even { background-color: white; }
 
-table.dataTable tbody td {
-	border-right: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	/* border-bottom: 1px solid #ccc; */
-}
-
-table.dataTable thead {
-/* 	background-image: -webkit-gradient(
-		linear,
-		left top,
-		left bottom,
-		color-stop(0, #C8D2DC),
-		color-stop(1, #FFFFFF)
-	);
-	background-image: -o-linear-gradient(bottom, #C8D2DC 0%, #EEEEEE 100%);
-	background-image: -moz-linear-gradient(bottom, #C8D2DC 0%, #EEEEEE 100%);
-	background-image: -webkit-linear-gradient(bottom, #C8D2DC 0%, #EEEEEE 100%);
-	background-image: -ms-linear-gradient(bottom, #C8D2DC 0%, #EEEEEE 100%);
-	background-image: linear-gradient(to bottom, #C8D2DC 0%, #EEEEEE 100%); */
-}
-
 table.dataTable thead th, table.dataTable thead td {
-	border-right: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	border-bottom: none;
+	background-image: none;
+	
+	border-right: none;
+	border-left: none;
+	border-bottom: 1px solid #ccc;
 	padding: 10px;
+	text-align: center;
+}
+
+table.dataTable tbody td {
+	border-left: none;
+	border-right: none;
 }
 
 table.dataTable thead .sorting {
@@ -94,7 +77,21 @@ table.dataTable tbody tr.selected:last-child td {
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
 	padding-bottom: 10px;
-}	
+}
+
+div.dataTables_scrollHead thead th {
+	/* scroll bar has 16 pixel width, bottom border can't cross the its container. so, the bottom border 
+	is appended to div.dataTables_scrollHead */
+	border-bottom: none;
+}
+
+.dataTables_scrollHeadInner {
+	border-bottom: 1px solid #ccc;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+	border-bottom: none;
+}
 
 .dataTables_wrapper .dataTables_paginate {
 	padding-top: 0.755em;
@@ -102,4 +99,13 @@ table.dataTable tbody tr.selected:last-child td {
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
 	 padding: 0.1em 0.2em;
+}
+
+table.dataTable td.dataTables_empty {
+	text-align: center;
+	padding: 50px 0;
+}
+
+.DTFC_LeftHeadWrapper {
+	margin-bottom: 10px;
 }

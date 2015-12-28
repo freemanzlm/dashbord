@@ -32,7 +32,10 @@ var BizReport = BizReport || {};
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'bScrollCollapse': true,
 				'sScrollX': "100%",
-				'sScrollY': "600",				
+				'sScrollY': "600",
+				 fixedColumns: {
+					 leftColumns: 2
+				 },
 				'oLanguage': {
 					sEmptyTable: local.getText('dataTable.emptyTable'),
 					sInfo: local.getText('dataTable.listing.info'),
