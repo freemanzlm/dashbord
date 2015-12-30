@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.interceptor;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PromotionUtil;
+import com.ebay.raptor.promotion.util.RequestUtil;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 	
@@ -37,9 +39,19 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 			// check the annotated method
 			if (annotation != null) {
-			    boolean success = authenticate(request, response);
+				Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
+			    boolean success = authenticate(request, response, cookieMap);
                 if (!success) {
-                    redirectToLogin(request, response);
+                	if (StringUtil.isEmpty(cookieMap.get(CookieUtil.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
+                		redirectToLogin(request, response);
+                	} else {
+                		try {
+                			response.sendRedirect("error");
+                		} catch (IOException e) {
+                			_logger.error(ErrorType.UnableRedirectToUrl, e, "error");
+                		}
+                	}
+                    
                     return false;
                 }
 			}
@@ -54,48 +66,34 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		// reset session in cookie?
 	}
 	
-	private boolean authenticate (HttpServletRequest request, HttpServletResponse response) {
-		Cookie [] cookies = request.getCookies();
+	private boolean authenticate (HttpServletRequest request,
+			HttpServletResponse response, Map <String, String> cookieMap) {
+		
+		String userName = null;
+		String sessionId = null;
+		ParameterType type = null;
 
-		if (cookies != null && cookies.length > 0) {
-			Long userId = null;
-			String sessionId = null;
-			boolean userFound = false;
-			boolean sessionFound = false;
-
-			for (Cookie cookie : cookies) {
-				String cookieName = cookie.getName();
-				String cookieValue = cookie.getValue();
-
-				if (CookieUtil.HACKID_COOKIE_KEY.equalsIgnoreCase(cookieName)) {
-					// found hack_id which means the access is by hack mode, and no session stored
-                    return true;
-                }
-
-				if (CookieUtil.USERID_COOKIE_KEY.equalsIgnoreCase(cookieName)) {
-					userId = Long.parseLong(cookieValue);
-					userFound = true;
-				}
-				
-				if (CookieUtil.SESSIONID_COOKIE_KEY.equalsIgnoreCase(cookieName)) {
-					sessionId = cookieValue;
-					sessionFound = true;
-				}
-				
-				if (userFound && sessionFound) {
-					break;
-				}
+		if (cookieMap != null && cookieMap.size() > 0) {
+			if (!StringUtil.isEmpty(cookieMap.get(CookieUtil.HACKID_COOKIE_KEY))) {
+				return true;
+			} else if (!StringUtil.isEmpty(cookieMap.get(CookieUtil.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
+				userName = cookieMap.get(CookieUtil.EBAY_CBT_ADMIN_USER_COOKIE_NAME);
+				sessionId = cookieMap.get(CookieUtil.EBAY_CBT_SESSION_ID_COOKIE_NAME);
+				type = ParameterType.BackendSession;
+			} else {
+				userName = cookieMap.get(CookieUtil.EBAY_CBT_USER_NAME_COOKIE_NAME);
+				sessionId = cookieMap.get(CookieUtil.EBAY_CBT_SESSION_ID_COOKIE_NAME);
+				type = ParameterType.DashboardSession;
 			}
 			
-			if (userId != null) {
-				String storedSession = dataService.getSdParamterValue(ParameterType.BIZSession,
-						CommonConstant.DEFAULT_PARAMETER_STATUS, userId + "");
+			if (userName != null) {
+				String storedSession = dataService.getSdParamterValue(type,
+						CommonConstant.PARAMETER_ENABLE, userName);
 
 				if (!StringUtil.isEmpty(sessionId) && sessionId.equalsIgnoreCase(storedSession)) {
 					return true;
 				}
 			}
-
 		}
 
 		return false;
@@ -103,7 +101,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 	private void redirectToLogin (HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String url = PromotionUtil.LOGIN_URL + "?referurl=" + FastURLEncoder.encode(PromotionUtil._promoUrlPrefix + request.getRequestURI());
+			String url = PromotionUtil.LOGIN_URL + '?'
+					+ PromotionUtil.REFER_PARAM + '='
+					+ FastURLEncoder.encode(FastURLEncoder.encode(RequestUtil.getFullRequestUrl(request)));
 			_logger.log("redirect to url: " + url);
 			response.sendRedirect(url);
 		} catch (IOException e) {

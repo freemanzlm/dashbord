@@ -78,9 +78,9 @@ public class IndexController {
         if (!StringUtil.isEmpty(userId)) {
         	// add hack_id in order to avoid login checking
         	CookieUtil.setCBTPromotionCookie(response, CookieUtil.HACKID_COOKIE_KEY, hackId);
-        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.USERID_COOKIE_KEY, userId);
+        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.EBAY_CBT_USER_ID_COOKIE_NAME, userId);
         	// hack_id is the user name.
-        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.USERNAME_COOKIE_KEY, hackId);
+        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId);
         }
 
         try {
