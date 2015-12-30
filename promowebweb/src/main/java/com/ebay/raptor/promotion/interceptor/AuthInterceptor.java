@@ -103,10 +103,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		try {
 			String url = PromotionUtil.LOGIN_URL + '?'
 					+ PromotionUtil.REFER_PARAM + '='
-					+ FastURLEncoder.encode(RequestUtil.getFullRequestUrl(request));
-			_logger.warn("=================================================");
-			_logger.warn("add refer url in parameter: " + url);
-			_logger.warn("=================================================");
+					+ FastURLEncoder.encode(FastURLEncoder.encode(RequestUtil.getFullRequestUrl(request)));
 			response.sendRedirect(url);
 		} catch (IOException e) {
 			_logger.error(ErrorType.UnableRedirectToUrl, e, PromotionUtil.LOGIN_URL);
