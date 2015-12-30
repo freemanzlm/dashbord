@@ -174,7 +174,13 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["worldwide",  "russia", "china", "latin", "mexico", "brazil", "israel"],
+					aTargets: ["worldwide",  "russia", "mexico", "israel"],
+					sType: "string",
+					sClass: "text-center",
+					sDefaultContent: "Free"
+				},
+				{
+					aTargets: ["china", "latin", "brazil"],
 					sType: "string",
 					sClass: "text-center",
 					sDefaultContent: "No"
