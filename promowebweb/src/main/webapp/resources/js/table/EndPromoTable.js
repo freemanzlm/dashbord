@@ -183,7 +183,7 @@ var BizReport = BizReport || {};
 					mRender : function (data, type, full) {
 						if (type == "display") {
 							
-							if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
+							if (data == 'SubsidyRetrieved') { // complete
 								return local.getText('promo.state.SubsidyRetrieved') + "<br/><a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
 							}
 
@@ -192,7 +192,7 @@ var BizReport = BizReport || {};
 
 						if (type == "sort") {
 
-							if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
+							if (data == 'SubsidyRetrieved') { // complete
 								return 11;
 							}
 
@@ -201,7 +201,7 @@ var BizReport = BizReport || {};
 
 						if (type == "filter") {
 							
-							if ((data == 'SubsidyRetrieved') || (data == 'End' && full.reward > 0)) { // complete
+							if (data == 'SubsidyRetrieved') { // complete
 								return 'SubsidyRetrieved';
 							}
 

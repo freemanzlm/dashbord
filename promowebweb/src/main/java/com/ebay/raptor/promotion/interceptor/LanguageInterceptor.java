@@ -22,7 +22,6 @@ import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PromotionUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
-import com.ebay.raptor.promotion.util.TokenUtil;
 
 public class LanguageInterceptor extends HandlerInterceptorAdapter{
 
@@ -55,7 +54,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			user.setLang(language);
 
 			// change the language cookie according to the "lang" request parameter.
-			CookieUtil.setCBTPromotionCookie(resp, CookieUtil.LANG_COOKIE_NAME, language);
+			CookieUtil.setCBTPromotionCookie(resp, CookieUtil.EBAY_CBT_LANGUAGE_COOKIE_NAME, language);
 		}
 
 		addPageParameters(req, model, user);
@@ -159,10 +158,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 		}
 
 		// add the seller dashboard url
-		model.addObject(ViewContext.SDUrl.getAttr(), CommonConstant.SELLER_DASHBOARD_URL + "?token="
-                + TokenUtil.generateSDToken(userName,
-                        userData.getUserId(), req.getRemoteHost(),
-                        language, userData.getAdmin()));
+		model.addObject(ViewContext.SDUrl.getAttr(), CommonConstant.SELLER_DASHBOARD_URL);
 
 		//for zh_HK, change the view name and translate the particular data into traditional Chinese
 		if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(language)) {

@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.util.CookieUtil;
 
 @Controller
 @RequestMapping(value = "hotsell")
