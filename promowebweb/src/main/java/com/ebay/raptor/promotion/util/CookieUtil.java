@@ -130,16 +130,14 @@ public class CookieUtil {
 	}
 
 	public static Map <String, String> convertCookieToMap (Cookie [] cookies) {
-		if (cookies == null || cookies.length <= 0) {
-			return null;
-		}
-		
 		Map <String, String> cookieMap = new HashMap <String, String> ();
-		
-		for (Cookie c : cookies) {
-			cookieMap.put(c.getName(), c.getValue());
+
+		if (cookies != null && cookies.length > 0) {
+			for (Cookie c : cookies) {
+				cookieMap.put(c.getName(), c.getValue());
+			}
 		}
-		
+
 		return cookieMap;
 	}
 }
