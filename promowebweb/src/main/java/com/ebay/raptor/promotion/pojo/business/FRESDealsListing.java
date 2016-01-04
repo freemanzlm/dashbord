@@ -87,6 +87,13 @@ public class FRESDealsListing {
 		this.currency = currency;
 	}
 
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	private String skuId;
 	private String skuName;
 	private ProductCategory category;
@@ -101,4 +108,5 @@ public class FRESDealsListing {
 	private Float shipPrice;
 	private String rrpLink;
 	private Currency currency;
+	private String state;
 }

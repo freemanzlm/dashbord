@@ -141,6 +141,13 @@ public class GBHDealsListing {
 		this.currency = currency;
 	}
 
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	private String skuId;
 	private String skuName;
 	private ProductCategory category;
@@ -164,4 +171,5 @@ public class GBHDealsListing {
 	private ShipOption isShipOpt;
 	private Float isShipChg;
 	private Currency currency;
+	private String state;
 }

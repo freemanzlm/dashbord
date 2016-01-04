@@ -21,7 +21,15 @@ public class RequestParameter {
 		this.lang = lang;
 	}
 
+	public String getPromoSubType() {
+		return promoSubType;
+	}
+	public void setPromoSubType(String promoSubType) {
+		this.promoSubType = promoSubType;
+	}
+
 	private String promoId;
 	private String promoType;
+	private String promoSubType;
 	private String lang;
 }

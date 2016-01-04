@@ -40,6 +40,7 @@ public class ResourceProvider {
 	
 	public interface ListingRes {
 		String dealsBase = "deals";
+		String siteDeals = "sitedeals";
 		String hotsellBase = "hotsell";
 		
 		String _getPromotionListings = "/getPromotionListings";
