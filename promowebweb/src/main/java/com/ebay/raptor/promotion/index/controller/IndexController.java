@@ -35,7 +35,6 @@ import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
-
 @Controller
 public class IndexController {
     

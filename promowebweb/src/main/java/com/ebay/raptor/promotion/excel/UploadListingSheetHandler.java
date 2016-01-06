@@ -1,7 +1,6 @@
 package com.ebay.raptor.promotion.excel;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -13,21 +12,15 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
-import com.ebay.app.raptor.promocommon.excel.EmptyCellValueException;
-import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
 import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
-import com.ebay.app.raptor.promocommon.excel.InvalidDateCellValueException;
-import com.ebay.app.raptor.promocommon.util.DateUtil;
-import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 
-public class UploadListingSheetHandler implements IExcelSheetHandler {
+public class UploadListingSheetHandler extends AbstractListingSheetHandler {
 	private static CommonLogger logger =
             CommonLogger.getInstance(UploadListingSheetHandler.class);
-	private static final String DATE_FORMAT_STRING = "YYYY-MM-DD";
 	
 	public UploadListingSheetHandler(DealsListingService dealsListingService,
 			String promoId, Long userId) {
@@ -151,90 +144,6 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 		} else {
 			throw new InvalidCellValueException(ErrorType.EmptyListingInExcel, 0, 0, "");
 		}
-	}
-
-	private Object getCellValue (Cell cell) {
-		int cellType = cell.getCellType();
-
-		if (cellType == Cell.CELL_TYPE_BLANK) {
-			return null;
-		} else if (cellType == Cell.CELL_TYPE_STRING) {
-			String cellValue = cell.getStringCellValue();
-			return StringUtil.isEmpty(cellValue) ? null : cellValue;
-		} else if (cellType == Cell.CELL_TYPE_NUMERIC) {
-			if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) {
-				 return cell.getDateCellValue();
-			}
-
-			return cell.getNumericCellValue();
-		} else {
-			return null;
-		}
-	}
-	
-	private String validateStringData (Object cellValue, Cell cell) throws InvalidCellValueException {
-		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex();
-
-		if (cellValue == null) {
-			throw new EmptyCellValueException(rowIndex, colIndex);
-		}
-
-		String value = "";
-
-		try {
-			value = (String)cellValue;
-		} catch (Exception e) {
-			throw new InvalidCellValueException(rowIndex, colIndex, cellValue.toString(), e);
-		}
-		
-		if (value.length() > 200 || value.length() <= 0) {
-			throw new InvalidCellValueException(rowIndex, colIndex, value);
-		}
-		
-		return value;
-	}
-
-	private String validateStringDateData (Object cellValue, Cell cell) throws InvalidCellValueException {
-		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex();
-
-		if (cellValue == null) {
-			throw new EmptyCellValueException(rowIndex, colIndex);
-		}
-
-		Date value = null;
-
-		try {
-			value = (Date)cellValue;
-		} catch (Exception e) {
-			throw new InvalidDateCellValueException(rowIndex, colIndex, cellValue.toString(), DATE_FORMAT_STRING, e);
-		}
-		
-		return value == null ? "" : DateUtil.formatSimpleDateWithDash(value);
-	}
-	
-	private Double validateNumberData (Object cellValue, Cell cell) throws InvalidCellValueException {
-		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex();
-
-		if (cellValue == null) {
-			throw new EmptyCellValueException(rowIndex, colIndex);
-		}
-
-		Double value = -1.0;
-
-		try {
-			value = (double)cellValue;
-		} catch (Exception e) {
-			throw new InvalidCellValueException(rowIndex, colIndex, cellValue.toString(), e);
-		}
-		
-		if (value < 0) {
-			throw new InvalidCellValueException(rowIndex, colIndex, value + "");
-		}
-		
-		return value;
 	}
 
 	private DealsListingService dealsListingService;

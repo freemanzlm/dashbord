@@ -1,7 +1,6 @@
 package com.ebay.raptor.promotion.pojo.business;
 
 public enum ProductCategory {
-	Default 	(""),
 	BAI 		("Business & Industrial"),
 	Collect		("Collectibles"),
 	Elect		("Electronics"),
