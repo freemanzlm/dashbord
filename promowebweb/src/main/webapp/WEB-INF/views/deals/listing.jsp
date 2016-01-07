@@ -155,6 +155,7 @@
 				<div class="mt20 page-bottom-actions">
 					<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
+						<input type="hidden" name="promoSubType" value="${promo.promoSubType}"/>
 						<input type="hidden" name="listings" value="[]" />
 						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 						<c:choose>
