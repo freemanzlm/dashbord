@@ -10,7 +10,7 @@ import com.ebay.raptor.promotion.service.CSApiService;
 
 @Configuration
 public class PromoConfiguration {
-	@Bean
+	@Bean(name="messageSource")
 	public ResourceBundleMessageSource getResourceBundleMessageSource () {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource ();
 		source.setBasenames("Message");

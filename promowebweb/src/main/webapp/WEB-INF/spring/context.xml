@@ -20,7 +20,7 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 
-	<mvc:annotation-driven>
+	<mvc:annotation-driven validator="validator">
 			<mvc:message-converters>
             <!--  Support AJAX processing with progressive rendering. Overrides HttpOutputMessage with RaptorResponseWriter -->
 			<beans:bean class="com.ebay.raptor.kernel.filter.RaptorJacksonHttpMessageConverter"/>
@@ -44,6 +44,11 @@
        <beans:bean class="com.ebay.raptor.promotion.interceptor.LanguageInterceptor"></beans:bean>
        <beans:bean class="com.ebay.raptor.promotion.interceptor.UpdatedPromotionsNumInterceptor"></beans:bean>
     </mvc:interceptors>
+    
+    <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">  
+	    <beans:property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>  
+	    <beans:property name="validationMessageSource" ref="messageSource"/>  
+	</beans:bean>  
     
     <beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

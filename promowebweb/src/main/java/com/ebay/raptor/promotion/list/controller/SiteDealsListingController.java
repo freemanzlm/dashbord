@@ -28,6 +28,7 @@ import com.ebay.app.raptor.promocommon.excel.ExcelReader;
 import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
+import com.ebay.raptor.promotion.excel.SiteDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
@@ -86,7 +87,7 @@ public class SiteDealsListingController extends AbstractListingController{
 		XSSFWorkbook workbook = null;
 		try {
 			workbook = new XSSFWorkbook(dealsListings.getInputStream());
-			ExcelReader.readWorkbook(workbook, 0, new UploadListingSheetHandler(service,
+			ExcelReader.readWorkbook(workbook, 0, new SiteDealsListingSheetHandler(service,
 							promoId, userData.getUserId()));
 			responseData.setStatus(true);
 			this.acceptAgreement(promoId, userData.getUserId());
