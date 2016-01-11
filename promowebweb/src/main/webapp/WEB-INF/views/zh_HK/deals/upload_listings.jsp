@@ -14,6 +14,7 @@
 			選擇上傳您的刊登清單
 			<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇檔案" /> <input type="file" name="dealsListings" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">選擇</button></span>
 			<input type="hidden" name="promoId" value="${promo.promoId}"/>
+			<input type="hidden" name="promoSubType" value="${promo.promoSubType}"/> 
 		</form>
 		<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
 		

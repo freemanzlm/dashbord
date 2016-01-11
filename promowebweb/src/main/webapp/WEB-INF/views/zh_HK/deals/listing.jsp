@@ -8,7 +8,7 @@
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<c:set var="dealsType" value="${ 2 }" />
+<c:set var="dealsType" value="${ promo.promoSubType }" />
 
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
@@ -71,12 +71,12 @@
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<c:choose>
 		<c:when test="${ dealsType eq 1}">
-			<!-- china, brazil -->
-			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
-		</c:when>
-		<c:when test="${ dealsType eq 2}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ dealsType eq 2}">
+			<!-- china, brazil -->
+			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
 		<c:when test="${ dealsType eq 3}">
 			<!-- French and spain -->
@@ -138,10 +138,10 @@
 				
 				<c:choose>
 					<c:when test="${dealsType eq 1 }">
-						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
 					</c:when>
 					<c:when test="${dealsType eq 2 }">
-						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
 					</c:when>
 					<c:when test="${dealsType eq 3 }">
 						<jsp:include page="../table/usListing.jsp"></jsp:include>
@@ -157,6 +157,7 @@
 					<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
 						<input type="hidden" name="promoId" value="${promo.promoId}"/>
 						<input type="hidden" name="listings" value="[]" />
+						<input type="hidden" name="promoSubType" value="${promo.promoSubType}"/> 
 						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 						<c:choose>
 							<c:when test="${ state eq 'Applied' }">

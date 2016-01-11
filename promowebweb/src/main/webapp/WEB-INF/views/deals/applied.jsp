@@ -69,12 +69,12 @@
 	
 	<c:choose>
 		<c:when test="${ dealsType eq 1}">
-			<!-- china, brazil -->
-			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
-		</c:when>
-		<c:when test="${ dealsType eq 2}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ dealsType eq 2}">
+			<!-- china, brazil -->
+			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
 		<c:when test="${ dealsType eq 3}">
 			<!-- French and spain -->
@@ -114,10 +114,10 @@
 						</h3>
 						<c:choose>
 							<c:when test="${dealsType eq 1 }">
-								<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+								<jsp:include page="../table/frenchListing.jsp"></jsp:include>
 							</c:when>
 							<c:when test="${dealsType eq 2 }">
-								<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+								<jsp:include page="../table/gbhListing.jsp"></jsp:include>
 							</c:when>
 							<c:when test="${dealsType eq 3 }">
 								<jsp:include page="../table/usListing.jsp"></jsp:include>

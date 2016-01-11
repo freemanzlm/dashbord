@@ -5,7 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<c:set var="dealsType" value="${ 2 }" />
+<c:set var="dealsType" value="${ promo.promoSubType }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -64,12 +64,12 @@
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<c:choose>
 		<c:when test="${ dealsType eq 1}">
-			<!-- china, brazil -->
-			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
-		</c:when>
-		<c:when test="${ dealsType eq 2}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ dealsType eq 2}">
+			<!-- china, brazil -->
+			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
 		<c:when test="${ dealsType eq 3}">
 			<!-- French and spain -->
@@ -105,10 +105,10 @@
 				<h3><strong>提交預審的刊登</strong></h3>
 				<c:choose>
 					<c:when test="${dealsType eq 1 }">
-						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
 					</c:when>
 					<c:when test="${dealsType eq 2 }">
-						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
 					</c:when>
 					<c:when test="${dealsType eq 3 }">
 						<jsp:include page="../table/usListing.jsp"></jsp:include>
@@ -144,6 +144,7 @@
 							<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt30" method="post" enctype="multipart/form-data" target="uploadIframe">
 								選擇上傳您的刊登清單
 								<input type="hidden" name="promoId" value="${promo.promoId}"/>
+								<input type="hidden" name="promoSubType" value="${promo.promoSubType}"/> 
 								<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇檔案" /> <input type="file" name="dealsListings" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button type="button" class="btn" style="margin-left: 3px;">選擇</button></span>
 							</form>
 							<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
