@@ -1,5 +1,7 @@
 package com.ebay.raptor.promotion.pojo.business;
 
+import com.ebay.app.raptor.promocommon.excel.header.Header;
+
 public class APACDealsListing {
 
 	public String getSkuId() {
@@ -64,14 +66,32 @@ public class APACDealsListing {
 		this.state = state;
 	}
 
+	@Header(title="APAC.skuId", order=2, writable=false, dataType=String.class)
 	private String skuId;
+	
+	@Header(title="APAC.skuName", order=1, writable=false, dataType=String.class)
 	private String skuName;
+	
+	@Header(title="APAC.category", order=3, writable=true, dataType=Enum.class)
 	private ProductCategory category;
+	
+	@Header(title="APAC.itemId", order=4, writable=true, dataType=Long.class)
 	private Long itemId;
+	
+	@Header(title="APAC.listPrice", order=6, writable=true, dataType=Float.class)
 	private Float listPrice;
+	
+	@Header(title="APAC.dealPrice", order=5, writable=true, dataType=Float.class)
 	private Float dealPrice;
+	
+	@Header(title="APAC.qty", order=7, writable=true, dataType=Long.class)
 	private Long qty;
+	
+	@Header(title="APAC.rrpLink", order=9, writable=true, dataType=String.class)
 	private String rrpLink;
+	
+	@Header(title="APAC.currency", order=8, writable=true, dataType=Enum.class)
 	private Currency currency;
+	
 	private String state;
 }

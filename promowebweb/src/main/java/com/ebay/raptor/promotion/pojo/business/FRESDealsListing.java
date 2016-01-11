@@ -1,5 +1,7 @@
 package com.ebay.raptor.promotion.pojo.business;
 
+import com.ebay.app.raptor.promocommon.excel.header.Header;
+
 public class FRESDealsListing {
 
 	public String getSkuId() {
@@ -93,20 +95,48 @@ public class FRESDealsListing {
 	public void setState(String state) {
 		this.state = state;
 	}
-
+	
+	@Header(title="FRES.skuId", order=2, writable=false, dataType=String.class)
 	private String skuId;
+	
+	@Header(title="FRES.skuName", order=1, writable=false, dataType=String.class)
 	private String skuName;
+	
+	@Header(title="FRES.category", order=3, writable=true, dataType=Enum.class)
 	private ProductCategory category;
+	
+	@Header(title="FRES.itemId", order=4, writable=true, dataType=Long.class)
 	private Long itemId;
+	
+	@Header(title="FRES.esItemId", order=5, writable=true, dataType=Long.class)
 	private Long esItemId;
+	
+	@Header(title="FRES.fvf", order=6, writable=true, dataType=Float.class)
 	private Float fvf;
+	
+	@Header(title="FRES.listPrice", order=7, writable=true, dataType=Float.class)
 	private Float listPrice;
+	
+	@Header(title="FRES.dealPrice", order=8, writable=true, dataType=Float.class)
 	private Float dealPrice;
+	
+	@Header(title="FRES.qty", order=9, writable=true, dataType=Long.class)
 	private Long qty;
+	
+	@Header(title="FRES.location", order=10, writable=true, dataType=Enum.class)
 	private Location location;
+	
+	@Header(title="FRES.dlvyTime", order=11, writable=true, dataType=Enum.class)
 	private DeliveryTime dlvyTime;
+	
+	@Header(title="FRES.shipPrice", order=12, writable=true, dataType=Float.class)
 	private Float shipPrice;
+	
+	@Header(title="FRES.rrpLink", order=13, writable=true, dataType=String.class)
 	private String rrpLink;
+	
+	@Header(title="FRES.currency", order=14, writable=true, dataType=Enum.class)
 	private Currency currency;
+	
 	private String state;
 }
