@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.list.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,11 +26,10 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.ExcelReader;
-import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.excel.SiteDealsListingSheetHandler;
-import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
+import com.ebay.raptor.promotion.excel.writer.ExcelSheetWriter;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
@@ -39,7 +39,7 @@ import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
-import com.ebay.raptor.promotion.pojo.business.Sku;
+import com.ebay.raptor.promotion.pojo.business.GBHDealsListing;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -64,17 +64,32 @@ public class SiteDealsListingController extends AbstractListingController{
         	resp.setHeader("Content-disposition", "attachment; filename=" + ResourceProvider.ListingRes.skuListFileName + ".xlsx");
         	UserData userData = CookieUtil.getUserDataFromCookie(req);
         	
-        	List<DealsListing> skuListings = service.getSkuListingsByPromotionId(param.getPromoId(), userData.getUserId());
+        	List<GBHDealsListing> gbhListings = initGBHList();
 
         	XSSFWorkbook workBook = new XSSFWorkbook();
-        	ExcelSheetWriter<DealsListing> writer = new ExcelSheetWriter<DealsListing>(DealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName);
+        	ExcelSheetWriter<GBHDealsListing> writer = new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName);
             writer.resetHeaders();
-            writer.build(skuListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
+            writer.build(gbhListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
             workBook.write(resp.getOutputStream());
-        } catch (IOException | PromoException | MissingArgumentException e) {
+        } catch (IOException | MissingArgumentException e) {
         	logger.error("Unable to download deals listing.", e);
         }
     }
+	
+	private static List<GBHDealsListing> initGBHList() {
+		List<GBHDealsListing> gbhListings = new ArrayList<>();
+		for(int i=0; i<10; i++) {
+			GBHDealsListing listing = new GBHDealsListing();
+			listing.setSkuName("耿艳菲");
+			listing.setSkuId("00000"+i);
+			listing.setItemId((long)10000+i);
+			listing.setListPrice((float)20.1+i);
+			listing.setDealPrice((float)20.1-i);
+			listing.setQty((long)17*i+i);
+			gbhListings.add(listing);
+		}
+		return gbhListings;
+	}
 	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadDealsListings)

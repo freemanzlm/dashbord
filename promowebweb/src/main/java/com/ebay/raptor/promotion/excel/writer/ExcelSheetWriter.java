@@ -26,10 +26,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
-import com.dyuproject.protostuff.runtime.MappedSchema.Field;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfiguration;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfigurationManager;
-import com.ebay.app.raptor.promocommon.export.ColumnFormat;
 import com.ebay.app.raptor.promocommon.util.DateUtil;
 import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.Currency;

@@ -62,7 +62,7 @@ public class SiteDealsListingSheetHandler extends AbstractListingSheetHandler{
 	public void handleSheet(XSSFSheet sheet) throws CommonException {
 		Class<? extends SiteDealsListing> clazz = null;
 		
-		if (proSubType == PromotionSubType.GBH) {
+		/*if (proSubType == PromotionSubType.GBH) {
 			clazz = GBHDealsListing.class;
 		} else if (proSubType == PromotionSubType.FRES) {
 //			clazz = FRESDealsListing.class;
@@ -70,7 +70,7 @@ public class SiteDealsListingSheetHandler extends AbstractListingSheetHandler{
 //			clazz = APACDealsListing.class;
 		} else {
 			// TODO - 
-		}
+		}*/
 
 		readHeader(sheet, clazz);
 		readContent(sheet, clazz);
