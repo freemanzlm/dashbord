@@ -1,5 +1,10 @@
 package com.ebay.raptor.promotion.pojo.business;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.ebay.app.raptor.promocommon.excel.header.Header;
 
 public class FRESDealsListing {
@@ -27,12 +32,6 @@ public class FRESDealsListing {
 	}
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
-	}
-	public Long getEsItemId() {
-		return esItemId;
-	}
-	public void setEsItemId(Long esItemId) {
-		this.esItemId = esItemId;
 	}
 	public Float getFvf() {
 		return fvf;
@@ -96,47 +95,62 @@ public class FRESDealsListing {
 		this.state = state;
 	}
 	
-	@Header(title="FRES.skuId", order=2, writable=false, dataType=String.class)
+	@NotEmpty(message = "{listing.skuId.empty}")
+	@Header(title="FRES.skuId", order=0, writable=false)
 	private String skuId;
 	
-	@Header(title="FRES.skuName", order=1, writable=false, dataType=String.class)
+	@NotEmpty(message = "{listing.skuName.empty}")
+	@Header(title="FRES.skuName", order=1, writable=false)
 	private String skuName;
 	
-	@Header(title="FRES.category", order=3, writable=true, dataType=Enum.class)
+	@NotNull(message = "{listing.category.null}")
+	@Header(title="FRES.category", order=2, writable=true)
 	private ProductCategory category;
 	
-	@Header(title="FRES.itemId", order=4, writable=true, dataType=Long.class)
+	@NotNull(message = "{listing.itemId.null}")
+	@Header(title="FRES.itemId", order=3, writable=true)
 	private Long itemId;
 	
-	@Header(title="FRES.esItemId", order=5, writable=true, dataType=Long.class)
-	private Long esItemId;
-	
-	@Header(title="FRES.fvf", order=6, writable=true, dataType=Float.class)
+	@NotNull(message = "{listing.fvf.null}")
+	@Min(value=0)
+	@Header(title="FRES.fvf", order=4, writable=true)
 	private Float fvf;
 	
-	@Header(title="FRES.listPrice", order=7, writable=true, dataType=Float.class)
+	@NotNull(message = "{listing.listPrice.null}")
+	@Min(value=0)
+	@Header(title="FRES.listPrice", order=5, writable=true)
 	private Float listPrice;
 	
-	@Header(title="FRES.dealPrice", order=8, writable=true, dataType=Float.class)
+	@NotNull(message = "{listing.dealPrice.null}")
+	@Min(value=0)
+	@Header(title="FRES.dealPrice", order=6, writable=true)
 	private Float dealPrice;
 	
-	@Header(title="FRES.qty", order=9, writable=true, dataType=Long.class)
+	@NotNull(message = "{listing.qty.null}")
+	@Min(value=0)
+	@Header(title="FRES.qty", order=7, writable=true)
 	private Long qty;
 	
-	@Header(title="FRES.location", order=10, writable=true, dataType=Enum.class)
+	@NotNull(message = "{listing.location.null}")
+	@Header(title="FRES.location", order=8, writable=true)
 	private Location location;
 	
-	@Header(title="FRES.dlvyTime", order=11, writable=true, dataType=Enum.class)
+	@NotNull(message = "{listing.dlvyTime.null}")
+	@Header(title="FRES.dlvyTime", order=9, writable=true)
 	private DeliveryTime dlvyTime;
 	
-	@Header(title="FRES.shipPrice", order=12, writable=true, dataType=Float.class)
+	@NotNull(message = "{listing.shipPrice.null}")
+	@Min(value=0)
+	@Header(title="FRES.shipPrice", order=10, writable=true)
 	private Float shipPrice;
 	
-	@Header(title="FRES.rrpLink", order=13, writable=true, dataType=String.class)
-	private String rrpLink;
-	
-	@Header(title="FRES.currency", order=14, writable=true, dataType=Enum.class)
+	@NotNull(message = "{listing.currency.null}")
+	@Header(title="FRES.currency", order=11, writable=true)
 	private Currency currency;
 	
+	@NotEmpty(message = "{listing.rrpLink.empty}")
+	@Header(title="FRES.rrpLink", order=12, writable=true)
+	private String rrpLink;
+
 	private String state;
 }

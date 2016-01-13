@@ -13,6 +13,8 @@ import javax.ws.rs.POST;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +30,10 @@ import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.ExcelReader;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
+import com.ebay.raptor.promotion.excel.APACDealsListingSheetHandler;
+import com.ebay.raptor.promotion.excel.FRESDealsListingSheetHandler;
+import com.ebay.raptor.promotion.excel.GBHDealsListingSheetHandler;
+import com.ebay.raptor.promotion.excel.InvalidCellDataException;
 import com.ebay.raptor.promotion.excel.SiteDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.writer.ExcelSheetWriter;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -40,6 +46,7 @@ import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.GBHDealsListing;
+import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -55,6 +62,8 @@ public class SiteDealsListingController extends AbstractListingController{
 	
 	@Autowired
 	DealsListingService service;
+	
+	@Autowired SpringValidatorAdapter validator;
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes.downloadSkuList)
@@ -80,7 +89,7 @@ public class SiteDealsListingController extends AbstractListingController{
 		List<GBHDealsListing> gbhListings = new ArrayList<>();
 		for(int i=0; i<10; i++) {
 			GBHDealsListing listing = new GBHDealsListing();
-			listing.setSkuName("耿艳菲");
+			listing.setSkuName("testSKUNAME");
 			listing.setSkuId("00000"+i);
 			listing.setItemId((long)10000+i);
 			listing.setListPrice((float)20.1+i);
@@ -102,10 +111,27 @@ public class SiteDealsListingController extends AbstractListingController{
 		XSSFWorkbook workbook = null;
 		try {
 			workbook = new XSSFWorkbook(dealsListings.getInputStream());
-			ExcelReader.readWorkbook(workbook, 0, new SiteDealsListingSheetHandler(service,
-							promoId, userData.getUserId()));
-			responseData.setStatus(true);
-			this.acceptAgreement(promoId, userData.getUserId());
+			SiteDealsListingSheetHandler<?> handler = null;
+			
+			if (promoSubType.equals(PromotionSubType.GBH.toString())) {
+				handler = new GBHDealsListingSheetHandler(validator, service,
+						promoId, userData.getUserId());
+			} else if (promoSubType.equals(PromotionSubType.APAC.toString())) {
+				handler = new APACDealsListingSheetHandler(validator, service,
+						promoId, userData.getUserId());
+			} else if (promoSubType.equals(PromotionSubType.FRES.toString())) {
+				handler = new FRESDealsListingSheetHandler(validator, service,
+						promoId, userData.getUserId());
+			} else {
+				logger.error("Unsupported promotion type " + promoSubType);
+				responseData.setStatus(false);
+			}
+			
+			if (handler != null) {
+				ExcelReader.readWorkbook(workbook, 0, handler);
+				responseData.setStatus(true);
+				this.acceptAgreement(promoId, userData.getUserId());
+			}
 		} catch (IOException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
 			logger.error("Upload listings got error.", e);
@@ -115,6 +141,12 @@ public class SiteDealsListingController extends AbstractListingController{
 			logger.error("Upload listings got error.", e);
 			responseData.setData(e.getErrorType().getCode() + "");
 			responseData.setStatus(false);
+		} catch (InvalidCellDataException e) {
+			logger.error("The uploaded listings are invalid.", e);
+			responseData.setStatus(false);
+			Errors errors = e.getErrors();
+			
+			responseData.setMessage(errors.getFieldError().getDefaultMessage());
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
 			logger.error("The uploaded listings are invalid.", e);

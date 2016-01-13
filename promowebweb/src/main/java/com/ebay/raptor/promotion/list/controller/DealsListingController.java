@@ -13,6 +13,8 @@ import javax.ws.rs.POST;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.beanvalidation.SpringValidatorAdapter;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,10 +28,16 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.ExcelReader;
+import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
 import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.kernel.context.IRaptorContext;
+import com.ebay.raptor.promotion.excel.APACDealsListingSheetHandler;
+import com.ebay.raptor.promotion.excel.FRESDealsListingSheetHandler;
+import com.ebay.raptor.promotion.excel.GBHDealsListingSheetHandler;
+import com.ebay.raptor.promotion.excel.InvalidCellDataException;
+import com.ebay.raptor.promotion.excel.SiteDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
@@ -40,6 +48,7 @@ import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
+import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -60,6 +69,8 @@ public class DealsListingController extends AbstractListingController{
 	
 	@Autowired
 	DealsListingService service;
+	
+	@Autowired SpringValidatorAdapter validator;
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes.downloadSkuList)
@@ -84,16 +95,33 @@ public class DealsListingController extends AbstractListingController{
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadDealsListings)
 	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
-			@RequestPart MultipartFile dealsListings, @RequestParam String promoId) throws MissingArgumentException{
+			@RequestPart MultipartFile dealsListings, @RequestParam String promoId, @RequestParam String promoSubType) throws MissingArgumentException{
 		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
+		
+		promoSubType = "GBH";
 
 		XSSFWorkbook workbook = null;
 		try {
 			workbook = new XSSFWorkbook(dealsListings.getInputStream());
-			ExcelReader.readWorkbook(workbook, 0, new UploadListingSheetHandler(service,
-							promoId, userData.getUserId()));
+			IExcelSheetHandler handler = null;
+			
+			if (promoSubType.equals(PromotionSubType.GBH.toString())) {
+				handler = new GBHDealsListingSheetHandler(validator, service,
+						promoId, userData.getUserId());
+			} else if (promoSubType.equals(PromotionSubType.APAC.toString())) {
+				handler = new APACDealsListingSheetHandler(validator, service,
+						promoId, userData.getUserId());
+			} else if (promoSubType.equals(PromotionSubType.FRES.toString())) {
+				handler = new FRESDealsListingSheetHandler(validator, service,
+						promoId, userData.getUserId());
+			} else {
+				handler = new UploadListingSheetHandler(service,
+						promoId, userData.getUserId());
+			}
+
+			ExcelReader.readWorkbook(workbook, 0, handler);
 			responseData.setStatus(true);
 			this.acceptAgreement(promoId, userData.getUserId());
 		} catch (IOException e) {
@@ -105,6 +133,25 @@ public class DealsListingController extends AbstractListingController{
 			logger.error("Upload listings got error.", e);
 			responseData.setData(e.getErrorType().getCode() + "");
 			responseData.setStatus(false);
+		} catch (InvalidCellDataException e) {
+			logger.error("The uploaded listings are invalid.", e);
+			responseData.setStatus(false);
+			Errors errors = e.getErrors();
+			
+			Locale locale = Locale.SIMPLIFIED_CHINESE;
+			
+			if (!StringUtil.isEmpty(userData.getLang())
+					&& CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(userData.getLang())) {
+				locale = new Locale("zh", "HK");
+			}
+			
+			String errPrefix = messageSource.getMessage("listing.upload.rowPrefix", new Object []{e.getRowIndex()}, locale);
+			
+			if (errors.getFieldError() != null) {
+				responseData.setMessage(errPrefix + errors.getFieldError().getDefaultMessage());
+			} else if (errors.getGlobalError() != null) {
+				responseData.setMessage(errPrefix + errors.getGlobalError().getDefaultMessage());
+			}
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
 			logger.error("The uploaded listings are invalid.", e);

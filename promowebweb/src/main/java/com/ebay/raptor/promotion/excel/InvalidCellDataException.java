@@ -10,10 +10,14 @@ public class InvalidCellDataException extends CommonException {
 	
 	public InvalidCellDataException (Errors errors, int rowIndex) {
 		super(errors.getAllErrors().toString());
+		this.errors = errors;
+		this.rowIndex = rowIndex;
 	}
 	
 	public InvalidCellDataException (Errors errors, int rowIndex, Throwable cause) {
 		super(errors.getAllErrors().toString(), cause);
+		this.errors = errors;
+		this.rowIndex = rowIndex;
 	}
 	
 	public Errors getErrors() {

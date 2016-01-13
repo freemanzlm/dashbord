@@ -45,11 +45,6 @@
        <beans:bean class="com.ebay.raptor.promotion.interceptor.UpdatedPromotionsNumInterceptor"></beans:bean>
     </mvc:interceptors>
     
-    <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">  
-	    <beans:property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>  
-	    <beans:property name="validationMessageSource" ref="messageSource"/>  
-	</beans:bean>  
-    
     <beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- one of the properties available; the maximum file size in bytes -->
