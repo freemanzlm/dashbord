@@ -17,7 +17,7 @@ public class PromoConfiguration {
 	@Bean(name="messageSource")
 	public ResourceBundleMessageSource getResourceBundleMessageSource () {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource ();
-		source.setBasenames("Message");
+		source.setBasenames("Message", "GBH", "FRES", "APAC");
 		return source;
 	}
 	

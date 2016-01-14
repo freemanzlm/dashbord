@@ -76,7 +76,7 @@ public class SiteDealsListingController extends AbstractListingController{
         	List<GBHDealsListing> gbhListings = initGBHList();
 
         	XSSFWorkbook workBook = new XSSFWorkbook();
-        	ExcelSheetWriter<GBHDealsListing> writer = new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName);
+        	ExcelSheetWriter<GBHDealsListing> writer = new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName, this.messageSource);
             writer.resetHeaders();
             writer.build(gbhListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
             workBook.write(resp.getOutputStream());

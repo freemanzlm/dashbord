@@ -47,14 +47,13 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 	private CellStyle unlockedBodyStyle;
 	private CellStyle dateCellStyle;
 	private List<List<String>> params;
+	private ResourceBundleMessageSource messageSource;
 
-	@Autowired 
-	ResourceBundleMessageSource messageSource;
-
-	public ExcelSheetWriter(Class<?> clazz, XSSFWorkbook workBook, String sheetName){
+	public ExcelSheetWriter(Class<?> clazz, XSSFWorkbook workBook, String sheetName, ResourceBundleMessageSource messageSource){
 		super(clazz);
 		this.workBook = workBook;
 		this.sheetName = sheetName;
+		this.messageSource = messageSource;
 		buildMetadata(workBook);
 	}
 
@@ -83,6 +82,9 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 	public void initSelectedValue() {
 		Sheet hiddenSheet = workBook.createSheet("hiddenSheet");
 		this.params = new ArrayList<>();
+		for(int i=0;i<configurations.size();i++) {
+			params.add(null);
+		}
 		for(int i=0; i<configurations.size(); i++) {
 			Class<?> dataType = configurations.get(i).getDataType();
 			if(Enum.class.isAssignableFrom(dataType)) {
@@ -129,6 +131,9 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 		
 		for (int i = 0; i < params.size(); i++) {
 			Row row = hiddenSheet.createRow(i);
+			if(params.get(i)==null) {
+				continue;
+			}
 			for(int j=0; j<params.get(i).size(); j++) {
 				String name = params.get(i).get(j);
 				Cell cell = row.createCell(j);
@@ -214,7 +219,10 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 		} else if(Enum.class.isAssignableFrom(type)) {
 			Sheet hiddenSheet = workBook.getSheet("hiddenSheet");
 			char endCh = (char) ('A'+params.get(cellIndex).size()-1);
-			namedCell = workBook.createName();
+			namedCell = workBook.getName("hidden"+cellIndex);
+			if(namedCell==null) {
+				namedCell = workBook.createName();
+			}
 			namedCell.setNameName("hidden"+cellIndex);
 			namedCell.setRefersToFormula(hiddenSheet.getSheetName()+"!$A$"+(cellIndex+1)+":$"+endCh+"$" + (cellIndex+1));
 			dvHelper = hiddenSheet.getDataValidationHelper();
