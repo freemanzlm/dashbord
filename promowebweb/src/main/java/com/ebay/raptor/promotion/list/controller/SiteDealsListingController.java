@@ -45,6 +45,7 @@ import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
+import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
 import com.ebay.raptor.promotion.pojo.business.GBHDealsListing;
 import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
@@ -73,31 +74,31 @@ public class SiteDealsListingController extends AbstractListingController{
         	resp.setHeader("Content-disposition", "attachment; filename=" + ResourceProvider.ListingRes.skuListFileName + ".xlsx");
         	UserData userData = CookieUtil.getUserDataFromCookie(req);
         	
-        	List<GBHDealsListing> gbhListings = initGBHList();
+        	List<FRESDealsListing> FRESListings = initFRESList();
 
         	XSSFWorkbook workBook = new XSSFWorkbook();
-        	ExcelSheetWriter<GBHDealsListing> writer = new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName, this.messageSource);
+        	ExcelSheetWriter<FRESDealsListing> writer = new ExcelSheetWriter<FRESDealsListing>(FRESDealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName, this.messageSource);
             writer.resetHeaders();
-            writer.build(gbhListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
+            writer.build(FRESListings , 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
             workBook.write(resp.getOutputStream());
         } catch (IOException | MissingArgumentException e) {
         	logger.error("Unable to download deals listing.", e);
         }
     }
 	
-	private static List<GBHDealsListing> initGBHList() {
-		List<GBHDealsListing> gbhListings = new ArrayList<>();
+	private static List<FRESDealsListing> initFRESList() {
+		List<FRESDealsListing> fresListings = new ArrayList<>();
 		for(int i=0; i<10; i++) {
-			GBHDealsListing listing = new GBHDealsListing();
+			FRESDealsListing listing = new FRESDealsListing();
 			listing.setSkuName("testSKUNAME");
 			listing.setSkuId("00000"+i);
 			listing.setItemId((long)10000+i);
 			listing.setListPrice((float)20.1+i);
 			listing.setDealPrice((float)20.1-i);
 			listing.setQty((long)17*i+i);
-			gbhListings.add(listing);
+			fresListings.add(listing);
 		}
-		return gbhListings;
+		return fresListings;
 	}
 	
 	@POST
