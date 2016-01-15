@@ -6,11 +6,11 @@ import org.hibernate.validator.HibernateValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.ebay.app.raptor.promocommon.concurrent.CommonExecutorService;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestService;
 import com.ebay.raptor.promotion.service.CSApiService;
+import com.ebay.raptor.promotion.validation.LocalValidatorFactoryBean;
 
 @Configuration
 public class PromoConfiguration {
