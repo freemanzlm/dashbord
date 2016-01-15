@@ -65,6 +65,7 @@ public class ResourceProvider {
 		String downloadSkuList = "/downloadSkuList";
 		String uploadDealsListings = "/uploadDealsListings";
 		String submitDealsListings = "/submitDealsListings";
+		String getListingsByPromotionIdAndUserIdAndType = "/getPromotionListings/promoId/{promoId}/uid/{uid}/proSubType/{type}";
 		
 		String skuListFileName = "Deals_listing_template"; //TODO Here should be Chinese 
 	}

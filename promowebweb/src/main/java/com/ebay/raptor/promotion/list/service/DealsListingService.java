@@ -11,7 +11,11 @@ import org.springframework.stereotype.Component;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
+import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
+import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
+import com.ebay.raptor.promotion.pojo.business.GBHDealsListing;
+import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.req.SubmitListingRequest;
 import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
@@ -31,6 +35,9 @@ public class DealsListingService extends BaseService {
 		return secureUrl(ResourceProvider.ListingRes.dealsBase) + url;
 	}
 	
+	private String siteUrl(String url){
+		return secureUrl(ResourceProvider.ListingRes.siteDeals) + url;
+	}
 
 	@SuppressWarnings("unchecked")
 	public Boolean confirmDealsListings(Listing[] listings, String promoId, Long uid) throws PromoException{
@@ -195,6 +202,51 @@ public class DealsListingService extends BaseService {
 			}
 		} else {
 			throw new PromoException("Failed to retrieve the SKU list with provided promo ID: " + promoId);
+		}
+		return null;
+	}
+	
+	public List<GBHDealsListing> getGBHListingsByPromotionId(String promoId, Long uid, PromotionSubType subType) throws PromoException{
+		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{proSubType}", subType}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<ListDataServiceResponse<GBHDealsListing>> type = new GenericType<ListDataServiceResponse<GBHDealsListing>>(){};
+			ListDataServiceResponse<GBHDealsListing> data = resp.getEntity(type);
+			if(null != data && AckValue.SUCCESS == data.getAckValue()){
+				return data.getData();
+			}
+		} else {
+			throw new PromoException("Failed to retrieve the GBH list with provided promo ID: " + promoId);
+		}
+		return null;
+	}
+	
+	public List<FRESDealsListing> getFRESListingsByPromotionId(String promoId, Long uid, PromotionSubType subType) throws PromoException{
+		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{proSubType}", subType}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<ListDataServiceResponse<FRESDealsListing>> type = new GenericType<ListDataServiceResponse<FRESDealsListing>>(){};
+			ListDataServiceResponse<FRESDealsListing> data = resp.getEntity(type);
+			if(null != data && AckValue.SUCCESS == data.getAckValue()){
+				return data.getData();
+			}
+		} else {
+			throw new PromoException("Failed to retrieve the FRES list with provided promo ID: " + promoId);
+		}
+		return null;
+	}
+	
+	public List<APACDealsListing> getAPACListingsByPromotionId(String promoId, Long uid, PromotionSubType subType) throws PromoException{
+		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{proSubType}", subType}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<ListDataServiceResponse<APACDealsListing>> type = new GenericType<ListDataServiceResponse<APACDealsListing>>(){};
+			ListDataServiceResponse<APACDealsListing> data = resp.getEntity(type);
+			if(null != data && AckValue.SUCCESS == data.getAckValue()){
+				return data.getData();
+			}
+		} else {
+			throw new PromoException("Failed to retrieve the APAC list with provided promo ID: " + promoId);
 		}
 		return null;
 	}
