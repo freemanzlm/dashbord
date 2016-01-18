@@ -161,67 +161,90 @@ public class GBHDealsListing {
 	@NotEmpty(message = "{listing.skuId.empty}")
 	@Header(title="GBH.skuId", order=0)
 	private String skuId;
+	
 	@NotEmpty(message = "{listing.skuName.empty}")
 	@Header(title="GBH.skuName", order=1)
 	private String skuName;
+	
 	@NotNull(message = "{listing.category.null}")
 	@Header(title="GBH.category", order=2, writable=true)
 	private ProductCategory category;
+	
 	@NotNull(message = "{listing.itemId.null}")
 	@Header(title="GBH.itemId", order=3, writable=true)
 	private Long itemId;
+	
 	@NotNull(message = "{listing.listPrice.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.listPrice.negative}")
 	@Header(title="GBH.listPrice", order=4, writable=true)
 	private Float listPrice;
+	
 	@NotNull(message = "{listing.dealPrice.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.dealPrice.negative}")
 	@Header(title="GBH.dealPrice", order=5, writable=true)
 	private Float dealPrice;
+	
 	@NotNull(message = "{listing.qty.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.qty.negative}")
 	@Header(title="GBH.qty", order=6, writable=true)
 	private Long qty;
+	
 	@NotNull(message = "{listing.listSite.null}")
 	@Header(title="GBH.listSite", order=7, writable=true)
 	private Site listSite;
+	
 	@NotNull(message = "{listing.wwShipOpt.null}")
 	@Header(title="GBH.wwShipOpt", order=8, writable=true)
 	private ShipOption wwShipOpt;
+	
 	@Header(title="GBH.wwShipChg", order=9, writable=true)
 	private Float wwShipChg;
+	
 	@NotNull(message = "{listing.ruShipOpt.null}")
 	@Header(title="GBH.ruShipOpt", order=10, writable=true)
 	private ShipOption ruShipOpt;
+	
 	@Header(title="GBH.ruShipChg", order=11, writable=true)
 	private Float ruShipChg;
+	
 	@NotNull(message = "{listing.cnShipOpt.null}")
 	@Header(title="GBH.cnShipOpt", order=12, writable=true)
 	private ShipOption cnShipOpt;
+	
 	@Header(title="GBH.cnShipChg", order=13, writable=true)
 	private Float cnShipChg;
+	
 	@NotNull(message = "{listing.laShipOpt.null}")
 	@Header(title="GBH.laShipOpt", order=14, writable=true)
 	private ShipOption laShipOpt;
+	
 	@Header(title="GBH.laShipChg", order=15, writable=true)
 	private Float laShipChg;
+	
 	@NotNull(message = "{listing.meShipOpt.null}")
 	@Header(title="GBH.meShipOpt", order=16, writable=true)
 	private ShipOption meShipOpt;
+	
 	@Header(title="GBH.meShipChg", order=17, writable=true)
 	private Float meShipChg;
+	
 	@NotNull(message = "{listing.brShipOpt.null}")
 	@Header(title="GBH.brShipOpt", order=18, writable=true)
 	private ShipOption brShipOpt;
+	
 	@Header(title="GBH.brShipChg", order=19, writable=true)
 	private Float brShipChg;
+	
 	@NotNull(message = "{listing.isShipOpt.null}")
 	@Header(title="GBH.isShipOpt", order=20, writable=true)
 	private ShipOption isShipOpt;
+	
 	@Header(title="GBH.isShipChg", order=21, writable=true)
 	private Float isShipChg;
+	
 	@NotNull(message = "{listing.currency.null}")
 	@Header(title="GBH.currency", order=22, writable=true)
 	private Currency currency;
+	
 	private String state;
 }

@@ -88,17 +88,17 @@ public class APACDealsListing {
 	private Long itemId;
 	
 	@NotNull(message = "{listing.listPrice.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.listPrice.negative}")
 	@Header(title="APAC.listPrice", order=4, writable=true)
 	private Float listPrice;
 	
 	@NotNull(message = "{listing.dealPrice.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.dealPrice.negative}")
 	@Header(title="APAC.dealPrice", order=5, writable=true)
 	private Float dealPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.qty.negative}")
 	@Header(title="APAC.qty", order=6, writable=true)
 	private Long qty;
 	

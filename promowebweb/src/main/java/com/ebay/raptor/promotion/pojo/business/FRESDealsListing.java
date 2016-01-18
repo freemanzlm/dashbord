@@ -112,22 +112,22 @@ public class FRESDealsListing {
 	private Long itemId;
 	
 	@NotNull(message = "{listing.fvf.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.fvf.negative}")
 	@Header(title="FRES.fvf", order=4, writable=true)
 	private Float fvf;
 	
 	@NotNull(message = "{listing.listPrice.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.listPrice.negative}")
 	@Header(title="FRES.listPrice", order=5, writable=true)
 	private Float listPrice;
 	
 	@NotNull(message = "{listing.dealPrice.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.dealPrice.negative}")
 	@Header(title="FRES.dealPrice", order=6, writable=true)
 	private Float dealPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.qty.negative}")
 	@Header(title="FRES.qty", order=7, writable=true)
 	private Long qty;
 	
@@ -140,7 +140,7 @@ public class FRESDealsListing {
 	private DeliveryTime dlvyTime;
 	
 	@NotNull(message = "{listing.shipPrice.null}")
-	@Min(value=0)
+	@Min(value=0, message="{listing.shipPrice.negative}")
 	@Header(title="FRES.shipPrice", order=10, writable=true)
 	private Float shipPrice;
 	
