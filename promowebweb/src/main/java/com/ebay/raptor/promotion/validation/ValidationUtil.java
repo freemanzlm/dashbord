@@ -32,7 +32,7 @@ public class ValidationUtil {
 	
 	public static boolean validateItem(Long itemId, Set<Long> itemIds,
 			int rowIndex) throws InvalidCellValueException {
-		if (itemId == null || itemIds == null || itemIds.size() <= 0) {
+		if (itemId == null || itemIds == null) {
 			return false;
 		}
 

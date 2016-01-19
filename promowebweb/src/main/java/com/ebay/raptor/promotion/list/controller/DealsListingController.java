@@ -100,7 +100,7 @@ public class DealsListingController extends AbstractListingController{
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 		
-		promoSubType = "GBH";
+		promoSubType = "FRES";
 
 		XSSFWorkbook workbook = null;
 		try {

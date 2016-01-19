@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.ebay.app.raptor.promocommon.excel.header.Header;
+import com.ebay.raptor.promotion.validation.Link;
 
 public class FRESDealsListing {
 
@@ -95,6 +96,20 @@ public class FRESDealsListing {
 		this.state = state;
 	}
 	
+	public Float getProposePrice() {
+		return proposePrice;
+	}
+	public void setProposePrice(Float proposePrice) {
+		this.proposePrice = proposePrice;
+	}
+
+	public Float getProposeQty() {
+		return proposeQty;
+	}
+	public void setProposeQty(Float proposeQty) {
+		this.proposeQty = proposeQty;
+	}
+
 	@NotEmpty(message = "{listing.skuId.empty}")
 	@Header(title="FRES.skuId", order=0, writable=false)
 	private String skuId;
@@ -148,9 +163,11 @@ public class FRESDealsListing {
 	@Header(title="FRES.currency", order=11, writable=true)
 	private Currency currency;
 	
-	@NotEmpty(message = "{listing.rrpLink.empty}")
+	@Link(message = "{listing.url.invalid}")
 	@Header(title="FRES.rrpLink", order=12, writable=true)
 	private String rrpLink;
-
+	
+	private Float proposePrice;
+	private Float proposeQty;
 	private String state;
 }

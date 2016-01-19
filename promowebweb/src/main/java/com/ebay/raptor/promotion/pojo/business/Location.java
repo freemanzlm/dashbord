@@ -8,7 +8,8 @@ public enum Location {
 	FR	("FR"),
 	CN	("CN"),
 	HK	("HK"),
-	TW	("TW");
+	TW	("TW"),
+	US  ("US");
 	
 	private String description;
 	

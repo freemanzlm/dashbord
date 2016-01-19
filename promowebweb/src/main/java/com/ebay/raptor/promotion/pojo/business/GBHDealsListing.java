@@ -158,6 +158,20 @@ public class GBHDealsListing {
 		this.state = state;
 	}
 
+	public Float getProposePrice() {
+		return proposePrice;
+	}
+	public void setProposePrice(Float proposePrice) {
+		this.proposePrice = proposePrice;
+	}
+
+	public Float getProposeQty() {
+		return proposeQty;
+	}
+	public void setProposeQty(Float proposeQty) {
+		this.proposeQty = proposeQty;
+	}
+
 	@NotEmpty(message = "{listing.skuId.empty}")
 	@Header(title="GBH.skuId", order=0)
 	private String skuId;
@@ -246,5 +260,7 @@ public class GBHDealsListing {
 	@Header(title="GBH.currency", order=22, writable=true)
 	private Currency currency;
 	
+	private Float proposePrice;
+	private Float proposeQty;
 	private String state;
 }
