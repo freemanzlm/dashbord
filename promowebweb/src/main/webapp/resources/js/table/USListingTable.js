@@ -85,9 +85,9 @@ var BizReport = BizReport || {};
 				    {data: 'skuId'},
 				    {data: 'category'},
 				    {data: 'itemId'},
-				    {data: 'currPrice', aDataSort: [9, 5]},
-				    {data: 'dealsPrice', aDataSort: [9, 6]},
-				    {data: 'quantity'},
+				    {data: 'listPrice', aDataSort: [9, 5]},
+				    {data: 'dealPrice', aDataSort: [9, 6]},
+				    {data: 'qty'},
 				    {data: 'rrpLink'},
 				    {data: 'currency'},
 				    {data: 'state'}
