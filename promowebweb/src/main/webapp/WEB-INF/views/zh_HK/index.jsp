@@ -186,7 +186,8 @@
 
 	<script type="text/javascript">
 		var pageData = {
-			region : '${ region }'
+			region : '${ region }',
+			admin: ${invisible}
 		};
 	</script>
 
