@@ -62,12 +62,24 @@ public class DealsListingService extends BaseService {
 		return Boolean.FALSE;
 	}
 	
-	public List<DealsListing> getPromotionListings(String promoId, Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.ListingRes.getPromotionListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+	public <T> List<T> getPromotionListings(String promoId,
+			Long uid, PromotionSubType promoSubType) throws PromoException{
+		String uri = "";
+
+		if (promoSubType == null) {
+			uri = url(params(ResourceProvider.ListingRes.getPromotionListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+		} else {
+			uri = siteUrl(params(
+					ResourceProvider.ListingRes.getTempPromotionListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid,
+							"{type}", promoSubType }));
+		}
+
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<DealsListing>> type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
-			ListDataServiceResponse<DealsListing> listing = resp.getEntity(type);
+			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
+			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -81,12 +93,23 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public List<DealsListing> getUploadedListings(String promoId, Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.ListingRes.getUploadedListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+	public <T> List<T> getUploadedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
+		String uri = "";
+
+		if (promoSubType == null) {
+			uri = url(params(ResourceProvider.ListingRes.getUploadedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+		} else {
+			uri = siteUrl(params(
+					ResourceProvider.ListingRes.getTempUploadedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid,
+							"{type}", promoSubType }));
+		}
+
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<DealsListing>> type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
-			ListDataServiceResponse<DealsListing> listing = resp.getEntity(type);
+			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
+			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -100,12 +123,23 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public List<DealsListing> getSubmitedListings(String promoId, Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.ListingRes.getSubmittedListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+	public <T> List<T> getSubmitedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
+		String uri = "";
+
+		if (promoSubType == null) {
+			uri = url(params(ResourceProvider.ListingRes.getSubmittedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+		} else {
+			uri = siteUrl(params(
+					ResourceProvider.ListingRes.getTempSubmittedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid,
+							"{type}", promoSubType }));
+		}
+
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<DealsListing>> type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
-			ListDataServiceResponse<DealsListing> listing = resp.getEntity(type);
+			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
+			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -138,12 +172,23 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public List<DealsListing> getAppliedListings(String promoId, Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.ListingRes.getAppliedListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+	public <T> List<T> getAppliedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
+		String uri = "";
+
+		if (promoSubType == null) {
+			uri = url(params(ResourceProvider.ListingRes.getAppliedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+		} else {
+			uri = siteUrl(params(
+					ResourceProvider.ListingRes.getTempAppliedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid,
+							"{type}", promoSubType }));
+		}
+
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<DealsListing>> type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
-			ListDataServiceResponse<DealsListing> listing = resp.getEntity(type);
+			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
+			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -157,12 +202,23 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public List<DealsListing> getApprovedListings(String promoId, Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.ListingRes.getApprovedListings, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+	public <T> List<T> getApprovedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
+		String uri = "";
+
+		if (promoSubType == null) {
+			uri = url(params(ResourceProvider.ListingRes.getApprovedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+		} else {
+			uri = siteUrl(params(
+					ResourceProvider.ListingRes.getTempApprovedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid,
+							"{type}", promoSubType }));
+		}
+
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<DealsListing>> type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
-			ListDataServiceResponse<DealsListing> listing = resp.getEntity(type);
+			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
+			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -191,12 +247,23 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public List<DealsListing> getSkuListingsByPromotionId(String promoId, Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.ListingRes.getSKUListingsByPromotionId, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+	public <T> List<T> getSkuListingsByPromotionId(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
+		String uri = "";
+
+		if (promoSubType == null) {
+			uri = url(params(ResourceProvider.ListingRes.getSKUListingsByPromotionId,
+					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+		} else {
+			uri = siteUrl(params(
+					ResourceProvider.ListingRes.getSKUListingsByPromotionIdAndType,
+					new Object[] { "{promoId}", promoId, "{uid}", uid,
+							"{type}", promoSubType }));
+		}
+
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<DealsListing>> type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
-			ListDataServiceResponse<DealsListing> data = resp.getEntity(type);
+			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
+			ListDataServiceResponse<T> data = resp.getEntity(type);
 			if(null != data && AckValue.SUCCESS == data.getAckValue()){
 				return data.getData();
 			}
@@ -206,6 +273,7 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
+
 	public List<GBHDealsListing> getGBHListingsByPromotionId(String promoId, Long uid, PromotionSubType subType) throws PromoException{
 		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{proSubType}", subType}));
 		GingerClientResponse resp = httpGet(uri);

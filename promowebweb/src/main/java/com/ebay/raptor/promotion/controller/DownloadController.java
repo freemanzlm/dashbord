@@ -22,12 +22,10 @@ import com.ebay.app.raptor.promocommon.export.ColumnFormat;
 import com.ebay.app.raptor.promocommon.export.HeaderConfiguration;
 import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.raptor.promotion.excep.PromoException;
-//import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
-import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
 @Controller
@@ -50,7 +48,7 @@ public class DownloadController {
         	
         	UserData userData = CookieUtil.getUserDataFromCookie(request);
         	
-        	List<DealsListing> skuListings = dealsListingService.getSkuListingsByPromotionId(param.getPromoId(), userData.getUserId());
+        	List<DealsListing> skuListings = dealsListingService.getSkuListingsByPromotionId(param.getPromoId(), userData.getUserId(), null);
 
         	List<HeaderConfiguration> preCfgs = new ArrayList<HeaderConfiguration>();
         	preCfgs.add(new HeaderConfiguration(20, "itemId", resource("itemId") , ColumnFormat.String));

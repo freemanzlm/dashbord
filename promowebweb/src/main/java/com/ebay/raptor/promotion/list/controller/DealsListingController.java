@@ -37,7 +37,6 @@ import com.ebay.raptor.promotion.excel.APACDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.FRESDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.GBHDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.InvalidCellDataException;
-import com.ebay.raptor.promotion.excel.SiteDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
@@ -47,7 +46,10 @@ import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
+import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
+import com.ebay.raptor.promotion.pojo.business.GBHDealsListing;
 import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
@@ -60,7 +62,7 @@ import com.ebay.raptor.promotion.util.PromotionUtil;
 
 @Controller
 @RequestMapping(ResourceProvider.ListingRes.dealsBase)
-public class DealsListingController extends AbstractListingController{
+public class DealsListingController extends AbstractDealsListingController{
 
 	private static CommonLogger logger = CommonLogger.getInstance(DealsListingController.class);
 	
@@ -74,24 +76,76 @@ public class DealsListingController extends AbstractListingController{
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes.downloadSkuList)
-    public void handleTempletRequest(HttpServletRequest req, HttpServletResponse resp, @ModelAttribute RequestParameter param) {
-        try {
-        	resp.setContentType("application/x-msdownload;");
-        	resp.setHeader("Content-disposition", "attachment; filename=" + ResourceProvider.ListingRes.skuListFileName + ".xlsx");
-        	UserData userData = CookieUtil.getUserDataFromCookie(req);
-        	
-        	List<DealsListing> skuListings = service.getSkuListingsByPromotionId(param.getPromoId(), userData.getUserId());
+    public void handleTempletRequest(HttpServletRequest req,
+    		HttpServletResponse resp, @ModelAttribute RequestParameter param)
+    				throws MissingArgumentException {
+		PromotionSubType promoSubType = null;
+		
+		try {
+			// if promotion sub type is empty, handle as general deals listings,
+			// and don't throw the NullPointerException
+			if (!StringUtil.isEmpty(param.getPromoSubType())) {
+				promoSubType = PromotionSubType.valueOf(param.getPromoSubType());
+			}
+		} catch (Exception e) {
+			logger.error("Invalid promotion Sub Type", e);
+			throw new MissingArgumentException("PromoSubType");
+		}
 
-        	XSSFWorkbook workBook = new XSSFWorkbook();
-        	ExcelSheetWriter<DealsListing> writer = new ExcelSheetWriter<DealsListing>(DealsListing.class, workBook, ResourceProvider.ListingRes.skuListFileName);
-            writer.resetHeaders();
+		UserData userData = CookieUtil.getUserDataFromCookie(req);
+		XSSFWorkbook workBook = new XSSFWorkbook();
+
+        try {
+        	ExcelSheetWriter<?> writer = null;
+        	String fileName = "";
+
+        	if (promoSubType != null) {
+        		switch (promoSubType) {
+        			case GBH :
+        				fileName = ResourceProvider.ListingRes.gbhSkuListFileName;
+        				writer = new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class,
+        						workBook, fileName);
+        				break;
+        			case FRES :
+        				fileName = ResourceProvider.ListingRes.fresSkuListFileName;
+        				writer = new ExcelSheetWriter<FRESDealsListing>(FRESDealsListing.class,
+        						workBook, fileName);
+        				break;
+        			case APAC :
+        				fileName = ResourceProvider.ListingRes.apacSkuListFileName;
+        				writer = new ExcelSheetWriter<APACDealsListing>(APACDealsListing.class,
+        						workBook, fileName);
+        				break;
+        			default :
+        				throw new MissingArgumentException("PromoSubType");
+        		}
+        	} else {
+        		fileName = ResourceProvider.ListingRes.skuListFileName;
+        		writer = new ExcelSheetWriter<DealsListing>(DealsListing.class,
+    					workBook, fileName);
+        	}
+
+    		List<?> skuListings = service.getSkuListingsByPromotionId(
+    				param.getPromoId(), userData.getUserId(), promoSubType);
+
+    		writer.resetHeaders();
             writer.build(skuListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
-            workBook.write(resp.getOutputStream());
-        } catch (IOException | PromoException | MissingArgumentException e) {
+
+            resp.setContentType("application/x-msdownload;");
+    		resp.setHeader("Content-disposition", "attachment; filename="
+    				+ fileName + ".xlsx");
+    		workBook.write(resp.getOutputStream());
+        } catch (IOException | PromoException e) {
         	logger.error("Unable to download deals listing.", e);
+        } finally {
+        	try {
+				workBook.close();
+			} catch (IOException e) {
+				// ignore..
+			}
         }
     }
-	
+
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadDealsListings)
 	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
@@ -100,22 +154,41 @@ public class DealsListingController extends AbstractListingController{
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 		
-		promoSubType = "FRES";
+		PromotionSubType pSubType = null;
+		
+		try {
+			// if promotion sub type is empty, handle as general deals listings,
+			// and don't throw the NullPointerException
+			if (StringUtil.isEmpty(promoSubType)) {
+				pSubType = PromotionSubType.valueOf(promoSubType);
+			}
+		} catch (Exception e) {
+			logger.error("Invalid promotion Sub Type", e);
+			throw new MissingArgumentException("PromoSubType");
+		}
 
 		XSSFWorkbook workbook = null;
 		try {
 			workbook = new XSSFWorkbook(dealsListings.getInputStream());
 			IExcelSheetHandler handler = null;
 			
-			if (promoSubType.equals(PromotionSubType.GBH.toString())) {
-				handler = new GBHDealsListingSheetHandler(validator, service,
-						promoId, userData.getUserId());
-			} else if (promoSubType.equals(PromotionSubType.APAC.toString())) {
-				handler = new APACDealsListingSheetHandler(validator, service,
-						promoId, userData.getUserId());
-			} else if (promoSubType.equals(PromotionSubType.FRES.toString())) {
-				handler = new FRESDealsListingSheetHandler(validator, service,
-						promoId, userData.getUserId());
+			if (pSubType != null) {
+				switch (pSubType) {
+					case GBH :
+						handler = new GBHDealsListingSheetHandler(validator,
+								service, promoId, userData.getUserId());
+						break;
+					case FRES :
+						handler = new FRESDealsListingSheetHandler(validator,
+								service, promoId, userData.getUserId());
+						break;
+					case APAC :
+						handler = new APACDealsListingSheetHandler(validator,
+								service, promoId, userData.getUserId());
+						break;
+					default :
+						throw new MissingArgumentException("PromoSubType");
+				}
 			} else {
 				handler = new UploadListingSheetHandler(service,
 						promoId, userData.getUserId());
@@ -233,64 +306,25 @@ public class DealsListingController extends AbstractListingController{
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getPromotionListings(HttpServletRequest req,
+	public ListDataWebResponse<?> getPromotionListings(HttpServletRequest req,
 			@ModelAttribute ListingWebParam param)  {
-		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
-		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			List<DealsListing> listings = service.getPromotionListings(param.getPromoId(), userData.getUserId());
-			if (listings != null && listings.size() > 0) {
-				resp.setData(listings);
-			} else {
-				logger.error("No applicable listings found.");
-			}
-		} catch (PromoException | MissingArgumentException e) {
-			logger.error("Unable to get applicable listings, with error", e);
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
+		return getListings(req, param, DealsListingType.Confirmed);
 	}
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getUploadedListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getUploadedListings(HttpServletRequest req,
+	public ListDataWebResponse<?> getUploadedListings(HttpServletRequest req,
 			@ModelAttribute ListingWebParam param)  {
-		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
-		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			List<DealsListing> listings = service.getUploadedListings(param.getPromoId(), userData.getUserId());
-			if (listings != null && listings.size() > 0) {
-				resp.setData(listings);
-			} else {
-				logger.error("No uploaded listings found.");
-			}
-		} catch (PromoException | MissingArgumentException e) {
-			logger.error("Unable to get uploaded listings, with error", e);
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
+		return getListings(req, param, DealsListingType.Uploaded);
 	}
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getSubmittedListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getSubmittedListings(HttpServletRequest req,
+	public ListDataWebResponse<?> getSubmittedListings(HttpServletRequest req,
 			@ModelAttribute ListingWebParam param)  {
-		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
-		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			List<DealsListing> listings = service.getSubmitedListings(param.getPromoId(), userData.getUserId());
-			if (listings != null && listings.size() > 0) {
-				resp.setData(listings);
-			} else {
-				logger.error("No submitted listings found.");
-			}
-		} catch (PromoException | MissingArgumentException e) {
-			logger.error("Unable to get submitted listings, with error", e);
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
+		return getListings(req, param, DealsListingType.Submitted);
 	}
 	
 	@GET
@@ -317,29 +351,15 @@ public class DealsListingController extends AbstractListingController{
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getAppliedListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getAppliedListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
-		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
-		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			resp.setData(service.getAppliedListings(param.getPromoId(), userData.getUserId()));
-		} catch (PromoException | MissingArgumentException e) {
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
+	public ListDataWebResponse<?> getAppliedListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
+		return getListings(req, param, DealsListingType.Applied);
 	}
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getApprovedListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getApprovedListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
-		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
-		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			resp.setData(service.getApprovedListings(param.getPromoId(), userData.getUserId()));
-		} catch (PromoException | MissingArgumentException e) {
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
+	public ListDataWebResponse<?> getApprovedListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
+		return getListings(req, param, DealsListingType.Approved);
 	}
 	
 	@GET
@@ -354,6 +374,188 @@ public class DealsListingController extends AbstractListingController{
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
+	}
+//
+//	private void writeGBHDealsTemplate (HttpServletResponse resp,
+//			String promoId, Long userId)
+//					throws PromoException, IOException {
+//		resp.setContentType("application/x-msdownload;");
+//		XSSFWorkbook workBook = new XSSFWorkbook();
+//		
+//		ExcelSheetWriter<GBHDealsListing> writer =
+//				new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class,
+//					workBook, ResourceProvider.ListingRes.gbhSkuListFileName);
+//
+//		List<GBHDealsListing> skuListings = service
+//				.getSkuListingsByPromotionIdAndType(promoId, userId,
+//						PromotionSubType.GBH);
+//
+//		writer.resetHeaders();
+//		writer.build(skuListings, 1, 2, 1, 3, 0,
+//				PromotionUtil.LISTING_TEMP_PASS);
+//
+//		resp.setHeader("Content-disposition", "attachment; filename="
+//				+ ResourceProvider.ListingRes.gbhSkuListFileName + ".xlsx");
+//		workBook.write(resp.getOutputStream());
+//	}
+//	
+//	private void writeFRESDealsTemplate (HttpServletResponse resp,
+//			String promoId, Long userId)
+//					throws PromoException, IOException {
+//		resp.setContentType("application/x-msdownload;");
+//		XSSFWorkbook workBook = new XSSFWorkbook();
+//		
+//		ExcelSheetWriter<FRESDealsListing> writer =
+//				new ExcelSheetWriter<FRESDealsListing>(FRESDealsListing.class,
+//					workBook, ResourceProvider.ListingRes.fresSkuListFileName);
+//
+//		List<FRESDealsListing> skuListings = service
+//				.getSkuListingsByPromotionIdAndType(promoId, userId,
+//						PromotionSubType.FRES);
+//
+//		writer.resetHeaders();
+//		writer.build(skuListings, 1, 2, 1, 3, 0,
+//				PromotionUtil.LISTING_TEMP_PASS);
+//
+//		resp.setHeader("Content-disposition", "attachment; filename="
+//				+ ResourceProvider.ListingRes.fresSkuListFileName + ".xlsx");
+//		workBook.write(resp.getOutputStream());
+//	}
+//	
+//	private void writeAPACDealsTemplate (HttpServletResponse resp,
+//			String promoId, Long userId)
+//					throws PromoException, IOException {
+//		resp.setContentType("application/x-msdownload;");
+//		XSSFWorkbook workBook = new XSSFWorkbook();
+//		
+//		ExcelSheetWriter<APACDealsListing> writer =
+//				new ExcelSheetWriter<APACDealsListing>(APACDealsListing.class,
+//					workBook, ResourceProvider.ListingRes.apacSkuListFileName);
+//
+//		List<APACDealsListing> skuListings = service
+//				.getSkuListingsByPromotionIdAndType(promoId, userId,
+//						PromotionSubType.APAC);
+//
+//		writer.resetHeaders();
+//		writer.build(skuListings, 1, 2, 1, 3, 0,
+//				PromotionUtil.LISTING_TEMP_PASS);
+//
+//		resp.setHeader("Content-disposition", "attachment; filename="
+//				+ ResourceProvider.ListingRes.apacSkuListFileName + ".xlsx");
+//		workBook.write(resp.getOutputStream());
+//	}
+//	
+//	private void writeGeneralDealsTemplate (HttpServletResponse resp,
+//			String promoId, Long userId)
+//					throws PromoException, IOException {
+//		resp.setContentType("application/x-msdownload;");
+//		XSSFWorkbook workBook = new XSSFWorkbook();
+//
+//		ExcelSheetWriter<DealsListing> writer =
+//				new ExcelSheetWriter<DealsListing>(DealsListing.class,
+//						workBook, ResourceProvider.ListingRes.skuListFileName);
+//		List<DealsListing> skuListings = service.getSkuListingsByPromotionId(
+//				promoId, userId);
+//
+//		writer.resetHeaders();
+//        writer.build(skuListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
+//
+//		resp.setHeader("Content-disposition", "attachment; filename="
+//				+ ResourceProvider.ListingRes.skuListFileName + ".xlsx");
+//		workBook.write(resp.getOutputStream());
+//	}
+	
+	private void writeDealsTemplate (HttpServletResponse resp,
+			String promoId, Long userId, PromotionSubType promoSubType)
+					throws PromoException, IOException {
+		resp.setContentType("application/x-msdownload;");
+		XSSFWorkbook workBook = new XSSFWorkbook();
+		ExcelSheetWriter<?> writer = null;
+		
+		if (promoSubType != null) {
+    		switch (promoSubType) {
+    			case GBH :
+    				writer = new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class,
+    						workBook, ResourceProvider.ListingRes.gbhSkuListFileName);
+    				break;
+    			case FRES :
+    				writer = new ExcelSheetWriter<FRESDealsListing>(FRESDealsListing.class,
+    						workBook, ResourceProvider.ListingRes.fresSkuListFileName);
+    				break;
+    			case APAC :
+    				writer = new ExcelSheetWriter<APACDealsListing>(APACDealsListing.class,
+    						workBook, ResourceProvider.ListingRes.apacSkuListFileName);
+    				break;
+    			default :
+    				return;
+    		}
+    	} else {
+    		writer = new ExcelSheetWriter<DealsListing>(DealsListing.class,
+					workBook, ResourceProvider.ListingRes.skuListFileName);
+    	}
+
+		List<?> skuListings = service.getSkuListingsByPromotionId(
+				promoId, userId, promoSubType);
+
+		writer.resetHeaders();
+        writer.build(skuListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
+
+		resp.setHeader("Content-disposition", "attachment; filename="
+				+ ResourceProvider.ListingRes.skuListFileName + ".xlsx");
+		workBook.write(resp.getOutputStream());
+	}
+
+	private ListDataWebResponse<?> getListings (HttpServletRequest req,
+			ListingWebParam param, DealsListingType listType) {
+		PromotionSubType pSubType = null;
+		UserData userData = null;
+
+		try {
+			userData = CookieUtil.getUserDataFromCookie(req);
+		} catch (MissingArgumentException e) {
+			logger.error("Missing required argument.", e);
+			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
+			resp.setStatus(Boolean.FALSE);
+			return resp;
+		}
+
+		try {
+			// if promotion sub type is empty, handle as general deals listings,
+			// and don't throw the NullPointerException
+			if (StringUtil.isEmpty(param.getPromoSubType())) {
+				pSubType = PromotionSubType.valueOf(param.getPromoSubType());
+			}
+		} catch (Exception e) {
+			logger.error("Invalid promotion Sub Type", e);
+			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
+			resp.setStatus(Boolean.FALSE);
+			return resp;
+		}
+		
+		if (pSubType != null) {
+			switch (pSubType) {
+				case GBH :
+					ListDataWebResponse<GBHDealsListing> gbhResp = getListings(
+							param.getPromoId(), userData.getUserId(), PromotionSubType.GBH, listType);
+					return gbhResp;
+				case FRES :
+					ListDataWebResponse<FRESDealsListing> fresResp = getListings(
+							param.getPromoId(), userData.getUserId(), PromotionSubType.FRES, listType);
+					return fresResp;
+				case APAC :
+					ListDataWebResponse<APACDealsListing> apacResp = getListings(
+							param.getPromoId(), userData.getUserId(), PromotionSubType.APAC, listType);
+					return apacResp;
+				default :
+					ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
+					resp.setStatus(Boolean.FALSE);
+					return resp;
+			}
+		} else {
+			ListDataWebResponse<DealsListing> resp = getListings(
+					param.getPromoId(), userData.getUserId(), null, listType);
+			return resp;
+		}
 	}
 
 }

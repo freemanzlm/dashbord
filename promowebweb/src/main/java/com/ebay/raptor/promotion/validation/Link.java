@@ -22,11 +22,11 @@ import org.hibernate.validator.constraints.Length;
 @Documented
 @Length(max=2000)
 public @interface Link {
-	String message() default "{link.defult}";  
+	String message() default "{link.defult}"; 
 
-    Class<?>[] groups() default { };  
+    Class<?>[] groups() default { }; 
 
-    Class<? extends Payload>[] payload() default { };  
+    Class<? extends Payload>[] payload() default { }; 
 
     @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER }) 
     @Retention(RUNTIME)  

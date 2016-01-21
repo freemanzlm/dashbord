@@ -229,12 +229,12 @@ public class SiteDealsListingController extends AbstractListingController{
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
 	@ResponseBody
-	public ListDataWebResponse<DealsListing> getPromotionListings(HttpServletRequest req,
+	public <T> ListDataWebResponse<T> getPromotionListings(HttpServletRequest req,
 			@ModelAttribute ListingWebParam param)  {
-		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
+		ListDataWebResponse<T> resp = new ListDataWebResponse<T>();
 		try {
 			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			List<DealsListing> listings = service.getPromotionListings(param.getPromoId(), userData.getUserId());
+			List<T> listings = service.getPromotionListings(param.getPromoId(), userData.getUserId(), null);
 			if (listings != null && listings.size() > 0) {
 				resp.setData(listings);
 			} else {
@@ -255,7 +255,7 @@ public class SiteDealsListingController extends AbstractListingController{
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
 			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			List<DealsListing> listings = service.getUploadedListings(param.getPromoId(), userData.getUserId());
+			List<DealsListing> listings = service.getUploadedListings(param.getPromoId(), userData.getUserId(), null);
 			if (listings != null && listings.size() > 0) {
 				resp.setData(listings);
 			} else {
@@ -276,7 +276,7 @@ public class SiteDealsListingController extends AbstractListingController{
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
 			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			List<DealsListing> listings = service.getSubmitedListings(param.getPromoId(), userData.getUserId());
+			List<DealsListing> listings = service.getSubmitedListings(param.getPromoId(), userData.getUserId(), null);
 			if (listings != null && listings.size() > 0) {
 				resp.setData(listings);
 			} else {
@@ -296,7 +296,8 @@ public class SiteDealsListingController extends AbstractListingController{
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
 			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			resp.setData(service.getApprovedListings(param.getPromoId(), userData.getUserId()));
+			List<DealsListing> listings = service.getApprovedListings(param.getPromoId(), userData.getUserId(), null);
+			resp.setData(listings);
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
