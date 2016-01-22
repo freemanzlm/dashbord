@@ -159,7 +159,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		try {
 			// if promotion sub type is empty, handle as general deals listings,
 			// and don't throw the NullPointerException
-			if (StringUtil.isEmpty(promoSubType)) {
+			if (!StringUtil.isEmpty(promoSubType)) {
 				pSubType = PromotionSubType.valueOf(promoSubType);
 			}
 		} catch (Exception e) {
@@ -522,7 +522,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		try {
 			// if promotion sub type is empty, handle as general deals listings,
 			// and don't throw the NullPointerException
-			if (StringUtil.isEmpty(param.getPromoSubType())) {
+			if (!StringUtil.isEmpty(param.getPromoSubType())) {
 				pSubType = PromotionSubType.valueOf(param.getPromoSubType());
 			}
 		} catch (Exception e) {
