@@ -17,8 +17,8 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[24, 'desc']],
+				'aaSorting': [[1, 'asc']],
+				'aaSortingFixed': [[23, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -78,28 +78,27 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
-				    {data: 'skuName'},
-				    {data: 'skuId'},
-				    {data: 'category'},
 				    {data: 'itemId'},
-				    {data: 'listPrice', aDataSort: [23, 5]},
-				    {data: 'dealPrice', aDataSort: [23, 6]},
+				    {data: 'skuName'},
+				    {data: 'category'},
+				    {data: 'listPrice', aDataSort: [22, 4]},
+				    {data: 'dealPrice', aDataSort: [22, 5]},
 				    {data: 'qty'},
 				    {data: 'listSite'},
 				    {data: 'wwShipOpt'},
-				    {data: 'wwShipChg', aDataSort: [23, 10]},
+				    {data: 'wwShipChg', aDataSort: [22, 9]},
 				    {data: 'ruShipOpt'},
-				    {data: 'ruShipChg', aDataSort: [23, 12]},
+				    {data: 'ruShipChg', aDataSort: [22, 11]},
 				    {data: 'cnShipOpt'},
-				    {data: 'cnShipChg', aDataSort: [23, 14]},
+				    {data: 'cnShipChg', aDataSort: [22, 13]},
 				    {data: 'laShipOpt'},
-				    {data: 'laShipChg', aDataSort: [23, 16]},
+				    {data: 'laShipChg', aDataSort: [22, 15]},
 				    {data: 'meShipOpt'},
-				    {data: 'meShipChg', aDataSort: [23, 18]},
+				    {data: 'meShipChg', aDataSort: [22, 17]},
 				    {data: 'brShipOpt'},
-				    {data: 'brShipChg', aDataSort: [23, 20]},
+				    {data: 'brShipChg', aDataSort: [22, 19]},
 				    {data: 'isShipOpt'},
-				    {data: 'isShipChg', aDataSort: [23, 22]},
+				    {data: 'isShipChg', aDataSort: [22, 21]},
 				    {data: 'currency'},
 				    {data: 'state'}
 				],
@@ -324,7 +323,7 @@ var BizReport = BizReport || {};
 					// some of the listings are selected.
 					that.checkAllBox.prop("indeterminate", that.selectedItems.length > 0 && that.selectedItems.length < aRows.length);
 					// all selectable listings are selected.
-					that.checkAllBox.prop("checked", that.selectedItems.length == aRows.length && that.selectedItems.length > 0);
+					that.checkAllBox.prop("checked", that.selectedItems.length == aRows.length && that.selectedItems.length > 0);					
 					
 					that.publish("initialized");
 					that.publish("selectChange");
@@ -446,7 +445,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(24).visible(false);
+			this.oDataTable.column(23).visible(false);
 		}
 	});
 	

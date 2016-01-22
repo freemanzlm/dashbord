@@ -17,7 +17,7 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[2, 'asc']],
+				'aaSorting': [[1, 'asc']],
 				'aaSortingFixed': [[10, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
@@ -81,12 +81,11 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
-				    {data: 'skuName'},
-				    {data: 'skuId'},
-				    {data: 'category'},
 				    {data: 'itemId'},
-				    {data: 'listPrice', aDataSort: [9, 5]},
-				    {data: 'dealPrice', aDataSort: [9, 6]},
+				    {data: 'skuName'},
+				    {data: 'category'},
+				    {data: 'listPrice', aDataSort: [9, 4]},
+				    {data: 'dealPrice', aDataSort: [9, 5]},
 				    {data: 'qty'},
 				    {data: 'rrpLink'},
 				    {data: 'currency'},
@@ -433,7 +432,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(10).visible(false);
+			this.oDataTable.column(9).visible(false);
 		}
 	});
 	

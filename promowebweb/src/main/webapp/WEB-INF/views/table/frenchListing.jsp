@@ -7,10 +7,9 @@
 		<thead>
 			<tr>
 				<th class="check"><input type="checkbox" class="check-all" /></th>
+				<th class="item-id">刊登编号<br/>Item ID</th>
 				<th class="sku-name">招募SKU名称<br />SKU</th>
-				<th class="sku-id">SKU编号<br/>SKU ID</th>
 				<th class="category">产品品类<br />Product Category</th>
-				<th class="item-id">刊登号<br/>Item ID</th>
 				<th class="item-id-spain">西班牙站点Item ID<br/>ES Item ID</th>
 				<th class="fvf">成交费率<br/>FvF%</th>
 				<th class="last-price">原价<br/>List Price(MSRP)</th>

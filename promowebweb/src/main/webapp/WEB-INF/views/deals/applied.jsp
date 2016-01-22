@@ -6,7 +6,7 @@
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<c:set var="dealsType" value="${ 2 }" />
+<c:set var="dealsType" value="${ promo.promoSubType }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />

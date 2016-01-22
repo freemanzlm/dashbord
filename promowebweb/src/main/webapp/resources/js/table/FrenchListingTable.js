@@ -17,8 +17,8 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[15, 'desc']],
+				'aaSorting': [[1, 'asc']],
+				'aaSortingFixed': [[14, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -78,18 +78,17 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 				    {data: 'itemId'},
-				    {data: 'skuName'},
-				    {data: 'skuId'},
-				    {data: 'category'},
 				    {data: 'itemId'},
+				    {data: 'skuName'},
+				    {data: 'category'},
 				    {data: 'spainItemId'},
 				    {data: 'fvf'},
-				    {data: 'currPrice', aDataSort: [14, 7]},
-				    {data: 'dealsPrice', aDataSort: [14, 8]},
+				    {data: 'currPrice', aDataSort: [13, 6]},
+				    {data: 'dealsPrice', aDataSort: [13, 7]},
 				    {data: 'qty'},
 				    {data: 'location'},
 				    {data: 'dlvyTime'},
-				    {data: 'shipPrice', aDataSort: [14, 12]},
+				    {data: 'shipPrice', aDataSort: [13, 11]},
 				    {data: 'rrpLink'},
 				    {data: 'currency'},
 				    {data: 'state'}
@@ -435,7 +434,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(15).visible(false);
+			this.oDataTable.column(14).visible(false);
 		}
 	});
 	
