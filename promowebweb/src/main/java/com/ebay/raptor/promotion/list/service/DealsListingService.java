@@ -275,7 +275,7 @@ public class DealsListingService extends BaseService {
 	
 
 	public List<GBHDealsListing> getGBHListingsByPromotionId(String promoId, Long uid, PromotionSubType subType) throws PromoException{
-		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{proSubType}", subType}));
+		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{type}", subType}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<ListDataServiceResponse<GBHDealsListing>> type = new GenericType<ListDataServiceResponse<GBHDealsListing>>(){};
@@ -290,7 +290,7 @@ public class DealsListingService extends BaseService {
 	}
 	
 	public List<FRESDealsListing> getFRESListingsByPromotionId(String promoId, Long uid, PromotionSubType subType) throws PromoException{
-		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{proSubType}", subType}));
+		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{type}", subType}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<ListDataServiceResponse<FRESDealsListing>> type = new GenericType<ListDataServiceResponse<FRESDealsListing>>(){};
@@ -305,7 +305,7 @@ public class DealsListingService extends BaseService {
 	}
 	
 	public List<APACDealsListing> getAPACListingsByPromotionId(String promoId, Long uid, PromotionSubType subType) throws PromoException{
-		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{proSubType}", subType}));
+		String uri = siteUrl(params(ResourceProvider.ListingRes.getListingsByPromotionIdAndUserIdAndType, new Object[]{"{promoId}", promoId, "{uid}", uid, "{type}", subType}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<ListDataServiceResponse<APACDealsListing>> type = new GenericType<ListDataServiceResponse<APACDealsListing>>(){};

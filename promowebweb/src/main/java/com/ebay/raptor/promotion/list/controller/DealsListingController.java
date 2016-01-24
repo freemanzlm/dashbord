@@ -273,10 +273,26 @@ public class DealsListingController extends AbstractDealsListingController{
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
-	public ModelAndView reviewUploadedListings(@RequestParam String promoId) {
+	public ModelAndView reviewUploadedListings(@RequestParam String promoId,
+			@RequestParam String promoSubType) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView();
+		
+		PromotionSubType pSubType = null;
+		
+		try {
+			// if promotion sub type is empty, handle as general deals listings,
+			// and don't throw the NullPointerException
+			if (!StringUtil.isEmpty(promoSubType)) {
+				pSubType = PromotionSubType.valueOf(promoSubType);
+			}
+		} catch (Exception e) {
+			logger.error("Invalid promotion Sub Type", e);
+			throw new MissingArgumentException("PromoSubType");
+		}
+
 		mav.addObject("formUrl", "/promotion/deals/submitDealsListings");
 		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
+		mav.addObject(ViewContext.PromotionSubType.getAttr(), pSubType);
 		mav.setViewName(ViewResource.DU_LISTING_PREVIEW.getPath());
 		return mav;
 	}
@@ -374,135 +390,6 @@ public class DealsListingController extends AbstractDealsListingController{
 			resp.setStatus(Boolean.FALSE);
 		}
 		return resp;
-	}
-//
-//	private void writeGBHDealsTemplate (HttpServletResponse resp,
-//			String promoId, Long userId)
-//					throws PromoException, IOException {
-//		resp.setContentType("application/x-msdownload;");
-//		XSSFWorkbook workBook = new XSSFWorkbook();
-//		
-//		ExcelSheetWriter<GBHDealsListing> writer =
-//				new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class,
-//					workBook, ResourceProvider.ListingRes.gbhSkuListFileName);
-//
-//		List<GBHDealsListing> skuListings = service
-//				.getSkuListingsByPromotionIdAndType(promoId, userId,
-//						PromotionSubType.GBH);
-//
-//		writer.resetHeaders();
-//		writer.build(skuListings, 1, 2, 1, 3, 0,
-//				PromotionUtil.LISTING_TEMP_PASS);
-//
-//		resp.setHeader("Content-disposition", "attachment; filename="
-//				+ ResourceProvider.ListingRes.gbhSkuListFileName + ".xlsx");
-//		workBook.write(resp.getOutputStream());
-//	}
-//	
-//	private void writeFRESDealsTemplate (HttpServletResponse resp,
-//			String promoId, Long userId)
-//					throws PromoException, IOException {
-//		resp.setContentType("application/x-msdownload;");
-//		XSSFWorkbook workBook = new XSSFWorkbook();
-//		
-//		ExcelSheetWriter<FRESDealsListing> writer =
-//				new ExcelSheetWriter<FRESDealsListing>(FRESDealsListing.class,
-//					workBook, ResourceProvider.ListingRes.fresSkuListFileName);
-//
-//		List<FRESDealsListing> skuListings = service
-//				.getSkuListingsByPromotionIdAndType(promoId, userId,
-//						PromotionSubType.FRES);
-//
-//		writer.resetHeaders();
-//		writer.build(skuListings, 1, 2, 1, 3, 0,
-//				PromotionUtil.LISTING_TEMP_PASS);
-//
-//		resp.setHeader("Content-disposition", "attachment; filename="
-//				+ ResourceProvider.ListingRes.fresSkuListFileName + ".xlsx");
-//		workBook.write(resp.getOutputStream());
-//	}
-//	
-//	private void writeAPACDealsTemplate (HttpServletResponse resp,
-//			String promoId, Long userId)
-//					throws PromoException, IOException {
-//		resp.setContentType("application/x-msdownload;");
-//		XSSFWorkbook workBook = new XSSFWorkbook();
-//		
-//		ExcelSheetWriter<APACDealsListing> writer =
-//				new ExcelSheetWriter<APACDealsListing>(APACDealsListing.class,
-//					workBook, ResourceProvider.ListingRes.apacSkuListFileName);
-//
-//		List<APACDealsListing> skuListings = service
-//				.getSkuListingsByPromotionIdAndType(promoId, userId,
-//						PromotionSubType.APAC);
-//
-//		writer.resetHeaders();
-//		writer.build(skuListings, 1, 2, 1, 3, 0,
-//				PromotionUtil.LISTING_TEMP_PASS);
-//
-//		resp.setHeader("Content-disposition", "attachment; filename="
-//				+ ResourceProvider.ListingRes.apacSkuListFileName + ".xlsx");
-//		workBook.write(resp.getOutputStream());
-//	}
-//	
-//	private void writeGeneralDealsTemplate (HttpServletResponse resp,
-//			String promoId, Long userId)
-//					throws PromoException, IOException {
-//		resp.setContentType("application/x-msdownload;");
-//		XSSFWorkbook workBook = new XSSFWorkbook();
-//
-//		ExcelSheetWriter<DealsListing> writer =
-//				new ExcelSheetWriter<DealsListing>(DealsListing.class,
-//						workBook, ResourceProvider.ListingRes.skuListFileName);
-//		List<DealsListing> skuListings = service.getSkuListingsByPromotionId(
-//				promoId, userId);
-//
-//		writer.resetHeaders();
-//        writer.build(skuListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
-//
-//		resp.setHeader("Content-disposition", "attachment; filename="
-//				+ ResourceProvider.ListingRes.skuListFileName + ".xlsx");
-//		workBook.write(resp.getOutputStream());
-//	}
-	
-	private void writeDealsTemplate (HttpServletResponse resp,
-			String promoId, Long userId, PromotionSubType promoSubType)
-					throws PromoException, IOException {
-		resp.setContentType("application/x-msdownload;");
-		XSSFWorkbook workBook = new XSSFWorkbook();
-		ExcelSheetWriter<?> writer = null;
-		
-		if (promoSubType != null) {
-    		switch (promoSubType) {
-    			case GBH :
-    				writer = new ExcelSheetWriter<GBHDealsListing>(GBHDealsListing.class,
-    						workBook, ResourceProvider.ListingRes.gbhSkuListFileName);
-    				break;
-    			case FRES :
-    				writer = new ExcelSheetWriter<FRESDealsListing>(FRESDealsListing.class,
-    						workBook, ResourceProvider.ListingRes.fresSkuListFileName);
-    				break;
-    			case APAC :
-    				writer = new ExcelSheetWriter<APACDealsListing>(APACDealsListing.class,
-    						workBook, ResourceProvider.ListingRes.apacSkuListFileName);
-    				break;
-    			default :
-    				return;
-    		}
-    	} else {
-    		writer = new ExcelSheetWriter<DealsListing>(DealsListing.class,
-					workBook, ResourceProvider.ListingRes.skuListFileName);
-    	}
-
-		List<?> skuListings = service.getSkuListingsByPromotionId(
-				promoId, userId, promoSubType);
-
-		writer.resetHeaders();
-        writer.build(skuListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
-
-		resp.setHeader("Content-disposition", "attachment; filename="
-				+ ResourceProvider.ListingRes.skuListFileName + ".xlsx");
-		workBook.write(resp.getOutputStream());
 	}
 
 	private ListDataWebResponse<?> getListings (HttpServletRequest req,
