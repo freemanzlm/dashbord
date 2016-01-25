@@ -410,9 +410,9 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public boolean uploadDealsListings(List<DealsListing> uploadListings, String promoId, Long uid) throws PromoException {
+	public <T> boolean uploadDealsListings(List<T> uploadListings, String promoId, Long uid) throws PromoException {
 		String uri = url(ResourceProvider.ListingRes.uploadDealsListings);
-		UploadListingRequest<DealsListing> req = new UploadListingRequest<DealsListing>();
+		UploadListingRequest<T> req = new UploadListingRequest<T>();
 		req.setListings(uploadListings);
 		req.setPromoId(promoId);
 		req.setUid(uid);
@@ -438,7 +438,7 @@ public class DealsListingService extends BaseService {
 			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
 	}
-	
+
 	public boolean submitDealsListings(String promoId, Long uid) throws PromoException {
 		String uri = url(ResourceProvider.ListingRes.submitDealsListings);
 		SubmitListingRequest req = new SubmitListingRequest();

@@ -72,7 +72,7 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
 		String presetHeaders = getPresetColumnsString(headerConfigs);
 
 		try {
-			for (int i = 1; i < rowNum; i++) {
+			for (int i = 2; i < rowNum; i++) {
 				Row row = sheet.getRow(i);
 				List<Cell> cells = getRowCells(row, headerConfigs.size());
 				
@@ -86,7 +86,7 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
 					setValue(cell, field, listing, sb);
 				}
 				
-//				validateSKU(listing, i);
+				validateSKU(listing, i);
 				
 				if (!presetHeaders.equals(sb.toString())) {
 					validateObj(listing, i);
