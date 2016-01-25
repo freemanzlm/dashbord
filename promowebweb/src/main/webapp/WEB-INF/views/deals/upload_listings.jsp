@@ -6,7 +6,7 @@
 	<h3>批量上传预审刊登</h3>
 	
 	<div class="body mt20" style="width: 545px;">
-		<p>您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">批量提交模板</a>按格式填写并上传您的刊登参与本活动。</p>
+		<p>您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}&promoSubType=${promo.promoSubType}" target="_self">批量提交模板</a>按格式填写并上传您的刊登参与本活动。</p>
 		
 		<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><em ></em></p>
 		

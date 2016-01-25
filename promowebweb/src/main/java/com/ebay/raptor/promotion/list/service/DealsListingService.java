@@ -1,5 +1,6 @@
 package com.ebay.raptor.promotion.list.service;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.ws.rs.core.GenericType;
@@ -65,20 +66,34 @@ public class DealsListingService extends BaseService {
 	public <T> List<T> getPromotionListings(String promoId,
 			Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
+		GenericType type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getPromotionListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+			type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
 		} else {
 			uri = siteUrl(params(
 					ResourceProvider.ListingRes.getTempPromotionListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid,
 							"{type}", promoSubType }));
+			switch (promoSubType) {
+				case GBH:
+					type = new GenericType<ListDataServiceResponse<GBHDealsListing>>(){};
+					break;
+				case FRES:
+					type = new GenericType<ListDataServiceResponse<FRESDealsListing>>(){};
+					break;
+				case APAC:
+					type = new GenericType<ListDataServiceResponse<APACDealsListing>>(){};
+					break;
+				default :
+					throw new PromoException("Unrecognized promotion sub type.");
+			}
 		}
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
 			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
@@ -95,20 +110,34 @@ public class DealsListingService extends BaseService {
 	
 	public <T> List<T> getUploadedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
+		GenericType type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getUploadedListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+			type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
 		} else {
 			uri = siteUrl(params(
 					ResourceProvider.ListingRes.getTempUploadedListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid,
 							"{type}", promoSubType }));
+			switch (promoSubType) {
+				case GBH:
+					type = new GenericType<ListDataServiceResponse<GBHDealsListing>>(){};
+					break;
+				case FRES:
+					type = new GenericType<ListDataServiceResponse<FRESDealsListing>>(){};
+					break;
+				case APAC:
+					type = new GenericType<ListDataServiceResponse<APACDealsListing>>(){};
+					break;
+				default :
+					throw new PromoException("Unrecognized promotion sub type.");
+			}
 		}
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
 			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
@@ -125,20 +154,35 @@ public class DealsListingService extends BaseService {
 	
 	public <T> List<T> getSubmitedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
+		GenericType type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getSubmittedListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+			type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
 		} else {
 			uri = siteUrl(params(
 					ResourceProvider.ListingRes.getTempSubmittedListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid,
 							"{type}", promoSubType }));
+			
+			switch (promoSubType) {
+				case GBH:
+					type = new GenericType<ListDataServiceResponse<GBHDealsListing>>(){};
+					break;
+				case FRES:
+					type = new GenericType<ListDataServiceResponse<FRESDealsListing>>(){};
+					break;
+				case APAC:
+					type = new GenericType<ListDataServiceResponse<APACDealsListing>>(){};
+					break;
+				default :
+					throw new PromoException("Unrecognized promotion sub type.");
+			}
 		}
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
 			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
@@ -174,20 +218,35 @@ public class DealsListingService extends BaseService {
 	
 	public <T> List<T> getAppliedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
+		GenericType type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getAppliedListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+			type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
 		} else {
 			uri = siteUrl(params(
 					ResourceProvider.ListingRes.getTempAppliedListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid,
 							"{type}", promoSubType }));
+			
+			switch (promoSubType) {
+				case GBH:
+					type = new GenericType<ListDataServiceResponse<GBHDealsListing>>(){};
+					break;
+				case FRES:
+					type = new GenericType<ListDataServiceResponse<FRESDealsListing>>(){};
+					break;
+				case APAC:
+					type = new GenericType<ListDataServiceResponse<APACDealsListing>>(){};
+					break;
+				default :
+					throw new PromoException("Unrecognized promotion sub type.");
+			}
 		}
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
 			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
@@ -204,20 +263,35 @@ public class DealsListingService extends BaseService {
 	
 	public <T> List<T> getApprovedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
+		GenericType type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getApprovedListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+			type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
 		} else {
 			uri = siteUrl(params(
 					ResourceProvider.ListingRes.getTempApprovedListings,
 					new Object[] { "{promoId}", promoId, "{uid}", uid,
 							"{type}", promoSubType }));
+			
+			switch (promoSubType) {
+				case GBH:
+					type = new GenericType<ListDataServiceResponse<GBHDealsListing>>(){};
+					break;
+				case FRES:
+					type = new GenericType<ListDataServiceResponse<FRESDealsListing>>(){};
+					break;
+				case APAC:
+					type = new GenericType<ListDataServiceResponse<APACDealsListing>>(){};
+					break;
+				default :
+					throw new PromoException("Unrecognized promotion sub type.");
+			}
 		}
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
 			ListDataServiceResponse<T> listing = resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
@@ -247,22 +321,39 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public <T> List<T> getSkuListingsByPromotionId(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
+		GenericType type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getSKUListingsByPromotionId,
 					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+			type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
 		} else {
 			uri = siteUrl(params(
 					ResourceProvider.ListingRes.getSKUListingsByPromotionIdAndType,
 					new Object[] { "{promoId}", promoId, "{uid}", uid,
 							"{type}", promoSubType }));
+			
+			switch (promoSubType) {
+				case GBH:
+					type = new GenericType<ListDataServiceResponse<GBHDealsListing>>(){};
+					break;
+				case FRES:
+					type = new GenericType<ListDataServiceResponse<FRESDealsListing>>(){};
+					break;
+				case APAC:
+					type = new GenericType<ListDataServiceResponse<APACDealsListing>>(){};
+					break;
+				default :
+					throw new PromoException("Unrecognized promotion sub type.");
+			}
 		}
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<T>> type = new GenericType<ListDataServiceResponse<T>>(){};
+			
 			ListDataServiceResponse<T> data = resp.getEntity(type);
 			if(null != data && AckValue.SUCCESS == data.getAckValue()){
 				return data.getData();
