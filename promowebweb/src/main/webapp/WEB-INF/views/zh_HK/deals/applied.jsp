@@ -5,7 +5,7 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<c:set var="dealsType" value="${ promo.promoSubType }" />
+<c:set var="promoSubType" value="${ promo.promoSubType }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -63,15 +63,15 @@
 	<res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>	
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<c:choose>
-		<c:when test="${ dealsType eq 1}">
+		<c:when test="${ promoSubType eq 'FRES'}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
-		<c:when test="${ dealsType eq 2}">
+		<c:when test="${ promoSubType eq 'GBH'}">
 			<!-- china, brazil -->
 			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
-		<c:when test="${ dealsType eq 3}">
+		<c:when test="${ promoSubType eq 'APAC'}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
@@ -104,13 +104,13 @@
 			<div class="mt20 my-listing">
 				<h3><strong>提交預審的刊登</strong></h3>
 				<c:choose>
-					<c:when test="${dealsType eq 1 }">
+					<c:when test="${promoSubType eq 'FRES' }">
 						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
 					</c:when>
-					<c:when test="${dealsType eq 2 }">
+					<c:when test="${promoSubType eq 'GBH'}">
 						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
 					</c:when>
-					<c:when test="${dealsType eq 3 }">
+					<c:when test="${promoSubType eq 'APAC'}">
 						<jsp:include page="../table/usListing.jsp"></jsp:include>
 					</c:when>
 					<c:otherwise>
@@ -125,7 +125,7 @@
 						<h3>重新提交預審</h3>
 						
 						<div class="body mt20"  style="width: 420px;">
-							<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改並重新上傳。</p>
+							<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}&promoSubType=${promo.promoSubType}" target="_self">已提交的刊登物品</a>修改並重新上傳。</p>
 							<p class="mt10">請注意：您新上傳的刊登物品將完全替換之前的清單，並需要重新進行預審且接受活動條款。</p>
 							
 							<div class="mt10">
@@ -172,7 +172,8 @@
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },
-		promoId: '${promo.promoId}'
+		promoId: '${promo.promoId}',
+		promoSubType: '${promo.promoSubType}'
 	};
 </script>
 

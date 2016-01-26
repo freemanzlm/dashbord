@@ -23,7 +23,10 @@ $(function(){
                 columns: [{bVisible: false}] // hide the first column which has checkbox
             }
 		}});
-	listingTable.update({promoId:pageData && pageData.promoId});
+	listingTable.update({
+		promoId:pageData && pageData.promoId,
+		promoSubType:pageData && pageData.promoSubType
+	});
 	
 	uploadForm = $("#upload-form").submit(function(){
 		if (!acceptCheckbox.checked) {
@@ -47,7 +50,8 @@ $(function(){
 				var responseData = $.parseJSON(response);
 				// verification returns no error 
 				if (responseData.status) {
-					window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId);
+					window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId
+							+ (pageData.promoSubType ? "&promoSubType=" + pageData.promoSubType : ""));
 				}
 				// handle error
 				else {

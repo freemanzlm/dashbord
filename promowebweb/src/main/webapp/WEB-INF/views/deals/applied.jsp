@@ -6,7 +6,7 @@
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<c:set var="dealsType" value="${ promo.promoSubType }" />
+<c:set var="promoSubType" value="${ promo.promoSubType }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -68,15 +68,15 @@
 	<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
 	
 	<c:choose>
-		<c:when test="${ dealsType eq 1}">
+		<c:when test="${ promoSubType eq 'FRES'}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
-		<c:when test="${ dealsType eq 2}">
+		<c:when test="${ promoSubType eq 'GBH'}">
 			<!-- china, brazil -->
 			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
-		<c:when test="${ dealsType eq 3}">
+		<c:when test="${ promoSubType eq 'APAC'}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
@@ -113,13 +113,13 @@
 							<strong>提交预审的刊登</strong>
 						</h3>
 						<c:choose>
-							<c:when test="${dealsType eq 1 }">
+							<c:when test="${promoSubType eq 'FRES' }">
 								<jsp:include page="../table/frenchListing.jsp"></jsp:include>
 							</c:when>
-							<c:when test="${dealsType eq 2 }">
+							<c:when test="${promoSubType eq 'GBH' }">
 								<jsp:include page="../table/gbhListing.jsp"></jsp:include>
 							</c:when>
-							<c:when test="${dealsType eq 3 }">
+							<c:when test="${promoSubType eq 'APAC' }">
 								<jsp:include page="../table/usListing.jsp"></jsp:include>
 							</c:when>
 							<c:otherwise>
@@ -136,7 +136,7 @@
 
 								<div class="body mt20" style="width: 490px;">
 									<p class="mt10">
-										您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改并重新上传。
+										您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}&promoSubType=${promo.promoSubType}" target="_self">已提交的刊登物品</a>修改并重新上传。
 									</p>
 									<p class="mt10">请注意：您新上传的刊登物品将完全替换之前的列表，并需要重新进行预审且接受活动条款。</p>
 
@@ -192,7 +192,8 @@
 	<script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },
-		promoId: '${promo.promoId}'
+		promoId: '${promo.promoId}',
+		promoSubType: '${promo.promoSubType}'
 	};
 </script>
 
