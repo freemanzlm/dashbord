@@ -27,7 +27,7 @@ public class ValidationUtil {
 		}
 
 		throw new InvalidCellValueException(ErrorType.InvalidSkuCellValue,
-				rowIndex, 0, skuName);
+				rowIndex + 1, 0, skuName);
 	}
 	
 	public static boolean validateItem(Long itemId, Set<Long> itemIds,
@@ -41,6 +41,6 @@ public class ValidationUtil {
 		}
 		
 		throw new InvalidCellValueException(ErrorType.DuplicateItemFound,
-				rowIndex, 0, itemId + "");		
+				rowIndex + 1, 0, itemId + "");		
 	}
 }

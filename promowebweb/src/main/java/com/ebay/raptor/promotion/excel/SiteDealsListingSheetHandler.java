@@ -222,7 +222,7 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
         if (errors == null || errors.getAllErrors().isEmpty()) {
         	return true;
         } else {
-            throw new InvalidCellDataException(errors, rowIndex);
+            throw new InvalidCellDataException(errors, rowIndex + 1);
         }
 	}
 
