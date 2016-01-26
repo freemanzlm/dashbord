@@ -4,8 +4,6 @@
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 
-<c:set var="dealsType" value="${ 2 }" />
-
 <r:includeJquery jsSlot="head" />
 <r:client />
 	
@@ -131,7 +129,8 @@
 
 	<script type="text/javascript">
 		var pageData = {
-			promoId : '${promoId}'
+			promoId : '${promoId}',
+			promoSubType : '${promoSubType}'
 		};
 	</script>
 

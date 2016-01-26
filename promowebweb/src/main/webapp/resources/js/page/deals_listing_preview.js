@@ -30,7 +30,9 @@ $(function(){
 			}
 			
 		}});
-	listingTable.update({promoId: pageData && pageData.promoId});
+	listingTable.update({
+		promoId: pageData && pageData.promoId,
+		promoSubType: pageData && pageData.promoSubType});
 
 	var submitBtn = document.getElementById("submit-btn"),
 		data = {promoId: pageData && pageData.promoId};

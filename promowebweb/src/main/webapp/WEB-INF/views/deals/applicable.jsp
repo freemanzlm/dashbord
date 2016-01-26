@@ -109,7 +109,8 @@
 
 	<script type="text/javascript">
 		var pageData = {
-			promoId : '${promo.promoId}'
+			promoId : '${promo.promoId}',
+			promoSubType : '${promo.promoSubType}'
 		};
 	</script>
 

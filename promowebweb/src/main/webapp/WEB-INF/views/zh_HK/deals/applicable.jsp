@@ -111,7 +111,8 @@
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },
-		promoId: '${promo.promoId}'
+		promoId: '${promo.promoId}',
+		promoSubType : '${promo.promoSubType}'
 	};
 </script>
 

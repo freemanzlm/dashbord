@@ -49,7 +49,8 @@ $(function(){
 				var responseData = $.parseJSON(response);
 				// verification returns no error 
 				if (responseData && responseData.status) {
-					window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId);
+					window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId
+							+ (pageData.promoSubType ? "&promoSubType=" + pageData.promoSubType : ""));
 				}
 				// handle error
 				else {
