@@ -1,6 +1,6 @@
 package com.ebay.raptor.promotion.pojo.business;
 
-public enum Location {
+public enum Location implements IDescription{
 	UK	("UK"),
 	DE	("DE"),
 	ESP	("ESP"),

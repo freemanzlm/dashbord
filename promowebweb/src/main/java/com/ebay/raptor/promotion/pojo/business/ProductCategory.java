@@ -1,6 +1,6 @@
 package com.ebay.raptor.promotion.pojo.business;
 
-public enum ProductCategory {
+public enum ProductCategory  implements IDescription {
 	BAI 		("Business & Industrial"),
 	Collect		("Collectibles"),
 	Elect		("Electronics"),

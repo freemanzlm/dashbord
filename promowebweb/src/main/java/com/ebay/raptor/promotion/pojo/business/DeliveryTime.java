@@ -1,6 +1,6 @@
 package com.ebay.raptor.promotion.pojo.business;
 
-public enum DeliveryTime {
+public enum DeliveryTime  implements IDescription {
 	LT14	("小于14Days"), 
 	GE14	("大于等于 14Days");
 	

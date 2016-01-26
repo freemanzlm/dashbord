@@ -1,6 +1,6 @@
 package com.ebay.raptor.promotion.pojo.business;
 
-public enum ShipOption {
+public enum ShipOption implements IDescription{
 	Yes	("Yes"),
 	No	("No"),
 	Free	("Free");

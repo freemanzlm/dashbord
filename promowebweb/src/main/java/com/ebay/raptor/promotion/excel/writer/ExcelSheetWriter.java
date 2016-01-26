@@ -23,22 +23,26 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
+import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfiguration;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfigurationManager;
 import com.ebay.app.raptor.promocommon.util.DateUtil;
+import com.ebay.raptor.promotion.list.controller.DealsListingController;
 import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.Currency;
 import com.ebay.raptor.promotion.pojo.business.DeliveryTime;
 import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
+import com.ebay.raptor.promotion.pojo.business.IDescription;
 import com.ebay.raptor.promotion.pojo.business.Location;
 import com.ebay.raptor.promotion.pojo.business.ProductCategory;
 import com.ebay.raptor.promotion.pojo.business.ShipOption;
 import com.ebay.raptor.promotion.pojo.business.Site;
 
 public class ExcelSheetWriter <T> extends Writer<T>{
+	private static CommonLogger logger = CommonLogger.getInstance(ExcelSheetWriter.class);
+
 	private XSSFWorkbook workBook;
 	private String sheetName;
 	private CellStyle headerStyle;
@@ -230,6 +234,12 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 			addressList = new CellRangeAddressList(row.getRowNum(), row.getRowNum(), cellIndex, cellIndex);
 			DataValidation validation = dvHelper.createValidation(constraint, addressList);
 			workBook.getSheet(this.sheetName).addValidationData(validation);
+
+			try {
+				cl.setCellValue(((IDescription)cellData).getDescription());
+			} catch (Exception e) {
+//				logger.error(String.format("Unable to add cell value [%s], type [%s] ", cellData, type), e);
+			}
 		} else {
 			cl.setCellType(Cell.CELL_TYPE_STRING);
 			if (cellData != null) {

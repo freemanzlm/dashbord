@@ -1,6 +1,6 @@
 package com.ebay.raptor.promotion.pojo.business;
 
-public enum Currency {
+public enum Currency implements IDescription {
 	USD	("USD"),
 	AUD	("AUD"),
 	EURO	("EURO"),

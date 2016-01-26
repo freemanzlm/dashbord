@@ -1,6 +1,6 @@
 package com.ebay.raptor.promotion.pojo.business;
 
-public enum Site {
+public enum Site implements IDescription{
 	
 	US	("US"),
 	CA	("CA"),
@@ -24,5 +24,4 @@ public enum Site {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
 }
