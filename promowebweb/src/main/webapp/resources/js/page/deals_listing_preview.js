@@ -32,10 +32,14 @@ $(function(){
 		}});
 	listingTable.update({
 		promoId: pageData && pageData.promoId,
-		promoSubType: pageData && pageData.promoSubType});
+		promoSubType: pageData && pageData.promoSubType
+	});
 
 	var submitBtn = document.getElementById("submit-btn"),
-		data = {promoId: pageData && pageData.promoId};
+		data = {
+			promoId: pageData && pageData.promoId,
+			promoSubType: pageData && pageData.promoSubType
+		};
 	
 	$(submitBtn).click(function(){
 		$.ajax({
