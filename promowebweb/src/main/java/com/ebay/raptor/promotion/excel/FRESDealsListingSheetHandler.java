@@ -39,7 +39,7 @@ public class FRESDealsListingSheetHandler extends SiteDealsListingSheetHandler<F
 	protected void updateDealsListing(List<FRESDealsListing> listings)
 			throws PromoException {
 		if (listings.size() > 0) {
-//			dealsListingService.uploadDealsListings(listings, promoId, userId);
+			dealsListingService.uploadFRESDealsListings(listings, promoId, userId);
 		}
 	}
 

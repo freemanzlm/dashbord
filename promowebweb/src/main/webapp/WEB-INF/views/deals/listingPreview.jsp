@@ -62,15 +62,15 @@
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	
 	<c:choose>
-		<c:when test="${ dealsType eq 1}">
+		<c:when test="${ promoSubType eq 'GBH'}">
 			<!-- china, brazil -->
 			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
-		<c:when test="${ dealsType eq 2}">
+		<c:when test="${ promoSubType eq 'FRES'}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
-		<c:when test="${ dealsType eq 3}">
+		<c:when test="${ promoSubType eq 'APAC'}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
@@ -96,13 +96,13 @@
 
 					<div class="mt20">
 						<c:choose>
-							<c:when test="${dealsType eq 1 }">
+							<c:when test="${promoSubType eq 'GBH' }">
 								<jsp:include page="../table/gbhListing.jsp"></jsp:include>
 							</c:when>
-							<c:when test="${dealsType eq 2 }">
+							<c:when test="${promoSubType eq 'FRES' }">
 								<jsp:include page="../table/frenchListing.jsp"></jsp:include>
 							</c:when>
-							<c:when test="${dealsType eq 3 }">
+							<c:when test="${promoSubType eq 'APAC' }">
 								<jsp:include page="../table/usListing.jsp"></jsp:include>
 							</c:when>
 							<c:otherwise>

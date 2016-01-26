@@ -39,7 +39,7 @@ public class APACDealsListingSheetHandler extends SiteDealsListingSheetHandler<A
 	protected void updateDealsListing(List<APACDealsListing> listings)
 			throws PromoException {
 		if (listings.size() > 0) {
-//			dealsListingService.uploadDealsListings(listings, promoId, userId);
+			dealsListingService.uploadAPACDealsListings(listings, promoId, userId);
 		}
 	}
 

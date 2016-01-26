@@ -39,7 +39,7 @@ public class GBHDealsListingSheetHandler extends SiteDealsListingSheetHandler<GB
 	protected void updateDealsListing(List<GBHDealsListing> listings)
 			throws PromoException {
 		if (listings.size() > 0) {
-			dealsListingService.uploadDealsListings(listings, promoId, userId);
+			dealsListingService.uploadGBHDealsListings(listings, promoId, userId);
 		}
 	}
 

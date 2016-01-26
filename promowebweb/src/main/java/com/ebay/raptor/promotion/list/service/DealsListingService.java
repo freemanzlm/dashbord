@@ -410,9 +410,96 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	public <T> boolean uploadDealsListings(List<T> uploadListings, String promoId, Long uid) throws PromoException {
+	public boolean uploadDealsListings(List<DealsListing> uploadListings, String promoId, Long uid) throws PromoException {
 		String uri = url(ResourceProvider.ListingRes.uploadDealsListings);
-		UploadListingRequest<T> req = new UploadListingRequest<T>();
+		UploadListingRequest<DealsListing> req = new UploadListingRequest<DealsListing>();
+		req.setListings(uploadListings);
+		req.setPromoId(promoId);
+		req.setUid(uid);
+		GingerClientResponse resp = httpPost(uri, req);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
+			GeneralDataResponse<Boolean> general = resp.getEntity(type);
+			if(null != general){
+				if (AckValue.SUCCESS == general.getAckValue()) {
+					return true;
+				} else {
+					int errorCode = general.getResponseStatus();
+	
+					if (errorCode == ErrorType.DateExpiredException.getCode()) {
+						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
+					}
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
+		}
+	}
+	
+	public boolean uploadGBHDealsListings(List<GBHDealsListing> uploadListings, String promoId, Long uid) throws PromoException {
+		String uri = siteUrl(ResourceProvider.ListingRes.uploadGBHDealsListings);
+		UploadListingRequest<GBHDealsListing> req = new UploadListingRequest<GBHDealsListing>();
+		req.setListings(uploadListings);
+		req.setPromoId(promoId);
+		req.setUid(uid);
+		GingerClientResponse resp = httpPost(uri, req);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
+			GeneralDataResponse<Boolean> general = resp.getEntity(type);
+			if(null != general){
+				if (AckValue.SUCCESS == general.getAckValue()) {
+					return true;
+				} else {
+					int errorCode = general.getResponseStatus();
+	
+					if (errorCode == ErrorType.DateExpiredException.getCode()) {
+						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
+					}
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
+		}
+	}
+	
+	public boolean uploadFRESDealsListings(List<FRESDealsListing> uploadListings, String promoId, Long uid) throws PromoException {
+		String uri = siteUrl(ResourceProvider.ListingRes.uploadDealsListings);
+		UploadListingRequest<FRESDealsListing> req = new UploadListingRequest<FRESDealsListing>();
+		req.setListings(uploadListings);
+		req.setPromoId(promoId);
+		req.setUid(uid);
+		GingerClientResponse resp = httpPost(uri, req);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
+			GeneralDataResponse<Boolean> general = resp.getEntity(type);
+			if(null != general){
+				if (AckValue.SUCCESS == general.getAckValue()) {
+					return true;
+				} else {
+					int errorCode = general.getResponseStatus();
+	
+					if (errorCode == ErrorType.DateExpiredException.getCode()) {
+						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
+					}
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
+		}
+	}
+	
+	public boolean uploadAPACDealsListings(List<APACDealsListing> uploadListings, String promoId, Long uid) throws PromoException {
+		String uri = url(ResourceProvider.ListingRes.uploadDealsListings);
+		UploadListingRequest<APACDealsListing> req = new UploadListingRequest<APACDealsListing>();
 		req.setListings(uploadListings);
 		req.setPromoId(promoId);
 		req.setUid(uid);

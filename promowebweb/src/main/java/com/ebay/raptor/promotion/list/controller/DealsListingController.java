@@ -295,9 +295,9 @@ public class DealsListingController extends AbstractDealsListingController{
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
-	public ModelAndView reviewUploadedListings(@RequestParam String promoId,
-			@RequestParam String promoSubType) throws MissingArgumentException {
+	public ModelAndView reviewUploadedListings(HttpServletRequest req, @RequestParam String promoId) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView();
+		String promoSubType = req.getParameter("promoSubType");
 		
 		PromotionSubType pSubType = null;
 		
