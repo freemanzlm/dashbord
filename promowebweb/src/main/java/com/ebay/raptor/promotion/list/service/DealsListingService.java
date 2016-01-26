@@ -1,6 +1,5 @@
 package com.ebay.raptor.promotion.list.service;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.ws.rs.core.GenericType;
@@ -63,10 +62,11 @@ public class DealsListingService extends BaseService {
 		return Boolean.FALSE;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> List<T> getPromotionListings(String promoId,
 			Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
-		GenericType type = null;
+		GenericType<?> type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getPromotionListings,
@@ -94,7 +94,7 @@ public class DealsListingService extends BaseService {
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			ListDataServiceResponse<T> listing = resp.getEntity(type);
+			ListDataServiceResponse<T> listing = (ListDataServiceResponse<T>)resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -108,9 +108,10 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> List<T> getUploadedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
-		GenericType type = null;
+		GenericType<?> type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getUploadedListings,
@@ -138,7 +139,7 @@ public class DealsListingService extends BaseService {
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			ListDataServiceResponse<T> listing = resp.getEntity(type);
+			ListDataServiceResponse<T> listing = (ListDataServiceResponse<T>)resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -152,9 +153,10 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> List<T> getSubmitedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
-		GenericType type = null;
+		GenericType<?> type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getSubmittedListings,
@@ -183,7 +185,7 @@ public class DealsListingService extends BaseService {
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			ListDataServiceResponse<T> listing = resp.getEntity(type);
+			ListDataServiceResponse<T> listing = (ListDataServiceResponse<T>) resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -216,9 +218,10 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> List<T> getAppliedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
-		GenericType type = null;
+		GenericType<?> type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getAppliedListings,
@@ -247,7 +250,7 @@ public class DealsListingService extends BaseService {
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			ListDataServiceResponse<T> listing = resp.getEntity(type);
+			ListDataServiceResponse<T> listing = (ListDataServiceResponse<T>)resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -261,9 +264,10 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> List<T> getApprovedListings(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
-		GenericType type = null;
+		GenericType<?> type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getApprovedListings,
@@ -292,7 +296,7 @@ public class DealsListingService extends BaseService {
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			ListDataServiceResponse<T> listing = resp.getEntity(type);
+			ListDataServiceResponse<T> listing = (ListDataServiceResponse<T>)resp.getEntity(type);
 			if(null != listing && AckValue.SUCCESS == listing.getAckValue()){
 				return listing.getData();
 			} else {
@@ -321,10 +325,10 @@ public class DealsListingService extends BaseService {
 		return null;
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings("unchecked")
 	public <T> List<T> getSkuListingsByPromotionId(String promoId, Long uid, PromotionSubType promoSubType) throws PromoException{
 		String uri = "";
-		GenericType type = null;
+		GenericType<?> type = null;
 
 		if (promoSubType == null) {
 			uri = url(params(ResourceProvider.ListingRes.getSKUListingsByPromotionId,
@@ -354,7 +358,7 @@ public class DealsListingService extends BaseService {
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			
-			ListDataServiceResponse<T> data = resp.getEntity(type);
+			ListDataServiceResponse<T> data = (ListDataServiceResponse<T>)resp.getEntity(type);
 			if(null != data && AckValue.SUCCESS == data.getAckValue()){
 				return data.getData();
 			}
@@ -554,5 +558,4 @@ public class DealsListingService extends BaseService {
 			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
 	}
-	
 }
