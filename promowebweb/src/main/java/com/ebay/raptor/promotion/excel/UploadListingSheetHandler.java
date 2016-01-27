@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.excel;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -77,22 +78,22 @@ public class UploadListingSheetHandler extends AbstractListingSheetHandler {
 			Cell stockReadyDateCell = row.getCell(cellIndex++);
 			
 	
-			Object skuIdObj = getCellValue(skuIdCell);
-			Object skuNameObj = getCellValue(skuNameCell);
-			Object itemIdObj = getCellValue(itemIdCell);
+			Object skuIdObj = getCellValue(skuIdCell, String.class);
+			Object skuNameObj = getCellValue(skuNameCell, String.class);
+			Object itemIdObj = getCellValue(itemIdCell, Double.class);
 //			Object itemTitleObj = getCellValue(itemTitleCell);
-			Object currPriceObj = getCellValue(currPriceCell);
-			Object dealsPriceObj = getCellValue(dealsPriceCell);
-			Object stockNumObj = getCellValue(stockNumCell);
-			Object stockReadyDateObj = getCellValue(stockReadyDateCell);
-			Object currencyObj = getCellValue(currencyCell);
+			Object currPriceObj = getCellValue(currPriceCell, Double.class);
+			Object dealsPriceObj = getCellValue(dealsPriceCell, Double.class);
+			Object stockNumObj = getCellValue(stockNumCell, Double.class);
+			Object stockReadyDateObj = getCellValue(stockReadyDateCell, Date.class);
+			Object currencyObj = getCellValue(currencyCell, String.class);
 			
 			DealsListing listing = new DealsListing();
 			
 			// check if the sku is in the list
-			String skuId = skuIdObj == null ? "" : skuIdObj.toString();
-			String skuName = skuNameObj == null ? "" : skuNameObj.toString();
-			String currency = currencyObj == null ? "" : currencyObj.toString();
+			String skuId = skuIdObj == null ? "" : (String)skuIdObj;
+			String skuName = skuNameObj == null ? "" : (String)skuNameObj;
+			String currency = currencyObj == null ? "" : (String)currencyObj;
 			Long itemId = itemIdObj == null ? -1 : ((Double)itemIdObj).longValue();
 			boolean foundSku = false;
 

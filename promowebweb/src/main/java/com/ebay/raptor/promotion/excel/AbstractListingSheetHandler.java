@@ -1,18 +1,27 @@
 package com.ebay.raptor.promotion.excel;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.poi.ss.usermodel.Cell;
 
+import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.excel.EmptyCellValueException;
 import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
 import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
 import com.ebay.app.raptor.promocommon.excel.InvalidDateCellValueException;
 import com.ebay.app.raptor.promocommon.util.DateUtil;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
+import com.ebay.raptor.promotion.pojo.business.Currency;
+import com.ebay.raptor.promotion.pojo.business.DeliveryTime;
+import com.ebay.raptor.promotion.pojo.business.Location;
+import com.ebay.raptor.promotion.pojo.business.ProductCategory;
+import com.ebay.raptor.promotion.pojo.business.ShipOption;
+import com.ebay.raptor.promotion.pojo.business.Site;
 
 public abstract class AbstractListingSheetHandler implements IExcelSheetHandler{
 
+	private static CommonLogger logger = CommonLogger.getInstance(AbstractListingSheetHandler.class);
 	private static final String DATE_FORMAT_STRING = "YYYY-MM-DD";
 	
 	protected Object getCellValue (Cell cell) {
@@ -32,6 +41,79 @@ public abstract class AbstractListingSheetHandler implements IExcelSheetHandler{
 		} else {
 			return null;
 		}
+	}
+	
+	protected Object getCellValue (Cell cell, Class<?> fldType) throws UnsupportFieldDataTypeException, UnsupportExcelDataTypeException {
+		if (cell == null) {
+			return null;
+		}
+		
+		int cellType = cell.getCellType();
+
+		if (cellType == Cell.CELL_TYPE_BLANK) {
+			return null;
+		} else if (cellType == Cell.CELL_TYPE_STRING) {
+			String cellValue = cell.getStringCellValue();
+
+			if (String.class.isAssignableFrom(fldType)) {
+				return cellValue;
+			} else if (Integer.class.isAssignableFrom(fldType)) {
+				return Integer.parseInt(cellValue);
+			} else if (Long.class.isAssignableFrom(fldType)) {
+				return Long.parseLong(cellValue);
+			} else if (Float.class.isAssignableFrom(fldType)) {
+				return Float.parseFloat(cellValue);
+			} else if (Double.class.isAssignableFrom(fldType)) {
+				return Double.parseDouble(cellValue);
+			} else if (Boolean.class.isAssignableFrom(fldType)) {
+				return Boolean.parseBoolean(cellValue);
+			} else if (Date.class.isAssignableFrom(fldType)) {
+				try {
+					return DateUtil.parseSimpleDateWithDash(cellValue);
+				} catch (ParseException e) {
+					logger.error(String.format("The cell value [%s] does not match the format [%s].",
+							cellValue, DateUtil.simple_date_format_dash), e);
+				}
+			} else if (Currency.class.isAssignableFrom(fldType)) {
+				return Currency.valueOf(cellValue);
+			} else if (DeliveryTime.class.isAssignableFrom(fldType)) {
+				return DeliveryTime.valueOf(cellValue); // TODO use long key
+			} else if (Location.class.isAssignableFrom(fldType)) {
+				return Location.valueOf(cellValue);
+			} else if (ProductCategory.class.isAssignableFrom(fldType)) {
+				return ProductCategory.valueOf(cellValue);
+			} else if (ShipOption.class.isAssignableFrom(fldType)) {
+				return ShipOption.valueOf(cellValue);
+			} else if (Site.class.isAssignableFrom(fldType)) {
+				return Site.valueOf(cellValue);
+			} else {
+				throw new UnsupportFieldDataTypeException(fldType.getSimpleName());
+			}
+		} else if (cellType == Cell.CELL_TYPE_NUMERIC) {
+			Double cellValue = cell.getNumericCellValue();
+
+			if (String.class.isAssignableFrom(fldType)) {
+				return String.valueOf(cellValue);
+			} else if (Integer.class.isAssignableFrom(fldType)) {
+				return cellValue.intValue();
+			} else if (Long.class.isAssignableFrom(fldType)) {
+				return cellValue.longValue();
+			} else if (Float.class.isAssignableFrom(fldType)) {
+				return cellValue.floatValue();
+			} else if (Double.class.isAssignableFrom(fldType)) {
+				return cellValue;
+			} else if (Boolean.class.isAssignableFrom(fldType)) {
+				return cellValue == 1 ? true : false;
+			} else if (Date.class.isAssignableFrom(fldType)) {
+				return new Date(cellValue.longValue());
+			} else {
+				throw new UnsupportFieldDataTypeException(fldType.getSimpleName());
+			}
+		} else {
+			throw new UnsupportExcelDataTypeException(cellType + "");
+		}
+		
+		return null;
 	}
 	
 	protected String validateStringData (Object cellValue, Cell cell) throws InvalidCellValueException {
