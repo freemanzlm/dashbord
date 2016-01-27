@@ -12,12 +12,6 @@ import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
 import com.ebay.app.raptor.promocommon.excel.InvalidDateCellValueException;
 import com.ebay.app.raptor.promocommon.util.DateUtil;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
-import com.ebay.raptor.promotion.pojo.business.Currency;
-import com.ebay.raptor.promotion.pojo.business.DeliveryTime;
-import com.ebay.raptor.promotion.pojo.business.Location;
-import com.ebay.raptor.promotion.pojo.business.ProductCategory;
-import com.ebay.raptor.promotion.pojo.business.ShipOption;
-import com.ebay.raptor.promotion.pojo.business.Site;
 
 public abstract class AbstractListingSheetHandler implements IExcelSheetHandler{
 
@@ -74,18 +68,6 @@ public abstract class AbstractListingSheetHandler implements IExcelSheetHandler{
 					logger.error(String.format("The cell value [%s] does not match the format [%s].",
 							cellValue, DateUtil.simple_date_format_dash), e);
 				}
-			} else if (Currency.class.isAssignableFrom(fldType)) {
-				return Currency.valueOf(cellValue);
-			} else if (DeliveryTime.class.isAssignableFrom(fldType)) {
-				return DeliveryTime.valueOf(cellValue); // TODO use long key
-			} else if (Location.class.isAssignableFrom(fldType)) {
-				return Location.valueOf(cellValue);
-			} else if (ProductCategory.class.isAssignableFrom(fldType)) {
-				return ProductCategory.valueOf(cellValue);
-			} else if (ShipOption.class.isAssignableFrom(fldType)) {
-				return ShipOption.valueOf(cellValue);
-			} else if (Site.class.isAssignableFrom(fldType)) {
-				return Site.valueOf(cellValue);
 			} else {
 				throw new UnsupportFieldDataTypeException(fldType.getSimpleName());
 			}

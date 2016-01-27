@@ -18,5 +18,19 @@ public enum ShipOption implements IDescription{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public static ShipOption descriptionOf(String description) {
+		if (description == null || description.isEmpty()) {
+			return null;
+		}
+		
+		for (ShipOption so : ShipOption.values()) {
+			if (description.equalsIgnoreCase(so.getDescription())) {
+				return so;
+			}
+		}
+		
+		return null;
+	}
 	
 }

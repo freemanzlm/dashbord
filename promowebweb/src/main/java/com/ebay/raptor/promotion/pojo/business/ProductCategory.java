@@ -1,5 +1,8 @@
 package com.ebay.raptor.promotion.pojo.business;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonValue;
+
 public enum ProductCategory  implements IDescription {
 	BAI 		("Business & Industrial"),
 	Collect		("Collectibles"),
@@ -13,6 +16,7 @@ public enum ProductCategory  implements IDescription {
 		this.description = desc;
 	}
 
+	@JsonValue
 	public String getDescription() {
 		return description;
 	}
@@ -22,4 +26,19 @@ public enum ProductCategory  implements IDescription {
 	}
 	
 	private String description;
+
+	@JsonCreator
+	public static ProductCategory descriptionOf(String description) {
+		if (description == null || description.isEmpty()) {
+			return null;
+		}
+		
+		for (ProductCategory pc : ProductCategory.values()) {
+			if (description.equalsIgnoreCase(pc.getDescription())) {
+				return pc;
+			}
+		}
+		
+		return null;
+	}
 }

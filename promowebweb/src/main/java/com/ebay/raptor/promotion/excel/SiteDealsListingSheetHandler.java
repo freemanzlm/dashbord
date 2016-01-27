@@ -160,17 +160,17 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
 								cellValue, DateUtil.simple_date_format_dash), e);
 					}
 				} else if (Currency.class.isAssignableFrom(fldClazz)) {
-					field.set(obj, Currency.valueOf(cellValue));
+					field.set(obj, Currency.descriptionOf(cellValue));
 				} else if (DeliveryTime.class.isAssignableFrom(fldClazz)) {
-					field.set(obj, DeliveryTime.valueOf(cellValue)); // TODO use long key
+					field.set(obj, DeliveryTime.descriptionOf(cellValue)); // TODO use long key
 				} else if (Location.class.isAssignableFrom(fldClazz)) {
-					field.set(obj, Location.valueOf(cellValue));
+					field.set(obj, Location.descriptionOf(cellValue));
 				} else if (ProductCategory.class.isAssignableFrom(fldClazz)) {
-					field.set(obj, ProductCategory.valueOf(cellValue));
+					field.set(obj, ProductCategory.descriptionOf(cellValue));
 				} else if (ShipOption.class.isAssignableFrom(fldClazz)) {
-					field.set(obj, ShipOption.valueOf(cellValue));
+					field.set(obj, ShipOption.descriptionOf(cellValue));
 				} else if (Site.class.isAssignableFrom(fldClazz)) {
-					field.set(obj, Site.valueOf(cellValue));
+					field.set(obj, Site.descriptionOf(cellValue));
 				} else {
 					throw new UnsupportFieldDataTypeException(fldClazz.getSimpleName());
 				}

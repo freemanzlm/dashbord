@@ -24,5 +24,19 @@ public enum Location implements IDescription{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public static Location descriptionOf(String description) {
+		if (description == null || description.isEmpty()) {
+			return null;
+		}
+		
+		for (Location loc : Location.values()) {
+			if (description.equalsIgnoreCase(loc.getDescription())) {
+				return loc;
+			}
+		}
+		
+		return null;
+	}
 	
 }

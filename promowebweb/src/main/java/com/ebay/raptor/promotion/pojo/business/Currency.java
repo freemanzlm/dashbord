@@ -20,5 +20,19 @@ public enum Currency implements IDescription {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public static Currency descriptionOf(String description) {
+		if (description == null || description.isEmpty()) {
+			return null;
+		}
+		
+		for (Currency curr : Currency.values()) {
+			if (description.equalsIgnoreCase(curr.getDescription())) {
+				return curr;
+			}
+		}
+		
+		return null;
+	}
 	
 }

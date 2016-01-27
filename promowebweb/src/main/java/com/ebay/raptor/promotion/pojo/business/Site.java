@@ -24,4 +24,18 @@ public enum Site implements IDescription{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public static Site descriptionOf(String description) {
+		if (description == null || description.isEmpty()) {
+			return null;
+		}
+		
+		for (Site site : Site.values()) {
+			if (description.equalsIgnoreCase(site.getDescription())) {
+				return site;
+			}
+		}
+		
+		return null;
+	}
 }

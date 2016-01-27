@@ -1,5 +1,8 @@
 package com.ebay.raptor.promotion.pojo.business;
 
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonValue;
+
 public enum DeliveryTime  implements IDescription {
 	LT14	("小于14Days"), 
 	GE14	("大于等于 14Days");
@@ -10,6 +13,7 @@ public enum DeliveryTime  implements IDescription {
 		this.description = desc;
 	}
 
+	@JsonValue
 	public String getDescription() {
 		return description;
 	}
@@ -17,5 +21,19 @@ public enum DeliveryTime  implements IDescription {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	@JsonCreator
+	public static DeliveryTime descriptionOf(String description) {
+		if (description == null || description.isEmpty()) {
+			return null;
+		}
+		
+		for (DeliveryTime dt : DeliveryTime.values()) {
+			if (description.equalsIgnoreCase(dt.getDescription())) {
+				return dt;
+			}
+		}
+		
+		return null;
+	}
 }
