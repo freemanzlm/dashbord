@@ -1,5 +1,5 @@
 $(function(){
-	var DealsListingTable = BizReport.DealsListingTable || BizReport.GBHListingTable;
+	var DealsListingTable = BizReport.DealsListingTable;
 	var local = BizReport.local;
 	
 	var confirmForm = $("form");

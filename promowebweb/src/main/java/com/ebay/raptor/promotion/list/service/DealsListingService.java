@@ -473,7 +473,7 @@ public class DealsListingService extends BaseService {
 	}
 	
 	public boolean uploadFRESDealsListings(List<FRESDealsListing> uploadListings, String promoId, Long uid) throws PromoException {
-		String uri = siteUrl(ResourceProvider.ListingRes.uploadDealsListings);
+		String uri = siteUrl(ResourceProvider.ListingRes.uploadFRESDealsListings);
 		UploadListingRequest<FRESDealsListing> req = new UploadListingRequest<FRESDealsListing>();
 		req.setListings(uploadListings);
 		req.setPromoId(promoId);
@@ -502,7 +502,7 @@ public class DealsListingService extends BaseService {
 	}
 	
 	public boolean uploadAPACDealsListings(List<APACDealsListing> uploadListings, String promoId, Long uid) throws PromoException {
-		String uri = url(ResourceProvider.ListingRes.uploadDealsListings);
+		String uri = siteUrl(ResourceProvider.ListingRes.uploadAPACDealsListings);
 		UploadListingRequest<APACDealsListing> req = new UploadListingRequest<APACDealsListing>();
 		req.setListings(uploadListings);
 		req.setPromoId(promoId);

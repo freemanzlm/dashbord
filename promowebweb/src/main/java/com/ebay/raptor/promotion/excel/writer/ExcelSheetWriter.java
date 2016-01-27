@@ -105,7 +105,7 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 					if(this.clazz.equals(FRESDealsListing.class)) {
 						list.add(Currency.USD.getDescription());
 						list.add(Currency.AUD.getDescription());
-						list.add(Currency.EURO.getDescription());
+						list.add(Currency.EUR.getDescription());
 						list.add(Currency.GBP.getDescription());
 					} else if(this.clazz.equals(APACDealsListing.class)) {
 						list.add(Currency.USD.getDescription());

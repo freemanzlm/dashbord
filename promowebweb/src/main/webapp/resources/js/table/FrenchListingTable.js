@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[1, 'asc']],
-				'aaSortingFixed': [[14, 'desc']],
+				'aaSortingFixed': [[13, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -81,10 +81,10 @@ var BizReport = BizReport || {};
 				    {data: 'itemId'},
 				    {data: 'skuName'},
 				    {data: 'category'},
-				    {data: 'spainItemId'},
+//				    {data: 'spainItemId'},
 				    {data: 'fvf'},
-				    {data: 'currPrice', aDataSort: [13, 6]},
-				    {data: 'dealsPrice', aDataSort: [13, 7]},
+				    {data: 'listPrice', aDataSort: [13, 6]},
+				    {data: 'dealPrice', aDataSort: [13, 7]},
 				    {data: 'qty'},
 				    {data: 'location'},
 				    {data: 'dlvyTime'},
@@ -434,7 +434,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(14).visible(false);
+			this.oDataTable.column(13).visible(false);
 		}
 	});
 	
