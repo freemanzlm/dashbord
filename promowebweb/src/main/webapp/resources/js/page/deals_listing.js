@@ -1,6 +1,6 @@
 $(function(){
 	
-	var DealsListingTable = BizReport.DealsListingTable || BizReport.GBHListingTable || BizReport.FrenchListingTable || BizReport.USListingTable;
+	var DealsListingTable = BizReport.DealsListingTable;
 	var local = BizReport.local;
 	
 	var customTableConfig = pageData && ((pageData.state != "PromotionApproved" && pageData.state != 'Applied') || pageData.expired) ? {} : {

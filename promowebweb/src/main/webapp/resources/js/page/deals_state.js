@@ -1,6 +1,6 @@
 $(function(){
 	
-	var DealsListingTable = BizReport.DealsListingTable || BizReport.GBHListingTable || BizReport.FrenchListingTable || BizReport.USListingTable;
+	var DealsListingTable = BizReport.DealsListingTable;
 	
 	var listingTable = new DealsListingTable();
 	
