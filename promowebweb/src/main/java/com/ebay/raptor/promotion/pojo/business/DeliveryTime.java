@@ -4,8 +4,8 @@ import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonValue;
 
 public enum DeliveryTime  implements IDescription {
-	LT14	("小于14Days"), 
-	GE14	("大于等于 14Days");
+	LT14	("<14 Days"), 
+	GE14	(">14 Days");
 	
 	private String description;
 	

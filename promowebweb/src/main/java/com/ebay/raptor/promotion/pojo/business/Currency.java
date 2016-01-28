@@ -3,7 +3,7 @@ package com.ebay.raptor.promotion.pojo.business;
 public enum Currency implements IDescription {
 	USD	("USD"),
 	AUD	("AUD"),
-	EUR	("EUR"),
+	EURO("EURO"),
 	GBP	("GBP"),
 	CAD	("CAD");
 	

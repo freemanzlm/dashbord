@@ -252,7 +252,7 @@ var BizReport = BizReport || {};
 							switch(data) {
 							case 'GBP':
 								return 'zzzz';
-							case 'EUR':
+							case 'EURO':
 								return 'zzzy';
 							case 'USD':
 								return 'zzzx';							
