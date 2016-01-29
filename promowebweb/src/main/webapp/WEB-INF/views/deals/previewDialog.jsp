@@ -1,5 +1,8 @@
 <%@ page trimDirectiveWhitespaces="true"
 	contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="promoSubType" value="${ promo.promoSubType }" />
+
 <div id="listing-preview-dialog" class="dialog">
 	<a class="close"></a>
 	<div class="dialog-header">
@@ -10,7 +13,7 @@
 			<div class="mt20">
 				<div class="dataTable-container">
 					<c:choose>
-						<c:when test="${ promo.type eq 1}">
+						<c:when test="${ promoSubType eq 'GBH'}">
 							<!-- china, brazil -->
 							<table id="listing-preview-table" class="dataTable header-no-wrap">
 								<thead>
@@ -46,7 +49,7 @@
 								</tbody>
 							</table>
 						</c:when>
-						<c:when test="${ promo.type eq 2}">
+						<c:when test="${ promoSubType eq 'FRES'}">
 							<!-- French and spain -->
 							<table id="listing-preview-table" class="dataTable header-no-wrap">
 								<thead>
@@ -55,7 +58,6 @@
 										<th class="item-id">刊登编号<br/>Item ID</th>
 										<th class="sku-name">招募SKU名称<br />SKU</th>
 										<th class="category">产品品类<br />Product Category</th>
-										<th class="item-id-spain">西班牙站点Item ID<br/>ES Item ID</th>
 										<th class="fvf">成交费率<br/>FvF%</th>
 										<th class="last-price">原价<br/>List Price(MSRP)</th>
 										<th class="deal-price">活动价<br/>Deal Price</th>
@@ -72,7 +74,7 @@
 								</tbody>
 							</table>
 						</c:when>
-						<c:when test="${ promo.type eq 3}">
+						<c:when test="${promoSubType eq 'APAC'}">
 							<!-- US -->
 							<table id="listing-preview-table" class="dataTable header-no-wrap">
 								<thead>

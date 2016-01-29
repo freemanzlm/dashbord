@@ -11,7 +11,10 @@ $(function(){
 				columns: [{bVisible: false}] // hide the first column which has checkbox
 			}
 		}});
-	listingTable.update({promoId:pageData && pageData.promoId});	
+	listingTable.update({
+		promoId: pageData && pageData.promoId,
+		promoSubType: pageData && pageData.promoSubType
+	});	
 	
 	var termsDialog = cbt.termsDialog;
 	$(".terms-conditions").click(function(event){

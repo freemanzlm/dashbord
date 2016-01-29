@@ -7,7 +7,7 @@
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
-<c:set var="dealsType" value="${ 2 }" />
+<c:set var="promoSubType" value="${ promo.promoSubType }" />
 
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 
@@ -63,15 +63,15 @@
 	<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 	<c:choose>
-		<c:when test="${ dealsType eq 1}">
+		<c:when test="${ promoSubType eq 'GBH'}">
 			<!-- china, brazil -->
 			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
-		<c:when test="${ dealsType eq 2}">
+		<c:when test="${ promoSubType eq 'FRES'}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
-		<c:when test="${ dealsType eq 3}">
+		<c:when test="${ promoSubType eq 'APAC'}">
 			<!-- French and spain -->
 			<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
@@ -103,13 +103,13 @@
 			<div class="mt20 my-listing">
 				<h3>報名刊登清單</h3>
 				<c:choose>
-					<c:when test="${dealsType eq 1 }">
+					<c:when test="${promoSubType eq 'GBH'}">
 						<jsp:include page="../table/gbhListing.jsp"></jsp:include>
 					</c:when>
-					<c:when test="${dealsType eq 2 }">
+					<c:when test="${promoSubType eq 'FRES'}">
 						<jsp:include page="../table/frenchListing.jsp"></jsp:include>
 					</c:when>
-					<c:when test="${dealsType eq 3 }">
+					<c:when test="${promoSubType eq 'APAC'}">
 						<jsp:include page="../table/usListing.jsp"></jsp:include>
 					</c:when>
 					<c:otherwise>
@@ -132,7 +132,8 @@
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },
-		promoId: '${promo.promoId}'
+		promoId: '${promo.promoId}',
+		promoSubType: '${promo.promoSubType}'
 	};
 </script>
 
