@@ -48,6 +48,10 @@ public abstract class AbstractListingSheetHandler implements IExcelSheetHandler{
 			return null;
 		} else if (cellType == Cell.CELL_TYPE_STRING) {
 			String cellValue = cell.getStringCellValue();
+			
+			if (cellValue == null || cellValue.isEmpty()) {
+				return null;
+			}
 
 			if (String.class.isAssignableFrom(fldType)) {
 				return cellValue;

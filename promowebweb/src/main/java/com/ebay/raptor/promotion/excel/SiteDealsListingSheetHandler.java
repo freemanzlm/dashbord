@@ -139,6 +139,10 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
 				return;
 			} else if (cellType == Cell.CELL_TYPE_STRING) {
 				String cellValue = cell.getStringCellValue();
+				
+				if (cellValue == null || cellValue.isEmpty()) {
+					return;
+				}
 
 				if (String.class.isAssignableFrom(fldClazz)) {
 					field.set(obj, cellValue);

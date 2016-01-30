@@ -41,6 +41,7 @@
 										<th class="israel">是否寄送以色列<br/>Israel</th>
 										<th class="israel-charge">寄送以色列运费<br/>Israel Shipping Charge</th>
 										<th class="currency">刊登币种<br/>Currency</th>
+										<th class="state">狀態</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -66,6 +67,7 @@
 										<th class="ship-price">运费<br/>Shipping Price</th>
 										<th class="rrp-link">产品全网最低价<br/>RRP Link</th>
 										<th class="currency">刊登币种<br/>Currency</th>
+										<th class="state">狀態</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -87,6 +89,7 @@
 										<th class="quantity">数量<br/>Quantity</th>
 										<th class="rrp-link">产品全网最低价<br/>RRP Link</th>
 										<th class="currency">刊登币种<br/>Currency</th>
+										<th class="state">狀態</th>
 									</tr>
 								</thead>
 								<tbody>
