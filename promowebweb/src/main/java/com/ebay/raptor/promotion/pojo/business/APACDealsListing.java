@@ -72,10 +72,10 @@ public class APACDealsListing {
 		this.state = state;
 	}
 
-	public Float getProposeQty() {
+	public Long getProposeQty() {
 		return proposeQty;
 	}
-	public void setProposeQty(Float proposeQty) {
+	public void setProposeQty(Long proposeQty) {
 		this.proposeQty = proposeQty;
 	}
 
@@ -126,6 +126,6 @@ public class APACDealsListing {
 	private String rrpLink;
 	
 	private Float proposePrice;
-	private Float proposeQty;
+	private Long proposeQty;
 	private String state;
 }

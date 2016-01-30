@@ -165,10 +165,10 @@ public class GBHDealsListing {
 		this.proposePrice = proposePrice;
 	}
 
-	public Float getProposeQty() {
+	public Long getProposeQty() {
 		return proposeQty;
 	}
-	public void setProposeQty(Float proposeQty) {
+	public void setProposeQty(Long proposeQty) {
 		this.proposeQty = proposeQty;
 	}
 
@@ -261,6 +261,6 @@ public class GBHDealsListing {
 	private Currency currency;
 	
 	private Float proposePrice;
-	private Float proposeQty;
+	private Long proposeQty;
 	private String state;
 }

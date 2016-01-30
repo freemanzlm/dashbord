@@ -103,10 +103,10 @@ public class FRESDealsListing {
 		this.proposePrice = proposePrice;
 	}
 
-	public Float getProposeQty() {
+	public Long getProposeQty() {
 		return proposeQty;
 	}
-	public void setProposeQty(Float proposeQty) {
+	public void setProposeQty(Long proposeQty) {
 		this.proposeQty = proposeQty;
 	}
 
@@ -168,6 +168,6 @@ public class FRESDealsListing {
 	private String rrpLink;
 	
 	private Float proposePrice;
-	private Float proposeQty;
+	private Long proposeQty;
 	private String state;
 }
