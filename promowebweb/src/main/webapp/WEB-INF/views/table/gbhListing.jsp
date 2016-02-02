@@ -17,7 +17,7 @@
 				<th class="worldwide">是否寄送全球<br/>Worldwide</th>
 				<th class="worldwide-charge">寄送全球运费<br/>Worldwide Shipping Charge</th>
 				<th class="russia">是否寄送俄罗斯<br/>Russia</th>
-				<th class="russia-charge">寄送全球运费<br/>Russia Shipping Charge</th>
+				<th class="russia-charge">寄送俄罗斯运费<br/>Russia Shipping Charge</th>
 				<th class="china">是否寄送中国<br/>China</th>
 				<th class="china-charge">寄送中国运费<br/>China Shipping Charge</th>
 				<th class="latin">是否寄送拉美<br/>Latin</th>
