@@ -233,6 +233,8 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 			constraint = dvHelper.createFormulaListConstraint("hidden"+cellIndex);
 			addressList = new CellRangeAddressList(row.getRowNum(), row.getRowNum(), cellIndex, cellIndex);
 			DataValidation validation = dvHelper.createValidation(constraint, addressList);
+			validation.setShowErrorBox(true);
+			validation.createErrorBox("数据填写错误", "请选择有效选项");
 			workBook.getSheet(this.sheetName).addValidationData(validation);
 
 			try {
