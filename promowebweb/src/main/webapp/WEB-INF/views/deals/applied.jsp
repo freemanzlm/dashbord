@@ -77,7 +77,7 @@
 			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
 		<c:when test="${ promoSubType eq 'APAC'}">
-			<!-- French and spain -->
+			<!-- US -->
 			<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
 		</c:when>
 		<c:otherwise>
