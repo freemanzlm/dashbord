@@ -124,7 +124,7 @@
 					<div class="listings-upload">
 						<h3>重新提交預審</h3>
 						
-						<div class="body mt20"  style="width: 420px;">
+						<div class="body mt20"  style="width: 490px;">
 							<p class="mt10">您可以通過下載<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}&promoSubType=${promo.promoSubType}" target="_self">已提交的刊登物品</a>修改並重新上傳。</p>
 							<p class="mt10">請注意：您新上傳的刊登物品將完全替換之前的清單，並需要重新進行預審且接受活動條款。</p>
 							
