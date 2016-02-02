@@ -142,17 +142,17 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var value = parseFloat(data);
 						if (type == "display") {
-							if (full.proposeQuality > 0 && value > 0 && full.proposeQuality != data) {
-								return "<span class='color-cyan'>" + parseFloat(full.proposeQuality).toUSFixed() + "</span>" + "<br/><del>" + parseFloat(data).toUSFixed() + "</del>";
+							if (full.proposeQty > 0 && value > 0 && full.proposeQty != data) {
+								return "<span class='color-cyan'>" + parseFloat(full.proposeQty).toUSFixed() + "</span>" + "<br/><del>" + parseFloat(data).toUSFixed() + "</del>";
 							} else {
-								value = (isNaN(value) || value <= 0) ? parseFloat(full.proposeQuality) : value;
+								value = (isNaN(value) || value <= 0) ? parseFloat(full.proposeQty) : value;
 								return (!isNaN(value) && value > 0 ? value.toUSFixed() : '0');
 							}
 						}
 						
 						if (type == 'sort') {
-							if (full.proposeQuality > 0) {
-								return full.proposeQuality;
+							if (full.proposeQty > 0) {
+								return full.proposeQty;
 							}
 							return value;
 						}
