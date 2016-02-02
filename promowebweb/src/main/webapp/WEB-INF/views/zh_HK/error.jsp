@@ -33,7 +33,7 @@
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.promotion_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.error_css}" target="head-css"/>
 	
 	<res:useJs value="${res.js.local.js['cookie.js']}" target="head"></res:useJs>

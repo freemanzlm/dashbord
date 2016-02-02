@@ -1,3 +1,5 @@
+@CHARSET "UTF-8";
+
 .clr:after {
 	content:"\0020";
 	display:block;
@@ -80,6 +82,10 @@ table.item-list-table {
 table.item-list-table td {
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
+}
+
+table.dataTable tbody td.url {
+	word-break: break-world;
 }
 
 table.item-list-table td:first-child {

@@ -57,7 +57,7 @@ $(function(){
 					// show error infor
 					if (responseData.message && responseData.message.length > 0) {
 						$("#upload-error-msg").removeClass("hide");
-						$("#upload-error-msg").find("em").text(responseData.message);
+						$("#upload-error-msg").find("b").text(responseData.message);
 					} else if (responseData.data && responseData.data.length > 0) {
 						cbt.alert(local.getText("errorMsg.regDateExpired"));
 						window.location.replace("/promotion/" + pageData.promoId);

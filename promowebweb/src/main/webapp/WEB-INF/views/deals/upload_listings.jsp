@@ -8,7 +8,7 @@
 	<div class="body mt20" style="width: 545px;">
 		<p>您可以通过下载<a class="template" href="/promotion/deals/downloadSkuList?promoId=${promo.promoId}&promoSubType=${promo.promoSubType}" target="_self">批量提交模板</a>按格式填写并上传您的刊登参与本活动。</p>
 		
-		<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><em ></em></p>
+		<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><b ></b></p>
 		
 		<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
 			选择上传您的刊登列表 

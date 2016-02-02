@@ -266,6 +266,7 @@ var BizReport = BizReport || {};
 				},{
 					aTargets: ["rrp-link"],
 					bSortable: true,
+					sClass: "url",
 					sDefaultContent: "",
 					sType: "string",
 					mRender: function(data, type, full, meta) {
