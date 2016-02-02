@@ -152,7 +152,7 @@
 									</div>
 
 									<p id="upload-error-msg" class="error-msg hide">
-										<span class="icon error mb-25"></span><em></em>
+										<span class="icon error mb-25"></span><b></b>
 									</p>
 
 									<form id="upload-form" action="/promotion/deals/uploadDealsListings" class="mt30" method="post"
