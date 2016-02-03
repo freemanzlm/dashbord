@@ -29,7 +29,6 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfiguration;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfigurationManager;
 import com.ebay.app.raptor.promocommon.util.DateUtil;
-import com.ebay.raptor.promotion.list.controller.DealsListingController;
 import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.Currency;
 import com.ebay.raptor.promotion.pojo.business.DeliveryTime;
@@ -153,14 +152,14 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 		Locale locale = Locale.SIMPLIFIED_CHINESE;
 		for (HeaderConfiguration headerConfig : configurations) {
 			String headerText = messageSource.getMessage(headerConfig.getTitle(), null, locale);
-			addCell(headerText, String.class, num++, header, true, false);
+			addCell(headerText, null, String.class, num++, header, true, false);
 		}
 		header = sheet.createRow(1);
 		num = 0;
 		locale = Locale.ENGLISH;
 		for (HeaderConfiguration headerConfig : configurations) {
 			String headerText = messageSource.getMessage(headerConfig.getTitle(), null, locale);
-			addCell(headerText, String.class, num++, header, true, false);
+			addCell(headerText, null, String.class, num++, header, true, false);
 		}
 	}
 	
@@ -184,7 +183,7 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 			try {
 				Object fieldVal = PropertyUtils.getProperty(obj, fieldName);
 				Class <?> type = PropertyUtils.getPropertyType(obj, fieldName);
-				addCell(fieldVal, type, num++, row, false, headerConfig.getWritale());
+				addCell(fieldVal, fieldName, type, num++, row, false, headerConfig.getWritale());
 			} catch (IllegalAccessException | InvocationTargetException
 					| NoSuchMethodException e) {
 				// ignore...
@@ -192,7 +191,7 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 		}
 	}
 
-	protected void addCell(Object cellData, Class <?> type, int cellIndex, Row row, boolean isHeader, boolean writable){
+	protected void addCell(Object cellData, String fieldName, Class <?> type, int cellIndex, Row row, boolean isHeader, boolean writable){
 		Cell cl = row.createCell(cellIndex);
 		CellStyle celStyle = null;
 		Name namedCell = null;
@@ -238,7 +237,17 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 			workBook.getSheet(this.sheetName).addValidationData(validation);
 
 			try {
-				cl.setCellValue(((IDescription)cellData).getDescription());
+				if((IDescription)cellData==null&&fieldName!=null&&!"".equals(fieldName)) {
+					if(fieldName.equals("wwShipOpt")||fieldName.equals("ruShipOpt")
+							||fieldName.equals("meShipOpt")||fieldName.equals("isShipOpt")) {
+						cl.setCellValue("Free");
+					} else if(fieldName.equals("cnShipOpt")||fieldName.equals("brShipOpt")
+							||fieldName.equals("laShipOpt")){
+						cl.setCellValue("No");
+					}
+				} else {
+					cl.setCellValue(((IDescription)cellData).getDescription());
+				}
 			} catch (Exception e) {
 //				logger.error(String.format("Unable to add cell value [%s], type [%s] ", cellData, type), e);
 			}
