@@ -134,7 +134,7 @@
 									<li>請勿修改下載範本的檔案格式。</li>
 									<li>請勿修改、增减範本中的原有資訊,包括每個單元單元的屬性.</li>
 									<li>報名的資訊請填寫完整，不可留空。除非標記為選填項，或參照範本標題說明。</li>
-									<li>不報名的SKU請整行留空，不填寫任何待填寫資訊。<a href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank">詳細請查閱使用指南（連結： http://community.ebay.cn/portal.php?mod=view&aid=250）</a></li>
+									<li>不報名的SKU請整行留空，不填寫任何待填寫資訊。<a href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank">詳細請查閱使用指南</a></li>
 								</ul>
 							</div>
 							

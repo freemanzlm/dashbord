@@ -264,12 +264,12 @@ var BizReport = BizReport || {};
 				},{
 					aTargets: ["rrp-link"],
 					bSortable: true,
-					sClass: "url",
+					sClass: "url text-center",
 					sDefaultContent: "",		
 					sType: "string",
 					mRender: function(data, type, full, meta) {
 						if (type == 'display' && data !== undefined) {
-							return '<a target="_blank" href="' + data + '">' + data + '</a>';
+							return '<a target="_blank" href="' + data + '">' + local.getText('promo.deals.rrpLink') + '</a>';
 						}
 						
 						return data;
