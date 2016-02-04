@@ -5,7 +5,7 @@ import org.codehaus.jackson.annotate.JsonValue;
 
 public enum DeliveryTime  implements IDescription {
 	LT14	("<14 Days"), 
-	GE14	(">14 Days");
+	GE14	(">=14 Days");
 	
 	private String description;
 	
