@@ -34,28 +34,28 @@ public class FRESDealsListing {
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
 	}
-	public Float getFvf() {
+	public Double getFvf() {
 		return fvf;
 	}
-	public void setFvf(Float fvf) {
+	public void setFvf(Double fvf) {
 		this.fvf = fvf;
 	}
-	public Float getListPrice() {
+	public Double getListPrice() {
 		return listPrice;
 	}
-	public void setListPrice(Float listPrice) {
+	public void setListPrice(Double listPrice) {
 		this.listPrice = listPrice;
 	}
-	public Float getDealPrice() {
+	public Double getDealPrice() {
 		return dealPrice;
 	}
-	public void setDealPrice(Float dealPrice) {
+	public void setDealPrice(Double dealPrice) {
 		this.dealPrice = dealPrice;
 	}
-	public Long getQty() {
+	public Double getQty() {
 		return qty;
 	}
-	public void setQty(Long qty) {
+	public void setQty(Double qty) {
 		this.qty = qty;
 	}
 	public Location getLocation() {
@@ -70,10 +70,10 @@ public class FRESDealsListing {
 	public void setDlvyTime(DeliveryTime dlvyTime) {
 		this.dlvyTime = dlvyTime;
 	}
-	public Float getShipPrice() {
+	public Double getShipPrice() {
 		return shipPrice;
 	}
-	public void setShipPrice(Float shipPrice) {
+	public void setShipPrice(Double shipPrice) {
 		this.shipPrice = shipPrice;
 	}
 	public String getRrpLink() {
@@ -96,17 +96,17 @@ public class FRESDealsListing {
 		this.state = state;
 	}
 	
-	public Float getProposePrice() {
+	public Double getProposePrice() {
 		return proposePrice;
 	}
-	public void setProposePrice(Float proposePrice) {
+	public void setProposePrice(Double proposePrice) {
 		this.proposePrice = proposePrice;
 	}
 
-	public Long getProposeQty() {
+	public Double getProposeQty() {
 		return proposeQty;
 	}
-	public void setProposeQty(Long proposeQty) {
+	public void setProposeQty(Double proposeQty) {
 		this.proposeQty = proposeQty;
 	}
 
@@ -129,22 +129,22 @@ public class FRESDealsListing {
 	@NotNull(message = "{listing.fvf.null}")
 	@Min(value=0, message="{listing.fvf.negative}")
 	@Header(title="FRES.fvf", order=4, writable=true)
-	private Float fvf;
+	private Double fvf;
 	
 	@NotNull(message = "{listing.listPrice.null}")
 	@Min(value=0, message="{listing.listPrice.negative}")
 	@Header(title="FRES.listPrice", order=5, writable=true)
-	private Float listPrice;
+	private Double listPrice;
 	
 	@NotNull(message = "{listing.dealPrice.null}")
 	@Min(value=0, message="{listing.dealPrice.negative}")
 	@Header(title="FRES.dealPrice", order=6, writable=true)
-	private Float dealPrice;
+	private Double dealPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
 	@Min(value=0, message="{listing.qty.negative}")
 	@Header(title="FRES.qty", order=7, writable=true)
-	private Long qty;
+	private Double qty;
 	
 	@NotNull(message = "{listing.location.null}")
 	@Header(title="FRES.location", order=8, writable=true)
@@ -157,7 +157,7 @@ public class FRESDealsListing {
 	@NotNull(message = "{listing.shipPrice.null}")
 	@Min(value=0, message="{listing.shipPrice.negative}")
 	@Header(title="FRES.shipPrice", order=10, writable=true)
-	private Float shipPrice;
+	private Double shipPrice;
 	
 	@NotNull(message = "{listing.currency.null}")
 	@Header(title="FRES.currency", order=11, writable=true)
@@ -167,7 +167,7 @@ public class FRESDealsListing {
 	@Header(title="FRES.rrpLink", order=12, writable=true)
 	private String rrpLink;
 	
-	private Float proposePrice;
-	private Long proposeQty;
+	private Double proposePrice;
+	private Double proposeQty;
 	private String state;
 }

@@ -132,9 +132,9 @@ public class UploadListingSheetHandler extends AbstractListingSheetHandler {
 			} else {
 				listing.setItemId(validateNumberData(itemIdObj, itemIdCell).longValue());
 //				listing.setItemTitle(validateStringData(itemTitleObj, itemTitleCell));
-				listing.setCurrPrice(validateNumberData(currPriceObj, currPriceCell).floatValue());
-				listing.setDealsPrice(validateNumberData(dealsPriceObj, dealsPriceCell).floatValue());
-				listing.setStockNum(validateNumberData(stockNumObj, stockNumCell).longValue());
+				listing.setCurrPrice(validateNumberData(currPriceObj, currPriceCell));
+				listing.setDealsPrice(validateNumberData(dealsPriceObj, dealsPriceCell));
+				listing.setStockNum(validateNumberData(stockNumObj, stockNumCell));
 				listing.setStockReadyDate(validateStringDateData(stockReadyDateObj, stockReadyDateCell));
 				uploadedListings.add(listing);
 			}

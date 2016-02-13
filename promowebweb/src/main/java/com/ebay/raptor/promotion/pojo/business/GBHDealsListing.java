@@ -35,22 +35,22 @@ public class GBHDealsListing {
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
 	}
-	public Float getListPrice() {
+	public Double getListPrice() {
 		return listPrice;
 	}
-	public void setListPrice(Float listPrice) {
+	public void setListPrice(Double listPrice) {
 		this.listPrice = listPrice;
 	}
-	public Float getDealPrice() {
+	public Double getDealPrice() {
 		return dealPrice;
 	}
-	public void setDealPrice(Float dealPrice) {
+	public void setDealPrice(Double dealPrice) {
 		this.dealPrice = dealPrice;
 	}
-	public Long getQty() {
+	public Double getQty() {
 		return qty;
 	}
-	public void setQty(Long qty) {
+	public void setQty(Double qty) {
 		this.qty = qty;
 	}
 	
@@ -66,10 +66,10 @@ public class GBHDealsListing {
 	public void setWwShipOpt(ShipOption wwShipOpt) {
 		this.wwShipOpt = wwShipOpt;
 	}
-	public Float getWwShipChg() {
+	public Double getWwShipChg() {
 		return wwShipChg;
 	}
-	public void setWwShipChg(Float wwShipChg) {
+	public void setWwShipChg(Double wwShipChg) {
 		this.wwShipChg = wwShipChg;
 	}
 	public ShipOption getRuShipOpt() {
@@ -78,10 +78,10 @@ public class GBHDealsListing {
 	public void setRuShipOpt(ShipOption ruShipOpt) {
 		this.ruShipOpt = ruShipOpt;
 	}
-	public Float getRuShipChg() {
+	public Double getRuShipChg() {
 		return ruShipChg;
 	}
-	public void setRuShipChg(Float ruShipChg) {
+	public void setRuShipChg(Double ruShipChg) {
 		this.ruShipChg = ruShipChg;
 	}
 	public ShipOption getCnShipOpt() {
@@ -90,10 +90,10 @@ public class GBHDealsListing {
 	public void setCnShipOpt(ShipOption cnShipOpt) {
 		this.cnShipOpt = cnShipOpt;
 	}
-	public Float getCnShipChg() {
+	public Double getCnShipChg() {
 		return cnShipChg;
 	}
-	public void setCnShipChg(Float cnShipChg) {
+	public void setCnShipChg(Double cnShipChg) {
 		this.cnShipChg = cnShipChg;
 	}
 	public ShipOption getLaShipOpt() {
@@ -102,10 +102,10 @@ public class GBHDealsListing {
 	public void setLaShipOpt(ShipOption laShipOpt) {
 		this.laShipOpt = laShipOpt;
 	}
-	public Float getLaShipChg() {
+	public Double getLaShipChg() {
 		return laShipChg;
 	}
-	public void setLaShipChg(Float laShipChg) {
+	public void setLaShipChg(Double laShipChg) {
 		this.laShipChg = laShipChg;
 	}
 	public ShipOption getMeShipOpt() {
@@ -114,10 +114,10 @@ public class GBHDealsListing {
 	public void setMeShipOpt(ShipOption meShipOpt) {
 		this.meShipOpt = meShipOpt;
 	}
-	public Float getMeShipChg() {
+	public Double getMeShipChg() {
 		return meShipChg;
 	}
-	public void setMeShipChg(Float meShipChg) {
+	public void setMeShipChg(Double meShipChg) {
 		this.meShipChg = meShipChg;
 	}
 	public ShipOption getBrShipOpt() {
@@ -126,10 +126,10 @@ public class GBHDealsListing {
 	public void setBrShipOpt(ShipOption brShipOpt) {
 		this.brShipOpt = brShipOpt;
 	}
-	public Float getBrShipChg() {
+	public Double getBrShipChg() {
 		return brShipChg;
 	}
-	public void setBrShipChg(Float brShipChg) {
+	public void setBrShipChg(Double brShipChg) {
 		this.brShipChg = brShipChg;
 	}
 	public ShipOption getIsShipOpt() {
@@ -138,10 +138,10 @@ public class GBHDealsListing {
 	public void setIsShipOpt(ShipOption isShipOpt) {
 		this.isShipOpt = isShipOpt;
 	}
-	public Float getIsShipChg() {
+	public Double getIsShipChg() {
 		return isShipChg;
 	}
-	public void setIsShipChg(Float isShipChg) {
+	public void setIsShipChg(Double isShipChg) {
 		this.isShipChg = isShipChg;
 	}
 	public Currency getCurrency() {
@@ -158,17 +158,17 @@ public class GBHDealsListing {
 		this.state = state;
 	}
 
-	public Float getProposePrice() {
+	public Double getProposePrice() {
 		return proposePrice;
 	}
-	public void setProposePrice(Float proposePrice) {
+	public void setProposePrice(Double proposePrice) {
 		this.proposePrice = proposePrice;
 	}
 
-	public Long getProposeQty() {
+	public Double getProposeQty() {
 		return proposeQty;
 	}
-	public void setProposeQty(Long proposeQty) {
+	public void setProposeQty(Double proposeQty) {
 		this.proposeQty = proposeQty;
 	}
 
@@ -191,17 +191,17 @@ public class GBHDealsListing {
 	@NotNull(message = "{listing.listPrice.null}")
 	@Min(value=0, message="{listing.listPrice.negative}")
 	@Header(title="GBH.listPrice", order=4, writable=true)
-	private Float listPrice;
+	private Double listPrice;
 	
 	@NotNull(message = "{listing.dealPrice.null}")
 	@Min(value=0, message="{listing.dealPrice.negative}")
 	@Header(title="GBH.dealPrice", order=5, writable=true)
-	private Float dealPrice;
+	private Double dealPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
 	@Min(value=0, message="{listing.qty.negative}")
 	@Header(title="GBH.qty", order=6, writable=true)
-	private Long qty;
+	private Double qty;
 	
 	@NotNull(message = "{listing.listSite.null}")
 	@Header(title="GBH.listSite", order=7, writable=true)
@@ -212,55 +212,55 @@ public class GBHDealsListing {
 	private ShipOption wwShipOpt;
 	
 	@Header(title="GBH.wwShipChg", order=9, writable=true)
-	private Float wwShipChg;
+	private Double wwShipChg;
 	
 	@NotNull(message = "{listing.ruShipOpt.null}")
 	@Header(title="GBH.ruShipOpt", order=10, writable=true)
 	private ShipOption ruShipOpt;
 	
 	@Header(title="GBH.ruShipChg", order=11, writable=true)
-	private Float ruShipChg;
+	private Double ruShipChg;
 	
 	@NotNull(message = "{listing.cnShipOpt.null}")
 	@Header(title="GBH.cnShipOpt", order=12, writable=true)
 	private ShipOption cnShipOpt;
 	
 	@Header(title="GBH.cnShipChg", order=13, writable=true)
-	private Float cnShipChg;
+	private Double cnShipChg;
 	
 	@NotNull(message = "{listing.laShipOpt.null}")
 	@Header(title="GBH.laShipOpt", order=14, writable=true)
 	private ShipOption laShipOpt;
 	
 	@Header(title="GBH.laShipChg", order=15, writable=true)
-	private Float laShipChg;
+	private Double laShipChg;
 	
 	@NotNull(message = "{listing.meShipOpt.null}")
 	@Header(title="GBH.meShipOpt", order=16, writable=true)
 	private ShipOption meShipOpt;
 	
 	@Header(title="GBH.meShipChg", order=17, writable=true)
-	private Float meShipChg;
+	private Double meShipChg;
 	
 	@NotNull(message = "{listing.brShipOpt.null}")
 	@Header(title="GBH.brShipOpt", order=18, writable=true)
 	private ShipOption brShipOpt;
 	
 	@Header(title="GBH.brShipChg", order=19, writable=true)
-	private Float brShipChg;
+	private Double brShipChg;
 	
 	@NotNull(message = "{listing.isShipOpt.null}")
 	@Header(title="GBH.isShipOpt", order=20, writable=true)
 	private ShipOption isShipOpt;
 	
 	@Header(title="GBH.isShipChg", order=21, writable=true)
-	private Float isShipChg;
+	private Double isShipChg;
 	
 	@NotNull(message = "{listing.currency.null}")
 	@Header(title="GBH.currency", order=22, writable=true)
 	private Currency currency;
 	
-	private Float proposePrice;
-	private Long proposeQty;
+	private Double proposePrice;
+	private Double proposeQty;
 	private String state;
 }

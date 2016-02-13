@@ -34,22 +34,22 @@ public class APACDealsListing {
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
 	}
-	public Float getListPrice() {
+	public Double getListPrice() {
 		return listPrice;
 	}
-	public void setListPrice(Float listPrice) {
+	public void setListPrice(Double listPrice) {
 		this.listPrice = listPrice;
 	}
-	public Float getDealPrice() {
+	public Double getDealPrice() {
 		return dealPrice;
 	}
-	public void setDealPrice(Float dealPrice) {
+	public void setDealPrice(Double dealPrice) {
 		this.dealPrice = dealPrice;
 	}
-	public Long getQty() {
+	public Double getQty() {
 		return qty;
 	}
-	public void setQty(Long qty) {
+	public void setQty(Double qty) {
 		this.qty = qty;
 	}
 	public String getRrpLink() {
@@ -72,17 +72,17 @@ public class APACDealsListing {
 		this.state = state;
 	}
 
-	public Long getProposeQty() {
+	public Double getProposeQty() {
 		return proposeQty;
 	}
-	public void setProposeQty(Long proposeQty) {
+	public void setProposeQty(Double proposeQty) {
 		this.proposeQty = proposeQty;
 	}
 
-	public Float getProposePrice() {
+	public Double getProposePrice() {
 		return proposePrice;
 	}
-	public void setProposePrice(Float proposePrice) {
+	public void setProposePrice(Double proposePrice) {
 		this.proposePrice = proposePrice;
 	}
 
@@ -105,17 +105,17 @@ public class APACDealsListing {
 	@NotNull(message = "{listing.listPrice.null}")
 	@Min(value=0, message="{listing.listPrice.negative}")
 	@Header(title="APAC.listPrice", order=4, writable=true)
-	private Float listPrice;
+	private Double listPrice;
 	
 	@NotNull(message = "{listing.dealPrice.null}")
 	@Min(value=0, message="{listing.dealPrice.negative}")
 	@Header(title="APAC.dealPrice", order=5, writable=true)
-	private Float dealPrice;
+	private Double dealPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
 	@Min(value=0, message="{listing.qty.negative}")
 	@Header(title="APAC.qty", order=6, writable=true)
-	private Long qty;
+	private Double qty;
 	
 	@NotNull(message = "{listing.currency.null}")
 	@Header(title="APAC.currency", order=7, writable=true)
@@ -125,7 +125,7 @@ public class APACDealsListing {
 	@Header(title="APAC.rrpLink", order=8, writable=true)
 	private String rrpLink;
 	
-	private Float proposePrice;
-	private Long proposeQty;
+	private Double proposePrice;
+	private Double proposeQty;
 	private String state;
 }
