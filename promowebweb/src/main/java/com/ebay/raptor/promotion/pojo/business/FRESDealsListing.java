@@ -82,10 +82,10 @@ public class FRESDealsListing {
 	public void setRrpLink(String rrpLink) {
 		this.rrpLink = rrpLink;
 	}
-	public Currency getCurrency() {
+	public String getCurrency() {
 		return currency;
 	}
-	public void setCurrency(Currency currency) {
+	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
 
@@ -115,56 +115,56 @@ public class FRESDealsListing {
 	private String skuId;
 	
 	@NotEmpty(message = "{listing.skuName.empty}")
-	@Header(title="FRES.skuName", order=1, writable=false)
+	@Header(title="FRES.skuName", order=10, writable=false)
 	private String skuName;
 	
+	@NotNull(message = "{listing.currency.null}")
+	@Header(title="FRES.currency", order=20, writable=false)
+	private String currency;
+	
 	@NotNull(message = "{listing.category.null}")
-	@Header(title="FRES.category", order=2, writable=true)
+	@Header(title="FRES.category", order=30, writable=true)
 	private ProductCategory category;
 	
 	@NotNull(message = "{listing.itemId.null}")
-	@Header(title="FRES.itemId", order=3, writable=true)
+	@Header(title="FRES.itemId", order=40, writable=true)
 	private Long itemId;
 	
 	@NotNull(message = "{listing.fvf.null}")
 	@Min(value=0, message="{listing.fvf.negative}")
-	@Header(title="FRES.fvf", order=4, writable=true)
+	@Header(title="FRES.fvf", order=50, writable=true)
 	private Double fvf;
 	
 	@NotNull(message = "{listing.listPrice.null}")
 	@Min(value=0, message="{listing.listPrice.negative}")
-	@Header(title="FRES.listPrice", order=5, writable=true)
+	@Header(title="FRES.listPrice", order=60, writable=true)
 	private Double listPrice;
 	
 	@NotNull(message = "{listing.dealPrice.null}")
 	@Min(value=0, message="{listing.dealPrice.negative}")
-	@Header(title="FRES.dealPrice", order=6, writable=true)
+	@Header(title="FRES.dealPrice", order=70, writable=true)
 	private Double dealPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
 	@Min(value=0, message="{listing.qty.negative}")
-	@Header(title="FRES.qty", order=7, writable=true)
+	@Header(title="FRES.qty", order=80, writable=true)
 	private Double qty;
 	
 	@NotNull(message = "{listing.location.null}")
-	@Header(title="FRES.location", order=8, writable=true)
+	@Header(title="FRES.location", order=90, writable=true)
 	private Location location;
 	
 	@NotNull(message = "{listing.dlvyTime.null}")
-	@Header(title="FRES.dlvyTime", order=9, writable=true)
+	@Header(title="FRES.dlvyTime", order=100, writable=true)
 	private DeliveryTime dlvyTime;
 	
 	@NotNull(message = "{listing.shipPrice.null}")
 	@Min(value=0, message="{listing.shipPrice.negative}")
-	@Header(title="FRES.shipPrice", order=10, writable=true)
+	@Header(title="FRES.shipPrice", order=110, writable=true)
 	private Double shipPrice;
-	
-	@NotNull(message = "{listing.currency.null}")
-	@Header(title="FRES.currency", order=11, writable=true)
-	private Currency currency;
-	
+
 	@Link(message = "{listing.url.invalid}")
-	@Header(title="FRES.rrpLink", order=12, writable=true)
+	@Header(title="FRES.rrpLink", order=120, writable=true)
 	private String rrpLink;
 	
 	private Double proposePrice;

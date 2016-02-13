@@ -58,10 +58,10 @@ public class APACDealsListing {
 	public void setRrpLink(String rrpLink) {
 		this.rrpLink = rrpLink;
 	}
-	public Currency getCurrency() {
+	public String getCurrency() {
 		return currency;
 	}
-	public void setCurrency(Currency currency) {
+	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
 
@@ -91,38 +91,38 @@ public class APACDealsListing {
 	private String skuId;
 	
 	@NotEmpty(message = "{listing.skuName.empty}")
-	@Header(title="APAC.skuName", order=1, writable=false)
+	@Header(title="APAC.skuName", order=10, writable=false)
 	private String skuName;
 	
+	@NotNull(message = "{listing.currency.null}")
+	@Header(title="APAC.currency", order=20, writable=false)
+	private String currency;
+	
 	@NotNull(message = "{listing.category.null}")
-	@Header(title="APAC.category", order=2, writable=true)
+	@Header(title="APAC.category", order=30, writable=true)
 	private ProductCategory category;
 	
 	@NotNull(message = "{listing.itemId.null}")
-	@Header(title="APAC.itemId", order=3, writable=true)
+	@Header(title="APAC.itemId", order=40, writable=true)
 	private Long itemId;
 	
 	@NotNull(message = "{listing.listPrice.null}")
 	@Min(value=0, message="{listing.listPrice.negative}")
-	@Header(title="APAC.listPrice", order=4, writable=true)
+	@Header(title="APAC.listPrice", order=50, writable=true)
 	private Double listPrice;
 	
 	@NotNull(message = "{listing.dealPrice.null}")
 	@Min(value=0, message="{listing.dealPrice.negative}")
-	@Header(title="APAC.dealPrice", order=5, writable=true)
+	@Header(title="APAC.dealPrice", order=60, writable=true)
 	private Double dealPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
 	@Min(value=0, message="{listing.qty.negative}")
-	@Header(title="APAC.qty", order=6, writable=true)
+	@Header(title="APAC.qty", order=70, writable=true)
 	private Double qty;
-	
-	@NotNull(message = "{listing.currency.null}")
-	@Header(title="APAC.currency", order=7, writable=true)
-	private Currency currency;
-	
+
 	@Link(message = "{listing.url.invalid}")
-	@Header(title="APAC.rrpLink", order=8, writable=true)
+	@Header(title="APAC.rrpLink", order=80, writable=true)
 	private String rrpLink;
 	
 	private Double proposePrice;

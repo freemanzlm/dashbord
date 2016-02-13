@@ -79,13 +79,16 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
 				T listing = clazz.newInstance();
 				StringBuilder sb = new StringBuilder();
 				
-				for (HeaderConfiguration hc : headerConfigs) {
+				
+				for (int j = 0; j < headerConfigs.size(); j++) {
+					HeaderConfiguration hc = headerConfigs.get(j);
+
 					Field field = clazz.getDeclaredField(hc.getPropertyName());
-					Cell cell = cells.get(hc.getOrder());
+					Cell cell = cells.get(j);
 					
 					setValue(cell, field, listing, sb);
 				}
-				
+
 				validateSKU(listing, i);
 				
 				if (!presetHeaders.equals(sb.toString())) {

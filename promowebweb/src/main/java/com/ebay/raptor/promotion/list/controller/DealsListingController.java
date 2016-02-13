@@ -110,7 +110,7 @@ public class DealsListingController extends AbstractDealsListingController{
 									GBHDealsListing.class, workBook, fileName,
 									this.messageSource);
 					gbhWriter.resetHeaders();
-					gbhWriter.build(gbhSkuListings, 1, 2, 1, 2, 0,
+					gbhWriter.build(gbhSkuListings, 1, 3, 1, 3, 0,
 							PromotionUtil.LISTING_TEMP_PASS);
         				break;
         			case FRES :
@@ -123,7 +123,7 @@ public class DealsListingController extends AbstractDealsListingController{
         								FRESDealsListing.class,
         								workBook, fileName, this.messageSource);
         				fresWriter.resetHeaders();
-        				fresWriter.build(fresSkuListings, 1, 2, 1, 2, 0,
+        				fresWriter.build(fresSkuListings, 1, 3, 1, 3, 0,
     							PromotionUtil.LISTING_TEMP_PASS);
         				break;
         			case APAC :
@@ -136,7 +136,7 @@ public class DealsListingController extends AbstractDealsListingController{
         								APACDealsListing.class,
         								workBook, fileName, this.messageSource);
         				apacWriter.resetHeaders();
-        				apacWriter.build(apacSkuListings, 1, 2, 1, 2, 0,
+        				apacWriter.build(apacSkuListings, 1, 3, 1, 3, 0,
     							PromotionUtil.LISTING_TEMP_PASS);
         				break;
         			default :

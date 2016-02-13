@@ -144,10 +144,10 @@ public class GBHDealsListing {
 	public void setIsShipChg(Double isShipChg) {
 		this.isShipChg = isShipChg;
 	}
-	public Currency getCurrency() {
+	public String getCurrency() {
 		return currency;
 	}
-	public void setCurrency(Currency currency) {
+	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
 
@@ -177,89 +177,89 @@ public class GBHDealsListing {
 	private String skuId;
 	
 	@NotEmpty(message = "{listing.skuName.empty}")
-	@Header(title="GBH.skuName", order=1)
+	@Header(title="GBH.skuName", order=10)
 	private String skuName;
 	
+	@NotNull(message = "{listing.currency.null}")
+	@Header(title="GBH.currency", order=20)
+	private String currency;
+	
 	@NotNull(message = "{listing.category.null}")
-	@Header(title="GBH.category", order=2, writable=true)
+	@Header(title="GBH.category", order=30, writable=true)
 	private ProductCategory category;
 	
 	@NotNull(message = "{listing.itemId.null}")
-	@Header(title="GBH.itemId", order=3, writable=true)
+	@Header(title="GBH.itemId", order=40, writable=true)
 	private Long itemId;
 	
 	@NotNull(message = "{listing.listPrice.null}")
 	@Min(value=0, message="{listing.listPrice.negative}")
-	@Header(title="GBH.listPrice", order=4, writable=true)
+	@Header(title="GBH.listPrice", order=50, writable=true)
 	private Double listPrice;
 	
 	@NotNull(message = "{listing.dealPrice.null}")
 	@Min(value=0, message="{listing.dealPrice.negative}")
-	@Header(title="GBH.dealPrice", order=5, writable=true)
+	@Header(title="GBH.dealPrice", order=60, writable=true)
 	private Double dealPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
 	@Min(value=0, message="{listing.qty.negative}")
-	@Header(title="GBH.qty", order=6, writable=true)
+	@Header(title="GBH.qty", order=70, writable=true)
 	private Double qty;
 	
 	@NotNull(message = "{listing.listSite.null}")
-	@Header(title="GBH.listSite", order=7, writable=true)
+	@Header(title="GBH.listSite", order=80, writable=true)
 	private Site listSite;
 	
 	@NotNull(message = "{listing.wwShipOpt.null}")
-	@Header(title="GBH.wwShipOpt", order=8, writable=true)
+	@Header(title="GBH.wwShipOpt", order=90, writable=true)
 	private ShipOption wwShipOpt;
 	
-	@Header(title="GBH.wwShipChg", order=9, writable=true)
+	@Header(title="GBH.wwShipChg", order=100, writable=true)
 	private Double wwShipChg;
 	
 	@NotNull(message = "{listing.ruShipOpt.null}")
-	@Header(title="GBH.ruShipOpt", order=10, writable=true)
+	@Header(title="GBH.ruShipOpt", order=110, writable=true)
 	private ShipOption ruShipOpt;
 	
-	@Header(title="GBH.ruShipChg", order=11, writable=true)
+	@Header(title="GBH.ruShipChg", order=120, writable=true)
 	private Double ruShipChg;
 	
 	@NotNull(message = "{listing.cnShipOpt.null}")
-	@Header(title="GBH.cnShipOpt", order=12, writable=true)
+	@Header(title="GBH.cnShipOpt", order=130, writable=true)
 	private ShipOption cnShipOpt;
 	
-	@Header(title="GBH.cnShipChg", order=13, writable=true)
+	@Header(title="GBH.cnShipChg", order=140, writable=true)
 	private Double cnShipChg;
 	
 	@NotNull(message = "{listing.laShipOpt.null}")
-	@Header(title="GBH.laShipOpt", order=14, writable=true)
+	@Header(title="GBH.laShipOpt", order=150, writable=true)
 	private ShipOption laShipOpt;
 	
-	@Header(title="GBH.laShipChg", order=15, writable=true)
+	@Header(title="GBH.laShipChg", order=160, writable=true)
 	private Double laShipChg;
 	
 	@NotNull(message = "{listing.meShipOpt.null}")
-	@Header(title="GBH.meShipOpt", order=16, writable=true)
+	@Header(title="GBH.meShipOpt", order=170, writable=true)
 	private ShipOption meShipOpt;
 	
-	@Header(title="GBH.meShipChg", order=17, writable=true)
+	@Header(title="GBH.meShipChg", order=180, writable=true)
 	private Double meShipChg;
 	
 	@NotNull(message = "{listing.brShipOpt.null}")
-	@Header(title="GBH.brShipOpt", order=18, writable=true)
+	@Header(title="GBH.brShipOpt", order=190, writable=true)
 	private ShipOption brShipOpt;
 	
-	@Header(title="GBH.brShipChg", order=19, writable=true)
+	@Header(title="GBH.brShipChg", order=200, writable=true)
 	private Double brShipChg;
 	
 	@NotNull(message = "{listing.isShipOpt.null}")
-	@Header(title="GBH.isShipOpt", order=20, writable=true)
+	@Header(title="GBH.isShipOpt", order=210, writable=true)
 	private ShipOption isShipOpt;
 	
-	@Header(title="GBH.isShipChg", order=21, writable=true)
+	@Header(title="GBH.isShipChg", order=220, writable=true)
 	private Double isShipChg;
-	
-	@NotNull(message = "{listing.currency.null}")
-	@Header(title="GBH.currency", order=22, writable=true)
-	private Currency currency;
-	
+
 	private Double proposePrice;
 	private Double proposeQty;
 	private String state;
