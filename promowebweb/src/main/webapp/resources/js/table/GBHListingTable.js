@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[1, 'asc']],
-				'aaSortingFixed': [[23, 'desc']],
+				'aaSortingFixed': [[22, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -99,7 +99,7 @@ var BizReport = BizReport || {};
 				    {data: 'brShipChg', aDataSort: [22, 19]},
 				    {data: 'isShipOpt'},
 				    {data: 'isShipChg', aDataSort: [22, 21]},
-				    {data: 'currency'},
+//				    {data: 'currency'},
 				    {data: 'state'}
 				],
 				aoColumnDefs: [{
@@ -259,31 +259,31 @@ var BizReport = BizReport || {};
 
 						return data;
 					}
-				}, {
-					aTargets: ["currency"],
-					bSortable: true,
-					sClass: "text-center",
-					sDefaultContent: "",		
-					sType: "string",
-					mRender: function(data, type, full, meta) {
-						data = data && data.toUpperCase();
-						
-						if (type == "sort") {
-							// sort by character, zzzy < zzzz;
-							switch(data) {
-							case 'GBP':
-								return 'zzzz';
-							case 'EURO':
-								return 'zzzy';
-							case 'USD':
-								return 'zzzx';							
-							case 'AUD':
-								return 'zzza';
-							}
-						}
-						
-						return data;
-					}
+//				}, {
+//					aTargets: ["currency"],
+//					bSortable: true,
+//					sClass: "text-center",
+//					sDefaultContent: "",		
+//					sType: "string",
+//					mRender: function(data, type, full, meta) {
+//						data = data && data.toUpperCase();
+//						
+//						if (type == "sort") {
+//							// sort by character, zzzy < zzzz;
+//							switch(data) {
+//							case 'GBP':
+//								return 'zzzz';
+//							case 'EURO':
+//								return 'zzzy';
+//							case 'USD':
+//								return 'zzzx';							
+//							case 'AUD':
+//								return 'zzza';
+//							}
+//						}
+//						
+//						return data;
+//					}
 				}] 
 			}
 		};
@@ -445,7 +445,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(23).visible(false);
+			this.oDataTable.column(22).visible(false);
 		}
 	});
 	

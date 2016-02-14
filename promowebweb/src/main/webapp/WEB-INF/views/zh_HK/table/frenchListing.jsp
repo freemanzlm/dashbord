@@ -19,7 +19,7 @@
 				<th class="delivery">妥投時間<br/>Delivery Time</th>
 				<th class="ship-price">運費<br/>Shipping Price</th>
 				<th class="rrp-link">產品全網最低價<br/>RRP Link</th>
-				<th class="currency">刊登幣種<br/>Currency</th>
+				<!-- <th class="currency">刊登幣種<br/>Currency</th> -->
 				<th class="state">狀態<br/>State</th>
 			</tr>
 		</thead>

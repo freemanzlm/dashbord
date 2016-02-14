@@ -28,7 +28,7 @@
 				<th class="brazil-charge">寄送巴西運費<br/>Brazil Shipping Charge</th>
 				<th class="israel">是否寄送以色列<br/>Israel</th>
 				<th class="israel-charge">寄送以色列運費<br/>Israel Shipping Charge</th>
-				<th class="currency">刊登幣種<br/>Currency</th>
+				<!-- <th class="currency">刊登幣種<br/>Currency</th>  -->
 				<th class="state">狀態<br/>State</th>
 			</tr>
 		</thead>

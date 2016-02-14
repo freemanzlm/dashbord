@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[1, 'asc']],
-				'aaSortingFixed': [[9, 'desc']],
+				'aaSortingFixed': [[8, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -84,11 +84,11 @@ var BizReport = BizReport || {};
 				    {data: 'itemId'},
 				    {data: 'skuName'},
 				    {data: 'category'},
-				    {data: 'listPrice', aDataSort: [9, 4]},
-				    {data: 'dealPrice', aDataSort: [9, 5]},
+				    {data: 'listPrice', aDataSort: [8, 4]},
+				    {data: 'dealPrice', aDataSort: [8, 5]},
 				    {data: 'qty'},
 				    {data: 'rrpLink'},
-				    {data: 'currency'},
+//				    {data: 'currency'},
 				    {data: 'state'}
 				],
 				aoColumnDefs: [{
@@ -237,30 +237,30 @@ var BizReport = BizReport || {};
 
 						return data;
 					}
-				}, {
-					aTargets: ["currency"],
-					bSortable: true,
-					sClass: "text-center",
-					sDefaultContent: "",		
-					sType: "string",
-					mRender: function(data, type, full, meta) {
-						data = data && data.toUpperCase();
-						
-						if (type == "sort") {
-							switch(data) {
-							case 'GBP':
-								return 'zzzz';
-							case 'EURO':
-								return 'zzzy';
-							case 'USD':
-								return 'zzzx';							
-							case 'AUD':
-								return 'zzza';
-							}
-						}
-						
-						return data;
-					}
+//				}, {
+//					aTargets: ["currency"],
+//					bSortable: true,
+//					sClass: "text-center",
+//					sDefaultContent: "",		
+//					sType: "string",
+//					mRender: function(data, type, full, meta) {
+//						data = data && data.toUpperCase();
+//						
+//						if (type == "sort") {
+//							switch(data) {
+//							case 'GBP':
+//								return 'zzzz';
+//							case 'EURO':
+//								return 'zzzy';
+//							case 'USD':
+//								return 'zzzx';							
+//							case 'AUD':
+//								return 'zzza';
+//							}
+//						}
+//						
+//						return data;
+//					}
 				},{
 					aTargets: ["rrp-link"],
 					bSortable: true,
@@ -433,7 +433,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(9).visible(false);
+			this.oDataTable.column(8).visible(false);
 		}
 	});
 	
