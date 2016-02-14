@@ -1,5 +1,6 @@
 package com.ebay.raptor.promotion.pojo.business;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -132,6 +133,7 @@ public class FRESDealsListing {
 	
 	@NotNull(message = "{listing.fvf.null}")
 	@Min(value=0, message="{listing.fvf.negative}")
+	@Max(value=1, message="{listing.fvf.toolarge}")
 	@Header(title="FRES.fvf", order=50, writable=true)
 	private Double fvf;
 	
