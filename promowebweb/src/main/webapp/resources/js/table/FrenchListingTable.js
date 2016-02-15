@@ -18,7 +18,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'aaSorting': [[1, 'asc']],
-				'aaSortingFixed': [[12, 'desc']],
+				'aaSortingFixed': [[13, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -83,14 +83,14 @@ var BizReport = BizReport || {};
 				    {data: 'category'},
 //				    {data: 'spainItemId'},
 				    {data: 'fvf'},
-				    {data: 'listPrice', aDataSort: [12, 5]},
-				    {data: 'dealPrice', aDataSort: [12, 6]},
+				    {data: 'listPrice', aDataSort: [13, 12, 5]},
+				    {data: 'dealPrice', aDataSort: [13, 12, 6]},
 				    {data: 'qty'},
 				    {data: 'location'},
 				    {data: 'dlvyTime'},
-				    {data: 'shipPrice', aDataSort: [12, 10]},
+				    {data: 'shipPrice', aDataSort: [13, 12, 10]},
 				    {data: 'rrpLink'},
-//				    {data: 'currency'},
+				    {data: 'currency'},
 				    {data: 'state'}
 				],
 				aoColumnDefs: [{
@@ -238,31 +238,32 @@ var BizReport = BizReport || {};
 
 						return data;
 					}
-//				}, {
-//					aTargets: ["currency"],
-//					bSortable: true,
-//					sClass: "text-center",
-//					sDefaultContent: "",		
-//					sType: "string",
-//					mRender: function(data, type, full, meta) {
-//						data = data && data.toUpperCase();
-//						
-//						if (type == "sort") {
-//							// sort by character, zzzy < zzzz; thera are three 'z' because currency label is composed of three characters.
-//							switch(data) {
-//							case 'GBP':
-//								return 'zzzz';
-//							case 'EURO':
-//								return 'zzzy';
-//							case 'USD':
-//								return 'zzzx';							
-//							case 'AUD':
-//								return 'zzza';
-//							}
-//						}
-//						
-//						return data;
-//					}
+				}, {
+					aTargets: ["currency"],
+					bSortable: true,
+					bVisible: false,
+					sClass: "text-center",
+					sDefaultContent: "",		
+					sType: "string",
+					mRender: function(data, type, full, meta) {
+						data = data && data.toUpperCase();
+						
+						if (type == "sort") {
+							// sort by character, zzzy < zzzz; thera are three 'z' because currency label is composed of three characters.
+							switch(data) {
+							case 'GBP':
+								return 'zzzz';
+							case 'EURO':
+								return 'zzzy';
+							case 'USD':
+								return 'zzzx';							
+							case 'AUD':
+								return 'zzza';
+							}
+						}
+						
+						return data;
+					}
 				},{
 					aTargets: ["rrp-link"],
 					bSortable: true,
@@ -435,7 +436,7 @@ var BizReport = BizReport || {};
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(12).visible(false);
+			this.oDataTable.column(13).visible(false);
 		}
 	});
 	

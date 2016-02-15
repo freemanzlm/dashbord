@@ -17,8 +17,8 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[1, 'asc']],
-				'aaSortingFixed': [[22, 'desc']],
+//				'aaSorting': [[1, 'asc']],
+				'aaSortingFixed': [[23, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -27,7 +27,7 @@ var BizReport = BizReport || {};
 				'bServerSide': false,
 				'bSortCellsTop': true,
 				'bSort': true,
-				'iDisplayLength': 200,
+				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'bScrollCollapse': true,
@@ -81,25 +81,25 @@ var BizReport = BizReport || {};
 				    {data: 'itemId'},
 				    {data: 'skuName'},
 				    {data: 'category'},
-				    {data: 'listPrice', aDataSort: [22, 4]},
-				    {data: 'dealPrice', aDataSort: [22, 5]},
+				    {data: 'listPrice', aDataSort: [23, 22, 4]},
+				    {data: 'dealPrice', aDataSort: [23, 22, 5]},
 				    {data: 'qty'},
 				    {data: 'listSite'},
 				    {data: 'wwShipOpt'},
-				    {data: 'wwShipChg', aDataSort: [22, 9]},
+				    {data: 'wwShipChg', aDataSort: [23, 22, 9]},
 				    {data: 'ruShipOpt'},
-				    {data: 'ruShipChg', aDataSort: [22, 11]},
+				    {data: 'ruShipChg', aDataSort: [23, 22, 11]},
 				    {data: 'cnShipOpt'},
-				    {data: 'cnShipChg', aDataSort: [22, 13]},
+				    {data: 'cnShipChg', aDataSort: [23, 22, 13]},
 				    {data: 'laShipOpt'},
-				    {data: 'laShipChg', aDataSort: [22, 15]},
+				    {data: 'laShipChg', aDataSort: [23, 22, 15]},
 				    {data: 'meShipOpt'},
-				    {data: 'meShipChg', aDataSort: [22, 17]},
+				    {data: 'meShipChg', aDataSort: [23, 22, 17]},
 				    {data: 'brShipOpt'},
-				    {data: 'brShipChg', aDataSort: [22, 19]},
+				    {data: 'brShipChg', aDataSort: [23, 22, 19]},
 				    {data: 'isShipOpt'},
-				    {data: 'isShipChg', aDataSort: [22, 21]},
-//				    {data: 'currency'},
+				    {data: 'isShipChg', aDataSort: [23, 22, 21]},
+				    {data: 'currency'},
 				    {data: 'state'}
 				],
 				aoColumnDefs: [{
@@ -259,31 +259,32 @@ var BizReport = BizReport || {};
 
 						return data;
 					}
-//				}, {
-//					aTargets: ["currency"],
-//					bSortable: true,
-//					sClass: "text-center",
-//					sDefaultContent: "",		
-//					sType: "string",
-//					mRender: function(data, type, full, meta) {
-//						data = data && data.toUpperCase();
-//						
-//						if (type == "sort") {
-//							// sort by character, zzzy < zzzz;
-//							switch(data) {
-//							case 'GBP':
-//								return 'zzzz';
-//							case 'EURO':
-//								return 'zzzy';
-//							case 'USD':
-//								return 'zzzx';							
-//							case 'AUD':
-//								return 'zzza';
-//							}
-//						}
-//						
-//						return data;
-//					}
+				}, {
+					aTargets: ["currency"],
+					bSortable: true,
+					bVisible: false,
+					sClass: "text-center",
+					sDefaultContent: "",		
+					sType: "string",
+					mRender: function(data, type, full, meta) {
+						data = data && data.toUpperCase();
+						
+						if (type == "sort") {
+							// sort by character, zzzy < zzzz;
+							switch(data) {
+							case 'GBP':
+								return 'zzzz';
+							case 'EURO':
+								return 'zzzy';
+							case 'USD':
+								return 'zzzx';							
+							case 'AUD':
+								return 'zzza';
+							}
+						}
+						
+						return data;
+					}
 				}] 
 			}
 		};
@@ -440,12 +441,16 @@ var BizReport = BizReport || {};
 			return this.oDataTable.data().length;
 		},
 		
+		hideColumn: function (colIndex) {
+			this.oDataTable.column(colIndex).visible(false);
+		},
+		
 		hideCheckbox: function() {
 			this.oDataTable.column(0).visible(false);
 		},
 		
 		hideStateColumn: function() {
-			this.oDataTable.column(22).visible(false);
+			this.oDataTable.column(23).visible(false);
 		}
 	});
 	
