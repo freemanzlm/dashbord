@@ -133,7 +133,7 @@ public class FRESDealsListing {
 	
 	@NotNull(message = "{listing.fvf.null}")
 	@Min(value=0, message="{listing.fvf.negative}")
-	@Max(value=1, message="{listing.fvf.toolarge}")
+	@Max(value=100, message="{listing.fvf.toolarge}")
 	@Header(title="FRES.fvf", order=50, writable=true)
 	private Double fvf;
 	
