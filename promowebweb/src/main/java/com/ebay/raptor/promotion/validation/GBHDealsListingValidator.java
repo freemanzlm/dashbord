@@ -78,6 +78,19 @@ public class GBHDealsListingValidator implements ConstraintValidator<GBHDealsLis
 		    return false; 
 		}
 		
+		if (gbhListing.getWwShipOpt() == ShipOption.No
+				&& gbhListing.getRuShipOpt() == ShipOption.No
+				&& gbhListing.getCnShipOpt() == ShipOption.No
+				&& gbhListing.getLaShipOpt() == ShipOption.No
+				&& gbhListing.getMeShipOpt() == ShipOption.No
+				&& gbhListing.getBrShipOpt() == ShipOption.No
+				&& gbhListing.getIsShipOpt() == ShipOption.No) {
+			context.disableDefaultConstraintViolation();  
+		    context.buildConstraintViolationWithTemplate("{listing.shipOpt.allNo}") 
+		            .addConstraintViolation();  
+		    return false; 
+		}
+		
 		return true;
 	}
 
