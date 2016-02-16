@@ -174,7 +174,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["last-price",  "worldwide-charge", "russia-charge", "china-charge", "latin-charge", "mexico-charge", "brazil-charge", "israel-charge"],
 					sType: "numeric",
-					sClass: "text-right",
+					sClass: "text-right dt-nowrap",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						var value = parseFloat(data);

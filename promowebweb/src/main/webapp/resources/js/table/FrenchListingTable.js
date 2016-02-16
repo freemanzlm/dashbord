@@ -165,7 +165,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["last-price",  "ship-price"],
 					sType: "numeric",
-					sClass: "text-right",
+					sClass: "text-right dt-nowrap",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						var value = parseFloat(data);
@@ -259,6 +259,17 @@ var BizReport = BizReport || {};
 							case 'AUD':
 								return 'zzza';
 							}
+						}
+						
+						return data;
+					}
+				},{
+					aTargets: ["fvf"],
+					sClass: "text-right",
+					sType: "numeric",
+					mRender: function(data, type, full, meta) {
+						if (type == 'display' && !isNaN(data)) {
+							return data + "%";
 						}
 						
 						return data;

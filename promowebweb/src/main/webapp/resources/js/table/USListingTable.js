@@ -163,7 +163,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["last-price",  "ship-price"],
 					sType: "numeric",
-					sClass: "text-right",
+					sClass: "text-right dt-nowrap",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						var value = parseFloat(data);
