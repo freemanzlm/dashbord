@@ -274,6 +274,9 @@ var BizReport = BizReport || {};
 						
 						return data;
 					}
+				}, {
+					aTargets: ["location"],
+					sClass: "text-center"
 				},{
 					aTargets: ["rrp-link"],
 					bSortable: true,
