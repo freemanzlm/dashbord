@@ -125,8 +125,8 @@ var BizReport = BizReport || {};
 					aTargets: ["item-id"],
 					sDefaultContent: "",					
 					sType: "numeric",
-					sWidth: "150px",
-					sClass: "pic-id",
+					sWidth: "165px",
+					sClass: "pic-id dt-nowrap",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
 							var display = "<img src='http://thumbs2.ebaystatic.com/pict/" + data + ".jpg' height='50' width='50'/>";
@@ -200,7 +200,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["deal-price"],
 					sType: "numeric",
-					sClass: "text-right",
+					sClass: "text-right dt-nowrap",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						var value = parseFloat(data);
@@ -226,9 +226,8 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["state"],
 					bSortable: false,
-					sClass: "text-center",
+					sClass: "text-center dt-nowrap",
 					sDefaultContent: "",
-					sWidth: 50,
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (pageData && pageData.expired === false && data == 'Nonapplied') {
