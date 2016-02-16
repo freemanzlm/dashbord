@@ -12,7 +12,7 @@ var BizReport = BizReport || {};
 	var DealsListingTable = function() {};
 	DealsListingTable.prototype = new cbt.Widget();
 	
-	var local = namespace.local;
+	var local = namespace.local, hasProtocolExp = /[a-zA-Z]+:/;
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
@@ -268,6 +268,10 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",		
 					sType: "string",
 					mRender: function(data, type, full, meta) {
+						if (!hasProtocolExp.test(data)) {
+							data = "http://" + data;
+						}
+						
 						if (type == 'display' && data !== undefined) {
 							return '<a target="_blank" href="' + data + '">' + local.getText('promo.deals.rrpLink') + '</a>';
 						}

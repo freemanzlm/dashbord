@@ -176,6 +176,8 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
 					field.set(obj, ProductCategory.descriptionOf(cellValue));
 				} else if (ShipOption.class.isAssignableFrom(fldClazz)) {
 					field.set(obj, ShipOption.descriptionOf(cellValue));
+					// ShipOption data always has default value, thus no need to check if its null
+					return;
 				} else if (Site.class.isAssignableFrom(fldClazz)) {
 					field.set(obj, Site.descriptionOf(cellValue));
 				} else {
