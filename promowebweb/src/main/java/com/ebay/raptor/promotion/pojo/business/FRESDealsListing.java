@@ -41,17 +41,17 @@ public class FRESDealsListing {
 	public void setFvf(Double fvf) {
 		this.fvf = fvf;
 	}
-	public Double getListPrice() {
-		return listPrice;
+	public Double getCurrPrice() {
+		return currPrice;
 	}
-	public void setListPrice(Double listPrice) {
-		this.listPrice = listPrice;
+	public void setCurrPrice(Double currPrice) {
+		this.currPrice = currPrice;
 	}
-	public Double getDealPrice() {
-		return dealPrice;
+	public Double getDealsPrice() {
+		return dealsPrice;
 	}
-	public void setDealPrice(Double dealPrice) {
-		this.dealPrice = dealPrice;
+	public void setDealsPrice(Double dealsPrice) {
+		this.dealsPrice = dealsPrice;
 	}
 	public Double getQty() {
 		return qty;
@@ -137,15 +137,15 @@ public class FRESDealsListing {
 	@Header(title="FRES.fvf", order=50, writable=true)
 	private Double fvf;
 	
-	@NotNull(message = "{listing.listPrice.null}")
-	@Min(value=0, message="{listing.listPrice.negative}")
-	@Header(title="FRES.listPrice", order=60, writable=true)
-	private Double listPrice;
+	@NotNull(message = "{listing.currPrice.null}")
+	@Min(value=0, message="{listing.currPrice.negative}")
+	@Header(title="FRES.currPrice", order=60, writable=true)
+	private Double currPrice;
 	
-	@NotNull(message = "{listing.dealPrice.null}")
-	@Min(value=0, message="{listing.dealPrice.negative}")
-	@Header(title="FRES.dealPrice", order=70, writable=true)
-	private Double dealPrice;
+	@NotNull(message = "{listing.dealsPrice.null}")
+	@Min(value=0, message="{listing.dealsPrice.negative}")
+	@Header(title="FRES.dealsPrice", order=70, writable=true)
+	private Double dealsPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
 	@Min(value=0, message="{listing.qty.negative}")

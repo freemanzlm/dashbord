@@ -34,17 +34,17 @@ public class APACDealsListing {
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
 	}
-	public Double getListPrice() {
-		return listPrice;
+	public Double getCurrPrice() {
+		return currPrice;
 	}
-	public void setListPrice(Double listPrice) {
-		this.listPrice = listPrice;
+	public void setCurrPrice(Double currPrice) {
+		this.currPrice = currPrice;
 	}
-	public Double getDealPrice() {
-		return dealPrice;
+	public Double getDealsPrice() {
+		return dealsPrice;
 	}
-	public void setDealPrice(Double dealPrice) {
-		this.dealPrice = dealPrice;
+	public void setDealsPrice(Double dealsPrice) {
+		this.dealsPrice = dealsPrice;
 	}
 	public Double getQty() {
 		return qty;
@@ -106,15 +106,15 @@ public class APACDealsListing {
 	@Header(title="APAC.itemId", order=40, writable=true)
 	private Long itemId;
 	
-	@NotNull(message = "{listing.listPrice.null}")
-	@Min(value=0, message="{listing.listPrice.negative}")
-	@Header(title="APAC.listPrice", order=50, writable=true)
-	private Double listPrice;
+	@NotNull(message = "{listing.currPrice.null}")
+	@Min(value=0, message="{listing.currPrice.negative}")
+	@Header(title="APAC.currPrice", order=50, writable=true)
+	private Double currPrice;
 	
-	@NotNull(message = "{listing.dealPrice.null}")
-	@Min(value=0, message="{listing.dealPrice.negative}")
-	@Header(title="APAC.dealPrice", order=60, writable=true)
-	private Double dealPrice;
+	@NotNull(message = "{listing.dealsPrice.null}")
+	@Min(value=0, message="{listing.dealsPrice.negative}")
+	@Header(title="APAC.dealsPrice", order=60, writable=true)
+	private Double dealsPrice;
 	
 	@NotNull(message = "{listing.qty.null}")
 	@Min(value=0, message="{listing.qty.negative}")
