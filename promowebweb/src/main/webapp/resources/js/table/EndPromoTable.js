@@ -184,10 +184,10 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							
 							if (data == 'SubsidyRetrieved') { // complete
-								return local.getText('promo.state.SubsidyRetrieved') + '<br/><a href="' + getLink(full.promoId) + '"' + (pageData.admin ? ' target="_blank"' : '') + '>' + local.getText('promo.state.Detailed') + "</a>";
+								return local.getText('promo.state.SubsidyRetrieved') + '<br/><a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 
-							return '<a href="' + getLink(full.promoId) + '"' + (pageData.admin ? ' target="_blank"' : '') + '>' + local.getText('promo.state.Detailed') + "</a>";
+							return '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 						}
 
 						if (type == "sort") {

@@ -204,14 +204,14 @@ var BizReport = BizReport || {};
 								case 'SubsidyResubmittable':
 									if (full.rewardUrl) {
 										display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + local.getText('promo.state.' + data) + "</a>";
-										display += "<br/>" + '<a href="' + getLink(full.promoId) + '"' + (pageData.admin ? ' target="_blank"' : '') + '>' + local.getText('promo.state.Detailed') + "</a>";
+										display += "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 									} else {
 										display = local.getText('promo.state.' + data);
-										display += '<a href="' + getLink(full.promoId) + '"' + (pageData.admin ? ' target="_blank"' : '') + '>' + local.getText('promo.state.Detailed') + "</a>";
+										display += '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 									}
 									return display;
 								default:
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '"' + (pageData.admin ? ' target="_blank"' : '') + '>' + local.getText('promo.state.Detailed') + "</a>";
+									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								}
 							}
 							
@@ -225,15 +225,15 @@ var BizReport = BizReport || {};
 								case 'SubsidyResubmittable':
 									if (full.rewardUrl) {
 										display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + local.getText('promo.state.' + data) + "</a>";
-										display += "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
+										display += "<br/>" + '<a href="' + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 									} else {
 										display = local.getText('promo.state.' + data);
-										display += "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
+										display += '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 									}
 									return display;
 								case 'SubsidyRetrievable':
 								default:
-									return local.getText('promo.state.' + data) + "<br/>" + "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
+									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								}
 							}
 
@@ -241,7 +241,7 @@ var BizReport = BizReport || {};
 								display = "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.SubsidyRetrievable') + "</a>";
 								return display;
 							} else {
-								return "<a href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Detailed') + "</a>";
+								return '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 						}
 

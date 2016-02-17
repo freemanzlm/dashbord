@@ -159,17 +159,17 @@ var BizReport = BizReport || {};
 								case 'Submitted':
 								case 'Started':
 								case 'SubsidyCounting':
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '"' + (pageData.admin ? ' target="_blank"' : '') + '>' + local.getText('promo.state.Detailed') + "</a>";
+									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								}
 							} else {
 								switch (data) {
 								case 'Started':
 								case 'SubsidyCounting':
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '"' + (pageData.admin ? ' target="_blank"' : '') + '>' + local.getText('promo.state.Detailed') + "</a>";
+									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								}
 							}
 
-							return '<a href="' + getLink(full.promoId) + '"' + (pageData.admin ? ' target="_blank"' : '') + '>' + local.getText('promo.state.Detailed') + '</a>';
+							return '<a href="' + getLink(full.promoId) + '" target="_self">'+ local.getText('promo.state.Detailed') + '</a>';
 						}
 
 						if (type == "filter") {
