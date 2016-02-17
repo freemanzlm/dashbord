@@ -214,6 +214,9 @@ mt0 {
 }
 
 /* Color */
+.color-cyan {
+	color: #007ab0;
+}
 .color-red {
     color:#ff0000;
 }

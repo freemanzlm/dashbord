@@ -3,18 +3,18 @@ $(function(){
 	var DealsListingTable = BizReport.DealsListingTable;
 	
 	var listingTable = new DealsListingTable();
-	listingTable.subscribe({
-		initialized: function() {
-			// if it has passed the apply deadline date, user can't select listings and submit again.
-			listingTable.hideCheckbox();
-		}
-	}, listingTable);
 	
 	listingTable.init({
 		dataTableConfig: {
-			tableId: "deals-listing-table"
+			tableId: "deals-listing-table",
+			customTableConfig: {
+				columns: [{bVisible: false}] // hide the first column which has checkbox
+			}
 		}});
-	listingTable.update({promoId:pageData && pageData.promoId});	
+	listingTable.update({
+		promoId: pageData && pageData.promoId,
+		promoSubType: pageData && pageData.promoSubType
+	});	
 	
 	var termsDialog = cbt.termsDialog;
 	$(".terms-conditions").click(function(event){

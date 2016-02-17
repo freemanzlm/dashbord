@@ -8,17 +8,17 @@ public class HotSellListing {
 
 	private String name;
 
-	private Float price;
+	private Double price;
 
 	private String currency;
 
-	private Float volume;
+	private Double volume;
 
-	private Float sales;
+	private Double sales;
 
-	private Float compCost;
+	private Double compCost;
 
-	private Float maxComp;
+	private Double maxComp;
 
 	private String state;
 
@@ -38,11 +38,11 @@ public class HotSellListing {
 		this.name = name;
 	}
 
-	public Float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
@@ -54,19 +54,19 @@ public class HotSellListing {
 		this.currency = currency;
 	}
 
-	public Float getVolume() {
+	public Double getVolume() {
 		return volume;
 	}
 
-	public void setVolume(Float volume) {
+	public void setVolume(Double volume) {
 		this.volume = volume;
 	}
 
-	public Float getSales() {
+	public Double getSales() {
 		return sales;
 	}
 
-	public void setSales(Float sales) {
+	public void setSales(Double sales) {
 		this.sales = sales;
 	}
 
@@ -86,19 +86,19 @@ public class HotSellListing {
 		this.skuId = skuId;
 	}
 
-	public Float getMaxComp() {
+	public Double getMaxComp() {
 		return maxComp;
 	}
 
-	public void setMaxComp(Float maxComp) {
+	public void setMaxComp(Double maxComp) {
 		this.maxComp = maxComp;
 	}
 
-	public Float getCompCost() {
+	public Double getCompCost() {
 		return compCost;
 	}
 
-	public void setCompCost(Float compCost) {
+	public void setCompCost(Double compCost) {
 		this.compCost = compCost;
 	}
 

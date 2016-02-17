@@ -38,7 +38,10 @@ $(function(){
 				}).join(",") + "]");
 			}
 		}});
-	listingTable.update({promoId:pageData && pageData.promoId});
+	listingTable.update({
+		promoId:pageData && pageData.promoId,
+		promoSubType:pageData && pageData.promoSubType
+	});
 	
 	function submitListings() {
 		$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});

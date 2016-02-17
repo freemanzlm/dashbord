@@ -49,14 +49,15 @@ $(function(){
 				var responseData = $.parseJSON(response);
 				// verification returns no error 
 				if (responseData && responseData.status) {
-					window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId);
+					window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId
+							+ (pageData.promoSubType ? "&promoSubType=" + pageData.promoSubType : ""));
 				}
 				// handle error
 				else {
 					// show error infor
 					if (responseData.message && responseData.message.length > 0) {
 						$("#upload-error-msg").removeClass("hide");
-						$("#upload-error-msg").find("em").text(responseData.message);
+						$("#upload-error-msg").find("b").text(responseData.message);
 					} else if (responseData.data && responseData.data.length > 0) {
 						cbt.alert(local.getText("errorMsg.regDateExpired"));
 						window.location.replace("/promotion/" + pageData.promoId);

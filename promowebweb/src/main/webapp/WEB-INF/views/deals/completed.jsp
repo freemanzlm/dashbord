@@ -7,10 +7,10 @@
 <c:set var="categoryId" value="6000" />
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="state" value="${ promo.state }" />
+<c:set var="promoSubType" value="${ promo.promoSubType }" />
 <fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 
-<r:includeJquery jsSlot="head" />
-<r:client />
+
 
 <!DOCTYPE html>
 <html>
@@ -28,23 +28,25 @@
 
 <%--module "ebay.page" add Resets and Global css --%>
 <res:useCss value="${res.css.local.css['normalize.css']}" target="head-css" />
-<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css"/>
+<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css.reset_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
-<res:useCss value="${res.css.local.css.signpost_css}" target="head-css"/>
+<res:useCss value="${res.css.local.css.signpost_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.module_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dialog_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.layout_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.header_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css" />
-<res:useCss value="${res.css.local.css.app_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.promotion_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.base_css}" target="head-css" />
 
+<r:includeJquery jsSlot="head" />
+<r:client />
 <res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
 <res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
 <res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head"></res:useJs>
@@ -60,7 +62,25 @@
 <res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+
+<c:choose>
+	<c:when test="${ promoSubType eq 'GBH'}">
+		<!-- china, brazil -->
+		<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
+	</c:when>
+	<c:when test="${ promoSubType eq 'FRES'}">
+		<!-- French and spain -->
+		<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
+	</c:when>
+	<c:when test="${ promoSubType eq 'APAC'}">
+		<!-- French and spain -->
+		<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
+	</c:when>
+	<c:otherwise>
+		<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+	</c:otherwise>
+</c:choose>
+
 <res:useJs value="${res.js.local.js.page['deals_state.js']}" target="page-js2"></res:useJs>
 </head>
 
@@ -84,7 +104,20 @@
 
 				<div class="mt20 my-listing">
 					<h3>报名刊登列表</h3>
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+					<c:choose>
+						<c:when test="${promoSubType eq 'GBH'}">
+							<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+						</c:when>
+						<c:when test="${promoSubType eq 'FRES'}">
+							<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+						</c:when>
+						<c:when test="${promoSubType eq 'APAC'}">
+							<jsp:include page="../table/usListing.jsp"></jsp:include>
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 
@@ -102,7 +135,8 @@
 	<script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },
-		promoId: '${promo.promoId}'
+		promoId: '${promo.promoId}',
+		promoSubType: '${promo.promoSubType}'
 	};
 </script>
 

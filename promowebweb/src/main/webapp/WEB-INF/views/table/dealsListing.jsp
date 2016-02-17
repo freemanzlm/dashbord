@@ -6,7 +6,7 @@
 	<table id="deals-listing-table" class="dataTable">
 		<thead>
 			<tr>
-				<th class="itemId"><input type="checkbox" class="check-all" /></th>
+				<th class="check"><input type="checkbox" class="check-all" /></th>
 				<th class="item-id">刊登编号</th>
 				<th class="name">SKU名称</th>
 				<th class="price">当前刊登单价</th>

@@ -1,8 +1,13 @@
 !function($) {
 	var defaultConfig = {
-		optionCreator: function(value, text) {
-			return $("<li class='op' tabindex='0' role='menuitem' op-value='"
-					+ value + "'>" + text + "</li>");
+		optionCreator: function(value, text, selected) {
+			var op = $('<li class="op" tabindex="0" role="option" aria-selected="false" op-value="'
+					+ value + '">' + text + '</li>');
+			
+			if (selected){
+				op.attr('aria-selected', true);
+			}
+			return op;
 		}
 	};
 	
@@ -35,12 +40,12 @@
 			var self = this;
 
 			// build dropdown begin
-			this.dropdown = $('<div class="dropdown">');
+			this.dropdown = $('<div class="dropdown" tabindex="0">');
 			
 			this.element.append(this.dropdown);
 			this.dropdown.append(this.field);
 
-			this.label = $('<input type="text" readonly data-toggle="dropdown">');
+			this.label = $('<input type="text" readonly data-toggle="dropdown" aria-readonly="true">');
 			this.label.attr({
 				value: this.currentText,
 				disabled: this.selectElement.attr("disabled")
@@ -57,12 +62,12 @@
 				self.setDropdownWidth(this.label.outerWidth() + 26);
 			}
 
-			this.menu = $('<ul class="dropdown-menu"></ul>');
+			this.menu = $('<ul class="dropdown-menu" role="listbox"></ul>');
 			this.dropdown.append(this.menu);
 			
 			this.initOptions.each(function() {
 				// 'this' is an option element
-				self.insertOption(this.text, this.value);
+				self.insertOption(this.text, this.value, this.selected);
 			});
 			// build dropdown end
 			
@@ -204,6 +209,8 @@
 			self.currentText = opText;
 			self.label.val(opText);
 			self.field.val($.trim(opVal));
+			self.options.attr('aria-selected', false);
+			option.attr('aria-selected', true);
 
 			if (!self.currentValue || self.currentValue === "") {
 				self.label.addClass("dropdown-ph");
@@ -218,7 +225,7 @@
 		insertBatchOptions: function(options) {
 			var self = this;
 			options.forEach(function(option){
-				var op = self.config.optionCreator.call(self, option.value, option.text);
+				var op = self.config.optionCreator.call(self, option.value, option.text, option.selected);
 				self.menu.append(op);
 			})
 			
@@ -237,8 +244,8 @@
 		 *            1, 2, etc.
 		 * @returns
 		 */
-		insertOption : function(text, value, index) {
-			var self = this, optionsLen = self.options.length, op = self.config.optionCreator.call(self, value, text);
+		insertOption : function(text, value, selected, index) {
+			var self = this, optionsLen = self.options.length, op = self.config.optionCreator.call(self, value, text, selected);
 
 			/**
 			 * 1. if no index is passed or there are no options, then add an
@@ -289,7 +296,7 @@
 			if (self.label.is(":disabled")) {
 				return;
 			}
-			self.field.attr("disabled", "disabled");
+			self.field.attr({"disabled": "disabled", 'aria-disabled': true});
 			self.label.attr("disabled", "disabled");
 		},
 		
@@ -330,12 +337,12 @@
 	$.fn.dropdown = function(option) {
 		var args = Array.prototype.slice.call(arguments, 1);
 		return this.each(function() {
-			var $this = $(this), data = $this.data('dropdown');
+			var $this = $(this), data = $this.data('cbt.dropdown');
 			if (!data) {
 				if (typeof option == 'object') {
-					$this.data('dropdown', (data = new Dropdown(this, option)));
+					$this.data('cbt.dropdown', (data = new Dropdown(this, option)));
 				} else {
-					$this.data('dropdown', (data = new Dropdown(this)));
+					$this.data('cbt.dropdown', (data = new Dropdown(this)));
 				}
 			}
 				
@@ -343,7 +350,7 @@
 				// call dropdown method
 				data[option].apply(data, args);
 			}				
-		});
+		})
 	}
 
 	$.fn.dropdown.Constructor = Dropdown

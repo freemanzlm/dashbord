@@ -27,7 +27,7 @@ var BizReport = BizReport || {};
 				'bServerSide': false,
 				'bSortCellsTop': true,
 				'bSort': true,
-				'iDisplayLength': 200,
+				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'bScrollCollapse': true,
@@ -86,7 +86,7 @@ var BizReport = BizReport || {};
 					{data: 'currency'}
 				],
 				aoColumnDefs: [{
-					aTargets: ["itemId"],
+					aTargets: ["check"],
 					bSortable: false,
 					bVisible: false,
 					sDefaultContent: "",
@@ -162,7 +162,7 @@ var BizReport = BizReport || {};
 						var value = parseFloat(data);
 						if (type == "display") {
 							if (full.proposePrice > 0 && value > 0 && full.proposePrice != full.dealsPrice) {
-								return "<span class='cyan'>" + parseFloat(full.proposePrice).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.dealsPrice).toUSFixed(2) + " " + full.currency + ")</del>";
+								return "<span class='color-cyan'>" + parseFloat(full.proposePrice).toUSFixed(2) + " (" + full.currency + ")</span>" + "<br/><del>(" + parseFloat(full.dealsPrice).toUSFixed(2) + " " + full.currency + ")</del>";
 							} else {
 								value = (isNaN(value) || value <= 0) ? parseFloat(full.proposePrice) : value;
 								return (!isNaN(value) && value > 0 ? value.toUSFixed(2) : '0')  + " (" + full.currency + ")";
@@ -247,6 +247,7 @@ var BizReport = BizReport || {};
 		init: function(config) {
 			var that = this;
 
+			// deep copy, objects in array will also be extended by their appeared order. 
 			this.dataTableConfig = $.extend(true, {}, defaultDataTableConfigs, config.dataTableConfig);
 
 			this.dataTableConfig.tableConfig = $.extend(true, {}, this.dataTableConfig.tableConfig, this.dataTableConfig.customTableConfig);

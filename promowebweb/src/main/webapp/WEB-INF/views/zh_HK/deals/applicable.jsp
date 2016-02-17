@@ -44,7 +44,7 @@
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.promotion_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
 	<res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
@@ -111,7 +111,8 @@
 <script type="text/javascript">
 	var pageData = {
 		expired: ${ expired == true },
-		promoId: '${promo.promoId}'
+		promoId: '${promo.promoId}',
+		promoSubType : '${promo.promoSubType}'
 	};
 </script>
 

@@ -6,7 +6,7 @@
 	<table id="hotsell-listing-table" class="dataTable">
 		<thead>
 			<tr>
-				<th class="itemId"><input type="checkbox" class="check-all" /></th>
+				<th class="check"><input type="checkbox" class="check-all" /></th>
 				<th class="name">刊登</th>
 				<th class="target-price">目標單價</th>
 				<th class="target-volume">目標銷量</th>

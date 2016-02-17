@@ -15,6 +15,8 @@ public class Promotion {
 	private String desc;
 
 	private Integer type;
+	
+	private PromotionSubType promoSubType;
 
 	@JsonSerialize(using=WebDateSerializer.class)
 	private Date promoDlDt;
@@ -213,6 +215,14 @@ public class Promotion {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+
+	public PromotionSubType getPromoSubType() {
+		return promoSubType;
+	}
+
+	public void setPromoSubType(PromotionSubType promoSubType) {
+		this.promoSubType = promoSubType;
 	}
 
 }
