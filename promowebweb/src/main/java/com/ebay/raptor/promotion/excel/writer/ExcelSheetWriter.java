@@ -81,7 +81,7 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 		autoSizeColumn(sheet, false);
 		updateStyle(sheet, freezeRows, freezeCols, freezeVisibleRow, freezeVisibleCol, hiddenCol, password);
 	}
-	
+
 	public void initSelectedValue() {
 		Sheet hiddenSheet = workBook.createSheet("hiddenSheet");
 		this.params = new ArrayList<>();

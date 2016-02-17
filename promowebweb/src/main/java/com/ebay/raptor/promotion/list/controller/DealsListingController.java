@@ -29,7 +29,6 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.ExcelReader;
 import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
-import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.kernel.context.IRaptorContext;
@@ -38,6 +37,7 @@ import com.ebay.raptor.promotion.excel.FRESDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.GBHDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.InvalidCellDataException;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
+import com.ebay.raptor.promotion.excel.writer.ExcelService;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
@@ -58,19 +58,20 @@ import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PojoConvertor;
-import com.ebay.raptor.promotion.util.PromotionUtil;
 
 @Controller
 @RequestMapping(ResourceProvider.ListingRes.dealsBase)
 public class DealsListingController extends AbstractDealsListingController{
 
 	private static CommonLogger logger = CommonLogger.getInstance(DealsListingController.class);
-	
+
 	@Inject
 	IRaptorContext raptorCtx;
 	
 	@Autowired
 	DealsListingService service;
+	
+	@Autowired ExcelService excelService;
 	
 	@Autowired SpringValidatorAdapter validator;
 	
@@ -93,78 +94,28 @@ public class DealsListingController extends AbstractDealsListingController{
 		}
 
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
-		XSSFWorkbook workBook = new XSSFWorkbook();
+		XSSFWorkbook workBook = null;
 
         try {
-        	String fileName = "";
-
-        	if (promoSubType != null) {
-        		switch (promoSubType) {
-        			case GBH :
-					fileName = ResourceProvider.ListingRes.gbhSkuListFileName;
-					List<GBHDealsListing> gbhSkuListings = service
-							.getSkuListingsByPromotionId(param.getPromoId(),
-									userData.getUserId(), PromotionSubType.GBH);
-					com.ebay.raptor.promotion.excel.writer.ExcelSheetWriter<GBHDealsListing> gbhWriter =
-							new com.ebay.raptor.promotion.excel.writer.ExcelSheetWriter<GBHDealsListing>(
-									GBHDealsListing.class, workBook, fileName,
-									this.messageSource);
-					gbhWriter.resetHeaders();
-					gbhWriter.build(gbhSkuListings, 1, 3, 1, 3, 0,
-							PromotionUtil.LISTING_TEMP_PASS);
-        				break;
-        			case FRES :
-        				fileName = ResourceProvider.ListingRes.fresSkuListFileName;
-        				List<FRESDealsListing> fresSkuListings = service
-    							.getSkuListingsByPromotionId(param.getPromoId(),
-    									userData.getUserId(), PromotionSubType.FRES);
-        				com.ebay.raptor.promotion.excel.writer.ExcelSheetWriter<FRESDealsListing> fresWriter =
-        						new com.ebay.raptor.promotion.excel.writer.ExcelSheetWriter<FRESDealsListing>(
-        								FRESDealsListing.class,
-        								workBook, fileName, this.messageSource);
-        				fresWriter.resetHeaders();
-        				fresWriter.build(fresSkuListings, 1, 3, 1, 3, 0,
-    							PromotionUtil.LISTING_TEMP_PASS);
-        				break;
-        			case APAC :
-        				fileName = ResourceProvider.ListingRes.apacSkuListFileName;
-        				List<APACDealsListing> apacSkuListings = service
-    							.getSkuListingsByPromotionId(param.getPromoId(),
-    									userData.getUserId(), PromotionSubType.APAC);
-        				com.ebay.raptor.promotion.excel.writer.ExcelSheetWriter<APACDealsListing> apacWriter =
-        						new com.ebay.raptor.promotion.excel.writer.ExcelSheetWriter<APACDealsListing>(
-        								APACDealsListing.class,
-        								workBook, fileName, this.messageSource);
-        				apacWriter.resetHeaders();
-        				apacWriter.build(apacSkuListings, 1, 3, 1, 3, 0,
-    							PromotionUtil.LISTING_TEMP_PASS);
-        				break;
-        			default :
-        				throw new MissingArgumentException("PromoSubType");
-        		}
-        	} else {
-        		fileName = ResourceProvider.ListingRes.skuListFileName;
-        		List<DealsListing> skuListings = service
-						.getSkuListingsByPromotionId(param.getPromoId(),
-								userData.getUserId(), null);
-        		ExcelSheetWriter<DealsListing> writer = new ExcelSheetWriter<DealsListing>(DealsListing.class,
-    					workBook, fileName);
-        		writer.resetHeaders();
-                writer.build(skuListings, 1, 3, 1, 3, 0, PromotionUtil.LISTING_TEMP_PASS);
-        	}
+        	workBook = excelService.getDealListingWorkbook(param.getPromoId(),
+        			userData.getUserId(), promoSubType);
+        	
+        	excelService.addDocSheet(workBook, promoSubType);
 
             resp.setContentType("application/x-msdownload;");
     		resp.setHeader("Content-disposition", "attachment; filename="
-    				+ fileName + ".xlsx");
+    				+ excelService.getExcelName(promoSubType));
     		workBook.write(resp.getOutputStream());
         } catch (IOException | PromoException e) {
         	logger.error("Unable to download deals listing.", e);
         } finally {
-        	try {
-				workBook.close();
-			} catch (IOException e) {
-				// ignore..
-			}
+        	if (workBook != null) {
+    			try {
+					workBook.close();
+				} catch (IOException e) {
+					// ignore
+				}
+    		}
         }
     }
 
