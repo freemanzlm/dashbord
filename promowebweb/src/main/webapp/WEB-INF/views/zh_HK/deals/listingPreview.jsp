@@ -3,8 +3,8 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<c:set var="categoryId" value="6000" />
-<!-- TODO 废弃这个页面 -->
+<c:set var="dealsType" value="${ 2 }" />
+
 <r:includeJquery jsSlot="head" />
 <r:client />
 
@@ -38,7 +38,7 @@
 	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.app_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.promotion_css}" target="head-css"/>
 	
 	<res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
 	<res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
@@ -54,7 +54,23 @@
 	<res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-	<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+	<c:choose>
+		<c:when test="${ promoSubType eq 'GBH'}">
+			<!-- china, brazil -->
+			<res:useJs value="${res.js.local.js.table['GBHListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ promoSubType eq 'FRES'}">
+			<!-- French and spain -->
+			<res:useJs value="${res.js.local.js.table['FrenchListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:when test="${ promoSubType eq 'APAC'}">
+			<!-- French and spain -->
+			<res:useJs value="${res.js.local.js.table['USListingTable.js']}" target="page-js2"></res:useJs>
+		</c:when>
+		<c:otherwise>
+			<res:useJs value="${res.js.local.js.table['DealsListingTable.js']}" target="page-js2"></res:useJs>
+		</c:otherwise>
+	</c:choose>
 	<res:useJs value="${res.js.local.js.page['deals_listing_preview.js']}" target="page-js2"></res:useJs>	
 </head>
 
@@ -70,7 +86,20 @@
 				<h2>已選擇的刊登預覽</h2>
 				
 				<div class="mt20">
-					<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+					<c:choose>
+						<c:when test="${promoSubType eq 'GBH' }">
+							<jsp:include page="../table/gbhListing.jsp"></jsp:include>
+						</c:when>
+						<c:when test="${promoSubType eq 'FRES' }">
+							<jsp:include page="../table/frenchListing.jsp"></jsp:include>
+						</c:when>
+						<c:when test="${promoSubType eq 'APAC' }">
+							<jsp:include page="../table/usListing.jsp"></jsp:include>
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="../table/dealsListing.jsp"></jsp:include>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				
 				<div class="mt20 page-bottom-actions">
@@ -93,7 +122,8 @@
 
 <script type="text/javascript">
 	var pageData = {
-		promoId: '${promoId}'
+		promoId: '${promoId}',
+		promoSubType : '${promoSubType}'
 	};
 </script>
 

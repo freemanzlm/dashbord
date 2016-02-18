@@ -20,7 +20,7 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 
-	<mvc:annotation-driven>
+	<mvc:annotation-driven validator="validator">
 			<mvc:message-converters>
             <!--  Support AJAX processing with progressive rendering. Overrides HttpOutputMessage with RaptorResponseWriter -->
 			<beans:bean class="com.ebay.raptor.kernel.filter.RaptorJacksonHttpMessageConverter"/>

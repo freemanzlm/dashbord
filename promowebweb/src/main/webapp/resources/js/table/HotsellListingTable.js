@@ -87,7 +87,7 @@ var BizReport = BizReport || {};
 					{data: 'currency'}
 				],
 				aoColumnDefs: [{
-					aTargets: ["itemId"],
+					aTargets: ["check"],
 					bSortable: false,
 					bVisible: false,
 					sDefaultContent: "",					

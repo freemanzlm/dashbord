@@ -13,21 +13,15 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
-import com.ebay.app.raptor.promocommon.excel.EmptyCellValueException;
-import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
 import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
-import com.ebay.app.raptor.promocommon.excel.InvalidDateCellValueException;
-import com.ebay.app.raptor.promocommon.util.DateUtil;
-import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 
-public class UploadListingSheetHandler implements IExcelSheetHandler {
+public class UploadListingSheetHandler extends AbstractListingSheetHandler {
 	private static CommonLogger logger =
             CommonLogger.getInstance(UploadListingSheetHandler.class);
-	private static final String DATE_FORMAT_STRING = "YYYY-MM-DD";
 	
 	public UploadListingSheetHandler(DealsListingService dealsListingService,
 			String promoId, Long userId) {
@@ -84,22 +78,22 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			Cell stockReadyDateCell = row.getCell(cellIndex++);
 			
 	
-			Object skuIdObj = getCellValue(skuIdCell);
-			Object skuNameObj = getCellValue(skuNameCell);
-			Object itemIdObj = getCellValue(itemIdCell);
+			Object skuIdObj = getCellValue(skuIdCell, String.class);
+			Object skuNameObj = getCellValue(skuNameCell, String.class);
+			Object itemIdObj = getCellValue(itemIdCell, Double.class);
 //			Object itemTitleObj = getCellValue(itemTitleCell);
-			Object currPriceObj = getCellValue(currPriceCell);
-			Object dealsPriceObj = getCellValue(dealsPriceCell);
-			Object stockNumObj = getCellValue(stockNumCell);
-			Object stockReadyDateObj = getCellValue(stockReadyDateCell);
-			Object currencyObj = getCellValue(currencyCell);
+			Object currPriceObj = getCellValue(currPriceCell, Double.class);
+			Object dealsPriceObj = getCellValue(dealsPriceCell, Double.class);
+			Object stockNumObj = getCellValue(stockNumCell, Double.class);
+			Object stockReadyDateObj = getCellValue(stockReadyDateCell, Date.class);
+			Object currencyObj = getCellValue(currencyCell, String.class);
 			
 			DealsListing listing = new DealsListing();
 			
 			// check if the sku is in the list
-			String skuId = skuIdObj == null ? "" : skuIdObj.toString();
-			String skuName = skuNameObj == null ? "" : skuNameObj.toString();
-			String currency = currencyObj == null ? "" : currencyObj.toString();
+			String skuId = skuIdObj == null ? "" : (String)skuIdObj;
+			String skuName = skuNameObj == null ? "" : (String)skuNameObj;
+			String currency = currencyObj == null ? "" : (String)currencyObj;
 			Long itemId = itemIdObj == null ? -1 : ((Double)itemIdObj).longValue();
 			boolean foundSku = false;
 
@@ -138,9 +132,9 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 			} else {
 				listing.setItemId(validateNumberData(itemIdObj, itemIdCell).longValue());
 //				listing.setItemTitle(validateStringData(itemTitleObj, itemTitleCell));
-				listing.setCurrPrice(validateNumberData(currPriceObj, currPriceCell).floatValue());
-				listing.setDealsPrice(validateNumberData(dealsPriceObj, dealsPriceCell).floatValue());
-				listing.setStockNum(validateNumberData(stockNumObj, stockNumCell).longValue());
+				listing.setCurrPrice(validateNumberData(currPriceObj, currPriceCell));
+				listing.setDealsPrice(validateNumberData(dealsPriceObj, dealsPriceCell));
+				listing.setStockNum(validateNumberData(stockNumObj, stockNumCell));
 				listing.setStockReadyDate(validateStringDateData(stockReadyDateObj, stockReadyDateCell));
 				uploadedListings.add(listing);
 			}
@@ -151,90 +145,6 @@ public class UploadListingSheetHandler implements IExcelSheetHandler {
 		} else {
 			throw new InvalidCellValueException(ErrorType.EmptyListingInExcel, 0, 0, "");
 		}
-	}
-
-	private Object getCellValue (Cell cell) {
-		int cellType = cell.getCellType();
-
-		if (cellType == Cell.CELL_TYPE_BLANK) {
-			return null;
-		} else if (cellType == Cell.CELL_TYPE_STRING) {
-			String cellValue = cell.getStringCellValue();
-			return StringUtil.isEmpty(cellValue) ? null : cellValue;
-		} else if (cellType == Cell.CELL_TYPE_NUMERIC) {
-			if (org.apache.poi.ss.usermodel.DateUtil.isCellDateFormatted(cell)) {
-				 return cell.getDateCellValue();
-			}
-
-			return cell.getNumericCellValue();
-		} else {
-			return null;
-		}
-	}
-	
-	private String validateStringData (Object cellValue, Cell cell) throws InvalidCellValueException {
-		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex();
-
-		if (cellValue == null) {
-			throw new EmptyCellValueException(rowIndex, colIndex);
-		}
-
-		String value = "";
-
-		try {
-			value = (String)cellValue;
-		} catch (Exception e) {
-			throw new InvalidCellValueException(rowIndex, colIndex, cellValue.toString(), e);
-		}
-		
-		if (value.length() > 200 || value.length() <= 0) {
-			throw new InvalidCellValueException(rowIndex, colIndex, value);
-		}
-		
-		return value;
-	}
-
-	private String validateStringDateData (Object cellValue, Cell cell) throws InvalidCellValueException {
-		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex();
-
-		if (cellValue == null) {
-			throw new EmptyCellValueException(rowIndex, colIndex);
-		}
-
-		Date value = null;
-
-		try {
-			value = (Date)cellValue;
-		} catch (Exception e) {
-			throw new InvalidDateCellValueException(rowIndex, colIndex, cellValue.toString(), DATE_FORMAT_STRING, e);
-		}
-		
-		return value == null ? "" : DateUtil.formatSimpleDateWithDash(value);
-	}
-	
-	private Double validateNumberData (Object cellValue, Cell cell) throws InvalidCellValueException {
-		int rowIndex = cell.getRowIndex() + 1;
-		int colIndex = cell.getColumnIndex();
-
-		if (cellValue == null) {
-			throw new EmptyCellValueException(rowIndex, colIndex);
-		}
-
-		Double value = -1.0;
-
-		try {
-			value = (double)cellValue;
-		} catch (Exception e) {
-			throw new InvalidCellValueException(rowIndex, colIndex, cellValue.toString(), e);
-		}
-		
-		if (value < 0) {
-			throw new InvalidCellValueException(rowIndex, colIndex, value + "");
-		}
-		
-		return value;
 	}
 
 	private DealsListingService dealsListingService;

@@ -24,3 +24,9 @@ a.fa-question-circle {
 	background-image: url("../img/icon/error.png");
 	color: #f00;
 }
+
+.icon-new {
+    background-image: url(../img/newicon.png);
+    width: 24px;
+    height: 15px;
+}

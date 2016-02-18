@@ -40,32 +40,52 @@ public class ResourceProvider {
 	
 	public interface ListingRes {
 		String dealsBase = "deals";
+		String siteDeals = "sitedeals";
 		String hotsellBase = "hotsell";
 		
 		String _getPromotionListings = "/getPromotionListings";
 		String getPromotionListings = "/getPromotionListings/promoId/{promoId}/uid/{uid}";
+		String getTempPromotionListings = "/getPromotionListings/promoId/{promoId}/uid/{uid}/type/{type}";
+	
 		String _getApplicableListings = "/getApplicableListings";
 		String getApplicableListings = "/getApplicableListings/promoId/{promoId}/uid/{uid}";
+
 		String _getAppliedListings = "/getAppliedListings";
 		String getAppliedListings = "/getAppliedListings/promoId/{promoId}/uid/{uid}";
+		String getTempAppliedListings = "/getAppliedListings/promoId/{promoId}/uid/{uid}/type/{type}";
+
 		String _getApprovedListings = "/getApprovedListings";
 		String getApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}";
+		String getTempApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}/type/{type}";
+
 		String _getSKUsByPromotionId = "/getSKUsByPromotionId";
 		String getSKUsByPromotionId = "/getSKUsByPromotionId/promoId/{promoId}/uid/{uid}";
+
 		String _getUploadedListings = "/getUploadedListings";
 		String getUploadedListings = "/getUploadedListings/promoId/{promoId}/uid/{uid}";
+		String getTempUploadedListings = "/getUploadedListings/promoId/{promoId}/uid/{uid}/type/{type}";
+
 		String _getSubmittedListings = "/getSubmittedListings";
 		String getSubmittedListings = "/getSubmittedListings/promoId/{promoId}/uid/{uid}";
+		String getTempSubmittedListings = "/getSubmittedListings/promoId/{promoId}/uid/{uid}/type/{type}";
 
 		String reviewUploadedListings = "/reviewUploadedListings";
 		String getSKUListingsByPromotionId = "/getSKUListingsByPromotionId/promoId/{promoId}/uid/{uid}";
+		String getSKUListingsByPromotionIdAndType = "/getSKUListingsByPromotionId/promoId/{promoId}/uid/{uid}/type/{type}";
 		String confirmDealsListings = "/confirmDealsListings";
 		String confirmHotSellListings = "/confirmHotSellListings";
 		String downloadSkuList = "/downloadSkuList";
 		String uploadDealsListings = "/uploadDealsListings";
+		String uploadGBHDealsListings = "/uploadGBHDealsListings";
+		String uploadAPACDealsListings = "/uploadAPACDealsListings";
+		String uploadFRESDealsListings = "/uploadFRESDealsListings";
 		String submitDealsListings = "/submitDealsListings";
+		String getListingsByPromotionIdAndUserIdAndType = "/getPromotionListings/promoId/{promoId}/uid/{uid}/type/{type}";
 		
 		String skuListFileName = "Deals_listing_template"; //TODO Here should be Chinese 
+		String gbhSkuListFileName = "Deals_listing_template_GBH"; //TODO Here should be Chinese 
+		String fresSkuListFileName = "Deals_listing_template_FRES"; //TODO Here should be Chinese 
+		String apacSkuListFileName = "Deals_listing_template_APAC"; //TODO Here should be Chinese 
 	}
 	
 	public interface SubsidyRes {

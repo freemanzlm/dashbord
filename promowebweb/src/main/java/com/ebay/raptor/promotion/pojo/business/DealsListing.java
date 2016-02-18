@@ -18,13 +18,13 @@ public class DealsListing {
 	private String itemTitle;
 
 	@Header(name = "刊登当前单价", order=5, format=ColumnFormat.FltNum, writable=true)
-	private Float currPrice;
+	private Double currPrice;
 	
 	@Header(name = "刊登活动单价", order=6, format=ColumnFormat.FltNum, writable=true)
-	private Float dealsPrice;
+	private Double dealsPrice;
 
 	@Header(name = "刊登库存量", order=7, format=ColumnFormat.IntNum, writable=true)
-	private Long stockNum;
+	private Double stockNum;
 	
 	@Header(name = "备货完成时间(YYYY-MM-DD)", order=8, format=ColumnFormat.Date, writable=true)
 	private String stockReadyDate;
@@ -32,7 +32,7 @@ public class DealsListing {
 	@Header(name = "货币单位", order=3, format=ColumnFormat.String)
 	private String currency;
 	
-	private Float proposePrice;
+	private Double proposePrice;
 
 	private String state;
 
@@ -68,27 +68,27 @@ public class DealsListing {
 		this.itemTitle = itemTitle;
 	}
 
-	public Float getCurrPrice() {
+	public Double getCurrPrice() {
 		return currPrice;
 	}
 
-	public void setCurrPrice(Float currPrice) {
+	public void setCurrPrice(Double currPrice) {
 		this.currPrice = currPrice;
 	}
 
-	public Float getDealsPrice() {
+	public Double getDealsPrice() {
 		return dealsPrice;
 	}
 
-	public void setDealsPrice(Float dealsPrice) {
+	public void setDealsPrice(Double dealsPrice) {
 		this.dealsPrice = dealsPrice;
 	}
 
-	public Long getStockNum() {
+	public Double getStockNum() {
 		return stockNum;
 	}
 
-	public void setStockNum(Long stockNum) {
+	public void setStockNum(Double stockNum) {
 		this.stockNum = stockNum;
 	}
 
@@ -116,11 +116,11 @@ public class DealsListing {
 		this.state = state;
 	}
 
-	public Float getProposePrice() {
+	public Double getProposePrice() {
 		return proposePrice;
 	}
 
-	public void setProposePrice(Float proposePrice) {
+	public void setProposePrice(Double proposePrice) {
 		this.proposePrice = proposePrice;
 	}
 }

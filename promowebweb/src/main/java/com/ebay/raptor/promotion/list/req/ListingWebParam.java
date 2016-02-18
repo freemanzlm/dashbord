@@ -1,5 +1,7 @@
 package com.ebay.raptor.promotion.list.req;
 
+import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
+
 public class ListingWebParam {
 	
 //	public static Long UID = 689917510l;
@@ -9,6 +11,8 @@ public class ListingWebParam {
 	private String promoId;
 
 	private Long uid;
+	
+	private String promoSubType;
 
 	public String getPromoId() {
 		return promoId;
@@ -24,6 +28,14 @@ public class ListingWebParam {
 
 	public void setUid(Long uid) {
 		this.uid = uid;
+	}
+
+	public String getPromoSubType() {
+		return promoSubType;
+	}
+
+	public void setPromoSubType(String promoSubType) {
+		this.promoSubType = promoSubType;
 	}
 
 }
