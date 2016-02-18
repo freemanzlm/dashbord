@@ -91,7 +91,7 @@
 <res:jsSlot id="exec-js" />
 <script type="text/javascript">
 	$(".terms-conditions").click(function(event){
-		BizReport.termsDialog.show();
+		cbt.termsDialog.show();
 	});
 </script>
 </body>

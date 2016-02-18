@@ -40,6 +40,11 @@
 	overflow: hidden;
 }
 
+table.dataTable tbody td,
+table.dataTable tbody th {
+	word-break: break-all;
+}
+
 table.dataTable thead th.text-left {
 	text-align: left;
 }
