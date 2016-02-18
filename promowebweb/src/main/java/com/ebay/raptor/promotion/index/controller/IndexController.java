@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.app.raptor.promocommon.businesstype.PMPromotionType;
+import com.ebay.cbt.common.constant.pm.PMPromotionType;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.AuthNeed;

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.ebay.app.raptor.promocommon.businesstype.PMPromotionStatus;
+import com.ebay.cbt.common.constant.pm.PMPromotionStatus;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 
