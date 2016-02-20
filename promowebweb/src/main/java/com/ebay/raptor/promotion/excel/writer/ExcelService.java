@@ -6,12 +6,14 @@ import java.util.Locale;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
@@ -30,9 +32,10 @@ import com.ebay.raptor.promotion.util.PromotionUtil;
 @Component
 public class ExcelService {
 	public final static String DEALS_LISTING_FILENAME_PREFIX = "Deals_listing_template";
-	private final static int DOC_SHEET_ROW = 20;
-	private final static int DOC_SHEET_COL = 8;
-	private final static String DOC_SHEET_NAME_KEY = "Document.sheetName";
+	private final static String DOC_SHEET_NAME_KEY = "doc.sheetName";
+	private final static String DOC_FIELD_HEADER_KEY = "doc.field";
+	private final static String DOC_LOCKED_HEADER_KEY = "doc.locked";
+	private final static String DOC_DESCRIPTION_HEADER_KEY = "doc.description";
 	
 	private static final SecureRandom random = new SecureRandom(); // not really random when cross multi-instance.
 
@@ -110,51 +113,98 @@ public class ExcelService {
 	}
 	
 	public void addDocSheet (XSSFWorkbook workBook, PromotionSubType promoSubType) {
+		String docHeader = messageSource.getMessage(DOC_SHEET_NAME_KEY, null, Locale.SIMPLIFIED_CHINESE);
+
+		// create sheet
+		Sheet docSheet = workBook.createSheet(docHeader);
+		
+		// create header: create style and insert data
+		CellStyle headerStyle = workBook.createCellStyle();
+		headerStyle.setAlignment(CellStyle.ALIGN_LEFT);
+		headerStyle.setFillForegroundColor(IndexedColors.LIME.getIndex());
+		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		headerStyle.setWrapText(true);
+		Font ft = workBook.createFont();
+		ft.setFontName("Arial");
+		ft.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		headerStyle.setFont(ft);
+		
+		CellStyle bodyStyle = workBook.createCellStyle();
+		bodyStyle.setAlignment(CellStyle.ALIGN_LEFT);
+		bodyStyle.setWrapText(true);
+
+		Row row0 = docSheet.createRow(0);
+		Cell cell00 = row0.createCell(0);
+		cell00.setCellStyle(bodyStyle);
+		cell00.setCellValue(docHeader);
+		
+		Row row1 = docSheet.createRow(1);
+		Cell cell10 = row1.createCell(0);
+		Cell cell11 = row1.createCell(1);
+		Cell cell12 = row1.createCell(2);
+		cell10.setCellStyle(headerStyle);
+		cell10.setCellValue(messageSource.getMessage(DOC_FIELD_HEADER_KEY, null, Locale.SIMPLIFIED_CHINESE));
+		cell11.setCellStyle(headerStyle);
+		cell11.setCellValue(messageSource.getMessage(DOC_LOCKED_HEADER_KEY, null, Locale.SIMPLIFIED_CHINESE));
+		cell12.setCellStyle(headerStyle);
+		cell12.setCellValue(messageSource.getMessage(DOC_DESCRIPTION_HEADER_KEY, null, Locale.SIMPLIFIED_CHINESE));
+
+		CellRangeAddress mergeRegion = new CellRangeAddress(0, 0, 0, 2);
+		docSheet.addMergedRegion(mergeRegion);
+		docSheet.setFitToPage(true);
+		
+		// create body
+		String [] rowKeys = null;
+		String msgKeyPrefix = "";
+		
 		if (promoSubType != null) {
-
-			Sheet docSheet = workBook.createSheet(messageSource.getMessage(DOC_SHEET_NAME_KEY, null, Locale.SIMPLIFIED_CHINESE));
+			switch (promoSubType) {
+				case GBH:
+					rowKeys = DocSheetKey.GBHKeys;
+					msgKeyPrefix = "doc.GBH";
+					break;
+				case FRES:
+					rowKeys = DocSheetKey.FRESKeys;
+					msgKeyPrefix = "doc.FRES";
+					break;
+				case APAC:
+					rowKeys = DocSheetKey.APACKeys;
+					msgKeyPrefix = "doc.APAC";
+					break;
+				default:
+					return;
+			}
+		} else {
+			rowKeys = DocSheetKey.listingKeys;
+			msgKeyPrefix = "doc.listing";
+		}
+		
+		for (int i = 0; i < rowKeys.length; i++) {
+			Row row = docSheet.createRow(i + 2);
 			
-			for (int i = 0; i < DOC_SHEET_ROW; i++) {
-				Row row = docSheet.createRow(i);
+			Cell cell0 = row.createCell(0);
+			Cell cell1 = row.createCell(1);
+			Cell cell2 = row.createCell(2);
 
-				for (int j = 0; j < DOC_SHEET_COL; j++) {
-					Cell cell = row.createCell(j);
-					
-					if (i == 0) {
-						docSheet.setColumnWidth(j, 10 * 512);
-					}
-					
-					if (i==0 && j==0) {
-						String msgKey = "";
-						switch (promoSubType) {
-							case GBH: 
-								msgKey = "Document.GBHDoc";
-								break;
-							case FRES:
-								msgKey = "Document.FRESDoc";
-								break;
-							case APAC:
-								msgKey = "Document.APACDoc";
-								break;
-						default:
-							break;
-						}
+			// set once only
+			if (i == 1) {
+				docSheet.setColumnWidth(0, 10 * 512);
+				docSheet.setColumnWidth(1, 5 * 512);
+				docSheet.setColumnWidth(2, 60 * 512);
+			}
 
-						XSSFCellStyle cellStyle = workBook.createCellStyle();
-						cellStyle.setWrapText(true);
-						cellStyle.setAlignment(CellStyle.ALIGN_LEFT);
-						cellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-						cell.setCellStyle(cellStyle);
-						
-						cell.setCellValue(messageSource.getMessage(msgKey, null, Locale.SIMPLIFIED_CHINESE));
-					}
-				}
+			cell0.setCellStyle(bodyStyle);
+			cell1.setCellStyle(bodyStyle);
+			cell2.setCellStyle(bodyStyle);
+			cell0.setCellValue(messageSource.getMessage(msgKeyPrefix + '.' + rowKeys[i] + ".key", null, Locale.SIMPLIFIED_CHINESE));
+
+			try {
+				cell1.setCellValue(messageSource.getMessage(msgKeyPrefix + '.' + rowKeys[i] + ".locked", null, Locale.SIMPLIFIED_CHINESE));
+			} catch (NoSuchMessageException e) {
+				// ignore
 			}
 			
-			CellRangeAddress mergeRegion = new CellRangeAddress(0, DOC_SHEET_ROW - 1, 0, DOC_SHEET_COL - 1);
-			docSheet.addMergedRegion(mergeRegion);
-			
-			docSheet.setFitToPage(true);
+			cell2.setCellValue(messageSource.getMessage(msgKeyPrefix + '.' + rowKeys[i] + ".description", null, Locale.SIMPLIFIED_CHINESE));
 		}
 	}
 	
