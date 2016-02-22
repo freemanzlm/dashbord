@@ -199,7 +199,7 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
 				} else if (Boolean.class.isAssignableFrom(fldClazz)) {
 					field.set(obj, cellValue == 1 ? true : false);
 				} else if (Date.class.isAssignableFrom(fldClazz)) {
-					field.set(obj, new Date(cellValue.longValue()));
+					field.set(obj, org.apache.poi.ss.usermodel.DateUtil.getJavaDate(cellValue));
 				} else {
 					throw new UnsupportFieldDataTypeException(fldClazz.getSimpleName());
 				}

@@ -91,7 +91,7 @@ public abstract class AbstractListingSheetHandler implements IExcelSheetHandler{
 			} else if (Boolean.class.isAssignableFrom(fldType)) {
 				return cellValue == 1 ? true : false;
 			} else if (Date.class.isAssignableFrom(fldType)) {
-				return new Date(cellValue.longValue());
+				return org.apache.poi.ss.usermodel.DateUtil.getJavaDate(cellValue);
 			} else {
 				throw new UnsupportFieldDataTypeException(fldType.getSimpleName());
 			}
