@@ -81,7 +81,6 @@ var BizReport = BizReport || {};
 				    {data: 'itemId'},
 				    {data: 'skuName'},
 				    {data: 'category'},
-//				    {data: 'spainItemId'},
 				    {data: 'fvf'},
 				    {data: 'currPrice', aDataSort: [13, 12, 5]},
 				    {data: 'dealsPrice', aDataSort: [13, 12, 6]},
