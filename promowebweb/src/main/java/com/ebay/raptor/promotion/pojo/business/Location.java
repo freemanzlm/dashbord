@@ -1,14 +1,11 @@
 package com.ebay.raptor.promotion.pojo.business;
 
 public enum Location implements IDescription{
-	US  ("US"),
-	CA  ("CA"),
 	UK	("UK"),
 	DE	("DE"),
 	ESP	("ESP"),
 	IT	("IT"),
 	FR	("FR"),
-	AU  ("AU"),
 	CN	("CN"),
 	HK	("HK"),
 	TW	("TW");
