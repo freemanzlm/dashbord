@@ -17,7 +17,7 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-//				'aaSorting': [[1, 'asc']],
+				'aaSorting': [[2, 'asc']],
 				'aaSortingFixed': [[23, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
@@ -123,7 +123,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["item-id"],
-					sDefaultContent: "",					
+					sDefaultContent: "",			
 					sType: "numeric",
 					sWidth: "165px",
 					sClass: "pic-id dt-nowrap",

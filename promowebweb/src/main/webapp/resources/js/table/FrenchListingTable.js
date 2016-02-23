@@ -17,7 +17,7 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[1, 'asc']],
+				'aaSorting': [[2, 'asc']],
 				'aaSortingFixed': [[13, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
@@ -81,7 +81,6 @@ var BizReport = BizReport || {};
 				    {data: 'itemId'},
 				    {data: 'skuName'},
 				    {data: 'category'},
-//				    {data: 'spainItemId'},
 				    {data: 'fvf'},
 				    {data: 'currPrice', aDataSort: [13, 12, 5]},
 				    {data: 'dealsPrice', aDataSort: [13, 12, 6]},

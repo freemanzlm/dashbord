@@ -17,7 +17,7 @@
 				<th class="location">仓储地址<br/>Item Location</th>
 				<th class="delivery">妥投时间<br/>Delivery Time</th>
 				<th class="ship-price">运费<br/>Shipping Price</th>
-				<th class="rrp-link">产品全网最低价<br/>RRP Link</th>
+				<th class="rrp-link">相同产品全网最低价<br/>RRP Link</th>
 				<th class="currency">刊登币种<br/>Currency</th>
 				<th class="state">状态<br/>State</th>
 			</tr>
