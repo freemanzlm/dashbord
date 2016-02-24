@@ -33,9 +33,6 @@ var BizReport = BizReport || {};
 				'bScrollCollapse': true,
 				'sScrollX': "100%",
 				'sScrollY': "600",
-				 fixedColumns: {
-					 leftColumns: 2
-				 },
 				'oLanguage': {
 					sEmptyTable: local.getText('dataTable.emptyTable'),
 					sInfo: local.getText('dataTable.listing.info'),

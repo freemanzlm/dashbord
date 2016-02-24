@@ -28,7 +28,6 @@
 						'iDisplayLength': 10
 					}
 				}});
-			listingTable.initDataTable();
 		},
 
 		delegate : function() {
@@ -40,6 +39,11 @@
 				self.publish("ok");
 				self.close();
 			});
+		},
+		
+		show: function() {
+			this._super();
+			this.listingTable.initDataTable();
 		}
 
 	};
