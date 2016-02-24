@@ -277,6 +277,9 @@ var BizReport = BizReport || {};
 					aTargets: ["location"],
 					sClass: "text-center"
 				},{
+					aTargets: ["category"],
+					sClass: "dt-nowrap"
+				},{
 					aTargets: ["rrp-link"],
 					bSortable: true,
 					sClass: "url text-center",

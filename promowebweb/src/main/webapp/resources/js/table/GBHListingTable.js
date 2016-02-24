@@ -284,6 +284,9 @@ var BizReport = BizReport || {};
 						
 						return data;
 					}
+				},{
+					aTargets: ["category"],
+					sClass: "dt-nowrap"
 				}] 
 			}
 		};
