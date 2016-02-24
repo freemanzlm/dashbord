@@ -36,13 +36,17 @@ public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSh
 
 	@Override
 	public void handleSheet(XSSFSheet sheet) throws CommonException {
+		logger.warn("--------------------------\r\n get excel header......\r\n--------------------------------");
 		List<HeaderConfiguration> headerConfigs =  HeaderConfigurationManager.getHeaderConfigurations(clazz);
 
+		logger.warn("--------------------------\r\n validate header......\r\n--------------------------------");
 		parseAndValidateHeader(sheet, headerConfigs);
 
+		logger.warn("--------------------------\r\n validate listing......\r\n--------------------------------");
 		List<T> listings = parseAndValidateContent(sheet, headerConfigs);
 		
 		if (listings != null && listings.size() > 0) {
+			logger.warn("--------------------------\r\n upload listing......\r\n--------------------------------");
 			updateDealsListing(listings);
 		} else {
 			throw new InvalidCellValueException(ErrorType.EmptyListingInExcel, 0, 0, "");

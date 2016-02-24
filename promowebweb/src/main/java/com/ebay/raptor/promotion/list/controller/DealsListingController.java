@@ -127,6 +127,8 @@ public class DealsListingController extends AbstractDealsListingController{
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 		
+		logger.warn("--------------------------\r\nBegin uploading......\r\n---------------------------");
+		
 		PromotionSubType pSubType = null;
 		
 		try {
@@ -166,6 +168,8 @@ public class DealsListingController extends AbstractDealsListingController{
 				handler = new UploadListingSheetHandler(service,
 						promoId, userData.getUserId());
 			}
+			
+			logger.warn("--------------------------\r\nInit Handler......\r\n-----------------------------");
 
 			ExcelReader.readWorkbook(workbook, 0, handler);
 			responseData.setStatus(true);
@@ -222,6 +226,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		}
 
 		mav.addObject("response", PojoConvertor.convertToJson(responseData));
+		logger.warn("--------------------------\r\nFinish uploading......\r\n-------------------------------");
 		return mav;
 	}
 
