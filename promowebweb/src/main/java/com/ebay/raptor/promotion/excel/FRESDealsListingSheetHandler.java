@@ -39,7 +39,11 @@ public class FRESDealsListingSheetHandler extends SiteDealsListingSheetHandler<F
 	protected void updateDealsListing(List<FRESDealsListing> listings)
 			throws PromoException {
 		if (listings.size() > 0) {
+			long start = System.currentTimeMillis();
 			dealsListingService.uploadFRESDealsListings(listings, promoId, userId);
+			long end = System.currentTimeMillis();
+			
+			logger.error("uploading listing cost " + (end-start) + "ms");
 		}
 	}
 

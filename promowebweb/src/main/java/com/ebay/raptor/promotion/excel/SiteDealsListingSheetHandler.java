@@ -31,7 +31,7 @@ import com.ebay.raptor.promotion.pojo.business.ShipOption;
 import com.ebay.raptor.promotion.pojo.business.Site;
 
 public abstract class SiteDealsListingSheetHandler <T> extends AbstractListingSheetHandler{
-	private static CommonLogger logger =
+	protected static CommonLogger logger =
             CommonLogger.getInstance(UploadListingSheetHandler.class);
 
 	@Override
