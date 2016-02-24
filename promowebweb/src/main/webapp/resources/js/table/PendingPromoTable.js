@@ -139,7 +139,7 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return '<a href="' + getLink(full.promoId) + '" target="_blank">' + local.getText('promo.state.Detailed') + "</a>";
+							return '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 						}
 						
 						if (type == "sort") {
