@@ -262,6 +262,9 @@ var BizReport = BizReport || {};
 						return data;
 					}
 				},{
+					aTargets: ["category"],
+					sClass: "dt-nowrap"
+				},{
 					aTargets: ["rrp-link"],
 					bSortable: true,
 					sClass: "url text-center",
