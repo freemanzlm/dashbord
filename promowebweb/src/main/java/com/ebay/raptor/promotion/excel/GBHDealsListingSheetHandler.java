@@ -15,17 +15,17 @@ import com.ebay.raptor.promotion.validation.ValidationUtil;
 public class GBHDealsListingSheetHandler extends SiteDealsListingSheetHandler<GBHDealsListing> {
 
 	public GBHDealsListingSheetHandler(SpringValidatorAdapter validator,DealsListingService dealsListingService,
-			String promoId, Long userId) {
+			String promoId, Long userId) throws PromoException {
 		this.validator = validator;
 		this.dealsListingService = dealsListingService;
 		this.promoId = promoId;
 		this.userId = userId;
 		this.clazz = GBHDealsListing.class;
+		this.skus = dealsListingService.getSkusByPromotionId(promoId, userId);
 	}
 
 	@Override
 	protected boolean validateSKU(GBHDealsListing listing, int rowIndex) throws InvalidCellValueException, PromoException {
-		List<Sku> skus = dealsListingService.getSkusByPromotionId(promoId, userId);
 		return ValidationUtil.validateSKU(listing.getSkuId(), listing.getSkuName(), skus, rowIndex);
 	}
 
@@ -46,4 +46,5 @@ public class GBHDealsListingSheetHandler extends SiteDealsListingSheetHandler<GB
 	protected DealsListingService dealsListingService;
 	private String promoId;
 	private Long userId;
+	private List<Sku> skus;
 }
