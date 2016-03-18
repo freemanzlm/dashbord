@@ -59,7 +59,14 @@ $(function(){
 						$("#upload-error-msg").removeClass("hide");
 						$("#upload-error-msg").find("b").text(responseData.message);
 					} else if (responseData.data && responseData.data.length > 0) {
-						cbt.alert(local.getText("errorMsg.regDateExpired"));
+						var errCode = parseInt(responseData.data);
+						
+						if (errCode == 32) {
+							cbt.alert(local.getText("errorMsg.regDateExpired"));
+						} else {
+							cbt.alert(local.getText("errorMsg.uploadListingError"));
+						}
+						
 						window.location.replace("/promotion/" + pageData.promoId);
 					}
 					// redirect to error page

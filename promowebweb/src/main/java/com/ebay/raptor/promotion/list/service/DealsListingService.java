@@ -433,14 +433,11 @@ public class DealsListingService extends BaseService {
 					if (errorCode == ErrorType.DateExpiredException.getCode()) {
 						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
 					}
-					return false;
 				}
-			} else {
-				return false;
 			}
-		} else {
-			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
+		
+		throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 	}
 	
 	public boolean uploadGBHDealsListings(List<GBHDealsListing> uploadListings, String promoId, Long uid) throws PromoException {
@@ -462,14 +459,11 @@ public class DealsListingService extends BaseService {
 					if (errorCode == ErrorType.DateExpiredException.getCode()) {
 						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
 					}
-					return false;
 				}
-			} else {
-				return false;
 			}
-		} else {
-			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
+		
+		throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 	}
 	
 	public boolean uploadFRESDealsListings(List<FRESDealsListing> uploadListings, String promoId, Long uid) throws PromoException {
@@ -491,14 +485,11 @@ public class DealsListingService extends BaseService {
 					if (errorCode == ErrorType.DateExpiredException.getCode()) {
 						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
 					}
-					return false;
 				}
-			} else {
-				return false;
 			}
-		} else {
-			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
+		
+		throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 	}
 	
 	public boolean uploadAPACDealsListings(List<APACDealsListing> uploadListings, String promoId, Long uid) throws PromoException {
@@ -513,21 +504,19 @@ public class DealsListingService extends BaseService {
 			GeneralDataResponse<Boolean> general = resp.getEntity(type);
 			if(null != general){
 				if (AckValue.SUCCESS == general.getAckValue()) {
-					return true;
+					throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
+//					return true;
 				} else {
 					int errorCode = general.getResponseStatus();
 	
 					if (errorCode == ErrorType.DateExpiredException.getCode()) {
 						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
 					}
-					return false;
 				}
-			} else {
-				return false;
 			}
-		} else {
-			throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
+		
+		throw new PromoException(ErrorType.UnableUploadDealsListing, Status.fromStatusCode(resp.getStatus()));
 	}
 
 	public boolean submitDealsListings(String promoId, Long uid) throws PromoException {

@@ -139,6 +139,13 @@ public class DealsListingController extends AbstractDealsListingController{
 			logger.error("Invalid promotion Sub Type", e);
 			throw new MissingArgumentException("PromoSubType");
 		}
+		
+		Locale locale = Locale.SIMPLIFIED_CHINESE;
+		
+		if (!StringUtil.isEmpty(userData.getLang())
+				&& CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(userData.getLang())) {
+			locale = new Locale("zh", "HK");
+		}
 
 		XSSFWorkbook workbook = null;
 		try {
@@ -183,14 +190,7 @@ public class DealsListingController extends AbstractDealsListingController{
 			logger.error("The uploaded listings are invalid.", e);
 			responseData.setStatus(false);
 			Errors errors = e.getErrors();
-			
-			Locale locale = Locale.SIMPLIFIED_CHINESE;
-			
-			if (!StringUtil.isEmpty(userData.getLang())
-					&& CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(userData.getLang())) {
-				locale = new Locale("zh", "HK");
-			}
-			
+
 			String errPrefix = messageSource.getMessage("listing.upload.rowPrefix", new Object []{e.getRowIndex()}, locale);
 			
 			if (errors.getFieldError() != null) {
@@ -201,13 +201,6 @@ public class DealsListingController extends AbstractDealsListingController{
 		} catch (CommonException e) {
 			// Got logic exception -> check the error code and return the message to UI
 			logger.error("The uploaded listings are invalid.", e);
-			
-			Locale locale = Locale.SIMPLIFIED_CHINESE;
-			
-			if (!StringUtil.isEmpty(userData.getLang())
-					&& CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(userData.getLang())) {
-				locale = new Locale("zh", "HK");
-			}
 
 			ErrorType errorType = e.getErrorType();
 			responseData.setStatus(false);

@@ -115,6 +115,7 @@ BizReport.local = {
 	},
 	'errorMsg': {
 		'regDateExpired': '很遺憾，報名已經截止，如需繼續報名，請聯繫客服！',
+		'uploadListingError': '上傳刊登失敗，請聯繫客服了解詳細情況！'
 	}
 };
 
