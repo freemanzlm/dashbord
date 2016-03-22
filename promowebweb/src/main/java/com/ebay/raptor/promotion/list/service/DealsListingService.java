@@ -504,8 +504,7 @@ public class DealsListingService extends BaseService {
 			GeneralDataResponse<Boolean> general = resp.getEntity(type);
 			if(null != general){
 				if (AckValue.SUCCESS == general.getAckValue()) {
-					throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
-//					return true;
+					return true;
 				} else {
 					int errorCode = general.getResponseStatus();
 	
