@@ -14,6 +14,7 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.trans.ZHConverter;
 import com.ebay.raptor.geo.utils.CountryEnum;
+import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -54,10 +55,12 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter{
 			user.setLang(language);
 
 			// change the language cookie according to the "lang" request parameter.
-			CookieUtil.setCBTPromotionCookie(resp, CookieUtil.EBAY_CBT_LANGUAGE_COOKIE_NAME, language);
+			CookieUtil.setCBTPromotionCookie(resp, AppCookies.EBAY_CBT_LANGUAGE_COOKIE_NAME, language);
 		}
 
 		addPageParameters(req, model, user);
+		
+		resp.addHeader("X-Frame-Option", "Allow-From http://www.ebay.cn");
 		
 		//TODO Add CN by default.
 //		model.addObject(ViewContext.Region.getAttr(), "CN");

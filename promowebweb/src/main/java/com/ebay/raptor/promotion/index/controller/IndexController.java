@@ -18,10 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.cbt.common.constant.pm.PMPromotionType;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
+import com.ebay.cbt.common.constant.pm.PMPromotionType;
 import com.ebay.raptor.promotion.AuthNeed;
+import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -69,17 +70,17 @@ public class IndexController {
         }
         
         //Add admin cookie
-        Cookie adminCookie = new Cookie(CookieUtil.ADMIN_COOKIE_NAME, Boolean.parseBoolean(admin) + "");
-	   	adminCookie.setMaxAge(CookieUtil.COOKIE_LIFESPAN);
-	   	adminCookie.setPath(CookieUtil.COOKIE_PATH_ROOT);
+        Cookie adminCookie = new Cookie(AppCookies.ADMIN_COOKIE_NAME, Boolean.parseBoolean(admin) + "");
+	   	adminCookie.setMaxAge(CookieUtil.ONE_DAY_COOKIE_LIFESPAN);
+	   	adminCookie.setPath(AppCookies.COOKIE_PATH_ROOT);
         response.addCookie(adminCookie);
 
         if (!StringUtil.isEmpty(userId)) {
         	// add hack_id in order to avoid login checking
-        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.HACKID_COOKIE_KEY, hackId);
-        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.EBAY_CBT_USER_ID_COOKIE_NAME, userId);
+        	CookieUtil.setCBTPromotionCookie(response, AppCookies.HACKID_COOKIE_KEY, hackId);
+        	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, userId);
         	// hack_id is the user name.
-        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId);
+        	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId);
         }
 
         try {
