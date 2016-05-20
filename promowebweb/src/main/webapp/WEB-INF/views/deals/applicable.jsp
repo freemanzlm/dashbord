@@ -73,7 +73,6 @@
 		<!-- end: Global Header -->
 
 		<jsp:include page="../topNavigator.jsp"></jsp:include>
-
 		<div id="page-pane">
 			<div class="pane">
 				<h2>Deals招募 ${promo.name}</h2>

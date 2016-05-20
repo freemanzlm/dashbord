@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping(value="other")
+@RequestMapping(value="front/other")
 public class OtherController {
 
 	@RequestMapping(value = "state", method = RequestMethod.GET)

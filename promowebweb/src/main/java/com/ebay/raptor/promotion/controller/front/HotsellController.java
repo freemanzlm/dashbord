@@ -18,7 +18,7 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
  *
  */
 @Controller
-@RequestMapping(value = "hotsell")
+@RequestMapping(value = "front/hotsell")
 public class HotsellController {
 
     @RequestMapping(value = "applicable", method = RequestMethod.GET)

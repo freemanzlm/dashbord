@@ -5,7 +5,6 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.Response.Status;
 
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.ebayopensource.ginger.client.GingerWebTarget;
@@ -42,18 +41,12 @@ public class BaseService {
 	protected GingerClientResponse httpGet(String url){
 		GingerWebTarget target = PromoClient.getClient().target(url);
 		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(TokenService.getIAFToken())).get();
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			return resp;
-		}
 		return resp;
 	}
 	
 	protected GingerClientResponse httpPost(String url, Object postObj){
 		GingerWebTarget target = PromoClient.getClient().target(url);
 		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(TokenService.getIAFToken())).post(Entity.json(postObj));
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			return resp;
-		}
 		return resp;
 	}
 	

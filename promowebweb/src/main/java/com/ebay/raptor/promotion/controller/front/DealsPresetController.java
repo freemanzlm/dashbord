@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-@RequestMapping(value="dealspreset")
+@RequestMapping(value="front/dealspreset")
 public class DealsPresetController {
 
 	@RequestMapping(value = "applicable", method = RequestMethod.GET)
