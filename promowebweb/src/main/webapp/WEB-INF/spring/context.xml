@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -13,47 +11,61 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
-	<!--  Allow proxys -->
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Allow proxys -->
 	<aop:aspectj-autoproxy />
-	
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 
 	<mvc:annotation-driven validator="validator">
-			<mvc:message-converters>
-            <!--  Support AJAX processing with progressive rendering. Overrides HttpOutputMessage with RaptorResponseWriter -->
-			<beans:bean class="com.ebay.raptor.kernel.filter.RaptorJacksonHttpMessageConverter"/>
-			</mvc:message-converters>
+		<mvc:message-converters>
+			<!-- Support AJAX processing with progressive rendering. Overrides HttpOutputMessage 
+				with RaptorResponseWriter -->
+			<beans:bean
+				class="com.ebay.raptor.kernel.filter.RaptorJacksonHttpMessageConverter" />
+		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-    <context:component-scan base-package="com.ebay.raptor.config" />
+	<context:component-scan base-package="com.ebay.raptor.config" />
 	<context:component-scan base-package="com.ebay.raptor.promotion" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.controller" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.resource" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.service" />
 
 	<!-- Handles HTTP GET requests by efficiently serving up static resources 
-	     in the corresponding directory -->
+		in the corresponding directory -->
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/static/**" location="/resources/static/" />
 	
 	<mvc:interceptors>
-       <beans:bean class="com.ebay.raptor.promotion.interceptor.AuthInterceptor"></beans:bean>
-       <beans:bean class="com.ebay.raptor.promotion.interceptor.LanguageInterceptor"></beans:bean>
-       <beans:bean class="com.ebay.raptor.promotion.interceptor.UpdatedPromotionsNumInterceptor"></beans:bean>
-    </mvc:interceptors>
-    
-    <beans:bean id="multipartResolver"
+		<beans:bean class="com.ebay.raptor.promotion.interceptor.AuthInterceptor"></beans:bean>
+		<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<beans:property name="paramName" value="lang" />
+		</beans:bean>
+		<beans:bean class="com.ebay.raptor.promotion.interceptor.LanguageInterceptor"></beans:bean>
+		<beans:bean class="com.ebay.raptor.promotion.interceptor.UpdatedPromotionsNumInterceptor"></beans:bean>
+	</mvc:interceptors>
+	
+	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<beans:property name="cookieName" value="eBayCBTLang" />
+		<beans:property name="cookieMaxAge" value="86400" />
+		<beans:property name="cookiePath" value="/" />
+	</beans:bean>
+
+	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- one of the properties available; the maximum file size in bytes -->
-		<beans:property name="maxUploadSize" value="10000000"/>
+		<beans:property name="maxUploadSize" value="10000000" />
 	</beans:bean>
-    
- 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>

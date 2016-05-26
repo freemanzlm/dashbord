@@ -19,6 +19,7 @@ public class TokenService extends BaseService{
 	
 	static Map<String, String> secrets = null;
 	static String iafToken = null;
+//	static Map<String, String> cachedTokens = new ConcurrentHashMap<String, String>();
 	
 	static {
 		secrets = new ConcurrentHashMap<String, String>();
@@ -62,11 +63,38 @@ public class TokenService extends BaseService{
 				logger.log(LogLevel.ERROR, "Failed to get the IAF Token.", e);
 			}
 		}
-		
-		iafToken = IAFTokenProvider.getTokenByConsumerIdAndSecret(CONSUMER_ID, secret());
+
+		iafToken = IAFTokenProvider.getConsumerIAFToken(CONSUMER_ID, secret());
 		
 		return null != iafToken ? iafToken : "";
 	}
+	
+	/**
+	 * Get the IAF token
+	 * @return
+	 */
+	/*public static String getIAFToken(){
+		if (!StringUtil.isEmpty(iafToken)) {
+			try{
+				if(!IAFTokenUtility.isExpired(iafToken)){
+					return iafToken;
+				}
+			} catch(Throwable e){
+				logger.log(LogLevel.ERROR, "Failed to get the IAF Token.", e);
+			}
+		}
+		
+		try {
+			ISecureTokenManager tokenGen = SecureTokenFactory.getInstance();
+			iafToken = tokenGen.getAppToken().getAccessToken();
+			System.out.println(iafToken);
+		} catch (TokenCreationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null != iafToken ? iafToken : "";
+	}*/
 	
 	/**
 	 * Get the IAF token
