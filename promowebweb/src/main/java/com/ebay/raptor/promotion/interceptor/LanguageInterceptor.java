@@ -97,7 +97,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		Boolean isTradionalLang = langCache.get(user.getUserId());
 		if (null != isTradionalLang) {
 			if (isTradionalLang) {
-				updateApplicationContextForNonCNRegion(model);
+				translatePromotionDescription(model);
 			}
 			return;
 		}
@@ -114,7 +114,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 
 		if (null != region) {
 			if (!(CountryEnum.CN.getName()).equals(region)) {
-				updateApplicationContextForNonCNRegion(model);
+				translatePromotionDescription(model);
 				// Cache the user
 				langCache.put(user.getUserId(), Boolean.TRUE);
 			} else {
@@ -190,17 +190,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		// for zh_HK, change the view name and translate the particular data
 		// into traditional Chinese
 		if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(language)) {
-			updateApplicationContextForNonCNRegion(model);
+			translatePromotionDescription(model);
 		}
-	}
-
-	/**
-	 * Update tasks to set or update the context.
-	 * 
-	 * @param model
-	 */
-	private void updateApplicationContextForNonCNRegion(ModelAndView model) {
-		translatePromotionDescription(model);
 	}
 
 	/**

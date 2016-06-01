@@ -1,30 +1,34 @@
 package com.ebay.raptor.promotion.util;
 
-
-import java.io.IOException;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * Convert JSON string to object or convert object into JSON string.
+ * @author lyan2
+ */
 public class PojoConvertor {
 
 	private static ObjectMapper mapper = new ObjectMapper();
 	
+	static {
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true); 
+	}
+	
 	private static Logger logger = Logger.getInstance(PojoConvertor.class);
 	
+	/**
+	 * Serialize a object into JSON string.
+	 * @param obj
+	 * @return
+	 */
 	public static <T> String convertToJson(T obj) {
-		if (obj == null) {
-			return null;
-		}
-		
 		try {
-			return mapper.writeValueAsString(obj);
+			return obj == null ? null : mapper.writeValueAsString(obj);
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "Can't convert the obj to string.", e);
 		}
@@ -32,32 +36,15 @@ public class PojoConvertor {
 		return null;
 	}
 	
+	/**
+	 * Deserialize a JSON string into a object.
+	 * @param jsonBean
+	 * @param clazz
+	 * @return
+	 */
 	public static <T> T convertToObject(String jsonBean, Class<T> clazz){
-		if(StringUtil.isEmpty(jsonBean)){
-			return null;
-		}
 		try{
-			mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			T javaBean = mapper.readValue(jsonBean, clazz);
-			return javaBean;
-		} catch(Exception e){
-			logger.log(LogLevel.ERROR, "Cannt convert JSON string to Java object. JSON:" 
-						+ jsonBean + " Class: " + clazz, e);
-		}
-		return null;
-	}
-	
-	public static <T> T convertToObject(String jsonBean, Class<T> clazz, boolean quoted){
-		if(StringUtil.isEmpty(jsonBean)){
-			return null;
-		}
-		try{
-			if(!quoted){
-				mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true); 
-			}
-			mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			T javaBean = mapper.readValue(jsonBean, clazz);
-			return javaBean;
+			return (jsonBean == null || jsonBean.isEmpty()) ? null : mapper.readValue(jsonBean, clazz);
 		} catch(Exception e){
 			logger.log(LogLevel.ERROR, "Cannt convert JSON string to Java object. JSON:" 
 						+ jsonBean + " Class: " + clazz, e);

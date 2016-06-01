@@ -31,7 +31,7 @@ public class UpdatedPromotionsNumInterceptor extends HandlerInterceptorAdapter {
 			return;
 		}
 		long start = System.currentTimeMillis();
-		UserData userDt = CookieUtil.getUserDataFromCookieOverrideLang(request);
+		UserData userDt = CookieUtil.getUserDataFromCookie(request);
 		List<Promotion> promos = service.getUpdatedPromotions(userDt.getUserId());
 		if(null != promos){
 			int num = 0;

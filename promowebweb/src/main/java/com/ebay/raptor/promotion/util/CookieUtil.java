@@ -83,7 +83,7 @@ public class CookieUtil {
 				ONE_DAY_COOKIE_LIFESPAN, AppCookies.COOKIE_PATH_ROOT, AppCookies.COOKIE_DOMAIN, false);
 	}
 
-	public static UserData getUserDataFromCookieOverrideLang (
+	/*public static UserData getUserDataFromCookieOverrideLang (
 	        HttpServletRequest request) throws MissingArgumentException {
 		UserData user = getUserDataFromCookie(request);
 		String paramLang = request.getParameter(PromotionUtil.LANG_REQUEST_PARAMETER_KEY);
@@ -93,7 +93,7 @@ public class CookieUtil {
 		}
 
 		return user;
-	}
+	}*/
 	
 	/**
 	 * Get user id, user name, language required and whether user is an administrator.

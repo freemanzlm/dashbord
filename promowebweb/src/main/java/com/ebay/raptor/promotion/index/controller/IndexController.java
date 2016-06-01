@@ -91,7 +91,7 @@ public class IndexController {
             @ModelAttribute RequestParameter param) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
         //Set unconfirmed status
-        UserData userDt = CookieUtil.getUserDataFromCookieOverrideLang(request);
+        UserData userDt = CookieUtil.getUserDataFromCookie(request);
         mav.addObject(ViewContext.IsUnconfirmedVisable.getAttr(), userDt.getAdmin());
         
        	mav.setViewName("index");

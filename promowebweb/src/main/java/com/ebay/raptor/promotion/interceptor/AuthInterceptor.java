@@ -90,7 +90,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				String storedSession = dataService.getSdParamterValue(type,
 						CommonConstant.PARAMETER_ENABLE, userName);
 
-				if (!StringUtil.isEmpty(sessionId) && sessionId.equalsIgnoreCase(storedSession)) {
+				if (sessionId != null && sessionId.equalsIgnoreCase(storedSession)) {
 					return true;
 				}
 			}
