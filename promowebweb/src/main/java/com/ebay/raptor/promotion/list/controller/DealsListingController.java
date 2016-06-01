@@ -270,7 +270,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		ResponseData <String> responseData = new ResponseData <String>();
 
 		if(null != listings){
-			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class, false);
+			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
 			try {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
