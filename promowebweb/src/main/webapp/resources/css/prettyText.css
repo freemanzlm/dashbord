@@ -39,3 +39,15 @@
 	padding-left: 40px;
 	list-style: numeric outside none;	
 }
+
+.pretty-text table {
+	width: auto;
+	border-collapse: collapse;
+	border: 1px solid #ccc;
+}
+
+.pretty-text table td, 
+.pretty-text table th {
+	border: 1px solid #ccc;
+	padding: .5em;
+}
