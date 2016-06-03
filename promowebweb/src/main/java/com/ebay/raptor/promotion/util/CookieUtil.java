@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
-import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.pojo.UserData;
 

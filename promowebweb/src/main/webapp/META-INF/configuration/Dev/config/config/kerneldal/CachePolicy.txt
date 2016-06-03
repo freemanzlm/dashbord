@@ -1,2 +1,3 @@
 ebay.dal.CacheObject.EbaySessionKey
 ebay.dal.CacheObject.PartnerContingency useBackingStore=true
+ebay.dal.CacheObject.SiteParameter

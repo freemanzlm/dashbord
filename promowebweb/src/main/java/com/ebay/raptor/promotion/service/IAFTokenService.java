@@ -11,9 +11,9 @@ import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.util.IAFTokenProvider;
 import com.ebay.raptor.promotion.util.StringUtil;
 
-public class TokenService extends BaseService{
+public class IAFTokenService extends BaseService{
 
-	private static Logger logger = Logger.getInstance(TokenService.class);
+	private static Logger logger = Logger.getInstance(IAFTokenService.class);
 	
 	private static String CONSUMER_ID = "urn:ebay-marketplace-consumerid:cae9973c-79c3-43d9-9cf7-3297668b17b9";
 	

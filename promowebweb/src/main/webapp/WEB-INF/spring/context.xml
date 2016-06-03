@@ -53,6 +53,7 @@
 		<beans:property name="cookieName" value="eBayCBTLang" />
 		<beans:property name="cookieMaxAge" value="86400" />
 		<beans:property name="cookiePath" value="/" />
+		<beans:property name="defaultLocale" value="zh_CN" />
 	</beans:bean>
 
 	<beans:bean id="multipartResolver"

@@ -31,6 +31,8 @@ import com.ebay.integ.user.User;
 import com.ebay.integ.user.UserDAO;
 import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.soap.CSSOAPMessageFactory;
+import com.ebay.raptor.promotion.user.service.UserService;
+import com.ebay.raptor.promotion.util.DateUtil;
 import com.ebay.raptor.promotion.xml.DOMResolver;
 
 public class CSApiService {
@@ -43,10 +45,15 @@ public class CSApiService {
 	private static final String GETUSER_API = "CSGetUserCore";
 	private static final String GETITEMDETAIL_API = "CSGetItemDetail";
 	
+	private static Date expiredTime;
+	private String token;
+	
+
 //	private String token;
 //	private Date tokenExpiration;
 
 	@Autowired private HttpRequestService httpRequestService;
+	@Autowired private UserService userService;
 	
 	/**
 	 * Get the token to access CS APIs.
@@ -55,25 +62,26 @@ public class CSApiService {
 	 */
 	public String getToken () {
 		// get token if no token exists or token has expired
+		if (!isTokenExpired() && token != null) {
+			return token;
+		}
+		
 		GetTokenResponse tokenInfor = initToken();
-
+		
 		if (tokenInfor != null && "Success".equalsIgnoreCase(tokenInfor.getAck())) {
-			return tokenInfor.geteBayAuthToken();
+			Date responseTime = DateUtil.parseCSAPIDate(tokenInfor.getTimeStamp());
+			Date expectedExpiredTime = DateUtil.parseCSAPIDate(tokenInfor.getHardExpirationTime());
+			long lag = DateUtil.timeLag(responseTime, expectedExpiredTime);
+			expiredTime = new Date();
+			// short 5 minutes because there may have delay between CS server and client.
+			expiredTime.setTime(expiredTime.getTime() + lag - 300);
+			
+			token = tokenInfor.geteBayAuthToken();
+			return token;
 		} else {
 			_logger.error("Unable to get user token.");
 		}
 
-		return "";
-	}
-
-	public String getUserIdByNameDAL(String userName){
-		try {
-			User usr = UserDAO.getInstance().findCompactUserByName(userName, true, true);
-			_logger.error("Load user ID by user name via DAL, uname: " + userName);
-			return usr.getUserId() + "";
-		} catch (FinderException e) {
-			_logger.error("Failed to load user ID by user name via DAL, uname: " + userName);
-		}
 		return "";
 	}
 	
@@ -97,7 +105,12 @@ public class CSApiService {
 	public String getUserIdByName (String userName) {
 		//For production env, use dal instead of service
 		if(EnviromentUtil.isProduction()){
-			return getUserIdByNameDAL(userName);
+			try {
+				long id = userService.getUserIdByNameFromDal(userName);
+				return id == -1 ? "" : String.valueOf(id);
+			} catch (Exception e) {
+				return "";
+			}
 		}
 		
 		String token = getToken();
@@ -259,6 +272,18 @@ public class CSApiService {
 		}
 		
 		return response;
+	}
+	
+	/**
+	 * Check if the CS API token is expired. It's based on the time lag between response Timestamp and HardExpirationTime.
+	 * @return
+	 */
+	public boolean isTokenExpired() {
+		Date now = new Date();
+		if (expiredTime != null && now.before(expiredTime)) {
+			return false;
+		}
+		return true;
 	}
 
 }

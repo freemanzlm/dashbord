@@ -59,6 +59,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 
 		if (model.hasView()) {
 			String viewName = model.getViewName();
+			
 			// default locale is zh_CN
 			if (viewName != null && !"zh_CN".equals(lang)
 					&& viewName.indexOf(lang) == -1) {
