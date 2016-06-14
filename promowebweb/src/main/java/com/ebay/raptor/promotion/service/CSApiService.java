@@ -46,12 +46,9 @@ public class CSApiService {
 	private static final String GETITEMDETAIL_API = "CSGetItemDetail";
 	
 	private static Date expiredTime;
+	private static boolean tokenExpired = true;
 	private String token;
 	
-
-//	private String token;
-//	private Date tokenExpiration;
-
 	@Autowired private HttpRequestService httpRequestService;
 	@Autowired private UserService userService;
 	
@@ -69,14 +66,18 @@ public class CSApiService {
 		GetTokenResponse tokenInfor = initToken();
 		
 		if (tokenInfor != null && "Success".equalsIgnoreCase(tokenInfor.getAck())) {
+			
+			/* Each time call CSGetToken API, response will include the HardExpirationTime. But we don't know which time zone it is. 
+			 * So, we only use the time lag to infer the expiration time. */
 			Date responseTime = DateUtil.parseCSAPIDate(tokenInfor.getTimeStamp());
 			Date expectedExpiredTime = DateUtil.parseCSAPIDate(tokenInfor.getHardExpirationTime());
 			long lag = DateUtil.timeLag(responseTime, expectedExpiredTime);
 			expiredTime = new Date();
-			// short 5 minutes because there may have delay between CS server and client.
+			// reduce token life 5 minutes because there may have delay between CS server and client.
 			expiredTime.setTime(expiredTime.getTime() + lag - 300);
 			
 			token = tokenInfor.geteBayAuthToken();
+			tokenExpired = false;
 			return token;
 		} else {
 			_logger.error("Unable to get user token.");
@@ -134,6 +135,14 @@ public class CSApiService {
 		try {
 			String xmlStr = httpRequestService.doHttpRequest(url,
 					HttpRequestService.POST_METHOD, message, headers);
+			
+			/*if (xmlStr != null) {
+				// if it's token expired, try again.
+				if (xmlStr.indexOf("<ErrorCode>931</ErrorCode>") != -1) {
+					tokenExpired = true;
+					return getUserIdByName(userName);
+				}
+			}*/
 
 			if (!StringUtil.isEmpty(xmlStr)) {
 				int start = xmlStr.indexOf("<UserId>");
@@ -182,6 +191,14 @@ public class CSApiService {
 		try {
 			String xmlStr = httpRequestService.doHttpRequest(url,
 					HttpRequestService.POST_METHOD, message, headers);
+			
+			/*if (xmlStr != null) {
+				// if it's token expired, try again.
+				if (xmlStr.indexOf("<ErrorCode>931</ErrorCode>") != -1) {
+					tokenExpired = true;
+					return getUserCountryByName(userName);
+				}
+			}*/
 
 			if (!StringUtil.isEmpty(xmlStr)) {
 				int start = xmlStr.indexOf("<Country>");
@@ -226,6 +243,14 @@ public class CSApiService {
         try {
             String xmlStr = httpRequestService.doHttpRequest(url,
                     HttpRequestService.POST_METHOD, message, headers);
+            
+            /*if (xmlStr != null) {
+				// if it's token expired, try again.
+				if (xmlStr.indexOf("<ErrorCode>931</ErrorCode>") != -1) {
+					tokenExpired = true;
+					return getItemDetail(itemId);
+				}
+			}*/
 
             if (!StringUtil.isEmpty(xmlStr)) {
                 return XmlParser.parseXmlToObject(
@@ -280,7 +305,7 @@ public class CSApiService {
 	 */
 	public boolean isTokenExpired() {
 		Date now = new Date();
-		if (expiredTime != null && now.before(expiredTime)) {
+		if (expiredTime != null && now.before(expiredTime) && !tokenExpired) {
 			return false;
 		}
 		return true;
