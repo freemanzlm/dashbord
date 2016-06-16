@@ -17,13 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Row.MissingCellPolicy;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.ebay.raptor.promotion.enums.ICustomEnum;
@@ -40,13 +37,11 @@ public class SheetReader implements ISheetReader {
 	protected SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm:ss");
 	public static Map<Type, ArrayList<ColumnConfiguration>> sheetHeaders = new ConcurrentHashMap<Type, ArrayList<ColumnConfiguration>>();
 	
+	private Validator validator;
+	
 	@Override
 	public List<Object> readSheet(Sheet sheet, Class<?> clazz, int firstDataRow, Set<ConstraintViolation<Object>> constraintViolations) {
-		// preparing validation
-//		ValidatorFactory factory = Validation.byDefaultProvider().configure().messageInterpolator(new ResourceBundleMessageInterpolator(new PlatformResourceBundleLocator("ExcelValidationMessages"))).buildValidatorFactory();
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-		Validator validator = factory.getValidator();		
-				
+		
 		ArrayList<ColumnConfiguration> headers = null;
 		ArrayList<Object> list = new ArrayList<Object>();
 
@@ -74,15 +69,19 @@ public class SheetReader implements ISheetReader {
 				if (row != null) {
 					Object obj = readRow(headers, row, clazz);
 					if (obj != null) {
-						Set<ConstraintViolation<Object>> violations = validator.validate(obj);
-						
-						if (violations == null || violations.isEmpty()) {
-							list.add(obj);
-						} else {
-							if (constraintViolations != null) {
-								constraintViolations.addAll(violations);
-								break;
+						if (validator != null) {
+							Set<ConstraintViolation<Object>> violations = validator.validate(obj);
+							
+							if (violations == null || violations.isEmpty()) {
+								list.add(obj);
+							} else {
+								if (constraintViolations != null) {
+									constraintViolations.addAll(violations);
+									break;
+								}
 							}
+						} else {
+							list.add(obj);
 						}
 					}
 				}
@@ -300,6 +299,10 @@ public class SheetReader implements ISheetReader {
 		}
 		
 		return null;
+	}
+	
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -30,4 +31,6 @@ public interface ISheetReader {
 	 * @return
 	 */
 	public List<Object> readSheet(Sheet sheet, Class<?> clazz, int firstDataRow, Set<ConstraintViolation<Object>> violations);
+	
+	public void setValidator(Validator validator);
 }
