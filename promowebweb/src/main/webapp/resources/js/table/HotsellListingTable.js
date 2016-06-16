@@ -149,7 +149,11 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(0);
+							var nData = parseFloat(data);
+							if (isNaN(nData)) {
+								return 'N/A';
+							}
+							return nData.toUSFixed(0);
 						}
 						return data;
 					}
@@ -161,7 +165,11 @@ var BizReport = BizReport || {};
 					sType: 'numeric',
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
+							var nData = parseFloat(data);
+							if (isNaN(nData)) {
+								return 'N/A';
+							}
+							return nData.toUSFixed(2) + " (" + full.currency + ")";
 						}
 
 						return data;
