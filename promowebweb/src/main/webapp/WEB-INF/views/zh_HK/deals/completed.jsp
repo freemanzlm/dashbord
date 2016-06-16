@@ -98,7 +98,7 @@
 			
 			<%@ include file="../stateMessages/forCompleted.jsp" %>
 			
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 			
 			<div class="mt20 my-listing">
 				<h3>報名刊登清單</h3>

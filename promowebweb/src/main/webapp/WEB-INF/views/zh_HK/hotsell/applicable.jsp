@@ -86,7 +86,7 @@
 				<%@ include file="../stateMessages/forReversed.jsp" %>
 			</c:if>
 			
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 			
 			<div class="mt20 my-listing">
 				<h3>選擇報名刊登<small>（已選 <span>0</span> 項）</small></h3>

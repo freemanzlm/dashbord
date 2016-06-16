@@ -74,7 +74,7 @@
 			
 			<%@ include file="../stateMessages/forCancelled.jsp" %>
 			
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 		</div>
 	</div>
 

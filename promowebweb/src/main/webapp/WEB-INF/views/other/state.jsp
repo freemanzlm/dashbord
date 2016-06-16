@@ -138,7 +138,7 @@
 				</c:otherwise>
 			</c:choose>
 
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 			
 		</div>
 	</div>
