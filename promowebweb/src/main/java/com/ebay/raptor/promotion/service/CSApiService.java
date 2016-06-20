@@ -4,6 +4,7 @@ import java.beans.IntrospectionException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,15 +70,21 @@ public class CSApiService {
 			
 			/* Each time call CSGetToken API, response will include the HardExpirationTime. But we don't know which time zone it is. 
 			 * So, we only use the time lag to infer the expiration time. */
-			Date responseTime = DateUtil.parseCSAPIDate(tokenInfor.getTimeStamp());
-			Date expectedExpiredTime = DateUtil.parseCSAPIDate(tokenInfor.getHardExpirationTime());
-			long lag = DateUtil.timeLag(responseTime, expectedExpiredTime);
-			expiredTime = new Date();
-			// reduce token life 5 minutes because there may have delay between CS server and client.
-			expiredTime.setTime(expiredTime.getTime() + lag - 300);
-			
+			Date responseTime;
+			try {
+				responseTime = DateUtil.parseUTCDateTime(tokenInfor.getTimeStamp(), null);
+				Date expectedExpiredTime = DateUtil.parseUTCDateTime(tokenInfor.getHardExpirationTime(), null);
+				long lag = DateUtil.timeLag(responseTime, expectedExpiredTime);
+				expiredTime = new Date();
+				// reduce token life 5 minutes because there may have delay between CS server and client.
+				expiredTime.setTime(expiredTime.getTime() + lag - 300);
+				tokenExpired = false;
+			} catch (ParseException e) {
+				tokenExpired = true;
+				e.printStackTrace();
+			}
+
 			token = tokenInfor.geteBayAuthToken();
-			tokenExpired = false;
 			return token;
 		} else {
 			_logger.error("Unable to get user token.");
