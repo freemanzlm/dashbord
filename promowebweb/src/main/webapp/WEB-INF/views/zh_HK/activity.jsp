@@ -9,11 +9,9 @@
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="timeSlot" value="${promoStart} ~ ${promoEnd}"></c:set>
-<c:set var="activityContent" value="${promo.desc}"></c:set>
 
 <div class="activity-detail">
 	<div class="activity-time">
-		
 		<c:if test="${promo.type != 3}">
 			<strong style="margin-right: 90px;">報名截止時間（北京时間）：${ deadline }</strong>
 		</c:if>
@@ -26,17 +24,19 @@
 		<div class="table-row">
 			<div class="table-cell brief-title">活動描述：</div>
 			<div class="table-cell pretty-text">
-				<div>${ activityContent }</div>
+				<div>${promo.desc}</div>
 			</div>
 		</div>
-		<div class="table-row">
-			<div class="table-cell brief-title">活動條款：</div>
-			<div class="table-cell pretty-text">
-				<div>${ activityContent }</div>
+		<c:if test="${ not empty promo.itemDesc }">
+			<div class="table-row">
+				<div class="table-cell brief-title">活動條款：</div>
+				<div class="table-cell pretty-text">
+					<div>${ promo.itemDesc }</div>
+				</div>
 			</div>
-		</div>
+		</c:if>
 	</div>
-	<c:if test="${promo.type != PMPromotionType.STANDARD}">
+	<c:if test="${promo.type != 3}">
 		<div class="activity-law">
 			<a href="javascript:void(0)" class="terms-conditions">點擊閱讀《其他條款》</a>。其他條款為本活動條款的一部分，具有不可分割性。
 		</div>
