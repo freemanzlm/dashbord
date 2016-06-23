@@ -18,6 +18,7 @@ import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.kernel.util.FastURLEncoder;
 import com.ebay.raptor.promotion.AuthNeed;
+import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PromotionUtil;
@@ -41,7 +42,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
 			    boolean success = authenticate(request, response, cookieMap);
                 if (!success) {
-                	if (StringUtil.isEmpty(cookieMap.get(CookieUtil.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
+                	if (StringUtil.isEmpty(cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
                 		redirectToLogin(request, response);
                 	} else {
                 		try {
@@ -73,15 +74,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		ParameterType type = null;
 
 		if (cookieMap != null && cookieMap.size() > 0) {
-			if (!StringUtil.isEmpty(cookieMap.get(CookieUtil.HACKID_COOKIE_KEY))) {
+			if (!StringUtil.isEmpty(cookieMap.get(AppCookies.HACKID_COOKIE_KEY))) {
 				return true;
-			} else if (!StringUtil.isEmpty(cookieMap.get(CookieUtil.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
-				userName = cookieMap.get(CookieUtil.EBAY_CBT_ADMIN_USER_COOKIE_NAME);
-				sessionId = cookieMap.get(CookieUtil.EBAY_CBT_SESSION_ID_COOKIE_NAME);
+			} else if (!StringUtil.isEmpty(cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
+				userName = cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME);
+				sessionId = cookieMap.get(AppCookies.EBAY_CBT_SESSION_ID_COOKIE_NAME);
 				type = ParameterType.BackendSession;
 			} else {
-				userName = cookieMap.get(CookieUtil.EBAY_CBT_USER_NAME_COOKIE_NAME);
-				sessionId = cookieMap.get(CookieUtil.EBAY_CBT_SESSION_ID_COOKIE_NAME);
+				userName = cookieMap.get(AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME);
+				sessionId = cookieMap.get(AppCookies.EBAY_CBT_SESSION_ID_COOKIE_NAME);
 				type = ParameterType.DashboardSession;
 			}
 			
@@ -89,7 +90,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				String storedSession = dataService.getSdParamterValue(type,
 						CommonConstant.PARAMETER_ENABLE, userName);
 
-				if (!StringUtil.isEmpty(sessionId) && sessionId.equalsIgnoreCase(storedSession)) {
+				if (sessionId != null && sessionId.equalsIgnoreCase(storedSession)) {
 					return true;
 				}
 			}

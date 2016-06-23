@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<client-config-list xmlns="http://www.ebay.com/soaframework/common/config">
+    <client-config>
+        <service-interface-class-name>com.ebay.marketplace.services.iafservice.IAFService</service-interface-class-name>
+        <service-location>http://c-soacs1-v3a.qa.ebay.com:8080/ws/spf</service-location>
+        <client-instance-config>
+            <invocation-options>
+                <preferred-transport name="HTTP11"/>
+                <request-data-binding>XML</request-data-binding>
+                <response-data-binding>XML</response-data-binding>
+                <consumer-id>IAFServiceClient</consumer-id>
+            </invocation-options>
+            <protocol-processor name="SOAP12" version="1.2">
+        <indicator>
+          <transport-header name="X-EBAY-SOA-MESSAGE-PROTOCOL">SOAP12</transport-header>
+        </indicator>
+        <class-name>com.ebay.soaframework.sif.impl.protocolprocessor.soap.ClientSOAPProtocolProcessor</class-name>
+      	</protocol-processor>
+        </client-instance-config>
+    </client-config>
+</client-config-list>

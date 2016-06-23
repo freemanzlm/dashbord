@@ -1,11 +1,21 @@
 package com.ebay.raptor.promotion.service;
 
+import java.beans.IntrospectionException;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.soap.SOAPConnection;
+import javax.xml.soap.SOAPConnectionFactory;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Node;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.csApi.GetItemDetailResponse;
@@ -20,26 +30,27 @@ import com.ebay.integ.dal.dao.FinderException;
 import com.ebay.integ.user.User;
 import com.ebay.integ.user.UserDAO;
 import com.ebay.raptor.geo.utils.CountryEnum;
+import com.ebay.raptor.promotion.soap.CSSOAPMessageFactory;
+import com.ebay.raptor.promotion.user.service.UserService;
+import com.ebay.raptor.promotion.util.DateUtil;
+import com.ebay.raptor.promotion.xml.DOMResolver;
 
 public class CSApiService {
 
 	private static final CommonLogger _logger = CommonLogger.getInstance(CSApiService.class);
 
 	private static final String API_URL = "https://apics.vip.ebay.com/ws/websvc/eBayCSAPI";
-	private static final String API_USERNAME = "cn_cbt_sv_batch"; // TODO - persist in DB
-	private static final String API_PASSWORD = "11aa!!AA";
-	private static final String API_ID = "EBAYSLCTNSS2VCD9FGBWF7K53IIFIS";
-	private static final String DEV_ID = "Z938W1651D97433L537737638H8289";
-	private static final String AUTH_CERT = "P1HE1AE7LE1$2C31H57DH-EN943I68";
 
 	private static final String GETTOKEN_API = "CSGetToken";
 	private static final String GETUSER_API = "CSGetUserCore";
 	private static final String GETITEMDETAIL_API = "CSGetItemDetail";
 	
-//	private String token;
-//	private Date tokenExpiration;
-
+	private static Date expiredTime;
+	private static boolean tokenExpired = true;
+	private String token;
+	
 	@Autowired private HttpRequestService httpRequestService;
+	@Autowired private UserService userService;
 	
 	/**
 	 * Get the token to access CS APIs.
@@ -48,25 +59,30 @@ public class CSApiService {
 	 */
 	public String getToken () {
 		// get token if no token exists or token has expired
+		if (!isTokenExpired() && token != null) {
+			return token;
+		}
+		
 		GetTokenResponse tokenInfor = initToken();
-
+		
 		if (tokenInfor != null && "Success".equalsIgnoreCase(tokenInfor.getAck())) {
-			return tokenInfor.geteBayAuthToken();
+			
+			/* Each time call CSGetToken API, response will include the HardExpirationTime. But we don't know which time zone it is. 
+			 * So, we only use the time lag to infer the expiration time. */
+			Date responseTime = DateUtil.parseCSAPIDate(tokenInfor.getTimeStamp());
+			Date expectedExpiredTime = DateUtil.parseCSAPIDate(tokenInfor.getHardExpirationTime());
+			long lag = DateUtil.timeLag(responseTime, expectedExpiredTime);
+			expiredTime = new Date();
+			// reduce token life 5 minutes because there may have delay between CS server and client.
+			expiredTime.setTime(expiredTime.getTime() + lag - 300);
+			
+			token = tokenInfor.geteBayAuthToken();
+			tokenExpired = false;
+			return token;
 		} else {
 			_logger.error("Unable to get user token.");
 		}
 
-		return "";
-	}
-
-	public String getUserIdByNameDAL(String userName){
-		try {
-			User usr = UserDAO.getInstance().findCompactUserByName(userName, true, true);
-			_logger.error("Load user ID by user name via DAL, uname: " + userName);
-			return usr.getUserId() + "";
-		} catch (FinderException e) {
-			_logger.error("Failed to load user ID by user name via DAL, uname: " + userName);
-		}
 		return "";
 	}
 	
@@ -90,28 +106,27 @@ public class CSApiService {
 	public String getUserIdByName (String userName) {
 		//For production env, use dal instead of service
 		if(EnviromentUtil.isProduction()){
-			return getUserIdByNameDAL(userName);
+			try {
+				long id = userService.getUserIdByNameFromDal(userName);
+				return id == -1 ? "" : String.valueOf(id);
+			} catch (Exception e) {
+				return "";
+			}
 		}
 		
 		String token = getToken();
+		
+		SOAPMessage soapMessage = null;
+		String message = "";
+		try {
+			soapMessage = CSSOAPMessageFactory.createGetUserCoreByNameMessage(token, userName);
+			message = CSSOAPMessageFactory.parseToString(soapMessage);
+		} catch (SOAPException | IOException e1) {
+			_logger.error("Unable to create CSGetUserCoreRequest SOAP message.", e1);
+			return null;
+		}
 
 		String url = API_URL + "?callname=" + GETUSER_API;
-		String soapMessage = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-				+ "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\""
-				+ " xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\""
-				+ " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
-				+ "<soapenv:Header>\n"
-				+ "<RequesterCredentials soapenv:mustUnderstand=\"0\" xmlns=\"urn:ebay:apis:eBLBaseComponents\"><eBayAuthToken>"
-				+ token
-				+ "</eBayAuthToken></RequesterCredentials>"
-				+ "</soapenv:Header>"
-				+ "<soapenv:Body>"
-				+ "<CSGetUserCoreRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\">"
-				+ "<Version>999</Version>"
-				+ "<OutputSelector>IpGeoLocation</OutputSelector>" + "<UserID>"
-				+ userName + "</UserID>" + "</CSGetUserCoreRequest>"
-				+ "</soapenv:Body>" + "</soapenv:Envelope>";
-
 
 		Map <String, String> headers = new HashMap <String, String> ();
 		headers.put("Content-Type","text/xml; charset=utf-8");
@@ -119,7 +134,15 @@ public class CSApiService {
 
 		try {
 			String xmlStr = httpRequestService.doHttpRequest(url,
-					HttpRequestService.POST_METHOD, soapMessage, headers);
+					HttpRequestService.POST_METHOD, message, headers);
+			
+			/*if (xmlStr != null) {
+				// if it's token expired, try again.
+				if (xmlStr.indexOf("<ErrorCode>931</ErrorCode>") != -1) {
+					tokenExpired = true;
+					return getUserIdByName(userName);
+				}
+			}*/
 
 			if (!StringUtil.isEmpty(xmlStr)) {
 				int start = xmlStr.indexOf("<UserId>");
@@ -144,29 +167,22 @@ public class CSApiService {
 	 * @param userName    The user name
 	 * @return
 	 */
-	public String getUserCountryByName (String name) {
+	public String getUserCountryByName (String userName) {
 		if(EnviromentUtil.isProduction()){
-			return getUserCountryByNameDAL(name);
+			return getUserCountryByNameDAL(userName);
 		}
 		String token = getToken();
 
+		SOAPMessage soapMessage = null;
+		String message = "";
+		try {
+			soapMessage = CSSOAPMessageFactory.createGetUserCoreByNameMessage(token, userName);
+			message = CSSOAPMessageFactory.parseToString(soapMessage);
+		} catch (SOAPException | IOException e1) {
+			_logger.error("Unable to create CSGetUserCoreRequest SOAP message.", e1);
+			return null;
+		}
 		String url = API_URL + "?callname=" + GETUSER_API;
-		String soapMessage = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-				+ "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\""
-				+ " xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\""
-				+ " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
-				+ "<soapenv:Header>\n"
-				+ "<RequesterCredentials soapenv:mustUnderstand=\"0\" xmlns=\"urn:ebay:apis:eBLBaseComponents\"><eBayAuthToken>"
-				+ token
-				+ "</eBayAuthToken></RequesterCredentials>"
-				+ "</soapenv:Header>"
-				+ "<soapenv:Body>"
-				+ "<CSGetUserCoreRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\">"
-				+ "<Version>999</Version>"
-				+ "<OutputSelector>IpGeoLocation</OutputSelector>" + "<UserID>"
-				+ name + "</UserID>" + "</CSGetUserCoreRequest>"
-				+ "</soapenv:Body>" + "</soapenv:Envelope>";
-
 
 		Map <String, String> headers = new HashMap <String, String> ();
 		headers.put("Content-Type","text/xml; charset=utf-8");
@@ -174,7 +190,15 @@ public class CSApiService {
 
 		try {
 			String xmlStr = httpRequestService.doHttpRequest(url,
-					HttpRequestService.POST_METHOD, soapMessage, headers);
+					HttpRequestService.POST_METHOD, message, headers);
+			
+			/*if (xmlStr != null) {
+				// if it's token expired, try again.
+				if (xmlStr.indexOf("<ErrorCode>931</ErrorCode>") != -1) {
+					tokenExpired = true;
+					return getUserCountryByName(userName);
+				}
+			}*/
 
 			if (!StringUtil.isEmpty(xmlStr)) {
 				int start = xmlStr.indexOf("<Country>");
@@ -201,36 +225,32 @@ public class CSApiService {
         String token = getToken();
 
         String url = API_URL + "?callname=" + GETITEMDETAIL_API;
-        String soapMessage = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-                + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\""
-                + " xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\""
-                + " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
-                + "<soapenv:Header>\n"
-                + "<RequesterCredentials soapenv:mustUnderstand=\"0\" xmlns=\"urn:ebay:apis:eBLBaseComponents\"><eBayAuthToken>"
-                + token
-                + "</eBayAuthToken></RequesterCredentials>"
-                + "</soapenv:Header>"
-                + "<soapenv:Body>"
-                + "<CSGetItemDetailRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\">"
-                + "<Version>999</Version>"
-                + "<OutputSelector>ItemHeader.ItemID</OutputSelector>"
-                + "<OutputSelector>ItemHeader.ItemTitle</OutputSelector>"
-                + "<OutputSelector>ItemHeader.ItemStatus</OutputSelector>"
-                + "<OutputSelector>ItemHeader.Seller.LongId</OutputSelector>"
-                + "<OutputSelector>ItemHeader.Seller.DisplayLoginName</OutputSelector>"
-                + "<ItemID>" + itemId + "</ItemID>"
-                + "</CSGetItemDetailRequest>"
-                + "</soapenv:Body>"
-                + "</soapenv:Envelope>";
-
-
+        
+        SOAPMessage soapMessage = null;
+		String message = "";
+		try {
+			soapMessage = CSSOAPMessageFactory.createGetItemDetailMessage(token, itemId);
+			message = CSSOAPMessageFactory.parseToString(soapMessage);
+		} catch (SOAPException | IOException e1) {
+			_logger.error("Unable to create CSGetItemDetailRequest SOAP message.", e1);
+			return null;
+		}
+		
         Map <String, String> headers = new HashMap <String, String> ();
         headers.put("Content-Type","text/xml; charset=utf-8");
         headers.put("SOAPAction","");
 
         try {
             String xmlStr = httpRequestService.doHttpRequest(url,
-                    HttpRequestService.POST_METHOD, soapMessage, headers);
+                    HttpRequestService.POST_METHOD, message, headers);
+            
+            /*if (xmlStr != null) {
+				// if it's token expired, try again.
+				if (xmlStr.indexOf("<ErrorCode>931</ErrorCode>") != -1) {
+					tokenExpired = true;
+					return getItemDetail(itemId);
+				}
+			}*/
 
             if (!StringUtil.isEmpty(xmlStr)) {
                 return XmlParser.parseXmlToObject(
@@ -252,54 +272,43 @@ public class CSApiService {
 	 * @return
 	 */
 	private GetTokenResponse initToken () {
+		GetTokenResponse response = null;
 		String url = API_URL + "?callname=" + GETTOKEN_API;
-		String soapMessage = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-				+ "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\""
-				+ " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
-				+ " xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n"
-				+ "<soap:Header>\n"
-				+ "<RequesterCredentials xmlns=\"urn:ebay:apis:eBLBaseComponents\">\n"
-				+ "<Credentials>\n"
-				+ "<AppId>" + API_ID + "</AppId>\n"
-				+ "<DevId>" + DEV_ID + "</DevId>\n"
-				+ "<AuthCert>" + AUTH_CERT + "</AuthCert>\n"
-				+ "<Username>" + API_USERNAME + "</Username>\n"
-				+ "<Password>" + API_PASSWORD +"</Password>\n"
-				+ "</Credentials>\n"
-				+ "</RequesterCredentials>\n"
-				+ "</soap:Header>\n"
-				+ "<soap:Body>\n"
-				+ "<CSGetTokenRequest xmlns=\"urn:ebay:apis:eBLBaseComponents\">\n"
-				+ "<Version>999</Version>\n" + "</CSGetTokenRequest>\n"
-				+ "</soap:Body>\n" + "</soap:Envelope>\n";
-
-		Map <String, String> headers = new HashMap <String, String> ();
-		headers.put("Content-Type","text/xml; charset=utf-8");
-		headers.put("SOAPAction","");
-
+		
+		DOMResolver resolver = new DOMResolver();
 		try {
-			String xmlStr = httpRequestService.doHttpRequest(url,
-					HttpRequestService.POST_METHOD, soapMessage, headers);
-
-			if (!StringUtil.isEmpty(xmlStr)) {
-				return XmlParser.parseXmlToObject(
-						new ByteArrayInputStream(xmlStr.getBytes()),
-						GetTokenResponse.class, "CSGetTokenResponse");
+			SOAPConnectionFactory factory = SOAPConnectionFactory.newInstance();
+			SOAPMessage requestMessage = CSSOAPMessageFactory.createGetTokenMessage();
+			SOAPConnection con = factory.createConnection();
+			
+			SOAPMessage responseMessage = con.call(requestMessage, url);
+			
+			Node responseNode = CSSOAPMessageFactory.getResponse(responseMessage, "CSGetTokenResponse");
+			
+			if (responseNode != null) {
+				response = resolver.parseElementToObject(responseNode, GetTokenResponse.class);
 			}
-		} catch (HttpRequestException e) {
-			_logger.error("Unable to call CSGetToken API.", e);
-		} catch (XmlParseException e) {
-			_logger.error("Unable to parse the response from CSGetToken API.", e);
+		} catch (UnsupportedOperationException | SOAPException e1) {
+			_logger.error("Unable to call CSGetToken API.", e1);
+		} catch (InstantiationException | IllegalAccessException
+						| IllegalArgumentException | InvocationTargetException
+						| DOMException | IntrospectionException e2) {
+			_logger.error("Unable to parse the response from CSGetToken API.", e2);
 		}
-
-		return null;
+		
+		return response;
+	}
+	
+	/**
+	 * Check if the CS API token is expired. It's based on the time lag between response Timestamp and HardExpirationTime.
+	 * @return
+	 */
+	public boolean isTokenExpired() {
+		Date now = new Date();
+		if (expiredTime != null && now.before(expiredTime) && !tokenExpired) {
+			return false;
+		}
+		return true;
 	}
 
-	private boolean isDateExpired (Date dt) {
-		// date is empty or current date is not earlier than the date minus 1h. 
-		if (dt == null || dt.getTime() - new Date().getTime() < 3600000) {
-			return true;
-		}
-		return false;
-	}
 }

@@ -86,7 +86,7 @@
 			
 			<%@ include file="../stateMessages/forCompleted.jsp" %>
 			
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 
 		</div>
 	</div>

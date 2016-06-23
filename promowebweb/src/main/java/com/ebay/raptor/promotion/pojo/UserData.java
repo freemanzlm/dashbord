@@ -1,6 +1,11 @@
 package com.ebay.raptor.promotion.pojo;
 
-
+/**
+ * Information and configuration about user stored in user agent cookies.
+ * 
+ * @author lyan2
+ *
+ */
 public class UserData {
     public UserData(){}
 

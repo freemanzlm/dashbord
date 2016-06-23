@@ -88,7 +88,7 @@
 			
 			<%@ include file="../stateMessages/forDealsApplied.jsp" %>
 			
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 	
 			<div class="mt20 my-listing">
 				<h3>選擇報名刊登

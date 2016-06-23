@@ -8,6 +8,7 @@
 
 <r:includeJquery jsSlot="head" />
 <r:client />
+<r:includeHtml5Tags />
 
 <!DOCTYPE html>
 <html>
@@ -190,6 +191,8 @@
 		region: '${ region }',
 		admin: ${invisible}
 	};
+	var clientContext = ${client.serialize(client.getContext())} ; 
+	var supportHTML5 = ${client.supportHtml5Tags()} ; 
 </script>
 
 <res:jsSlot id="body" />

@@ -19,9 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.common.constant.pm.PMPromotionType;
-import com.ebay.app.raptor.promocommon.util.CommonConstant;
-import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.promotion.AuthNeed;
+import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -48,7 +47,7 @@ public class IndexController {
 	
     @RequestMapping(value = "/backend", method = RequestMethod.GET)
     public void handleBackendRequest(HttpServletRequest request,
-            HttpServletResponse response) throws MissingArgumentException {
+            HttpServletResponse response) throws MissingArgumentException, IOException {
         String hackId = request.getParameter("hack_id");   // name
         String userId = request.getParameter("user_id");   // id
         String admin = request.getParameter("admin");
@@ -59,33 +58,29 @@ public class IndexController {
 //        if(!loginService.isLoginIPValid(ip)) {
 //            throw new MissingArgumentException(ip);
 //        }
-
-        if (StringUtil.isEmpty(userId)) {
+        
+        if ((userId == null || userId.isEmpty()) && (hackId == null || hackId.isEmpty())) {
+            return;
+        } else if (userId == null || userId.isEmpty()) {
             userId = csApiService.getUserIdByName(hackId);
-        }
-
-        if (StringUtil.isEmpty(hackId)) {
+        } else if (hackId == null || hackId.isEmpty()) {
             hackId = userId;
         }
         
         //Add admin cookie
-        Cookie adminCookie = new Cookie(CookieUtil.ADMIN_COOKIE_NAME, Boolean.parseBoolean(admin) + "");
-	   	adminCookie.setMaxAge(CookieUtil.COOKIE_LIFESPAN);
-	   	adminCookie.setPath(CookieUtil.COOKIE_PATH_ROOT);
+        Cookie adminCookie = new Cookie(AppCookies.ADMIN_COOKIE_NAME, Boolean.parseBoolean(admin) + "");
+	   	adminCookie.setMaxAge(CookieUtil.ONE_DAY_COOKIE_LIFESPAN);
+	   	adminCookie.setPath(AppCookies.COOKIE_PATH_ROOT);
         response.addCookie(adminCookie);
 
-        if (!StringUtil.isEmpty(userId)) {
+        if (userId != null) {
         	// add hack_id in order to avoid login checking
-        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.HACKID_COOKIE_KEY, hackId);
-        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.EBAY_CBT_USER_ID_COOKIE_NAME, userId);
+        	CookieUtil.setCBTPromotionCookie(response, AppCookies.HACKID_COOKIE_KEY, hackId);
+        	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, userId);
         	// hack_id is the user name.
-        	CookieUtil.setCBTPromotionCookie(response, CookieUtil.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId);
-        }
-
-        try {
-            response.sendRedirect("index");// TODO - index
-        } catch (IOException e) {
-            // ignore
+        	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId);
+        	
+        	response.sendRedirect("index");// TODO - index
         }
     }
 
@@ -96,14 +91,10 @@ public class IndexController {
             @ModelAttribute RequestParameter param) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
         //Set unconfirmed status
-        UserData userDt = CookieUtil.getUserDataFromCookieOverrideLang(request);
+        UserData userDt = CookieUtil.getUserDataFromCookie(request);
         mav.addObject(ViewContext.IsUnconfirmedVisable.getAttr(), userDt.getAdmin());
         
-        if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(param.getLang())) {
-        	mav.setViewName("zh_HK/index");
-        } else {
-        	mav.setViewName("index");
-        }
+       	mav.setViewName("index");
         return mav;
     }
 	
@@ -136,11 +127,7 @@ public class IndexController {
             HttpServletResponse response,
             @ModelAttribute RequestParameter param) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
-        if (CommonConstant.ZHHK_LANGUAGE.equalsIgnoreCase(param.getLang())) {
-        	mav.setViewName("zh_HK/error");
-        } else {
-        	mav.setViewName("error");
-        }
+       	mav.setViewName("error");
         return mav;
     }
     

@@ -84,7 +84,7 @@
 			
 			<%@ include file="../stateMessages/forHotsellApplied.jsp" %>
 			
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 	
 			<div class="mt20 my-listing">
 				<h3>选择报名刊登

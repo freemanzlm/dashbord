@@ -1,4 +1,4 @@
-package com.ebay.raptor.promotion.controller;
+package com.ebay.raptor.promotion.controller.front;
 
 import java.util.HashMap;
 
@@ -8,14 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.raptor.promotion.pojo.UserData;
 
+/**
+ * For front-end usage.
+ * @author lyan2
+ *
+ */
 @Controller
-@RequestMapping(value = "hotsell")
+@RequestMapping(value = "front/hotsell")
 public class HotsellController {
 
     @RequestMapping(value = "applicable", method = RequestMethod.GET)

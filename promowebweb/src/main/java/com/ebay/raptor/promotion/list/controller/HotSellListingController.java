@@ -49,7 +49,7 @@ public class HotSellListingController extends AbstractListingController{
 		ResponseData <String> responseData = new ResponseData <String>();
 		responseData.setStatus(Boolean.FALSE);
 		if(null != listings){
-			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class, false);
+			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
 			try {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), userData.getUserId())){

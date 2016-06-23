@@ -1,4 +1,4 @@
-package com.ebay.raptor.promotion.controller;
+package com.ebay.raptor.promotion.controller.front;
 
 import java.util.HashMap;
 
@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * only for front-end usage
+ * @author lyan2
+ *
+ */
 @Controller
-@RequestMapping(value="dealspreset")
+@RequestMapping(value="front/dealspreset")
 public class DealsPresetController {
 
 	@RequestMapping(value = "applicable", method = RequestMethod.GET)

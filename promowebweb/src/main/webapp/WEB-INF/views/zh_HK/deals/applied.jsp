@@ -99,7 +99,7 @@
 			
 			<%@ include file="../stateMessages/forPretrial.jsp" %>
 			
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 
 			<div class="mt20 my-listing">
 				<h3><strong>提交預審的刊登</strong></h3>

@@ -13,6 +13,8 @@ public class Promotion {
 	private String name;
 	
 	private String desc;
+	
+	private String itemDesc;
 
 	private Integer type;
 	
@@ -223,6 +225,14 @@ public class Promotion {
 
 	public void setPromoSubType(PromotionSubType promoSubType) {
 		this.promoSubType = promoSubType;
+	}
+
+	public String getItemDesc() {
+		return itemDesc;
+	}
+
+	public void setItemDesc(String itemDesc) {
+		this.itemDesc = itemDesc;
 	}
 
 }
