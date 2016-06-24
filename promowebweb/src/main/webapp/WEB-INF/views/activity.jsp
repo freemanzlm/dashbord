@@ -21,12 +21,15 @@
 		</c:if>
 	</div>
 	<div class="table activity-brief">
+		<c:if test="${ not empty promo.desc }">
 		<div class="table-row">
 			<div class="table-cell brief-title">活动描述：</div>
 			<div class="table-cell pretty-text">
 				<div>${promo.desc}</div>
 			</div>
 		</div>
+		</c:if>
+		
 		<c:if test="${ not empty promo.itemDesc }">
 			<div class="table-row">
 				<div class="table-cell brief-title">活动条款：</div>
