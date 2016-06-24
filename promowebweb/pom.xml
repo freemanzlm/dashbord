@@ -89,11 +89,21 @@
       		<groupId>javax.servlet</groupId>
       		<artifactId>javax.servlet-api</artifactId>
       	</dependency>
-      	<dependency>
-      		<groupId>org.apache.poi</groupId>
-      		<artifactId>poi-ooxml</artifactId>
-      		<version>3.12</version>
-      	</dependency>
+      	<!-- Excel writer and reader -->
+		<dependency>
+			<!-- .xls -->
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.14</version>
+		</dependency>
+
+		<dependency>
+			<!-- .xlsx, based on poi -->
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.14</version>
+		</dependency>
+		<!-- Excel writer and reader end -->
       	<dependency>
       		<groupId>commons-io</groupId>
       		<artifactId>commons-io</artifactId>

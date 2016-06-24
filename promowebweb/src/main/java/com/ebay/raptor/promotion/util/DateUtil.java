@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author lyan2
  */
 public class DateUtil {
-	private static final Logger logger = Logger.getLogger(DateUtil.class.getName());
+private static final Logger logger = Logger.getLogger(DateUtil.class.getName());
 	
 	// Database time format
 	private static final String TIME_FORMAT = "HH:mm:ss";
@@ -29,7 +29,7 @@ public class DateUtil {
 	private static final String SLASH_DATE_FORMAT = "yyyy/MM/dd";
 	private static final String ISO_DATE_FORMAT = "yyyy-MM-dd";
 	
-	// CS API and SaleForce use this time format, in fact, it's ISO 8601 Date and time format. 'Z' means UTC time.
+	// CS API and SaleForce use this time format, in fact, it's ISO 8601 Date and time format.'Z' means UTC time.
 	private static final String UTC_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
 	// Chinese bei jing time zone
@@ -176,6 +176,18 @@ public class DateUtil {
 		DateFormat format = getISODateTimeZoneFormat();
 		format.setTimeZone(zone);
 		return format.parse(dateStr);
+	}
+	
+	/**
+	 * Format date to : yyyy.MM.dd
+	 * @param date
+	 * @param zone
+	 * @return
+	 */
+	public static String formatTime(Date date) {
+		DateFormat df = getTimeFormat();
+		
+		return df.format(date);
 	}
 
 	/**
@@ -332,13 +344,13 @@ public class DateUtil {
 	public static Time resolveTime(Date date) {
 		String text = getTimeFormat().format(date);
 		return Time.valueOf(text);
-	}	
-
+	}
+	
 	/**
 	 * Return the absolute time lag between two dates.
 	 * @param date1
 	 * @param date2
-	 * @return
+	 * @return absolute milliseconds between two dates.
 	 */
 	public static long timeLag(Date date1, Date date2) {
 		return Math.abs(date1.getTime() - date2.getTime());
