@@ -9,6 +9,7 @@ import java.util.Set;
  */
 public class RangeColumnConstraint extends ColumnConstraint {
 	private String[]  pickList;
+	private Boolean mustInRange = true;
 
 	public RangeColumnConstraint() {
 		this.message = "excel.validation.range.message";
@@ -40,6 +41,14 @@ public class RangeColumnConstraint extends ColumnConstraint {
 
 	public void setPickList(String[] pickList) {
 		this.pickList = pickList;
+	}
+	
+	public Boolean getMustInRange() {
+		return mustInRange;
+	}
+
+	public void setMustInRange(Boolean mustInRange) {
+		this.mustInRange = mustInRange;
 	}
 	
 }
