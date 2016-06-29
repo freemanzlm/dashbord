@@ -79,7 +79,7 @@
 
 				<%@ include file="steps.jsp"%>
 
-				<%@ include file="activity.jsp"%>
+				<%@ include file="../activity.jsp"%>
 
 				<div class="mt20">
 					<%@ include file="../table/skuList.jsp"%>

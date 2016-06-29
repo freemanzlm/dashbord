@@ -106,7 +106,7 @@
 
 					<%@ include file="../stateMessages/forPretrial.jsp"%>
 
-					<%@ include file="activity.jsp"%>
+					<%@ include file="../activity.jsp"%>
 
 					<div class="mt20 my-listing">
 						<h3>

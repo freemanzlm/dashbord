@@ -120,7 +120,7 @@
 				</c:otherwise>
 			</c:choose>
 			
-			<%@ include file="activity.jsp" %>
+			<%@ include file="../activity.jsp" %>
 			
 			<div class="mt20 my-listing">
 				<h3>报名刊登列表</h3>
