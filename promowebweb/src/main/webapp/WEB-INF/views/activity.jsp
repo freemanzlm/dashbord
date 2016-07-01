@@ -2,20 +2,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:formatDate value="${promo.promoDlDt}" var="deadline" pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate value="${promo.regEndDate}" var="nominationEndDate" pattern="yyyy-MM-dd-hh" type="date" />
+<fmt:formatDate value="${promo.promoDlDt}" var="deadline" pattern="yyyy-MM-dd-hh" type="date" />
+<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd-hh" type="date" />
+<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd-hh" type="date" />
+<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd-hh" type="date" />
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="timeSlot" value="${promoStart} ~ ${promoEnd}"></c:set>
 
 <div class="activity-detail">
 	<div class="activity-time">
-		<c:if test="${promo.type != 3}">
-			<strong style="margin-right: 90px;">报名截止时间（北京时间）：${ deadline }</strong>
+		<c:if test="${ not empty nominationEndDate}">
+			<strong style="margin-right: 90px;">报名截止时间（北京时间）：${ nominationEndDate }</strong>
 		</c:if>
+		
 		<strong>活动时间（北京时间）：${ timeSlot }</strong>
+		
 		<c:if test="${ state == 'rewarding' }">
 			<strong style="margin-left: 90px;">奖励领取截止时间（北京时间）：${ rewardDeadline }</strong>
 		</c:if>

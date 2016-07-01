@@ -15,12 +15,18 @@ public class Promotion {
 	private String desc;
 	
 	private String itemDesc;
+	
+	private Boolean regType;
 
 	private Integer type;
 	
 	private PromotionSubType promoSubType;
 	
 	private String currentStep;
+	
+	private String adjustedCurrentStep;
+	
+	private Boolean hasValidCurrentStep;
 	
 	private String stepList;
 
@@ -253,6 +259,30 @@ public class Promotion {
 
 	public void setStepList(String stepList) {
 		this.stepList = stepList;
+	}
+
+	public Boolean getHasValidCurrentStep() {
+		return hasValidCurrentStep;
+	}
+
+	public void setHasValidCurrentStep(Boolean hasValidCurrentStep) {
+		this.hasValidCurrentStep = hasValidCurrentStep;
+	}
+
+	public String getAdjustedCurrentStep() {
+		return adjustedCurrentStep;
+	}
+
+	public void setAdjustedCurrentStep(String adjustedCurrentStep) {
+		this.adjustedCurrentStep = adjustedCurrentStep;
+	}
+
+	public Boolean getRegType() {
+		return regType;
+	}
+
+	public void setRegType(Boolean regType) {
+		this.regType = regType;
 	}
 
 }

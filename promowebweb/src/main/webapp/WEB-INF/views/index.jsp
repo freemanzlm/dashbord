@@ -81,14 +81,6 @@
 			<div class="pane pane-table mt20">
 				<div class="header clr">
 					<div class="fr cl">
-						<span class="select-control type-filter fr">
-							<select name="" id="">
-								<option value="">全部活动类型</option>
-								<option value="0">爆款促销</option>
-								<option value="1">Deals招募</option>
-								<option value="3">其它活动</option>
-							</select>
-						</span>
 					</div>
 					<h3>等待开放的活动</h3>
 				</div>
@@ -112,14 +104,6 @@
 							<option value="Detailed">只能查看详情的活动</option>
 						</select>
 					</span>
-					<span class="select-control type-filter fr">
-						<select name="" id="">
-							<option value="">全部活动类型</option>
-							<option value="0">爆款促销</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活动</option>
-						</select>
-					</span>
 				</div>
 				<h3>进行中的活动</h3>
 			</div>
@@ -140,14 +124,6 @@
 							<option value="SubsidyUploaded">申领审核中的活动</option>
 						</select>
 					</span>
-					<span class="select-control type-filter fr">
-						<select name="" id="">
-							<option value="">全部活动类型</option>
-							<option value="0">爆款促销</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活动</option>
-						</select>
-					</span>
 				</div>
 				<h3>领取活动奖励</h3>
 			</div>
@@ -162,14 +138,6 @@
 							<option value="">显示所有活动</option>
 							<option value="SubsidyRetrieved">领取奖励成功的活动</option>
 							<option value="Detailed">只能查看详情的活动</option>
-						</select>
-					</span>
-					<span class="select-control type-filter fr">
-						<select name="" id="">
-							<option value="">全部活动类型</option>
-							<option value="0">爆款促销</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活动</option>
 						</select>
 					</span>
 				</div>

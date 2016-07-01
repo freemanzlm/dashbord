@@ -3,6 +3,8 @@ package com.ebay.raptor.promotion.promo.service;
 
 public enum ViewResource {
 
+	CAMPAIGN("campaign"),
+	
 	HV_APPLICABLE("hotsell/applicable"), 
 	HV_APPLIED("hotsell/applied"),
 	HV_CANCELLED("hotsell/canceled"),

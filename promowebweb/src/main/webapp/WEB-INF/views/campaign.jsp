@@ -1,10 +1,12 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
-<c:set var="categoryId" value="6000" />
+
+<c:set var="currentStep" value="${ promo.currentStep }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -12,8 +14,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>活動促銷</title>
-<meta name="description" content="活動促銷">
+<title>${promo.name }</title>
+<meta name="description" content="${promo.name }">
 <meta name="author" content="eBay: Apps">
 <res:cssSlot id="head" />
 <res:cssSlot id="head-css" />
@@ -33,8 +35,12 @@
 <res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.signpost_css}" target="head-css"/>
 <res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dialog_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.popup_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.layout_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.header_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css" />
@@ -43,7 +49,7 @@
 
 <res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
 <res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
-<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="head"></res:useJs>
+<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head"></res:useJs>
 <res:useJs value="${res.js.local.js['cookie.js']}" target="head"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
@@ -53,15 +59,13 @@
 <res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
 
 <res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['OnGoingPromoTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['RewardingPromoTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['EndPromoTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['PendingPromoTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.page['index.js']}" target="exec-js"></res:useJs>
-
+<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.page['deals_applicable.js']}" target="page-js2"></res:useJs>
 </head>
 
 <body>
@@ -71,78 +75,33 @@
 		<!-- end: Global Header -->
 
 		<jsp:include page="topNavigator.jsp"></jsp:include>
-
 		<div id="page-pane">
-			<div class="clr" style="margin-bottom: 15px;">
-				<h2>活動促銷</h2>
-			</div>
+			<div class="pane">
+				<h2>${promo.name}</h2>
 
-			<c:if test="${ invisible eq true }">
-				<div class="pane pane-table mt20">
-					<div class="header clr">
-						<div class="fr cl">
-						</div>
-						<h3>等待開放的活動</h3>
-					</div>
-					<jsp:include page="table/pending.jsp"></jsp:include>
-				</div>
-			</c:if>
+				<%@ include file="steps.jsp"%>
+				
+				<%@ include file="state.jsp"%>
 
-			<div class="pane pane-table mt20">
-				<div class="header clr">
-					<div class="fr cl">
-						<span class="select-control state-filter fr">
-							<select name="" id="" class="">
-								<option value="">顯示所有活動</option>
-								<option value="Created">可報名的活動</option>
-								<option value="PromotionApproved">待正式報名的活動</option>
-								<option value="Submitted">已提交預審的活動</option>
-								<option value="Verifying">預審中的活動</option>
-								<option value="Applied">已報名的活動</option>
-								<option value="Started">進行中的活動</option>
-								<option value="SubsidyCounting">獎勵確認中的活動</option>
-								<option value="Detailed">只能查看詳情的活動</option>
-							</select></span>
-					</div>
-					<h3>進行中的活動</h3>
-				</div>
-				<jsp:include page="table/ongoing.jsp"></jsp:include>
-			</div>
+				<%@ include file="activity.jsp"%>
 
-			<div class="pane pane-table mt20">
-				<div class="header clr">
-					<div class="fr cl">
-						<span class="select-control state-filter fr">
-							<select name="" id="">
-								<option value="">顯示所有活動</option>
-								<option value="SubsidyWaiting">可申領獎勵的活動</option>
-								<option value="SubsidyAccessed">待填寫協定的活動</option>
-								<option value="SubsidyResubmittable">需要重新申領獎勵的活動</option>
-								<option value="SubsidyRetrievable">可領取獎勵的活動</option>
-								<option value="SubsidySubmitted">待上傳協定的活動</option>
-								<option value="SubsidyUploaded">申領稽核中的活動</option>
-							</select>
-						</span>
+				<c:if test="${currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' }">
+					<div class="mt20">
+						<%@ include file="table/skuList.jsp"%>
 					</div>
-					<h3>領取活動獎勵</h3>
-				</div>
-				<jsp:include page="table/rewarding.jsp"></jsp:include>
-			</div>
-
-			<div class="pane pane-table mt20">
-				<div class="header clr">
-					<div class="fr cl">
-						<span class="select-control state-filter fr">
-							<select name="" id="" class="fr state-filter">
-								<option value="">顯示所有活動</option>
-								<option value="SubsidyRetrieved">領取獎勵成功的活動</option>
-								<option value="Detailed">只能查看詳情的活動</option>
-							</select>
-						</span>
+					
+					<div class="mt20">
+						<%@ include file="deals/upload_listings.jsp"%>
 					</div>
-					<h3>已結束的活動</h3>
-				</div>
-				<jsp:include page="table/end.jsp"></jsp:include>
+					
+					<div class="mt20 page-bottom-actions">
+						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
+							<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
+						<button id="upload-btn" class="btn" ${ isAdmin ? 'disabled' : '' }>预览并提交报名</button>
+						<br /> <br /> <a href="index">返回活动列表</a>
+					</div>
+				</c:if>
+				
 			</div>
 		</div>
 
@@ -152,11 +111,12 @@
 	</div>
 
 	<%@ include file="dialog/alert.jsp"%>
+	<%@ include file="dialog/terms.jsp"%>
 
 	<script type="text/javascript">
 		var pageData = {
-			region : '${ region }',
-			admin: ${invisible}
+			promoId : '${promo.promoId}',
+			promoSubType : '${promo.promoSubType}'
 		};
 	</script>
 

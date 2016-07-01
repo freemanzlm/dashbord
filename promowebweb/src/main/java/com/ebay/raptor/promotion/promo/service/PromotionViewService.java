@@ -1,5 +1,6 @@
 package com.ebay.raptor.promotion.promo.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,12 +10,29 @@ import org.springframework.stereotype.Component;
 import com.ebay.cbt.common.constant.pm.PMPromotionStatus;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
+import com.ebay.raptor.promotion.util.DateUtil;
 
 @Component
 public class PromotionViewService {
 	
 	@Autowired
 	private PromotionService service;
+	
+	public ContextViewRes handleView(Promotion pro, long uid) throws PromoException{
+		ContextViewRes res = new ContextViewRes();
+		Map<String, Object> context = new HashMap<String, Object>();
+		context.put(ViewContext.Agreement.getAttr(), ViewResource.HV_AGGREMENT.getPath());
+		
+		Date nominationEndDate = pro.getRegEndDate();
+		if (nominationEndDate != null) {
+			nominationEndDate = DateUtil.convertToSystemTime(nominationEndDate, DateUtil.BEIJING_TIMEZONE);
+			context.put(ViewContext.IS_NOMINATION_END.getAttr(), nominationEndDate.before(new Date()));
+		}
+		
+		res.setView(ViewResource.CAMPAIGN);
+		
+		return res;
+	}
 	
 	public ContextViewRes highVelocityView(Promotion pro, long uid) throws PromoException{
 		ContextViewRes res = new ContextViewRes();

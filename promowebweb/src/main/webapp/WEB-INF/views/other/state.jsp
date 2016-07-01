@@ -63,6 +63,8 @@
 		<div class="pane">
 			<h2>其它活动 ${promo.name}</h2>
 			
+			<jsp:include page="../steps.jsp"></jsp:include>
+			
 			<c:choose>
 				<c:when test="${ rewarding }">
 					<div class="signpost mb20">

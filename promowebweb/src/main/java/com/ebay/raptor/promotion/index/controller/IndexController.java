@@ -21,6 +21,7 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.common.constant.pm.PMPromotionType;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.enums.PromotionStep;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -151,7 +152,7 @@ public class IndexController {
 //		String stepList = promo.getStepList();
 //		String currentStep = promo.getCurrentStep();
 		String stepList = "Draft>Nomination eDM in approve flow>Nomination eDM approved>Seller nomination_Need approve>Promotion Submitted>Promotion Approved>Notification eDM in approve flow>Notification eDM approved>Seller Feedback>Promotion in progress>Promotion in validation>Promotion validated";
-		String currentStep = "Promotion Approved";
+		String currentStep = PromotionStep.PROMOTION_APPROVED.getName();
 		String[] steps = stepList.split(">");
 		stepList = "";
 		for (String step : steps) {
@@ -184,7 +185,9 @@ public class IndexController {
 					}
 				}
 			}
-			promo.setCurrentStep(currentStep);
+//			promo.setCurrentStep(currentStep);
+			promo.setAdjustedCurrentStep(currentStep);
+			promo.setHasValidCurrentStep(isValidStep(currentStep));
 		}
 	}
 	
@@ -195,16 +198,17 @@ public class IndexController {
 	 * @return if step is one of the invalid step, return false.
 	 */
 	private boolean isValidStep(String step) {
-		return !(("Nomination eDM in approve flow".equalsIgnoreCase(step) 
-				|| "Nomination eDM approved".equalsIgnoreCase(step)
-				|| "Promotion Approved".equalsIgnoreCase(step)
-				|| "Notification eDM in approve flow".equalsIgnoreCase(step)
-				|| "Notification eDM approved".equalsIgnoreCase(step)));
+		return !((PromotionStep.NOMINATION_EDM_IN_APPROVE_FLOW.getName().equalsIgnoreCase(step) 
+				|| PromotionStep.NOMINATION_EDM_APPROVED.getName().equalsIgnoreCase(step)
+				|| PromotionStep.PROMOTION_APPROVED.getName().equalsIgnoreCase(step)
+				|| PromotionStep.NOTIFICATION_EDM_IN_APPROVE_FLOW.getName().equalsIgnoreCase(step)
+				|| PromotionStep.NOTIFICATION_EDM_APPROVED.getName().equalsIgnoreCase(step)));
 	}
 		
 	private ContextViewRes handleViewBasedOnPromotion(Promotion promo, long uid) throws PromoException{
 		ContextViewRes result = new ContextViewRes();
-		switch(PMPromotionType.valueOfPMType(promo.getType())){
+		result = view.handleView(promo, uid);
+		/*switch(PMPromotionType.valueOfPMType(promo.getType())){
 			case HIGH_VELOCITY:
 				result = view.highVelocityView(promo, uid);
 				break;
@@ -220,7 +224,7 @@ public class IndexController {
 			case PM_UNKNOWN_TYPE:
 				result.setView(ViewResource.ERROR);
 				break;
-		}
+		}*/
 		return result;
 	}
 }

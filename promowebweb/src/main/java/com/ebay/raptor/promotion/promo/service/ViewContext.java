@@ -19,7 +19,10 @@ public enum ViewContext {
 	PromoUpdatedNum(13, "promoUpdatedNum"),
 	PromoUpdatedDetail(14, "promoUpdatedDetail"),
 	IsAdmin(15, "isAdmin"),
-	PromotionSubType(16, "promoSubType");
+	PromotionSubType(16, "promoSubType"),
+	
+	IS_NOMINATION_END(17, "isNomitionEnd"),
+	HAS_LISTINGS_NOMINATED(18, "hasListingsNominated");	
 	
 	private Integer id;
 
