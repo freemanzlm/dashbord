@@ -19,6 +19,10 @@ public class Promotion {
 	private Integer type;
 	
 	private PromotionSubType promoSubType;
+	
+	private String currentStep;
+	
+	private String stepList;
 
 	@JsonSerialize(using=WebDateSerializer.class)
 	private Date promoDlDt;
@@ -233,6 +237,22 @@ public class Promotion {
 
 	public void setPromoSubType(PromotionSubType promoSubType) {
 		this.promoSubType = promoSubType;
+	}
+
+	public String getCurrentStep() {
+		return currentStep;
+	}
+
+	public void setCurrentStep(String currentStep) {
+		this.currentStep = currentStep;
+	}
+
+	public String getStepList() {
+		return stepList;
+	}
+
+	public void setStepList(String stepList) {
+		this.stepList = stepList;
 	}
 
 }

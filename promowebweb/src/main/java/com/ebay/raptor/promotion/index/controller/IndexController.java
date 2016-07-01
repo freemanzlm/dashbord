@@ -108,20 +108,22 @@ public class IndexController {
 
 		try {
 			Promotion promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-
+			
 			if(null != promo){
 				ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
 				model.setViewName(res.getView().getPath());
 				model.addAllObjects(res.getContext());
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
 			}
+			
+			handleInvalidSteps(promo);
 		} catch (PromoException e) {
 			logger.error("Unable to get promotion for " + promoId, e);
 			model.setViewName(ViewResource.ERROR.getPath());
 		}
 		return model;
 	}
-	
+    
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
     public ModelAndView handleErrorRequest(HttpServletRequest request,
             HttpServletResponse response,
@@ -130,7 +132,7 @@ public class IndexController {
        	mav.setViewName("error");
         return mav;
     }
-    
+	
 	@ExceptionHandler(MissingArgumentException.class)
     public ModelAndView handleException(MissingArgumentException exception,
             HttpServletRequest request) {
@@ -139,6 +141,67 @@ public class IndexController {
         return mav;
     }
 	
+	/**
+	 * If step list contains invalid steps, we need to filter them out and fix the current step.
+	 * 
+	 * @param promo
+	 */
+	private void handleInvalidSteps(Promotion promo) {
+		/* stepList comes from SalesForce */
+//		String stepList = promo.getStepList();
+//		String currentStep = promo.getCurrentStep();
+		String stepList = "Draft>Nomination eDM in approve flow>Nomination eDM approved>Seller nomination_Need approve>Promotion Submitted>Promotion Approved>Notification eDM in approve flow>Notification eDM approved>Seller Feedback>Promotion in progress>Promotion in validation>Promotion validated";
+		String currentStep = "Promotion Approved";
+		String[] steps = stepList.split(">");
+		stepList = "";
+		for (String step : steps) {
+			// filter out useless steps
+			if (isValidStep(step)){
+				stepList += ">" + step;
+			}
+		}
+		
+		if (stepList.startsWith(">")) {
+			// remove first ">"
+			promo.setStepList(stepList.substring(1));
+		}
+		
+		if (! isValidStep(currentStep)){
+			boolean found = false;
+			// currentStep is an invalid promotion step, we'll adjust currentStep to a former valid step.
+			for (int i = steps.length - 1; i > 0; i--) {
+				String step = steps[i];
+				if (!currentStep.equalsIgnoreCase(step) && !found) {
+					// find current step's position in original step list.
+					continue;
+				} else {
+					found = true;
+					currentStep = step;
+					if (isValidStep(currentStep)) {
+						break;
+					} else {
+						continue;
+					}
+				}
+			}
+			promo.setCurrentStep(currentStep);
+		}
+	}
+	
+	/**
+	 * There are four invalid steps: Nomination eDM in approve flow, Nomination eDM approved, Notification eDM in approve flow, Notification eDM approved.
+	 * 
+	 * @param step
+	 * @return if step is one of the invalid step, return false.
+	 */
+	private boolean isValidStep(String step) {
+		return !(("Nomination eDM in approve flow".equalsIgnoreCase(step) 
+				|| "Nomination eDM approved".equalsIgnoreCase(step)
+				|| "Promotion Approved".equalsIgnoreCase(step)
+				|| "Notification eDM in approve flow".equalsIgnoreCase(step)
+				|| "Notification eDM approved".equalsIgnoreCase(step)));
+	}
+		
 	private ContextViewRes handleViewBasedOnPromotion(Promotion promo, long uid) throws PromoException{
 		ContextViewRes result = new ContextViewRes();
 		switch(PMPromotionType.valueOfPMType(promo.getType())){
