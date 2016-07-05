@@ -30,14 +30,14 @@
 		</div>
 		</c:if>
 		
-		<c:if test="${ not empty promo.itemDesc }">
+		<%-- <c:if test="${ not empty promo.itemDesc }">
 			<div class="table-row">
 				<div class="table-cell brief-title">活动条款：</div>
 				<div class="table-cell pretty-text">
 					<div>${promo.itemDesc}</div>
 				</div>
 			</div>
-		</c:if>
+		</c:if> --%>
 	</div>
 	<c:if test="${promo.type != 3}">
 		<div class="activity-law">
