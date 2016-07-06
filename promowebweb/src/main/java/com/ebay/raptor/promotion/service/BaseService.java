@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.service;
 
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -40,13 +41,17 @@ public class BaseService {
 	
 	protected GingerClientResponse httpGet(String url){
 		GingerWebTarget target = PromoClient.getClient().target(url);
-		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(IAFTokenService.getIAFToken())).get();
+		Invocation.Builder build = target.request();
+		GingerClientResponse resp = (GingerClientResponse) build.headers(authHeaders(IAFTokenService.getIAFToken())).get();
+//		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(IAFTokenService.getIAFToken())).get();
 		return resp;
 	}
 	
 	protected GingerClientResponse httpPost(String url, Object postObj){
 		GingerWebTarget target = PromoClient.getClient().target(url);
-		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(IAFTokenService.getIAFToken())).post(Entity.json(postObj));
+		Invocation.Builder build = target.request();
+		GingerClientResponse resp = (GingerClientResponse) build.headers(authHeaders(IAFTokenService.getIAFToken())).post(Entity.json(postObj));
+//		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(IAFTokenService.getIAFToken())).post(Entity.json(postObj));
 		return resp;
 	}
 	

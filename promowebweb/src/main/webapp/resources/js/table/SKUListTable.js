@@ -42,7 +42,7 @@ var BizReport = BizReport || {};
 					}
 				},
 //				'sScrollX': "100%",
-				sAjaxSource: "/promotion/deals/getSKUsByPromotionId",
+				sAjaxSource: "/promotion/listings/getSKUsByPromotionId",
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {

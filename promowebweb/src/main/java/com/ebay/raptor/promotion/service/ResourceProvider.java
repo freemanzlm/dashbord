@@ -39,6 +39,7 @@ public class ResourceProvider {
 	}
 	
 	public interface ListingRes {
+		String base = "listings";
 		String dealsBase = "deals";
 		String siteDeals = "sitedeals";
 		String hotsellBase = "hotsell";

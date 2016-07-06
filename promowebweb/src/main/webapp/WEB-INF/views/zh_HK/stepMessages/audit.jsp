@@ -6,6 +6,7 @@
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd-hh" type="date" />
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd-hh" type="date" />
 <fmt:formatDate value="${promo.promoDlDt}" var="promoDlDt" pattern="yyyy-MM-hh" type="date" />
+<c:set var="regType" value="${promo.regType}" />
 
 <c:choose>
 	<c:when test="${approved eq true}">

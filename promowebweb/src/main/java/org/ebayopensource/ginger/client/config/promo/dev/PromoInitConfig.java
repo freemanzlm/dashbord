@@ -2,6 +2,8 @@ package org.ebayopensource.ginger.client.config.promo.dev;
 
 import org.ebayopensource.ginger.client.config.promo.BasePromoInitConfig;
 
+import com.ebay.raptor.promotion.service.ObjectMapperProvider;
+
 public class PromoInitConfig extends BasePromoInitConfig{
 
 

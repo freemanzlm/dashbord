@@ -16,11 +16,9 @@ public class Promotion {
 	
 	private String itemDesc;
 	
-	private Boolean regType;
+	private Boolean regType = true;
 
 	private Integer type;
-	
-	private PromotionSubType promoSubType;
 	
 	private String currentStep;
 	
@@ -67,8 +65,18 @@ public class Promotion {
 	
 	private Boolean isReversed;
 	
+	private Boolean isEnded;
+	
 	private String endReason;
 	
+	public Boolean getIsEnded() {
+		return isEnded;
+	}
+
+	public void setIsEnded(Boolean isEnded) {
+		this.isEnded = isEnded;
+	}
+
 	public String getEndReason() {
 		return endReason;
 	}
@@ -235,14 +243,6 @@ public class Promotion {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
-	}
-
-	public PromotionSubType getPromoSubType() {
-		return promoSubType;
-	}
-
-	public void setPromoSubType(PromotionSubType promoSubType) {
-		this.promoSubType = promoSubType;
 	}
 
 	public String getCurrentStep() {

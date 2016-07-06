@@ -22,7 +22,10 @@ public enum ViewContext {
 	PromotionSubType(16, "promoSubType"),
 	
 	IS_NOMINATION_END(17, "isNomitionEnd"),
-	HAS_LISTINGS_NOMINATED(18, "hasListingsNominated");	
+	HAS_LISTINGS_NOMINATED(18, "hasListingsNominated"),
+	// promotion end date is before now
+	IS_PROMOTION_STOP(19, "isPromotionStoped"),
+	IS_AWARD_END(20, "isAwardEnd");
 	
 	private Integer id;
 

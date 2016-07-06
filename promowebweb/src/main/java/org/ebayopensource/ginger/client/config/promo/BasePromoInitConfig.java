@@ -2,7 +2,16 @@ package org.ebayopensource.ginger.client.config.promo;
 
 import org.ebayopensource.ginger.client.config.DefaultInitGingerClientConfig;
 
+import com.ebay.raptor.promotion.service.ObjectMapperProvider;
+
 public abstract class BasePromoInitConfig extends DefaultInitGingerClientConfig{
+	
+	@Override
+	public Object[] getProviders() {
+		// set custom jackson ObjectMapper
+		return new Object[] {new ObjectMapperProvider()};
+//	    return new Object[] {new ContextPropagator(),new RaptorContextInjector()};
+	}
 
 	@Override
 	public int getConnectTimeout() {

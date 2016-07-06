@@ -6,7 +6,9 @@
 <fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatDate value="${promo.promoDlDt}" var="promoDlDt" pattern="yyyy-MM-dd" type="date" />
+<c:set var="regType" value="${promo.regType}" />
 <!-- whether seller has nominted his listings -->
+<c:set var="hasListingsNominated" value="${true}" />
 
 <c:choose>
 	<c:when test="${hasListingsNominated eq true}">

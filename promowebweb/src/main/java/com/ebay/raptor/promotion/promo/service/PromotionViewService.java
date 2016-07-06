@@ -23,10 +23,24 @@ public class PromotionViewService {
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put(ViewContext.Agreement.getAttr(), ViewResource.HV_AGGREMENT.getPath());
 		
+		Date now = new Date();
+		
+		// whether nomination end date has expired
 		Date nominationEndDate = pro.getRegEndDate();
 		if (nominationEndDate != null) {
 			nominationEndDate = DateUtil.convertToSystemTime(nominationEndDate, DateUtil.BEIJING_TIMEZONE);
-			context.put(ViewContext.IS_NOMINATION_END.getAttr(), nominationEndDate.before(new Date()));
+			context.put(ViewContext.IS_NOMINATION_END.getAttr(), nominationEndDate.before(now));
+		}
+		
+		// whether promotion has stopped
+		Date endDate = DateUtil.convertToSystemTime(pro.getPromoEdt(), DateUtil.BEIJING_TIMEZONE);
+		context.put(ViewContext.IS_PROMOTION_STOP.getAttr(), endDate.before(now));
+		
+		// whether promotion reward deadline has expired
+		Date awardEndDate = pro.getRewardDlDt();
+		if (awardEndDate != null) {
+			awardEndDate = DateUtil.convertToSystemTime(pro.getRewardDlDt(), DateUtil.BEIJING_TIMEZONE);
+			context.put(ViewContext.IS_AWARD_END.getAttr(), awardEndDate.before(now));
 		}
 		
 		res.setView(ViewResource.CAMPAIGN);

@@ -6,7 +6,11 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 
-<c:set var="currentStep" value="${ promo.currentStep }" />
+<%-- <c:set var="currentStep" value="${ promo.adjustedCurrentStep }" /> --%>
+<%-- <c:set var="regType" value="${ promo.regType }" /> --%>
+<c:set var="currentStep" value="${ 'Seller nomination_Need approve' }" />
+<c:set var="regType" value="${ true }" />
+<c:set var="hasListingsNominated" value="${false}" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -85,13 +89,13 @@
 
 				<%@ include file="activity.jsp"%>
 
-				<c:if test="${currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' }">
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType }">
 					<div class="mt20">
 						<%@ include file="table/skuList.jsp"%>
 					</div>
 					
 					<div class="mt20">
-						<%@ include file="deals/upload_listings.jsp"%>
+						<%@ include file="upload_listings.jsp"%>
 					</div>
 					
 					<div class="mt20 page-bottom-actions">
@@ -102,6 +106,12 @@
 					</div>
 				</c:if>
 				
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  not regType }">
+					<div class="mt20 my-listing">
+						<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
+						<jsp:include page="table/listings.jsp"></jsp:include>
+					</div>
+				</c:if>
 			</div>
 		</div>
 
@@ -115,8 +125,7 @@
 
 	<script type="text/javascript">
 		var pageData = {
-			promoId : '${promo.promoId}',
-			promoSubType : '${promo.promoSubType}'
+			promoId : '${promo.promoId}'
 		};
 	</script>
 
