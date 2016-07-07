@@ -3,6 +3,7 @@ package com.ebay.raptor.promotion.excel;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -22,8 +23,9 @@ public interface ISheetWriter {
 	 * @param row
 	 * @param column
 	 * @param value
+	 * @param style Cell style.
 	 */
-	public void createCell(Workbook book, Sheet sheet, Row row, int column, Object value);
+	public void createCell(Workbook book, Sheet sheet, Row row, int column, Object value, CellStyle style);
 	
 	/**
 	 * Create a new cell in row, column is specified by config.getWriteOrder(). Cell type is determined by config.getRawType().
@@ -33,7 +35,7 @@ public interface ISheetWriter {
 	 * @param config
 	 * @param value
 	 */
-	public void createCell(Workbook book, Sheet sheet, Row row, ColumnConfiguration config, Object value);
+	public void createCell(Workbook book, Sheet sheet, Row row, ColumnConfiguration config, Object value, CellStyle style);
 
 	/**
 	 * Fill row with a map's values. Display order is the same as it is in list.
@@ -82,4 +84,25 @@ public interface ISheetWriter {
 	 */
 	public void writeSheet2(Workbook book, Sheet sheet, List<ColumnConfiguration> configs, List<List<Object>> list, boolean hasTitle);
 	
+	/**
+	 * Create freeze pane.
+	 * 
+	 * @param sheet
+	 * @param freezeCols
+	 * @param freezeRows
+	 */
+	public void freeze(Sheet sheet, int freezeCols, int freezeRows);
+	
+	/**
+	 * Hide a column
+	 * @param sheet
+	 * @param hiddenCol
+	 */
+	public void hideColumn(Sheet sheet, int hiddenCol);
+	
+	/**
+	 * Set protection password
+	 * @param password
+	 */
+	public void setProtectionPassword(Sheet sheet, String password);
 }

@@ -29,7 +29,7 @@ import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.PromotionUtil;
 
-@Component
+//@Component
 public class ExcelService {
 	public final static String DEALS_LISTING_FILENAME_PREFIX = "Deals_listing_template";
 	private final static String DOC_SHEET_NAME_KEY = "doc.sheetName";

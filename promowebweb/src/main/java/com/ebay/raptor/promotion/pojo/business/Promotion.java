@@ -69,6 +69,19 @@ public class Promotion {
 	
 	private String endReason;
 	
+	/**
+	 * Listing fields definition. It's a JSON object string.
+	 */
+	private String listingFields;
+	
+	public String getListingFields() {
+		return listingFields;
+	}
+
+	public void setListingFields(String listingFields) {
+		this.listingFields = listingFields;
+	}
+
 	public Boolean getIsEnded() {
 		return isEnded;
 	}

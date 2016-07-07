@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.excel;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -9,6 +10,8 @@ import java.util.logging.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -31,38 +34,227 @@ import com.ebay.raptor.promotion.util.StringUtil;
  */
 public class SheetWriter implements ISheetWriter {
 	private final Logger logger = Logger.getLogger(SheetWriter.class.getName());
-	private int firstRowNum = 0;
+	private Map<Integer, CellStyle> styleMapping = new HashMap<Integer, CellStyle>();
+	private int firstDataRowNum = 0;
 	
 	@Override
 	public void createCell(Workbook book, Sheet sheet, Row row, ColumnConfiguration config,
-			Object value) {
+			Object value, CellStyle style) {
 		if (config == null) return;
 		
 		if (config.getRawType() == null) {
 			// attachment doesn't have raw type.
-			createCell(book, row, config, value);
+			createCell(book, row, config, value, style);
 			return;
 		}
 		
 		switch(config.getRawType().toUpperCase()) {
 			case "DOUBLE":
-				createDoubleCell(book, row, config, value); break;
+				createDoubleCell(book, row, config, value, style); break;
 			case "DATE":
-				createDateCell(book, row, config, value); break;
+				createDateCell(book, row, config, value, style); break;
 			case "DATETIME":
-				createDateTimeCell(book, row, config, value); break;
+				createDateTimeCell(book, row, config, value, style); break;
 			case "TIME":
-				createTimeCell(book, row, config, value); break;
+				createTimeCell(book, row, config, value, style); break;
 			case "PERCENT":
-				createPercentCell(book, row, config, value); break;
+				createPercentCell(book, row, config, value, style); break;
 			case "COMBOBOX":
 			case "PICKLIST":
 			case "STRING":
 			case "TEXTAREA":
 			default:
-				createCell(book, row, config, value); break;
+				createCell(book, row, config, value, style); break;
 		}
 		
+	}
+	
+	@Override
+	public void createCell(Workbook book, Sheet sheet,  Row row, int column, Object value, CellStyle style) {
+		Cell cell = null;
+		
+		if (value instanceof Number) {
+			cell = row.createCell(column, Cell.CELL_TYPE_NUMERIC);
+			style = style == null ? book.createCellStyle() : style;
+			style.setAlignment(CellStyle.ALIGN_RIGHT);
+			cell.setCellValue(((Number) value).doubleValue());
+			cell.setCellStyle(style);
+		} else if (value instanceof Date) {
+			cell = row.createCell(column, Cell.CELL_TYPE_NUMERIC);
+			style = style == null ? book.createCellStyle() : style;
+			style.setAlignment(CellStyle.ALIGN_CENTER);
+			cell.setCellStyle(style);
+			cell.setCellValue((Date)value);			
+		} else if (value instanceof Boolean) {
+			cell = row.createCell(column, Cell.CELL_TYPE_BOOLEAN);
+			style = style == null ? book.createCellStyle() : style;
+			style.setAlignment(CellStyle.ALIGN_CENTER);
+			cell.setCellStyle(style);
+			cell.setCellValue((Boolean)value);
+		} else if (value == null) {
+			cell = row.createCell(column, Cell.CELL_TYPE_BLANK);
+		} else {
+			cell = row.createCell(column, Cell.CELL_TYPE_STRING);
+			cell.setCellValue(value.toString());
+			cell.setCellStyle(style);
+		}
+		
+	}
+
+	@Override
+	public void writeRow(Workbook book, Sheet sheet, Row row, List<Object> list) {
+		int column = 0;
+		for (Object value : list) {
+			createCell(book, sheet, row, column++, value, null);
+		}
+	}
+
+	@Override
+	public void writeRow(Workbook book, Sheet sheet, Row row, List<ColumnConfiguration> configs, Map<String, Object> map) {
+		for (ColumnConfiguration config : configs) {
+			if (config != null) {
+				CellStyle cellStyle = styleMapping.get(config.getWriteOrder());
+				if (cellStyle == null) {
+					cellStyle = book.createCellStyle();
+					cellStyle.setLocked(!config.getWritable());
+					styleMapping.put(config.getWriteOrder(), cellStyle);
+				}
+				createCell(book, sheet, row, config, map.get(config.getKey()), cellStyle);
+			}
+		}
+	}
+
+	@Override
+	public void writeSheet(Workbook book, Sheet sheet, List<ColumnConfiguration> configs, List<Map<String, Object>> list, boolean hasTitle) {
+		if (hasTitle) createTitle(book, sheet, configs);
+		createSampleRow(book, sheet, configs);
+		
+		int rowNum = firstDataRowNum;
+		for (Map<String, Object> map : list) {
+			Row row = sheet.createRow(rowNum);
+			writeRow(book, sheet, row, configs, map);
+			rowNum++;
+		}
+		
+		if (firstDataRowNum > sheet.getLastRowNum()) {
+			// no data
+			return;
+		}
+		
+		for(ColumnConfiguration config : configs) {
+			List<ColumnConstraint> constraints = config.getConstraints();
+			for (ColumnConstraint constraint : constraints) {
+				if (constraint instanceof RangeColumnConstraint) {
+					XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper((XSSFSheet)sheet);
+					XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint)
+					    dvHelper.createExplicitListConstraint(((RangeColumnConstraint) constraint).getPickList());
+					
+					CellRangeAddressList addressList = new CellRangeAddressList(firstDataRowNum,  sheet.getLastRowNum(), config.getWriteOrder(), config.getWriteOrder());
+					XSSFDataValidation validation =(XSSFDataValidation)dvHelper.createValidation(dvConstraint, addressList);
+					
+					// Display pick list when user click the cell.    
+					validation.setSuppressDropDownArrow(true);
+					
+					// Note this extra method call. If this method call is omitted, or if the
+					// boolean value false is passed, then Excel will not validate the value the
+					// user enters into the cell.
+					validation.setShowErrorBox(((RangeColumnConstraint) constraint).getMustInRange());
+					sheet.addValidationData(validation);
+					break;
+				}
+				
+				if (constraint instanceof IntegerRangeColumnConstraint) {
+					IntegerRangeColumnConstraint iconstraint = (IntegerRangeColumnConstraint) constraint;
+					XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper((XSSFSheet)sheet);
+					XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint)dvHelper.createNumericConstraint(
+						      XSSFDataValidationConstraint.ValidationType.INTEGER,
+						      XSSFDataValidationConstraint.OperatorType.BETWEEN,
+						      "=" + iconstraint.getMin(), "=" + iconstraint.getMax());
+					
+					CellRangeAddressList addressList = new CellRangeAddressList(firstDataRowNum,  sheet.getLastRowNum(), config.getWriteOrder(), config.getWriteOrder());
+					XSSFDataValidation validation =(XSSFDataValidation)dvHelper.createValidation(dvConstraint, addressList);
+					
+					// Display pick list when user click the cell.    
+					validation.setSuppressDropDownArrow(true);
+					
+					// Note this extra method call. If this method call is omitted, or if the
+					// boolean value false is passed, then Excel will not validate the value the
+					// user enters into the cell.
+					validation.setShowErrorBox(true);
+					sheet.addValidationData(validation);
+					break;
+				}
+			}
+		}
+		
+		adjustColumnWidth(sheet, configs);
+	}
+
+	@Override
+	public void writeSheet2(Workbook book, Sheet sheet, List<ColumnConfiguration> configs, List<List<Object>> list, boolean hasTitle) {
+		if (hasTitle) createTitle(book, sheet, configs);
+		
+		int rowNum = firstDataRowNum;
+		for (List<Object> obj : list) {
+			Row row = sheet.createRow(rowNum);
+			writeRow(book, sheet, row, obj);
+			rowNum++;
+		}
+		
+	}
+
+	@Override
+	public void createTitle(Workbook book, Sheet sheet, List<ColumnConfiguration> configs) {
+		Row row = sheet.createRow(firstDataRowNum ++);
+		CellStyle headerStyle = book.createCellStyle();
+		headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+		headerStyle.setFillForegroundColor(IndexedColors.LIME.getIndex());
+		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		headerStyle.setWrapText(true);
+		
+		Font ft = book.createFont();
+		ft.setFontName("Arial");
+		ft.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		headerStyle.setFont(ft);
+		
+		for (ColumnConfiguration config : configs) {
+			if (config != null) {
+				createCell(book, sheet, row, config.getWriteOrder(), config.getTitle(), headerStyle);
+			}
+		}
+	}
+	
+	/**
+	 * Freeze some columns and rows.
+	 * @param sheet
+	 * @param freezeRows
+	 * @param freezeCols
+	 * @param password
+	 */
+	public void freeze(Sheet sheet, int freezeCols, int freezeRows) {
+		sheet.createFreezePane(freezeCols, freezeRows);
+	}
+	
+	/**
+	 * Hide a column.
+	 * @param sheet
+	 * @param hiddenCol
+	 */
+	public void hideColumn(Sheet sheet, int hiddenCol) {
+		sheet.setColumnHidden(hiddenCol, true);
+	}
+	
+	public int getFirstDataRowNum() {
+		return firstDataRowNum;
+	}
+
+	public void setFirstDataRowNum(int firstDataRowNum) {
+		this.firstDataRowNum = firstDataRowNum;
+	}
+
+	@Override
+	public void setProtectionPassword(Sheet sheet, String password) {
+		sheet.protectSheet(password);
 	}
 	
 	/**
@@ -72,13 +264,15 @@ public class SheetWriter implements ISheetWriter {
 	 * @param config
 	 * @param value
 	 */
-	private void createCell(Workbook book, Row row, ColumnConfiguration config, Object value) {
+	private void createCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
 		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_STRING);
 		if (value != null) {
 			cell.setCellValue(value.toString());
 		} else {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
 		}
+		
+		cell.setCellStyle(style);
 	}
 	
 	/**
@@ -88,9 +282,8 @@ public class SheetWriter implements ISheetWriter {
 	 * @param config
 	 * @param value
 	 */
-	private void createPercentCell(Workbook book, Row row, ColumnConfiguration config, Object value) {
+	private void createPercentCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
 		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_NUMERIC);
-		CellStyle style = book.createCellStyle();
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		DataFormat df = book.createDataFormat();
 		style.setDataFormat(df.getFormat("0.00%"));
@@ -110,9 +303,8 @@ public class SheetWriter implements ISheetWriter {
 	 * @param config
 	 * @param value
 	 */
-	private void createDoubleCell(Workbook book, Row row, ColumnConfiguration config, Object value) {
+	private void createDoubleCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
 		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_NUMERIC);
-		CellStyle style = book.createCellStyle();
 		style.setAlignment(CellStyle.ALIGN_RIGHT);
 		
 		for (ColumnConstraint constraint : config.getConstraints()) {
@@ -144,9 +336,8 @@ public class SheetWriter implements ISheetWriter {
 	 * @param config
 	 * @param value
 	 */
-	private void createDateCell(Workbook book, Row row, ColumnConfiguration config, Object value) {
+	private void createDateCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
 		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_STRING);
-		CellStyle style = book.createCellStyle();
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		DataFormat df = book.createDataFormat();
 		style.setDataFormat(df.getFormat("yyyy-mm-dd"));
@@ -154,6 +345,8 @@ public class SheetWriter implements ISheetWriter {
 		
 		if (value instanceof Date && value != null) {
 			cell.setCellValue(DateUtil.formatISODate((Date)value, null));
+		} if (value instanceof String && value != null) {
+			cell.setCellValue((String)value);
 		} else {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
 		}		
@@ -166,9 +359,8 @@ public class SheetWriter implements ISheetWriter {
 	 * @param config
 	 * @param value
 	 */
-	private void createDateTimeCell(Workbook book, Row row, ColumnConfiguration config, Object value) {
+	private void createDateTimeCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
 		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_STRING);
-		CellStyle style = book.createCellStyle();
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		DataFormat df = book.createDataFormat();
 		style.setDataFormat(df.getFormat("yyyy-mm-dd hh:mm:ss"));
@@ -176,6 +368,8 @@ public class SheetWriter implements ISheetWriter {
 		
 		if (value instanceof Date && value != null) {
 			cell.setCellValue(DateUtil.formatISODateTime((Date)value, null));
+		} if (value instanceof String && value != null) {
+			cell.setCellValue((String)value);
 		} else {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
 		}
@@ -188,9 +382,8 @@ public class SheetWriter implements ISheetWriter {
 	 * @param config
 	 * @param value
 	 */
-	private void createTimeCell(Workbook book, Row row, ColumnConfiguration config, Object value) {
+	private void createTimeCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
 		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_STRING);
-		CellStyle style = book.createCellStyle();
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		DataFormat df = book.createDataFormat();
 		style.setDataFormat(df.getFormat("hh:mm:ss"));
@@ -198,143 +391,47 @@ public class SheetWriter implements ISheetWriter {
 		
 		if (value instanceof Date && value != null) {
 			cell.setCellValue(DateUtil.formatTime((Date)value));
+		} if (value instanceof String && value != null) {
+			cell.setCellValue((String)value);
 		} else {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
 		}
 	}
 	
-	@Override
-	public void createCell(Workbook book, Sheet sheet,  Row row, int column, Object value) {
-		Cell cell = null;
+	/**
+	 * Create a row filled with sample data.
+	 * @param book
+	 * @param sheet
+	 * @param configs
+	 */
+	private void createSampleRow(Workbook book, Sheet sheet, List<ColumnConfiguration> configs) {
+		Row row = sheet.createRow(firstDataRowNum ++);
 		
-		if (value instanceof Number) {
-			cell = row.createCell(column, Cell.CELL_TYPE_NUMERIC);
-			CellStyle style = book.createCellStyle();
-			style.setAlignment(CellStyle.ALIGN_RIGHT);
-			cell.setCellValue(((Number) value).doubleValue());
-			cell.setCellStyle(style);
-		} else if (value instanceof Date) {
-			cell = row.createCell(column, Cell.CELL_TYPE_NUMERIC);
-			CellStyle style = book.createCellStyle();
-			style.setAlignment(CellStyle.ALIGN_CENTER);
-			cell.setCellStyle(style);
-			cell.setCellValue((Date)value);			
-		} else if (value instanceof Boolean) {
-			cell = row.createCell(column, Cell.CELL_TYPE_BOOLEAN);
-			CellStyle style = book.createCellStyle();
-			style.setAlignment(CellStyle.ALIGN_CENTER);
-			cell.setCellStyle(style);
-			cell.setCellValue((Boolean)value);
-		} else if (value == null) {
-			cell = row.createCell(column, Cell.CELL_TYPE_BLANK);
-		} else {
-			cell = row.createCell(column, Cell.CELL_TYPE_STRING);
-			cell.setCellValue(value.toString());
-		}
-	}
-
-	@Override
-	public void writeRow(Workbook book, Sheet sheet, Row row, List<Object> list) {
-		int column = 0;
-		for (Object value : list) {
-			createCell(book, sheet, row, column++, value);
-		}
-	}
-
-	@Override
-	public void writeRow(Workbook book, Sheet sheet, Row row, List<ColumnConfiguration> configs, Map<String, Object> map) {
+		// sample data is locked;
+		CellStyle style = book.createCellStyle();
+		style.setLocked(true);
+		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
-				createCell(book, sheet, row, config, map.get(config.getKey()));
-			}
-		}
-	}
-
-	@Override
-	public void writeSheet(Workbook book, Sheet sheet, List<ColumnConfiguration> configs, List<Map<String, Object>> list, boolean hasTitle) {
-		if (hasTitle) createTitle(book, sheet, configs);
-		int rowNum = firstRowNum;
-		for (Map<String, Object> map : list) {
-			Row row = sheet.createRow(rowNum);
-			writeRow(book, sheet, row, configs, map);
-		}
-		
-		for(ColumnConfiguration config : configs) {
-			List<ColumnConstraint> constraints = config.getConstraints();
-			for (ColumnConstraint constraint : constraints) {
-				if (constraint instanceof RangeColumnConstraint) {
-					XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper((XSSFSheet)sheet);
-					XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint)
-					    dvHelper.createExplicitListConstraint(((RangeColumnConstraint) constraint).getPickList());
-					
-					CellRangeAddressList addressList = new CellRangeAddressList(firstRowNum,  sheet.getLastRowNum(), config.getWriteOrder(), config.getWriteOrder());
-					XSSFDataValidation validation =(XSSFDataValidation)dvHelper.createValidation(dvConstraint, addressList);
-					
-					// Display pick list when user click the cell.    
-					validation.setSuppressDropDownArrow(true);
-					
-					// Note this extra method call. If this method call is omitted, or if the
-					// boolean value false is passed, then Excel will not validate the value the
-					// user enters into the cell.
-					validation.setShowErrorBox(((RangeColumnConstraint) constraint).getMustInRange());
-					sheet.addValidationData(validation);
-					break;
-				}
-				
-				if (constraint instanceof IntegerRangeColumnConstraint) {
-					IntegerRangeColumnConstraint iconstraint = (IntegerRangeColumnConstraint) constraint;
-					XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper((XSSFSheet)sheet);
-					XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint)dvHelper.createNumericConstraint(
-						      XSSFDataValidationConstraint.ValidationType.INTEGER,
-						      XSSFDataValidationConstraint.OperatorType.BETWEEN,
-						      "=" + iconstraint.getMin(), "=" + iconstraint.getMax());
-					
-					CellRangeAddressList addressList = new CellRangeAddressList(firstRowNum,  sheet.getLastRowNum(), config.getWriteOrder(), config.getWriteOrder());
-					XSSFDataValidation validation =(XSSFDataValidation)dvHelper.createValidation(dvConstraint, addressList);
-					
-					// Display pick list when user click the cell.    
-					validation.setSuppressDropDownArrow(true);
-					
-					// Note this extra method call. If this method call is omitted, or if the
-					// boolean value false is passed, then Excel will not validate the value the
-					// user enters into the cell.
-					validation.setShowErrorBox(true);
-					sheet.addValidationData(validation);
-					break;
-				}
-			}
-		}
-	}
-
-	@Override
-	public void writeSheet2(Workbook book, Sheet sheet, List<ColumnConfiguration> configs, List<List<Object>> list, boolean hasTitle) {
-		if (hasTitle) createTitle(book, sheet, configs);
-		
-		int rowNum = firstRowNum;
-		for (List<Object> obj : list) {
-			Row row = sheet.createRow(rowNum);
-			writeRow(book, sheet, row, obj);
-		}
-		
-	}
-
-	@Override
-	public void createTitle(Workbook book, Sheet sheet, List<ColumnConfiguration> configs) {
-		Row row = sheet.createRow(0);
-		setFirstRowNum(1);
-		for (ColumnConfiguration config : configs) {
-			if (config != null) {
-				createCell(book, sheet, row, config.getWriteOrder(), config.getTitle());
+				createCell(book, sheet, row, config, config.getSample(), style);
 			}
 		}
 	}
 	
-	public int getFirstRowNum() {
-		return firstRowNum;
+	/**
+	 * Adjust column width to display all title.
+	 * @param sheet
+	 * @param configs
+	 */
+	protected void adjustColumnWidth(Sheet sheet, List<ColumnConfiguration> configs) {
+		Row firstRow = sheet.getRow(0);
+		
+		if (firstRow != null) {
+			for (int columnIndex = firstRow.getLastCellNum() - 1; columnIndex >= 0; columnIndex--) {
+				// character length + 2, 256 is a character's width;
+				int columnWidth = 512 * (configs.get(columnIndex).getTitle() != null ? (configs.get(columnIndex).getTitle().length() + 2) : 2);
+				sheet.setColumnWidth(columnIndex, columnWidth);
+			}
+		}
 	}
-
-	public void setFirstRowNum(int firstRowNum) {
-		this.firstRowNum = firstRowNum;
-	}
-
 }

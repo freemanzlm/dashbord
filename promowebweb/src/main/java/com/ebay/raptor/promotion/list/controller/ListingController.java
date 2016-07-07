@@ -19,6 +19,7 @@ import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.service.ListingService;
+import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Sku;
@@ -64,8 +65,8 @@ public class ListingController extends AbstractListingController {
 		XSSFWorkbook workBook = null;
 
         try {
-        	workBook = excelService.getDealListingWorkbook(param.getPromoId(),
-        			userData.getUserId());
+        	workBook = excelService.getListingWorkbook(param.getPromoId(),
+        			userData.getUserId(), LocaleUtil.getCurrentLocale());
         	
             resp.setContentType("application/x-msdownload;");
     		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());

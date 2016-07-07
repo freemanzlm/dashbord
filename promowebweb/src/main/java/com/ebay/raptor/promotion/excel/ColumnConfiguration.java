@@ -11,16 +11,57 @@ import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
  * @author lyan2
  */
 public class ColumnConfiguration {
+	
+	/**
+	 * Excel column header title.
+	 */
+	private String title;
+	
+	/**
+	 * Which excel column to read data.
+	 */
+	private int readOrder;
+	
+	/**
+	 * Which excel row to read data.
+	 */
+	private int writeOrder;
+	
+	/**
+	 * Whether user can change the default value in the cell.
+	 */
+	private Boolean writable;
+	
+	/**
+	 * The PropertyDescriptor object of the property which the cell maps to.
+	 */
+	private PropertyDescriptor propertyDescriptor;
+	
+	private String rawType;
+	
+	private Class<?> type;
+	
+	// for JSON and XML conversion
+	private String key;
+	
+	// sample data
+	private String sample;
+	
+	private List<ColumnConstraint> constraints = new ArrayList<ColumnConstraint>();
+	
+	private Boolean display;
+	
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public boolean isWritable() {
+	
+	public Boolean getWritable() {
 		return writable;
 	}
-	public void setWritable(boolean writable) {
+	public void setWritable(Boolean writable) {
 		this.writable = writable;
 	}
 	public PropertyDescriptor getPropertyDescriptor() {
@@ -76,40 +117,11 @@ public class ColumnConfiguration {
 	public void setType(Class<?> type) {
 		this.type = type;
 	}
+	public String getSample() {
+		return sample;
+	}
+	public void setSample(String sample) {
+		this.sample = sample;
+	}
 
-	/**
-	 * Excel column header title.
-	 */
-	private String title;
-	
-	/**
-	 * Which excel column to read data.
-	 */
-	private int readOrder;
-	
-	/**
-	 * Which excel row to read data.
-	 */
-	private int writeOrder;
-	
-	/**
-	 * Whether user can change the default value in the cell.
-	 */
-	private boolean writable;
-	
-	/**
-	 * The PropertyDescriptor object of the property which the cell maps to.
-	 */
-	private PropertyDescriptor propertyDescriptor;
-	
-	private String rawType;
-	
-	private Class<?> type;
-	
-	// for JSON and XML conversion
-	private String key;
-	
-	private List<ColumnConstraint> constraints = new ArrayList<ColumnConstraint>();
-	
-	private Boolean display;
 }

@@ -43,7 +43,6 @@ public class BaseService {
 		GingerWebTarget target = PromoClient.getClient().target(url);
 		Invocation.Builder build = target.request();
 		GingerClientResponse resp = (GingerClientResponse) build.headers(authHeaders(IAFTokenService.getIAFToken())).get();
-//		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(IAFTokenService.getIAFToken())).get();
 		return resp;
 	}
 	
@@ -51,7 +50,6 @@ public class BaseService {
 		GingerWebTarget target = PromoClient.getClient().target(url);
 		Invocation.Builder build = target.request();
 		GingerClientResponse resp = (GingerClientResponse) build.headers(authHeaders(IAFTokenService.getIAFToken())).post(Entity.json(postObj));
-//		GingerClientResponse resp = (GingerClientResponse) target.request().headers(authHeaders(IAFTokenService.getIAFToken())).post(Entity.json(postObj));
 		return resp;
 	}
 	

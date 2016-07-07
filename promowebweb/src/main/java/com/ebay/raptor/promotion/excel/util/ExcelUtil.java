@@ -117,7 +117,12 @@ public class ExcelUtil {
 	 */
 	private static void resolveCommonConfigurations(ColumnConfiguration config, JsonNode field) {
 		config.setKey(field.get("api_Name").asText());
-		config.setDisplay(field.get("display").asBoolean());		
+		config.setDisplay(field.get("display").asBoolean());	
+		config.setWritable(field.get("input").asBoolean());
+		if (field.has("sample")) {
+			String sample = field.get("sample").asText();
+			config.setSample("null".equalsIgnoreCase(sample) ? "" : sample);
+		}
 	}
 	
 	/**

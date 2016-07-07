@@ -37,7 +37,7 @@ import com.ebay.raptor.promotion.excel.FRESDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.GBHDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.InvalidCellDataException;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
-import com.ebay.raptor.promotion.excel.writer.ExcelService;
+import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
@@ -71,6 +71,7 @@ public class DealsListingController extends AbstractDealsListingController{
 	@Autowired
 	DealsListingService service;
 	
+	// TODO, it used to be com.ebay.raptor.promotion.excel.writer.ExcelService
 	@Autowired ExcelService excelService;
 	
 	@Autowired SpringValidatorAdapter validator;
@@ -96,27 +97,27 @@ public class DealsListingController extends AbstractDealsListingController{
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		XSSFWorkbook workBook = null;
 
-        try {
-        	workBook = excelService.getDealListingWorkbook(param.getPromoId(),
-        			userData.getUserId(), promoSubType);
-        	
-        	excelService.addDocSheet(workBook, promoSubType);
-
-            resp.setContentType("application/x-msdownload;");
-    		resp.setHeader("Content-disposition", "attachment; filename="
-    				+ excelService.getExcelName(promoSubType));
-    		workBook.write(resp.getOutputStream());
-        } catch (IOException | PromoException e) {
-        	logger.error("Unable to download deals listing.", e);
-        } finally {
-        	if (workBook != null) {
-    			try {
-					workBook.close();
-				} catch (IOException e) {
-					// ignore
-				}
-    		}
-        }
+//        try {
+//        	workBook = excelService.getDealListingWorkbook(param.getPromoId(),
+//        			userData.getUserId(), promoSubType);
+//        	
+//        	excelService.addDocSheet(workBook, promoSubType);
+//
+//            resp.setContentType("application/x-msdownload;");
+//    		resp.setHeader("Content-disposition", "attachment; filename="
+//    				+ excelService.getExcelName(promoSubType));
+//    		workBook.write(resp.getOutputStream());
+//        } catch (IOException | PromoException e) {
+//        	logger.error("Unable to download deals listing.", e);
+//        } finally {
+//        	if (workBook != null) {
+//    			try {
+//					workBook.close();
+//				} catch (IOException e) {
+//					// ignore
+//				}
+//    		}
+//        }
     }
 
 	@POST
