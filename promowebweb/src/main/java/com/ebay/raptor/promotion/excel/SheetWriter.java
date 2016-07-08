@@ -117,6 +117,7 @@ public class SheetWriter implements ISheetWriter {
 				if (cellStyle == null) {
 					cellStyle = book.createCellStyle();
 					cellStyle.setLocked(!config.getWritable());
+					cellStyle.setWrapText(true);
 					styleMapping.put(config.getWriteOrder(), cellStyle);
 				}
 				createCell(book, sheet, row, config, map.get(config.getKey()), cellStyle);
@@ -131,9 +132,8 @@ public class SheetWriter implements ISheetWriter {
 		
 		int rowNum = firstDataRowNum;
 		for (Map<String, Object> map : list) {
-			Row row = sheet.createRow(rowNum);
+			Row row = sheet.createRow(rowNum++);
 			writeRow(book, sheet, row, configs, map);
-			rowNum++;
 		}
 		
 		if (firstDataRowNum > sheet.getLastRowNum()) {
@@ -210,7 +210,6 @@ public class SheetWriter implements ISheetWriter {
 		headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		headerStyle.setFillForegroundColor(IndexedColors.LIME.getIndex());
 		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		headerStyle.setWrapText(true);
 		
 		Font ft = book.createFont();
 		ft.setFontName("Arial");
@@ -220,6 +219,27 @@ public class SheetWriter implements ISheetWriter {
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
 				createCell(book, sheet, row, config.getWriteOrder(), config.getTitle(), headerStyle);
+			}
+		}
+		
+		createSubHead(book, sheet, configs);
+	}
+	
+	private void createSubHead(Workbook book, Sheet sheet, List<ColumnConfiguration> configs) {
+		Row row = sheet.createRow(firstDataRowNum ++);
+		CellStyle headerStyle = book.createCellStyle();
+		headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+		headerStyle.setFillForegroundColor(IndexedColors.LIME.getIndex());
+		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		
+		Font ft = book.createFont();
+		ft.setFontName("Arial");
+		ft.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		headerStyle.setFont(ft);
+		
+		for (ColumnConfiguration config : configs) {
+			if (config != null) {
+				createCell(book, sheet, row, config.getWriteOrder(), config.getLabel(), headerStyle);
 			}
 		}
 	}
@@ -428,9 +448,14 @@ public class SheetWriter implements ISheetWriter {
 		
 		if (firstRow != null) {
 			for (int columnIndex = firstRow.getLastCellNum() - 1; columnIndex >= 0; columnIndex--) {
+				sheet.autoSizeColumn(columnIndex);
+				int columnWidth = sheet.getColumnWidth(columnIndex);
+				
 				// character length + 2, 256 is a character's width;
-				int columnWidth = 512 * (configs.get(columnIndex).getTitle() != null ? (configs.get(columnIndex).getTitle().length() + 2) : 2);
-				sheet.setColumnWidth(columnIndex, columnWidth);
+				int minColumnWidth = 512 * (configs.get(columnIndex).getTitle() != null ? (configs.get(columnIndex).getTitle().length() + 2) : 2);
+				if (columnWidth < minColumnWidth) {
+					sheet.setColumnWidth(columnIndex, columnWidth);
+				}
 			}
 		}
 	}

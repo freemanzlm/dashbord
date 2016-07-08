@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.list.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response.Status;
@@ -9,11 +10,6 @@ import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
-import com.ebay.raptor.promotion.pojo.business.DealsListing;
-import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
-import com.ebay.raptor.promotion.pojo.business.GBHDealsListing;
-import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
@@ -75,7 +71,7 @@ public class ListingService extends BaseService {
 
 		uri = url(params(ResourceProvider.ListingRes.getSKUListingsByPromotionId,
 				new Object[] { "{promoId}", promoId, "{uid}", uid }));
-		type = new GenericType<ListDataServiceResponse<DealsListing>>(){};
+		type = new GenericType<ListDataServiceResponse<Map<String, Object>>>(){};
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){

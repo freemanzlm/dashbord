@@ -28,11 +28,11 @@
 					<span class="icon error mb-25"></span><b></b>
 				</p>
 
-				<form id="upload-form" action="/promotion/listings/uploadDealsListings" class="mt30" method="post"
+				<form id="upload-form" action="/promotion/listings/uploadListings" class="mt30" method="post"
 					enctype="multipart/form-data" target="uploadIframe">
 					<input type="hidden" name="promoId" value="${promo.promoId}" />
 					选择上传您的刊登列表 <span class="file-input"><input
-						type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="dealsListings"
+						type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile"
 						accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
 						<button type="button" class="btn" style="margin-left: 3px;">选择</button></span>
 				</form>
@@ -49,9 +49,9 @@
 				
 				<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><b ></b></p>
 				
-				<form id="upload-form" action="/promotion/listings/uploadDealsListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
+				<form id="upload-form" action="/promotion/listings/uploadListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
 					选择上传您的刊登列表 
-					<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="dealsListings" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">选择</button></span>
+					<span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">选择</button></span>
 					<input type="hidden" name="promoId" value="${promo.promoId}"/>
 				</form>
 				<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>

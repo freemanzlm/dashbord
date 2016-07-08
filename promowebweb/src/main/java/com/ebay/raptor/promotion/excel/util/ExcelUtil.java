@@ -117,6 +117,7 @@ public class ExcelUtil {
 	 */
 	private static void resolveCommonConfigurations(ColumnConfiguration config, JsonNode field) {
 		config.setKey(field.get("api_Name").asText());
+		config.setLabel(field.get("labelName").asText());
 		config.setDisplay(field.get("display").asBoolean());	
 		config.setWritable(field.get("input").asBoolean());
 		if (field.has("sample")) {

@@ -13,9 +13,11 @@ import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 public class ColumnConfiguration {
 	
 	/**
-	 * Excel column header title.
+	 * Excel column header title. In fact, it's local label.
 	 */
 	private String title;
+	
+	private String label;
 	
 	/**
 	 * Which excel column to read data.
@@ -122,6 +124,12 @@ public class ColumnConfiguration {
 	}
 	public void setSample(String sample) {
 		this.sample = sample;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 }
