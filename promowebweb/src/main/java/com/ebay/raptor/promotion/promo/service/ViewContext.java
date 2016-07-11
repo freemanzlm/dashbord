@@ -25,7 +25,8 @@ public enum ViewContext {
 	HAS_LISTINGS_NOMINATED(18, "hasListingsNominated"),
 	// promotion end date is before now
 	IS_PROMOTION_STOP(19, "isPromotionStoped"),
-	IS_AWARD_END(20, "isAwardEnd");
+	IS_AWARD_END(20, "isAwardEnd"),
+	FIELDS_DEFINITIONS(21, "fieldsDefintions");
 	
 	private Integer id;
 

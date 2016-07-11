@@ -1,7 +1,16 @@
 package com.ebay.raptor.promotion.excel.validation;
 
+/**
+ * 
+ * @author lyan2
+ */
 public class DoubleColumnConstraint extends ColumnConstraint {
 	private int digits = 0;
+
+	public DoubleColumnConstraint() {
+		super();
+		this.message = "excel.valiation.double.message";
+	}
 
 	@Override
 	public boolean isValid(Object value) {

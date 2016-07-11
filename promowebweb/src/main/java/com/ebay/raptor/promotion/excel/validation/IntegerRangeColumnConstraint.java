@@ -8,6 +8,11 @@ public class IntegerRangeColumnConstraint extends ColumnConstraint {
 	private Integer min = Integer.MIN_VALUE;
 	private Integer max = Integer.MAX_VALUE;
 
+	public IntegerRangeColumnConstraint() {
+		super();
+		this.message = "excel.valiation.integerrange.message";
+	}
+
 	@Override
 	public boolean isValid(Object value) {
 		if (value != null) {

@@ -5,7 +5,7 @@ package com.ebay.raptor.promotion.excel.validation;
  * @author lyan2
  */
 public abstract class ColumnConstraint {
-	protected String message;
+	protected String message = "excel.valiation.message";
 	protected Boolean requried;
 	protected Class<?> type;
 	
@@ -47,3 +47,4 @@ public abstract class ColumnConstraint {
 		this.message = message;
 	}
 }
+

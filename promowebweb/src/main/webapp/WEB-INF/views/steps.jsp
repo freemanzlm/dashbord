@@ -23,17 +23,27 @@
 					</c:otherwise>
 				</c:choose>
 				
-				<c:if test="${step eq 'Seller nomination_Need approve' or step eq 'Seller Feedback'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">报名</span></div>
+				<c:if test="${step eq 'Seller nomination_Need approve'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活动报名</span></div>
+				</c:if>
+				<c:if test="${step eq 'Seller Feedback'}">
+					<c:choose>
+						<c:when test="${fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') }">
+							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">正式报名</span></div>
+						</c:when>
+						<c:otherwise>
+							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活动报名</span></div>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 				<c:if test="${step eq 'Promotion Submitted'}">
 					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">报名审核</span></div>
 				</c:if>
 				<c:if test="${step eq 'Promotion in progress'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活动进行中</span></div>
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活动进行</span></div>
 				</c:if>				
 				<c:if test="${step eq 'Promotion in validation'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">奖励审核中</span></div>
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">奖励审核</span></div>
 				</c:if>
 				<c:if test="${step eq 'Promotion validated'}">
 					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">申领奖励</span></div>

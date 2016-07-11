@@ -10,6 +10,7 @@ public class LengthColumnConstraint extends ColumnConstraint {
 	private int length;
 	
 	public LengthColumnConstraint(int maxlength) {
+		super();
 		this.length = maxlength;
 		this.message = "excel.valiation.length.message";
 	}

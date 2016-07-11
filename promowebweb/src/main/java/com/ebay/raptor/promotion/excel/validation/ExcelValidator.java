@@ -14,7 +14,8 @@ import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.InvalidCellValueError;
 
 /**
- * Validate data of a row.
+ * Validate data from a row of excel sheet. For each sheet reading, you need to create a new ExcelValidator object. 
+ * 
  * @author lyan2
  */
 public class ExcelValidator {

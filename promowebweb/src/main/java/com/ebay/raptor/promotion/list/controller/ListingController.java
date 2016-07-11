@@ -14,7 +14,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,13 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ebay.app.raptor.promocommon.CommonException;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.app.raptor.promocommon.error.ErrorType;
-import com.ebay.app.raptor.promocommon.excel.ExcelReader;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
-import com.ebay.raptor.promotion.excel.InvalidCellDataException;
 import com.ebay.raptor.promotion.excel.UploadedListingFileHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
@@ -150,6 +145,15 @@ public class ListingController extends AbstractListingController {
 				this.acceptAgreement(promoId, userData.getUserId());
 			} else {
 				responseData.setStatus(false);
+				StringBuffer errorMessage = new StringBuffer();
+				
+				boolean first = true;
+				for (ConstraintViolation<Object> violation : violations) {
+					errorMessage.append((first ? "" : "</br>") + violation.getMessage());
+					first = false;
+				}
+				
+				responseData.setMessage(errorMessage.toString());
 			}
 			
 		} catch (IOException e) {

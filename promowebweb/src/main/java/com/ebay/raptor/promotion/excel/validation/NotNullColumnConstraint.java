@@ -1,8 +1,13 @@
 package com.ebay.raptor.promotion.excel.validation;
 
+/**
+ * 
+ * @author lyan2
+ */
 public class NotNullColumnConstraint extends ColumnConstraint {
 	
 	public NotNullColumnConstraint() {
+		super();
 		this.message = "excel.validation.notnull.message";
 	}
 	
