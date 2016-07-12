@@ -1,7 +1,6 @@
 package com.ebay.raptor.promotion.list.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response.Status;
@@ -10,6 +9,7 @@ import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
 import com.ebay.raptor.promotion.excep.PromoException;
+import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
@@ -31,7 +31,7 @@ public class ListingService extends BaseService {
 	 */
 	private String url(String url){
 		// TODO, change to ResourceProvider.ListingRes.base
-		return secureUrl(ResourceProvider.ListingRes.dealsBase) + url;
+		return secureUrl(ResourceProvider.ListingRes.base) + url;
 	}
 
 	/**
@@ -71,7 +71,8 @@ public class ListingService extends BaseService {
 
 		uri = url(params(ResourceProvider.ListingRes.getSKUListingsByPromotionId,
 				new Object[] { "{promoId}", promoId, "{uid}", uid }));
-		type = new GenericType<ListDataServiceResponse<Map<String, Object>>>(){};
+//		type = new GenericType<ListDataServiceResponse<Map<String, Object>>>(){};
+		type = new GenericType<ListDataServiceResponse<Listing>>(){};
 
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
@@ -85,4 +86,5 @@ public class ListingService extends BaseService {
 		}
 		return null;
 	}
+	
 }

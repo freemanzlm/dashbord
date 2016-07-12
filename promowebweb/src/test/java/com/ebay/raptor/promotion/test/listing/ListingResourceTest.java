@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.list.service.ListingService;
+import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.service.PromoClient;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -41,23 +42,23 @@ public class ListingResourceTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void getSKUListingsByPromotionId() throws JsonProcessingException {
-		WebTarget target = c.target("/promoser/listings/getSKUListingsByPromotionId/promoId/701O0000000WAUcIAO/uid/1413178537");
+		WebTarget target = c.target("/promoser/listings/getSKUListingsByPromotionId/promoId/701N00000003aqSIAQ/uid/1413178537");
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE).header("Authorization", authorization);
-		
-		ListDataServiceResponse<Map<String, Object>> data;
 		
 		System.out.println("URL: " + target.getUri());
 		
 		GingerClientResponse response = (GingerClientResponse)builder.get();
 		if (response.getStatus() == Status.OK.getStatusCode()) {
 			
-			data = (ListDataServiceResponse<Map<String, Object>>)response.getEntity(ListDataServiceResponse.class);
+			ListDataServiceResponse<Listing> data;
+//			data = (ListDataServiceResponse<Map<String, Object>>)response.getEntity(ListDataServiceResponse.class);
+			data = (ListDataServiceResponse<Listing>)response.getEntity(ListDataServiceResponse.class);
 			
 			System.out.println(mapper.writeValueAsString(data));
 		}
 	}
 	
-	@Test
+//	@Test
 	public void getSKUsByPromotionId() throws JsonProcessingException {
 		WebTarget target = c.target("/promoser/listings/getSKUsByPromotionId/promoId/701O0000000WAUcIAO/uid/1413178537");
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE).header("Authorization", authorization);

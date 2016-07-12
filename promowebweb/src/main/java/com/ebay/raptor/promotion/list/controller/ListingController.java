@@ -1,7 +1,10 @@
 package com.ebay.raptor.promotion.list.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +38,7 @@ import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
@@ -176,4 +180,82 @@ public class ListingController extends AbstractListingController {
 		mav.addObject("response", PojoConvertor.convertToJson(responseData));
 		return mav;
 	}
+	
+	@GET
+	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
+	@ResponseBody
+	public ListDataWebResponse<?> getPromotionListings(HttpServletRequest req,
+			@ModelAttribute ListingWebParam param)  {
+		
+		return getListings(req, param);
+	}
+	
+	protected ListDataWebResponse<?> getListings (HttpServletRequest req,
+			ListingWebParam param) {
+		UserData userData = null;
+
+		try {
+			userData = CookieUtil.getUserDataFromCookie(req);
+		} catch (MissingArgumentException e) {
+			logger.error("Missing required argument.", e);
+			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
+			resp.setStatus(Boolean.FALSE);
+			return resp;
+		}
+
+		ListDataWebResponse<Listing> resp = getListings(param.getPromoId(), userData.getUserId());
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+		ListDataWebResponse<Map<String, Object>> mergedResp = new ListDataWebResponse<Map<String, Object>>();
+		
+		if (resp != null && resp.getData() != null) {
+			for (Listing listing : resp.getData()) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("skuId", listing.getSkuId());
+				map.put("skuTitle", listing.getSkuTitle());
+				map.put("state", listing.getState());
+				map.put("currency", listing.getCurrency());
+				
+				if (listing.getNominationValues() != null) {
+					try {
+						@SuppressWarnings("unchecked")
+						Map<String, Object> fields = mapper.readValue(listing.getNominationValues(), HashMap.class);
+						map.putAll(fields);
+					} catch (IOException e) {
+						logger.error("Can't read listing normination values for listing with sku ID: " + listing.getSkuId());
+					}
+				}
+				
+				data.add(map);
+			}
+			
+			mergedResp.setStatus(resp.isStatus());
+			mergedResp.setData(data);
+		} else {
+			mergedResp.setStatus(resp.isStatus());
+		}
+		
+		
+		return mergedResp;
+	}
+	
+	// TODO - If there is no particular business logic on the meta data,
+	// it's no need to convert to an object, and add the json string in response.
+	protected <T> ListDataWebResponse<T> getListings (String promoId, Long userId) {
+		ListDataWebResponse<T> resp = new ListDataWebResponse<T>();
+		try {
+			List<T> listings = service.getSkuListingsByPromotionId(promoId, userId);
+			
+			if (listings != null && listings.size() > 0) {
+				resp.setData(listings);
+			} else {
+				logger.error("No listings found for promotion: " + promoId + ", user:" + userId);
+			}
+		} catch (PromoException e) {
+			logger.error("No listings found for promotion: " + promoId + ", user:" + userId + ", with error", e);
+			resp.setStatus(Boolean.FALSE);
+		}
+
+		return resp;
+	} 
+
 }

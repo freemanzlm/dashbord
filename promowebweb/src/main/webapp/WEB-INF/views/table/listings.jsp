@@ -10,12 +10,18 @@
 		<table id="listing-table" class="dataTable">
 			<thead>
 				<tr>
-					<!-- <th class="check"><input type="checkbox" class="check-all" /></th> -->
+					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
+						<th class="check"><input type="checkbox" class="check-all" /></th>
+					</c:if>
+					
 					<c:forEach items="${ fieldsDefintions }" var="field">
-						<th class="${fn:toLowerCase(field.rawType)}">${field.title}</th>
+						<th class="${fn:toLowerCase(field.rawType)} dt-nowrap">${field.title}</th>
 						<c:set var="columns" value='${columns},{"data":"${field.key}"}' ></c:set>
 					</c:forEach>
-					<!-- <th class="state">状态</th> -->
+					
+					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
+						<th class="state">状态</th>
+					</c:if>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,7 +29,15 @@
 			</tbody>
 		</table>
 		
-		<c:set var="columns" value="[${ fn:substringAfter(columns, ',') }]" />
+		<c:choose>
+			<c:when test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
+				<c:set var="columns" value='[{"data:":"itemId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
+			</c:when>
+			<c:otherwise>
+				<c:set var="columns" value="[${ fn:substringAfter(columns, ',') }]" />
+			</c:otherwise>
+		</c:choose>
+		
 		<%-- <c:out value="${columns}"></c:out> --%>
 	</c:if>
 </div>

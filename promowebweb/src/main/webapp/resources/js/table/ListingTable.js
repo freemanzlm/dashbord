@@ -31,6 +31,7 @@ var BizReport = BizReport || {};
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'bScrollCollapse': true,
+				'sScrollX': '100%',
 				'sScrollY': "600",
 				'oLanguage': {
 					sEmptyTable: local.getText('dataTable.emptyTable'),
@@ -44,7 +45,7 @@ var BizReport = BizReport || {};
 						sNext: local.getText('dataTable.nextPage')
 					}
 				},
-				sAjaxSource: "/promotion/deals/getPromotionListings", //"/promotion/js/data/dealsListing.json"
+				sAjaxSource: "/promotion/listings/getPromotionListings", //"/promotion/js/data/dealsListing.json"
 				'fnServerParams': function(aoData){
 					var settings = this.fnSettings(); 
 					if (settings.aaSorting[0]) {
@@ -86,7 +87,7 @@ var BizReport = BizReport || {};
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
 						oRow.checked = oRow.checked || (oRow.state == 'Confirmed' || oRow.state == 'Applied');
-							
+
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
@@ -116,8 +117,13 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
+						var value = parseInt(data);
 						if (type == "display") {
-							return parseFloat(data).toUSFixed(0);
+							return isNaN(value) ? 'NA' : value;
+						}
+						
+						if (type == 'sort') {
+							return isNaN(value) ? Number.NEGATIVE_INFINITY : value;
 						}
 						return data;
 					}
@@ -136,20 +142,11 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						var value = parseFloat(data);
 						if (type == "display") {
-							if (full.proposePrice > 0 && value > 0 && full.proposePrice != full.dealsPrice) {
-								return "<span class='color-cyan'>" + parseFloat(full.proposePrice).toUSFixed(2) + "</span>" + "<br/><del>(" + parseFloat(full.dealsPrice).toUSFixed(2) + ")</del>";
-							} else {
-								value = (isNaN(value) || value <= 0) ? parseFloat(full.proposePrice) : value;
-								return (!isNaN(value) && value > 0 ? value.toUSFixed(2) : '0');
-//								return parseFloat(data).toUSFixed(2) + " (" + full.currency + ")";
-							}
+							return isNaN(value) ? 'NA' : (value > 0 ? value.toUSFixed(2) : '0');
 						}
 						
 						if (type == 'sort') {
-							if (full.proposePrice > 0) {
-								return full.proposePrice;
-							}
-							return value;
+							return isNaN(value) ? Number.NEGATIVE_INFINITY : value;
 						}
 
 						return data;
