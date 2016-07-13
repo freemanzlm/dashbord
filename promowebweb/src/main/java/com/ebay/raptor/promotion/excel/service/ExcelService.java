@@ -89,6 +89,7 @@ public class ExcelService {
 			JsonNode tree = mapper.readTree(fieldsDefinitions);
 			if (tree.isArray()) {
 				List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
+				adjustColumnConfigurations(columnConfigs);
 				writer.writeSheet(workBook, sheet, columnConfigs, skuListings, true);
 			}
 		}
@@ -107,5 +108,31 @@ public class ExcelService {
 	 */
 	public String getSKUListingTemplateFileName() {
 		return ExcelService.LISTING_FILENAME_PREFIX + "_" + random.nextInt() + ".xlsx";
+	}
+	
+	/**
+	 * Nomination id is used to differentiate listings.
+	 * @param columnConfigs
+	 */
+	private List<ColumnConfiguration> adjustColumnConfigurations(List<ColumnConfiguration> columnConfigs) {
+		// it's used to configure a hidden column, it will store nomination id.
+		ColumnConfiguration nominationConfig = new ColumnConfiguration();
+		nominationConfig.setKey("skuId");
+		nominationConfig.setReadOrder(0);
+		nominationConfig.setWriteOrder(0);
+		nominationConfig.setWritable(false);
+		nominationConfig.setDisplay(false);
+		
+		if (columnConfigs != null) {
+			// move colmuns to right by one column
+			for (ColumnConfiguration config : columnConfigs) {
+				config.setReadOrder(config.getReadOrder() + 1);
+				config.setWriteOrder(config.getWriteOrder() + 1);
+			}
+			
+			columnConfigs.add(nominationConfig);
+		}
+		
+		return columnConfigs;
 	}
 }

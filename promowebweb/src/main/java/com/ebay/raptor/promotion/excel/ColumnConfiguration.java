@@ -51,7 +51,10 @@ public class ColumnConfiguration {
 	
 	private List<ColumnConstraint> constraints = new ArrayList<ColumnConstraint>();
 	
-	private Boolean display;
+	/**
+	 * hide this column or not
+	 */
+	private Boolean display = true;
 	
 	public String getTitle() {
 		return title;

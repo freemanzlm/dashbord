@@ -142,6 +142,10 @@ public class SheetWriter implements ISheetWriter {
 		}
 		
 		for(ColumnConfiguration config : configs) {
+			if (!config.getDisplay()) {
+				hideColumn(sheet, config.getWriteOrder());
+			}
+			
 			List<ColumnConstraint> constraints = config.getConstraints();
 			for (ColumnConstraint constraint : constraints) {
 				if (constraint instanceof RangeColumnConstraint) {

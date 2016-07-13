@@ -63,7 +63,7 @@ public class ListingController extends AbstractListingController {
 	private final ObjectMapper mapper = new ObjectMapper();
 	
 	@Autowired
-	ListingService service;
+	ListingService listingService;
 	
 	@Autowired
 	PromotionService promoService;
@@ -77,7 +77,7 @@ public class ListingController extends AbstractListingController {
 		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();
 		try {
 			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			resp.setData(service.getSkusByPromotionId(param.getPromoId(), userData.getUserId()));
+			resp.setData(listingService.getSkusByPromotionId(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
 		}
@@ -243,7 +243,7 @@ public class ListingController extends AbstractListingController {
 	protected <T> ListDataWebResponse<T> getListings (String promoId, Long userId) {
 		ListDataWebResponse<T> resp = new ListDataWebResponse<T>();
 		try {
-			List<T> listings = service.getSkuListingsByPromotionId(promoId, userId);
+			List<T> listings = listingService.getSkuListingsByPromotionId(promoId, userId);
 			
 			if (listings != null && listings.size() > 0) {
 				resp.setData(listings);
