@@ -19,9 +19,7 @@
 						<c:set var="columns" value='${columns},{"data":"${field.key}"}' ></c:set>
 					</c:forEach>
 					
-					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
-						<th class="state">状态</th>
-					</c:if>
+					<th class="state">状态</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,10 +29,10 @@
 		
 		<c:choose>
 			<c:when test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
-				<c:set var="columns" value='[{"data:":"itemId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
+				<c:set var="columns" value='[{"data:":"skuId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
 			</c:when>
 			<c:otherwise>
-				<c:set var="columns" value="[${ fn:substringAfter(columns, ',') }]" />
+				<c:set var="columns" value='[${ fn:substringAfter(columns, ",") },{"data":"state"}]' />
 			</c:otherwise>
 		</c:choose>
 		

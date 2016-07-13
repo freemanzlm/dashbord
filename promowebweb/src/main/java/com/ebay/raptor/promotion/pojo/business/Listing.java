@@ -1,14 +1,18 @@
 package com.ebay.raptor.promotion.pojo.business;
 
 /**
- * Each Listing has skuId, skuTitle. Promotion fields are stored in dataValue. "dataValue" is a JSON object string.
+ * Each Listing has skuId, skuTitle. Promotion fields are stored in nominationValues. "nominationValues" is a JSON object string.
  * 
  * @author lyan2
  */
 public class Listing {
 
+	/**
+	 *  This is not the real sku id, in fact, it's nomination id.
+	 */
 	private String skuId;
 	
+	// This is nomination title.
 	private String skuTitle;
 	
 	private String currency;

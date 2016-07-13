@@ -2,6 +2,7 @@ package com.ebay.raptor.promotion.excel.service;
 
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -17,6 +18,7 @@ import com.ebay.raptor.promotion.excel.SheetWriter;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.ListingService;
+import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
@@ -57,14 +59,25 @@ public class ExcelService {
 	 * @throws JsonProcessingException
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unchecked")
 	public XSSFWorkbook getListingWorkbook(String promoId, Long uid, Locale locale)
 			throws PromoException, MissingArgumentException, JsonProcessingException, IOException {
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		String sheetName = ResourceProvider.ListingRes.skuListFileName;
 		
-		List<Map<String, Object>> skuListings = listingService.getSkuListingsByPromotionId(promoId, uid);
+		List<Listing> listings = listingService.getSkuListingsByPromotionId(promoId, uid);
+		List<Map<String, Object>> skuListings = new ArrayList<Map<String, Object>>();
 		
-		SheetWriter writer = new SheetWriter();		
+		if (listings != null) {
+			for (Listing listing : listings) {
+				String nominationValues = listing.getNominationValues();
+				if (nominationValues != null) {
+					skuListings.add(mapper.readValue(nominationValues, Map.class));
+				}
+			}
+		}
+		
+		SheetWriter writer = new SheetWriter();
 		Sheet sheet = workBook.createSheet(sheetName);
 		
 		Promotion promo = promoService.getPromotionById(promoId, uid, false);

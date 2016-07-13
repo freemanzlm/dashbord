@@ -149,7 +149,7 @@
 		var pageData = {
 			promoId : '${promo.promoId}',
 			currentStep: '${currentStep}',
-			columns: JSON.parse('${columns}')
+			columns: JSON.parse('${not empty columns ? columns : "{}"}')
 		};
 	</script>
 

@@ -131,6 +131,14 @@
       		<groupId>javax.el</groupId>
       		<artifactId>javax.el-api</artifactId>
       	</dependency>
+      	
+      	<!-- Salesforce servcie -->
+		<dependency>
+		  <groupId>com.ebay.cbt</groupId>
+		  <artifactId>salesforceService</artifactId>
+		  <version>0.0.1-SNAPSHOT</version>
+		</dependency> 
+      	
 	</dependencies>
 
 	<build>
