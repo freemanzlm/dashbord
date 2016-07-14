@@ -15,8 +15,6 @@ var BizReport = BizReport || {};
 	var local = namespace.local,
 	util = namespace.util;
 
-	var promos = ['hotsell', 'deals', 'deals', 'other'];
-
 	function getLink(promoId) {
 		return "/promotion/" + promoId;
 	}
@@ -24,7 +22,7 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 		tableConfig : {
 			'aLengthMenu' : [20],
-			'aaSorting' : [[5, 'asc'], [3, 'asc']],
+			'aaSorting' : [[4, 'asc'], [2, 'asc']],
 			'bAutoWidth' : true,
 			'bDeferRender' : true,
 			'bFilter' : true,
@@ -82,8 +80,6 @@ var BizReport = BizReport || {};
 			columns : [{
 					data : 'name'
 				}, {
-					data : 'type'
-				}, {
 					data : 'rewardDlDt'
 				}, {
 					data : 'promoEdt'
@@ -102,23 +98,6 @@ var BizReport = BizReport || {};
 					mRender : function (data, type, full, meta) {
 						if (type == "display") {
 							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
-						}
-
-						return data;
-					}
-				}, {
-					aTargets : ["type"],
-					sClass : "text-center",
-					sDefaultContent : "",
-					mRender : function (data, type, full) {
-						if (type == "display") {
-							return local.getText('promo.type.' + promos[data]);
-						}
-
-						if (type == 'sort' || type == 'filter') {
-							if (data == '2') {
-								return 1;
-							}
 						}
 
 						return data;

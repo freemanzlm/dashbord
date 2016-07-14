@@ -10,6 +10,7 @@ import javax.validation.ConstraintViolation;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 
+import com.ebay.cbt.sf.service.ServiceExecutor;
 import com.ebay.raptor.promotion.list.service.ListingService;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,6 +36,9 @@ public class UploadedListingFileHandler {
 		Set<ConstraintViolation<Object>> violations = new HashSet<ConstraintViolation<Object>>();
 		List<Map<String, Object>> list = reader.readSheet(sheet, configs, 3, violations);
 		
+		// TODO add sales force logic.
+		/*ServiceExecutor serviceInstance = ServiceExecutor.getInstance();
+		serviceInstance.submitListing(list);*/
 		try {
 			logger.warn(mapper.writeValueAsString(list));
 		} catch (Exception e) {

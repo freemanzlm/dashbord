@@ -64,6 +64,18 @@ BizReport.local = {
 			'hotsell': '爆款促销',
 			'other': '其它活动'
 		},
+		'step': {
+			'null': '无',
+			'Draft': '草稿',
+			'Nomination eDM in approve flow': '报名阶段',
+			'Promotion Submitted': '审核阶段',
+			'Promotion Approved': '审核阶段',
+			'Seller Feedback': '报名阶段',
+			'Promotion in progress': '活动进行阶段',
+			'Promotion in validation': '奖励审核阶段',
+			'Promotion validated': '申领奖励阶段',
+			'Promotion end': '活动结束阶段'
+		},
 		'state': {
 			'Created': '报名',
 			'Submitted': '已提交预审',

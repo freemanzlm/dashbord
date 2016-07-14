@@ -14,8 +14,6 @@ var BizReport = BizReport || {};
 
 	var local = namespace.local;
 
-	var promos = ['hotsell', 'deals', 'deals', 'other'];
-
 	function getLink(promoId) {
 		return "/promotion/" + promoId;
 	}
@@ -23,7 +21,7 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 		tableConfig : {
 			'aLengthMenu' : [20],
-			'aaSorting' : [[4, 'asc'], [3, 'asc']],
+			'aaSorting' : [[3, 'asc'], [2, 'asc']],
 			'bAutoWidth' : true,
 			'bDeferRender' : true,
 			'bFilter' : true,
@@ -82,20 +80,17 @@ var BizReport = BizReport || {};
 			columns : [{
 					data : 'name'
 				}, {
-					data : 'type'
-				}, {
 					data : 'promoDlDt'
 				}, {
 					data : 'promoEdt'
 				}, {
-					data : 'state'
+					data : 'currentStep'
 				}
 			],
 			aoColumnDefs : [{
 					aTargets : ["name"],
 					sDefaultContent : "",
 					sType : "string",
-					sWidth : "350px",
 					sClass : "item-title",
 					mRender : function (data, type, full, meta) {
 						if (type == "display") {
@@ -147,26 +142,17 @@ var BizReport = BizReport || {};
 					sClass : "text-center state",
 					sDefaultContent : "",
 					sType : 'numeric',
+					swidth: '120px',
 					mRender : function (data, type, full) {
 						if (type == "display") {
-							if (full.type != 3) {
-								switch (data) {
-								case 'Created':
-								case 'PromotionApproved':
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a>";
-								case 'Applied':
-								case 'Verifying':
-								case 'Submitted':
-								case 'Started':
-								case 'SubsidyCounting':
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-								}
-							} else {
-								switch (data) {
-								case 'Started':
-								case 'SubsidyCounting':
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-								}
+							switch (data) {
+							case 'Seller nomination_Need approve':
+							case 'Seller Feedback':
+								return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.step.' + data) + "</a>";
+							case 'Promotion Submitted':
+							case 'Promotion in progress':
+							case 'Promotion in validation':
+								return local.getText('promo.step.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 
 							return '<a href="' + getLink(full.promoId) + '" target="_self">'+ local.getText('promo.state.Detailed') + '</a>';
@@ -174,18 +160,15 @@ var BizReport = BizReport || {};
 
 						if (type == "filter") {
 							switch (data) {
-							case 'Created':
-								return full.type == 3 ? 'Detailed' : 'Created';
-							case 'PromotionApproved':
-								return 'PromotionApproved';
-							case 'Applied':
-								return 'Applied';
-							case 'Submitted':
-								return 'Submitted';
-							case 'Started':
-								return 'Started';
-							case 'SubsidyCounting':
-								return 'SubsidyCounting';
+							case 'Seller nomination_Need approve':
+							case 'Seller Feedback':
+								return 'Seller nomination_Need approve';			
+							case 'Promotion Submitted':
+								return 'Promotion Submitted';
+							case 'Promotion in progress':
+								return 'Promotion in progress';
+							case 'Promotion in validation':
+								return 'Promotion in validation';
 							}
 
 							return 'Detailed';
@@ -193,18 +176,15 @@ var BizReport = BizReport || {};
 
 						if (type == "sort") {
 							switch (data) {
-							case 'Created':
-								return full.type == 3 ? 20 : 0;
-							case 'PromotionApproved':
+							case 'Seller nomination_Need approve':
+							case 'Seller Feedback':
+								return 0;							
+							case 'Promotion Submitted':
 								return 1;
-							case 'Applied':
+							case 'Promotion in progress':
 								return 2;
-							case 'Submitted':
+							case 'Promotion in validation':
 								return 3;
-							case 'Started':
-								return 4;
-							case 'SubsidyCounting':
-								return 5;
 							}
 
 							return 20;
