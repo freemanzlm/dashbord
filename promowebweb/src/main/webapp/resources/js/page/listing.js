@@ -3,7 +3,7 @@ $(function(){
 	var SKUListTable = BizReport.SKUListTable;
 	var ListingTable = BizReport.ListingTable;
 	var local = BizReport.local;
-	
+
 	var skuList, uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form;
 	
 	var customTableConfig = pageData && (pageData.currentStep != 'Seller Feedback') ? {

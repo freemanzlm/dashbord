@@ -9,10 +9,10 @@
 	<c:when test="${isPromotionStoped eq true}">
 		<div class="promo-state-message">
 			<div class="message-content">
-				<h3>活动已截止，我们将尽快公布统计结果，请耐心等待！</h3>
+				<h3>活動已截止，我們將盡快公布統計結果，請耐心等待！</h3>
 			</div>
 			<menu>
-				<li><a href="index" class="btn">返回活动列表</a></li>
+				<li><a href="index" class="btn">返回活動列表</a></li>
 			</menu>
 		</div>
 	</c:when>
@@ -21,11 +21,11 @@
 			<div class="message-content">
 				<h3>活动进行中！</h3>
 				<p class="desc">
-					活动时间为${ promoStart } 到 ${ promoEnd }, <br /> 我们将在活动结束后尽快公布统计结果，请耐心等待！
+					活动时间为${ promoStart } 到 ${ promoEnd }, <br /> 我們將在活動結束後盡快公布統計結果，請耐心等待！
 				</p>
 			</div>
 			<menu>
-				<li><a href="index" class="btn">返回活动列表</a></li>
+				<li><a href="index" class="btn">返回活動列表</a></li>
 			</menu>
 		</div>
 	</c:otherwise>
