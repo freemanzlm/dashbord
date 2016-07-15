@@ -5,7 +5,7 @@ package com.ebay.raptor.promotion.excel.validation;
  * @author lyan2
  */
 public abstract class ColumnConstraint {
-	protected String message = "excel.valiation.message";
+	protected String message = "excel.validation.message";
 	protected Boolean requried;
 	protected Class<?> type;
 	
@@ -21,6 +21,15 @@ public abstract class ColumnConstraint {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * After get the message template from bundle, it's still need to replace the arguments in the message template.
+	 * @param message
+	 * @return
+	 */
+	public String resolveMessage(String message) {
+		return message;
 	}
 
 	protected Class<?> getType() {
@@ -42,9 +51,11 @@ public abstract class ColumnConstraint {
 	public String getMessage() {
 		return message;
 	}
-
+	
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	
 }
 

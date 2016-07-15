@@ -18,6 +18,7 @@ import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.LengthColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.RangeColumnConstraint;
+import com.ebay.raptor.promotion.excel.validation.UniqueColumnConstraint;
 import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -134,6 +135,7 @@ public class ExcelUtil {
 	 */
 	private static void resolveColumnConstraint(ColumnConfiguration config, JsonNode fieldNode) {
 		boolean required = fieldNode.get("required").asBoolean();
+		boolean isUnique = fieldNode.get("isUnique").asBoolean();
 		
 		JsonNode typeNode = fieldNode.get("fieldtype");
 		if (typeNode != null && !typeNode.isNull()) {
@@ -161,6 +163,11 @@ public class ExcelUtil {
 		
 		if (required) {
 			ColumnConstraint constraint = new NotNullColumnConstraint();
+			config.getConstraints().add(constraint);
+		}
+		
+		if (isUnique) {
+			ColumnConstraint constraint = new UniqueColumnConstraint();
 			config.getConstraints().add(constraint);
 		}
 	}

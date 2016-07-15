@@ -41,9 +41,9 @@ public class ExcelValidator {
 					if (!constraint.isValid(value)) {
 						String message = getBundle().getString(constraint.getMessage());
 						String invalidMessage = getBundle().getString("excel.validation.invalidcell.message");
-						invalidMessage = invalidMessage.replaceFirst("\\{row\\}", String.valueOf(rowIndex));
-						invalidMessage = invalidMessage.replaceFirst("\\{column\\}", String.valueOf(config.getReadOrder()));
-						invalidMessage += message;
+						invalidMessage = invalidMessage.replaceFirst("\\{row\\}", String.valueOf(rowIndex + 1));
+						invalidMessage = invalidMessage.replaceFirst("\\{column\\}", String.valueOf(config.getReadOrder() + 1));
+						invalidMessage += constraint.resolveMessage(message);
 						errors.add(new InvalidCellValueError(rowIndex, config.getReadOrder(), value, invalidMessage));
 					}
 				}
@@ -71,9 +71,9 @@ public class ExcelValidator {
 						if (!constraint.isValid(value)) {
 							String message = getBundle().getString(constraint.getMessage());
 							String invalidMessage = getBundle().getString("excel.validation.invalidcell.message");
-							invalidMessage = invalidMessage.replaceFirst("\\{row\\}", String.valueOf(rowIndex));
-							invalidMessage = invalidMessage.replaceFirst("\\{column\\}", String.valueOf(config.getReadOrder()));
-							invalidMessage += message;
+							invalidMessage = invalidMessage.replaceFirst("\\{row\\}", String.valueOf(rowIndex + 1));
+							invalidMessage = invalidMessage.replaceFirst("\\{column\\}", String.valueOf(config.getReadOrder() + 1));
+							invalidMessage += constraint.resolveMessage(message);
 							errors.add(new InvalidCellValueError(rowIndex, config.getReadOrder(), value, invalidMessage));
 						}
 					} catch(ClassCastException e) {

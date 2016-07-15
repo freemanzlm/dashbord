@@ -1,11 +1,16 @@
 package com.ebay.raptor.promotion.excel.validation;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 /**
  * Value must be a value of a set.
  * @author lyan2
  */
 public class RangeColumnConstraint extends ColumnConstraint {
+	private static ObjectMapper mapper = new ObjectMapper();
+	
 	private String[]  pickList;
 	private Boolean mustInRange = true;
 
@@ -43,6 +48,17 @@ public class RangeColumnConstraint extends ColumnConstraint {
 
 	public void setMustInRange(Boolean mustInRange) {
 		this.mustInRange = mustInRange;
+	}
+
+	public String resolveMessage(String message) {
+		if (message != null) {
+			try {
+				message = message.replaceAll("\\{range\\}", mapper.writeValueAsString(pickList));
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		}
+		return message;
 	}
 	
 }

@@ -7,7 +7,10 @@ package com.ebay.raptor.promotion.excel.validation;
  */
 public class LengthColumnConstraint extends ColumnConstraint {
 
-	private int length;
+	/**
+	 * Default length is Integer.MAX_VALUE.
+	 */
+	private int length = Integer.MAX_VALUE;
 	
 	public LengthColumnConstraint(int maxlength) {
 		super();
@@ -37,6 +40,13 @@ public class LengthColumnConstraint extends ColumnConstraint {
 
 	public int getLength() {
 		return length;
+	}
+
+	public String resolveMessage(String message) {
+		if (message != null) {
+			message = message.replaceAll("\\{length\\}", String.valueOf(this.getLength()));
+		}
+		return message;
 	}
 
 }

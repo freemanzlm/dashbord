@@ -16,6 +16,8 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.SheetWriter;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
+import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
+import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.pojo.business.Listing;
@@ -122,6 +124,10 @@ public class ExcelService {
 		nominationConfig.setWriteOrder(0);
 		nominationConfig.setWritable(false);
 		nominationConfig.setDisplay(false);
+		nominationConfig.setRawType("string");
+		
+		ColumnConstraint constraint = new NotNullColumnConstraint();
+		constraint.setMessage("excel.validation.template.message");
 		
 		if (columnConfigs != null) {
 			// move colmuns to right by one column
