@@ -1,65 +1,63 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
-<%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
-<%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
 
-<c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
-<c:set var="state" value="${ promo.state }" />
+<%-- stepList comes from SalesForce --%>
+<%-- <c:set var="stepList" value="${ 'Draft>Nomination eDM in approve flow>Nomination eDM approved>Seller nomination_Need approve>Promotion Submitted>Promotion Approved>Notification eDM in approve flow>Notification eDM approved>Seller Feedback>Promotion in progress>Promotion in validation>Promotion validated' }" /> --%>
+<c:set var="stepList" value="${ promo.stepList }" />
+<c:set var="hasValidCurrentStep" value="${ promo.hasValidCurrentStep }" />
+<c:set var="hasGotCurrentStep" value="${ false }" />
+<c:set var="isCurrentStep" value="${ false }" />
 
-<div class="signpost mb20">
-	<div class="signpost-posts">
-		<c:choose>
-			<c:when test="${ state eq 'Created' or state eq 'Unknown' }">
-				<div class="post current-post"><span class="label">報名</span></div>
-				<div class="post"><span class="label">已提交預審</span></div>
-				<div class="post"><span class="label">預審進行中</span></div>
-				<div class="post"><span class="label">正式報名</span></div>
-				<div class="post ${rewarding ? '':'last'}"><span class="label">活動進行中</span></div>
-			</c:when>
-			<c:when test="${ state eq 'Applied' }">
-				<div class="post done"><span class="label">報名</span></div>
-				<div class="post current-post"><span class="label">已報名</span></div>
-				<div class="post ${rewarding ? '':'last'}"><span class="label">活動進行中</span></div>
-			</c:when>
-			<c:when test="${ state eq 'Started' }">
-				<div class="post done"><span class="label">報名</span></div>
-				<div class="post done"><span class="label">已報名</span></div>
-				<div class="post current-post ${rewarding ? '':'last'}"><span class="label">活動進行中</span></div>
-			</c:when>
-			<c:otherwise>
-				<div class="post done"><span class="label">報名</span></div>
-				<div class="post done"><span class="label">已報名</span></div>
-				<div class="post done"><span class="label">活動進行中</span></div>
-			</c:otherwise>
-		</c:choose>
-		
-		<c:if test="${ rewarding }">
+<c:if test="${not empty stepList}">
+	<div class="signpost mb20">
+		<div class="signpost-posts">
+			<c:forTokens items="${ stepList }" delims=">" var="step">
+				<c:choose>
+					<c:when test="${step eq currentStep}">
+						<c:set var="hasGotCurrentStep" value="${ true }" />
+						<c:set var="isCurrentStep" value="${ true }" />
+					</c:when>
+					<c:otherwise>
+						<c:set var="isCurrentStep" value="${ false }" />
+					</c:otherwise>
+				</c:choose>
+				
+				<c:if test="${step eq 'Seller nomination_Need approve'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動報名</span></div>
+				</c:if>
+				<c:if test="${step eq 'Seller Feedback'}">
+					<c:choose>
+						<c:when test="${fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') }">
+							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">正式報名</span></div>
+						</c:when>
+						<c:otherwise>
+							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動報名</span></div>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+				<c:if test="${step eq 'Promotion Submitted'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">報名審核</span></div>
+				</c:if>
+				<c:if test="${step eq 'Promotion in progress'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動進行</span></div>
+				</c:if>				
+				<c:if test="${step eq 'Promotion in validation'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">獎勵審核</span></div>
+				</c:if>
+				<c:if test="${step eq 'Promotion validated'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">申領獎勵</span></div>
+				</c:if>
+			</c:forTokens>
+			
 			<c:choose>
-				<c:when test="${ state eq 'SubsidyCounting' }">
-					<div class="post current-post"><span class="label">獎勵確認中</span></div>
-					<div class="post"><span class="label">申領獎勵</span></div>
-					<div class="post last"><span class="label">活動完成</span></div>
-				</c:when>
-				<c:when test="${ (state eq 'SubsidyWaiting') or (state eq 'SubsidyAccessed') or 
-					(state eq 'SubsidySubmitted') or (state eq 'SubsidyUploaded') or (state eq 'SubsidyRetrievable') or
-					(state eq 'SubsidyResubmittable') or (state eq 'SubsidyRetrieveFailed')}">
-					<div class="post done"><span class="label">獎勵確認中</span></div>
-					<div class="post current-post"><span class="label">申領獎勵</span></div>
-					<div class="post last"><span class="label">活動完成</span></div>
-				</c:when>
-				<c:when test="${state eq 'SubsidyRetrieved'}">
-					<div class="post done"><span class="label">獎勵確認中</span></div>
-					<div class="post done"><span class="label">申領獎勵</span></div>
-					<div class="post current-post last"><span class="label">活動完成</span></div>
+				<c:when test="${ currentStep eq 'Promotion end' }">
+					<div class="post current-post last""><span class="label">活動結束</span></div>
 				</c:when>
 				<c:otherwise>
-					<div class="post"><span class="label">獎勵確認中</span></div>
-					<div class="post"><span class="label">申領獎勵</span></div>
-					<div class="post last"><span class="label">活動完成</span></div>
+					<div class="post last""><span class="label">活動結束</span></div>
 				</c:otherwise>
-			</c:choose>
-		</c:if>		
+			</c:choose>			
+		</div>
 	</div>
-</div>  <!-- steps end -->
+</c:if>
