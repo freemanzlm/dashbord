@@ -11,6 +11,7 @@
 <%-- <c:set var="currentStep" value="${ 'Seller nomination_Need approve' }" /> --%>
 <%-- <c:set var="currentStep" value="${ 'Promotion in progress' }" /> --%>
 <c:set var="currentStep" value="${ 'Seller Feedback' }" />
+<%-- <c:set var="currentStep" value="${ 'Promotion validated' }" /> --%>
 <c:set var="regType" value="${ true }" />
 <c:set var="hasListingsNominated" value="${false}" />
 

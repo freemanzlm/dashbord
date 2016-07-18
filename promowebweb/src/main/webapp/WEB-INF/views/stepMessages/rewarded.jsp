@@ -5,7 +5,7 @@
 
 <fmt:formatDate value="${promo.rewardDlDt}" var="rewardDeadline" pattern="yyyy-MM-dd-hh" type="date" />
 <fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
-<<c:set var="state" value="${ promo.state }"></c:set>
+<c:set var="state" value="${ promo.state }"></c:set>
 
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">

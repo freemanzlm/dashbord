@@ -102,6 +102,7 @@ BizReport.local = {
 	},
 	'listing': {
 		'state': {
+			'null':'N/A',
 			'Applicable': '可報名',
 			'Applied': '已報名', // hot sell and deals preset
 			'Nonapplied': '未報名',

@@ -158,7 +158,11 @@ public class ExcelUtil {
 					config.getConstraints().add(constraint);
 				}
 			}
-			
+		}
+		
+		JsonNode attachmentNode = fieldNode.get("attachmentType");
+		if (attachmentNode != null && !attachmentNode.isNull()) {
+			config.setRawType("attachment");
 		}
 		
 		if (required) {

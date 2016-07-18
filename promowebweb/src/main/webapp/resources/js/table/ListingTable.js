@@ -97,7 +97,7 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["item-id"],
+					aTargets: ["Item_ID_base__c"],
 					sDefaultContent: "",					
 					sType: "numeric",
 					sWidth: "150px",
@@ -129,6 +129,55 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
+					aTargets: ["date", "datetime", "time"],
+					sType: "date",
+					sClass: "text-center",
+					sDefaultContent: "NA"
+				},
+				{
+					aTargets: ["percent"],
+					sType: "numeric",
+					sClass: "text-right",
+					sDefaultContent: "NA",
+					mRender: function(data, type, full) {
+						var value = parseInt(data);
+						if (type == "display") {
+							return isNaN(value) ? 'NA' : value.toUSFixed(2) + "%";
+						}
+						
+						if (type == 'sort') {
+							return isNaN(value) ? Number.NEGATIVE_INFINITY : value;
+						}
+						return data;
+					}
+				},
+				{
+					aTargets: ["email"],
+					sType: "date",
+					sClass: "text-center",
+					sDefaultContent: "NA",
+					mRender: function(data, type, full) {
+						if (type == "display" && data) {
+							return '<a href="mailto:' + data + '">' + data + '</a>';
+						}
+						
+						return data;
+					}
+				},
+				{
+					aTargets: ["url"],
+					sType: "date",
+					sClass: "text-left",
+					sDefaultContent: "NA",
+					mRender: function(data, type, full) {
+						if (type == "display" && data) {
+							return '<a href="' + data + '" target="_blank">' + data + '</a>';
+						}
+						
+						return data;
+					}
+				},
+				{
 					aTargets: ["currency"],
 					sType: "numeric",
 					sClass: "text-center",
@@ -138,7 +187,7 @@ var BizReport = BizReport || {};
 					aTargets: ["double"],
 					sType: "numeric",
 					sClass: "text-right",
-					sDefaultContent: "",
+					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
 						var value = parseFloat(data);
 						if (type == "display") {
@@ -156,7 +205,7 @@ var BizReport = BizReport || {};
 					aTargets: ["state"],
 					bSortable: false,
 					sClass: "text-center",
-					sDefaultContent: "",
+					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (pageData && pageData.expired === false && data == 'Nonapplied') {

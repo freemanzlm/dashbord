@@ -3,6 +3,7 @@ package com.ebay.raptor.promotion.excel.service;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
@@ -20,6 +22,7 @@ import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.ListingService;
+import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
@@ -40,6 +43,8 @@ public class ExcelService {
 	private static final SecureRandom random = new SecureRandom(); // not really random when cross multi-instance.
 	private final ObjectMapper mapper = new ObjectMapper();
 	private final String password = "111111";
+	
+	@Autowired ResourceBundleMessageSource messageSource;
 	
 	public ExcelService() {
 	}
@@ -72,10 +77,18 @@ public class ExcelService {
 		
 		if (listings != null) {
 			for (Listing listing : listings) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("skuId", listing.getSkuId());
+				map.put("skuTitle", listing.getSkuTitle());
+				map.put("state", listing.getState());
+				map.put("currency", listing.getCurrency());
+				
 				String nominationValues = listing.getNominationValues();
 				if (nominationValues != null) {
-					skuListings.add(mapper.readValue(nominationValues, Map.class));
+					map.putAll(mapper.readValue(nominationValues, Map.class));
 				}
+				
+				skuListings.add(map);
 			}
 		}
 		
@@ -92,6 +105,7 @@ public class ExcelService {
 			if (tree.isArray()) {
 				List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
 				adjustColumnConfigurations(columnConfigs);
+				preHandleData(columnConfigs, skuListings);
 				writer.writeSheet(workBook, sheet, columnConfigs, skuListings, true);
 			}
 		}
@@ -110,6 +124,21 @@ public class ExcelService {
 	 */
 	public String getSKUListingTemplateFileName() {
 		return ExcelService.LISTING_FILENAME_PREFIX + "_" + random.nextInt() + ".xlsx";
+	}
+	
+	private void preHandleData(List<ColumnConfiguration> columnConfigs, List<Map<String, Object>> listings) {
+		if (listings != null && columnConfigs != null) {
+			for (ColumnConfiguration config : columnConfigs) {
+				if ("attachment".equalsIgnoreCase(config.getRawType())) {
+					for(Map<String, Object> map : listings) {
+						Object value = map.get(config.getKey());
+						if (value == null) {
+							map.put(config.getKey(), messageSource.getMessage("listing.attachment.comment", null, LocaleUtil.getCurrentLocale()));
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	/**
