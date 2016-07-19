@@ -283,8 +283,10 @@ public class SheetReader implements ISheetReader {
 			if (header.getType() != null) {
 				value = readCell(cell, header.getType());
 			} else {
-				value = readCell(cell);
-			}			
+				if (!"attachment".equalsIgnoreCase(header.getRawType())) {
+					value = readCell(cell);
+				}
+			}		
 			
 			map.put(header.getKey(), value);
 		}

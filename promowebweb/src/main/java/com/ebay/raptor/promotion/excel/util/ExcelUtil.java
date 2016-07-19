@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.annotation.Header;
 import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
+import com.ebay.raptor.promotion.excel.validation.DoubleColumnConstraint;
+import com.ebay.raptor.promotion.excel.validation.IntegerRangeColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.LengthColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.RangeColumnConstraint;
@@ -149,6 +151,21 @@ public class ExcelUtil {
 				RangeColumnConstraint constraint = new RangeColumnConstraint();
 				constraint.setPickList(list);
 				config.getConstraints().add(constraint);
+			} if (type.equalsIgnoreCase("combobox")) {
+				String entries = typeNode.get("picklistEntry").asText();
+				String[] list = entries.split(";");
+				
+				RangeColumnConstraint constraint = new RangeColumnConstraint();
+				constraint.setMustInRange(false);
+				constraint.setPickList(list);
+				config.getConstraints().add(constraint);
+			} else if (type.equalsIgnoreCase("integer")) {
+				IntegerRangeColumnConstraint constraint = new IntegerRangeColumnConstraint();
+				config.getConstraints().add(constraint);
+			} else if (type.equalsIgnoreCase("double")) {
+				DoubleColumnConstraint constraint = new DoubleColumnConstraint();
+				constraint.setDigits(typeNode.get("digits").asInt(0));
+				config.getConstraints().add(constraint);
 			} else if (type.equalsIgnoreCase("string")) {
 				config.setType(parseType(type));
 				
@@ -158,11 +175,12 @@ public class ExcelUtil {
 					config.getConstraints().add(constraint);
 				}
 			}
-		}
-		
-		JsonNode attachmentNode = fieldNode.get("attachmentType");
-		if (attachmentNode != null && !attachmentNode.isNull()) {
-			config.setRawType("attachment");
+		} else {
+			// for attachment field, fieldNode is empty.
+			JsonNode attachmentNode = fieldNode.get("attachmentType");
+			if (attachmentNode != null && !attachmentNode.isNull()) {
+				config.setRawType("attachment");
+			}
 		}
 		
 		if (required) {

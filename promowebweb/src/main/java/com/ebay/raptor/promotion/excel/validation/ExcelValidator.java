@@ -33,6 +33,7 @@ public class ExcelValidator {
 	 */
 	public List<InvalidCellValueError> validate(int rowIndex, Map<String, Object> map, List<ColumnConfiguration> configs) {
 		List<InvalidCellValueError> errors = new ArrayList<InvalidCellValueError>();
+		
 		if (configs != null && !configs.isEmpty() && map != null) {
 			for (ColumnConfiguration config : configs) {
 				Object value = map.get(config.getKey());
@@ -42,7 +43,7 @@ public class ExcelValidator {
 						String message = getBundle().getString(constraint.getMessage());
 						String invalidMessage = getBundle().getString("excel.validation.invalidcell.message");
 						invalidMessage = invalidMessage.replaceFirst("\\{row\\}", String.valueOf(rowIndex + 1));
-						invalidMessage = invalidMessage.replaceFirst("\\{column\\}", String.valueOf(config.getReadOrder() + 1));
+						invalidMessage = invalidMessage.replaceFirst("\\{title\\}", config.getTitle());
 						invalidMessage += constraint.resolveMessage(message);
 						errors.add(new InvalidCellValueError(rowIndex, config.getReadOrder(), value, invalidMessage));
 					}
@@ -72,7 +73,7 @@ public class ExcelValidator {
 							String message = getBundle().getString(constraint.getMessage());
 							String invalidMessage = getBundle().getString("excel.validation.invalidcell.message");
 							invalidMessage = invalidMessage.replaceFirst("\\{row\\}", String.valueOf(rowIndex + 1));
-							invalidMessage = invalidMessage.replaceFirst("\\{column\\}", String.valueOf(config.getReadOrder() + 1));
+							invalidMessage = invalidMessage.replaceFirst("\\{title\\}", config.getTitle());
 							invalidMessage += constraint.resolveMessage(message);
 							errors.add(new InvalidCellValueError(rowIndex, config.getReadOrder(), value, invalidMessage));
 						}

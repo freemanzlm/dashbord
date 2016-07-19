@@ -145,7 +145,7 @@ public class ExcelService {
 	 * Nomination id is used to differentiate listings.
 	 * @param columnConfigs
 	 */
-	private List<ColumnConfiguration> adjustColumnConfigurations(List<ColumnConfiguration> columnConfigs) {
+	public List<ColumnConfiguration> adjustColumnConfigurations(List<ColumnConfiguration> columnConfigs) {
 		// it's used to configure a hidden column, it will store nomination id.
 		ColumnConfiguration nominationConfig = new ColumnConfiguration();
 		nominationConfig.setKey("skuId");

@@ -140,6 +140,7 @@ public class ListingController extends AbstractListingController {
 				JsonNode tree = mapper.readTree(fieldsDefinitions);
 				if (tree.isArray()) {
 					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, LocaleUtil.getCurrentLocale());
+					excelService.adjustColumnConfigurations(columnConfigs);
 					violations = handler.handleSheet(sheet, columnConfigs);
 				}
 			}
@@ -153,7 +154,7 @@ public class ListingController extends AbstractListingController {
 				
 				boolean first = true;
 				for (ConstraintViolation<Object> violation : violations) {
-					errorMessage.append((first ? "" : "</br>") + violation.getMessage());
+					errorMessage.append((first ? "" : "<br/>") + violation.getMessage());
 					first = false;
 				}
 				

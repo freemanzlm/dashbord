@@ -71,7 +71,7 @@
 <res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js2"></res:useJs>
+<%-- <res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js2"></res:useJs> --%>
 <res:useJs value="${res.js.local.js.table['ListingTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.page['listing.js']}" target="page-js2"></res:useJs>
 </head>
@@ -94,9 +94,9 @@
 				<%@ include file="activity.jsp"%>
 
 				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType }">
-					<div class="mt20">
+					<%-- <div class="mt20">
 						<%@ include file="table/skuList.jsp"%>
-					</div>
+					</div> --%>
 					
 					<div class="mt20">
 						<%@ include file="upload_listings.jsp"%>

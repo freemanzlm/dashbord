@@ -1,6 +1,6 @@
 $(function(){
 	
-	var SKUListTable = BizReport.SKUListTable;
+	/*var SKUListTable = BizReport.SKUListTable;*/
 	var ListingTable = BizReport.ListingTable;
 	var local = BizReport.local;
 
@@ -23,7 +23,7 @@ $(function(){
 		$(this).popup({"trigger": "mannual", html: this.title});
 	});
 	
-	if (document.getElementById('sku-list-table')) {
+	/*if (document.getElementById('sku-list-table')) {
 		// SKU List
 		skuList = new SKUListTable();
 		skuList.init({dataTableConfig: {tableId: "sku-list-table"}});
@@ -34,7 +34,7 @@ $(function(){
 			skuList.initDataTable();
 			console.log('sku list failed to get data');
 		}
-	}
+	}*/
 	
 	if (document.getElementById('listing-table')) {
 		// Listing Table
@@ -82,19 +82,18 @@ $(function(){
 				
 				// check the response
 				if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").html().length > 0) {
-					var response = uploadIFrame.contents().find("body").text();
+					var response = uploadIFrame.contents().find("body").html();
 					var responseData = $.parseJSON(response);
 					// verification returns no error 
 					if (responseData && responseData.status) {
-//						window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId
-//								+ (pageData.promoSubType ? "&promoSubType=" + pageData.promoSubType : ""));
+						window.location.replace("/promotion/deals/reviewUploadedListings?promoId="+pageData.promoId);
 					}
 					// handle error
 					else {
 						// show error infor
 						if (responseData.message && responseData.message.length > 0) {
 							$("#upload-error-msg").removeClass("hide");
-							$("#upload-error-msg").find("b").text(responseData.message);
+							$("#upload-error-msg").find("b").html(responseData.message);
 						} else if (responseData.data && responseData.data.length > 0) {
 							var errCode = parseInt(responseData.data);
 							
