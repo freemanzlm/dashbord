@@ -88,6 +88,8 @@ public class ResourceProvider {
 		String gbhSkuListFileName = "Deals_listing_template_GBH"; //TODO Here should be Chinese 
 		String fresSkuListFileName = "Deals_listing_template_FRES"; //TODO Here should be Chinese 
 		String apacSkuListFileName = "Deals_listing_template_APAC"; //TODO Here should be Chinese 
+		
+		String uploadListingAttachment = "uploadListingAttachment";
 	}
 	
 	public interface SubsidyRes {

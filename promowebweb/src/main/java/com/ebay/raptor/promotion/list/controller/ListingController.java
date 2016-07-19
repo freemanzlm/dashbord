@@ -31,6 +31,7 @@ import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.UploadedListingFileHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
+import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.service.ListingService;
@@ -49,6 +50,7 @@ import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PojoConvertor;
+import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -183,6 +185,26 @@ public class ListingController extends AbstractListingController {
 			}
 		}
 
+		mav.addObject("response", PojoConvertor.convertToJson(responseData));
+		return mav;
+	}
+	
+	@POST
+	@RequestMapping(ResourceProvider.ListingRes.uploadListingAttachment)
+	public ModelAndView uploadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
+			@RequestPart MultipartFile uploadFile, @RequestParam String listingId) throws MissingArgumentException{
+		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
+		ResponseData <String> responseData = new ResponseData <String>();
+		AttachmentFileValidator attachmentFileValidator = AttachmentFileValidator.getInstance();
+		try {
+			if(attachmentFileValidator.isValidate(uploadFile)) {
+				//TODO implements the upload service
+				//listingService.uploadListingAttachment(uploadFile, listingId);
+			}
+		} catch (AttachmentUploadException e) {
+			responseData.setStatus(false);
+			responseData.setMessage(e.getMessage());
+		}
 		mav.addObject("response", PojoConvertor.convertToJson(responseData));
 		return mav;
 	}
