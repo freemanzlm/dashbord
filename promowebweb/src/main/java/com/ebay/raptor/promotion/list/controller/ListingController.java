@@ -43,6 +43,8 @@ import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
+import com.ebay.raptor.promotion.promo.service.PromotionViewService;
+import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.CookieUtil;
@@ -67,6 +69,9 @@ public class ListingController extends AbstractListingController {
 	
 	@Autowired
 	PromotionService promoService;
+
+	@Autowired
+	PromotionViewService promoViewService;
 	
 	@Autowired ExcelService excelService;
 
@@ -188,6 +193,57 @@ public class ListingController extends AbstractListingController {
 	public ListDataWebResponse<?> getPromotionListings(HttpServletRequest req,
 			@ModelAttribute ListingWebParam param)  {
 		
+		return getListings(req, param);
+	}
+	
+	@GET
+	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
+	public ModelAndView reviewUploadedListings(HttpServletRequest req, @RequestParam String promoId) throws MissingArgumentException {
+		ModelAndView mav = new ModelAndView();
+		Map<String, Object> context = new HashMap<String, Object>();
+		
+		UserData userData = CookieUtil.getUserDataFromCookie(req);
+
+		Promotion promo;
+		try {
+			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+			promoViewService.handleListingFields(promo, context);
+		} catch (PromoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mav.addAllObjects(context);
+		mav.addObject("formUrl", "/promotion/listings/submitDealsListings");
+		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
+		mav.setViewName(ViewResource.LISTING_PREVIEW.getPath());
+		return mav;
+	}
+	
+	@POST
+	@RequestMapping(ResourceProvider.ListingRes.submitDealsListings)
+	public @ResponseBody ResponseData <String> submitDealsListings(HttpServletRequest req, HttpServletResponse resp) throws MissingArgumentException{
+		ResponseData <String> responseData = new ResponseData <String>();
+		String promoId = req.getParameter("promoId");
+
+		try {
+			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			boolean result = listingService.submitDealsListings(promoId, userData.getUserId());
+			responseData.setStatus(result);
+		} catch (PromoException | MissingArgumentException e) {
+			// do not throw but set the error status.
+			responseData.setStatus(false);
+			responseData.setMessage("Internal Error happens.");
+			responseData.setData(e.getErrorType().getCode() + "");
+		}
+		return responseData;
+	}
+	
+	@GET
+	@RequestMapping(ResourceProvider.ListingRes._getUploadedListings)
+	@ResponseBody
+	public ListDataWebResponse<?> getUploadedListings(HttpServletRequest req,
+			@ModelAttribute ListingWebParam param)  {
 		return getListings(req, param);
 	}
 	

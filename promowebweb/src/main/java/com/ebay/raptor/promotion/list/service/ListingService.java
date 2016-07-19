@@ -8,10 +8,13 @@ import javax.ws.rs.core.Response.Status;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
+import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
+import com.ebay.raptor.promotion.pojo.service.req.SubmitListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
+import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
@@ -87,4 +90,40 @@ public class ListingService extends BaseService {
 		return null;
 	}
 	
+	/**
+	 * Submit all uploaded listing from Database to SalesForce.
+	 * 
+	 * @param promoId
+	 * @param uid
+	 * @return
+	 * @throws PromoException
+	 */
+	public boolean submitDealsListings(String promoId, Long uid) throws PromoException {
+		String uri = url(ResourceProvider.ListingRes.submitDealsListings);
+		SubmitListingRequest req = new SubmitListingRequest();
+		req.setPromoId(promoId);
+		req.setUid(uid);
+		GingerClientResponse resp = httpPost(uri, req);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
+			GeneralDataResponse<Boolean> general = resp.getEntity(type);
+			if(null != general){
+				if (AckValue.SUCCESS == general.getAckValue()) {
+					return true;
+				} else {
+					int errorCode = general.getResponseStatus();
+	
+					if (errorCode == ErrorType.DateExpiredException.getCode()) {
+						throw new PromoException(ErrorType.DateExpiredException, "ACTION1_END_DATE");
+					}
+					return false;
+				}
+			} else {
+				
+				return false;
+			}
+		} else {
+			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
+		}
+	}
 }
