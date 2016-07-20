@@ -34,6 +34,7 @@ import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
+import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
@@ -121,6 +122,28 @@ public class ListingController extends AbstractListingController {
     }
 	
 	@POST
+	@RequestMapping(ResourceProvider.ListingRes.confirmListings)
+	@ResponseBody
+	public ResponseData <String> confirmDealsListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
+		ResponseData <String> responseData = new ResponseData <String>();
+
+		if(null != listings){
+			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
+			try {
+				UserData userData = CookieUtil.getUserDataFromCookie(req);
+				boolean result = listingService.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
+				responseData.setStatus(result);
+				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
+			} catch (PromoException | MissingArgumentException e) {
+				// do not throw but set the error status.
+				responseData.setStatus(false);
+				responseData.setMessage("Internal Error happens.");
+			}
+		}
+		return responseData;
+	}
+	
+	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadListings)
 	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile uploadFile, @RequestParam String promoId) throws MissingArgumentException{
@@ -141,7 +164,7 @@ public class ListingController extends AbstractListingController {
 			// read uploaded excel file.
 			workbook = new XSSFWorkbook(uploadFile.getInputStream());			
 			Sheet sheet = workbook.getSheetAt(0);
-			UploadedListingFileHandler handler = new UploadedListingFileHandler(promoId, userData.getUserId());
+			UploadedListingFileHandler handler = new UploadedListingFileHandler(listingService, promoId, userData.getUserId());
 			
 			if (fieldsDefinitions != null) {
 				JsonNode tree = mapper.readTree(fieldsDefinitions);
@@ -250,7 +273,7 @@ public class ListingController extends AbstractListingController {
 
 		try {
 			UserData userData = CookieUtil.getUserDataFromCookie(req);
-			boolean result = listingService.submitDealsListings(promoId, userData.getUserId());
+			boolean result = listingService.submitListings(promoId, userData.getUserId());
 			responseData.setStatus(result);
 		} catch (PromoException | MissingArgumentException e) {
 			// do not throw but set the error status.

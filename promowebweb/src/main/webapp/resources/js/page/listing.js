@@ -1,16 +1,11 @@
 $(function(){
 	
-	/*var SKUListTable = BizReport.SKUListTable;*/
 	var ListingTable = BizReport.ListingTable;
 	var local = BizReport.local;
 
-	var skuList, uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form;
+	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn;
 	
-	var customTableConfig = pageData && (pageData.currentStep != 'Seller Feedback') ? {
-		columns: pageData && pageData.columns
-	} : {
-		/*asStripeClasses: ['selectable'],
-		aoColumnDefs: [{bVisible: true}],*/
+	var customTableConfig = {
 		columns: pageData && pageData.columns
 	};
 	
@@ -18,23 +13,11 @@ $(function(){
 	uploadBtn = document.getElementById("upload-btn");
 	acceptCheckbox = document.getElementById("accept");
 	form = $("#listing-form");
+	formBtn = document.getElementById("form-btn");
 	
 	var acceptPopup = $(acceptCheckbox).parent().each(function(){
 		$(this).popup({"trigger": "mannual", html: this.title});
 	});
-	
-	/*if (document.getElementById('sku-list-table')) {
-		// SKU List
-		skuList = new SKUListTable();
-		skuList.init({dataTableConfig: {tableId: "sku-list-table"}});
-		
-		try {
-			skuList.update({promoId: pageData && pageData.promoId});
-		} catch(e) {
-			skuList.initDataTable();
-			console.log('sku list failed to get data');
-		}
-	}*/
 	
 	if (document.getElementById('listing-table')) {
 		// Listing Table
@@ -125,6 +108,76 @@ $(function(){
 			
 			uploadForm.submit();
 		});	
+	}
+	
+	if (formBtn) {
+		// confirm listings to apply.
+		function submitListings() {
+			$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
+			var listings = listingTable.getData();
+			listings = listings.filter(function(listing){
+				return !(listing.state == 'PretrialFail');
+			});
+			form.find("input[name=listings]").val("[" + listings.map(function(item){
+				return '{"skuId": "' + item.skuId + '", "selected": ' + (item.checked ? 1 : 0) + '}';
+			}).join(",") + "]");
+			
+			var data = form.serialize();
+			$.ajax({
+				url: form.prop('action'),
+				type: 'POST',
+				data: data,
+				dataType : 'json',
+				success : function(json){
+					$(document.body).isLoading('hide');
+					if (json && json.status) {
+						location.reload();
+					} else {
+						cbt.alert(local.getText('promo.request.fail'));
+					}
+				},
+				error: function(){
+					$(document.body).isLoading('hide');
+					cbt.alert(local.getText('promo.request.fail'));
+				}
+			});
+		}
+		
+		var ListingPreviewDialog = BizReport.ListingPreviewDialog;
+		var previewDialog = new ListingPreviewDialog(null, {wrapper: "#listing-preview-dialog", zIndex: 20000, width: 850, body: {
+			style: {
+				'max-height': "530px",
+				overflow: 'auto'
+			}
+		}});
+		
+		previewDialog.subscribe({
+			ok: function(){
+				submitListings();
+			}
+		});
+		
+		$(formBtn).click(function(event){
+			event.preventDefault();
+			
+			if (!acceptCheckbox.checked) {
+				acceptPopup.popup('show');
+				return false;
+			}
+			
+			var listings = listingTable.selectedItems;
+			
+			if (listings && listings.length > 0) {
+				previewDialog.show();
+				previewDialog.listingTable.setData(listings);
+			} else {
+				if (pageData && pageData.state == 'Applied') {
+					cbt.confirm(local.getText('promo.hotsell.zeroSubmitted'), submitListings);
+				} else {
+					cbt.alert(local.getText('promo.hotsell.applyCondition'));
+				}
+			}
+		});
 	}
 	
 	var termsDialog = cbt.termsDialog;

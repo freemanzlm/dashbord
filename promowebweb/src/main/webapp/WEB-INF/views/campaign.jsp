@@ -12,7 +12,7 @@
 <%-- <c:set var="currentStep" value="${ 'Promotion in progress' }" /> --%>
 <c:set var="currentStep" value="${ 'Seller Feedback' }" />
 <%-- <c:set var="currentStep" value="${ 'Promotion validated' }" /> --%>
-<c:set var="regType" value="${ true }" />
+<c:set var="regType" value="${ false }" />
 <c:set var="hasListingsNominated" value="${false}" />
 
 <r:includeJquery jsSlot="head" />
@@ -71,8 +71,8 @@
 <res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.table['ListingTable.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.page['listing.js']}" target="page-js2"></res:useJs>
 </head>
 
@@ -93,11 +93,7 @@
 
 				<%@ include file="activity.jsp"%>
 
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType }">
-					<div class="mt20">
-						<%@ include file="table/skuList.jsp"%>
-					</div>
-					
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or (currentStep eq 'Seller Feedback' and not fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve'))) and  regType  }">
 					<div class="mt20">
 						<%@ include file="upload_listings.jsp"%>
 					</div>
@@ -110,7 +106,8 @@
 					</div>
 				</c:if>
 				
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  not regType  }">
+				
 					<!-- 非上传形式报名, 或者正式报名 -->
 					<div class="mt20 my-listing">
 						<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
@@ -118,14 +115,15 @@
 					</div>
 					
 					<div class="mt20 page-bottom-actions">
-						<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
+						<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 							<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并提交报名</button>
 							<br /><br /> <a href="index">返回活动列表</a>
 						</form>
-					</div>	
+					</div>
+						
 				</c:if>
 				
 				<c:if test="${currentStep eq 'Promotion Submitted' or currentStep eq 'Promotion in progress'
@@ -144,13 +142,16 @@
 	</div>
 
 	<%@ include file="dialog/alert.jsp"%>
+	<%@ include file="dialog/confirm.jsp" %>
 	<%@ include file="dialog/terms.jsp"%>
+	<%@ include file="previewDialog.jsp" %>
 
 	<script type="text/javascript">
 		var pageData = {
 			promoId : '${promo.promoId}',
 			currentStep: '${currentStep}',
-			columns: JSON.parse('${not empty columns ? columns : "{}"}')
+			columns: JSON.parse('${not empty columns ? columns : "{}"}'),
+			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "{}"}')
 		};
 	</script>
 

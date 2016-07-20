@@ -80,7 +80,6 @@ var BizReport = BizReport || {};
 				aoColumnDefs: [{
 					aTargets: ["check"],
 					bSortable: false,
-					bVisible: false,
 					sDefaultContent: "",
 					sType: "numeric",
 					sWidth: "30px",
@@ -202,10 +201,30 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
+					aTargets: ["attachment"],
+					sType: "string",
+					sClass: "text-right",
+					sDefaultContent: "NA",
+					mRender: function(data, type, full) {
+						if (type == "display") {
+							if (!data) {
+								return '<input type="file" title="Upload attachment"/>';
+							}
+						}
+						
+						if (type == 'sort') {
+							return !data ? 0 : 1;
+						}
+
+						return data;
+					}
+				},
+				{
 					aTargets: ["state"],
 					bSortable: false,
 					sClass: "text-center",
 					sDefaultContent: "NA",
+					width: "75",
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							if (pageData && pageData.expired === false && data == 'Nonapplied') {

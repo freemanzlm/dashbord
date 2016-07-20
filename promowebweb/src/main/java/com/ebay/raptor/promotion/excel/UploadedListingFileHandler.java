@@ -1,5 +1,6 @@
 package com.ebay.raptor.promotion.excel;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,12 @@ import javax.validation.ConstraintViolation;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import com.ebay.cbt.sf.service.ServiceExecutor;
+import com.ebay.raptor.promotion.enums.ListingState;
+import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.ListingService;
+import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -23,18 +27,37 @@ public class UploadedListingFileHandler {
 	private final ObjectMapper mapper = new ObjectMapper();
 	private Logger logger = Logger.getLogger(UploadedListingFileHandler.class);
 	
-	public UploadedListingFileHandler(
+	public UploadedListingFileHandler(ListingService listingService,
 			String promoId, Long userId) {
+		this.listingService = listingService;
 		this.promoId = promoId;
 		this.userId = userId;
 		
 		mapper.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
 	}
 	
-	public Set<ConstraintViolation<Object>> handleSheet(Sheet sheet, List<ColumnConfiguration> configs) {
+	public Set<ConstraintViolation<Object>> handleSheet(Sheet sheet, List<ColumnConfiguration> configs) throws PromoException {
 		ISheetReader reader = new SheetReader();
 		Set<ConstraintViolation<Object>> violations = new HashSet<ConstraintViolation<Object>>();
 		List<Map<String, Object>> list = reader.readSheet(sheet, configs, 3, violations);
+		List<Listing> listings = new ArrayList<Listing>();
+		
+		if (list != null) {
+			for (Map<String, Object> row : list) {
+				Listing listing = new Listing();
+				listing.setSkuId(row.remove("skuId").toString());
+				listing.setCurrency(row.remove("currency").toString());
+				listing.setState(ListingState.Uploaded.getName());
+				try {
+					listing.setNominationValues(mapper.writeValueAsString(row));
+				} catch (JsonProcessingException e) {
+					logger.error("Listing nomination value is unresolvable.");
+				}
+				listings.add(listing);
+			}
+			
+			listingService.uploadListings(listings, promoId, userId);
+		}
 		
 		// TODO add sales force logic.
 		/*ServiceExecutor serviceInstance = ServiceExecutor.getInstance();

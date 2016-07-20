@@ -15,7 +15,7 @@
 					</c:if>
 					
 					<c:forEach items="${ fieldsDefintions }" var="field">
-						<th class="${fn:toLowerCase(field.rawType)} dt-nowrap">${field.title}</th>
+						<th class="${fn:toLowerCase(field.rawType)} dt-nowrap ${field.key}">${field.title}</th>
 						<c:set var="columns" value='${columns},{"data":"${field.key}"}' ></c:set>
 					</c:forEach>
 					
@@ -23,7 +23,6 @@
 				</tr>
 			</thead>
 			<tbody>
-				
 			</tbody>
 		</table>
 		
