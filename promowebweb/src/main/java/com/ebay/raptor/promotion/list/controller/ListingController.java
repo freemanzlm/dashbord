@@ -233,6 +233,22 @@ public class ListingController extends AbstractListingController {
 	}
 	
 	@GET
+	@RequestMapping(ResourceProvider.ListingRes.downloadListingAttachment)
+	public void downloadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
+			@RequestParam("listingId") String skuId) throws MissingArgumentException {
+		resp.setContentType("application/x-msdownload;");
+		UserData userData = CookieUtil.getUserDataFromCookie(req);
+		//TODO
+		//Listing listing = listingService.getListing(skuId, userData.getUserId());
+		
+		/*resp.setHeader("Content-disposition", "attachment; filename=" + listing.getAttachmentName() 
+					+ "." + listing.getAttachmentType());
+		OutputStream outStream = resp.getOutputStream();
+    	outStream.write(listing.getAttachmentContent());
+        outStream.close();*/
+	}
+	
+	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
 	@ResponseBody
 	public ListDataWebResponse<?> getPromotionListings(HttpServletRequest req,
