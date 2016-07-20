@@ -3,7 +3,7 @@ $(function(){
 	var ListingTable = BizReport.ListingTable;
 	var local = BizReport.local;
 
-	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn;
+	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn, listingCountJ;
 	
 	var customTableConfig = {
 		columns: pageData && pageData.columns
@@ -14,6 +14,7 @@ $(function(){
 	acceptCheckbox = document.getElementById("accept");
 	form = $("#listing-form");
 	formBtn = document.getElementById("form-btn");
+	listingCountJ = $(".my-listing h3 small span");
 	
 	var acceptPopup = $(acceptCheckbox).parent().each(function(){
 		$(this).popup({"trigger": "mannual", html: this.title});

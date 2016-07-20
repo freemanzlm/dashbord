@@ -77,7 +77,7 @@ public class ResourceProvider {
 		String confirmHotSellListings = "/confirmHotSellListings";
 		String downloadSkuList = "/downloadSkuList";
 		String uploadListings = "/uploadListings";
-		String confirmListings = "/confirmDealsListings";
+		String confirmListings = "/confirmListings";
 		String uploadDealsListings = "/uploadDealsListings";
 		String uploadGBHDealsListings = "/uploadGBHDealsListings";
 		String uploadAPACDealsListings = "/uploadAPACDealsListings";

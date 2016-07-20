@@ -128,10 +128,10 @@ public class ListingController extends AbstractListingController {
 		ResponseData <String> responseData = new ResponseData <String>();
 
 		if(null != listings){
-			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
+			com.ebay.raptor.promotion.list.req.Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), com.ebay.raptor.promotion.list.req.Listing[].class);
 			try {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
-				boolean result = listingService.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
+				boolean result = listingService.confirmListings(listingAry, listings.getPromoId(), userData.getUserId());
 				responseData.setStatus(result);
 				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
 			} catch (PromoException | MissingArgumentException e) {

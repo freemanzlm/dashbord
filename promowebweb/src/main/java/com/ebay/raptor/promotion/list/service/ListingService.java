@@ -42,8 +42,8 @@ public class ListingService extends BaseService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Boolean confirmDealsListings(Listing[] listings, String promoId, Long uid) throws PromoException{
-		String uri = url(ResourceProvider.ListingRes.confirmDealsListings);
+	public Boolean confirmListings(com.ebay.raptor.promotion.list.req.Listing[] listings, String promoId, Long uid) throws PromoException{
+		String uri = url(ResourceProvider.ListingRes.confirmListings);
 		List<Listing> listingList = Arrays.asList(listings);
 		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
 		req.setListings(listingList);
