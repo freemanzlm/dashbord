@@ -55,7 +55,7 @@ $(function(){
 			
 			var fileName = fileInput.val();
 			if (!fileName || fileName.indexOf(".xls") < 0) {
-				cbt.alert(local.getText("promo.deals.onlyXls"));
+				cbt.alert(local.getText("promo.listings.onlyXls"));
 				return false;
 			}
 			
@@ -173,9 +173,9 @@ $(function(){
 				previewDialog.listingTable.setData(listings);
 			} else {
 				if (pageData && pageData.state == 'Applied') {
-					cbt.confirm(local.getText('promo.hotsell.zeroSubmitted'), submitListings);
+					cbt.confirm(local.getText('promo.listings.zeroSubmitted'), submitListings);
 				} else {
-					cbt.alert(local.getText('promo.hotsell.applyCondition'));
+					cbt.alert(local.getText('promo.listings.applyCondition'));
 				}
 			}
 		});

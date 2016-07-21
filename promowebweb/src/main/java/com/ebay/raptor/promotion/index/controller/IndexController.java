@@ -93,7 +93,7 @@ public class IndexController {
         ModelAndView mav = new ModelAndView();
         //Set unconfirmed status
         UserData userDt = CookieUtil.getUserDataFromCookie(request);
-        mav.addObject(ViewContext.IsUnconfirmedVisable.getAttr(), userDt.getAdmin());
+        mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
         
        	mav.setViewName("index");
         return mav;

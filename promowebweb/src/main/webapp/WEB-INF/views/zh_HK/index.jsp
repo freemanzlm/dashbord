@@ -1,13 +1,12 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
-<c:set var="categoryId" value="6000" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <r:includeJquery jsSlot="head" />
 <r:client />
+<r:includeHtml5Tags />
 
 <!DOCTYPE html>
 <html>
@@ -77,7 +76,7 @@
 				<h2>活動促銷</h2>
 			</div>
 
-			<c:if test="${ invisible eq true }">
+			<c:if test="${ isAdmin eq true }">
 				<div class="pane pane-table mt20">
 					<div class="header clr">
 						<div class="fr cl">
@@ -156,7 +155,7 @@
 	<script type="text/javascript">
 		var pageData = {
 			region : '${ region }',
-			admin: ${invisible}
+			admin: JSON.parse('${not empty isAdmin ? isAdmin : false}')
 		};
 	</script>
 

@@ -58,12 +58,6 @@ BizReport.local = {
 		}
 	},
 	'promo': {
-		'type': {
-			'deals': 'Deals招募',
-			'dealsPreset': 'Deals招募预置',
-			'hotsell': '爆款促销',
-			'other': '其它活动'
-		},
 		'step': {
 			'null': '无',
 			'Draft': '草稿',
@@ -99,12 +93,9 @@ BizReport.local = {
 			'Claimed': '我已领取奖励',
 			'Detailed': '查看详情'
 		},
-		'hotsell': {
+		'listings': {
 			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，确认吗？',
-			'applyCondition': '申请参与活动需要选择至少一条刊登报名。'
-		},
-		'deals': {
-			'upload': '提交刊登报名前请先阅读其他条款，并<strong>全部读完</strong>，然后点击确认接受该其他条款后方可提交报名。',
+			'applyCondition': '申请参与活动需要选择至少一条刊登报名。',
 			'onlyXls': '您选择提交的不是Excel文件，请重新选择刊登文件.',
 			'rrpLink': '链接'
 		},
