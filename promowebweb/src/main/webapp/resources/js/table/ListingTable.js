@@ -17,8 +17,6 @@ var BizReport = BizReport || {};
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
-				'aaSorting': [[2, 'asc']],
-				'aaSortingFixed': [[6, 'desc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': false,
@@ -207,8 +205,12 @@ var BizReport = BizReport || {};
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
 						if (type == "display") {
+							var id = 'attachmentFrame'+ full.skuId;
 							if (!data) {
-								return '<input type="file" title="Upload attachment"/>';
+								return '<form id="' + id + '" target="'+ id + '"><input type="file" name="attachment" title="Upload attachment"/></form>' +
+									'<iframe name="'+ id + '" style="display:none;"></iframe>';
+							} else {
+								return '<a href="' + data + '">' + local.getText('listing.attachment') + '</a>';
 							}
 						}
 						
@@ -227,14 +229,14 @@ var BizReport = BizReport || {};
 					width: "75",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							if (pageData && pageData.expired === false && data == 'Nonapplied') {
-								return local.getText('listing.state.Applicable');
-							}
-							return local.getText('listing.state.' + data);
+							return !!data ? local.getText('listing.state.' + data) : '';
 						}
 						
 						if (type == "sort") {
 							switch (data) {
+							// TODO
+							// 已报名在前，未报名和可报名在后。
+							// 已通过审核在前、未通过审核、未报名在
 							case 'Confirmed':
 								return 6;
 							case 'Applied':

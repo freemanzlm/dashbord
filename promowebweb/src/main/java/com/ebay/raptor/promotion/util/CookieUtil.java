@@ -7,8 +7,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ebay.app.raptor.cbtcommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.pojo.UserData;
 
@@ -104,8 +104,20 @@ public class CookieUtil {
 	        HttpServletRequest request) throws MissingArgumentException {
 		Map <String, String> cookieMap =  convertCookieToMap(request.getCookies());
 		
-		long userId = -1;
+		// Get user data from token first, this can prevent people from changing cookie value to visit our site.
+		String token = cookieMap.get(AppCookies.EBAY_CBT_TOKEN_COOKIE_NAME);
+		if (token != null) {
+			try {
+				TokenData tokenData = TokenUtil.parse(token, true);
+				return new UserData(tokenData.getUserId(), tokenData.getUserName(), tokenData.getIsAdmin(), tokenData.getLanguage());
+			} catch (Exception e) {
+				throw new MissingArgumentException(AppCookies.EBAY_CBT_TOKEN_COOKIE_NAME);
+			}
+		}
 
+		// TODO
+		// After Dashboard and Bizreport have implement the same token mechanism, remove below code.
+		long userId = -1;
 		try {
 			userId = Long.parseLong(cookieMap.get(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME));
 		} catch (NumberFormatException e) {

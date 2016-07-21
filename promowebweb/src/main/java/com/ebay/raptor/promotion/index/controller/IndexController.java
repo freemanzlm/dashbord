@@ -18,10 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.cbt.common.constant.pm.PMPromotionType;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
-import com.ebay.raptor.promotion.enums.PromotionStep;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -34,6 +32,8 @@ import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.util.CookieUtil;
+import com.ebay.raptor.promotion.util.TokenData;
+import com.ebay.raptor.promotion.util.TokenUtil;
 
 @Controller
 public class IndexController {
@@ -68,20 +68,21 @@ public class IndexController {
             hackId = userId;
         }
         
-        //Add admin cookie
-        Cookie adminCookie = new Cookie(AppCookies.ADMIN_COOKIE_NAME, Boolean.parseBoolean(admin) + "");
-	   	adminCookie.setMaxAge(CookieUtil.ONE_DAY_COOKIE_LIFESPAN);
-	   	adminCookie.setPath(AppCookies.COOKIE_PATH_ROOT);
-        response.addCookie(adminCookie);
-
+        // Dashboard and Bizreport will give us hackId, userId, isAdmin and username by cookies. But we use token from backend.
+        // You need to see how CookieUtil.getUserDataFromCookie() to get user data.
         if (userId != null) {
+        	TokenData tokenData = new TokenData();
+            tokenData.setIsAdmin(Boolean.parseBoolean(admin));
+            tokenData.setUserId(Long.parseLong(userId));
+            tokenData.setUserName(hackId);
+            CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_TOKEN_COOKIE_NAME, TokenUtil.getTokenString(tokenData));
         	// add hack_id in order to avoid login checking
         	CookieUtil.setCBTPromotionCookie(response, AppCookies.HACKID_COOKIE_KEY, hackId);
-        	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, userId);
         	// hack_id is the user name.
         	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId);
-        	
-        	response.sendRedirect("index");// TODO - index
+            response.sendRedirect("index");
+        } else {
+        	response.sendRedirect("error");
         }
     }
 
@@ -94,7 +95,7 @@ public class IndexController {
         //Set unconfirmed status
         UserData userDt = CookieUtil.getUserDataFromCookie(request);
         mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
-        
+             
        	mav.setViewName("index");
         return mav;
     }
@@ -115,6 +116,8 @@ public class IndexController {
 				model.setViewName(res.getView().getPath());
 				model.addAllObjects(res.getContext());
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
+			} else {
+				model.setViewName(ViewResource.ERROR.getPath());
 			}
 			
 		} catch (PromoException e) {

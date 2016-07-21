@@ -106,7 +106,6 @@ BizReport.local = {
 	},
 	'listing': {
 		'state': {
-			'null':'N/A',
 			'Applicable': '可报名',
 			'Applied': '已报名', // hot sell and deals preset
 			'Nonapplied': '未报名',
@@ -115,13 +114,24 @@ BizReport.local = {
 			'PretrialPass': '通过预审',
 			'PretrialFail': '未通过',
 			'Confirmed': '已确认报名',
-			'Nonsubmitted': '未提交'
-		}
+			'Nonsubmitted': '未提交',
+			
+			// new
+			'null':'N/A',
+			'unknow':'N/A',
+			'can_enroll':'可报名',
+			'enrolled':'已报名',
+			'not_enrolled':'未报名',
+			'under_review':'待审核',
+			'review_passed':'审核通过',
+			'review_failed':'审核未通过'
+		},
+		attachment: '附件'
 	},
 	'errorMsg': {
 		'regDateExpired': '很遗憾，报名已经截止，如需继续报名，请联系客服！',
 		'uploadListingError': '上传刊登失败，请联系客服了解详细情况！'
-	}
+	}	
 };
 
 BizReport.local.getText = function(key, params) {

@@ -4,6 +4,7 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%-- jQuery is included in body jsSlot by default --%>
 <r:includeJquery jsSlot="head" />
 <r:client />
 <r:includeHtml5Tags />
@@ -21,7 +22,6 @@
 	var BizReport = BizReport || {};
 </script>
 <res:jsSlot id="head" />
-<res:jsSlot id="head-js" />
 
 <%--module "ebay.page" add Resets and Global css --%>
 <res:useCss value="${res.css.local.css['normalize.css']}" target="head-css" />

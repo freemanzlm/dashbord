@@ -5,8 +5,15 @@ $(function(){
 
 	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn, listingCountJ;
 	
+	var hasState = false;
+	
+	if (pageData && pageData.columns) {
+		hasState = pageData.columns[pageData.columns.length - 1]['data'] == 'state';
+	}
+	
 	var customTableConfig = {
-		columns: pageData && pageData.columns
+		'columns': pageData && pageData.columns,
+		'aaSorting': (hasState ? [[pageData.columns.length - 1, 'desc']] : null)
 	};
 	
 	uploadIFrame = $("iframe[name=uploadIframe]");

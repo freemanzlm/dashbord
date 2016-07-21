@@ -11,11 +11,10 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.ebay.app.raptor.cbtcommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.pojo.db.ParameterType;
-import com.ebay.app.raptor.promocommon.util.CommonConstant;
-import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.kernel.util.FastURLEncoder;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
@@ -23,6 +22,7 @@ import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PromotionUtil;
 import com.ebay.raptor.promotion.util.RequestUtil;
+import com.ebay.raptor.promotion.util.StringUtil;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 	
@@ -72,7 +72,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		String userName = null;
 		String sessionId = null;
 		ParameterType type = null;
-
+		
 		if (cookieMap != null && cookieMap.size() > 0) {
 			if (!StringUtil.isEmpty(cookieMap.get(AppCookies.HACKID_COOKIE_KEY))) {
 				return true;
