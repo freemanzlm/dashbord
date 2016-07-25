@@ -102,7 +102,7 @@
 						<li>
 							<c:choose>
 								<c:when test="${ state eq 'SubsidySubmitted' }">
-									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin ? 'disabled' : '' }>上传奖励申请协议</a>
+									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>上传奖励申请协议</a>
 									<br />
 									<br />
 									<a href="index">返回活动列表</a>
@@ -111,7 +111,7 @@
 								<c:when test="${ state eq 'SubsidyRetrievable' }">
 									<c:choose>
 										<c:when test="${ promo.rewardType eq 2 and promo.region == 'CN'}">
-											<a href="${promo.rewardUrl}" class="btn" ${ isAdmin ? 'disabled' : '' }>领取奖励</a>
+											<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>领取奖励</a>
 											<br />
 											<br />
 											<a href="index">返回活动列表</a>
@@ -123,7 +123,7 @@
 								</c:when>
 								
 								<c:when test="${ state eq 'SubsidyResubmittable' }">
-									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin ? 'disabled' : '' }>重新申领奖励</a>
+									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>重新申领奖励</a>
 									<br />
 									<br />
 									<a href="index">返回活动列表</a>
@@ -134,7 +134,7 @@
 								</c:when>
 								<c:when	test="${ state eq 'SubsidyWaiting' or state eq 'SubsidyAccessed' }">
 									<a href="${promo.rewardUrl}" class="btn"
-										${ isAdmin ? 'disabled' : '' }>填写奖励申请协议</a>
+										${ isAdmin or isPreview ? 'disabled' : '' }>填写奖励申请协议</a>
 									<br />
 									<br />
 									<a href="index">返回活动列表</a>

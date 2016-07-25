@@ -74,6 +74,16 @@ public class Promotion {
 	 */
 	private String listingFields;
 	
+	private Boolean isPreview = false;
+	
+	public Boolean getIsPreview() {
+		return isPreview;
+	}
+
+	public void setIsPreview(Boolean isPreview) {
+		this.isPreview = isPreview;
+	}
+
 	public String getListingFields() {
 		return listingFields;
 	}

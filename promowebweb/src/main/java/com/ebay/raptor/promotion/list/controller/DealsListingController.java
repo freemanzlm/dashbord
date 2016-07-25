@@ -39,7 +39,7 @@ import com.ebay.raptor.promotion.excel.InvalidCellDataException;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.req.Listing;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
@@ -271,7 +271,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		ResponseData <String> responseData = new ResponseData <String>();
 
 		if(null != listings){
-			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
+			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());

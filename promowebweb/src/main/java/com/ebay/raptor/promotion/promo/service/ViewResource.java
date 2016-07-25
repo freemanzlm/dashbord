@@ -4,6 +4,7 @@ package com.ebay.raptor.promotion.promo.service;
 public enum ViewResource {
 
 	CAMPAIGN("campaign"),
+	CAMPAIGN_PREVIEW("campaignPreview"),
 	LISTING_PREVIEW("listingPreview"),
 	
 	HV_APPLICABLE("hotsell/applicable"), 

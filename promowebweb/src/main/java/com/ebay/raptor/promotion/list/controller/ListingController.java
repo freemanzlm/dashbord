@@ -34,6 +34,7 @@ import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.locale.LocaleUtil;
@@ -124,11 +125,11 @@ public class ListingController extends AbstractListingController {
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.confirmListings)
 	@ResponseBody
-	public ResponseData <String> confirmDealsListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
+	public ResponseData <String> confirmListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
 		ResponseData <String> responseData = new ResponseData <String>();
 
 		if(null != listings){
-			com.ebay.raptor.promotion.list.req.Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), com.ebay.raptor.promotion.list.req.Listing[].class);
+			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				boolean result = listingService.confirmListings(listingAry, listings.getPromoId(), userData.getUserId());

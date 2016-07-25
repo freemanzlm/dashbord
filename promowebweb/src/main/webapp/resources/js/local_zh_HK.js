@@ -103,15 +103,12 @@ BizReport.local = {
 	'listing': {
 		'state': {
 			'null':'N/A',
-			'Applicable': '可報名',
-			'Applied': '已報名', // hot sell and deals preset
-			'Nonapplied': '未報名',
-			'AuditSuccess': '通過審核',
-			'Pretrial': '待審核', // deals
-			'PretrialPass': '通過預審',
-			'PretrialFail': '未通過',
-			'Confirmed': '已確認報名',
-			'Nonsubmitted': '未提交'
+			'CanEnroll':'可報名',
+			'Enrolled':'已報名',
+			'NotEnrolled':'未報名',
+			'Reviewing':'待審核',
+			'ReviewPassed':'通過審核',
+			'ReviewFailed':'審核未通過'
 		}
 	},
 	'errorMsg': {

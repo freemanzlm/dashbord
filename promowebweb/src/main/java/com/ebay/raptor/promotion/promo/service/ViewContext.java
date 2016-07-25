@@ -21,12 +21,13 @@ public enum ViewContext {
 	IsAdmin(15, "isAdmin"),
 	PromotionSubType(16, "promoSubType"),
 	
+	IS_PREVIEW(6, "isPreview"),
 	IS_NOMINATION_END(17, "isNomitionEnd"),
 	HAS_LISTINGS_NOMINATED(18, "hasListingsNominated"),
 	// promotion end date is before now
 	IS_PROMOTION_STOP(19, "isPromotionStoped"),
 	IS_AWARD_END(20, "isAwardEnd"),
-	FIELDS_DEFINITIONS(21, "fieldsDefintions");
+	FIELDS_DEFINITIONS(21, "fieldsDefintions");	
 	
 	private Integer id;
 

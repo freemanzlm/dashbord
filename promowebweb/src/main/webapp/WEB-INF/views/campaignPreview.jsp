@@ -14,7 +14,7 @@
 <%-- <c:set var="currentStep" value="${ 'Promotion validated' }" /> --%>
 <c:set var="regType" value="${ false }" />
 <c:set var="hasListingsNominated" value="${false}" />
-<c:set var="isPreview" value="${ false }" />
+<c:set var="isPreview" value="${ promo.isPreview }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -74,7 +74,7 @@
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.table['ListingTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.page['campaign.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.page['campaign_preview.js']}" target="page-js2"></res:useJs>
 </head>
 
 <body>
@@ -102,7 +102,7 @@
 					<div class="mt20 page-bottom-actions">
 						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
 							<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
-						<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
+						<button id="upload-btn" class="btn" ${ isAdmin ? 'disabled' : '' }>预览并提交报名</button>
 						<br /> <br /> <a href="index">返回活动列表</a>
 					</div>
 				</c:if>
@@ -120,7 +120,7 @@
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-							<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
+							<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>预览并提交报名</button>
 							<br /><br /> <a href="index">返回活动列表</a>
 						</form>
 					</div>

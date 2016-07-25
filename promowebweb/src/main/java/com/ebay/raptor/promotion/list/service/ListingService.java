@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.raptor.promotion.excep.PromoException;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.req.SubmitListingRequest;
@@ -42,7 +43,7 @@ public class ListingService extends BaseService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Boolean confirmListings(com.ebay.raptor.promotion.list.req.Listing[] listings, String promoId, Long uid) throws PromoException{
+	public Boolean confirmListings(SelectableListing[] listings, String promoId, Long uid) throws PromoException{
 		String uri = url(ResourceProvider.ListingRes.confirmListings);
 		List<Listing> listingList = Arrays.asList(listings);
 		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();

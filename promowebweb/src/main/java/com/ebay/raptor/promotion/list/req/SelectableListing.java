@@ -1,8 +1,8 @@
 package com.ebay.raptor.promotion.list.req;
 
-public class Listing {
+public class SelectableListing {
 	
-	public Listing() {
+	public SelectableListing() {
 		super();
 	}
 

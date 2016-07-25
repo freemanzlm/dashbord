@@ -66,7 +66,12 @@ public class PromotionViewService {
 		handleListingFields(pro, context);
 		
 		res.setContext(context);
-		res.setView(ViewResource.CAMPAIGN);
+		
+		if (pro.getIsPreview()) {
+			res.setView(ViewResource.CAMPAIGN_PREVIEW);
+		} else {
+			res.setView(ViewResource.CAMPAIGN);
+		}
 		
 		return res;
 	}

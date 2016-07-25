@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.HotSellListingService;
 import com.ebay.raptor.promotion.pojo.ResponseData;
@@ -49,7 +49,7 @@ public class HotSellListingController extends AbstractListingController{
 		ResponseData <String> responseData = new ResponseData <String>();
 		responseData.setStatus(Boolean.FALSE);
 		if(null != listings){
-			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
+			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), userData.getUserId())){

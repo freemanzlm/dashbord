@@ -72,7 +72,7 @@
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.table['ListingTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.page['listing.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.page['campaign.js']}" target="page-js2"></res:useJs>
 </head>
 
 <body>
@@ -104,7 +104,7 @@
 					<div class="mt20 page-bottom-actions">
 						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閱讀並接受活動條款及
 							<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
-						<button id="upload-btn" class="btn" ${ isAdmin ? 'disabled' : '' }>預覽並提交報名</button>
+						<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
 						<br /> <br /> <a href="index">返回活動列表</a>
 					</div>
 				</c:if>
@@ -121,7 +121,7 @@
 							<input type="hidden" name="promoId" value="${promo.promoId}"/>
 							<input type="hidden" name="listings" value="[]" />
 							<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
-							<button id="form-btn" class="btn" type="button" ${ isAdmin ? 'disabled' : '' }>預覽並提交報名</button>
+							<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
 							<br /><br /> <a href="index">返回活動列表</a>
 						</form>
 					</div>	

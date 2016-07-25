@@ -106,25 +106,13 @@ BizReport.local = {
 	},
 	'listing': {
 		'state': {
-			'Applicable': '可报名',
-			'Applied': '已报名', // hot sell and deals preset
-			'Nonapplied': '未报名',
-			'AuditSuccess': '通过审核',
-			'Pretrial': '待审核', // deals
-			'PretrialPass': '通过预审',
-			'PretrialFail': '未通过',
-			'Confirmed': '已确认报名',
-			'Nonsubmitted': '未提交',
-			
-			// new
 			'null':'N/A',
-			'unknow':'N/A',
-			'can_enroll':'可报名',
-			'enrolled':'已报名',
-			'not_enrolled':'未报名',
-			'under_review':'待审核',
-			'review_passed':'审核通过',
-			'review_failed':'审核未通过'
+			'CanEnroll':'可报名',
+			'Enrolled':'已报名',
+			'NotEnrolled':'未报名',
+			'Reviewing':'待审核',
+			'ReviewPassed':'审核通过',
+			'ReviewFailed':'审核未通过'
 		},
 		attachment: '附件'
 	},

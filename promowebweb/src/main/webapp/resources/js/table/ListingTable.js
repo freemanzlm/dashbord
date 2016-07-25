@@ -83,13 +83,13 @@ var BizReport = BizReport || {};
 					sWidth: "30px",
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
-						oRow.checked = oRow.checked || (oRow.state == 'Confirmed' || oRow.state == 'Applied');
+						oRow.checked = oRow.checked || (oRow.state == 'Enrolled');
 
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
 							checked: oRow.checked,
-							disabled: (oRow.state == 'PretrialFail')
+							disabled: (oRow.state == 'ReviewFailed')
 						}));
 					}
 				},
@@ -234,22 +234,14 @@ var BizReport = BizReport || {};
 						
 						if (type == "sort") {
 							switch (data) {
-							// TODO
-							// 已报名在前，未报名和可报名在后。
-							// 已通过审核在前、未通过审核、未报名在
-							case 'Confirmed':
-								return 6;
-							case 'Applied':
-								return 5;
-							case 'Applicable':
-								return 4;
-							case 'Nonapplied':
-								return (pageData && pageData.expired === false) ? 4 : 3;
-							case 'PretrialPass':
+							case 'Enrolled':
+							case 'ReviewPassed':
 								return 2;
-							case 'Nonsubmitted':
+							case 'CanEnroll':
+							case 'NotEnrolled':
+							case 'ReviewFailed':
 								return 1;
-							case 'PretrialFail':
+							case 'Reviewing':
 								return 0;
 							default: return -1;
 							}

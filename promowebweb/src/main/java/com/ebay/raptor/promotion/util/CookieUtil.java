@@ -82,18 +82,6 @@ public class CookieUtil {
 				ONE_DAY_COOKIE_LIFESPAN, AppCookies.COOKIE_PATH_ROOT, AppCookies.COOKIE_DOMAIN, false);
 	}
 
-	/*public static UserData getUserDataFromCookieOverrideLang (
-	        HttpServletRequest request) throws MissingArgumentException {
-		UserData user = getUserDataFromCookie(request);
-		String paramLang = request.getParameter(PromotionUtil.LANG_REQUEST_PARAMETER_KEY);
-
-		if (!StringUtil.isEmpty(paramLang)) {
-			user.setLang(paramLang);
-		}
-
-		return user;
-	}*/
-	
 	/**
 	 * Get user id, user name, language required and whether user is an administrator.
 	 * @param request
@@ -117,6 +105,7 @@ public class CookieUtil {
 
 		// TODO
 		// After Dashboard and Bizreport have implement the same token mechanism, remove below code.
+		System.out.println("userID: get from non token!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		long userId = -1;
 		try {
 			userId = Long.parseLong(cookieMap.get(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME));

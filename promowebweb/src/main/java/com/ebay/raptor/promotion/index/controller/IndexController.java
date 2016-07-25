@@ -2,7 +2,6 @@ package com.ebay.raptor.promotion.index.controller;
 
 import java.io.IOException;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -78,6 +77,7 @@ public class IndexController {
             CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_TOKEN_COOKIE_NAME, TokenUtil.getTokenString(tokenData));
         	// add hack_id in order to avoid login checking
         	CookieUtil.setCBTPromotionCookie(response, AppCookies.HACKID_COOKIE_KEY, hackId);
+        	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, userId);
         	// hack_id is the user name.
         	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId);
             response.sendRedirect("index");
@@ -147,23 +147,6 @@ public class IndexController {
 	private ContextViewRes handleViewBasedOnPromotion(Promotion promo, long uid) throws PromoException{
 		ContextViewRes result = new ContextViewRes();
 		result = view.handleView(promo, uid);
-		/*switch(PMPromotionType.valueOfPMType(promo.getType())){
-			case HIGH_VELOCITY:
-				result = view.highVelocityView(promo, uid);
-				break;
-			case DEALS_DASHBOARD_UPLOAD:
-				result = view.dealsUpload(promo, uid);
-				break;
-			case DEALS_AM_UPLOAD:
-				result = view.dealsPresetView(promo, uid);
-				break;
-			case STANDARD:
-				result = view.standard(promo);
-				break;
-			case PM_UNKNOWN_TYPE:
-				result.setView(ViewResource.ERROR);
-				break;
-		}*/
 		return result;
 	}
 }
