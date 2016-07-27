@@ -99,23 +99,6 @@ var BizReport = BizReport || {};
 						return data;
 					}
 				}, {
-					aTargets : ["type"],
-					sClass : "text-center",
-					sDefaultContent : "",
-					mRender : function (data, type, full) {
-						if (type == "display") {
-							return local.getText('promo.type.' + promos[data]);
-						}
-
-						if (type == 'sort' || type == 'filter') {
-							if (data == '2') {
-								return 1;
-							}
-						}
-
-						return data;
-					}
-				}, {
 					aTargets : ["promoDlDt"],
 					sType : "date",
 					sClass : "text-center",

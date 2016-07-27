@@ -5,11 +5,6 @@ $(function(){
 	var confirmForm = $("form");
 	
 	var listingTable = new ListingTable();
-	listingTable.subscribe({
-		initialized: function() {
-			listingTable.hideStateColumn();
-		}
-	}, listingTable);
 	listingTable.init({
 		dataTableConfig: {
 			tableId: "listing-table",

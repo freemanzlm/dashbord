@@ -403,14 +403,6 @@ var BizReport = BizReport || {};
 		
 		getDataSize: function() {
 			return this.oDataTable.data().length;
-		},
-		
-		hideCheckbox: function() {
-			this.oDataTable.column(0).visible(false);
-		},
-		
-		hideStateColumn: function() {
-			this.oDataTable.column(6).visible(false);
 		}
 	});
 	

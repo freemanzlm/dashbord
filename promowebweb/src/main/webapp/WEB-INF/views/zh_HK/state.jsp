@@ -3,10 +3,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
-<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd" type="date" />
-<fmt:formatDate value="${promo.rewardClmDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
+<!-- campaign time -->
+<fmt:formatDate value="${promo.promoSdt}" var="promoStart" pattern="yyyy-MM-dd hh:mm" type="date" />
+<fmt:formatDate value="${promo.promoEdt}" var="promoEnd" pattern="yyyy-MM-dd hh:mm" type="date" />
+<!-- enroll or confirm deadline -->
+<fmt:formatDate value="${promo.promoDlDt}" var="promoDlDt" pattern="yyyy-MM-hh:mm" type="date" />
+<!-- reward claim deadline -->
+<fmt:formatDate value="${promo.rewardDlDt}" var="rewardDeadline" pattern="yyyy-MM-dd hh:mm" type="date" />
 <fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
+<c:set var="timeSlot" value="${promoStart} ~ ${promoEnd}"></c:set>
+<c:set var="state" value="${ promo.state }"></c:set>
+<c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 			
 <c:choose>
 	<c:when test="${currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback'}">

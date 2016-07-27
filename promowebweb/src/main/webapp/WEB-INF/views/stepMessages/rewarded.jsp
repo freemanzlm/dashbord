@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<fmt:formatDate value="${promo.rewardDlDt}" var="rewardDeadline" pattern="yyyy-MM-dd hh:mm" type="date" />
-<fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
-<c:set var="state" value="${ promo.state }"></c:set>
-
 <c:choose>
 	<c:when test="${ promo.rewardType eq 1 }">
 		<c:set var="rewardName" value="加油卡" />
