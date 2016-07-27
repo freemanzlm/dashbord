@@ -8,6 +8,7 @@ import javax.ws.rs.core.Response.Status;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
+import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.SelectableListing;
@@ -31,6 +32,7 @@ import edu.emory.mathcs.backport.java.util.Arrays;
  */
 @Component
 public class ListingService extends BaseService {
+	private CommonLogger logger = CommonLogger.getInstance(ListingService.class);
 	
 	/**
 	 * TODO
@@ -132,6 +134,7 @@ public class ListingService extends BaseService {
 		req.setListings(uploadListings);
 		req.setPromoId(promoId);
 		req.setUid(uid);
+		
 		GingerClientResponse resp = httpPost(uri, req);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};

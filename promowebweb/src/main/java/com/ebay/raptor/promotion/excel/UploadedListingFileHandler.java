@@ -59,9 +59,6 @@ public class UploadedListingFileHandler {
 			listingService.uploadListings(listings, promoId, userId);
 		}
 		
-		// TODO add sales force logic.
-		/*ServiceExecutor serviceInstance = ServiceExecutor.getInstance();
-		serviceInstance.submitListing(list);*/
 		try {
 			logger.warn(mapper.writeValueAsString(list));
 		} catch (Exception e) {

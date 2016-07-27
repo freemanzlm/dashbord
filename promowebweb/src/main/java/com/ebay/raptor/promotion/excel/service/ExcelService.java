@@ -79,7 +79,6 @@ public class ExcelService {
 			for (Listing listing : listings) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("skuId", listing.getSkuId());
-				map.put("skuTitle", listing.getSkuTitle());
 				map.put("state", listing.getState());
 				map.put("currency", listing.getCurrency());
 				

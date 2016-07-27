@@ -1,25 +1,48 @@
 package com.ebay.raptor.promotion.test.listing;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
+import javax.validation.ConstraintViolation;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.ebayopensource.ginger.client.GingerClient;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.ebay.raptor.promotion.enums.ListingState;
+import com.ebay.raptor.promotion.excel.ColumnConfiguration;
+import com.ebay.raptor.promotion.excel.ISheetReader;
+import com.ebay.raptor.promotion.excel.SheetReader;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
+import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.list.service.ListingService;
+import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.business.Listing;
+import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.service.PromoClient;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 
 /**
  * Unit test is based on production.
@@ -40,7 +63,7 @@ public class ListingResourceTest {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Test
+//	@Test
 	public void getSKUListingsByPromotionId() throws JsonProcessingException {
 		WebTarget target = c.target("/promoser/listings/getSKUListingsByPromotionId/promoId/701N00000003aqSIAQ/uid/1413178537");
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE).header("Authorization", authorization);
@@ -60,6 +83,79 @@ public class ListingResourceTest {
 	
 //	@Test
 	public void getSKUsByPromotionId() throws JsonProcessingException {
+		WebTarget target = c.target("/promoser/listings/getSKUsByPromotionId/promoId/701O0000000WAUcIAO/uid/1413178537");
+		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE).header("Authorization", authorization);
+		
+		ListDataServiceResponse<Map<String, Object>> data;
+		
+		System.out.println("URL: " + target.getUri());
+		
+		GingerClientResponse response = (GingerClientResponse)builder.get();
+		if (response.getStatus() == Status.OK.getStatusCode()) {
+			data = (ListDataServiceResponse<Map<String, Object>>)response.getEntity(ListDataServiceResponse.class);
+			
+			System.out.println(mapper.writeValueAsString(data));
+		}
+	}
+	
+	@Test
+	public void uploadListings() throws IOException {
+		WebTarget target = c.target("/promoser/listings/uploadListings");
+		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE).header("Authorization", authorization);
+		
+		ListDataServiceResponse<Map<String, Object>> data;
+		
+		System.out.println("URL: " + target.getUri());
+		
+		File uploadedFile = new File(ListingResourceTest.class.getResource("Listing_Template.xlsx").getFile());
+		FileInputStream fis = new FileInputStream(uploadedFile);
+		Workbook workbook = new XSSFWorkbook(fis);			
+		Sheet sheet = workbook.getSheetAt(0);
+		
+		Set<ConstraintViolation<Object>> violations = new HashSet<ConstraintViolation<Object>>();
+		ISheetReader reader = new SheetReader();
+		String fieldsDefinitions =	"[{\"sample\":null,\"required\":false,\"labelName\":\"SKU_deal\",\"isUnique\":false,\"input\":true,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":32768,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"SKU编号\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU编号\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"產SKU编号\",\"isDefault\":true}],\"display\":false,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"skuId\"},{\"sample\":\"2015-12-24 24:38:56\",\"required\":false,\"labelName\":\"Stock ready Time\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":100,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"SKU名称\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU名称\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU名称\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"skuName\"},{\"sample\":null,\"required\":false,\"labelName\":\"Item ID\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":200,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"刊登编号\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"刊登編號\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"刊登編號\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"itemId\"},{\"sample\":null,\"required\":false,\"labelName\":\"Qty Available\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"当前价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"当前价\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"總量\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"currPrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"Site\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":0,\"length\":100,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"活动价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"活动价\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"活動網站\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"proposePrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"Listing Local Currency\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":10,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"货币单位\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"貨幣單位\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"貨幣單位\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"currency\"},{\"sample\":null,\"required\":false,\"labelName\":\"Propose Price_Local Currency\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":2},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"现价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"現價\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"現價\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"Local Currency\",\"attachmentType\":null,\"api_Name\":\"proposePrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"FVF take rate\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"INTEGER\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"库存量\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"库存量\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"成交費\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"stockNum\"},{\"sample\":null,\"required\":false,\"labelName\":\"Final Subsidy %\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DATE\",\"picklistEntry\":\"\",\"percision\":17,\"length\":0,\"digits\":2},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"备货日期\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"最終補貼金額\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"最終補貼金額\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"stockReadyDate\"}]";
+		JsonNode tree = mapper.readTree(fieldsDefinitions);
+		List<Map<String, Object>> list = null;
+		
+		if (tree.isArray()) {
+			List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, LocaleUtil.getCurrentLocale());
+			excelService.adjustColumnConfigurations(columnConfigs);
+			list = reader.readSheet(sheet, columnConfigs, 3, violations);
+		}
+		
+		List<Listing> listings = new ArrayList<Listing>();
+		
+		if (list != null) {
+			for (Map<String, Object> row : list) {
+				Listing listing = new Listing();
+				listing.setSkuId(row.remove("skuId").toString());
+				listing.setCurrency(row.remove("currency").toString());
+				listing.setState(ListingState.Uploaded.getName());
+				try {
+					listing.setNominationValues(mapper.writeValueAsString(row));
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+				listings.add(listing);
+			}
+			
+		}
+		
+		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
+		req.setListings(listings);
+		req.setPromoId("701N00000003aqSIAQ");
+		req.setUid(1413178537l);
+		
+		GingerClientResponse response = (GingerClientResponse)builder.post(Entity.json(req));
+		if (response.getStatus() == Status.OK.getStatusCode()) {
+			data = (ListDataServiceResponse<Map<String, Object>>)response.getEntity(ListDataServiceResponse.class);
+			
+			System.out.println(mapper.writeValueAsString(data));
+		}
+	}
+	
+	public void uploadFile() throws JsonProcessingException {
 		WebTarget target = c.target("/promoser/listings/getSKUsByPromotionId/promoId/701O0000000WAUcIAO/uid/1413178537");
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE).header("Authorization", authorization);
 		

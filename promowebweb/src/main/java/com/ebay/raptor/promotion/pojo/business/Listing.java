@@ -12,9 +12,6 @@ public class Listing {
 	 */
 	private String skuId;
 	
-	// This is nomination title.
-	private String skuTitle;
-	
 	private String currency;
 	
 	/**
@@ -46,14 +43,6 @@ public class Listing {
 
 	public void setState(String state) {
 		this.state = state;
-	}
-
-	public String getSkuTitle() {
-		return skuTitle;
-	}
-
-	public void setSkuTitle(String skuTitle) {
-		this.skuTitle = skuTitle;
 	}
 
 	public String getNominationValues() {
