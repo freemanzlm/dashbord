@@ -91,7 +91,7 @@ public class ResourceProvider {
 		String apacSkuListFileName = "Deals_listing_template_APAC"; //TODO Here should be Chinese 
 		
 		String uploadListingAttachment = "uploadListingAttachment";
-		String downloadListingAttachment = "downloadListingAttachment";
+		String downloadListingAttachment = "/downloadListingAttachment/promoId/{promoId}/userId/{userId}/skuId/{skuId}";
 	}
 	
 	public interface SubsidyRes {
