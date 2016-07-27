@@ -1,6 +1,8 @@
 package com.ebay.raptor.promotion.list.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -42,6 +45,7 @@ import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Listing;
+import com.ebay.raptor.promotion.pojo.business.ListingAttachment;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
@@ -216,14 +220,24 @@ public class ListingController extends AbstractListingController {
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadListingAttachment)
 	public ModelAndView uploadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
-			@RequestPart MultipartFile uploadFile, @RequestParam String listingId) throws MissingArgumentException{
+			@RequestPart MultipartFile uploadFile, @RequestParam String skuId, @RequestParam String promoId) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
 		ResponseData <String> responseData = new ResponseData <String>();
+		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		AttachmentFileValidator attachmentFileValidator = AttachmentFileValidator.getInstance();
 		try {
 			if(attachmentFileValidator.isValidate(uploadFile)) {
-				//TODO implements the upload service
-				//listingService.uploadListingAttachment(uploadFile, listingId);
+				try {
+					String fileType = attachmentFileValidator.getType(uploadFile).toString();
+					boolean result = listingService.uploadListingAttachment(skuId, promoId, userData.getUserId(), uploadFile, fileType);
+					responseData.setStatus(result);
+					//responseData.setMessage("uploaded successfully!");
+					mav.addObject("downloadListingAttachmentUrl", ResourceProvider.ListingRes.downloadListingAttachment);
+				} catch (PromoException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (AttachmentUploadException e) {
 			responseData.setStatus(false);
@@ -235,18 +249,40 @@ public class ListingController extends AbstractListingController {
 	
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes.downloadListingAttachment)
-	public void downloadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
-			@RequestParam("listingId") String skuId) throws MissingArgumentException {
+	public void downloadListingAttachment(HttpServletRequest req, HttpServletResponse resp,
+			@PathVariable("promoId") String promoId, @PathVariable("userId") Long userId, 
+			@PathVariable("skuId") String skuId) throws MissingArgumentException, IOException {
 		resp.setContentType("application/x-msdownload;");
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
-		//TODO
-		//Listing listing = listingService.getListing(skuId, userData.getUserId());
-		
-		/*resp.setHeader("Content-disposition", "attachment; filename=" + listing.getAttachmentName() 
-					+ "." + listing.getAttachmentType());
-		OutputStream outStream = resp.getOutputStream();
-    	outStream.write(listing.getAttachmentContent());
-        outStream.close();*/
+		if(userData.getUserId()!=userId) {
+			//TODO
+		}
+		InputStream inputStream = null;
+		OutputStream outStream = null;
+		ListingAttachment attachment = null;
+		String attachmentName = "";
+		String attachmentType = "";
+		try {
+			attachment = listingService.downloadListingAttachment(promoId, userId, skuId);
+			if(attachment!=null) {
+				inputStream = attachment.getContent();
+				attachmentName = attachment.getAttachmentName();
+				attachmentType = attachment.getAttachmentType();
+			}
+			resp.setHeader("Content-disposition", "attachment; filename="+attachmentName+"."+attachmentType);
+			outStream = resp.getOutputStream();
+			int len = 0;
+			byte[] buffer = new byte[4096];
+			while((len = inputStream.read(buffer)) != -1) {
+	            outStream.write(buffer, 0, len);
+	        }
+		} catch (PromoException e) {
+			e.printStackTrace();
+		} finally {
+			inputStream.close();
+			outStream.flush();
+			outStream.close();
+		}
 	}
 	
 	@GET

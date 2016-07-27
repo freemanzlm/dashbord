@@ -1,18 +1,28 @@
 package com.ebay.raptor.promotion.list.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.ebayopensource.ginger.client.GingerClientResponse;
+import org.ebayopensource.ginger.client.GingerWebTarget;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.pojo.business.Listing;
+import com.ebay.raptor.promotion.pojo.business.ListingAttachment;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.req.SubmitListingRequest;
 import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
@@ -21,7 +31,11 @@ import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.UploadListingResponse;
 import com.ebay.raptor.promotion.service.BaseService;
+import com.ebay.raptor.promotion.service.IAFTokenService;
+import com.ebay.raptor.promotion.service.PromoClient;
 import com.ebay.raptor.promotion.service.ResourceProvider;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 import edu.emory.mathcs.backport.java.util.Arrays;
 
@@ -191,4 +205,78 @@ public class ListingService extends BaseService {
 			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
 		}
 	}
+	
+	/**
+	 * Upload listing attachment into database.
+	 * @param listingId
+	 * @param uploadFile
+	 * @param fileType
+	 * @return
+	 * @throws PromoException
+	 * @throws IOException 
+	 */
+	public boolean uploadListingAttachment(String skuId, String promoId, Long userId, final MultipartFile uploadFile, String fileType) throws PromoException, IOException {
+		String url = url(ResourceProvider.ListingRes.uploadListingAttachment);
+		FormDataMultiPart multiPart = new FormDataMultiPart();
+		File file = multipartToFile(uploadFile);
+	    FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file",
+	            file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+	    multiPart.bodyPart(fileDataBodyPart);
+	    multiPart.field("skuId", skuId);
+	    multiPart.field("promoId", promoId);
+	    multiPart.field("userId", Long.toString(userId));
+	    multiPart.field("fileType", fileType);
+		GingerClientResponse resp = uploadMultipart(url, multiPart);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
+			GeneralDataResponse<Boolean> general = resp.getEntity(type);
+			if(null != general){
+				if (AckValue.SUCCESS == general.getAckValue()) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			//TODO change the error type.
+			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
+		}
+	}
+	
+	/**
+	 * Download listing attachment into database.
+	 * @param skuId
+	 * @param userId
+	 * @param promoId
+	 * @return boolean
+	 * @throws PromoException 
+	 */
+	public ListingAttachment downloadListingAttachment(String promoId, Long userId, String skuId) throws PromoException {
+		String url = url(params(ResourceProvider.ListingRes.downloadListingAttachment,
+				new Object[] { "{promoId}", promoId, "{userId}", userId, "{skuId}", skuId}));
+		GingerWebTarget target = PromoClient.getClient().target(url);
+		Invocation.Builder build = target.request();
+		Response resp =  build.headers(authHeaders(IAFTokenService.getIAFToken())).get();
+		if(Status.OK.getStatusCode() == resp.getStatus()) {
+			MultivaluedMap<String, Object> headers = resp.getMetadata();
+			String attachmentName = (String) headers.get("attachmentName").get(0);
+			String attachmentType = (String) headers.get("attachmentType").get(0);
+			InputStream inputStream = (InputStream) resp.getEntity();
+			ListingAttachment attachment = new ListingAttachment();
+			attachment.setAttachmentName(attachmentName);
+			attachment.setAttachmentType(attachmentType);
+			attachment.setContent(inputStream);
+			return attachment;
+		} else {
+			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
+		}
+	}
+	
+	private File multipartToFile(MultipartFile multipartFile) throws IllegalStateException, IOException {
+		File file = new File(multipartFile.getOriginalFilename());
+		multipartFile.transferTo(file);
+		return file;
+	} 
 }

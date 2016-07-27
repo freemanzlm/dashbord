@@ -76,7 +76,7 @@ public class AttachmentFileValidator {
 		return bytes2hex(b);
 	}
 	
-	public static AttachmentAllowedFileType getType(MultipartFile file) throws IOException{
+	public AttachmentAllowedFileType getType(MultipartFile file) throws IOException{
 		String fileHead = getFileHeader(file);
 		if(fileHead == null || fileHead.length() == 0) {
 			return null;

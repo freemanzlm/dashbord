@@ -10,6 +10,8 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.ebayopensource.ginger.client.GingerWebTarget;
 
+import com.sun.jersey.multipart.FormDataMultiPart;
+
 public class BaseService {
 
 	protected String params(String url, Object... objs){
@@ -50,6 +52,14 @@ public class BaseService {
 		GingerWebTarget target = PromoClient.getClient().target(url);
 		Invocation.Builder build = target.request();
 		GingerClientResponse resp = (GingerClientResponse) build.headers(authHeaders(IAFTokenService.getIAFToken())).post(Entity.json(postObj));
+		return resp;
+	}
+	
+	protected GingerClientResponse uploadMultipart(String url, FormDataMultiPart multiPart){
+		GingerWebTarget target = PromoClient.getClient().target(url);
+		Invocation.Builder build = target.request();
+		Entity<FormDataMultiPart> entity = Entity.entity(multiPart, MediaType.MULTIPART_FORM_DATA_TYPE);
+		GingerClientResponse resp = (GingerClientResponse) build.headers(authHeaders(IAFTokenService.getIAFToken())).post(entity);
 		return resp;
 	}
 	
