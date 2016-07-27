@@ -8,11 +8,11 @@
 
 <%-- <c:set var="currentStep" value="${ promo.adjustedCurrentStep }" /> --%>
 <%-- <c:set var="regType" value="${ promo.regType }" /> --%>
-<%-- <c:set var="currentStep" value="${ 'Seller nomination_Need approve' }" /> --%>
+<c:set var="currentStep" value="${ 'Seller nomination_Need approve' }" />
 <%-- <c:set var="currentStep" value="${ 'Promotion in progress' }" /> --%>
-<c:set var="currentStep" value="${ 'Seller Feedback' }" />
+<%-- <c:set var="currentStep" value="${ 'Seller Feedback' }" /> --%>
 <%-- <c:set var="currentStep" value="${ 'Promotion validated' }" /> --%>
-<c:set var="regType" value="${ false }" />
+<c:set var="regType" value="${ true }" />
 <c:set var="hasListingsNominated" value="${false}" />
 <c:set var="isPreview" value="${ false }" />
 
@@ -151,8 +151,8 @@
 		var pageData = {
 			promoId : '${promo.promoId}',
 			currentStep: '${currentStep}',
-			columns: JSON.parse('${not empty columns ? columns : "{}"}'),
-			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "{}"}')
+			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
+			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}')
 		};
 	</script>
 

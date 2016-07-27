@@ -4,8 +4,6 @@
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:set var="isAdmin" value="true" />
-
 <%-- jQuery is included in body jsSlot by default --%>
 <r:includeJquery jsSlot="head" />
 <r:client />

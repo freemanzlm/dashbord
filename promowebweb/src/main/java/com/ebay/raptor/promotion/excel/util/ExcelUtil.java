@@ -125,7 +125,7 @@ public class ExcelUtil {
 		config.setWritable(field.get("input").asBoolean());
 		if (field.has("sample")) {
 			String sample = field.get("sample").asText();
-			config.setSample("null".equalsIgnoreCase(sample) ? "" : sample);
+			config.setSample("null".equalsIgnoreCase(sample) ? "" : "Sample: " + sample);
 		}
 	}
 	
@@ -147,7 +147,7 @@ public class ExcelUtil {
 			if (type.equalsIgnoreCase("picklist")) {
 				String entries = typeNode.get("picklistEntry").asText();
 				String[] list = entries.split(";");
-				logger.log(Level.INFO, list[0]);
+				
 				RangeColumnConstraint constraint = new RangeColumnConstraint();
 				constraint.setPickList(list);
 				config.getConstraints().add(constraint);

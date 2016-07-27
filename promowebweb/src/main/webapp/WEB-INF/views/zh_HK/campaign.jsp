@@ -143,13 +143,16 @@
 	</div>
 
 	<%@ include file="dialog/alert.jsp"%>
+	<%@ include file="dialog/confirm.jsp" %>
 	<%@ include file="dialog/terms.jsp"%>
+	<%@ include file="previewDialog.jsp" %>
 
 	<script type="text/javascript">
 		var pageData = {
 			promoId : '${promo.promoId}',
 			currentStep: '${currentStep}',
-			columns: JSON.parse('${columns}')
+			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
+			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}')
 		};
 	</script>
 

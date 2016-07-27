@@ -5,16 +5,16 @@ $(function(){
 
 	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn, listingCountJ;
 	
-	var hasState = false;
+	var hasState = false, customTableConfig;
 	
-	if (pageData && pageData.columns) {
+	if (pageData && pageData.columns && pageData.columns.length > 1) {
 		hasState = pageData.columns[pageData.columns.length - 1]['data'] == 'state';
+		
+		customTableConfig = {
+			'columns': pageData.columns,
+			'aaSorting': (hasState ? [[pageData.columns.length - 1, 'desc']] : null)
+		};
 	}
-	
-	var customTableConfig = {
-		'columns': pageData && pageData.columns,
-		'aaSorting': (hasState ? [[pageData.columns.length - 1, 'desc']] : null)
-	};
 	
 	uploadIFrame = $("iframe[name=uploadIframe]");
 	uploadBtn = document.getElementById("upload-btn");

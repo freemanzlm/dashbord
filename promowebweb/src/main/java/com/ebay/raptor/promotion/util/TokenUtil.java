@@ -38,8 +38,8 @@ public class TokenUtil {
 		String token = getTokenString(data);
 		System.out.println(token);
 		
-		data = parse("%2FGUi9rsqyjCKlrWPcZzItGsbpteF6MY%2Bo4g1OBK1D%2FINvbyTH6gx81gGGtNVyFlAbV2cMqF1Si54%0D%0AJgmDUnZTLZkpm0tVfhvnYlxy7Bo6lXo%3D", true);
-		System.out.println(data.getUserId());
+		data = parse("%2FGUi9rsqyjCKlrWPcZzItGsbpteF6MY%2Bo4g1OBK1D%2FINvbyTH6gx81gGGtNVyFlAzSsYNga1qe8X%0D%0AGwrDKKIiYMOkEwHc2PwGETLR04jMp0Y%3D", true);
+		System.out.println(data.getIsAdmin());
 	}
 
 	/**

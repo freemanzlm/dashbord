@@ -13,15 +13,6 @@
 			<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
 		</div>
 	</c:when>
-	<c:when test="${endReason == 'preFail' }">
-		<div class="promo-state-message fail">
-			<div class="message-content">
-				<h3>很遗憾，您的报名未通过预审</h3>
-				<p class="desc">感谢您的积极参与！期待下次合作。</p>
-			</div>
-			<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
-		</div>
-	</c:when>
 	<c:when test="${endReason == 'auFail' }">
 		<div class="promo-state-message fail">
 			<div class="message-content">
