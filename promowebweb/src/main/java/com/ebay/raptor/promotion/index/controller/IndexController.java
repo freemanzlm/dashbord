@@ -19,10 +19,12 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.enums.PromotionStep;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
+import com.ebay.raptor.promotion.pojo.business.Subsidy;
 import com.ebay.raptor.promotion.promo.service.ContextViewRes;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
@@ -30,6 +32,7 @@ import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
+import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.TokenData;
 import com.ebay.raptor.promotion.util.TokenUtil;
@@ -44,6 +47,7 @@ public class IndexController {
     @Autowired LoginService loginService;
     @Autowired PromotionService service;
     @Autowired PromotionViewService view;
+    @Autowired SubsidyService subsidyService;
 	
     @RequestMapping(value = "/backend", method = RequestMethod.GET)
     public void handleBackendRequest(HttpServletRequest request,
@@ -107,15 +111,17 @@ public class IndexController {
 			@PathVariable("promoId") String promoId) throws MissingArgumentException {
 		ModelAndView model = new ModelAndView();
 		UserData userData = CookieUtil.getUserDataFromCookie(request);
+		Promotion promo = null;
 
 		try {
-			Promotion promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+			promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 			
 			if(null != promo){
 				ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
 				model.setViewName(res.getView().getPath());
 				model.addAllObjects(res.getContext());
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
+				
 			} else {
 				model.setViewName(ViewResource.ERROR.getPath());
 			}
@@ -123,6 +129,18 @@ public class IndexController {
 		} catch (PromoException e) {
 			logger.error("Unable to get promotion for " + promoId, e);
 			model.setViewName(ViewResource.ERROR.getPath());
+		}
+		
+		try {
+			// get subsidy details when promotion is validated.
+			if (PromotionStep.PROMOTION_VALIDATED.getName().equalsIgnoreCase(promo.getCurrentStep())) {
+				Subsidy subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
+				if (subsidy != null) {
+					model.addObject(ViewContext.Subsidy.getAttr(), subsidy);
+				}
+			}
+		} catch (PromoException e) {
+			logger.error("Unable to get subsidy for " + promoId, e);
 		}
 		return model;
 	}

@@ -18,13 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 
+import com.ebay.app.raptor.cbtcommon.util.EnviromentUtil;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.csApi.GetItemDetailResponse;
 import com.ebay.app.raptor.promocommon.csApi.GetTokenResponse;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestException;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestService;
-import com.ebay.app.raptor.promocommon.util.EnviromentUtil;
-import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.app.raptor.promocommon.xml.XmlParseException;
 import com.ebay.app.raptor.promocommon.xml.XmlParser;
 import com.ebay.integ.dal.dao.FinderException;
@@ -34,6 +33,7 @@ import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.soap.CSSOAPMessageFactory;
 import com.ebay.raptor.promotion.user.service.UserService;
 import com.ebay.raptor.promotion.util.DateUtil;
+import com.ebay.raptor.promotion.util.StringUtil;
 import com.ebay.raptor.promotion.xml.DOMResolver;
 
 public class CSApiService {

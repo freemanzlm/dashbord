@@ -96,7 +96,7 @@ public class ResourceProvider {
 	
 	public interface SubsidyRes {
 		String base = "subsidy";
-		String getSubSidy = "/{sid}";
+		String getSubSidy = "/getSubsidy/promoId/{promoId}/uid/{uid}";
 	}
 	
 	public interface Token{

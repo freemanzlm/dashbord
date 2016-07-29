@@ -28,7 +28,8 @@ public enum ViewContext {
 	IS_PROMOTION_STOP(19, "isPromotionStoped"),
 	IS_AWARD_END(20, "isAwardEnd"),
 	FIELDS_DEFINITIONS(21, "fieldsDefintions"),
-	IS_CONFIRM_END(22, "isConfirmEnd");
+	IS_CONFIRM_END(22, "isConfirmEnd"),
+	Subsidy(23, "subsidy");
 	
 	private Integer id;
 
