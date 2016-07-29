@@ -3,12 +3,11 @@ package com.ebay.raptor.promotion.validation;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
@@ -20,7 +19,8 @@ import com.ebay.raptor.promotion.util.AttachmentAllowedFileType;
  */
 public class AttachmentFileValidator {
 	private Logger logger = Logger.getLogger(AttachmentFileValidator.class.getName());
-	@Autowired ResourceBundleMessageSource msgResource;
+	private String bundleBaseName = "Message";
+	private ResourceBundle bundle;
 	private Locale locale;
 	private static AttachmentFileValidator attachmentFileValidator = null;
 	
@@ -42,12 +42,12 @@ public class AttachmentFileValidator {
 	
 	public  boolean isValidate(MultipartFile file) throws AttachmentUploadException{
 		if(file.isEmpty()) {
-			throw new AttachmentUploadException(getMessage("attachment.validation.message.notnull"));
+			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notnull"));
 		}
 		try {
 			AttachmentAllowedFileType type = getType(file);
 			if(type==null) {
-				throw new AttachmentUploadException(getMessage("attachment.validation.message.notcorrecttype"));
+				throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notcorrecttype"));
 			}
 		} catch (IOException e) {
 			logger.log(Level.WARNING, e.getMessage());
@@ -98,8 +98,20 @@ public class AttachmentFileValidator {
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
+	
+	public ResourceBundle getBundle() {
+		return bundle == null ? bundle = ResourceBundle.getBundle(bundleBaseName, Locale.SIMPLIFIED_CHINESE) : bundle;
+	}
 
-	private String getMessage(String key){
-		return msgResource.getMessage(key, null, getLocale());
+	public void setBundle(ResourceBundle bundle) {
+		this.bundle = bundle;
+	}
+
+	public String getBundleBaseName() {
+		return bundleBaseName;
+	}
+
+	public void setBundleBaseName(String bundleBaseName) {
+		this.bundleBaseName = bundleBaseName;
 	}
 }

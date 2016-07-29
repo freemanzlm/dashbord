@@ -90,7 +90,7 @@ public class ResourceProvider {
 		String fresSkuListFileName = "Deals_listing_template_FRES"; //TODO Here should be Chinese 
 		String apacSkuListFileName = "Deals_listing_template_APAC"; //TODO Here should be Chinese 
 		
-		String uploadListingAttachment = "uploadListingAttachment";
+		String uploadListingAttachment = "/uploadListingAttachment";
 		String downloadListingAttachment = "/downloadListingAttachment/promoId/{promoId}/userId/{userId}/skuId/{skuId}";
 	}
 	

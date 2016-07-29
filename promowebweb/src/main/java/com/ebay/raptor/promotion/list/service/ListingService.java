@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.GenericType;
@@ -14,6 +15,9 @@ import javax.ws.rs.core.Response.Status;
 
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.ebayopensource.ginger.client.GingerWebTarget;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,7 +51,8 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 @Component
 public class ListingService extends BaseService {
 	private CommonLogger logger = CommonLogger.getInstance(ListingService.class);
-	
+	@Autowired ResourceBundleMessageSource msgResource;
+	private Locale locale;
 	/**
 	 * TODO
 	 * @param url
@@ -215,7 +220,7 @@ public class ListingService extends BaseService {
 	 * @throws PromoException
 	 * @throws IOException 
 	 */
-	public boolean uploadListingAttachment(String skuId, String promoId, Long userId, final MultipartFile uploadFile, String fileType) throws PromoException, IOException {
+	public String uploadListingAttachment(String skuId, String promoId, Long userId, final MultipartFile uploadFile, String fileType) throws Exception {
 		String url = url(ResourceProvider.ListingRes.uploadListingAttachment);
 		FormDataMultiPart multiPart = new FormDataMultiPart();
 		File file = multipartToFile(uploadFile);
@@ -232,16 +237,17 @@ public class ListingService extends BaseService {
 			GeneralDataResponse<Boolean> general = resp.getEntity(type);
 			if(null != general){
 				if (AckValue.SUCCESS == general.getAckValue()) {
-					return true;
+					return params(ResourceProvider.ListingRes.downloadListingAttachment,
+							new Object[] { "{promoId}", promoId, "{userId}", userId, "{skuId}", skuId});
 				} else {
-					return false;
+					return null;
 				}
 			} else {
-				return false;
+				return null;
 			}
 		} else {
 			//TODO change the error type.
-			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
+			throw new Exception(getMessage("attachment.validation.message.notcorrecttype"));
 		}
 	}
 	
@@ -279,4 +285,16 @@ public class ListingService extends BaseService {
 		multipartFile.transferTo(file);
 		return file;
 	} 
+	
+	public Locale getLocale() {
+		return locale == null ? LocaleContextHolder.getLocale() : locale;
+	}
+	
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+	private String getMessage(String key){
+		return msgResource.getMessage(key, null, getLocale());
+	}
 }

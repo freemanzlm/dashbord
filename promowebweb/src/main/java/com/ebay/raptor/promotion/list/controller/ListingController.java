@@ -229,13 +229,12 @@ public class ListingController extends AbstractListingController {
 			if(attachmentFileValidator.isValidate(uploadFile)) {
 				try {
 					String fileType = attachmentFileValidator.getType(uploadFile).toString();
-					boolean result = listingService.uploadListingAttachment(skuId, promoId, userData.getUserId(), uploadFile, fileType);
-					responseData.setStatus(result);
-					//responseData.setMessage("uploaded successfully!");
-					mav.addObject("downloadListingAttachmentUrl", ResourceProvider.ListingRes.downloadListingAttachment);
-				} catch (PromoException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
+					String downloadUrl = listingService.uploadListingAttachment(skuId, promoId, userData.getUserId(), uploadFile, fileType);
+					responseData.setStatus(true);
+					responseData.setMessage(downloadUrl);
+				} catch (Exception e) {
+					responseData.setStatus(false);
+					responseData.setMessage(e.getMessage());
 					e.printStackTrace();
 				}
 			}

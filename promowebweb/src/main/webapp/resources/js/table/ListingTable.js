@@ -202,13 +202,15 @@ var BizReport = BizReport || {};
 					aTargets: ["attachment"],
 					sType: "string",
 					sClass: "text-right",
+					sWidth: "300px",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							var id = 'attachmentFrame'+ full.skuId;
+							var id = 'iframe'+ full.skuId;
 							if (!data) {
-								return '<form id="' + id + '" target="'+ id + '"><input type="file" name="attachment" title="Upload attachment"/></form>' +
-									'<iframe name="'+ id + '" style="display:none;"></iframe>';
+								return '<form id="form' + full.skuId + '" target="'+ id + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="701N00000003aqSIAQ" name="promoId"/><input type="hidden" name="skuId" value="'+full.skuId+'" /><span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile" /></span><button class="btn" id="btn'+full.skuId+'" type="button">上传</button></form>' +
+								'<iframe name="'+ id + '" style="display:none;"></iframe>' +
+									'<span class="hide" id="msg'+full.skuId+'"><b></b></span>';
 							} else {
 								return '<a href="' + data + '">' + local.getText('listing.attachment') + '</a>';
 							}
@@ -219,6 +221,62 @@ var BizReport = BizReport || {};
 						}
 
 						return data;
+					},
+					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
+						//oRow.checked = oRow.checked || (oRow.state == 'Enrolled');
+						var listingBtn = $(nTd).find("#btn"+oRow.skuId);
+						var listingIframe = $(nTd).find("iframe[name=iframe"+oRow.skuId+"]");
+						if ($(nTd).find("#form"+oRow.skuId)) {
+							var listingForm = $(nTd).find("#form"+oRow.skuId).submit(function(){
+							if(!oRow.checked) {
+								cbt.alert(local.getText("promo.listings.needCheck"));
+								return false;
+							}
+							/*var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
+							var fileName = fileInput.val();
+							if (!fileName || fileName.indexOf(".xls")<0 || fileName.indexOf(".pdf" 
+									|| fileName.indexOf(".doc" || fileName.indexOf(".docx" || fileName.indexOf(".xlsx")<0
+									|| fileName.indexOf(".jpg" || fileName.indexOf(".JPG" || fileName.indexOf(".gif")
+									|| fileName.indexOf(".zip" || fileName.indexOf(".rar")){
+								cbt.alert(local.getText("promo.listings.attachmentTypeError"));
+								return false;
+							}*/
+										
+							$(nTd).isLoading({text: local.getText('dataTable.loading'), position: "inside"});
+							
+							listingIframe.on("load", function(){
+								$(nTd).isLoading('hide');
+								if (listingIframe.contents().length != 0 && listingIframe.contents().find("body").html().length > 0) {
+									var response = listingIframe.contents().find("body").html();
+									var responseData = $.parseJSON(response);
+								if (responseData.message && responseData.message.length > 0) {
+									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+									if(responseData.status==true) {
+										$(nTd).find("#msg"+oRow.skuId).find("b").html('<a href=/promotion/listings'+responseData.message+'>下载附件</a>');
+									} else {
+										$(nTd).find("#msg"+oRow.skuId).find("b").html(responseData.message);
+									}
+								} 
+								else {
+									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+									$(nTd).find("#msg"+oRow.skuId).find("b").html("upload file failed!");
+								}
+							}
+						});
+							return !!$(this).find("input[type=file]").attr("value");
+						});
+						
+						$(listingBtn).click(function(event){
+							event.preventDefault();
+							listingForm.submit();
+						});	
+						}
+						/*$(nTd).html($("<input type=checkbox name=item>").attr({
+							value:sData,
+							rowindex : iRowIndex,
+							checked: oRow.checked,
+							disabled: (oRow.state == 'ReviewFailed')
+						}));*/
 					}
 				},
 				{

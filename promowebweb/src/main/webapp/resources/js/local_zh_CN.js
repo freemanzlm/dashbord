@@ -97,7 +97,9 @@ BizReport.local = {
 			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，确认吗？',
 			'applyCondition': '申请参与活动需要选择至少一条刊登报名。',
 			'onlyXls': '您选择提交的不是Excel文件，请重新选择刊登文件.',
-			'rrpLink': '链接'
+			'rrpLink': '链接',
+			'attachmentTypeError' : '文件类型不合法',
+			'needCheck' : '请勾选左边的复选框'
 		},
 		'request': {
 			'fail': '请求提交失败',
