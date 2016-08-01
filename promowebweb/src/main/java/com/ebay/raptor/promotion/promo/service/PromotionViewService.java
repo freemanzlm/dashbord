@@ -119,28 +119,29 @@ public class PromotionViewService {
 	 * @param promo
 	 */
 	public String getDisplayableCurrentStep(String stepList, String currentStep) {
-		String[] steps = stepList.split(">");
-		
-		if (! isVisibleStep(currentStep)){
-			boolean found = false;
-			// currentStep is an invalid promotion step, we'll adjust currentStep to a former valid step.
-			for (int i = steps.length - 1; i > 0; i--) {
-				String step = steps[i];
-				if (!currentStep.equalsIgnoreCase(step) && !found) {
-					// find current step's position in original step list.
-					continue;
-				} else {
-					found = true;
-					currentStep = step;
-					if (isVisibleStep(currentStep)) {
-						break;
-					} else {
+		if (stepList != null) {
+			String[] steps = stepList.split(">");
+			
+			if (! isVisibleStep(currentStep)){
+				boolean found = false;
+				// currentStep is an invalid promotion step, we'll adjust currentStep to a former valid step.
+				for (int i = steps.length - 1; i > 0; i--) {
+					String step = steps[i];
+					if (!currentStep.equalsIgnoreCase(step) && !found) {
+						// find current step's position in original step list.
 						continue;
+					} else {
+						found = true;
+						currentStep = step;
+						if (isVisibleStep(currentStep)) {
+							break;
+						} else {
+							continue;
+						}
 					}
 				}
 			}
 		}
-		
 		return currentStep;
 	}
 	
@@ -150,19 +151,22 @@ public class PromotionViewService {
 	 * @return
 	 */
 	public String getVisibleStepList(String stepList) {
-		String[] steps = stepList.split(">");
 		String visibleStepList = "";
-		stepList = "";
-		for (String step : steps) {
-			// filter out invisible steps
-			if (isVisibleStep(step)){
-				stepList += ">" + step;
-			}
-		}
 		
-		if (stepList.startsWith(">")) {
-			// remove first ">"
-			visibleStepList = stepList.substring(1);
+		if (stepList != null) {
+			String[] steps = stepList.split(">");
+			stepList = "";
+			for (String step : steps) {
+				// filter out invisible steps
+				if (isVisibleStep(step)){
+					stepList += ">" + step;
+				}
+			}
+			
+			if (stepList.startsWith(">")) {
+				// remove first ">"
+				visibleStepList = stepList.substring(1);
+			}
 		}
 		
 		return visibleStepList;
