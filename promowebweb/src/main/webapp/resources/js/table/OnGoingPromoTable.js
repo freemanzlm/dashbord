@@ -120,7 +120,7 @@ var BizReport = BizReport || {};
 						return data;
 					}
 				}, {
-					aTargets : ["state"],
+					aTargets : ["currentStep"],
 					sClass : "text-center state",
 					sDefaultContent : "",
 					sType : 'numeric',

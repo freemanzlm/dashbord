@@ -160,8 +160,7 @@ var BizReport = BizReport || {};
 					sDefaultContent : "",
 					mRender : function (data, type, full) {
 						if (type == "display") {
-							
-							if (data == 'SubsidyRetrieved') { // complete
+							if (data == 'SubsidyRetrieved') {
 								return local.getText('promo.state.SubsidyRetrieved') + '<br/><a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 
@@ -169,21 +168,11 @@ var BizReport = BizReport || {};
 						}
 
 						if (type == "sort") {
-
-							if (data == 'SubsidyRetrieved') { // complete
-								return 11;
-							}
-
-							return 20;
+							return data == 'SubsidyRetrieved' ? 0 : 1;
 						}
 
 						if (type == "filter") {
-							
-							if (data == 'SubsidyRetrieved') { // complete
-								return 'SubsidyRetrieved';
-							}
-
-							return 'Detailed';
+							return data == 'SubsidyRetrieved' ? 'SubsidyRetrieved' : 'Detailed';
 						}
 
 						return data;

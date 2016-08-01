@@ -33,7 +33,7 @@
 			</div>
 		</c:if>
 	</div>
-	<c:if test="${promo.type != 3}">
+	<c:if test="${ not empty promo.itemDesc }">
 		<div class="activity-law">
 			<a href="javascript:void(0)" class="terms-conditions">點擊閱讀《其他條款》</a>。其他條款為本活動條款的一部分，具有不可分割性。
 		</div>

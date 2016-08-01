@@ -5,7 +5,7 @@
 
 <c:choose>
 	<c:when test="${approved eq true}">
-		<div class="promo-state-message ${ not expired ? 'success' : '' }">
+		<div class="promo-state-message ${ not isNomitionEnd ? 'success' : '' }">
 			<div class="message-content">
 				<h3>您已成功通过审核！请于<span class="color-cyan">${ promoDlDt }</span>前<a href="#listing">选择并提交</a>如下通过预审的刊登完成正式报名。</h3>
 				<p class="desc">活动时间为<span class="color-cyan">${ promoStart } </span>到 <span class="color-cyan">${ promoEnd }</span><br />活动如有更改，以最终通知为准。</p>

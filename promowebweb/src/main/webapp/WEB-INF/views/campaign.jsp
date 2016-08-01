@@ -12,6 +12,7 @@
 <%-- <c:set var="currentStep" value="${ 'Promotion in progress' }" /> --%>
 <%-- <c:set var="currentStep" value="${ 'Seller Feedback' }" /> --%>
 <%-- <c:set var="currentStep" value="${ 'Promotion validated' }" /> --%>
+<%-- <c:set var="currentStep" value="${ 'Promotion end' }" /> --%>
 <c:set var="regType" value="${ false }" />
 <c:set var="hasListingsNominated" value="${false}" />
 <c:set var="isPreview" value="${ false }" />

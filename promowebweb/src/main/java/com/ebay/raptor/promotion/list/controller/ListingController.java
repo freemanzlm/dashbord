@@ -83,6 +83,7 @@ public class ListingController extends AbstractListingController {
 	
 	@Autowired ExcelService excelService;
 
+	@Deprecated
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getSKUsByPromotionId)
 	@ResponseBody
@@ -98,7 +99,7 @@ public class ListingController extends AbstractListingController {
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.downloadSkuList)
+	@RequestMapping(ResourceProvider.ListingRes.downloadTempldate)
     public void createListingUploadTemplet(HttpServletRequest req,
     		HttpServletResponse resp, @ModelAttribute RequestParameter param)
     				throws MissingArgumentException {
@@ -114,7 +115,7 @@ public class ListingController extends AbstractListingController {
     		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
     		workBook.write(resp.getOutputStream());
         } catch (IOException | PromoException e) {
-        	logger.error("Unable to download sku listings.", e);
+        	logger.error("Failed to generate upload template.", e);
         } finally {
         	if (workBook != null) {
     			try {
@@ -125,28 +126,6 @@ public class ListingController extends AbstractListingController {
     		}
         }
     }
-	
-	@POST
-	@RequestMapping(ResourceProvider.ListingRes.confirmListings)
-	@ResponseBody
-	public ResponseData <String> confirmListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
-		ResponseData <String> responseData = new ResponseData <String>();
-
-		if(null != listings){
-			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
-			try {
-				UserData userData = CookieUtil.getUserDataFromCookie(req);
-				boolean result = listingService.confirmListings(listingAry, listings.getPromoId(), userData.getUserId());
-				responseData.setStatus(result);
-				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
-			} catch (PromoException | MissingArgumentException e) {
-				// do not throw but set the error status.
-				responseData.setStatus(false);
-				responseData.setMessage("Internal Error happens.");
-			}
-		}
-		return responseData;
-	}
 	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadListings)
@@ -215,6 +194,28 @@ public class ListingController extends AbstractListingController {
 
 		mav.addObject("response", PojoConvertor.convertToJson(responseData));
 		return mav;
+	}
+	
+	@POST
+	@RequestMapping(ResourceProvider.ListingRes.confirmListings)
+	@ResponseBody
+	public ResponseData <String> confirmListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
+		ResponseData <String> responseData = new ResponseData <String>();
+
+		if(null != listings){
+			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
+			try {
+				UserData userData = CookieUtil.getUserDataFromCookie(req);
+				boolean result = listingService.confirmListings(listingAry, listings.getPromoId(), userData.getUserId());
+				responseData.setStatus(result);
+				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
+			} catch (PromoException | MissingArgumentException e) {
+				// do not throw but set the error status.
+				responseData.setStatus(false);
+				responseData.setMessage("Internal Error happens.");
+			}
+		}
+		return responseData;
 	}
 	
 	@POST

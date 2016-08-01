@@ -9,7 +9,7 @@
 
 			<div class="body mt20" style="width: 490px;">
 				<p class="mt10">
-					您可以通過下載<a class="template" href="/promotion/listings/downloadSkuList?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改并重新上传。
+					您可以通過下載<a class="template" href="/promotion/listings/downloadTempldate?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改并重新上传。
 				</p>
 				<p class="mt10">請註意：您新上傳的刊登物品將完全替換之前的列表，並需要重新進行預審且接受活動條款。</p>
 
@@ -45,7 +45,7 @@
 			<h3>批量上傳刊登</h3>
 			
 			<div class="body mt20" style="width: 545px;">
-				<p>您可以通過下載<a class="template" href="/promotion/listings/downloadSkuList?promoId=${promo.promoId}" target="_self">批量提交模板</a>按格式填寫並上傳您的刊登參與本活動。</p>
+				<p>您可以通過下載<a class="template" href="/promotion/listings/downloadTempldate?promoId=${promo.promoId}" target="_self">批量提交模板</a>按格式填寫並上傳您的刊登參與本活動。</p>
 				
 				<p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><b ></b></p>
 				

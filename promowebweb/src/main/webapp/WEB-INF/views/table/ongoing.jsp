@@ -9,7 +9,7 @@
 				<th class="name">活动名称</th>
 				<th class="promoDlDt">报名截止日期</th>
 				<th class="promoDt">活动时间</th>
-				<th class="state">活动状态</th>
+				<th class="currentStep">活动状态</th>
 			</tr>
 		</thead>
 	</table>

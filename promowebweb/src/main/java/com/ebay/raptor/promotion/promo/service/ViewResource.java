@@ -12,6 +12,7 @@ public enum ViewResource {
 	HV_CANCELLED("hotsell/canceled"),
 	HV_END("hotsell/end"),
 	HV_DETAIL("hotsell/state"),
+	@Deprecated
 	HV_AGGREMENT("terms/hotsell"),
 	HV_COMPLETED("hotsell/completed"),
 	
@@ -20,6 +21,7 @@ public enum ViewResource {
 	DP_CANCELLED("dealspreset/canceled"),
 	DP_END("dealspreset/end"),
 	DP_DETAIL("dealspreset/state"),
+	@Deprecated
 	DP_AGGREMENT("terms/dealsPreset"),
 	DP_COMPLETED("dealspreset/completed"),
 	
@@ -31,6 +33,7 @@ public enum ViewResource {
 	DU_LISTING("deals/listing"),
 	DU_DETAIL("deals/state"),
 	DU_CONFIRM_LISTING("/promotion/deals/confirmDealsListings"),
+	@Deprecated
 	DU_AGGREMENT("terms/deals"),
 	DU_COMPLETED("deals/completed"),
 	DU_UPLOAD_RESPONSE("deals/uploadResponse"),
@@ -38,6 +41,7 @@ public enum ViewResource {
 	OTHER_CANCELLED("other/canceled"),
 	OTHER_END("other/end"),
 	OTHER_DETAIL("other/state"),
+	@Deprecated
 	OTHER_AGGREMENT("terms/other"),
 	OTHER_COMPLETED("other/completed"),
 

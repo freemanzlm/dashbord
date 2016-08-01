@@ -18,7 +18,6 @@ import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.controller.ListingController;
 import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.DateUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,8 +39,6 @@ public class PromotionViewService {
 	public ContextViewRes handleView(Promotion pro, long uid) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
-		context.put(ViewContext.Agreement.getAttr(), ViewResource.HV_AGGREMENT.getPath());
-		
 		Date now = new Date();
 		
 		// whether nomination end date has expired
@@ -69,17 +66,29 @@ public class PromotionViewService {
 			context.put(ViewContext.IS_AWARD_END.getAttr(), awardEndDate.before(now));
 		}
 		
-		handleInvalidSteps(pro);
+		String visibleStepList = getVisibleStepList(pro.getStepList());
+		pro.setStepList(visibleStepList);
 		
-		handleListingFields(pro, context);
+		String displayableCurrentStep = getDisplayableCurrentStep(pro.getStepList(), pro.getCurrentStep());
+		if (isVisibleStep(displayableCurrentStep)) {
+			pro.setDisplayableCurrentStep(displayableCurrentStep);
+			pro.setHasValidCurrentStep(true);
+		} else {
+			pro.setHasValidCurrentStep(false);
+		}
+		
+		String fieldsDefinitions = pro.getListingFields(); 
+		fieldsDefinitions = "[{\"sample\":null,\"required\":true,\"labelName\":\"SKU_deal\",\"isUnique\":false,\"input\":true,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":32768,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"SKU编号\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU编号\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"產SKU编号\",\"isDefault\":true}],\"display\":false,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"skuId\"},{\"sample\":\"2015-12-24 24:38:56\",\"required\":true,\"labelName\":\"Stock ready Time\",\"isUnique\":true,\"input\":false,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":100,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"SKU名称\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU名称\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU名称\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"skuName\"},{\"sample\":null,\"required\":true,\"labelName\":\"Item ID\",\"isUnique\":false,\"input\":true,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":200,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"刊登编号\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"刊登編號\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"刊登編號\",\"isDefault\":true}],\"display\":false,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"itemId\"},{\"sample\":null,\"required\":false,\"labelName\":\"Qty Available\",\"isUnique\":false,\"input\":true,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"当前价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"当前价\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"總量\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"currPrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"Site\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":0,\"length\":100,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"活动价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"活动价\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"活動網站\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"proposePrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"Listing Local Currency\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":10,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"货币单位\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"貨幣單位\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"貨幣單位\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"currency\"},{\"sample\":null,\"required\":false,\"labelName\":\"Propose Price_Local Currency\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":2},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"现价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"現價\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"現價\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"Local Currency\",\"attachmentType\":null,\"api_Name\":\"proposePrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"FVF take rate\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"INTEGER\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"库存量\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"库存量\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"成交費\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"stockNum\"},{\"sample\":null,\"required\":false,\"labelName\":\"Final Subsidy %\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DATE\",\"picklistEntry\":\"\",\"percision\":17,\"length\":0,\"digits\":2},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"备货日期\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"最終補貼金額\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"最終補貼金額\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"stockReadyDate\"},{\"api_Name\":\"account_item_attachment_1__c\",\"fieldtype\":null,\"isUnique\":false,\"currencyType\":null,\"display\":false,\"displayLabel\":[{\"isDefault\":true,\"labelName\":\"123\",\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\"},{\"isDefault\":false,\"labelName\":\"123\",\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\"},{\"isDefault\":false,\"labelName\":\"123\",\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\"}],\"required\":false,\"labelName\":\"Account Item Attachment 1\",\"attachmentType\":\"account_item\",\"input\":true}]";
+		handleListingFields(fieldsDefinitions, context);
+		
+		context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
+		
+		// if promotion is in draft step, it may be a preview-able promotion.
+		handleDraftPromotion(pro);
 		
 		res.setContext(context);
 		
-		if (pro.getIsPreview()) {
-			res.setView(ViewResource.CAMPAIGN_PREVIEW);
-		} else {
-			res.setView(ViewResource.CAMPAIGN);
-		}
+		res.setView(ViewResource.CAMPAIGN);
 		
 		return res;
 	}
@@ -89,11 +98,7 @@ public class PromotionViewService {
 	 * @param promo
 	 * @param context
 	 */
-	public void handleListingFields(Promotion promo, Map<String, Object> context){
-		String fieldsDefinitions = promo.getListingFields();
-		// TODO remove this test string
-		fieldsDefinitions =	"[{\"sample\":null,\"required\":true,\"labelName\":\"SKU_deal\",\"isUnique\":false,\"input\":true,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":32768,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"SKU编号\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU编号\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"產SKU编号\",\"isDefault\":true}],\"display\":false,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"skuId\"},{\"sample\":\"2015-12-24 24:38:56\",\"required\":true,\"labelName\":\"Stock ready Time\",\"isUnique\":true,\"input\":false,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":100,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"SKU名称\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU名称\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"SKU名称\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"skuName\"},{\"sample\":null,\"required\":true,\"labelName\":\"Item ID\",\"isUnique\":false,\"input\":true,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":200,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"刊登编号\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"刊登編號\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"刊登編號\",\"isDefault\":true}],\"display\":false,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"itemId\"},{\"sample\":null,\"required\":false,\"labelName\":\"Qty Available\",\"isUnique\":false,\"input\":true,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"当前价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"当前价\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"總量\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"currPrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"Site\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":0,\"length\":100,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"活动价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"活动价\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"活動網站\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"proposePrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"Listing Local Currency\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"STRING\",\"picklistEntry\":\"\",\"percision\":0,\"length\":10,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"货币单位\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"貨幣單位\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"貨幣單位\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"currency\"},{\"sample\":null,\"required\":false,\"labelName\":\"Propose Price_Local Currency\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DOUBLE\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":2},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"现价\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"現價\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"現價\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"Local Currency\",\"attachmentType\":null,\"api_Name\":\"proposePrice\"},{\"sample\":null,\"required\":false,\"labelName\":\"FVF take rate\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"INTEGER\",\"picklistEntry\":\"\",\"percision\":10,\"length\":0,\"digits\":0},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"库存量\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"库存量\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"成交費\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"stockNum\"},{\"sample\":null,\"required\":false,\"labelName\":\"Final Subsidy %\",\"isUnique\":false,\"input\":false,\"fieldtype\":{\"typeName\":\"DATE\",\"picklistEntry\":\"\",\"percision\":17,\"length\":0,\"digits\":2},\"displayLabel\":[{\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\",\"labelName\":\"备货日期\",\"isDefault\":true},{\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"最終補貼金額\",\"isDefault\":true},{\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\",\"labelName\":\"最終補貼金額\",\"isDefault\":true}],\"display\":true,\"currencyType\":\"\",\"attachmentType\":null,\"api_Name\":\"stockReadyDate\"},{\"api_Name\":\"account_item_attachment_1__c\",\"fieldtype\":null,\"isUnique\":false,\"currencyType\":null,\"display\":false,\"displayLabel\":[{\"isDefault\":true,\"labelName\":\"123\",\"locale\":\"CN\",\"localDisplayName\":\"中国大陆\"},{\"isDefault\":false,\"labelName\":\"123\",\"locale\":\"HK\",\"localDisplayName\":\"香港/台湾\"},{\"isDefault\":false,\"labelName\":\"123\",\"locale\":\"TW\",\"localDisplayName\":\"香港/台湾\"}],\"required\":false,\"labelName\":\"Account Item Attachment 1\",\"attachmentType\":\"account_item\",\"input\":true}]";
-		
+	public void handleListingFields(String fieldsDefinitions, Map<String, Object> context){
 		if (fieldsDefinitions != null) {
 			JsonNode tree;
 			try {
@@ -109,45 +114,14 @@ public class PromotionViewService {
 	}
 	
 	/**
-	 * There are four invalid steps: Nomination eDM in approve flow, Nomination eDM approved, Notification eDM in approve flow, Notification eDM approved.
-	 * 
-	 * @param step
-	 * @return if step is one of the invalid step, return false.
-	 */
-	private boolean isValidStep(String step) {
-		return !((PromotionStep.NOMINATION_EDM_IN_APPROVE_FLOW.getName().equalsIgnoreCase(step) 
-				|| PromotionStep.NOMINATION_EDM_APPROVED.getName().equalsIgnoreCase(step)
-				|| PromotionStep.PROMOTION_APPROVED.getName().equalsIgnoreCase(step)
-				|| PromotionStep.NOTIFICATION_EDM_IN_APPROVE_FLOW.getName().equalsIgnoreCase(step)
-				|| PromotionStep.NOTIFICATION_EDM_APPROVED.getName().equalsIgnoreCase(step)));
-	}
-	
-	/**
-	 * If step list contains invalid steps, we need to filter them out and fix the current step.
+	 * CurrentStep may is not a displayable step in dashboard, so we need to deduce the displayable step forward.
 	 * 
 	 * @param promo
 	 */
-	private void handleInvalidSteps(Promotion promo) {
-		/* stepList comes from SalesForce */
-//		String stepList = promo.getStepList();
-//		String currentStep = promo.getCurrentStep();
-		String stepList = "Draft>Nomination eDM in approve flow>Nomination eDM approved>Seller nomination_Need approve>Promotion Submitted>Promotion Approved>Notification eDM in approve flow>Notification eDM approved>Seller Feedback>Promotion in progress>Promotion in validation>Promotion validated";
-		String currentStep = PromotionStep.PROMOTION_APPROVED.getName();
+	public String getDisplayableCurrentStep(String stepList, String currentStep) {
 		String[] steps = stepList.split(">");
-		stepList = "";
-		for (String step : steps) {
-			// filter out useless steps
-			if (isValidStep(step)){
-				stepList += ">" + step;
-			}
-		}
 		
-		if (stepList.startsWith(">")) {
-			// remove first ">"
-			promo.setStepList(stepList.substring(1));
-		}
-		
-		if (! isValidStep(currentStep)){
+		if (! isVisibleStep(currentStep)){
 			boolean found = false;
 			// currentStep is an invalid promotion step, we'll adjust currentStep to a former valid step.
 			for (int i = steps.length - 1; i > 0; i--) {
@@ -158,19 +132,75 @@ public class PromotionViewService {
 				} else {
 					found = true;
 					currentStep = step;
-					if (isValidStep(currentStep)) {
+					if (isVisibleStep(currentStep)) {
 						break;
 					} else {
 						continue;
 					}
 				}
 			}
-//			promo.setCurrentStep(currentStep);
-			promo.setAdjustedCurrentStep(currentStep);
-			promo.setHasValidCurrentStep(isValidStep(currentStep));
+		}
+		
+		return currentStep;
+	}
+	
+	/**
+	 * Get visible step list from promotion step list.
+	 * @param stepList
+	 * @return
+	 */
+	public String getVisibleStepList(String stepList) {
+		String[] steps = stepList.split(">");
+		String visibleStepList = "";
+		stepList = "";
+		for (String step : steps) {
+			// filter out invisible steps
+			if (isVisibleStep(step)){
+				stepList += ">" + step;
+			}
+		}
+		
+		if (stepList.startsWith(">")) {
+			// remove first ">"
+			visibleStepList = stepList.substring(1);
+		}
+		
+		return visibleStepList;
+	}
+	
+	/**
+	 * There are four not visible steps: Nomination eDM in approve flow, Nomination eDM approved, Notification eDM in approve flow, Notification eDM approved.
+	 * 
+	 * @param step
+	 * @return if step is one of the invalid step, return false.
+	 */
+	private boolean isVisibleStep(String step) {
+		return !((PromotionStep.NOMINATION_EDM_IN_APPROVE_FLOW.getName().equalsIgnoreCase(step) 
+				|| PromotionStep.NOMINATION_EDM_APPROVED.getName().equalsIgnoreCase(step)
+				|| PromotionStep.PROMOTION_APPROVED.getName().equalsIgnoreCase(step)
+				|| PromotionStep.NOTIFICATION_EDM_IN_APPROVE_FLOW.getName().equalsIgnoreCase(step)
+				|| PromotionStep.NOTIFICATION_EDM_APPROVED.getName().equalsIgnoreCase(step)));
+	}
+	
+	/**
+	 * Only promotion in draft step can have preview state.
+	 * @param promo
+	 */
+	private void handleDraftPromotion(Promotion promo) {
+		if (PromotionStep.DRAFT.getName().equalsIgnoreCase(promo.getCurrentStep())) {
+			if (promo.getIsPreview() != null && promo.getIsPreview() == true) {
+				String displayableCurrentStep = getDisplayableCurrentStep(promo.getStepList(), promo.getDraftPreviewStep());
+				if (isVisibleStep(displayableCurrentStep)) {
+					promo.setDisplayableCurrentStep(displayableCurrentStep);
+					promo.setHasValidCurrentStep(true);
+				} else {
+					promo.setHasValidCurrentStep(false);
+				}
+			}
 		}
 	}
 	
+	@Deprecated
 	public ContextViewRes highVelocityView(Promotion pro, long uid) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
@@ -219,6 +249,7 @@ public class PromotionViewService {
 		return res;
 	}
 	
+	@Deprecated
 	public ContextViewRes dealsPresetView(Promotion pro, long uid) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
@@ -269,6 +300,7 @@ public class PromotionViewService {
 		return res;
 	}
 	
+	@Deprecated
 	public ContextViewRes dealsUpload(Promotion pro, long uid) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();
@@ -328,6 +360,7 @@ public class PromotionViewService {
 		return res;
 	}
 	
+	@Deprecated
 	public ContextViewRes standard(Promotion pro) throws PromoException{
 		ContextViewRes res = new ContextViewRes();
 		Map<String, Object> context = new HashMap<String, Object>();

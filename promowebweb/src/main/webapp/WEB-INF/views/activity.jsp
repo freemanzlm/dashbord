@@ -32,7 +32,7 @@
 			</div>
 		</c:if>
 	</div>
-	<c:if test="${promo.type != 3}">
+	<c:if test="${ not empty promo.itemDesc }">
 		<div class="activity-law">
 			<a href="javascript:void(0)" class="terms-conditions">点击阅读《其他条款》</a>。其他条款为本活动条款的一部分，具有不可分割性。
 		</div>

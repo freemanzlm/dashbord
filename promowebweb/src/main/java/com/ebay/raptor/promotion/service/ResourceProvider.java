@@ -75,7 +75,10 @@ public class ResourceProvider {
 		String getSKUListingsByPromotionIdAndType = "/getSKUListingsByPromotionId/promoId/{promoId}/uid/{uid}/type/{type}";
 		String confirmDealsListings = "/confirmDealsListings";
 		String confirmHotSellListings = "/confirmHotSellListings";
+		
+		@Deprecated
 		String downloadSkuList = "/downloadSkuList";
+		String downloadTempldate = "downloadTemplate";
 		String uploadListings = "/uploadListings";
 		String confirmListings = "/confirmListings";
 		String uploadDealsListings = "/uploadDealsListings";

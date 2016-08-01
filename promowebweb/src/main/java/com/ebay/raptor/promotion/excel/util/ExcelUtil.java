@@ -9,8 +9,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.annotation.Header;
@@ -26,7 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class ExcelUtil {
-	private static final Logger logger = Logger.getLogger(ExcelUtil.class.getName());
+//	private static final Logger logger = Logger.getLogger(ExcelUtil.class.getName());
 
 	/**
 	 * Get column configurations for POJO properties. These configurations are stored in <code>Header</code> annotation.

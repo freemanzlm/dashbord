@@ -22,7 +22,9 @@ public class Promotion {
 	
 	private String currentStep;
 	
-	private String adjustedCurrentStep;
+	private String displayableCurrentStep;
+	
+	private String draftPreviewStep;
 	
 	private Boolean hasValidCurrentStep;
 	
@@ -65,8 +67,6 @@ public class Promotion {
 	
 	private Boolean isReversed;
 	
-	private Boolean isEnded;
-	
 	private String endReason;
 	
 	/**
@@ -90,14 +90,6 @@ public class Promotion {
 
 	public void setListingFields(String listingFields) {
 		this.listingFields = listingFields;
-	}
-
-	public Boolean getIsEnded() {
-		return isEnded;
-	}
-
-	public void setIsEnded(Boolean isEnded) {
-		this.isEnded = isEnded;
 	}
 
 	public String getEndReason() {
@@ -284,6 +276,14 @@ public class Promotion {
 		this.stepList = stepList;
 	}
 
+	public String getDraftPreviewStep() {
+		return draftPreviewStep;
+	}
+
+	public void setDraftPreviewStep(String draftPreviewStep) {
+		this.draftPreviewStep = draftPreviewStep;
+	}
+
 	public Boolean getHasValidCurrentStep() {
 		return hasValidCurrentStep;
 	}
@@ -292,12 +292,12 @@ public class Promotion {
 		this.hasValidCurrentStep = hasValidCurrentStep;
 	}
 
-	public String getAdjustedCurrentStep() {
-		return adjustedCurrentStep;
+	public String getDisplayableCurrentStep() {
+		return displayableCurrentStep;
 	}
 
-	public void setAdjustedCurrentStep(String adjustedCurrentStep) {
-		this.adjustedCurrentStep = adjustedCurrentStep;
+	public void setDisplayableCurrentStep(String displayableCurrentStep) {
+		this.displayableCurrentStep = displayableCurrentStep;
 	}
 
 	public Boolean getRegType() {
