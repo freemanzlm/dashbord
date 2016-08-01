@@ -22,6 +22,7 @@ var BizReport = BizReport || {};
 				'bFilter': false,
 				'bLengthChange': false,
 				'bDestroy': true,
+				'bPaginate': false,
 				'bServerSide': false,
 				'bSortCellsTop': true,
 				'bSort': true,
@@ -71,6 +72,16 @@ var BizReport = BizReport || {};
 							var jTr = $(oRow.nTr);
 							jTr.find("input[type=checkbox]:enabled").prop("checked", oRow._aData.checked);
 							oRow._aData.checked ? jTr.addClass("selected") : jTr.removeClass('selected');
+						});
+						
+						$(".file-input").each(function(){
+							var fileBox = $(this), textInput = fileBox.find("[type=text]");
+							var fileInput = fileBox.find("[type=file]").change(function(){
+								textInput.attr("value", this.value);
+							}).width(textInput.width());
+							fileBox.find(".btn").click(function(){
+								fileInput.trigger("click");
+							});
 						});
 					}				
 				},
