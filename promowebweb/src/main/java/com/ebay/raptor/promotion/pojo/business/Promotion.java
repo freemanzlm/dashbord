@@ -22,7 +22,7 @@ public class Promotion {
 	
 	private String currentStep;
 	
-	private String displayableCurrentStep;
+	private String visibleCurrentStep;
 	
 	private String draftPreviewStep;
 	
@@ -292,12 +292,12 @@ public class Promotion {
 		this.hasValidCurrentStep = hasValidCurrentStep;
 	}
 
-	public String getDisplayableCurrentStep() {
-		return displayableCurrentStep;
+	public String getVisibleCurrentStep() {
+		return visibleCurrentStep;
 	}
 
-	public void setDisplayableCurrentStep(String displayableCurrentStep) {
-		this.displayableCurrentStep = displayableCurrentStep;
+	public void setVisibleCurrentStep(String visibleCurrentStep) {
+		this.visibleCurrentStep = visibleCurrentStep;
 	}
 
 	public Boolean getRegType() {
