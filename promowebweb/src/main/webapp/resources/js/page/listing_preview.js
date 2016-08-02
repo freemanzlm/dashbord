@@ -9,7 +9,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "listing-table",
 			customTableConfig: {
-                'sAjaxSource': '/promotion/listings/getUploadedListings',
+                'sAjaxSource': '/promotion/listings/getPromotionListings',
                 columns: pageData && pageData.columns
             }
 		},

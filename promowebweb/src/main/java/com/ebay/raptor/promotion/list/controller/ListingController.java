@@ -49,7 +49,6 @@ import com.ebay.raptor.promotion.pojo.business.ListingAttachment;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
-import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -74,15 +73,18 @@ public class ListingController extends AbstractListingController {
 	
 	@Autowired
 	ListingService listingService;
-	
-	@Autowired
-	PromotionService promoService;
 
 	@Autowired
 	PromotionViewService promoViewService;
 	
 	@Autowired ExcelService excelService;
 
+	/**
+	 * In promotion phase1,there is a SKU list. Its data source is from this API. 
+	 * To use this method, you need to pass in promotion id and user oracle id.
+	 * 
+	 * @return SKU list response.
+	 */
 	@Deprecated
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes._getSKUsByPromotionId)
@@ -98,6 +100,14 @@ public class ListingController extends AbstractListingController {
 		return resp;
 	}
 	
+	/**
+	 * Generate listing upload template.
+	 * To use this method, you need to pass in promotion id and user oracle id.
+	 * @param req
+	 * @param resp
+	 * @param param
+	 * @throws MissingArgumentException
+	 */
 	@GET
 	@RequestMapping(ResourceProvider.ListingRes.downloadTempldate)
     public void createListingUploadTemplet(HttpServletRequest req,
@@ -127,11 +137,20 @@ public class ListingController extends AbstractListingController {
         }
     }
 	
+	/**
+	 * Read user uploaded template file.
+	 * Use this method, you need to pass in promotion id and user oracle id.
+	 * @param req
+	 * @param resp
+	 * @param uploadFile
+	 * @param promoId
+	 * @throws MissingArgumentException
+	 */
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadListings)
-	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
+	public ModelAndView uploadListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile uploadFile, @RequestParam String promoId) throws MissingArgumentException{
-		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
+		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 		
@@ -159,6 +178,7 @@ public class ListingController extends AbstractListingController {
 				}
 			}
 			
+			// if there is listing that not comply with validation rules
 			if (violations == null || violations.size() == 0) {
 				responseData.setStatus(true);
 				this.acceptAgreement(promoId, userData.getUserId());
@@ -177,11 +197,11 @@ public class ListingController extends AbstractListingController {
 			
 		} catch (IOException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
-			logger.error("Upload listings got error.", e);
+			logger.error("Unable to read upload file", e);
 			responseData.setStatus(false);
 		} catch (PromoException e) {
 			// Got IO or PromoException exception -> means app level error -> show error page.
-			logger.error("Upload listings got error.", e);
+			logger.error("Got error when to read uploaded listings.", e);
 			responseData.setData(e.getErrorType().getCode() + "");
 			responseData.setStatus(false);
 		} finally {
@@ -208,7 +228,6 @@ public class ListingController extends AbstractListingController {
 				UserData userData = CookieUtil.getUserDataFromCookie(req);
 				boolean result = listingService.confirmListings(listingAry, listings.getPromoId(), userData.getUserId());
 				responseData.setStatus(result);
-				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
 			} catch (PromoException | MissingArgumentException e) {
 				// do not throw but set the error status.
 				responseData.setStatus(false);
@@ -222,7 +241,7 @@ public class ListingController extends AbstractListingController {
 	@RequestMapping(ResourceProvider.ListingRes.uploadListingAttachment)
 	public ModelAndView uploadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile uploadFile, @RequestParam String skuId, @RequestParam String promoId) throws MissingArgumentException {
-		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
+		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
 		ResponseData <String> responseData = new ResponseData <String>();
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		AttachmentFileValidator attachmentFileValidator = AttachmentFileValidator.getInstance();
@@ -318,8 +337,14 @@ public class ListingController extends AbstractListingController {
 		return mav;
 	}
 	
+	/**
+	 * After user confirm his listing, submit all of his listings to SalesForce.
+	 * @param req
+	 * @param listings
+	 * @return
+	 */
 	@POST
-	@RequestMapping(ResourceProvider.ListingRes.submitDealsListings)
+	@RequestMapping(ResourceProvider.ListingRes.submitListings)
 	public @ResponseBody ResponseData <String> submitDealsListings(HttpServletRequest req, HttpServletResponse resp) throws MissingArgumentException{
 		ResponseData <String> responseData = new ResponseData <String>();
 		String promoId = req.getParameter("promoId");
@@ -331,20 +356,19 @@ public class ListingController extends AbstractListingController {
 		} catch (PromoException | MissingArgumentException e) {
 			// do not throw but set the error status.
 			responseData.setStatus(false);
-			responseData.setMessage("Internal Error happens.");
+			responseData.setMessage("Internal Error happens: " + e.getMessage());
 			responseData.setData(e.getErrorType().getCode() + "");
 		}
 		return responseData;
 	}
 	
-	@GET
-	@RequestMapping(ResourceProvider.ListingRes._getUploadedListings)
-	@ResponseBody
-	public ListDataWebResponse<?> getUploadedListings(HttpServletRequest req,
-			@ModelAttribute ListingWebParam param)  {
-		return getListings(req, param);
-	}
-	
+	/**
+	 * In phase1, there are several kinds of getListings() by state. We keep this method for future usage.
+	 * 
+	 * @param req
+	 * @param param
+	 * @return
+	 */
 	protected ListDataWebResponse<?> getListings (HttpServletRequest req,
 			ListingWebParam param) {
 		UserData userData = null;

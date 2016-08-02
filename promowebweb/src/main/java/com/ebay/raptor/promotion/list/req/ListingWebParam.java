@@ -10,9 +10,6 @@ public class ListingWebParam {
 
 	private Long uid;
 	
-	// TODO Remove this field in phase2
-	private String promoSubType;
-
 	public String getPromoId() {
 		return promoId;
 	}
@@ -27,14 +24,6 @@ public class ListingWebParam {
 
 	public void setUid(Long uid) {
 		this.uid = uid;
-	}
-
-	public String getPromoSubType() {
-		return promoSubType;
-	}
-
-	public void setPromoSubType(String promoSubType) {
-		this.promoSubType = promoSubType;
 	}
 
 }

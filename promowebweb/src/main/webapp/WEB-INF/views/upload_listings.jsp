@@ -9,7 +9,7 @@
 
 			<div class="body mt20" style="width: 490px;">
 				<p class="mt10">
-					您可以通过下载<a class="template" href="/promotion/listings/downloadTempldate?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改并重新上传。
+					您可以通过下载<a class="template" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">已提交的刊登物品</a>修改并重新上传。
 				</p>
 				<p class="mt10">请注意：您新上传的刊登物品将完全替换之前的列表，并需要重新进行预审且接受活动条款。</p>
 
@@ -50,7 +50,7 @@
 			<h3>批量上传刊登</h3>
 			
 			<div class="body mt20" style="width: 545px;">
-				<p>您可以通过下载<a class="template" href="/promotion/listings/downloadTempldate?promoId=${promo.promoId}" target="_self">批量提交模板</a>按格式填写并上传您的刊登参与本活动。</p>
+				<p>您可以通过下载<a class="template" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">批量提交模板</a>按格式填写并上传您的刊登参与本活动。</p>
 				
 				<div id="upload-error-msg" class="error-msg hide">
 					<table>

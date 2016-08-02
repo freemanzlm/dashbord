@@ -6,6 +6,7 @@ public enum ViewResource {
 	CAMPAIGN("campaign"),
 	CAMPAIGN_PREVIEW("campaignPreview"),
 	LISTING_PREVIEW("listingPreview"),
+	UPLOAD_RESPONSE("uploadResponse"),
 	
 	HV_APPLICABLE("hotsell/applicable"), 
 	HV_APPLIED("hotsell/applied"),
@@ -36,6 +37,7 @@ public enum ViewResource {
 	@Deprecated
 	DU_AGGREMENT("terms/deals"),
 	DU_COMPLETED("deals/completed"),
+	@Deprecated
 	DU_UPLOAD_RESPONSE("deals/uploadResponse"),
 	
 	OTHER_CANCELLED("other/canceled"),

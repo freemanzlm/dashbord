@@ -26,7 +26,6 @@ import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
-import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,7 +55,7 @@ public class ExcelService {
 	PromotionService promoService;
 	
 	/**
-	 * Get the excel file which contains all listing of a seller in a promotion.
+	 * Generate the excel file which contains all listing of a seller in a promotion.
 	 * @param promoId
 	 * @param uid
 	 * @param locale
@@ -70,7 +69,6 @@ public class ExcelService {
 	public XSSFWorkbook getListingWorkbook(String promoId, Long uid, Locale locale)
 			throws PromoException, MissingArgumentException, JsonProcessingException, IOException {
 		XSSFWorkbook workBook = new XSSFWorkbook();
-		String sheetName = ResourceProvider.ListingRes.skuListFileName;
 		
 		List<Listing> listings = listingService.getSkuListingsByPromotionId(promoId, uid);
 		List<Map<String, Object>> skuListings = new ArrayList<Map<String, Object>>();
@@ -92,7 +90,7 @@ public class ExcelService {
 		}
 		
 		SheetWriter writer = new SheetWriter();
-		Sheet sheet = workBook.createSheet(sheetName);
+		Sheet sheet = workBook.createSheet(messageSource.getMessage("listing.template", null, LocaleUtil.getCurrentLocale()));
 		
 		Promotion promo = promoService.getPromotionById(promoId, uid, false);
 		String fieldsDefinitions = promo.getListingFields();
@@ -141,7 +139,8 @@ public class ExcelService {
 	}
 	
 	/**
-	 * Nomination id is used to differentiate listings.
+	 * Listing fields of promotion doesn't contain nomination id. But we need nomination id to differentiate listings. So we have to 
+	 * prepend nomination id as the first column configuration.
 	 * @param columnConfigs
 	 */
 	public List<ColumnConfiguration> adjustColumnConfigurations(List<ColumnConfiguration> columnConfigs) {

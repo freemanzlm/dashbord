@@ -28,7 +28,7 @@ import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 
-
+@Deprecated
 @Controller
 @RequestMapping(ResourceProvider.ListingRes.hotsellBase)
 public class HotSellListingController extends AbstractListingController{

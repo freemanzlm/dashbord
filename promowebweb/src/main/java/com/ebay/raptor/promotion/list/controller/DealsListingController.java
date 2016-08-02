@@ -374,7 +374,7 @@ public class DealsListingController extends AbstractDealsListingController{
 			return resp;
 		}
 
-		try {
+		/*try {
 			// if promotion sub type is empty, handle as general deals listings,
 			// and don't throw the NullPointerException
 			if (!StringUtil.isEmpty(param.getPromoSubType())) {
@@ -385,9 +385,9 @@ public class DealsListingController extends AbstractDealsListingController{
 			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
 			resp.setStatus(Boolean.FALSE);
 			return resp;
-		}
+		}*/
 		
-		if (pSubType != null) {
+		/*if (pSubType != null) {
 			switch (pSubType) {
 				case GBH :
 					ListDataWebResponse<GBHDealsListing> gbhResp = getListings(
@@ -405,12 +405,12 @@ public class DealsListingController extends AbstractDealsListingController{
 					ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
 					resp.setStatus(Boolean.FALSE);
 					return resp;
-			}
-		} else {
+			}*/
+//		} else {
 			ListDataWebResponse<DealsListing> resp = getListings(
 					param.getPromoId(), userData.getUserId(), null, listType);
 			return resp;
-		}
+//		}
 	}
 
 }
