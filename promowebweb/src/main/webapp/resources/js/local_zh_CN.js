@@ -98,7 +98,8 @@ BizReport.local = {
 			'applyCondition': '申请参与活动需要选择至少一条刊登报名。',
 			'onlyXls': '您选择提交的不是Excel文件，请重新选择刊登文件.',
 			'rrpLink': '链接',
-			'attachmentTypeError' : '文件类型不合法',
+			'typeError' : '文件类型不合法',
+			'notEmpty' : '上传文件不能为空',
 			'needCheck' : '请勾选左边的复选框'
 		},
 		'request': {

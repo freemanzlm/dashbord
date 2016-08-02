@@ -220,7 +220,7 @@ var BizReport = BizReport || {};
 							var id = 'iframe'+ full.skuId;
 							if (!data) {
 								return '<form id="form' + full.skuId + '" target="'+ id + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="701N00000003aqSIAQ" name="promoId"/><input type="hidden" name="skuId" value="'+full.skuId+'" /><span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile" /></span><button class="btn" id="btn'+full.skuId+'" type="button">上传</button></form>' +
-								'<iframe name="'+ id + '" style="display:none;"></iframe>' +
+								'<iframe name="'+ id + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
 									'<span class="hide" id="msg'+full.skuId+'"><b></b></span>';
 							} else {
 								return '<a href="' + data + '">' + local.getText('listing.attachment') + '</a>';
@@ -243,15 +243,24 @@ var BizReport = BizReport || {};
 								cbt.alert(local.getText("promo.listings.needCheck"));
 								return false;
 							}
-							/*var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
+							var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
 							var fileName = fileInput.val();
-							if (!fileName || fileName.indexOf(".xls")<0 || fileName.indexOf(".pdf" 
-									|| fileName.indexOf(".doc" || fileName.indexOf(".docx" || fileName.indexOf(".xlsx")<0
-									|| fileName.indexOf(".jpg" || fileName.indexOf(".JPG" || fileName.indexOf(".gif")
-									|| fileName.indexOf(".zip" || fileName.indexOf(".rar")){
-								cbt.alert(local.getText("promo.listings.attachmentTypeError"));
+							//文件不能为空
+							if(!fileName) {
+								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+								$(nTd).find("#msg"+oRow.skuId).addClass("error");
+								$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.notEmpty"));
 								return false;
-							}*/
+							}
+							//文件类型校验
+							if (fileName.indexOf(".xls")<0 && fileName.indexOf(".pdf")<0
+									&& fileName.indexOf(".doc")<0 && fileName.indexOf(".docx")<0 && fileName.indexOf(".xlsx")<0
+									&& fileName.indexOf(".jpg")<0 && fileName.indexOf(".JPG")<0 && fileName.indexOf(".gif")<0
+									&& fileName.indexOf(".zip")<0 && fileName.indexOf(".rar")<0){
+								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+								$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.typeError"));
+								return false;
+							}
 										
 							$(nTd).isLoading({text: local.getText('dataTable.loading'), position: "inside"});
 							

@@ -175,7 +175,28 @@ $(function(){
 			
 			var listings = listingTable.selectedItems;
 			
+			var attachIndex = 0;
+			var attachSubmit = function() {
+				var attachId = listings[attachIndex].skuId;
+				var attachIframe = $("iframe[name=iframe"+attachId+"]");
+				var attachForm = $("#form"+attachId);
+				attachForm.submit();
+				var timer = setInterval(function() {
+					console.log(attachIframe.contents().length != 0 && attachIframe.contents().find("body").html().length > 0);
+					if(attachIframe.contents().length != 0 && attachIframe.contents().find("body").html().length > 0) {
+						attachIndex += 1;
+						if(attachIndex<listings.length) {
+							attachSubmit();
+						}else {
+							clearInterval(timer);
+						}
+					}
+				}, 500);
+			};
+			
 			if (listings && listings.length > 0) {
+				attachSubmit();
+				return false;
 				previewDialog.show();
 				previewDialog.listingTable.setData(listings);
 			} else {
