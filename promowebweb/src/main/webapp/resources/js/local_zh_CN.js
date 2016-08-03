@@ -100,11 +100,13 @@ BizReport.local = {
 			'rrpLink': '链接',
 			'typeError' : '文件类型不合法',
 			'notEmpty' : '上传文件不能为空',
-			'needCheck' : '请勾选左边的复选框'
+			'needCheck' : '请勾选左边的复选框',
+			'attachdownload' : '下载附件'
 		},
 		'request': {
 			'fail': '请求提交失败',
-			'sending': '请求已发送，请稍候。。。'
+			'sending': '请求已发送，请稍候。。。',
+			'counting' : '已成功上传文件{0}/{1}'
 		}
 	},
 	'listing': {
