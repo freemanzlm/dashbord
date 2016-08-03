@@ -202,7 +202,12 @@
                 var elt = $.data( this, "plugin_" + pluginName );
 
                 if( "hide" === options )    { elt.hide(); }
-                else                        { elt.show(); }
+                else if (options != null && typeof options == 'object') {
+                	// Re-create the isLoading component. 
+                	$.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
+                } else {
+                	elt.show();
+                }
             }
         });
     };
