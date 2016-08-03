@@ -13,7 +13,7 @@
 <%-- <c:set var="currentStep" value="${ 'Seller Feedback' }" /> --%>
 <%-- <c:set var="currentStep" value="${ 'Promotion validated' }" /> --%>
 <%-- <c:set var="currentStep" value="${ 'Promotion end' }" /> --%>
-<c:set var="regType" value="${ false }" />
+<c:set var="regType" value="${ true }" />
 <c:set var="hasListingsNominated" value="${false}" />
 <c:set var="isPreview" value="${ false }" />
 
@@ -103,7 +103,7 @@
 					<div class="mt20 page-bottom-actions">
 						<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
 							<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
-						<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
+						<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">预览并提交报名</button>
 						<br /> <br /> <a href="index">返回活动列表</a>
 					</div>
 				</c:if>

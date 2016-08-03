@@ -7,6 +7,8 @@ $(function(){
 	
 	var hasState = false, customTableConfig;
 	
+	var successCount = 0;
+	
 	if (pageData && pageData.columns && pageData.columns.length > 1) {
 		hasState = pageData.columns[pageData.columns.length - 1]['data'] == 'state';
 		
@@ -176,36 +178,49 @@ $(function(){
 			var listings = listingTable.selectedItems;
 			
 			var attachIndex = 0;
+			var container = $(".dataTable-outer-layer");
 			var attachSubmit = function() {
 				var attachId = listings[attachIndex].skuId;
 				var attachIframe = $("iframe[name=iframe"+attachId+"]");
 				var attachForm = $("#form"+attachId);
+				var ahref = $("#msg"+attachId).find("a");
 				attachForm.submit();
+				container.isLoading({text: local.getText("promo.request.counting", [successCount, listings.length]), position: "inside"});
 				var timer = setInterval(function() {
-					console.log(attachIframe.contents().length != 0 && attachIframe.contents().find("body").html().length > 0);
-					if(attachIframe.contents().length != 0 && attachIframe.contents().find("body").html().length > 0) {
+					if($("#msg"+attachId).find("b").html().length != 0) {
+						container.isLoading('hide');
+						clearInterval(timer);
+						if(attachIframe.contents().length != 0 && attachIframe.contents().find("body").html().length > 0) {
+							if($.parseJSON(attachIframe.contents().find("body").html()).status==true && ahref.length<=0) {
+								successCount ++;
+							}
+						}
 						attachIndex += 1;
 						if(attachIndex<listings.length) {
 							attachSubmit();
-						}else {
-							clearInterval(timer);
+						} else {
+							if (listings && listings.length > 0) {
+								/*console.log('successCount: '+successCount);
+								console.log('listingLenght: '+listings.length)*/
+								if(successCount == listings.length) {
+									previewDialog.show();
+									previewDialog.listingTable.setData(listings);
+								} else {
+									return false;
+								}
+							} else {
+								if (pageData && pageData.state == 'Applied') {
+									cbt.confirm(local.getText('promo.listings.zeroSubmitted'), submitListings);
+								} else {
+									cbt.alert(local.getText('promo.listings.applyCondition'));
+								}
+							}
 						}
 					}
 				}, 500);
 			};
 			
-			if (listings && listings.length > 0) {
-				attachSubmit();
-				return false;
-				previewDialog.show();
-				previewDialog.listingTable.setData(listings);
-			} else {
-				if (pageData && pageData.state == 'Applied') {
-					cbt.confirm(local.getText('promo.listings.zeroSubmitted'), submitListings);
-				} else {
-					cbt.alert(local.getText('promo.listings.applyCondition'));
-				}
-			}
+			attachSubmit();
 		});
 	}
 	
