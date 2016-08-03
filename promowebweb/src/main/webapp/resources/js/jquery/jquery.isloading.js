@@ -115,8 +115,7 @@
                     if( this.$element.is( "body") ) {
 						var max_height = this.element.scrollHeight > document.documentElement.scrollHeight ? this.element.scrollHeight : document.documentElement.scrollHeight;
                         var _overlay = $( "body" ).prepend( '<div class="isloading-overlay" style="position:fixed; left:0; top:0; z-index: 10000; color: #fff; background: rgba(0,0,0,0.75); width: 100%; height: ' + max_height + 'px;" />' );
-                        
-                        _overlay.html( this._loader );
+                        _overlay.find(".isloading-overlay").html( this._loader );
                         this._loader.css({
                     		left: ($(window).width() - this._loader.innerWidth()) / 2 + document.documentElement.scrollLeft,
                     		top: ($(window).height() - this._loader.innerHeight()) / 2  + document.documentElement.scrollTop,
