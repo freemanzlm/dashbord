@@ -44,6 +44,9 @@ public class AttachmentFileValidator {
 		if(file.isEmpty()) {
 			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notnull"));
 		}
+		if(file.getSize() > 3*1024*1024) {
+			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.toolarge"));
+		}
 		try {
 			AttachmentAllowedFileType type = getType(file);
 			if(type==null) {

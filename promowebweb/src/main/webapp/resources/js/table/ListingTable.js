@@ -278,6 +278,7 @@ var BizReport = BizReport || {};
 										oRow.uploadSuccess = true;
 										oRow.downloadUrl = responseData.message;
 									} else {
+										$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
 										$(nTd).find("#msg"+oRow.skuId).find("b").html(responseData.message);
 									}
 								} 
