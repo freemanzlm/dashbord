@@ -199,7 +199,6 @@ $(function(){
 						}*/
 						attachIndex += 1;
 						successCount = container.find("input[name=item]:checked").parent().parent().find("a").length;;
-						console.log(successCount);
 						if(attachIndex<listings.length) {
 							attachSubmit();
 						} else {

@@ -36,24 +36,56 @@ $(function(){
 		};
 	
 	$(submitBtn).click(function(){
-		$.ajax({
-			url: "/promotion/listings/submitListings",
-			type: 'POST',
-			data: data,
-			dataType : 'json',
-			success : function(json){
-				if (json && json.status) {
-					window.location.replace("/promotion/"+pageData.promoId);
-				} else if (json.data && json.data.length > 0) {
-					cbt.alert(local.getText("errorMsg.regDateExpired"));
-					window.location.replace("/promotion/"+pageData.promoId);
-				} else {
-					cbt.alert(local.getText('promo.request.fail'));
-				}
-			},
-			error: function(){
-				cbt.alert(local.getText('promo.request.fail'));
+
+		event.preventDefault();
+		
+		var listings = listingTable.oDataTable.data();
+		var attachIndex = 0;
+		var container = $(".container");
+		var attachSubmit = function() {
+			var attachId = listings[attachIndex].skuId;
+			var attachIframe = $("iframe[name=iframe"+attachId+"]");
+			var attachForm = $("#form"+attachId);
+			if($("#href"+attachId).length<=0) {
+				attachForm.submit();
 			}
-		});
+			var successCount = container.find("iframe").parent().find("a").length;
+			container.isLoading({text: local.getText("promo.request.counting", [successCount, listings.length]), position: "overlay"});
+			var timer = setInterval(function() {
+				if($("#msg"+attachId).find("b").html().length != 0) {
+					container.isLoading('hide');
+					clearInterval(timer);
+					attachIndex += 1;
+					successCount = container.find("iframe").parent().find("a").length;
+					if(attachIndex<listings.length) {
+						attachSubmit();
+					} else {
+						if(successCount == listings.length) {
+							$.ajax({
+								url: "/promotion/listings/submitListings",
+								type: 'POST',
+								data: data,
+								dataType : 'json',
+								success : function(json){
+									if (json && json.status) {
+										window.location.replace("/promotion/"+pageData.promoId);
+									} else if (json.data && json.data.length > 0) {
+										cbt.alert(local.getText("errorMsg.regDateExpired"));
+										window.location.replace("/promotion/"+pageData.promoId);
+									} else {
+										cbt.alert(local.getText('promo.request.fail'));
+									}
+								},
+								error: function(){
+									cbt.alert(local.getText('promo.request.fail'));
+								}
+							});
+						}
+					}
+				}
+			}, 500);
+		};
+		
+		attachSubmit();
 	});	
 });

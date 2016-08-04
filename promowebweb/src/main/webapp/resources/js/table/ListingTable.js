@@ -218,10 +218,14 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							var id = 'iframe'+ full.skuId;
+							var str = 'disabled';
+							if(pageData.isPreview && pageData.isPreview == 'true') {
+								str = '';
+							}
 							if (full.uploadSuccess && full.downloadUrl) {
 								return '<a href=/promotion/listings'+full.downloadUrl+'>'+local.getText('promo.listings.attachdownload')+'</a>';
 							} else {
-								return '<form id="form' + full.skuId + '" target="'+ id + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+pageData.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+full.skuId+'" /><span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile" disabled/></span><button class="btn" id="btn'+full.skuId+'" type="button">上传</button></form>' +
+								return '<form id="form' + full.skuId + '" target="'+ id + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+pageData.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+full.skuId+'" /><span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile" '+str+'/></span><button class="btn" id="btn'+full.skuId+'" type="button">上传</button></form>' +
 								'<iframe name="'+ id + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
 									'<span class="hide" id="msg'+full.skuId+'"><b></b></span>';
 							}
