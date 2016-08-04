@@ -259,7 +259,7 @@ var BizReport = BizReport || {};
 								return false;
 							}
 										
-							$(nTd).isLoading({text: local.getText('dataTable.loading'), position: "inside"});
+							$(nTd).isLoading({text: local.getText('dataTable.handling'), position: "inside"});
 							
 							listingIframe.on("load", function(){
 								$(nTd).isLoading('hide');
@@ -269,8 +269,8 @@ var BizReport = BizReport || {};
 								if (responseData.message && responseData.message.length > 0) {
 									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
 									if(responseData.status==true) {
-										$("#form"+oRow.skuId).remove();
-										$(nTd).find("#msg"+oRow.skuId).find("b").html('<a href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
+										//$("#form"+oRow.skuId).remove();
+										$(nTd).find("#msg"+oRow.skuId).find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
 										oRow.uploadSuccess = true;
 										oRow.downloadUrl = responseData.message;
 									} else {
@@ -410,9 +410,11 @@ var BizReport = BizReport || {};
 				if (this.checked) {
 					that.selectedItems = Array.prototype.slice.apply(aRows) || [];
 					enabledBoxes.parents('tr').addClass("selected");
+					that.dataTable.table.find("input[type=file]").prop('disabled', false);
 				} else {
 					that.selectedItems.splice(0); // empty selectedItems
 					enabledBoxes.parents('tr').removeClass("selected");
+					that.dataTable.table.find("input[type=file]").prop('disabled', true);
 				}
 				
 				that.publish("selectChange");
