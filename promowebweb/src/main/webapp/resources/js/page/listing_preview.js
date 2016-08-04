@@ -10,6 +10,7 @@ $(function(){
 			tableId: "listing-table",
 			customTableConfig: {
                 'sAjaxSource': '/promotion/listings/getPromotionListings',
+                'sScrollY': '',
                 columns: pageData && pageData.columns
             }
 		},

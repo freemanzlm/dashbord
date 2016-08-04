@@ -57,12 +57,6 @@ BizReport.local = {
 		}
 	},
 	'promo': {
-		'type': {
-			'deals': 'Deals招募',
-			'dealsPreset': 'Deals招募預置',
-			'hotsell': '爆款促銷',
-			'other': '其它活動'
-		},
 		'state': {
 			'Created': '報名',
 			'Submitted': '已提交預審',

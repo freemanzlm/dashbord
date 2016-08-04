@@ -73,17 +73,17 @@ var BizReport = BizReport || {};
 							jTr.find("input[type=checkbox]:enabled").prop("checked", oRow._aData.checked);
 							oRow._aData.checked ? jTr.addClass("selected") : jTr.removeClass('selected');
 						});
-						
-						$(".file-input").each(function(){
-							var fileBox = $(this), textInput = fileBox.find("[type=text]");
-							var fileInput = fileBox.find("[type=file]").change(function(){
-								textInput.attr("value", this.value);
-							}).width(textInput.width());
-							fileBox.find(".btn").click(function(){
-								fileInput.trigger("click");
-							});
+					}
+					
+					$(".file-input").each(function(){
+						var fileBox = $(this), textInput = fileBox.find("[type=text]");
+						var fileInput = fileBox.find("[type=file]").change(function(){
+							textInput.attr("value", this.value);
+						}).width(textInput.width());
+						fileBox.find(".btn").click(function(){
+							fileInput.trigger("click");
 						});
-					}				
+					});
 				},
 				columns: null,
 				aoColumnDefs: [{
@@ -258,7 +258,7 @@ var BizReport = BizReport || {};
 								$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.typeError"));
 								return false;
 							}
-										
+
 							$(nTd).isLoading({text: local.getText('dataTable.handling'), position: "inside"});
 							
 							listingIframe.on("load", function(){
