@@ -105,9 +105,8 @@
       	</dependency>
       	
 	<dependency>
-	  <groupId>com.ebay.v3project.v3dal</groupId>
-	  <artifactId>DALUser</artifactId>
-	  <version>1.0.194-E961_DEV_BASE</version>
+		<groupId>com.ebay.v3project.v3core</groupId>
+		<artifactId>CoreDomain</artifactId>
 	</dependency>
 	
       	<dependency>
