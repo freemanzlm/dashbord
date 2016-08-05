@@ -98,7 +98,7 @@ public class ListingResourceTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void uploadListings() throws IOException {
 		WebTarget target = c.target("/promoser/listings/uploadListings");
 		Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE).header("Authorization", authorization);
@@ -153,6 +153,8 @@ public class ListingResourceTest {
 			
 			System.out.println(mapper.writeValueAsString(data));
 		}
+		
+		workbook.close();
 	}
 	
 	public void uploadFile() throws JsonProcessingException {

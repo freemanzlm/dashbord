@@ -112,14 +112,14 @@ public class CSApiService {
 	 */
 	public String getUserIdByName (String userName) {
 		//For production env, use dal instead of service
-		if(EnviromentUtil.isProduction()){
-			try {
-				long id = userService.getUserIdByNameFromDal(userName);
-				return id == -1 ? "" : String.valueOf(id);
-			} catch (Exception e) {
-				return "";
-			}
-		}
+//		if(EnviromentUtil.isProduction()){
+//			try {
+//				long id = userService.getUserIdByNameFromDal(userName);
+//				return id == -1 ? "" : String.valueOf(id);
+//			} catch (Exception e) {
+//				return "";
+//			}
+//		}
 		
 		String token = getToken();
 		
