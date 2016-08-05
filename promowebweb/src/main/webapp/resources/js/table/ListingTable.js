@@ -126,6 +126,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",
 					mRender: function(data, type, full) {
 						var value = parseInt(data);
+						
 						if (type == "display") {
 							return isNaN(value) ? 'NA' : value;
 						}
@@ -197,16 +198,31 @@ var BizReport = BizReport || {};
 					sClass: "text-right",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
-						var value = parseFloat(data);
-						if (type == "display") {
-							return isNaN(value) ? 'NA' : (value > 0 ? value.toUSFixed(2) : '0');
+						var value;
+						if (typeof data === 'object' && data != null) {
+							value = parseFloat(data.value);
+							
+							if (type == "display") {
+								return isNaN(value) ? 'NA' : (value > 0 ? value.toUSFixed(2) : '0') + '(' + data.currency + ')';
+							}
+							
+							if (type == 'sort') {
+								return isNaN(value) ? Number.NEGATIVE_INFINITY : value;
+							}
+							
+							return data.value;
+						} else {
+							value = parseFloat(data);
+							if (type == "display") {
+								return isNaN(value) ? 'NA' : (value > 0 ? value.toUSFixed(2) : '0');
+							}
+							
+							if (type == 'sort') {
+								return isNaN(value) ? Number.NEGATIVE_INFINITY : value;
+							}
+							
+							return data;
 						}
-						
-						if (type == 'sort') {
-							return isNaN(value) ? Number.NEGATIVE_INFINITY : value;
-						}
-
-						return data;
 					}
 				},
 				{
