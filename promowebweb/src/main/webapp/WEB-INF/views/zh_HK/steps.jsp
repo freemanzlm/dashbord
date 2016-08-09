@@ -3,8 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
 
 <%-- stepList comes from SalesForce --%>
-<%-- <c:set var="stepList" value="${ 'Draft>Nomination eDM in approve flow>Nomination eDM approved>Seller nomination_Need approve>Promotion Submitted>Promotion Approved>Notification eDM in approve flow>Notification eDM approved>Seller Feedback>Promotion in progress>Promotion in validation>Promotion validated' }" /> --%>
-<c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="hasValidCurrentStep" value="${ promo.hasValidCurrentStep }" />
 <c:set var="hasGotCurrentStep" value="${ false }" />
 <c:set var="isCurrentStep" value="${ false }" />

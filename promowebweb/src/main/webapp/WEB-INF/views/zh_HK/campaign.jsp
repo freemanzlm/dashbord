@@ -1,12 +1,16 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 
-<c:set var="currentStep" value="${ promo.visibleCurrentStep }" />
+<c:set var="currentStep" value="${ promo.currentStep }" />
+<c:set var="visibleCurrentStep" value="${ promo.visibleCurrentStep }" />
+<!-- visible step list -->
+<c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
 <c:set var="hasListingsNominated" value="${false}" />
 <c:set var="isPreview" value="${ promo.isPreview }" />
@@ -89,11 +93,7 @@
 
 				<%@ include file="activity.jsp"%>
 
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType }">
-					<div class="mt20">
-						<%@ include file="table/skuList.jsp"%>
-					</div>
-					
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType and not empty fieldsDefintions }">
 					<div class="mt20">
 						<%@ include file="upload_listings.jsp"%>
 					</div>
@@ -106,7 +106,7 @@
 					</div>
 				</c:if>
 				
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType and not empty fieldsDefintions }">
 					<!-- 非上传形式报名, 或者正式报名 -->
 					<div class="mt20 my-listing">
 						<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
@@ -124,8 +124,8 @@
 					</div>	
 				</c:if>
 				
-				<c:if test="${currentStep eq 'Promotion Submitted' or currentStep eq 'Promotion in progress'
-					or currentStep eq 'Promotion in validation' or currentStep eq 'Promotion validated' }">
+				<c:if test="${(fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') or fn:containsIgnoreCase(stepList, 'Seller Feedback')) and 
+					(currentStep ne 'Seller nomination_Need approve' and currentStep ne 'Seller Feedback') and not empty fieldsDefintions }">
 					<div class="mt20 my-listing">
 						<h3><strong>提交的刊登</strong></h3>
 						<%@ include file="table/listings.jsp"%>
