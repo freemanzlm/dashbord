@@ -6,16 +6,10 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 
-<%-- <c:set var="currentStep" value="${ promo.adjustedCurrentStep }" /> --%>
-<%-- <c:set var="regType" value="${ promo.regType }" /> --%>
-<c:set var="currentStep" value="${ 'Seller nomination_Need approve' }" />
-<%-- <c:set var="currentStep" value="${ 'Promotion in progress' }" /> --%>
-<%-- <c:set var="currentStep" value="${ 'Seller Feedback' }" /> --%>
-<%-- <c:set var="currentStep" value="${ 'Promotion validated' }" /> --%>
-<%-- <c:set var="currentStep" value="${ 'Promotion end' }" /> --%>
-<c:set var="regType" value="${ true }" />
+<c:set var="currentStep" value="${ promo.visibleCurrentStep }" />
+<c:set var="regType" value="${ promo.regType }" />
 <c:set var="hasListingsNominated" value="${false}" />
-<c:set var="isPreview" value="${ false }" />
+<c:set var="isPreview" value="${ promo.isPreview }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />

@@ -31,7 +31,6 @@ import com.ebay.integ.user.User;
 import com.ebay.integ.user.UserDAO;
 import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.soap.CSSOAPMessageFactory;
-import com.ebay.raptor.promotion.user.service.UserService;
 import com.ebay.raptor.promotion.util.DateUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
 import com.ebay.raptor.promotion.xml.DOMResolver;
@@ -51,7 +50,6 @@ public class CSApiService {
 	private String token;
 	
 	@Autowired private HttpRequestService httpRequestService;
-	@Autowired private UserService userService;
 	
 	/**
 	 * Get the token to access CS APIs.
@@ -112,15 +110,6 @@ public class CSApiService {
 	 */
 	public String getUserIdByName (String userName) {
 		//For production env, use dal instead of service
-//		if(EnviromentUtil.isProduction()){
-//			try {
-//				long id = userService.getUserIdByNameFromDal(userName);
-//				return id == -1 ? "" : String.valueOf(id);
-//			} catch (Exception e) {
-//				return "";
-//			}
-//		}
-		
 		String token = getToken();
 		
 		SOAPMessage soapMessage = null;

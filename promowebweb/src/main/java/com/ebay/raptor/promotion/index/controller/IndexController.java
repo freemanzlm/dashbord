@@ -133,7 +133,7 @@ public class IndexController {
 		
 		try {
 			// get subsidy details when promotion is validated.
-			if (PromotionStep.PROMOTION_VALIDATED.getName().equalsIgnoreCase(promo.getCurrentStep())) {
+			if (promo != null && PromotionStep.PROMOTION_VALIDATED.getName().equalsIgnoreCase(promo.getCurrentStep())) {
 				Subsidy subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
 				if (subsidy != null) {
 					model.addObject(ViewContext.Subsidy.getAttr(), subsidy);
