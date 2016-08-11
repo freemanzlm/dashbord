@@ -103,7 +103,7 @@ public class AttachmentFileValidator {
 	}
 	
 	public ResourceBundle getBundle() {
-		return bundle == null ? bundle = ResourceBundle.getBundle(bundleBaseName, Locale.SIMPLIFIED_CHINESE) : bundle;
+		return bundle == null ? bundle = ResourceBundle.getBundle(bundleBaseName, locale) : bundle;
 	}
 
 	public void setBundle(ResourceBundle bundle) {

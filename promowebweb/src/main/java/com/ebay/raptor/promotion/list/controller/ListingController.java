@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContext;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
@@ -243,6 +244,7 @@ public class ListingController extends AbstractListingController {
 		ResponseData <String> responseData = new ResponseData <String>();
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		AttachmentFileValidator attachmentFileValidator = AttachmentFileValidator.getInstance();
+		attachmentFileValidator.setLocale(LocaleUtil.getCurrentLocale());
 		try {
 			if(attachmentFileValidator.isValidate(uploadFile)) {
 				try {
