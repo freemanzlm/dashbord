@@ -81,6 +81,8 @@ public class PromotionViewService {
 		// if promotion is in draft step, it may be a preview-able promotion.
 		handleDraftPromotion(pro);
 		
+		context.put(ViewContext.HAS_LISTINGS_NOMINATED.getAttr(), service.hasListingNominated(pro.getPromoId(), uid));
+		
 		// We only leave visible step list for promotion display.
 		String visibleStepList = getVisibleStepList(pro.getStepList());
 		pro.setStepList(visibleStepList);

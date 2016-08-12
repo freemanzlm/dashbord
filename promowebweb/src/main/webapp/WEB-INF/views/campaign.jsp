@@ -12,7 +12,7 @@
 <!-- visible step list -->
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
-<c:set var="hasListingsNominated" value="${false}" />
+<c:set var="hasListingsNominated" value="${hasListingsNominated}" />
 <c:set var="isPreview" value="${ promo.isPreview }" />
 
 <r:includeJquery jsSlot="head" />

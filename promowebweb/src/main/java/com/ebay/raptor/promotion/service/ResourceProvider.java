@@ -31,6 +31,7 @@ public class ResourceProvider {
 		
 		String _getPromotionById = "/getPromotionById";
 		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}/isAdmin/{isAdmin}";
+		String hasListingNominated = "/hasListingNominated/promoId/{promoId}/uid/{uid}";
 	}
 	
 	public interface UserPromotionRes {
@@ -90,6 +91,7 @@ public class ResourceProvider {
 		String uploadFRESDealsListings = "/uploadFRESDealsListings";
 		@Deprecated
 		String submitDealsListings = "/submitDealsListings";
+		String submitPromoListings = "/submitPromoListings";
 		String getListingsByPromotionIdAndUserIdAndType = "/getPromotionListings/promoId/{promoId}/uid/{uid}/type/{type}";
 		
 		@Deprecated

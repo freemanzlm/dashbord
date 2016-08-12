@@ -183,7 +183,7 @@ public class ListingService extends BaseService {
 	 * @throws PromoException
 	 */
 	public boolean submitListings(String promoId, Long uid) throws PromoException {
-		String uri = url(ResourceProvider.ListingRes.submitDealsListings);
+		String uri = url(ResourceProvider.ListingRes.submitPromoListings);
 		SubmitListingRequest req = new SubmitListingRequest();
 		req.setPromoId(promoId);
 		req.setUid(uid);

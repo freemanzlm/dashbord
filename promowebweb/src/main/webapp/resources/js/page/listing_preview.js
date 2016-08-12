@@ -71,10 +71,11 @@ $(function(){
 									if (json && json.status) {
 										window.location.replace("/promotion/"+pageData.promoId);
 									} else if (json.data && json.data.length > 0) {
-										cbt.alert(local.getText("errorMsg.regDateExpired"));
+										//cbt.alert(local.getText("errorMsg.regDateExpired"));
 										window.location.replace("/promotion/"+pageData.promoId);
 									} else {
-										cbt.alert(local.getText('promo.request.fail'));
+										//cbt.alert(local.getText('promo.request.fail'));
+										window.location.replace("/promotion/"+pageData.promoId);
 									}
 								},
 								error: function(){
@@ -97,10 +98,11 @@ $(function(){
 					if (json && json.status) {
 						window.location.replace("/promotion/"+pageData.promoId);
 					} else if (json.data && json.data.length > 0) {
-						cbt.alert(local.getText("errorMsg.regDateExpired"));
+						//cbt.alert(local.getText("errorMsg.regDateExpired"));
 						window.location.replace("/promotion/"+pageData.promoId);
 					} else {
-						cbt.alert(local.getText('promo.request.fail'));
+						//cbt.alert(local.getText('promo.request.fail'));
+						window.location.replace("/promotion/"+pageData.promoId);
 					}
 				},
 				error: function(){
