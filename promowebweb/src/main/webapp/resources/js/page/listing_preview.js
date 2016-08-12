@@ -42,6 +42,7 @@ $(function(){
 		var listings = listingTable.oDataTable.data();
 		var attachIndex = 0;
 		var container = $(".container");
+		var total = container.find("input[type=file]:checked").length;
 		var attachSubmit = function() {
 			var attachId = listings[attachIndex].skuId;
 			var attachIframe = $("iframe[name=iframe"+attachId+"]");
@@ -50,17 +51,17 @@ $(function(){
 				attachForm.submit();
 			}
 			var successCount = container.find("iframe").parent().find("a").length;
-			container.isLoading({text: local.getText("promo.request.counting", [successCount, listings.length]), position: "overlay"});
+			container.isLoading({text: local.getText("promo.request.counting", [successCount, total]), position: "overlay"});
 			var timer = setInterval(function() {
 				if($("#msg"+attachId).find("b").html().length != 0) {
 					container.isLoading('hide');
 					clearInterval(timer);
 					attachIndex += 1;
 					successCount = container.find("iframe").parent().find("a").length;
-					if(attachIndex<listings.length) {
+					if(attachIndex<total) {
 						attachSubmit();
 					} else {
-						if(successCount == listings.length) {
+						if(successCount == total) {
 							$.ajax({
 								url: "/promotion/listings/submitListings",
 								type: 'POST',
@@ -86,6 +87,32 @@ $(function(){
 			}, 500);
 		};
 		
-		attachSubmit();
+		var withoutAttachSubmit = function() {
+			$.ajax({
+				url: "/promotion/listings/submitListings",
+				type: 'POST',
+				data: data,
+				dataType : 'json',
+				success : function(json){
+					if (json && json.status) {
+						window.location.replace("/promotion/"+pageData.promoId);
+					} else if (json.data && json.data.length > 0) {
+						cbt.alert(local.getText("errorMsg.regDateExpired"));
+						window.location.replace("/promotion/"+pageData.promoId);
+					} else {
+						cbt.alert(local.getText('promo.request.fail'));
+					}
+				},
+				error: function(){
+					cbt.alert(local.getText('promo.request.fail'));
+				}
+			});
+		};
+		
+		if(total > 0) {
+			attachSubmit();
+		} else {
+			withoutAttachSubmit();
+		}
 	});	
 });
