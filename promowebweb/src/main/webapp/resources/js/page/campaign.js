@@ -79,6 +79,7 @@ $(function(){
 					var responseData = $.parseJSON(response);
 					// verification returns no error 
 					if (responseData && responseData.status) {
+						console.log("/promotion/listings/reviewUploadedListings?promoId="+pageData.promoId);
 						window.location.replace("/promotion/listings/reviewUploadedListings?promoId="+pageData.promoId);
 					}
 					// handle error
