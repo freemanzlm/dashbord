@@ -121,7 +121,7 @@ public class ListingService extends BaseService {
 		String uri = "";
 		GenericType<?> type = null;
 
-		uri = url(params(ResourceProvider.ListingRes.getSKUListingsByPromotionId,
+		uri = url(params(ResourceProvider.ListingRes.getPromotionListings,
 				new Object[] { "{promoId}", promoId, "{uid}", uid }));
 //		type = new GenericType<ListDataServiceResponse<Map<String, Object>>>(){};
 		type = new GenericType<ListDataServiceResponse<Listing>>(){};

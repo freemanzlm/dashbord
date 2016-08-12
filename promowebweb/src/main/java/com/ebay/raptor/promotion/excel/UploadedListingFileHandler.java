@@ -45,8 +45,12 @@ public class UploadedListingFileHandler {
 		if (list != null) {
 			for (Map<String, Object> row : list) {
 				Listing listing = new Listing();
-				listing.setSkuId(row.remove("skuId").toString());
-				listing.setCurrency(row.remove("currency").toString());
+				if(row.get("skuId")!=null) {
+					listing.setSkuId(row.remove("skuId").toString());
+				}
+				if(row.get("currency")!=null) {
+					listing.setCurrency(row.remove("currency").toString());
+				}
 				listing.setState(ListingState.Uploaded.getName());
 				try {
 					listing.setNominationValues(mapper.writeValueAsString(row));
