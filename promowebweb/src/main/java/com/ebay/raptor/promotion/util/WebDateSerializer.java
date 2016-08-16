@@ -23,7 +23,7 @@ public class WebDateSerializer extends JsonSerializer<Date> {
 			jgen.writeString(EMPTY_DATE_STR);
 			return;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		jgen.writeString(sdf.format(value));
 	}
 
