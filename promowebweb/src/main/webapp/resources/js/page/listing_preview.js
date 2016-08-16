@@ -42,7 +42,7 @@ $(function(){
 		var listings = listingTable.oDataTable.data();
 		var attachIndex = 0;
 		var container = $(".container");
-		var total = container.find("input[type=file]:checked").length;
+		var total = container.find("input[type=file]").length;
 		var attachSubmit = function() {
 			var attachId = listings[attachIndex].skuId;
 			var attachIframe = $("iframe[name=iframe"+attachId+"]");

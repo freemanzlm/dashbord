@@ -105,17 +105,36 @@ var BizReport = BizReport || {};
 					sWidth : "120px",
 					sDefaultContent : " ",
 					mRender : function (data, type, full) {
-						return data;
+						if(!data) {
+							return "--"
+						}
+						var date = new Date(data);
+						var month = date.getMonth() + 1;
+						var dt = date.getDate();
+						var hour = date.getHours();
+						var min = date.getMinutes();
+						return date.getFullYear()+ "-" +(month.length >1 ? month : "0" + month) + "-" + (dt<10?"0"+dt:dt) +  " " + (hour.length>1?hour:"0"+hour) + ":" + (min.length>1?min:"0"+min);
 					}
 				}, {
 					aTargets : ["promoDt"],
 					sType : "date",
 					sClass : "text-center",
-					sWidth : "200px",
+					sWidth : "220px",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
 						if (type == "display") {
-							return full.promoSdt + " ~ " + data;
+							var date1 = new Date(data);
+							var date2 = new Date(full.promoSdt);
+							var month1 = date1.getMonth() + 1;
+							var month2 = date2.getMonth() + 1;
+							var dt1 = date1.getDate();
+							var dt2 = date2.getDate();
+							var hour1 = date1.getHours();
+							var hour2 = date2.getHours();
+							var min1 = date1.getMinutes();
+							var min2 = date2.getMinutes();
+							return date2.getFullYear()+ "-" +(month2.length > 1 ? month2 : "0" + month2) + "-" + (dt2<10?"0"+dt2:dt2) +  " " + (hour2.length>1?hour2:"0"+hour2) + ":" + (min2.length>1?min2:"0"+min2)
+									+ " ~ " + date1.getFullYear()+ "-" +(month1.length > 1 ? month1 : "0" + month1) + "-" + (dt1<10?"0"+dt1:dt1) +  " " + (hour1.length>1?hour1:"0"+hour1) + ":" + (min1.length>1?min1:"0"+min1);
 						}
 						return data;
 					}
