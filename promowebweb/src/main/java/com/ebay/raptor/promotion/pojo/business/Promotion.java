@@ -29,6 +29,17 @@ public class Promotion {
 	private Boolean hasValidCurrentStep;
 	
 	private String stepList;
+	
+	private Boolean legalTermFlag;
+	
+
+	public Boolean getLegalTermFlag() {
+		return legalTermFlag;
+	}
+
+	public void setLegalTermFlag(Boolean legalTermFlag) {
+		this.legalTermFlag = legalTermFlag;
+	}
 
 	@JsonSerialize(using=WebDateSerializer.class)
 	private Date promoDlDt;

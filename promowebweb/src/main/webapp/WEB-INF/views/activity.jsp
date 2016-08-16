@@ -31,10 +31,14 @@
 				</div>
 			</div>
 		</c:if>
+		
+		<c:if test="${ promo.legalTermFlag}">
+			<div class="table-row">
+				<div class="table-cell brief-title">其他条款：</div>
+				<div class="table-cell pretty-text">
+					<div><a href="javascript:void(0)" class="terms-conditions">点击阅读《其他条款》</a>。其他条款为本活动条款的一部分，具有不可分割性。</div>
+				</div>
+			</div>
+		</c:if>
 	</div>
-	<c:if test="${ not empty promo.itemDesc }">
-		<div class="activity-law">
-			<a href="javascript:void(0)" class="terms-conditions">点击阅读《其他条款》</a>。其他条款为本活动条款的一部分，具有不可分割性。
-		</div>
-	</c:if>	
 </div>

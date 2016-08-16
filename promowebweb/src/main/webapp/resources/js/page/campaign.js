@@ -77,11 +77,11 @@ $(function(){
 				// check the response
 				if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").html().length > 0) {
 					console.log("inside iframe");
-					var response = uploadIFrame.contents().find("body").html();
+					var response = uploadIFrame.contents().find("body").text();
 					var responseData = $.parseJSON(response);
 					// verification returns no error 
 					if (responseData && responseData.status) {
-						console.log("/promotion/listings/reviewUploadedListings?promoId="+pageData.promoId);
+						console.log("no error");
 						window.location.replace("/promotion/listings/reviewUploadedListings?promoId="+pageData.promoId);
 					}
 					// handle error

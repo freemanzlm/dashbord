@@ -71,8 +71,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 
 		addPageParameters(request, model, user);
 
-		//resp.addHeader("X-Frame-Option", "Allow-From http://www.ebay.cn");
-
+		resp.addHeader("X-Frame-Option", "Allow-From http://www.ebay.cn");
+		//resp.addHeader("X-Frame-Option", "SAMEORIGIN");
 		// TODO Add CN by default.
 		// model.addObject(ViewContext.Region.getAttr(), "CN");
 
