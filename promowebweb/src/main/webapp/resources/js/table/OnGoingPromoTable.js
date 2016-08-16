@@ -110,7 +110,7 @@ var BizReport = BizReport || {};
 						var dt = date.getDate();
 						var hour = date.getHours();
 						var min = date.getMinutes();
-						return date.getFullYear()+ "-" +(month.length >1 ? month : "0" + month) + "-" + (dt<10?"0"+dt:dt) +  " " + (hour.length>1?hour:"0"+hour) + ":" + (min.length>1?min:"0"+min);
+						return date.getFullYear()+ "-" +(month >=10 ? month : "0" + month) + "-" + (dt<10?"0"+dt:dt) +  " " + (hour<10?"0"+hour:hour) + ":" + (min<10?"0"+min:min);
 					}
 				}, {
 					aTargets : ["promoDt"],
@@ -130,8 +130,8 @@ var BizReport = BizReport || {};
 							var hour2 = date2.getHours();
 							var min1 = date1.getMinutes();
 							var min2 = date2.getMinutes();
-							return date2.getFullYear()+ "-" +(month2.length > 1 ? month2 : "0" + month2) + "-" + (dt2<10?"0"+dt2:dt2) +  " " + (hour2.length==1?"0"+hour2:hour2) + ":" + (min2.length==1?"0"+min2:min2)
-									+ " ~ " + date1.getFullYear()+ "-" +(month1.length > 1 ? month1 : "0" + month1) + "-" + (dt1<10?"0"+dt1:dt1) +  " " + (hour1.length==1?"0"+hour1:hour1) + ":" + (min1.length==1?"0"+min1:min1);
+							return date2.getFullYear()+ "-" +(month2 >= 10 ? month2 : "0" + month2) + "-" + (dt2<10?"0"+dt2:dt2) +  " " + (hour2<10?"0"+hour2:hour2) + ":" + (min2<10?"0"+min2:min2)
+									+ " ~ " + date1.getFullYear()+ "-" +(month1 >= 10 ? month1 : "0" + month1) + "-" + (dt1<10?"0"+dt1:dt1) +  " " + (hour1<10?"0"+hour1:hour1) + ":" + (min1<10?"0"+min1:min1);
 						}
 						return data;
 					}
