@@ -191,7 +191,7 @@ $(function(){
 				if($("#href"+attachId).length<=0) {
 					attachForm.submit();
 				}
-				var successCount = container.find("input[name=item]:checked").parent().parent().find("a").length;
+				var successCount = container.find("input[name=item]:checked").parent().parent().find("span a").length;
 				container.isLoading({text: local.getText("promo.request.counting", [successCount, listings.length]), position: "overlay"});
 				var timer = setInterval(function() {
 					if($("#msg"+attachId).find("b").html().length != 0) {
@@ -203,7 +203,7 @@ $(function(){
 							}
 						}*/
 						attachIndex += 1;
-						successCount = container.find("input[name=item]:checked").parent().parent().find("a").length;;
+						successCount = container.find("input[name=item]:checked").parent().parent().find("span a").length;
 						if(attachIndex<listings.length) {
 							attachSubmit();
 						} else {
