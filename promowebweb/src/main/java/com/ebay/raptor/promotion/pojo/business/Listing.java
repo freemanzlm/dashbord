@@ -20,6 +20,8 @@ public class Listing {
 	private String nominationValues;
 	
 	private String state;
+	
+	private Boolean hasUploaded;
 
 	public String getSkuId() {
 		return skuId;
@@ -52,5 +54,12 @@ public class Listing {
 	public void setNominationValues(String nominationValues) {
 		this.nominationValues = nominationValues;
 	}
-	
+
+	public Boolean getHasUploaded() {
+		return hasUploaded;
+	}
+
+	public void setHasUploaded(Boolean hasUploaded) {
+		this.hasUploaded = hasUploaded;
+	}
 }

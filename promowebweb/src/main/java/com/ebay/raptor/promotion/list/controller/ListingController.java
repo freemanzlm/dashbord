@@ -270,11 +270,11 @@ public class ListingController extends AbstractListingController {
 	@RequestMapping(ResourceProvider.ListingRes.downloadListingAttachment)
 	public void downloadListingAttachment(HttpServletRequest req, HttpServletResponse resp,
 			@PathVariable("promoId") String promoId, @PathVariable("userId") Long userId, 
-			@PathVariable("skuId") String skuId) throws MissingArgumentException, IOException {
+			@PathVariable("skuId") String skuId) throws MissingArgumentException, IOException, PromoException {
 		resp.setContentType("application/x-msdownload;");
 		UserData userData = CookieUtil.getUserDataFromCookie(req);
 		if(userData.getUserId()!=userId) {
-			//TODO
+			//throw new PromoException();
 		}
 		InputStream inputStream = null;
 		OutputStream outStream = null;
@@ -394,6 +394,11 @@ public class ListingController extends AbstractListingController {
 				map.put("skuId", listing.getSkuId());
 				map.put("state", listing.getState());
 				map.put("currency", listing.getCurrency());
+				map.put("hasUploaded", listing.getHasUploaded());
+				
+				if(listing.getHasUploaded()) {
+					map.put("downloadAttachUrl", "/downloadListingAttachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId());
+				}
 				
 				if (listing.getNominationValues() != null) {
 					try {

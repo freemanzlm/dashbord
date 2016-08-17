@@ -235,6 +235,10 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							var id = 'iframe'+ full.skuId;
 							var str = 'disabled';
+							var urlStr = '';
+							if(full.state && full.state== 'Enrolled') {
+								str = '';
+							}
 							if(pageData.isPreview && pageData.isPreview == 'true') {
 								str = '';
 							}
@@ -257,8 +261,14 @@ var BizReport = BizReport || {};
 						var listingBtn = $(nTd).find("#btn"+oRow.skuId);
 						var listingIframe = $(nTd).find("iframe[name=iframe"+oRow.skuId+"]");
 						if ($(nTd).find("#form"+oRow.skuId)) {
+							if(oRow.hasUploaded) {
+								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+								$(nTd).find("#msg"+oRow.skuId).find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+oRow.downloadAttachUrl+'>'+local.getText('promo.listings.attachdownload')+'</a>');
+								oRow.uploadSuccess = true;
+								oRow.downloadUrl = oRow.downloadAttachUrl;
+							}
 							var listingForm = $(nTd).find("#form"+oRow.skuId).submit(function(){
-							$(nTd).find("#msg"+oRow.skuId).find("b").empty();
+							//$(nTd).find("#msg"+oRow.skuId).find("b").empty();
 							var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
 							var fileName = fileInput.val();
 							//文件不能为空
@@ -284,7 +294,7 @@ var BizReport = BizReport || {};
 							listingIframe.on("load", function(){
 								$(nTd).isLoading('hide');
 								if (listingIframe.contents().length != 0 && listingIframe.contents().find("body").html().length > 0) {
-									var response = listingIframe.contents().find("body").html();
+									var response = listingIframe.contents().find("body").text();
 									var responseData = $.parseJSON(response);
 								if (responseData.message && responseData.message.length > 0) {
 									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
@@ -300,6 +310,7 @@ var BizReport = BizReport || {};
 								} 
 								else {
 									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+									$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
 									$(nTd).find("#msg"+oRow.skuId).find("b").html("upload file failed!");
 								}
 							}
@@ -375,7 +386,7 @@ var BizReport = BizReport || {};
 					var aRows = oDataTable.data();
 					
 					that.selectedItems = aRows.filter(function(oRow){
-						oRow.checked = oRow.state == 'Applied' || oRow.state == 'Confirmed';
+						oRow.checked = oRow.state == 'Applied' || oRow.state == 'Confirmed' || oRow.state == 'Enrolled';
 						return oRow.checked;
 					});
 					
