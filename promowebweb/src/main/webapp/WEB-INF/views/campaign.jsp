@@ -93,7 +93,7 @@
 
 				<%@ include file="activity.jsp"%>
 
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or (currentStep eq 'Seller Feedback' and not fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve'))) and  regType and not empty fieldsDefintions }">
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or (currentStep eq 'Seller Feedback' and not fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve'))) and not  regType and not empty fieldsDefintions }">
 					<div class="mt20">
 						<%@ include file="upload_listings.jsp"%>
 					</div>
@@ -106,7 +106,7 @@
 					</div>
 				</c:if>
 				
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  not regType and  not empty fieldsDefintions }">
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType and  not empty fieldsDefintions }">
 				
 					<!-- 非上传形式报名, 或者正式报名 -->
 					<div class="mt20 my-listing">
