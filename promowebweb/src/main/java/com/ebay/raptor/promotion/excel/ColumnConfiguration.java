@@ -49,6 +49,8 @@ public class ColumnConfiguration {
 	// sample data
 	private String sample;
 	
+	private Boolean required = false;
+	
 	private List<ColumnConstraint> constraints = new ArrayList<ColumnConstraint>();
 	
 	/**
@@ -133,6 +135,12 @@ public class ColumnConfiguration {
 	}
 	public void setLabel(String label) {
 		this.label = label;
+	}
+	public Boolean getRequired() {
+		return required;
+	}
+	public void setRequired(Boolean required) {
+		this.required = required;
 	}
 
 }
