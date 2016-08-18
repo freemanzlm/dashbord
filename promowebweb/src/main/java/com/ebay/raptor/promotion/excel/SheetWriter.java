@@ -2,6 +2,7 @@ package com.ebay.raptor.promotion.excel;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -41,6 +42,10 @@ public class SheetWriter implements ISheetWriter {
 	public void createCell(Workbook book, Sheet sheet, Row row, ColumnConfiguration config,
 			Object value, CellStyle style) {
 		if (config == null) return;
+		
+		if(value instanceof LinkedHashMap) {
+			value = ((LinkedHashMap) value).get("value");
+		}
 		
 		if (config.getRawType() == null) {
 			// attachment doesn't have raw type.

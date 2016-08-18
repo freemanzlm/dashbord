@@ -107,7 +107,7 @@ public class SheetReader implements ISheetReader {
 		ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		ExcelValidator validator = new ExcelValidator();
 		
-		for (int i = firstRowNum; i < lastRowNum; i++) {
+		for (int i = firstRowNum; i <= lastRowNum; i++) {
 			logger.log(Level.INFO,	"Beginning to read row " + i);
 			
 			Map<String, Object> obj = readRow(configs, sheet.getRow(i));
