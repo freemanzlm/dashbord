@@ -92,8 +92,15 @@
 				<%@ include file="state.jsp"%>
 
 				<%@ include file="activity.jsp"%>
-
+				
 				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or (currentStep eq 'Seller Feedback' and not fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve'))) and not  regType and not empty fieldsDefintions }">
+					<c:if test="${hasListingsNominated }">
+						<div class="mt20 my-listing">
+							<h3><strong>提交的刊登</strong></h3>
+							<%@ include file="table/listings.jsp"%>
+						</div>
+					</c:if>
+					
 					<div class="mt20">
 						<%@ include file="upload_listings.jsp"%>
 					</div>
