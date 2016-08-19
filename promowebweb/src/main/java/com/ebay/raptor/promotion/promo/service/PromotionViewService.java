@@ -41,19 +41,26 @@ public class PromotionViewService {
 		Date now = new Date();
 		
 		// whether nomination end date has expired
-		Date nominationEndDate = pro.getRegEndDate();
-		boolean enrollEnded = false;
-		if (nominationEndDate != null) {
-			nominationEndDate = DateUtil.convertToSystemTime(nominationEndDate, DateUtil.BEIJING_TIMEZONE);
-			context.put(ViewContext.IS_NOMINATION_END.getAttr(), enrollEnded = nominationEndDate.before(now));
-		}
+//		Date nominationEndDate = pro.getRegEndDate();
+//		boolean enrollEnded = false;
+//		if (nominationEndDate != null) {
+//			nominationEndDate = DateUtil.convertToSystemTime(nominationEndDate, DateUtil.BEIJING_TIMEZONE);
+//			context.put(ViewContext.IS_NOMINATION_END.getAttr(), enrollEnded = nominationEndDate.before(now));
+//		}
 		
 		// for non reg type
-		Date confirmEndDate = pro.getPromoDlDt();
-		boolean confirmEnded = false;
-		if (confirmEndDate != null) {
-			confirmEndDate = DateUtil.convertToSystemTime(confirmEndDate, DateUtil.BEIJING_TIMEZONE);
-			context.put(ViewContext.IS_CONFIRM_END.getAttr(), confirmEnded = confirmEndDate.before(now));
+//		Date confirmEndDate = pro.getPromoDlDt();
+//		boolean confirmEnded = false;
+//		if (confirmEndDate != null) {
+//			confirmEndDate = DateUtil.convertToSystemTime(confirmEndDate, DateUtil.BEIJING_TIMEZONE);
+//			context.put(ViewContext.IS_CONFIRM_END.getAttr(), confirmEnded = confirmEndDate.before(now));
+//		}
+		
+		Date regEndDate = pro.getPromoDlDt();
+		boolean isRegEnded = false;
+		if (regEndDate != null) {
+			regEndDate = DateUtil.convertToSystemTime(regEndDate, DateUtil.BEIJING_TIMEZONE);
+			context.put(ViewContext.IS_REG_END.getAttr(), isRegEnded = regEndDate.before(now));
 		}
 		
 		// whether promotion has stopped
@@ -73,7 +80,7 @@ public class PromotionViewService {
 		String fieldsDefinitions = pro.getListingFields(); 
 		handleListingFields(fieldsDefinitions, context);
 		
-		if (!enrollEnded || !confirmEnded) {
+		if (!isRegEnded) {
 			// Enroll and confirm need to check if user has accept the terms. 
 			context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 		}
