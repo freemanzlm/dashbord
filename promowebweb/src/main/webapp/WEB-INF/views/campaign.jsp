@@ -125,21 +125,31 @@
 				
 				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType and  not empty fieldsDefintions and not isRegEnd }">
 				
-					<!-- 非上传形式报名, 或者正式报名 -->
-					<div class="mt20 my-listing">
-						<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
-						<%@ include file="table/listings.jsp"%>
-					</div>
+					<c:choose>
+						<c:when test="${ isRegEnd ne true }">
+							<!-- 非上传形式报名, 或者正式报名 -->
+							<div class="mt20 my-listing">
+								<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
+								<%@ include file="table/listings.jsp"%>
+							</div>
+							
+							<div class="mt20 page-bottom-actions">
+								<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
+									<input type="hidden" name="promoId" value="${promo.promoId}"/>
+									<input type="hidden" name="listings" value="[]" />
+									<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
+									<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
+									<br /><br /> <a href="index">返回活动列表</a>
+								</form>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="mt20 page-bottom-actions">
+								<a href="index">返回活动列表</a>
+							</div>
+						</c:otherwise>
+					</c:choose>
 					
-					<div class="mt20 page-bottom-actions">
-						<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
-							<input type="hidden" name="promoId" value="${promo.promoId}"/>
-							<input type="hidden" name="listings" value="[]" />
-							<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-							<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
-							<br /><br /> <a href="index">返回活动列表</a>
-						</form>
-					</div>
 						
 				</c:if>
 				
