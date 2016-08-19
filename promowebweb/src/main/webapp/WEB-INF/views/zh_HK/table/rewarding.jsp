@@ -7,7 +7,6 @@
 		<thead>
 			<tr>
 				<th class="name">活動名稱</th>
-				<th class="type">活動類型</th>
 				<th class="rewardDlDt">獎勵申領截止時間</th>
 				<th class="promoDt">活動時間</th>				
 				<th class="reward">獎勵金額</th>

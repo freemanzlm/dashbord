@@ -54,10 +54,10 @@
 <res:useCss value="${res.css.local.css.promotion_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.base_css}" target="head-css" />
 
-<res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
-<res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
-<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head"></res:useJs>
-<res:useJs value="${res.js.local.js['cookie.js']}" target="head"></res:useJs>
+<res:useJs value="${res.js.local.js['extension.js']}" target="head-js"></res:useJs>
+<res:useJs value="${res.js.local.js['util.js']}" target="head-js"></res:useJs>
+<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head-js"></res:useJs>
+<res:useJs value="${res.js.local.js['cookie.js']}" target="head-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
@@ -123,7 +123,7 @@
 					
 				</c:if>
 				
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType and  not empty fieldsDefintions and not isRegEnd }">
+				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType and  not empty fieldsDefintions }">
 				
 					<c:choose>
 						<c:when test="${ isRegEnd ne true }">
