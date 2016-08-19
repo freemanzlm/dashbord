@@ -101,16 +101,27 @@
 						</div>
 					</c:if>
 					
-					<div class="mt20">
-						<%@ include file="upload_listings.jsp"%>
-					</div>
+					<c:choose>
+						<c:when test="${ isRegEnd ne true }">
+							<div class="mt20">
+								<%@ include file="upload_listings.jsp"%>
+							</div>
+							
+							<div class="mt20 page-bottom-actions">
+								<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閱讀並接受活動條款及
+									<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
+								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
+								<br /> <br /> <a href="index">返回活動列表</a>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="mt20 page-bottom-actions">
+								<a href="index">返回活動列表</a>
+							</div>
+						</c:otherwise>
+					</c:choose>
 					
-					<div class="mt20 page-bottom-actions">
-						<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閱讀並接受活動條款及
-							<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
-						<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
-						<br /> <br /> <a href="index">返回活動列表</a>
-					</div>
+					
 				</c:if>
 				
 				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType and not empty fieldsDefintions }">

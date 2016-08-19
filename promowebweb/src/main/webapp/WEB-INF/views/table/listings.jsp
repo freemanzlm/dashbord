@@ -28,7 +28,7 @@
 		</table>
 		
 		<c:choose>
-			<c:when test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  regType  }">
+			<c:when test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  regType and not isRegEnd }">
 				<c:set var="columns" value='[{"data:":"skuId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
 			</c:when>
 			<c:otherwise>
