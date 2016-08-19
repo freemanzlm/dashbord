@@ -62,6 +62,7 @@ BizReport.local = {
 			'null': '无',
 			'Draft': '草稿',
 			'Nomination eDM in approve flow': '报名阶段',
+			'Seller nomination_Need approve' : '报名阶段',
 			'Promotion Submitted': '审核阶段',
 			'Promotion Approved': '审核阶段',
 			'Seller Feedback': '报名阶段',
