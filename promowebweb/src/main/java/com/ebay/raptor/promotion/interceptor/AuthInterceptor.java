@@ -20,6 +20,7 @@ import com.ebay.kernel.util.FastURLEncoder;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.service.BaseDataService;
+import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PromotionUtil;
 import com.ebay.raptor.promotion.util.RequestUtil;
@@ -29,6 +30,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	private static final CommonLogger _logger = CommonLogger.getInstance(AuthInterceptor.class);
 	
 	@Autowired protected BaseDataService dataService;
+	@Autowired protected CSApiService csApiService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -72,8 +74,18 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		String userName = null;
 		String sessionId = null;
 		ParameterType type = null;
+		long userId = -1;
 
 		if (cookieMap != null && cookieMap.size() > 0) {
+			userName = cookieMap.get(AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME);
+			if(!StringUtil.isEmpty(userName)) {
+				userId = Long.parseLong(cookieMap.get(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME));
+				long id = Long.parseLong(csApiService.getUserIdByName(userName));
+				if(userId != id) {
+					return false;
+				}
+			}
+			
 			if (!StringUtil.isEmpty(cookieMap.get(AppCookies.HACKID_COOKIE_KEY))) {
 				return true;
 			} else if (!StringUtil.isEmpty(cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
