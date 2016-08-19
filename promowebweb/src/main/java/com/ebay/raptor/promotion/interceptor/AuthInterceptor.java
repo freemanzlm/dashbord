@@ -80,8 +80,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			userName = cookieMap.get(AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME);
 			if(!StringUtil.isEmpty(userName)) {
 				userId = Long.parseLong(cookieMap.get(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME));
-				long id = Long.parseLong(csApiService.getUserIdByName(userName));
-				if(userId != id) {
+				String str = csApiService.getUserIdByName(userName);
+				if((str!=null && Long.toString(userId) != str) || str == null) {
 					return false;
 				}
 			}
