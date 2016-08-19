@@ -71,7 +71,7 @@ var BizReport = BizReport || {};
 					for (var i in headers) {
 						var col_header = headers[i];
 						if (col_header && col_header.cell) {
-							col_header.requried = col_header.cell.hasAttribute('required');
+							col_header.required = col_header.cell.hasAttribute('required');
 						}
 					}
 				},
@@ -271,6 +271,9 @@ var BizReport = BizReport || {};
 						var required = this.fnSettings().aoHeader[0][iColIndex].required;
 						var listingBtn = $(nTd).find("#btn"+oRow.skuId);
 						var listingIframe = $(nTd).find("iframe[name=iframe"+oRow.skuId+"]");
+						/*if(pageData.hasListingsNominated) {
+							$(nTd).find("#form"+oRow.skuId).remove();
+						}*/
 						if ($(nTd).find("#form"+oRow.skuId)) {
 							if(oRow.hasUploaded) {
 								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
@@ -278,12 +281,13 @@ var BizReport = BizReport || {};
 								oRow.uploadSuccess = true;
 								oRow.downloadUrl = oRow.downloadAttachUrl;
 							}
+							
 							var listingForm = $(nTd).find("#form"+oRow.skuId).submit(function(){
 							//$(nTd).find("#msg"+oRow.skuId).find("b").empty();
 							var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
 							var fileName = fileInput.val();
 							//文件不能为空
-							if(!fileName) {
+							if(!fileName && required) {
 								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
 								$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
 								$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.notEmpty"));
