@@ -65,6 +65,16 @@ var BizReport = BizReport || {};
 				        }
 				    });
 				},
+				'fnPreDrawCallback': function(nHead, aData, iStart, iEnd, aiDisplay){
+					// preinitialize threshold value
+					var headers = this.fnSettings().aoHeader[0];
+					for (var i in headers) {
+						var col_header = headers[i];
+						if (col_header && col_header.cell) {
+							col_header.requried = col_header.cell.hasAttribute('required');
+						}
+					}
+				},
 				"fnDrawCallback": function(settings){
 					// update checkbox status
 					if (settings.aoColumns[0].bVisible) {
@@ -257,7 +267,8 @@ var BizReport = BizReport || {};
 
 						return data;
 					},
-					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
+					fnCreatedCell: function(nTd, sData, oRow, iRowIndex, iColIndex) {
+						var required = this.fnSettings().aoHeader[0][iColIndex].required;
 						var listingBtn = $(nTd).find("#btn"+oRow.skuId);
 						var listingIframe = $(nTd).find("iframe[name=iframe"+oRow.skuId+"]");
 						if ($(nTd).find("#form"+oRow.skuId)) {
