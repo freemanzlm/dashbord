@@ -78,9 +78,9 @@ public class CookieUtil {
 	
 	public static void setCBTPromotionCookie (HttpServletResponse response,
 			String cookieName, String cookieVal) {
-		if(cookieName!=null && cookieName.equals(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME)) {
+		/*if(cookieName!=null && cookieName.equals(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME)) {
 			cookieVal = AESEncryptor.encrypt(cookieVal);
-		}
+		}*/
 		setCookie(response, cookieName, cookieVal,
 				ONE_DAY_COOKIE_LIFESPAN, AppCookies.COOKIE_PATH_ROOT, AppCookies.COOKIE_DOMAIN, false);
 	}
@@ -110,7 +110,7 @@ public class CookieUtil {
 		long userId = -1;
 
 		try {
-			userId = Long.parseLong(AESEncryptor.decrypt(cookieMap.get(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME)));
+			userId = Long.parseLong(cookieMap.get(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME));
 		} catch (NumberFormatException e) {
 			throw new MissingArgumentException(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME);
 		}

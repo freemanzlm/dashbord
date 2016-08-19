@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.kernel.context.IRaptorContext;
+import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -76,6 +77,7 @@ public class PromotionDataController{
 		return resp;
 	}
 	
+	@AuthNeed
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getUnconfirmedPromotions)
 	@ResponseBody
@@ -91,7 +93,8 @@ public class PromotionDataController{
 		}
 		return resp;
 	}
-
+	
+	@AuthNeed
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getIngPromotions)
 	@ResponseBody
@@ -108,6 +111,7 @@ public class PromotionDataController{
 		return resp;
 	}
 	
+	@AuthNeed
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getSubsidyPromotions)
 	@ResponseBody
@@ -123,6 +127,7 @@ public class PromotionDataController{
 		return resp;
 	}
 	
+	@AuthNeed
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getEndPromotions)
 	@ResponseBody
@@ -137,7 +142,6 @@ public class PromotionDataController{
 		}
 		return resp;
 	}
-	
 	
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getPromotionById)
