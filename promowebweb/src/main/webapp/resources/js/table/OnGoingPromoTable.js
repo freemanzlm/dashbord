@@ -105,6 +105,9 @@ var BizReport = BizReport || {};
 					sWidth : "120px",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
+						if(!data) {
+							return '-';
+						}
 						var date = new Date(data);
 						var month = date.getMonth() + 1;
 						var dt = date.getDate();
