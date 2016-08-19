@@ -123,7 +123,7 @@ public class ExcelUtil {
 		config.setWritable(field.get("input").asBoolean());
 		if (field.has("sample")) {
 			String sample = field.get("sample").asText();
-			config.setSample("null".equalsIgnoreCase(sample) ? "" : "Sample: " + sample);
+			config.setSample(("null".equalsIgnoreCase(sample) || "".equalsIgnoreCase(sample)) ? "" : "Sample: " + sample);
 		}
 	}
 	
