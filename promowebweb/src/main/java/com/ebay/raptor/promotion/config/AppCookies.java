@@ -10,6 +10,7 @@ public class AppCookies {
 	
 	public final static String EBAY_CBT_ADMIN_USER_COOKIE_NAME = "eBayCBTAdminUser";
 	public final static String EBAY_CBT_USER_ID_COOKIE_NAME = "eBayCBTUserId";
+	public final static String EBAY_CBT_PROMOTION_USER_ID_COOKIE_NAME = "eBayCBTPromoUserId";
 	public final static String EBAY_CBT_USER_NAME_COOKIE_NAME = "eBayCBTUserName";
 	public final static String EBAY_CBT_SESSION_ID_COOKIE_NAME = "eBayCBTSession";
 	public final static String EBAY_CBT_LANGUAGE_COOKIE_NAME = "eBayCBTLang";
