@@ -44,7 +44,7 @@ public class AttachmentFileValidator {
 		if(file.isEmpty()) {
 			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notnull"));
 		}
-		if(file.getSize() > 3*1024*1024) {
+		if(file.getSize() > 4.5*1024*1024) {
 			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.toolarge"));
 		}
 		try {
@@ -88,7 +88,9 @@ public class AttachmentFileValidator {
 		AttachmentAllowedFileType[] fileTypes = AttachmentAllowedFileType.values();
 		for(AttachmentAllowedFileType type : fileTypes) {
 			if(fileHead.startsWith(type.getValue())) {
-				return type;
+				if(type.toString().equalsIgnoreCase(file.getOriginalFilename().split("\\.")[1])) {
+					return type;
+				}
 			}
 		}
 		return null;

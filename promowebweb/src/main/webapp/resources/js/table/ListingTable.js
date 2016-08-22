@@ -297,7 +297,10 @@ var BizReport = BizReport || {};
 							if (fileName.indexOf(".xls")<0 && fileName.indexOf(".pdf")<0
 									&& fileName.indexOf(".doc")<0 && fileName.indexOf(".docx")<0 && fileName.indexOf(".xlsx")<0
 									&& fileName.indexOf(".jpg")<0 && fileName.indexOf(".JPG")<0 && fileName.indexOf(".gif")<0
-									&& fileName.indexOf(".zip")<0 && fileName.indexOf(".rar")<0){
+									&& fileName.indexOf(".xls")<0 && fileName.indexOf(".zip")<0 && fileName.indexOf(".rar")<0 
+									&& fileName.indexOf(".pdf")<0 && fileName.indexOf(".GIF")<0 && fileName.indexOf(".ZIP")<0 
+									&& fileName.indexOf(".RAR")<0 && fileName.indexOf(".DOC")<0 && fileName.indexOf(".DOCX")<0 
+									&& fileName.indexOf(".XLSX")<0 && fileName.indexOf(".PDF")<0 && fileName.indexOf(".XLS")<0){
 								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
 								$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
 								$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.typeError"));

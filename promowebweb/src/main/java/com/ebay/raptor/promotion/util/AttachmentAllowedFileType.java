@@ -14,7 +14,8 @@ public enum AttachmentAllowedFileType {
 	/**
 	 * DOC
 	 */
-	doc("0D444F43"),
+	doc("D0CF11E0"),
+	
 	
 	/**
 	 * DOCX
@@ -24,7 +25,7 @@ public enum AttachmentAllowedFileType {
 	/**
 	 * XLS
 	 */
-	xls("09081000"),
+	xls("504B0304"),
 	
 	/**
 	 * XLSX
@@ -34,12 +35,7 @@ public enum AttachmentAllowedFileType {
 	/**
 	 * JPG
 	 */
-	jpg("FFD8FFE0"),
-	
-	/**
-	 * JPG Digital camera JPG
-	 */
-	JPG("FFD8FFE1"),
+	jpg("FFD8FF"),
 	
 	/**
 	 * JPG Still Picture Interchange File Format
