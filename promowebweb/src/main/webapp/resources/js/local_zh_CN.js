@@ -92,7 +92,16 @@ BizReport.local = {
 			'Canceled': '活动已取消',
 			'End': '活动已结束',
 			'Claimed': '我已领取奖励',
-			'Detailed': '查看详情'
+			'Detailed': '查看详情',
+			'ReEnroll':'重新报名',
+			'Enrolled':'已报名',
+			'NotEnrolled':'未报名',
+			'Reviewing':'审核中',
+			'ReviewPassed':'审核通过',
+			'RewardAuditing':'奖励审核中',
+			'Awarding':'领取奖励',
+			'ReAwarding':'重新领取奖励',
+			'End':'活动结束'
 		},
 		'listings': {
 			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，确认吗？',

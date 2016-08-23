@@ -136,11 +136,11 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 'Seller nomination_Need approve':
 							case 'Seller Feedback':
-								return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.step.' + data) + "</a>";
+								return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + full.state) + "</a>";
 							case 'Promotion Submitted':
 							case 'Promotion in progress':
 							case 'Promotion in validation':
-								return local.getText('promo.step.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+								return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 
 							return '<a href="' + getLink(full.promoId) + '" target="_self">'+ local.getText('promo.state.Detailed') + '</a>';
