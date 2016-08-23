@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
@@ -301,6 +302,7 @@ public class SheetWriter implements ISheetWriter {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
 		}
 		
+		style.setDataFormat(HSSFDataFormat.getBuiltinFormat("text"));
 		cell.setCellStyle(style);
 	}
 	
