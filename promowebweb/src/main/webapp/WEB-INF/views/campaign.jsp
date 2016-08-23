@@ -7,13 +7,14 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 
-<c:set var="currentStep" value="${ promo.currentStep }" />
+<c:set var="isPreview" value="${ promo.isPreview }" />
+<c:set var="currentStep" value="${ isPreview ? promo.draftPreviewStep : promo.currentStep }" />
 <c:set var="visibleCurrentStep" value="${ promo.visibleCurrentStep }" />
 <!-- visible step list -->
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
 <c:set var="hasListingsNominated" value="${hasListingsNominated}" />
-<c:set var="isPreview" value="${ promo.isPreview }" />
+
 
 <r:includeJquery jsSlot="head" />
 <r:client />

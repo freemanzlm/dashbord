@@ -7,13 +7,13 @@
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 
-<c:set var="currentStep" value="${ promo.currentStep }" />
+<c:set var="isPreview" value="${ promo.isPreview }" />
+<c:set var="currentStep" value="${ isPreview ? promo.draftPreviewStep : promo.currentStep }" />
 <c:set var="visibleCurrentStep" value="${ promo.visibleCurrentStep }" />
 <!-- visible step list -->
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
 <c:set var="hasListingsNominated" value="${false}" />
-<c:set var="isPreview" value="${ promo.isPreview }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -153,10 +153,12 @@
 				
 				<c:if test="${(fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') or fn:containsIgnoreCase(stepList, 'Seller Feedback')) and 
 					(currentStep ne 'Seller nomination_Need approve' and currentStep ne 'Seller Feedback') and not empty fieldsDefintions }">
-					<div class="mt20 my-listing">
-						<h3><strong>提交的刊登</strong></h3>
-						<%@ include file="table/listings.jsp"%>
-					</div>
+					<c:if test="${hasListingsNominated }">
+						<div class="mt20 my-listing">
+							<h3><strong>提交的刊登</strong></h3>
+							<%@ include file="table/listings.jsp"%>
+						</div>
+					</c:if>
 				</c:if>
 			</div>
 		</div>
