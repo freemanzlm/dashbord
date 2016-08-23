@@ -118,7 +118,8 @@ BizReport.local = {
 			'NotEnrolled':'未报名',
 			'Reviewing':'待审核',
 			'ReviewPassed':'审核通过',
-			'ReviewFailed':'审核未通过'
+			'ReviewFailed':'审核未通过',
+			'ReEnroll':'重新报名'
 		},
 		attachment: '附件'
 	},
