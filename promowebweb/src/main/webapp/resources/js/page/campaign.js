@@ -181,18 +181,24 @@ $(function(){
 			}
 			
 			var listings = listingTable.selectedItems;
-			
 			var attachIndex = 0;
 			var container = $(".dataTable-outer-layer");
+			var total = container.find("input[name=item]:checked").parent().parent().find("input[type=file]").length;
 			var attachSubmit = function() {
 				var attachId = listings[attachIndex].skuId;
 				var attachIframe = $("iframe[name=iframe"+attachId+"]");
 				var attachForm = $("#form"+attachId);
+				var required = $('#listing-table th').eq(attachForm.parent().index()).attr('required');
+				if(!required) {
+					total = container.find("input[type=file]").filter(function() {
+						return $(this).val();
+					}).length + container.find("iframe").parent().find("span a").length;
+				}
 				if($("#href"+attachId).length<=0) {
 					attachForm.submit();
 				}
 				var successCount = container.find("input[name=item]:checked").parent().parent().find("span a").length;
-				container.isLoading({text: local.getText("promo.request.counting", [successCount, listings.length]), position: "overlay"});
+				container.isLoading({text: local.getText("promo.request.counting", [successCount, total]), position: "overlay"});
 				var timer = setInterval(function() {
 					if($("#msg"+attachId).find("b").html().length != 0) {
 						container.isLoading('hide');
@@ -226,7 +232,17 @@ $(function(){
 				}, 500);
 			};
 			
-			attachSubmit();
+			if(total > 0) {
+				attachSubmit();
+			} else {
+				if (listings && listings.length > 0) {
+					previewDialog.show();
+					previewDialog.listingTable.setData(listings);
+				} else {
+					return false;
+				}
+			}
+			
 		});
 	}
 	

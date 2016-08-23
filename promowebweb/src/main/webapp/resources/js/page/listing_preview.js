@@ -58,8 +58,7 @@ $(function(){
 			if(!required) {
 				total = container.find("input[type=file]").filter(function() {
 					return $(this).val();
-				}).length + container.find("iframe").parent().find("a").length;
-				console.log(total);
+				}).length + container.find("iframe").parent().find("span a").length;
 			}
 			if($("#href"+attachId).length<=0) {
 				attachForm.submit();
