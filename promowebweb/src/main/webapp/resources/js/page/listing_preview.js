@@ -41,12 +41,26 @@ $(function(){
 		
 		var listings = listingTable.oDataTable.data();
 		var attachIndex = 0;
-		var container = $(".container");
+		var container = $(".dataTable-container");
 		var total = container.find("input[type=file]").length;
+		/*console.log(total);*/
+		/*if(!required) {
+			total = container.find("input[type=file]").filter(function() {
+				return !this.val()
+			}).length;
+			console.log(total);
+		} */
 		var attachSubmit = function() {
 			var attachId = listings[attachIndex].skuId;
 			var attachIframe = $("iframe[name=iframe"+attachId+"]");
 			var attachForm = $("#form"+attachId);
+			var required = $('#listing-table th').eq(attachForm.parent().index()).attr('required');
+			if(!required) {
+				total = container.find("input[type=file]").filter(function() {
+					return $(this).val();
+				}).length + container.find("iframe").parent().find("a").length;
+				console.log(total);
+			}
 			if($("#href"+attachId).length<=0) {
 				attachForm.submit();
 			}

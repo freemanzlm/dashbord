@@ -287,26 +287,28 @@ var BizReport = BizReport || {};
 							var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
 							var fileName = fileInput.val();
 							//文件不能为空
-							if(!fileName && required) {
-								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
-								$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
-								$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.notEmpty"));
-								return false;
+							if(required) {
+								if(!fileName) {
+									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+									$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
+									$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.notEmpty"));
+									return false;
+								}
+								//文件类型校验
+								if (fileName.indexOf(".xls")<0 && fileName.indexOf(".pdf")<0
+										&& fileName.indexOf(".doc")<0 && fileName.indexOf(".docx")<0 && fileName.indexOf(".xlsx")<0
+										&& fileName.indexOf(".jpg")<0 && fileName.indexOf(".JPG")<0 && fileName.indexOf(".gif")<0
+										&& fileName.indexOf(".xls")<0 && fileName.indexOf(".zip")<0 && fileName.indexOf(".rar")<0 
+										&& fileName.indexOf(".pdf")<0 && fileName.indexOf(".GIF")<0 && fileName.indexOf(".ZIP")<0 
+										&& fileName.indexOf(".RAR")<0 && fileName.indexOf(".DOC")<0 && fileName.indexOf(".DOCX")<0 
+										&& fileName.indexOf(".XLSX")<0 && fileName.indexOf(".PDF")<0 && fileName.indexOf(".XLS")<0){
+									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+									$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
+									$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.typeError"));
+									return false;
+								}
 							}
-							//文件类型校验
-							if (fileName.indexOf(".xls")<0 && fileName.indexOf(".pdf")<0
-									&& fileName.indexOf(".doc")<0 && fileName.indexOf(".docx")<0 && fileName.indexOf(".xlsx")<0
-									&& fileName.indexOf(".jpg")<0 && fileName.indexOf(".JPG")<0 && fileName.indexOf(".gif")<0
-									&& fileName.indexOf(".xls")<0 && fileName.indexOf(".zip")<0 && fileName.indexOf(".rar")<0 
-									&& fileName.indexOf(".pdf")<0 && fileName.indexOf(".GIF")<0 && fileName.indexOf(".ZIP")<0 
-									&& fileName.indexOf(".RAR")<0 && fileName.indexOf(".DOC")<0 && fileName.indexOf(".DOCX")<0 
-									&& fileName.indexOf(".XLSX")<0 && fileName.indexOf(".PDF")<0 && fileName.indexOf(".XLS")<0){
-								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
-								$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
-								$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.typeError"));
-								return false;
-							}
-
+							
 							$(nTd).isLoading({text: local.getText('dataTable.handling'), position: "inside"});
 							
 							listingIframe.on("load", function(){
@@ -314,25 +316,25 @@ var BizReport = BizReport || {};
 								if (listingIframe.contents().length != 0 && listingIframe.contents().find("body").html().length > 0) {
 									var response = listingIframe.contents().find("body").text();
 									var responseData = $.parseJSON(response);
-								if (responseData.message && responseData.message.length > 0) {
-									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
-									if(responseData.status==true) {
-										//$("#form"+oRow.skuId).remove();
-										$(nTd).find("#msg"+oRow.skuId).find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
-										oRow.uploadSuccess = true;
-										oRow.downloadUrl = responseData.message;
-									} else {
+									if (responseData.message && responseData.message.length > 0) {
+										$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+										if(responseData.status==true) {
+											//$("#form"+oRow.skuId).remove();
+											$(nTd).find("#msg"+oRow.skuId).find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
+											oRow.uploadSuccess = true;
+											oRow.downloadUrl = responseData.message;
+										} else {
+											$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
+											$(nTd).find("#msg"+oRow.skuId).find("b").html(responseData.message);
+										}
+									} 
+									else {
+										$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
 										$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
-										$(nTd).find("#msg"+oRow.skuId).find("b").html(responseData.message);
+										$(nTd).find("#msg"+oRow.skuId).find("b").html("upload file failed!");
 									}
-								} 
-								else {
-									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
-									$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
-									$(nTd).find("#msg"+oRow.skuId).find("b").html("upload file failed!");
 								}
-							}
-						});
+							});
 							return !!$(this).find("input[type=file]").attr("value");
 						});
 						

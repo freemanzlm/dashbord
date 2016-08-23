@@ -66,7 +66,7 @@ public class ExcelService {
 	 * @throws IOException
 	 */
 	@SuppressWarnings("unchecked")
-	public XSSFWorkbook getListingWorkbook(String promoId, Long uid, Locale locale)
+	public XSSFWorkbook getListingWorkbook(String promoId, Long uid, Locale locale, boolean isAdmin)
 			throws PromoException, MissingArgumentException, JsonProcessingException, IOException {
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		
@@ -92,8 +92,11 @@ public class ExcelService {
 		SheetWriter writer = new SheetWriter();
 		Sheet sheet = workBook.createSheet(messageSource.getMessage("listing.template", null, LocaleUtil.getCurrentLocale()));
 		
-		Promotion promo = promoService.getPromotionById(promoId, uid, false);
-		String fieldsDefinitions = promo.getListingFields();
+		Promotion promo = promoService.getPromotionById(promoId, uid, isAdmin);
+		String fieldsDefinitions = null;
+		if(promo != null) {
+			fieldsDefinitions = promo.getListingFields();
+		}
 		
 		if (fieldsDefinitions != null) {
 			JsonNode tree = mapper.readTree(fieldsDefinitions);

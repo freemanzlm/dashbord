@@ -120,7 +120,7 @@ public class ListingController extends AbstractListingController {
 
         try {
         	workBook = excelService.getListingWorkbook(param.getPromoId(),
-        			userData.getUserId(), LocaleUtil.getCurrentLocale());
+        			userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
         	
             resp.setContentType("application/x-msdownload;");
     		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
