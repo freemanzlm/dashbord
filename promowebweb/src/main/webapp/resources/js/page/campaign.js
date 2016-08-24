@@ -232,15 +232,16 @@ $(function(){
 				}, 500);
 			};
 			
-			if(total > 0) {
-				attachSubmit();
-			} else {
-				if (listings && listings.length > 0) {
+			if(listings && listings.length > 0) {
+				if(total > 0) {
+					attachSubmit();
+				} else {
 					previewDialog.show();
 					previewDialog.listingTable.setData(listings);
-				} else {
-					return false;
 				}
+			} else {
+				previewDialog.show();
+				previewDialog.listingTable.setData(listingTable.oDataTable.data());
 			}
 			
 		});
