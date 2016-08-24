@@ -70,7 +70,7 @@ public class ExcelService {
 			throws PromoException, MissingArgumentException, JsonProcessingException, IOException {
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		
-		List<Listing> listings = listingService.getSkuListingsByPromotionId(promoId, uid);
+		List<Listing> listings = listingService.getSkuListingsByPromotionId(promoId, uid, false);
 		List<Map<String, Object>> skuListings = new ArrayList<Map<String, Object>>();
 		
 		if (listings != null) {
