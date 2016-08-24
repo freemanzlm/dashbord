@@ -310,7 +310,16 @@ public class ListingController extends AbstractListingController {
 	public ListDataWebResponse<?> getPromotionListings(HttpServletRequest req,
 			@ModelAttribute ListingWebParam param)  {
 		
-		return getListings(req, param);
+		return getListings(req, param, false);
+	}
+	
+	@GET
+	@RequestMapping(ResourceProvider.ListingRes._getUploadedListings)
+	@ResponseBody
+	public ListDataWebResponse<?> getUploadListings(HttpServletRequest req,
+			@ModelAttribute ListingWebParam param)  {
+		
+		return getListings(req, param, true);
 	}
 	
 	@GET
@@ -372,7 +381,7 @@ public class ListingController extends AbstractListingController {
 	 * @return
 	 */
 	protected ListDataWebResponse<?> getListings (HttpServletRequest req,
-			ListingWebParam param) {
+			ListingWebParam param, boolean isUploaded) {
 		UserData userData = null;
 
 		try {
@@ -384,7 +393,7 @@ public class ListingController extends AbstractListingController {
 			return resp;
 		}
 
-		ListDataWebResponse<Listing> resp = getListings(param.getPromoId(), userData.getUserId());
+		ListDataWebResponse<Listing> resp = getListings(param.getPromoId(), userData.getUserId(), isUploaded);
 		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 		ListDataWebResponse<Map<String, Object>> mergedResp = new ListDataWebResponse<Map<String, Object>>();
 		
@@ -425,10 +434,10 @@ public class ListingController extends AbstractListingController {
 	
 	// TODO - If there is no particular business logic on the meta data,
 	// it's no need to convert to an object, and add the json string in response.
-	protected <T> ListDataWebResponse<T> getListings (String promoId, Long userId) {
+	protected <T> ListDataWebResponse<T> getListings (String promoId, Long userId, boolean isUploaded) {
 		ListDataWebResponse<T> resp = new ListDataWebResponse<T>();
 		try {
-			List<T> listings = listingService.getSkuListingsByPromotionId(promoId, userId);
+			List<T> listings = listingService.getSkuListingsByPromotionId(promoId, userId, isUploaded);
 			
 			if (listings != null && listings.size() > 0) {
 				resp.setData(listings);

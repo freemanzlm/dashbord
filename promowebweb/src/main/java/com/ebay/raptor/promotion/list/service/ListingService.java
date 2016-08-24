@@ -117,11 +117,15 @@ public class ListingService extends BaseService {
 	 * @return
 	 * @throws PromoException
 	 */
-	public <T> List<T> getSkuListingsByPromotionId(String promoId, Long uid) throws PromoException{
+	public <T> List<T> getSkuListingsByPromotionId(String promoId, Long uid, boolean isUploaded) throws PromoException{
 		String uri = "";
 		GenericType<?> type = null;
 
-		uri = url(params(ResourceProvider.ListingRes.getPromotionListings,
+		if(isUploaded)
+			uri = url(params(ResourceProvider.ListingRes.getUploadedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+		else
+			uri = url(params(ResourceProvider.ListingRes.getPromotionListings,
 				new Object[] { "{promoId}", promoId, "{uid}", uid }));
 //		type = new GenericType<ListDataServiceResponse<Map<String, Object>>>(){};
 		type = new GenericType<ListDataServiceResponse<Listing>>(){};
