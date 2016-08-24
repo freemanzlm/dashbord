@@ -69,9 +69,10 @@ $(function(){
 		var required = $('#listing-table th').eq($("iframe[name=iframe"+listings[0].skuId+"]").parent().index()).attr('required');
 		if(!required) {
 			total = container.find("input[type=file]").filter(function() {
-				return $(this).val();
-			}).length + container.find("iframe").parent().find("span a").length;
+				return !!($(this).val()|| $(this).parent().parent().parent().find("span a").length);
+			}).length ;
 		}
+		console.log(total);
 		var attachSubmit = function() {
 			var attachId = listings[attachIndex].skuId;
 			var attachIframe = $("iframe[name=iframe"+attachId+"]");
