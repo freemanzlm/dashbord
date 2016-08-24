@@ -108,8 +108,9 @@ var BizReport = BizReport || {};
 						if(!data) {
 							return '-';
 						}
-						var date = new Date(data);
-						return date.format("yyyy-MM-dd hh:mm");
+						/*var date = new Date(data);
+						return date.format("yyyy-MM-dd hh:mm");*/
+						return data;
 					}
 				}, {
 					aTargets : ["promoDt"],
@@ -119,9 +120,10 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
 						if (type == "display") {
-							var date1 = new Date(data);
+							/*var date1 = new Date(data);
 							var date2 = new Date(full.promoSdt);
-							return date2.format("yyyy-MM-dd hh:mm") + " ~ " + date1.format("yyyy-MM-dd hh:mm");
+							return date2.format("yyyy-MM-dd hh:mm") + " ~ " + date1.format("yyyy-MM-dd hh:mm");*/
+							return data + " ~ " + full.promoSdt;
 						}
 						return data;
 					}
@@ -136,7 +138,11 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 'Seller nomination_Need approve':
 							case 'Seller Feedback':
-								return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + full.state) + "</a>";
+								if(full.state == 'Enrolled') {
+									return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+								} else {
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + full.state) + "</a>";
+								}
 							case 'Promotion Submitted':
 							case 'Promotion in progress':
 							case 'Promotion in validation':

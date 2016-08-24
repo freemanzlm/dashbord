@@ -39,27 +39,49 @@ $(function(){
 
 		event.preventDefault();
 		
+		var withoutAttachSubmit = function() {
+			$.ajax({
+				url: "/promotion/listings/submitListings",
+				type: 'POST',
+				data: data,
+				dataType : 'json',
+				success : function(json){
+					if (json && json.status) {
+						window.location.replace("/promotion/"+pageData.promoId);
+					} else if (json.data && json.data.length > 0) {
+						//cbt.alert(local.getText("errorMsg.regDateExpired"));
+						window.location.replace("/promotion/"+pageData.promoId);
+					} else {
+						//cbt.alert(local.getText('promo.request.fail'));
+						window.location.replace("/promotion/"+pageData.promoId);
+					}
+				},
+				error: function(){
+					cbt.alert(local.getText('promo.request.fail'));
+				}
+			});
+		};
+		
 		var listings = listingTable.oDataTable.data();
 		var attachIndex = 0;
 		var container = $(".dataTable-container");
 		var total = container.find("input[type=file]").length;
-		/*console.log(total);*/
-		/*if(!required) {
+		var required = $('#listing-table th').eq($("iframe[name=iframe"+listings[0].skuId+"]").parent().index()).attr('required');
+		if(!required) {
 			total = container.find("input[type=file]").filter(function() {
-				return !this.val()
-			}).length;
-			console.log(total);
-		} */
+				return $(this).val();
+			}).length + container.find("iframe").parent().find("span a").length;
+		}
 		var attachSubmit = function() {
 			var attachId = listings[attachIndex].skuId;
 			var attachIframe = $("iframe[name=iframe"+attachId+"]");
 			var attachForm = $("#form"+attachId);
-			var required = $('#listing-table th').eq(attachForm.parent().index()).attr('required');
+			/*var required = $('#listing-table th').eq(attachForm.parent().index()).attr('required');
 			if(!required) {
 				total = container.find("input[type=file]").filter(function() {
 					return $(this).val();
 				}).length + container.find("iframe").parent().find("span a").length;
-			}
+			}*/
 			if($("#href"+attachId).length<=0) {
 				attachForm.submit();
 			}
@@ -70,7 +92,7 @@ $(function(){
 					container.isLoading('hide');
 					clearInterval(timer);
 					attachIndex += 1;
-					successCount = container.find("iframe").parent().find("a").length;
+					successCount = container.find("iframe").parent().find("span a").length;
 					if(attachIndex<total) {
 						attachSubmit();
 					} else {
@@ -101,28 +123,6 @@ $(function(){
 			}, 500);
 		};
 		
-		var withoutAttachSubmit = function() {
-			$.ajax({
-				url: "/promotion/listings/submitListings",
-				type: 'POST',
-				data: data,
-				dataType : 'json',
-				success : function(json){
-					if (json && json.status) {
-						window.location.replace("/promotion/"+pageData.promoId);
-					} else if (json.data && json.data.length > 0) {
-						//cbt.alert(local.getText("errorMsg.regDateExpired"));
-						window.location.replace("/promotion/"+pageData.promoId);
-					} else {
-						//cbt.alert(local.getText('promo.request.fail'));
-						window.location.replace("/promotion/"+pageData.promoId);
-					}
-				},
-				error: function(){
-					cbt.alert(local.getText('promo.request.fail'));
-				}
-			});
-		};
 		
 		if(total > 0) {
 			attachSubmit();
