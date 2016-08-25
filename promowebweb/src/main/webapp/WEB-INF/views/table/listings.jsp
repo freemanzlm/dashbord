@@ -11,7 +11,7 @@
 		<table id="listing-table" class="dataTable">
 			<thead>
 				<tr>
-					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  regType  }">
+					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  regType  and isRegEnd ne true }">
 						<th class="check"><input type="checkbox" class="check-all" /></th>
 					</c:if>
 					
@@ -28,7 +28,7 @@
 		</table>
 		
 		<c:choose>
-			<c:when test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  regType and not isRegEnd }">
+			<c:when test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  regType and isRegEnd ne true}">
 				<c:set var="columns" value='[{"data:":"skuId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
 			</c:when>
 			<c:otherwise>

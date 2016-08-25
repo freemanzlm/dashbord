@@ -10,7 +10,7 @@
 		<table id="listing-table" class="dataTable">
 			<thead>
 				<tr>
-					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
+					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  and isRegEnd ne true }">
 						<th class="check"><input type="checkbox" class="check-all" /></th>
 					</c:if>
 					
@@ -19,7 +19,7 @@
 						<c:set var="columns" value='${columns},{"data":"${field.key}"}' ></c:set>
 					</c:forEach>
 					
-					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  }">
+					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  not regType  and isRegEnd ne true }">
 						<th class="state">狀態</th>
 					</c:if>
 				</tr>
