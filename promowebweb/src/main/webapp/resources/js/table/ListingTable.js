@@ -177,7 +177,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["email"],
 					sType: "date",
-					sClass: "text-center",
+					sClass: "text-right",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
 						if (type == "display" && data) {
@@ -190,7 +190,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["url"],
 					sType: "date",
-					sClass: "text-left",
+					sClass: "text-right",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
 						if (type == "display" && data) {
@@ -203,7 +203,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["currency"],
 					sType: "numeric",
-					sClass: "text-center",
+					sClass: "text-right",
 					sDefaultContent: ""
 				},
 				{
