@@ -20,6 +20,7 @@ import com.ebay.raptor.promotion.excel.SheetWriter;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
+import com.ebay.raptor.promotion.excel.validation.RangeColumnConstraint;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.locale.LocaleUtil;
@@ -79,6 +80,7 @@ public class ExcelService {
 				map.put("skuId", listing.getSkuId());
 				map.put("state", listing.getState());
 				map.put("currency", listing.getCurrency());
+				map.put("toUpload", "Y");
 				
 				String nominationValues = listing.getNominationValues();
 				if (nominationValues != null) {
@@ -156,15 +158,34 @@ public class ExcelService {
 		
 		ColumnConstraint constraint = new NotNullColumnConstraint();
 		constraint.setMessage("excel.validation.template.message");
+		nominationConfig.getConstraints().add(constraint);
+		
+		// upload config
+		ColumnConfiguration uploadConfig = new ColumnConfiguration();
+		uploadConfig.setKey("toUpload");
+		uploadConfig.setTitle("Upload or Not");
+		uploadConfig.setLabel("Upload or Not");
+		uploadConfig.setReadOrder(1);
+		uploadConfig.setWriteOrder(1);
+		uploadConfig.setWritable(true);
+		uploadConfig.setDisplay(true);
+		uploadConfig.setRawType("picklist");
+		
+		RangeColumnConstraint rangeConstraint = new RangeColumnConstraint();
+		String[] whetherToUpload = {"Y", "N"};
+		rangeConstraint.setPickList(whetherToUpload);
+		uploadConfig.getConstraints().add(rangeConstraint);
 		
 		if (columnConfigs != null) {
+			
 			// move colmuns to right by one column
 			for (ColumnConfiguration config : columnConfigs) {
-				config.setReadOrder(config.getReadOrder() + 1);
-				config.setWriteOrder(config.getWriteOrder() + 1);
+				config.setReadOrder(config.getReadOrder() + 2);
+				config.setWriteOrder(config.getWriteOrder() + 2);
 			}
 			
 			columnConfigs.add(nominationConfig);
+			columnConfigs.add(uploadConfig);
 		}
 		
 		return columnConfigs;

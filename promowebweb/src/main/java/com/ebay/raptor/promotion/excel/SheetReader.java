@@ -112,11 +112,13 @@ public class SheetReader implements ISheetReader {
 			
 			Map<String, Object> obj = readRow(configs, sheet.getRow(i));
 			if (obj != null) {
-				violations.addAll(validator.validate(i, obj, configs));
-				if (violations.size() <= 0) {
-					list.add(obj);
-				} else {
-					break;
+				if ("Y".equalsIgnoreCase((String)obj.get("toUpload"))) {
+					violations.addAll(validator.validate(i, obj, configs));
+					if (violations.size() <= 0) {
+						list.add(obj);
+					} else {
+						break;
+					}
 				}
 			}
 		}
