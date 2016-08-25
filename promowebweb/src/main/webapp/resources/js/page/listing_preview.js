@@ -72,7 +72,6 @@ $(function(){
 				return !!($(this).val()|| $(this).parent().parent().parent().find("span a").length);
 			}).length ;
 		}
-		console.log(total);
 		var attachSubmit = function() {
 			var attachId = listings[attachIndex].skuId;
 			var attachIframe = $("iframe[name=iframe"+attachId+"]");

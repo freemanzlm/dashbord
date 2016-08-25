@@ -73,23 +73,18 @@ $(function(){
 			uploadIFrame.on("load", function(){
 				$(document.body).isLoading('hide');
 				
-				console.log("outside iframe");
 				// check the response
 				if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").html().length > 0) {
-					console.log("inside iframe");
 					var response = uploadIFrame.contents().find("body").text();
 					var responseData = $.parseJSON(response);
 					// verification returns no error 
 					if (responseData && responseData.status) {
-						console.log("no error");
 						window.location.replace("/promotion/listings/reviewUploadedListings?promoId="+pageData.promoId);
 					}
 					// handle error
 					else {
-						console.log("has error");
 						// show error infor
 						if (responseData.message && responseData.message.length > 0) {
-							console.log("error message");
 							$("#upload-error-msg").removeClass("hide");
 							$("#upload-error-msg").find("b").html(responseData.message);
 						} else if (responseData.data && responseData.data.length > 0) {
@@ -113,7 +108,6 @@ $(function(){
 					window.location.replace("promotion/error");
 				}
 			});
-			console.log(!!$(this).find("input[type=file]").attr("value"));
 			return !!$(this).find("input[type=file]").attr("value");
 		});
 		
