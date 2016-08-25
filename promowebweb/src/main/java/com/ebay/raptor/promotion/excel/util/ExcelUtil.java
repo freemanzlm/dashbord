@@ -183,7 +183,9 @@ public class ExcelUtil {
 		
 		if (required) {
 			ColumnConstraint constraint = new NotNullColumnConstraint();
-			config.getConstraints().add(constraint);
+			if(!config.getRawType().equalsIgnoreCase("attachment")) {
+				config.getConstraints().add(constraint);
+			}
 			config.setRequired(true);
 		}
 		
