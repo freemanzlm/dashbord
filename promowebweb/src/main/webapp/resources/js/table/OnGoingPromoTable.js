@@ -123,7 +123,7 @@ var BizReport = BizReport || {};
 							/*var date1 = new Date(data);
 							var date2 = new Date(full.promoSdt);
 							return date2.format("yyyy-MM-dd hh:mm") + " ~ " + date1.format("yyyy-MM-dd hh:mm");*/
-							return data + " ~ " + full.promoSdt;
+							return full.promoSdt + " ~ " + data;
 						}
 						return data;
 					}
