@@ -11,6 +11,7 @@ public abstract class BasePromoInitConfig extends DefaultInitGingerClientConfig{
 		// set custom jackson ObjectMapper
 		return new Object[] {new ObjectMapperProvider()};
 //	    return new Object[] {new ContextPropagator(),new RaptorContextInjector()};
+//		return new Object[] {new MultiPartConfigProvider(), new FormDataMultiPartDispatchProvider()};
 	}
 
 	@Override

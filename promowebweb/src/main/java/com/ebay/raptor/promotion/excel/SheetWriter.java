@@ -44,33 +44,36 @@ public class SheetWriter implements ISheetWriter {
 			Object value, CellStyle style) {
 		if (config == null) return;
 		
+		CellStyle cellStyle = book.createCellStyle();
+		cellStyle.cloneStyleFrom(style);
+		
 		if(value instanceof LinkedHashMap) {
 			value = ((LinkedHashMap) value).get("value");
 		}
 		
 		if (config.getRawType() == null) {
 			// attachment doesn't have raw type.
-			createCell(book, row, config, value, style);
+			createCell(book, row, config, value, cellStyle);
 			return;
 		}
 		
 		switch(config.getRawType().toUpperCase()) {
 			case "DOUBLE":
-				createDoubleCell(book, row, config, value, style); break;
+				createDoubleCell(book, row, config, value, cellStyle); break;
 			case "DATE":
-				createDateCell(book, row, config, value, style); break;
+				createDateCell(book, row, config, value, cellStyle); break;
 			case "DATETIME":
-				createDateTimeCell(book, row, config, value, style); break;
+				createDateTimeCell(book, row, config, value, cellStyle); break;
 			case "TIME":
-				createTimeCell(book, row, config, value, style); break;
+				createTimeCell(book, row, config, value, cellStyle); break;
 			case "PERCENT":
-				createPercentCell(book, row, config, value, style); break;
+				createPercentCell(book, row, config, value, cellStyle); break;
 			case "COMBOBOX":
 			case "PICKLIST":
 			case "STRING":
 			case "TEXTAREA":
 			default:
-				createCell(book, row, config, value, style); break;
+				createCell(book, row, config, value, cellStyle); break;
 		}
 		
 	}
@@ -78,31 +81,30 @@ public class SheetWriter implements ISheetWriter {
 	@Override
 	public void createCell(Workbook book, Sheet sheet,  Row row, int column, Object value, CellStyle style) {
 		Cell cell = null;
+		CellStyle cellStyle = book.createCellStyle();
+		cellStyle.cloneStyleFrom(style);
 		
 		if (value instanceof Number) {
 			cell = row.createCell(column, Cell.CELL_TYPE_NUMERIC);
-			style = style == null ? book.createCellStyle() : style;
-			style.setAlignment(CellStyle.ALIGN_RIGHT);
+			cellStyle.setAlignment(CellStyle.ALIGN_RIGHT);
 			cell.setCellValue(((Number) value).doubleValue());
-			cell.setCellStyle(style);
+			cell.setCellStyle(cellStyle);
 		} else if (value instanceof Date) {
 			cell = row.createCell(column, Cell.CELL_TYPE_NUMERIC);
-			style = style == null ? book.createCellStyle() : style;
-			style.setAlignment(CellStyle.ALIGN_CENTER);
-			cell.setCellStyle(style);
+			cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
+			cell.setCellStyle(cellStyle);
 			cell.setCellValue((Date)value);			
 		} else if (value instanceof Boolean) {
 			cell = row.createCell(column, Cell.CELL_TYPE_BOOLEAN);
-			style = style == null ? book.createCellStyle() : style;
-			style.setAlignment(CellStyle.ALIGN_CENTER);
-			cell.setCellStyle(style);
+			cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
+			cell.setCellStyle(cellStyle);
 			cell.setCellValue((Boolean)value);
 		} else if (value == null) {
 			cell = row.createCell(column, Cell.CELL_TYPE_BLANK);
 		} else {
 			cell = row.createCell(column, Cell.CELL_TYPE_STRING);
 			cell.setCellValue(value.toString());
-			cell.setCellStyle(style);
+			cell.setCellStyle(cellStyle);
 		}
 		
 	}
