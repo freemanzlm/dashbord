@@ -125,7 +125,7 @@ BizReport.local = {
 			'CanEnroll':'可报名',
 			'Enrolled':'已报名',
 			'NotEnrolled':'未报名',
-			'Reviewing':'待审核',
+			'Reviewing':'审核中',
 			'ReviewPassed':'审核通过',
 			'ReviewFailed':'审核未通过',
 			'ReEnroll':'重新报名'
