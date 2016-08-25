@@ -251,7 +251,7 @@ private static final Logger logger = Logger.getLogger(DateUtil.class.getName());
 	public static Date convertToSystemTime(Date date, TimeZone zone) {
 		long gap = zone.getRawOffset() - TimeZone.getDefault().getRawOffset();
 		
-		return new Date(date.getTime() + gap);
+		return new Date(date.getTime() - gap);
 	}
 
 	/**

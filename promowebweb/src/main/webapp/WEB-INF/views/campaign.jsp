@@ -145,6 +145,13 @@
 							</div>
 						</c:when>
 						<c:otherwise>
+							<c:if test="${hasListingsNominated }">
+								<div class="mt20 my-listing">
+									<h3><strong>提交的刊登</strong></h3>
+									<%@ include file="table/listings.jsp"%>
+								</div>
+							</c:if>
+							
 							<div class="mt20 page-bottom-actions">
 								<a href="index">返回活动列表</a>
 							</div>
