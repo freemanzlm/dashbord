@@ -11,6 +11,7 @@
 	
 	ListingPreviewDialog.prototype = {
 		init : function(element, cfg) {
+			var that = this;
 			this._super(element, cfg);
 			
 			var listingTable = this.listingTable = new ListingTable();
@@ -23,6 +24,12 @@
 						'columns':pageData && pageData.previewColumns
 					}
 				}});
+			
+			listingTable.subscribe({
+				dataupdated: function() {
+					that.resizeUpdate();
+				}
+			});
 		},
 
 		delegate : function() {

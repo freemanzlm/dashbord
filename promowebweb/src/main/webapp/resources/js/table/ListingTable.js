@@ -532,6 +532,7 @@ var BizReport = BizReport || {};
 		setData: function(data) {
 			this.oDataTable.clear();
 			this.oDataTable.rows.add(data).draw();
+			this.publish("dataupdated");
 		},
 		
 		getDataSize: function() {
