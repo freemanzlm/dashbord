@@ -433,11 +433,12 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 				    
 				    data.data = data.data.filter(function(oRow) {
-						if(pageData.currentStep == 'Seller nomination_Need approve' || pageData.currentStep == 'Seller Feedback') {
+						if((pageData.currentStep == 'Seller nomination_Need approve' || pageData.currentStep == 'Seller Feedback') && (!pageData.isPreview || pageData.isPreview != 'true')) {
 							if(pageData.regType=='false') {
 								return oRow.state != 'CanEnroll';
 							}
 						}
+						return true;
 					});
 				    
 				    if (data && data.status) {

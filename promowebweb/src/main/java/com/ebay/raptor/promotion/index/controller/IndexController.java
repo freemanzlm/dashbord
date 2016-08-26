@@ -131,7 +131,8 @@ public class IndexController {
 			model.setViewName(ViewResource.ERROR.getPath());
 		}
 		
-		try {
+		/*try {
+			
 			// get subsidy details when promotion is validated.
 			if (promo != null && PromotionStep.PROMOTION_VALIDATED.getName().equalsIgnoreCase(promo.getCurrentStep())) {
 				Subsidy subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
@@ -141,7 +142,7 @@ public class IndexController {
 			}
 		} catch (PromoException e) {
 			logger.error("Unable to get subsidy for " + promoId, e);
-		}
+		}*/
 		return model;
 	}
     

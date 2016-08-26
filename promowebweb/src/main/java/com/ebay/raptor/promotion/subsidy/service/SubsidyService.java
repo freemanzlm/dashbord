@@ -30,7 +30,7 @@ public class SubsidyService extends BaseService {
 	 * @throws PromoException
 	 */
 	public Subsidy getSubsidy(String promoId, Long userId) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getSubSidy, new Object[]{"promoId", promoId, "{uid}", userId}));
+		String uri = url(params(ResourceProvider.SubsidyRes.getSubSidy, new Object[]{"{promoId}", promoId, "{uid}", userId}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralDataResponse<Subsidy>> type = new GenericType<GeneralDataResponse<Subsidy>>(){};
