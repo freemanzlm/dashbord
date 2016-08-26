@@ -67,6 +67,7 @@
 
 <res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.dialog['confirm.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
