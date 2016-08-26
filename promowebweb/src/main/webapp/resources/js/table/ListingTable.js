@@ -431,7 +431,15 @@ var BizReport = BizReport || {};
 				},
 				ajaxfinished: function(data) {
 				    that.container.isLoading('hide');
-
+				    
+				    data.data = data.data.filter(function(oRow) {
+						if(pageData.currentStep == 'Seller nomination_Need approve' || pageData.currentStep == 'Seller Feedback') {
+							if(pageData.regType=='false') {
+								return oRow.state != 'CanEnroll';
+							}
+						}
+					});
+				    
 				    if (data && data.status) {
 				        that.container.find(".datatable_pager").show();
 				    } else {

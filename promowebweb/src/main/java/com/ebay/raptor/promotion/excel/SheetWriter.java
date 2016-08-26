@@ -231,6 +231,9 @@ public class SheetWriter implements ISheetWriter {
 		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
+				if(config.getRequired()) {
+					config.setTitle(config.getTitle()+"(required)");
+				}
 				createCell(book, sheet, row, config.getWriteOrder(), config.getTitle(), headerStyle);
 			}
 		}

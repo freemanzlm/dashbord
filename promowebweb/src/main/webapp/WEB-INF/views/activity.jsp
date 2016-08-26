@@ -32,7 +32,7 @@
 			</div>
 		</c:if>
 		
-		<c:if test="${ promo.legalTermFlag}">
+		<c:if test="${not promo.legalTermFlag}">
 			<div class="table-row">
 				<div class="table-cell brief-title">其他条款：</div>
 				<div class="table-cell pretty-text">

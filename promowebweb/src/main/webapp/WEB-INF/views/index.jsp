@@ -95,10 +95,10 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">显示所有活动</option>
-							<option value="Created">报名阶段的活动</option>
-							<option value="Submitted">审核阶段的活动</option>
-							<option value="Started">活动进行阶段的活动</option>
-							<option value="SubsidyCounting">奖励审核阶段的活动</option>
+							<option value="Seller nomination_Need approve">报名阶段的活动</option>
+							<option value="Promotion Submitted">审核阶段的活动</option>
+							<option value="Promotion in progress">活动进行阶段的活动</option>
+							<option value="Promotion in validation">奖励审核阶段的活动</option>
 						</select>
 					</span>
 				</div>
