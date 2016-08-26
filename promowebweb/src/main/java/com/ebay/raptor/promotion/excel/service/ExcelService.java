@@ -104,7 +104,7 @@ public class ExcelService {
 			JsonNode tree = mapper.readTree(fieldsDefinitions);
 			if (tree.isArray()) {
 				List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
-				adjustColumnConfigurations(columnConfigs);
+				adjustColumnConfigurations(columnConfigs, locale);
 				preHandleData(columnConfigs, skuListings);
 				writer.writeSheet(workBook, sheet, columnConfigs, skuListings, true);
 			}
@@ -146,7 +146,9 @@ public class ExcelService {
 	 * prepend nomination id as the first column configuration.
 	 * @param columnConfigs
 	 */
-	public List<ColumnConfiguration> adjustColumnConfigurations(List<ColumnConfiguration> columnConfigs) {
+	public List<ColumnConfiguration> adjustColumnConfigurations(List<ColumnConfiguration> columnConfigs, Locale locale) {
+		if (locale == null) locale = LocaleUtil.getCurrentLocale();
+		
 		// it's used to configure a hidden column, it will store nomination id.
 		ColumnConfiguration nominationConfig = new ColumnConfiguration();
 		nominationConfig.setKey("skuId");
@@ -163,8 +165,8 @@ public class ExcelService {
 		// upload config
 		ColumnConfiguration uploadConfig = new ColumnConfiguration();
 		uploadConfig.setKey("toUpload");
-		uploadConfig.setTitle("Upload or Not");
-		uploadConfig.setLabel("Upload or Not");
+		uploadConfig.setTitle(messageSource.getMessage("excel.header.toUpload", null, locale));
+		uploadConfig.setLabel("Whether Upload");
 		uploadConfig.setReadOrder(1);
 		uploadConfig.setWriteOrder(1);
 		uploadConfig.setWritable(true);

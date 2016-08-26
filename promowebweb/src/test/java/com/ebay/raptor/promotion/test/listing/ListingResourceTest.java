@@ -120,7 +120,7 @@ public class ListingResourceTest {
 		
 		if (tree.isArray()) {
 			List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, LocaleUtil.getCurrentLocale());
-			excelService.adjustColumnConfigurations(columnConfigs);
+			excelService.adjustColumnConfigurations(columnConfigs, LocaleUtil.getCurrentLocale());
 			list = reader.readSheet(sheet, columnConfigs, 3, violations);
 		}
 		

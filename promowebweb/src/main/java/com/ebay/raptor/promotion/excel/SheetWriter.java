@@ -70,6 +70,7 @@ public class SheetWriter implements ISheetWriter {
 				createPercentCell(book, row, config, value, cellStyle); break;
 			case "COMBOBOX":
 			case "PICKLIST":
+				cellStyle.setAlignment(CellStyle.ALIGN_CENTER);
 			case "STRING":
 			case "TEXTAREA":
 			default:

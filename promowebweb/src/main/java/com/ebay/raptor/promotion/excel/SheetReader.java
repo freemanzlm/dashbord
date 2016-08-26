@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.sql.Time;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +42,17 @@ public class SheetReader implements ISheetReader {
 	public static Map<Type, ArrayList<ColumnConfiguration>> sheetHeaders = new ConcurrentHashMap<Type, ArrayList<ColumnConfiguration>>();
 	
 	private Validator validator;
+	
+	
+	/**
+	 * Remove scientific notation
+	 * @param value
+	 * @return
+	 */
+	public static String formatNumber(Number value) {
+		DecimalFormat df = new DecimalFormat("0");
+		return df.format(value);
+	}
 	
 	@Override
 	public List<List<Object>> readSheet(Sheet sheet, int firstRowNum) {
@@ -403,8 +415,6 @@ public class SheetReader implements ISheetReader {
 		}
 	}
 	
-	
-	
 	/**
 	 * If cell type is number, its value is Double type.
 	 * @param cellVal
@@ -453,7 +463,9 @@ public class SheetReader implements ISheetReader {
 		} else if (Date.class.isAssignableFrom(type)) {
 			logger.log(Level.INFO, "Date cell value is " + cellVal);
 			return cell.getDateCellValue();
-		} 
+		}  else if (String.class.isAssignableFrom(type)) {
+			return formatNumber(cellVal);
+		}
 		
 		return resolveDouble(cellVal, type);
 	}

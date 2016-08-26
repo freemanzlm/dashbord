@@ -172,7 +172,7 @@ public class ListingController extends AbstractListingController {
 				JsonNode tree = mapper.readTree(fieldsDefinitions);
 				if (tree.isArray()) {
 					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, LocaleUtil.getCurrentLocale());
-					excelService.adjustColumnConfigurations(columnConfigs);
+					excelService.adjustColumnConfigurations(columnConfigs, LocaleUtil.getCurrentLocale());
 					violations = handler.handleSheet(sheet, columnConfigs);
 				}
 			}
