@@ -446,7 +446,7 @@ public class SheetWriter implements ISheetWriter {
 		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
-				createCell(book, sheet, row, config, config.getSample(), style);
+				createCell(book, row, config, config.getSample(), style);
 			}
 		}
 	}

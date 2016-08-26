@@ -278,6 +278,9 @@ public class SheetReader implements ISheetReader {
 		while (iter.hasNext()) {
 			ColumnConfiguration header = iter.next();
 			
+			if(header.getKey().equalsIgnoreCase("toUpload")) {
+				continue;
+			}
 			// if cell doesn't exist, return null;
 			Cell cell = row.getCell(header.getReadOrder(), MissingCellPolicy.CREATE_NULL_AS_BLANK);
 			Object value = null;
