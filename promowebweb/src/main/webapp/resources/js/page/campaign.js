@@ -234,8 +234,9 @@ $(function(){
 					previewDialog.listingTable.setData(listings);
 				}
 			} else {
-				previewDialog.show();
-				previewDialog.listingTable.setData(listingTable.oDataTable.data());
+/*				previewDialog.show();
+				previewDialog.listingTable.setData(listingTable.oDataTable.data());*/
+				cbt.confirm(local.getText('promo.listings.zeroSubmitted'), submitListings);
 			}
 			
 		});

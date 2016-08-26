@@ -342,7 +342,7 @@ public class ListingController extends AbstractListingController {
 		}
 		
 		mav.addAllObjects(context);
-		mav.addObject("formUrl", "/promotion/listings/submitDealsListings");
+		//mav.addObject("formUrl", "/promotion/listings/submitDealsListings");
 		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
 		mav.setViewName(ViewResource.LISTING_PREVIEW.getPath());
 		return mav;

@@ -207,6 +207,12 @@ var BizReport = BizReport || {};
 					sDefaultContent: ""
 				},
 				{
+					aTargets: ["Listing_Local_Currency_base__c"],
+					sType: "string",
+					sClass: "text-right",
+					sDefaultContent: ""
+				},
+				{
 					aTargets: ["double"],
 					sType: "numeric",
 					sClass: "text-right",
