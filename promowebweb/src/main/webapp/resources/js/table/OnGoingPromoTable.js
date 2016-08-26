@@ -218,7 +218,7 @@ var BizReport = BizReport || {};
 					});
 
 					that.container.parents(".pane-table").find(".state-filter").dropdown().change(function (e, data) {
-						oDataTable.column(4).search(data.value).draw();
+						oDataTable.column(3).search(data.value).draw();
 					});
 				},
 				ajaxbegin : function () {

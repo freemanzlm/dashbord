@@ -189,7 +189,8 @@
 			promoId : '${promo.promoId}',
 			currentStep: '${currentStep}',
 			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
-			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}')
+			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}'),
+			regType : '${promo.regType}'
 		};
 	</script>
 

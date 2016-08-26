@@ -158,6 +158,9 @@ public class SheetWriter implements ISheetWriter {
 			List<ColumnConstraint> constraints = config.getConstraints();
 			for (ColumnConstraint constraint : constraints) {
 				if (constraint instanceof RangeColumnConstraint) {
+					// only support single
+					if (((RangeColumnConstraint) constraint).isAllowMultiple()) break;
+					
 					XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper((XSSFSheet)sheet);
 					XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint)
 					    dvHelper.createExplicitListConstraint(((RangeColumnConstraint) constraint).getPickList());
@@ -231,6 +234,9 @@ public class SheetWriter implements ISheetWriter {
 		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
+				if(config.getRequired()) {
+					config.setTitle(config.getTitle()+"(required)");
+				}
 				createCell(book, sheet, row, config.getWriteOrder(), config.getTitle(), headerStyle);
 			}
 		}
