@@ -157,6 +157,15 @@ public class ExcelUtil {
 				constraint.setMustInRange(false);
 				constraint.setPickList(list);
 				config.getConstraints().add(constraint);
+			} if (type.equalsIgnoreCase("MULTIPICKLIST")) {
+				String entries = typeNode.get("picklistEntry").asText();
+				String[] list = entries.split(";");
+				
+				RangeColumnConstraint constraint = new RangeColumnConstraint();
+				constraint.setPickList(list);
+				constraint.setAllowMultiple(true);
+				constraint.setMustInRange(true);
+				config.getConstraints().add(constraint);
 			} else if (type.equalsIgnoreCase("integer")) {
 				IntegerRangeColumnConstraint constraint = new IntegerRangeColumnConstraint();
 				config.getConstraints().add(constraint);
