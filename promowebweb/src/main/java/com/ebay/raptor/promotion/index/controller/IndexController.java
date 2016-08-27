@@ -19,12 +19,10 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
-import com.ebay.raptor.promotion.enums.PromotionStep;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.pojo.business.Subsidy;
 import com.ebay.raptor.promotion.promo.service.ContextViewRes;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
@@ -34,8 +32,7 @@ import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
-import com.ebay.raptor.promotion.util.TokenData;
-import com.ebay.raptor.promotion.util.TokenUtil;
+import com.ebay.raptor.siteApi.util.SiteApiUtil;
 
 @Controller
 public class IndexController {
@@ -55,38 +52,29 @@ public class IndexController {
         String hackId = request.getParameter("hack_id");   // name
         String userId = request.getParameter("user_id");   // id
         String admin = request.getParameter("admin");
-
-        //@TODO Disable IP validation for the moment.
-//        String ip = request.getRemoteAddr();
-//
-//        if(!loginService.isLoginIPValid(ip)) {
-//            throw new MissingArgumentException(ip);
-//        }
-        
+  
         if ((userId == null || userId.isEmpty()) && (hackId == null || hackId.isEmpty())) {
-            return;
-        } else if (userId == null || userId.isEmpty()) {
-            userId = csApiService.getUserIdByName(hackId);
-        } else if (hackId == null || hackId.isEmpty()) {
-            hackId = userId;
-        }
-        
-        // Dashboard and Bizreport will give us hackId, userId, isAdmin and username by cookies. But we use token from backend.
-        // You need to see how CookieUtil.getUserDataFromCookie() to get user data.
-        if (userId != null) {
-        	TokenData tokenData = new TokenData();
-            tokenData.setIsAdmin(Boolean.parseBoolean(admin));
-            tokenData.setUserId(Long.parseLong(userId));
-            tokenData.setUserName(hackId);
-            CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_TOKEN_COOKIE_NAME, TokenUtil.getTokenString(tokenData));
-        	// add hack_id in order to avoid login checking
-        	CookieUtil.setCBTPromotionCookie(response, AppCookies.HACKID_COOKIE_KEY, hackId);
-        	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, userId);
-        	// hack_id is the user name.
-        	CookieUtil.setCBTPromotionCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId);
-            response.sendRedirect("index");
-        } else {
         	response.sendRedirect("error");
+        } else {
+        	if (userId == null || userId.isEmpty()) {
+        		userId = csApiService.getUserIdByName(hackId);
+            } else if (hackId == null || hackId.isEmpty()) {
+                hackId = userId;
+            }
+        	
+            // Dashboard and Bizreport will give us hackId, userId, isAdmin and username by cookies. But we use token from backend.
+            // You need to see how AppCookies.getUserDataFromCookie() to get user data.
+            if (userId != null) {
+            	// add hack mode in order to avoid login checking
+            	CookieUtil.setCBTCookie(response, AppCookies.HACK_MODE_COOKIE_NAME, "true", CookieUtil.SESSION_COOKIE_LIFESPAN);
+            	CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, SiteApiUtil.encodeUserId(userId), CookieUtil.SESSION_COOKIE_LIFESPAN);
+            	// hack_id is the user name.
+            	CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId, CookieUtil.SESSION_COOKIE_LIFESPAN);
+            	CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME, admin, CookieUtil.SESSION_COOKIE_LIFESPAN);
+                response.sendRedirect("index");
+            } else {
+            	response.sendRedirect("error");
+            }
         }
     }
 
@@ -97,7 +85,7 @@ public class IndexController {
             @ModelAttribute RequestParameter param) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
         //Set unconfirmed status
-        UserData userDt = CookieUtil.getUserDataFromCookie(request);
+        UserData userDt = AppCookies.getUserDataFromCookie(request);
         mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
              
        	mav.setViewName("index");
@@ -110,7 +98,7 @@ public class IndexController {
 	public ModelAndView promotion(HttpServletRequest request,
 			@PathVariable("promoId") String promoId) throws MissingArgumentException {
 		ModelAndView model = new ModelAndView();
-		UserData userData = CookieUtil.getUserDataFromCookie(request);
+		UserData userData = AppCookies.getUserDataFromCookie(request);
 		Promotion promo = null;
 
 		try {

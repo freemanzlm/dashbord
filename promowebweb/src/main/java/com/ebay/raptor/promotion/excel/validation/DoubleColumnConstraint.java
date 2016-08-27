@@ -5,6 +5,11 @@ package com.ebay.raptor.promotion.excel.validation;
  * @author lyan2
  */
 public class DoubleColumnConstraint extends ColumnConstraint {
+	public static void main(String[] args) {
+		DoubleColumnConstraint c = new DoubleColumnConstraint();
+		System.out.println(c.isValid("123."));
+	}
+	
 	private int digits = 0;
 
 	public DoubleColumnConstraint() {

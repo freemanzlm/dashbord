@@ -32,6 +32,7 @@ import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.kernel.context.IRaptorContext;
+import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excel.APACDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.FRESDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.GBHDealsListingSheetHandler;
@@ -39,24 +40,20 @@ import com.ebay.raptor.promotion.excel.InvalidCellDataException;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
-import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
-import com.ebay.raptor.promotion.pojo.business.GBHDealsListing;
 import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.ResourceProvider;
-import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 
 @Deprecated
@@ -95,7 +92,7 @@ public class DealsListingController extends AbstractDealsListingController{
 			throw new MissingArgumentException("PromoSubType");
 		}
 
-		UserData userData = CookieUtil.getUserDataFromCookie(req);
+		UserData userData = AppCookies.getUserDataFromCookie(req);
 		XSSFWorkbook workBook = null;
 
 //        try {
@@ -126,7 +123,7 @@ public class DealsListingController extends AbstractDealsListingController{
 	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile dealsListings, @RequestParam String promoId, @RequestParam String promoSubType) throws MissingArgumentException{
 		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
-		UserData userData = CookieUtil.getUserDataFromCookie(req);
+		UserData userData = AppCookies.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 		
 		PromotionSubType pSubType = null;
@@ -227,7 +224,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		String promoId = req.getParameter("promoId");
 
 		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			UserData userData = AppCookies.getUserDataFromCookie(req);
 			boolean result = service.submitDealsListings(promoId, userData.getUserId());
 			responseData.setStatus(result);
 		} catch (PromoException | MissingArgumentException e) {
@@ -274,7 +271,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		if(null != listings){
 			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
-				UserData userData = CookieUtil.getUserDataFromCookie(req);
+				UserData userData = AppCookies.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
 				responseData.setStatus(result);
 				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
@@ -318,7 +315,7 @@ public class DealsListingController extends AbstractDealsListingController{
 			@ModelAttribute ListingWebParam param)  {
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			UserData userData = AppCookies.getUserDataFromCookie(req);
 			List<DealsListing> listings = service.getApplicableListings(param.getPromoId(), userData.getUserId());
 			if (listings != null && listings.size() > 0) {
 				resp.setData(listings);
@@ -352,7 +349,7 @@ public class DealsListingController extends AbstractDealsListingController{
 	public ListDataWebResponse<Sku> getSKUsByPromotionId(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();
 		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			UserData userData = AppCookies.getUserDataFromCookie(req);
 			resp.setData(service.getSkusByPromotionId(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -366,7 +363,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		UserData userData = null;
 
 		try {
-			userData = CookieUtil.getUserDataFromCookie(req);
+			userData = AppCookies.getUserDataFromCookie(req);
 		} catch (MissingArgumentException e) {
 			logger.error("Missing required argument.", e);
 			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();

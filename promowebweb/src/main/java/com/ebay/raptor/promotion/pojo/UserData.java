@@ -53,5 +53,5 @@ public class UserData {
 	private Long userId;
     private String userName;
     private Boolean admin;
-    private String lang;
+    private String lang = "zh_CN";
 }
