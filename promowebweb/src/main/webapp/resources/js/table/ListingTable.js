@@ -124,6 +124,7 @@ var BizReport = BizReport || {};
 					sType: "numeric",
 					sWidth: "150px",
 					sClass: "pic-id",
+					sDefaultContent: "NA",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
 							var display = "<img src='http://thumbs2.ebaystatic.com/pict/" + data + ".jpg' height='50' width='50'/>";
@@ -137,7 +138,7 @@ var BizReport = BizReport || {};
 					aTargets: ["integer"],
 					sType: "numeric",
 					sClass: "text-right",
-					sDefaultContent: "",
+					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
 						var value = parseInt(data);
 						
@@ -430,7 +431,7 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 				    
 				    data.data = data.data.filter(function(oRow) {
-						if((pageData.currentStep == 'Seller nomination_Need approve' || pageData.currentStep == 'Seller Feedback') && (!pageData.isPreview || pageData.isPreview != 'true')) {
+						if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
 							if(pageData.regType=='false') {
 								return oRow.state != 'CanEnroll';
 							}
