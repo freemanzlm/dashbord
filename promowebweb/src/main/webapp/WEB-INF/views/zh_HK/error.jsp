@@ -51,7 +51,7 @@
 		<div class="error mb15 clr">
 			<h2><i class="fa fa-times"></i>錯誤</h2>
 		</div>
-		<p>很抱歉，分析異常，請稍後再試</p>			
+		<p>很抱歉，請求發生異常，請稍後再試。</p>			
 	</div>	
 
 	<!-- Global Footer -->

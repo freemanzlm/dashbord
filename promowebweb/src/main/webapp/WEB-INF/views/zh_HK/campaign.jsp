@@ -15,6 +15,7 @@
 <c:set var="regType" value="${ promo.regType }" />
 <c:set var="hasListingsNominated" value="${hasListingsNominated}" />
 
+
 <r:includeJquery jsSlot="head" />
 <r:client />
 
@@ -72,8 +73,8 @@
 <res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['SKUListTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.table['ListingTable.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.page['campaign.js']}" target="page-js2"></res:useJs>
 </head>
 
@@ -93,7 +94,7 @@
 				<%@ include file="state.jsp"%>
 
 				<%@ include file="activity.jsp"%>
-
+				
 				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or (currentStep eq 'Seller Feedback' and not fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve'))) and not regType and not empty fieldsDefintions }">
 					<c:if test="${hasListingsNominated }">
 						<div class="mt20 my-listing">
@@ -109,9 +110,9 @@
 							</div>
 							
 							<div class="mt20 page-bottom-actions">
-								<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閱讀並接受活動條款及
+								<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閲讀並接受活動條款及
 									<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
-								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
+								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交報名</button>
 								<br /> <br /> <a href="index">返回活動列表</a>
 							</div>
 						</c:when>
@@ -122,27 +123,27 @@
 						</c:otherwise>
 					</c:choose>
 					
-					
 				</c:if>
 				
 				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType and  not empty fieldsDefintions }">
+				
 					<c:choose>
 						<c:when test="${ isRegEnd ne true }">
-							<!-- 非上传形式报名, 或者正式报名 -->
+							<!-- 非上傳形式報名, 或者正式報名 -->
 							<div class="mt20 my-listing">
 								<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
 								<%@ include file="table/listings.jsp"%>
 							</div>
 							
 							<div class="mt20 page-bottom-actions">
-								<form id="listing-form" action="/promotion/deals/confirmDealsListings" target="_self" method="post">
+								<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
 									<input type="hidden" name="promoId" value="${promo.promoId}"/>
 									<input type="hidden" name="listings" value="[]" />
-									<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+									<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閲讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 									<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
 									<br /><br /> <a href="index">返回活動列表</a>
 								</form>
-							</div>	
+							</div>
 						</c:when>
 						<c:otherwise>
 							<c:if test="${hasListingsNominated }">
@@ -157,16 +158,58 @@
 							</div>
 						</c:otherwise>
 					</c:choose>
+					
+						
 				</c:if>
 				
 				<c:if test="${(fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') or fn:containsIgnoreCase(stepList, 'Seller Feedback')) and 
 					(currentStep ne 'Seller nomination_Need approve' and currentStep ne 'Seller Feedback') and not empty fieldsDefintions }">
-					<c:if test="${hasListingsNominated }">
-						<div class="mt20 my-listing">
-							<h3><strong>提交的刊登</strong></h3>
-							<%@ include file="table/listings.jsp"%>
-						</div>
-					</c:if>
+					<c:choose>
+						<c:when test="${not isRegEnd}">
+							<c:choose>
+								<c:when test="${regType}">
+									<div class="mt20 my-listing">
+										<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
+										<%@ include file="table/listings.jsp"%>
+									</div>
+									
+									<div class="mt20 page-bottom-actions">
+										<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
+											<input type="hidden" name="promoId" value="${promo.promoId}"/>
+											<input type="hidden" name="listings" value="[]" />
+											<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閲讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+											<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
+											<br /><br /> <a href="index">返回活動列表</a>
+										</form>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${hasListingsNominated }">
+										<div class="mt20 my-listing">
+											<h3><strong>提交的刊登</strong></h3>
+											<%@ include file="table/listings.jsp"%>
+										</div>
+									</c:if>
+									
+									<div class="mt20">
+										<%@ include file="upload_listings.jsp"%>
+									</div>
+									
+									<div class="mt20 page-bottom-actions">
+										<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閲讀並接受活動條款及
+											<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
+										<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交報名</button>
+										<br /><br /> <a href="index">返回活動列表</a>
+									</div>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<div class="mt20 page-bottom-actions">
+								<a href="index">返回活動列表</a>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 			</div>
 		</div>
@@ -186,7 +229,8 @@
 			promoId : '${promo.promoId}',
 			currentStep: '${currentStep}',
 			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
-			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}')
+			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}'),
+			regType : '${promo.regType}'
 		};
 	</script>
 

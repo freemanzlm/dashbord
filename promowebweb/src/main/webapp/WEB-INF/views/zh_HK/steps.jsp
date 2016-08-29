@@ -12,7 +12,7 @@
 		<div class="signpost-posts">
 			<c:forTokens items="${ stepList }" delims=">" var="step">
 				<c:choose>
-					<c:when test="${step eq currentStep}">
+					<c:when test="${step eq visibleCurrentStep}">
 						<c:set var="hasGotCurrentStep" value="${ true }" />
 						<c:set var="isCurrentStep" value="${ true }" />
 					</c:when>

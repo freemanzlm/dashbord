@@ -8,8 +8,8 @@
 			<tr>
 				<th class="name">活動名稱</th>
 				<th class="promoDlDt">報名截止日期</th>
-				<th class="promoDt">活動時間</th>				
-				<th class="state">活動狀態</th>
+				<th class="promoDt">活動時間</th>
+				<th class="currentStep">活動狀態</th>
 			</tr>
 		</thead>
 	</table>

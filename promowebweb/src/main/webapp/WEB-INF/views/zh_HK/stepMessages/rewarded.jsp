@@ -8,7 +8,7 @@
 		<c:set var="rewardName" value="加油卡" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardName" value="ebay萬裏通積分" />
+		<c:set var="rewardName" value="ebay萬里通積分" />
 	</c:when>
 	<c:when test="${ promo.rewardType eq 3 }">
 		<c:set var="rewardName" value="萬邑通禮品卡" />
@@ -38,7 +38,7 @@
 				<c:choose>
 					<c:when	test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
 		
-						<h3>恭喜!您的獎勵為等值&nbsp;${reward} ${promo.currency}的${rewardName }</h3>
+						<h3>恭喜!您的獎勵為等值 ${reward} ${promo.currency}的${rewardName }</h3>
 		
 						<c:choose>
 							<c:when test="${ state eq 'SubsidyRetrievable' }">
@@ -48,7 +48,7 @@
 										<ol>
 											<li>深圳 深圳市福田區深南中路3018號世紀匯廣場23/F</li>
 											<li>上海 上海市長寧區仙霞路317號遠東國際廣場B座1509</li>
-											<li>北京 北京市海澱區花園東路10號高德大廈803室</li>
+											<li>北京 北京市海淀區花園東路10號高德大廈803室</li>
 											<li>西安 西安市高新一路正信大廈B座203室</li>
 										</ol>
 										<p>工作時間為： AM9:00--PM6:00</p>
@@ -65,7 +65,7 @@
 					</c:when>
 					
 					<c:when test="${ promo.rewardType eq 3 }">
-						<h3>恭喜!您的獎勵為等值&nbsp;${reward} ${promo.currency}的${rewardName }</h3>
+						<h3>恭喜!您的獎勵為等值 ${reward} ${promo.currency}的${rewardName }</h3>
 						
 						<c:choose>
 							<c:when test="${ state eq 'SubsidyRetrievable' }">
@@ -85,7 +85,7 @@
 					</c:when>
 					
 					<c:otherwise>
-						<h3>恭喜您已完成本活動！接下來我們的客戶經理會聯系您關於獎勵的相關事宜，請註意接收相關的郵件通知。感謝您的參與!</h3>
+						<h3>恭喜您已完成本活動！接下來我們的客戶經理會聯繫您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!</h3>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -119,7 +119,7 @@
 								</c:when>
 								
 								<c:when test="${ state eq 'SubsidyResubmittable' }">
-									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>重新申领奖励</a>
+									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>重新申領獎勵</a>
 									<br />
 									<br />
 									<a href="index">返回活動列表</a>

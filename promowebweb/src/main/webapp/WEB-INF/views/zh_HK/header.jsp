@@ -12,12 +12,12 @@
 			style="clip: rect(47px, 118px, 95px, 0px); position: absolute;"></res:img></a>
 
 		<div class="head-nav">
-			歡迎您，<bdi>${unm}</bdi> &nbsp;&nbsp; <a href="http://cbtreport.ebay.com.hk/dashboard/logout" style="font-weight: 400;">退出</a>
+			歡迎您，<bdi>${unm}</bdi>    <a href="http://cbtreport.ebay.com.hk/dashboard/logout" style="font-weight: 400;">退出</a>
 			<i class="fa fa-globe"></i>
 			<span id="lang-switch" class="select-control">
 				<select name="lang" id="lang">
-					<option value="zh_HK" ${lang eq 'zh_HK' ? 'selected' : '' }>繁體中文</option>	
-					<option value="zh_CN" ${lang eq 'zh_CN' ? 'selected' : '' }>简体中文</option>				
+					<option value="zh_CN" ${lang eq 'zh_CN' ? 'selected' : '' }>簡體中文</option>
+					<option value="zh_HK" ${lang eq 'zh_HK' ? 'selected' : '' }>繁體中文</option>					
 				</select>
 			</span>
 		</div>		
