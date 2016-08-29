@@ -80,7 +80,12 @@ public class ExcelService {
 				map.put("skuId", listing.getSkuId());
 				map.put("state", listing.getState());
 				map.put("currency", listing.getCurrency());
-				map.put("toUpload", "Y");
+				if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equals("NotEnrolled")
+						|| listing.getState().equalsIgnoreCase("UploadEnroll")) {
+					map.put("toUpload", "N");
+				} else {
+					map.put("toUpload", "Y");
+				}
 				
 				String nominationValues = listing.getNominationValues();
 				if (nominationValues != null) {
