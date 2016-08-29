@@ -127,8 +127,10 @@ var BizReport = BizReport || {};
 					sDefaultContent: "NA",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
-							var display = "<img src='http://thumbs2.ebaystatic.com/pict/" + data + ".jpg' height='50' width='50'/>";
-							return display += "<p><a href='http://www.ebay.com/itm/" + data + "'>" + data + "</a></p>";
+							if(data) {
+								var display = "<img src='http://thumbs2.ebaystatic.com/pict/" + data + ".jpg' height='50' width='50'/>";
+								return display += "<p><a href='http://www.ebay.com/itm/" + data + "'>" + data + "</a></p>";
+							}
 						}
 						
 						return data;
