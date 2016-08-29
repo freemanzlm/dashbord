@@ -91,7 +91,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		 * If user is visiting from back end system, it will have admin user name and session id in database.
 		 * This is just for back compatibility.
 		 */
-		String sessionId = cookieMap.get(AppCookies.EBAY_CBT_LOGIN_SESSION_ID_COOKIE_NAME);
+		String sessionId = cookieMap.get(AppCookies.EBAY_CBT_SESSION_ID_COOKIE_NAME);
 		sessionId = (sessionId == null || sessionId.isEmpty()) ? cookieMap.get(AppCookies.EBAY_SESSION_ID_COOKIE_NAME) : sessionId;
 		if (sessionId != null && !sessionId.isEmpty()) {
 			String userName = null;

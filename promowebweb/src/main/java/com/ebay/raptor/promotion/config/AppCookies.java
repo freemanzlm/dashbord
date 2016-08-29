@@ -25,7 +25,7 @@ public class AppCookies {
 	// development back mode
 	public final static String HACK_MODE_COOKIE_NAME = "CBTHackMode";
 
-	public final static String EBAY_CBT_LOGIN_SESSION_ID_COOKIE_NAME = "eBayCBTLoginSession";
+//	public final static String EBAY_CBT_LOGIN_SESSION_ID_COOKIE_NAME = "eBayCBTLoginSession";
 	public final static String EBAY_CBT_ADMIN_USER_COOKIE_NAME = "eBayCBTAdminUser";
 	public final static String EBAY_CBT_USER_ID_COOKIE_NAME = "eBayCBTUserId";
 	public final static String EBAY_CBT_USER_NAME_COOKIE_NAME = "eBayCBTUserName";
