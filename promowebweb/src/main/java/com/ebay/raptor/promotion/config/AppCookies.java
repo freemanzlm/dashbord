@@ -78,7 +78,7 @@ public class AppCookies {
 				try {
 					userId = Long.parseLong(SiteApiUtil.decodeUserId(eiasToken, false));
 					userData.setUserId(userId);
-				} catch (NumberFormatException e) {
+				} catch (Exception e) {
 					// TODO remove, user id is encoded after DashBoard security branch online
 					userId = Long.parseLong(eiasToken);
 					userData.setUserId(userId);

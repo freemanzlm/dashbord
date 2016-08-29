@@ -92,6 +92,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		 * This is just for back compatibility.
 		 */
 		String sessionId = cookieMap.get(AppCookies.EBAY_CBT_SESSION_ID_COOKIE_NAME);
+//		sessionId = "0i8AAA**d5fa2c2e1560a7802cb15fc1ffff5f7b465a1ddd-d0a6-4caa-ad59-b7f558f0654e";
 		sessionId = (sessionId == null || sessionId.isEmpty()) ? cookieMap.get(AppCookies.EBAY_SESSION_ID_COOKIE_NAME) : sessionId;
 		if (sessionId != null && !sessionId.isEmpty()) {
 			String userName = null;
@@ -109,9 +110,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				userName = cookieMap.get(AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME);
 				type = ParameterType.DashboardSession;
 			}
-			
 			String storedSession = dataService.getSdParamterValue(type, CommonConstant.PARAMETER_ENABLE, userName);
-			
 			if (sessionId != null && sessionId.equalsIgnoreCase(storedSession)) {
 				return true;
 			}

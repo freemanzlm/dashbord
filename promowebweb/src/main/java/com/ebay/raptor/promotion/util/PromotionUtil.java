@@ -28,13 +28,13 @@ public class PromotionUtil {
 		} else if (bdCfg.isQATE()) {
 			// feature pool or staging pool
 			_promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
-			_sellerDashboardServicePrefix = "http://phx5qa01c-8a26.stratus.phx.qa.ebay.com:8080/sdt/secureResource/v1/";
+			_sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		} else if (bdCfg.isDev()) {
 			_promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
-			_sellerDashboardServicePrefix = "http://phx5qa01c-8a26.stratus.phx.qa.ebay.com:8080/sdt/secureResource/v1/";
+			_sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		} else {
 			_promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
-			_sellerDashboardServicePrefix = "http://phx5qa01c-8a26.stratus.phx.qa.ebay.com:8080/sdt/secureResource/v1/";
+			_sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		}
 	}
 }
