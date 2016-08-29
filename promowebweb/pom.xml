@@ -80,8 +80,8 @@
       		<version>0.0.1-SNAPSHOT</version>
       	</dependency>
       	<dependency>
-      		<groupId>com.ebay.cbt</groupId>
-      		<artifactId>cbtcommonfinal</artifactId>
+      		<groupId>com.ebay.app.raptor</groupId>
+      		<artifactId>CBTCommon</artifactId>
       		<version>0.0.1-SNAPSHOT</version>
       	</dependency>
       	<dependency>

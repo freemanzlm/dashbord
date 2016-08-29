@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.kernel.context.IRaptorContext;
+import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
@@ -51,7 +52,7 @@ public class HotSellListingController extends AbstractListingController{
 		if(null != listings){
 			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
 			try {
-				UserData userData = CookieUtil.getUserDataFromCookie(req);
+				UserData userData = AppCookies.getUserDataFromCookie(req);
 				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), userData.getUserId())){
 					responseData.setStatus(Boolean.TRUE);
 				}
@@ -70,7 +71,7 @@ public class HotSellListingController extends AbstractListingController{
 	public ListDataWebResponse<HotSellListing> getPromotionListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
 		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			UserData userData = AppCookies.getUserDataFromCookie(req);
 			resp.setData(service.getPromotionListing(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -84,7 +85,7 @@ public class HotSellListingController extends AbstractListingController{
 	public ListDataWebResponse<HotSellListing> getApplicableListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
 		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			UserData userData = AppCookies.getUserDataFromCookie(req);
 			resp.setData(service.getApplicableListings(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -98,7 +99,7 @@ public class HotSellListingController extends AbstractListingController{
 	public ListDataWebResponse<HotSellListing> getAppliedListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
 		try {
-			UserData userData = CookieUtil.getUserDataFromCookie(req);
+			UserData userData = AppCookies.getUserDataFromCookie(req);
 			resp.setData(service.getAppliedListings(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
