@@ -91,7 +91,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		 * If user is visiting from back end system, it will have admin user name and session id in database.
 		 * This is just for back compatibility.
 		 */
-		String sessionId = cookieMap.get(AppCookies.EBAY_CBT_SESSION_ID_COOKIE_NAME);
+		String sessionId = cookieMap.get(AppCookies.EBAY_CBT_LOGIN_SESSION_ID_COOKIE_NAME);
 		sessionId = (sessionId == null || sessionId.isEmpty()) ? cookieMap.get(AppCookies.EBAY_SESSION_ID_COOKIE_NAME) : sessionId;
 		if (sessionId != null && !sessionId.isEmpty()) {
 			String userName = null;
@@ -121,7 +121,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		 * 4. If there is eBayToken (eBayToken and eBaySession are always existed at the same time).
 		 * It means a user is visiting from eBay login page. So we just verify eBayToken.
 		 */
-		String eBayToken = (String)cookieMap.get(AppCookies.EBAY_TOKEN_COOKIE_NAME);
+		String eBayToken = cookieMap.get(AppCookies.EBAY_TOKEN_COOKIE_NAME);
 		
 		return validateEbayToken(eBayToken);
 	}

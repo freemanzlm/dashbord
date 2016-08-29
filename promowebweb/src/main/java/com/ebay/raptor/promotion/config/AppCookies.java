@@ -25,6 +25,7 @@ public class AppCookies {
 	// development back mode
 	public final static String HACK_MODE_COOKIE_NAME = "CBTHackMode";
 
+	public final static String EBAY_CBT_LOGIN_SESSION_ID_COOKIE_NAME = "eBayCBTLoginSession";
 	public final static String EBAY_CBT_ADMIN_USER_COOKIE_NAME = "eBayCBTAdminUser";
 	public final static String EBAY_CBT_USER_ID_COOKIE_NAME = "eBayCBTUserId";
 	public final static String EBAY_CBT_USER_NAME_COOKIE_NAME = "eBayCBTUserName";
@@ -40,7 +41,7 @@ public class AppCookies {
 		if (EnvironmentUtil.isProduction()) {
 			COOKIE_DOMAIN = ".ebay.com.hk"; // expand domain to all CBT app.
 		} else {
-			COOKIE_DOMAIN = null;
+			COOKIE_DOMAIN = ".ebay.com";
 		}
 	}
 	
