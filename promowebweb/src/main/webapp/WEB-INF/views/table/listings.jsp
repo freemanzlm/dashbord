@@ -16,8 +16,10 @@
 					</c:if>
 					
 					<c:forEach items="${ fieldsDefintions }" var="field">
-						<th class="${fn:toLowerCase(field.rawType)} dt-nowrap ${field.key}">${field.title}</th>
-						<c:set var="columns" value='${columns},{"data":"${field.key}"}' ></c:set>
+						<c:if test="${field.key ne 'Listing_Local_Currency_base__c'}">
+							<th class="${fn:toLowerCase(field.rawType)} dt-nowrap ${field.key}">${field.title}</th>
+							<c:set var="columns" value='${columns},{"data":"${field.key}"}' ></c:set>
+						</c:if>
 					</c:forEach>
 					
 					<th class="state">状态</th>
