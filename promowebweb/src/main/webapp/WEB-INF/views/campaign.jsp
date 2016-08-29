@@ -164,12 +164,52 @@
 				
 				<c:if test="${(fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') or fn:containsIgnoreCase(stepList, 'Seller Feedback')) and 
 					(currentStep ne 'Seller nomination_Need approve' and currentStep ne 'Seller Feedback') and not empty fieldsDefintions }">
-					<c:if test="${hasListingsNominated }">
-						<div class="mt20 my-listing">
-							<h3><strong>提交的刊登</strong></h3>
-							<%@ include file="table/listings.jsp"%>
-						</div>
-					</c:if>
+					<c:choose>
+						<c:when test="${not isRegEnd}">
+							<c:choose>
+								<c:when test="${regType}">
+									<div class="mt20 my-listing">
+										<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
+										<%@ include file="table/listings.jsp"%>
+									</div>
+									
+									<div class="mt20 page-bottom-actions">
+										<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
+											<input type="hidden" name="promoId" value="${promo.promoId}"/>
+											<input type="hidden" name="listings" value="[]" />
+											<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
+											<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
+											<br /><br /> <a href="index">返回活动列表</a>
+										</form>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${hasListingsNominated }">
+										<div class="mt20 my-listing">
+											<h3><strong>提交的刊登</strong></h3>
+											<%@ include file="table/listings.jsp"%>
+										</div>
+									</c:if>
+									
+									<div class="mt20">
+										<%@ include file="upload_listings.jsp"%>
+									</div>
+									
+									<div class="mt20 page-bottom-actions">
+										<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
+											<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
+										<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">预览并提交报名</button>
+										<br /><br /> <a href="index">返回活动列表</a>
+									</div>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+							<div class="mt20 page-bottom-actions">
+								<a href="index">返回活动列表</a>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 			</div>
 		</div>

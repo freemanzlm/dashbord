@@ -207,12 +207,6 @@ var BizReport = BizReport || {};
 					sDefaultContent: ""
 				},
 				{
-					aTargets: ["Listing_Local_Currency_base__c"],
-					sType: "string",
-					sClass: "text-right",
-					sDefaultContent: ""
-				},
-				{
 					aTargets: ["double"],
 					sType: "numeric",
 					sClass: "text-right",
@@ -285,6 +279,9 @@ var BizReport = BizReport || {};
 							$(nTd).find("#form"+oRow.skuId).remove();
 						}*/
 						if ($(nTd).find("#form"+oRow.skuId)) {
+							if((!pageData.isPreview || pageData.isPreview != 'true') && pageData.regType == 'false') {
+								$(nTd).find("#form"+oRow.skuId).remove();
+							}
 							if(oRow.hasUploaded) {
 								$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
 								$(nTd).find("#msg"+oRow.skuId).find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+oRow.downloadAttachUrl+'>'+local.getText('promo.listings.attachdownload')+'</a>');
