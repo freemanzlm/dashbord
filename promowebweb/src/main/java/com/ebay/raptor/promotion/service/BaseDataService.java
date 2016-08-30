@@ -19,7 +19,7 @@ import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.CommonUtil;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.kernel.util.FastURLEncoder;
-import com.ebay.raptor.promotion.util.PromotionUtil;
+import com.ebay.raptor.promotion.config.AppConfig;
 import com.google.gson.reflect.TypeToken;
 
 @Service
@@ -91,7 +91,7 @@ public class BaseDataService {
     	Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authorization);
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._sellerDashboardServicePrefix, selectSdParameterUrl)
+                buildServiceUrl(AppConfig.getSellerDashboardServicePrefix(), selectSdParameterUrl)
                 + paramType.getType() + '/' + paramStatus + '/' + paramKey,
                 GET_METHOD, null, headers);
 
@@ -126,7 +126,7 @@ public class BaseDataService {
     	Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authorization);
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._sellerDashboardServicePrefix, selectSdParameterUrl)
+                buildServiceUrl(AppConfig.getSellerDashboardServicePrefix(), selectSdParameterUrl)
                 + paramType.getType() + '/' + paramStatus, GET_METHOD, null,
                 headers);
 
@@ -177,7 +177,7 @@ public class BaseDataService {
                         FastURLEncoder.encode(p.getValue()));
 
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._sellerDashboardServicePrefix, updateSdParameterUrl),
+                buildServiceUrl(AppConfig.getSellerDashboardServicePrefix(), updateSdParameterUrl),
                 POST_METHOD, content, headers);
 
         TypeToken<HttpResponseData<String>> type = new TypeToken<HttpResponseData<String>>() {
@@ -193,7 +193,7 @@ public class BaseDataService {
         }
     }
 
-    public void insertPromoAudit(Audit audit) throws HttpRequestException {
+    /*public void insertPromoAudit(Audit audit) throws HttpRequestException {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("Authorization", authorization);
 
@@ -208,7 +208,7 @@ public class BaseDataService {
         }
 
         String json = httpRequestService.doHttpRequest(
-                buildServiceUrl(PromotionUtil._promoServicePrefix, insertSdAuditUrl),
+                buildServiceUrl(AppConfig., insertSdAuditUrl),
                 POST_METHOD, content, headers, false);
 
         TypeToken<HttpResponseData<String>> type = new TypeToken<HttpResponseData<String>>() {
@@ -250,7 +250,7 @@ public class BaseDataService {
         }
 
         return null;
-    }
+    }*/
     
 	public boolean isUserAbleToAccessBizReport (Long userId) throws HttpRequestException {
 		Map<String, String> headers = new HashMap<String, String>();

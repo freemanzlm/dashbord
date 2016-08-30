@@ -17,12 +17,12 @@ import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.pojo.db.ParameterType;
 import com.ebay.kernel.util.FastURLEncoder;
 import com.ebay.raptor.promotion.AuthNeed;
+import com.ebay.raptor.promotion.config.AppConfig;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.SiteAPIService;
 import com.ebay.raptor.promotion.util.CookieUtil;
-import com.ebay.raptor.promotion.util.PromotionUtil;
 import com.ebay.raptor.promotion.util.RequestUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
 import com.ebay.raptor.siteApi.response.GetTokenStatusResponse.TokenStatus;
@@ -127,12 +127,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 	private void redirectToLogin (HttpServletRequest request, HttpServletResponse response) {
 		try {
-			String url = PromotionUtil.LOGIN_URL + '?'
-					+ PromotionUtil.REFER_PARAM + '='
+			String url = AppConfig.LOGIN_URL + '?'
+					+ AppConfig.REFER_PARAM + '='
 					+ FastURLEncoder.encode(FastURLEncoder.encode(RequestUtil.getFullRequestUrl(request)));
 			response.sendRedirect(url);
 		} catch (IOException e) {
-			_logger.error(ErrorType.UnableRedirectToUrl, e, PromotionUtil.LOGIN_URL);
+			_logger.error(ErrorType.UnableRedirectToUrl, e, AppConfig.LOGIN_URL);
 		}
 	}
 	
