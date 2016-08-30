@@ -165,7 +165,7 @@
 				<c:if test="${(fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') or fn:containsIgnoreCase(stepList, 'Seller Feedback')) and 
 					(currentStep ne 'Seller nomination_Need approve' and currentStep ne 'Seller Feedback') and not empty fieldsDefintions }">
 					<c:choose>
-						<c:when test="${not isRegEnd}">
+						<c:when test="${not isRegEnd and currentStep ne 'Promotion Submitted'}">
 							<c:choose>
 								<c:when test="${regType}">
 									<div class="mt20 my-listing">
@@ -205,6 +205,12 @@
 							</c:choose>
 						</c:when>
 						<c:otherwise>
+							<c:if test="${hasListingsNominated }">
+								<div class="mt20 my-listing">
+									<h3><strong>提交的刊登</strong></h3>
+									<%@ include file="table/listings.jsp"%>
+								</div>
+							</c:if>
 							<div class="mt20 page-bottom-actions">
 								<a href="index">返回活动列表</a>
 							</div>
