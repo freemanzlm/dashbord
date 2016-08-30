@@ -32,17 +32,17 @@ public class AppConfig {
 			promoUrlPrefix = "http://cbtpromo.ebay.com.hk";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		} else if ("staging".equals(bdCfg.getPoolType())) {
-			promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
+			promoUrlPrefix = "promoweb-phx-1-web-envahhhydq27et4.stratus.phx.ebay.com";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		} else if (bdCfg.isQATE()) {
 			// feature pool or staging pool
-			promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
+			promoUrlPrefix = "http://promoweb-3.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		} else if (bdCfg.isDev()) {
 			promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		} else {
-			promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
+			promoUrlPrefix = "http://promoweb-3.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
 		}
 	}
