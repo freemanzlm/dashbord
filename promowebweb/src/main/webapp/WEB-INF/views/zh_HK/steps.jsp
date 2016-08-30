@@ -35,6 +35,7 @@
 					</c:choose>
 				</c:if>
 				<c:if test="${step eq 'Promotion Submitted'}">
+					<c:set var="hasReviewed" value="${ true }" />
 					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">報名審核</span></div>
 				</c:if>
 				<c:if test="${step eq 'Promotion in progress'}">
@@ -49,7 +50,7 @@
 			</c:forTokens>
 			
 			<c:choose>
-				<c:when test="${ currentStep eq 'Promotion end' }">
+				<c:when test="${ currentStep eq 'Promotion end' || (hasReviewed and hasListingsNominated ne true)}">
 					<div class="post current-post last""><span class="label">活動結束</span></div>
 				</c:when>
 				<c:otherwise>

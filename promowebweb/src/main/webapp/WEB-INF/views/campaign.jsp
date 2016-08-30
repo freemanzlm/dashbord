@@ -14,7 +14,7 @@
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
 <c:set var="hasListingsNominated" value="${hasListingsNominated}" />
-
+<c:set var="hasReviewed" value="${ false }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -165,7 +165,7 @@
 				<c:if test="${(fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') or fn:containsIgnoreCase(stepList, 'Seller Feedback')) and 
 					(currentStep ne 'Seller nomination_Need approve' and currentStep ne 'Seller Feedback') and not empty fieldsDefintions }">
 					<c:choose>
-						<c:when test="${not isRegEnd and currentStep ne 'Promotion Submitted'}">
+						<c:when test="${not isRegEnd and currentStep eq 'Promotion in progress' }">
 							<c:choose>
 								<c:when test="${regType}">
 									<div class="mt20 my-listing">
