@@ -50,11 +50,12 @@
 			</c:forTokens>
 			
 			<c:choose>
-				<c:when test="${ currentStep eq 'Promotion end' || (hasReviewed and hasListingsNominated ne true)}">
-					<div class="post current-post last""><span class="label">活動結束</span></div>
+				<c:when test="${ (currentStep eq 'Promotion end')}">
+					<div class="post current-post last"><span class="label">活动结束</span></div>
 				</c:when>
+				
 				<c:otherwise>
-					<div class="post last""><span class="label">活動結束</span></div>
+					<div class="post last"><span class="label">活動結束</span></div>
 				</c:otherwise>
 			</c:choose>			
 		</div>

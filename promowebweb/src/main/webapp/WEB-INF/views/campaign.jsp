@@ -240,6 +240,15 @@
 			isRegEnd : '${isRegEnd}'
 		};
 	</script>
+	
+	<script type="text/javascript">
+		var hasReviewed = '${hasReviewed}';
+		var hasListingsNominated = '${hasListingsNominated}';
+		if(hasReviewed == 'true' && hasListingsNominated=='false') {
+			$(".signpost .post").remove();
+			$(".signpost-posts").html("<div class='post current-post'><span class='label'>活动结束</span></div>");
+		}
+	</script>
 
 	<res:jsSlot id="body" />
 	<res:jsSlot id="page-js" />
