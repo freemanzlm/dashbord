@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.interceptor;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,12 +81,41 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 
 		// add username & biz report link & dashboard link
 		model.addObject(ViewContext.UserName.getAttr(), userName);
+		model.addObject(ViewContext.UserId.getAttr(), userData.getUserId());
 		model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
 		model.addObject(ViewContext.SDUrl.getAttr(), AppConfig.SELLER_DASHBOARD_URL);
 		
 		boolean accessBizReport = false;
 		try {
-			accessBizReport = userData.getAdmin() || baseService.isUserAbleToAccessBizReport(userData.getUserId());
+//			accessBizReport = userData.getAdmin() || baseService.isUserAbleToAccessBizReport(userData.getUserId());
+
+			boolean isInDDSWhitelist = false;
+			boolean isSubscribeDialogClosed = false;
+			boolean isCanSubscribeConv = false;
+			boolean isCanSubscribeDDS = false;
+			boolean isInConvWhitelist = false;
+			Map<String, Boolean> subscriptionMsg  = baseService.getSubscriptionMsg(userData.getUserId());
+
+			if (subscriptionMsg != null)
+			{
+				isInDDSWhitelist = subscriptionMsg.get("isInDDSWhitelist") == null ? false: subscriptionMsg.get("isInDDSWhitelist");
+				model.addObject("isInDDSWhitelist", isInDDSWhitelist);
+
+				isSubscribeDialogClosed = subscriptionMsg.get("isSubscribeDialogClosed") == null ? false : subscriptionMsg.get("isSubscribeDialogClosed");
+				model.addObject("isSubscribeDialogClosed", isSubscribeDialogClosed);
+
+				isCanSubscribeConv = subscriptionMsg.get("isCanSubscribeConv") == null ? false : subscriptionMsg.get("isCanSubscribeConv");
+				model.addObject("isCanSubscribeConv", isCanSubscribeConv);
+
+				isCanSubscribeDDS = subscriptionMsg.get("isCanSubscribeDDS") == null ? false : subscriptionMsg.get("isCanSubscribeDDS");
+				model.addObject("isCanSubscribeDDS", isCanSubscribeDDS);
+
+				isInConvWhitelist = subscriptionMsg.get("isInConvWhitelist") == null ? false : subscriptionMsg.get("isInConvWhitelist");
+				model.addObject("isInConvWhitelist", isInConvWhitelist);
+				
+				accessBizReport = userData.getAdmin() || isCanSubscribeConv || isCanSubscribeDDS;
+			}
+			
 		} catch (HttpRequestException e1) {
 			logger.log(LogLevel.WARN, "Failed to check if user can access biz report.");
 		}

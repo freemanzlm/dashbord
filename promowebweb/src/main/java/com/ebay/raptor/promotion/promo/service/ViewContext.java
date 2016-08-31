@@ -19,7 +19,8 @@ public enum ViewContext {
 	PromoUpdatedNum(13, "promoUpdatedNum"),
 	PromoUpdatedDetail(14, "promoUpdatedDetail"),
 	IsAdmin(15, "isAdmin"),
-	PromotionSubType(16, "promoSubType");
+	PromotionSubType(16, "promoSubType"),
+	UserId(17, "userId");
 	
 	private Integer id;
 
