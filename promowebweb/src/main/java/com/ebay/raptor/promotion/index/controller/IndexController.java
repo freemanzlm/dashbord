@@ -84,7 +84,7 @@ public class IndexController {
             @ModelAttribute RequestParameter param) throws MissingArgumentException {
         ModelAndView mav = new ModelAndView();
         //Set unconfirmed status
-        UserData userDt = AppCookies.getUserDataFromCookie(request);
+        UserData userDt = loginService.getUserDataFromCookie(request);
         mav.addObject(ViewContext.IsUnconfirmedVisable.getAttr(), userDt.getAdmin());
         
        	mav.setViewName("index");
@@ -97,7 +97,7 @@ public class IndexController {
 	public ModelAndView promotion(HttpServletRequest request,
 			@PathVariable("promoId") String promoId) throws MissingArgumentException {
 		ModelAndView model = new ModelAndView();
-		UserData userData = AppCookies.getUserDataFromCookie(request);
+		UserData userData = loginService.getUserDataFromCookie(request);
 
 		try {
 			Promotion promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());

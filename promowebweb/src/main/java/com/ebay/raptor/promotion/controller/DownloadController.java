@@ -21,18 +21,19 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.export.ColumnFormat;
 import com.ebay.app.raptor.promocommon.export.HeaderConfiguration;
 import com.ebay.app.raptor.promocommon.export.write.ExcelSheetWriter;
-import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
+import com.ebay.raptor.promotion.service.LoginService;
 
 @Controller
 public class DownloadController {
 	private static CommonLogger logger =
             CommonLogger.getInstance(DownloadController.class);
 	
+	@Autowired LoginService loginService;
 	@Autowired DealsListingService dealsListingService;
 	@Autowired ResourceBundleMessageSource msgResource;
 
@@ -46,7 +47,7 @@ public class DownloadController {
         	response.setContentType("application/x-msdownload;");
         	response.setHeader("Content-disposition", "attachment; filename=" + prefixFileName + ".xlsx");
         	
-        	UserData userData = AppCookies.getUserDataFromCookie(request);
+        	UserData userData = loginService.getUserDataFromCookie(request);
         	
         	List<DealsListing> skuListings = dealsListingService.getSkuListingsByPromotionId(param.getPromoId(), userData.getUserId(), null);
 
