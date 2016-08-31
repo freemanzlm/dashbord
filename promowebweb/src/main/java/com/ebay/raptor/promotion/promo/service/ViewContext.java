@@ -31,7 +31,8 @@ public enum ViewContext {
 	FIELDS_DEFINITIONS(21, "fieldsDefintions"),
 	IS_CONFIRM_END(22, "isConfirmEnd"),
 	IS_REG_END(24, "isRegEnd"),
-	Subsidy(23, "subsidy");
+	Subsidy(23, "subsidy"),
+	HAS_REVIEWED(25, "hasReviewed");
 	
 	private Integer id;
 

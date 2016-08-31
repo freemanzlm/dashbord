@@ -90,6 +90,8 @@ public class PromotionViewService {
 		
 		context.put(ViewContext.HAS_LISTINGS_NOMINATED.getAttr(), service.hasListingNominated(pro.getPromoId(), uid));
 		
+		context.put(ViewContext.HAS_REVIEWED.getAttr(), getIndexOfStep("Promotion Submitted", pro.getStepList())!=-1?(getIndexOfStep("Promotion Submitted", pro.getStepList())<=getIndexOfStep(pro.getCurrentStep(), pro.getStepList())):false);
+		
 		// We only leave visible step list for promotion display.
 		String visibleStepList = getVisibleStepList(pro.getStepList());
 		pro.setStepList(visibleStepList);
@@ -151,6 +153,16 @@ public class PromotionViewService {
 			}
 		}
 		return currentStep;
+	}
+	
+	public int getIndexOfStep(String step, String promoSteps) {
+		String[] steps = promoSteps.split(">");
+		for(int i=0;i<steps.length;i++) {
+			if(step.equalsIgnoreCase(steps[i])) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	/**

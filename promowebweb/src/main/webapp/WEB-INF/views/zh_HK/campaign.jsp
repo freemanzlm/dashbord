@@ -14,7 +14,7 @@
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
 <c:set var="hasListingsNominated" value="${hasListingsNominated}" />
-<c:set var="hasReviewed" value="${ false }" />
+<c:set var="hasReviewed" value="${ hasReviewed }" />
 
 
 <r:includeJquery jsSlot="head" />

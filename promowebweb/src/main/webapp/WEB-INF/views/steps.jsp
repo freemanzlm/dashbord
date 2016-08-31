@@ -35,7 +35,6 @@
 					</c:choose>
 				</c:if>
 				<c:if test="${step eq 'Promotion Submitted'}">
-					<c:set var="hasReviewed" value="${ true }" />
 					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">报名审核</span></div>
 				</c:if>
 				<c:if test="${step eq 'Promotion in progress'}">
