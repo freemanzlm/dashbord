@@ -186,7 +186,7 @@ public class ListingController extends AbstractListingController {
 				
 				boolean first = true;
 				for (ConstraintViolation<Object> violation : violations) {
-					errorMessage.append((first ? "" : "<br/>") + violation.getMessage());
+					errorMessage.append((first ? "" : "&lt;br/&gt;") + violation.getMessage());
 					first = false;
 				}
 				
