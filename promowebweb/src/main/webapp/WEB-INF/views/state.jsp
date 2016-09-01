@@ -16,7 +16,7 @@
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 			
 <c:choose>
-	<c:when test="${hasReviewed and hasListingsNominated ne true}">
+	<c:when test="${promo.endReason ne 'claimExpired' and promo.endReason ne 'subsidyRetrieved' && promo.state == 'End'}">
 		<%@ include file="stepMessages/end.jsp" %>
 	</c:when>
 	<c:when test="${currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback'}">

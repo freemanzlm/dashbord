@@ -14,7 +14,6 @@
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
 <c:set var="hasListingsNominated" value="${hasListingsNominated}" />
-<c:set var="hasReviewed" value="${ hasReviewed }" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -242,9 +241,11 @@
 	</script>
 	
 	<script type="text/javascript">
-		var hasReviewed = '${hasReviewed}';
-		var hasListingsNominated = '${hasListingsNominated}';
-		if(hasReviewed == 'true' && hasListingsNominated=='false') {
+		/* var hasReviewed = '${hasReviewed}';
+		var hasListingsNominated = '${hasListingsNominated}'; */
+		var endReason = '${promo.endReason}';
+		var state = '${promo.state}';
+		if((endReason != 'claimExpired' && endReason != 'subsidyRetrieved') && state == 'End') {
 			$(".signpost .post").remove();
 			$(".signpost-posts").html("<div class='post current-post'><span class='label'>活动结束</span></div>");
 		}

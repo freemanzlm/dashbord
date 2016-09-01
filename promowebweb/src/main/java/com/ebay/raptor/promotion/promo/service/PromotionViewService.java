@@ -90,7 +90,7 @@ public class PromotionViewService {
 		
 		context.put(ViewContext.HAS_LISTINGS_NOMINATED.getAttr(), service.hasListingNominated(pro.getPromoId(), uid));
 		
-		context.put(ViewContext.HAS_REVIEWED.getAttr(), getIndexOfStep("Promotion Submitted", pro.getStepList())!=-1?(getIndexOfStep("Promotion Submitted", pro.getStepList())<=getIndexOfStep(pro.getCurrentStep(), pro.getStepList())):false);
+//		context.put(ViewContext.HAS_REVIEWED.getAttr(), getIndexOfStep("Promotion Submitted", pro.getStepList())!=-1?(getIndexOfStep("Promotion Submitted", pro.getStepList())<=getIndexOfStep(pro.getCurrentStep(), pro.getStepList())):false);
 		
 		// We only leave visible step list for promotion display.
 		String visibleStepList = getVisibleStepList(pro.getStepList());
