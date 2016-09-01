@@ -65,7 +65,10 @@ public class IndexController {
             // You need to see how AppCookies.getUserDataFromCookie() to get user data.
             if (userId != null) {
             	// add hack mode in order to avoid login checking
+            	// remove ebay token and hack mode can't exist at the same time.
+            	CookieUtil.setCBTCookie(response, AppCookies.EBAY_TOKEN_COOKIE_NAME, "", CookieUtil.EXPIRED_COOKIE_LIFESPAN);
             	CookieUtil.setCBTCookie(response, AppCookies.HACK_MODE_COOKIE_NAME, "true", CookieUtil.SESSION_COOKIE_LIFESPAN);
+            	
             	CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, SiteApiUtil.encodeUserId(userId), CookieUtil.SESSION_COOKIE_LIFESPAN);
             	// hack_id is the user name.
             	CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId, CookieUtil.ONE_DAY_COOKIE_LIFESPAN);

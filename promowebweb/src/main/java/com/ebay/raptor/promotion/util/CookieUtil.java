@@ -13,6 +13,7 @@ public class CookieUtil {
 	public final static int ONE_DAY_COOKIE_LIFESPAN = 3600 * 24; // 1 Day
 	public final static int TEN_MIN_COOKIE_LIFESPAN = 600; // 10 min
 	public final static int SESSION_COOKIE_LIFESPAN = -1; // session cookie
+	public final static int EXPIRED_COOKIE_LIFESPAN = 0; // remove cookie
 	
 	/**
 	 * Set a new cookie in http reponse.
