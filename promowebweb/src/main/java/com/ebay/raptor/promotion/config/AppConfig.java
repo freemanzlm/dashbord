@@ -21,6 +21,7 @@ public class AppConfig {
     
     private static String promoUrlPrefix = "";
 	private static String sellerDashboardServicePrefix = "";
+	private static String bizReportServicePrefix = "";
 	
 	private static AppBuildConfig bdCfg = AppBuildConfig.getInstance();
 	
@@ -31,20 +32,35 @@ public class AppConfig {
 		} else if (bdCfg.isProduction()) {
 			promoUrlPrefix = "http://cbtpromo.ebay.com.hk";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
+			bizReportServicePrefix = "http://www.bizser.stratus.ebay.com/br/v1/";
 		} else if ("staging".equals(bdCfg.getPoolType())) {
 			promoUrlPrefix = "promoweb-phx-1-web-envahhhydq27et4.stratus.phx.ebay.com";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
+			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isQATE()) {
 			// feature pool or staging pool
 			promoUrlPrefix = "http://promoweb-3.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
+			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isDev()) {
 			promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
+			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
 		} else {
 			promoUrlPrefix = "http://promoweb-3.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
+			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
 		}
+	}
+	
+	public static String getBizReportServicePrefix() 
+	{
+		return bizReportServicePrefix;
+	}
+	
+	public static void setBizReportServicePrefix(String bizReportServicePrefix) 
+	{
+		AppConfig.bizReportServicePrefix = bizReportServicePrefix;
 	}
 	
 	public static String getPromoUrlPrefix() {

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.ebay.raptor.promotion.controller.brsubscribe;
 
 import java.util.HashMap;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestException;
-import com.ebay.raptor.promotion.service.BaseDataService;
+import com.ebay.raptor.promotion.service.BRDataService;
 import com.ebay.soaframework.common.config.RequestParam;
 
 /**
@@ -32,7 +29,7 @@ public class SubscriptionController
 	private static CommonLogger logger = CommonLogger.getInstance(SubscriptionController.class);
 
 	@Autowired
-	BaseDataService baseService;
+	BRDataService brdataService;
 
 	@RequestMapping(value = "/subscribe")
 	@ResponseBody
@@ -40,14 +37,14 @@ public class SubscriptionController
 			@ModelAttribute RequestParam param) throws MissingArgumentException
 	{
 		long userId = Long.valueOf(request.getParameter("userId"));
-		int whitelistType = Integer.valueOf(request.getParameter("whitelistType"));// FIXME, param.getWhitelistType)(),1 as conversion,2 as DDS，3 as both
+		int whitelistType = Integer.valueOf(request.getParameter("whitelistType"));// 1 as conversion,2 as DDS，3 as both
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		boolean result = false;
 
 		try
 		{
-			result = baseService.addWhitelist(userId, whitelistType);
+			result = brdataService.addWhitelist(userId, whitelistType);
 		}
 		catch (HttpRequestException e)
 		{
@@ -68,7 +65,7 @@ public class SubscriptionController
 		boolean result = false;
 		try
 		{
-			result = baseService.subscribeDialogClosed(userId);
+			result = brdataService.subscribeDialogClosed(userId);
 		}
 		catch(HttpRequestException e)
 		{

@@ -18,6 +18,7 @@ import com.ebay.raptor.promotion.config.AppConfig;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
+import com.ebay.raptor.promotion.service.BRDataService;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 
@@ -34,6 +35,9 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	private CSApiService service;
 	@Autowired
 	BaseDataService baseService;
+	
+	@Autowired
+	BRDataService brdataService;
 
 	@Override
 	public void postHandle(HttpServletRequest request,
@@ -94,7 +98,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			boolean isCanSubscribeConv = false;
 			boolean isCanSubscribeDDS = false;
 			boolean isInConvWhitelist = false;
-			Map<String, Boolean> subscriptionMsg  = baseService.getSubscriptionMsg(userData.getUserId());
+			Map<String, Boolean> subscriptionMsg  = brdataService.getSubscriptionMsg(userData.getUserId());
 
 			if (subscriptionMsg != null)
 			{
