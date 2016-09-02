@@ -142,10 +142,6 @@ public class BackendTokenUtil {
 		if (!adminUser.equalsIgnoreCase(token.getAdminUserName())) {
 			return false;
 		}
-		
-		if (!token.getUserVisitIp().equalsIgnoreCase(ip)) {
-			return false;
-		}
 
 		if (isLoginDateExpired(token.getVisitDt())) {
 			return false;
