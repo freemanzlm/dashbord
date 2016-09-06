@@ -18,8 +18,7 @@ import com.google.gson.reflect.TypeToken;
  * @date 2016-9-1
  */
 @Service
-public class BRDataService 
-{
+public class BRDataService {
 	protected static final String GET_METHOD = "GET";
 	
 	private static final CommonLogger logger = CommonLogger.getInstance(BRDataService.class);
@@ -38,19 +37,13 @@ public class BRDataService
 		TypeToken<HttpResponseData<Map<String, Boolean>>> type = new TypeToken<HttpResponseData<Map<String, Boolean>>>(){};
 		HttpResponseData<Map<String, Boolean>> response = httpRequestService.getResponseData(json, type);
 		
-		if(response != null)
-		{
-			if(response.getIsSuccess())
-			{
+		if(response != null) {
+			if(response.getIsSuccess()) {
 				return response.getData();
-			}
-			else
-			{
+			}else {
 				logger.error(String.format("Get subscription messages with [%d] failed, with error message: %s", userId, response.getErrorMmsg()));
 			}
-		}
-		else
-		{
+		}else {
 			logger.error("Unable to call getSubscriptionMsg API.");
 		}
 		return null;
@@ -63,17 +56,13 @@ public class BRDataService
 		HttpResponseData<String> response = httpRequestService.getResponseData(json, type);
 
 		boolean result = false;
-		if (response != null) 
-		{
+		if (response != null) {
 			result = response.getIsSuccess();
-			if (!result) 
-			{
+			if (!result) {
 				logger.error(String.format("Add whitelist with [%d] failed, with error message: %s",
 								userId, response.getErrorMmsg()));
 			}
-		} 
-		else 
-		{
+		} else {
 			logger.error("Unable to call add whitelist API.");
 		}
         return result;
@@ -86,16 +75,12 @@ public class BRDataService
 		HttpResponseData<Boolean> response = httpRequestService.getResponseData(json, type);
 		
 		boolean result = false;
-		if(response != null)
-		{
+		if(response != null){
 			result = response.getIsSuccess();
-			if(!result)
-			{
+			if(!result){
 				logger.error(String.format("Persist subscription dialog closed to DB with [%d] failed, whith error message: s%" , userId, response.getErrorMmsg()));
 			}
-		}
-		else
-		{
+		}else {
 			logger.error("Unable to call subscribeDialogClosed API.");
 		}
 		return result;

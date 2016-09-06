@@ -24,8 +24,7 @@ import com.ebay.soaframework.common.config.RequestParam;
  */
 @RequestMapping("/subscription")
 @Controller
-public class SubscriptionController
-{
+public class SubscriptionController {
 	private static CommonLogger logger = CommonLogger.getInstance(SubscriptionController.class);
 
 	@Autowired
@@ -34,20 +33,16 @@ public class SubscriptionController
 	@RequestMapping(value = "/subscribe")
 	@ResponseBody
 	public Map<String, Object> subscribe(HttpServletRequest request, HttpServletResponse response, 
-			@ModelAttribute RequestParam param) throws MissingArgumentException
-	{
+			@ModelAttribute RequestParam param) throws MissingArgumentException {
 		long userId = Long.valueOf(request.getParameter("userId"));
 		int whitelistType = Integer.valueOf(request.getParameter("whitelistType"));// 1 as conversion,2 as DDS，3 as both
 
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		boolean result = false;
 
-		try
-		{
+		try{
 			result = brdataService.addWhitelist(userId, whitelistType);
-		}
-		catch (HttpRequestException e)
-		{
+		}catch (HttpRequestException e){
 			logger.error(String.format("Can't add whitelist with info[userId=%d, whitelistType=%d]",userId, whitelistType), e);
 		}
 
@@ -58,17 +53,13 @@ public class SubscriptionController
 	@RequestMapping(value = "/subscribeDialogClosed")
 	@ResponseBody
 	public Map<String, Object> subscribeDialogClosed(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute RequestParam param) throws MissingArgumentException
-	{
+			@ModelAttribute RequestParam param) throws MissingArgumentException {
 		long userId = Long.valueOf(request.getParameter("userId"));
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		boolean result = false;
-		try
-		{
+		try{
 			result = brdataService.subscribeDialogClosed(userId);
-		}
-		catch(HttpRequestException e)
-		{
+		}catch(HttpRequestException e){
 			logger.error(String.format("Can't persist subscription dialog closed to DB with info[userId=%d]",userId), e);
 		}
 		jsonMap.put("status", result);
