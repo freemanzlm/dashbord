@@ -20,6 +20,22 @@ public class LocaleUtil {
 	}
 	
 	/**
+	 * Get locale from like: CN, TW, HK.
+	 * @param region
+	 * @return locale
+	 */
+	public static Locale getLocale(String region) {
+		if(region.equalsIgnoreCase("CN")) {
+			return new Locale("zh","CN");
+		} else if(region.equalsIgnoreCase("HK")) {
+			return new Locale("zh", "HK");
+		} else if(region.equalsIgnoreCase("TW")) {
+			return new Locale("zh", "TW");
+		}
+		return LocaleContextHolder.getLocale();
+	}
+	
+	/**
 	 * Get current Locale of user request.
 	 *  
 	 * @return Locale

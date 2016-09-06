@@ -78,7 +78,7 @@ public class PromotionViewService {
 		handleCurrentStep(pro, pro.getCurrentStep());
 		
 		String fieldsDefinitions = pro.getListingFields(); 
-		handleListingFields(fieldsDefinitions, context);
+		handleListingFields(fieldsDefinitions, context, pro.getRegion());
 		
 		if (!isRegEnded) {
 			// Enroll and confirm need to check if user has accept the terms. 
@@ -108,13 +108,13 @@ public class PromotionViewService {
 	 * @param promo
 	 * @param context
 	 */
-	public void handleListingFields(String fieldsDefinitions, Map<String, Object> context){
+	public void handleListingFields(String fieldsDefinitions, Map<String, Object> context, String region){
 		if (fieldsDefinitions != null) {
 			JsonNode tree;
 			try {
 				tree = mapper.readTree(fieldsDefinitions);
 				if (tree != null && tree.isArray()) {
-					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, LocaleUtil.getCurrentLocale());
+					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, LocaleUtil.getLocale(region));
 					context.put(ViewContext.FIELDS_DEFINITIONS.getAttr(), columnConfigs);
 				}
 			} catch (IOException e) {

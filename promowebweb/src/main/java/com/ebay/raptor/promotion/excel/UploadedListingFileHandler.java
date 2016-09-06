@@ -39,7 +39,7 @@ public class UploadedListingFileHandler {
 	public Set<ConstraintViolation<Object>> handleSheet(Sheet sheet, List<ColumnConfiguration> configs) throws PromoException {
 		ISheetReader reader = new SheetReader();
 		Set<ConstraintViolation<Object>> violations = new HashSet<ConstraintViolation<Object>>();
-		List<Map<String, Object>> list = reader.readSheet(sheet, configs, 3, violations);
+		List<Map<String, Object>> list = reader.readSheet(sheet, configs, 2, violations);
 		List<Listing> listings = new ArrayList<Listing>();
 		
 		if (list != null) {

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,11 +23,13 @@ import org.apache.poi.xssf.usermodel.XSSFDataValidation;
 import org.apache.poi.xssf.usermodel.XSSFDataValidationConstraint;
 import org.apache.poi.xssf.usermodel.XSSFDataValidationHelper;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.springframework.context.MessageSource;
 
 import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.DoubleColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.IntegerRangeColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.RangeColumnConstraint;
+import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.util.DateUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
 
@@ -38,6 +41,8 @@ public class SheetWriter implements ISheetWriter {
 	private final Logger logger = Logger.getLogger(SheetWriter.class.getName());
 	private Map<Integer, CellStyle> styleMapping = new HashMap<Integer, CellStyle>();
 	private int firstDataRowNum = 0;
+	private MessageSource messageSource;
+	private Locale locale;
 	
 	@Override
 	public void createCell(Workbook book, Sheet sheet, Row row, ColumnConfiguration config,
@@ -234,14 +239,26 @@ public class SheetWriter implements ISheetWriter {
 		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
-				if(config.getRequired()) {
-					config.setTitle(config.getTitle()+"(required)");
+				if(!config.getKey().equals("toUpload")) {
+					String endMark =")";
+					if(!config.getWritable()) {
+						endMark = "";
+					}
+					if(config.getRequired()) {
+						config.setTitle(config.getTitle()+"(required/"+messageSource.getMessage("excel.header.require", null, this.locale)+endMark);
+					} else {
+						config.setTitle(config.getTitle()+"(optional/"+messageSource.getMessage("excel.header.optional", null, this.locale)+endMark);
+					}
+					
+					if(!config.getWritable()) {
+						config.setTitle(config.getTitle()+", locked/"+messageSource.getMessage("excel.header.lock", null, this.locale)+")");
+					}
 				}
 				createCell(book, sheet, row, config.getWriteOrder(), config.getTitle(), headerStyle);
 			}
 		}
 		
-		createSubHead(book, sheet, configs);
+		//createSubHead(book, sheet, configs);
 	}
 	
 	private void createSubHead(Workbook book, Sheet sheet, List<ColumnConfiguration> configs) {
@@ -478,5 +495,21 @@ public class SheetWriter implements ISheetWriter {
 				}
 			}
 		}
+	}
+
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
+	public Locale getLocale() {
+		return locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
 	}
 }

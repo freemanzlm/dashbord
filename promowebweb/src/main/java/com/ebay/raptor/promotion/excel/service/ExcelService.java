@@ -97,6 +97,7 @@ public class ExcelService {
 		}
 		
 		SheetWriter writer = new SheetWriter();
+		writer.setMessageSource(messageSource);
 		Sheet sheet = workBook.createSheet(messageSource.getMessage("listing.template", null, LocaleUtil.getCurrentLocale()));
 		
 		Promotion promo = promoService.getPromotionById(promoId, uid, isAdmin);
@@ -105,12 +106,14 @@ public class ExcelService {
 			fieldsDefinitions = promo.getListingFields();
 		}
 		
+		locale = LocaleUtil.getLocale(promo.getRegion());
+		writer.setLocale(locale);
 		if (fieldsDefinitions != null) {
 			JsonNode tree = mapper.readTree(fieldsDefinitions);
 			if (tree.isArray()) {
 				List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
 				adjustColumnConfigurations(columnConfigs, locale);
-				preHandleData(columnConfigs, skuListings);
+				preHandleData(columnConfigs, skuListings, locale);
 				writer.writeSheet(workBook, sheet, columnConfigs, skuListings, true);
 			}
 		}
@@ -131,14 +134,14 @@ public class ExcelService {
 		return ExcelService.LISTING_FILENAME_PREFIX + "_" + random.nextInt() + ".xlsx";
 	}
 	
-	private void preHandleData(List<ColumnConfiguration> columnConfigs, List<Map<String, Object>> listings) {
+	private void preHandleData(List<ColumnConfiguration> columnConfigs, List<Map<String, Object>> listings, Locale locale) {
 		if (listings != null && columnConfigs != null) {
 			for (ColumnConfiguration config : columnConfigs) {
 				if ("attachment".equalsIgnoreCase(config.getRawType())) {
 					for(Map<String, Object> map : listings) {
 						Object value = map.get(config.getKey());
 						if (value == null) {
-							map.put(config.getKey(), messageSource.getMessage("listing.attachment.comment", null, LocaleUtil.getCurrentLocale()));
+							map.put(config.getKey(), messageSource.getMessage("listing.attachment.comment", null, locale));
 						}
 					}
 				}
@@ -171,7 +174,8 @@ public class ExcelService {
 		ColumnConfiguration uploadConfig = new ColumnConfiguration();
 		uploadConfig.setKey("toUpload");
 		uploadConfig.setTitle(messageSource.getMessage("excel.header.toUpload", null, locale));
-		uploadConfig.setLabel("Whether Upload");
+		//uploadConfig.setLabel("Whether Upload");
+		uploadConfig.setSample(messageSource.getMessage("excel.header.uploadSample", null, locale));
 		uploadConfig.setReadOrder(1);
 		uploadConfig.setWriteOrder(1);
 		uploadConfig.setWritable(true);

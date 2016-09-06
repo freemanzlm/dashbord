@@ -334,7 +334,7 @@ public class ListingController extends AbstractListingController {
 			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 			String fieldsDefinitions = promo.getListingFields();
 						
-			promoViewService.handleListingFields(fieldsDefinitions, context);
+			promoViewService.handleListingFields(fieldsDefinitions, context, promo.getRegion());
 		} catch (PromoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
