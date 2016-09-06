@@ -1,6 +1,10 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="isDisplayDialog" value="${((!isInConvWhitelist && isCanSubscribeConv) || (!isInDDSWhitelist && isCanSubscribeDDS)) && !isSubscribeDialogClosed}" /> <!-- //((!isInConvWhitelist && IsCanSubscribeConv) || (!accessDDS && isCanSubscribeDDS)) && !isSubscribeDialogClosed -->
+
+
+
 <div class="navigator-top" role="navigation">
 	<div class="navigator-bar clr">
 		<div class="navigator-title">卖家中心</div>
@@ -16,3 +20,7 @@
 		${promoUpdatedDetail}
 	</div>
 </div>
+
+<c:if test="${isDisplayDialog eq true }">
+<%@ include file="brsubscribe/subscribeDialog.jsp"%>
+</c:if>

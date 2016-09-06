@@ -117,6 +117,9 @@ BizReport.local = {
 	'errorMsg': {
 		'regDateExpired': '很遗憾，报名已经截止，如需继续报名，请联系客服！',
 		'uploadListingError': '上传刊登失败，请联系客服了解详细情况！'
+	},
+	'subscribe': {
+		'fail': '<p>订阅失败！请联系客服查询具体原因！</p>'
 	}
 };
 

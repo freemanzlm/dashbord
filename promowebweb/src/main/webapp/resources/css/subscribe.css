@@ -1,0 +1,29 @@
+#page-pure .subscribe-notice{
+	margin-top:30px;
+}
+
+.subscribe-notice{
+	/* text-align:center; */
+}
+
+.subscribe-content{
+	margin:0 auto;
+	width:600px;
+	margin-top: 30px;
+	line-height:130%;
+}
+
+.subscribe-notice h1 {font-size:15px;}
+.subscribe-notice ul {
+	list-style-type:square;
+	list-style-position:inside;
+}
+.subscribe-notice .actions {
+	margin-top: 20px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+.subscribe-notice .actions .btn {
+	width:160px;
+    margin-bottom: 8px;
+}

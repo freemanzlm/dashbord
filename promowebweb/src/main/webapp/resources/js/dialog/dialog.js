@@ -73,10 +73,6 @@
 
 		delegate : function() {
 			var self = this;
-			this.anchor.click(function(){
-				self.close();
-			});
-			
 			this.wrapper.find(".cancel, .close").click(function(){
 				self.close();
 			});
