@@ -9,10 +9,10 @@
 	<div class="navigator-bar clr">
 		<div class="navigator-title">卖家中心</div>
 		<ul class="navigation-list">
-			<li class="no-sub-menu"><a href="${sdurl}">买家体验报告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
 			<c:if test="${accessBiz == true}">
 				<li class=""><a href="${bizurl}">业务分析报告</a><span class="icon icon-new"></span></li>
 			</c:if>
+			<li class="no-sub-menu"><a href="${sdurl}">买家体验报告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
 			<li class="no-sub-menu active"><a id="promotion" href="/promotion/index" target="_self">活动促销<c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a></li>
 		</ul>
 	</div>	
