@@ -48,8 +48,10 @@
 <script type="text/javascript">
 	var userId = "${userId}";
 	$(document.body).ready(function() {
+		var closeByClickSubscribe = false;
 		$("#subscribe-dialog").on('show', function() {
 		}).on('close', function(){
+			if (closeByClickSubscribe) return;
 			$.ajax({
 				url : "subscription/subscribeDialogClosed?userId="+userId,
 				type : 'GET',
@@ -59,11 +61,11 @@
 					if (data.status == true) {
 						
 					} else {
-						//cbt.alert(BizReport.local.getText('subscribe.fail'));
+						cbt.alert(BizReport.local.getText('subscribe.fail'));
 					}
 				},
 				error : function() {
-					//cbt.alert(BizReport.local.getText('subscribe.fail'));
+					cbt.alert(BizReport.local.getText('subscribe.fail'));
 				}
 			});
 		}).dialog({
@@ -72,7 +74,7 @@
 	});
 
 	$("#btnSubscribe").click(function() {
-
+		closeByClickSubscribe = true;
 		var divConv = document.getElementById("divConv");
 
 		var divDDS = document.getElementById("divDDS");
@@ -96,10 +98,12 @@
 					$("#subscribe-dialog").dialog("close");
 					window.location.href = "/promotion/index";
 				} else {
+					closeByClickSubscribe = false;
 					cbt.alert(BizReport.local.getText('subscribe.fail'));
 				}
 			},
 			error : function() {
+				closeByClickSubscribe = false;
 				cbt.alert(BizReport.local.getText('subscribe.fail'));
 			}
 		});

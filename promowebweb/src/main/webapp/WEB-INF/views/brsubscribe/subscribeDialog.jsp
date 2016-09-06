@@ -52,15 +52,15 @@
 <script type="text/javascript">
 	var userId = "${userId}";
 	$(document.body).ready(function() {
+		var closeByClickSubscribe = false;
 		$("#subscribe-dialog").on('show', function() {
 		}).on('close', function(){
-			var params = {};
+			if (closeByClickSubscribe) return;
 			$.ajax({
 				url : "subscription/subscribeDialogClosed?userId="+userId,
 				type : 'GET',
 				contentType : 'application/json',
 				dataType : 'json',
-				data : params,
 				success : function(data) {
 					if (data.status == true) {
 						
@@ -78,7 +78,7 @@
 	});
 
 	$("#btnSubscribe").click(function() {
-
+		closeByClickSubscribe = true;
 		var divConv = document.getElementById("divConv");
 
 		var divDDS = document.getElementById("divDDS");
@@ -92,22 +92,22 @@
 			whitelistType = 3;
 		}
 
-		var params = {};
 		$.ajax({
 			url : "subscription/subscribe?whitelistType=" + whitelistType+"&userId="+userId,
 			type : 'GET',
 			contentType : 'application/json',
 			dataType : 'json',
-			data : params,
 			success : function(data) {
 				if (data.status == true) {
 					$("#subscribe-dialog").dialog("close");
 					window.location.href = "/promotion/index";
 				} else {
+					closeByClickSubscribe = false;
 					cbt.alert(BizReport.local.getText('subscribe.fail'));
 				}
 			},
 			error : function() {
+				closeByClickSubscribe = false;
 				cbt.alert(BizReport.local.getText('subscribe.fail'));
 			}
 		});
