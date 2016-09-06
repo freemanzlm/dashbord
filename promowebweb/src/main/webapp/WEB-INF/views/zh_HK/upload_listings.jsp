@@ -16,10 +16,9 @@
 				<div class="mt10">
 					<span style="float: left; font-weight: bold;">註：</span>
 					<ul>
-						<li>請勿修改下載模板的文件格式。</li>
+						<li>通過"確認報名"列標記參加活動的刊登或信息。標記為N的數據行不會被提交。</li>
 						<li>請勿修改、增減模板中的原有信息,包括每個單元格的屬性.</li>
 						<li>報名的信息請填寫完整，不可留空。除非標記為選填項，或參照模板標題說明。</li>
-						<li>不報名的請在Upload or Not列選擇N。</li>
 						<li><a href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank">詳細請查閲使用指南</a></li>
 					</ul>
 				</div>
