@@ -41,7 +41,7 @@ public class AppConfig {
 			// feature pool or staging pool
 			promoUrlPrefix = "http://promoweb-3.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
-			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
+			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isDev()) {
 			promoUrlPrefix = "http://L-SHC-00437469.corp.ebay.com:9080";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
@@ -49,7 +49,7 @@ public class AppConfig {
 		} else {
 			promoUrlPrefix = "http://promoweb-3.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://www.cbtsdws.stratus.ebay.com/sdt/secureResource/v1/";
-			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
+			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com/br/v1/";
 		}
 	}
 	
