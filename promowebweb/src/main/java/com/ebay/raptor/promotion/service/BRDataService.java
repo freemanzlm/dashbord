@@ -71,8 +71,8 @@ public class BRDataService {
 	public boolean subscribeDialogClosed(long userId) throws HttpRequestException {
 		String json = httpRequestService.doHttpRequest(buildServiceUrl(AppConfig.getBizReportServicePrefix(), subscribeDialogClosedUrl, "{userId}", userId),
 				GET_METHOD, null, prepareHeaders());
-		TypeToken<HttpResponseData<Boolean>> type = new TypeToken<HttpResponseData<Boolean>>(){};
-		HttpResponseData<Boolean> response = httpRequestService.getResponseData(json, type);
+		TypeToken<HttpResponseData<String>> type = new TypeToken<HttpResponseData<String>>(){};
+		HttpResponseData<String> response = httpRequestService.getResponseData(json, type);
 		
 		boolean result = false;
 		if(response != null){
