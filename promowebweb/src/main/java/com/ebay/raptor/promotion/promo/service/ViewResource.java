@@ -47,7 +47,9 @@ public enum ViewResource {
 	OTHER_AGGREMENT("terms/other"),
 	OTHER_COMPLETED("other/completed"),
 
-	ERROR("error");
+	ERROR("error"),
+	
+	UNKNOW_CAMPAIGN("unknowCampaign");
 
 	private ViewResource(String path) {
 		this.path = path;

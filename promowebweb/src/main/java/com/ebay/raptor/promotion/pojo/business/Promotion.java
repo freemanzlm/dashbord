@@ -80,6 +80,8 @@ public class Promotion {
 	
 	private String endReason;
 	
+	private Boolean activeFlag;
+	
 	/**
 	 * Listing fields definition. It's a JSON object string.
 	 */
@@ -317,6 +319,14 @@ public class Promotion {
 
 	public void setRegType(Boolean regType) {
 		this.regType = regType;
+	}
+
+	public Boolean getActiveFlag() {
+		return activeFlag;
+	}
+
+	public void setActiveFlag(Boolean activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 
 }

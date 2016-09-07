@@ -104,14 +104,14 @@ public class IndexController {
 		try {
 			promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 			
-			if(null != promo){
+			if(null != promo && promo.getActiveFlag()){
 				ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
 				model.setViewName(res.getView().getPath());
 				model.addAllObjects(res.getContext());
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
 				
 			} else {
-				model.setViewName(ViewResource.ERROR.getPath());
+				model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
 			}
 			
 		} catch (PromoException e) {
