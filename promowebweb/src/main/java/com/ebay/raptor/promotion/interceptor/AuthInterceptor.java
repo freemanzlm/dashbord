@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.interceptor;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,21 +12,21 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.ebay.app.raptor.cbtcommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
-import com.ebay.app.raptor.promocommon.pojo.db.ParameterType;
 import com.ebay.kernel.util.FastURLEncoder;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppConfig;
 import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.security.BackendTokenData;
+import com.ebay.raptor.promotion.security.BackendTokenUtil;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.SiteAPIService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.RequestUtil;
-import com.ebay.raptor.promotion.util.StringUtil;
 import com.ebay.raptor.siteApi.response.GetTokenStatusResponse.TokenStatus;
+import com.ebay.raptor.siteApi.util.SiteApiUtil;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 	
@@ -46,21 +47,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			if (annotation != null) {
 				Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
 			    boolean success = authenticate(request, response, cookieMap);
+			    
                 if (!success) {
-                	if (StringUtil.isEmpty(cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME))) {
-                		redirectToLogin(request, response);
-                	} else {
-                		try {
-                			response.sendRedirect("error");
-                		} catch (IOException e) {
-                			_logger.error(ErrorType.UnableRedirectToUrl, e, "error");
-                		}
-                	}
-                    
+                	redirectToLogin(request, response);
                     return false;
                 }
 			}
 		}
+		
 		return true;
 	}
 	
@@ -87,42 +81,43 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		/**
-		 * 3. If it is not in hack mode. Then check if it's administrator is visiting from back end system.
-		 * If user is visiting from back end system, it will have admin user name and session id in database.
-		 * This is just for back compatibility.
+		 * 3. Check if user is visiting from back end system or login page.
 		 */
-		String sessionId = cookieMap.get(AppCookies.EBAY_CBT_SESSION_ID_COOKIE_NAME);
-//		sessionId = "0i8AAA**d5fa2c2e1560a7802cb15fc1ffff5f7b465a1ddd-d0a6-4caa-ad59-b7f558f0654e";
-		sessionId = (sessionId == null || sessionId.isEmpty()) ? cookieMap.get(AppCookies.EBAY_SESSION_ID_COOKIE_NAME) : sessionId;
-		if (sessionId != null && !sessionId.isEmpty()) {
-			String userName = null;
-			ParameterType type = null;
-			
-			String adminUserName = cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME);
-			if (!StringUtil.isEmpty(adminUserName)) {
-				userName = adminUserName;
-				type = ParameterType.BackendSession;
-			} else {
-				/*
-				 * TODO, remove this back compatibility when DashBoard security branch is online.
-				 * Only back end system need to check session in the future. 
-				 */
-				userName = cookieMap.get(AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME);
-				type = ParameterType.DashboardSession;
+		String backendToken = cookieMap.get(AppCookies.BACKEND_TOKEN_COOKIE_NAME);
+		String adminUserName = cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME);
+		
+		if (adminUserName != null && !adminUserName.isEmpty() && backendToken != null && !backendToken.isEmpty()) {
+			/**
+			 * 1. First check if it's visiting from back end system.
+			 */
+			String ip = request.getRemoteAddr();
+			try {
+				backendToken = URLDecoder.decode(backendToken, "UTF-8");
+				BackendTokenData tokenData = BackendTokenUtil.parse(backendToken, false);
+				if (tokenData != null) {
+					return BackendTokenUtil.verifyToken(tokenData, adminUserName, ip);
+				}
+			} catch (Exception e) {
+				_logger.error("Token is not parsable.");
 			}
-			String storedSession = dataService.getSdParamterValue(type, CommonConstant.PARAMETER_ENABLE, userName);
-			if (sessionId != null && sessionId.equalsIgnoreCase(storedSession)) {
-				return true;
+		} else {
+			/**
+			 * 2. If there is eBayToken. It means a user is visiting from eBay login page. So we just verify eBayToken.
+			 */
+			String eBayToken = (String)cookieMap.get(AppCookies.EBAY_TOKEN_COOKIE_NAME);
+			if (eBayToken != null && !eBayToken.isEmpty()) {
+				String userId = cookieMap.get(AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME);
+				if (userId != null && !userId.isEmpty()) {
+					userId = SiteApiUtil.decodeUserId(userId, false);
+					return validateEbayToken(eBayToken, userId);
+				} else {
+					return validateEbayToken(eBayToken, null);
+				}
+				
 			}
 		}
 		
-		/**
-		 * 4. If there is eBayToken (eBayToken and eBaySession are always existed at the same time).
-		 * It means a user is visiting from eBay login page. So we just verify eBayToken.
-		 */
-		String eBayToken = cookieMap.get(AppCookies.EBAY_TOKEN_COOKIE_NAME);
-		
-		return validateEbayToken(eBayToken);
+		return false;
 	}
 
 	private void redirectToLogin (HttpServletRequest request, HttpServletResponse response) {
@@ -141,16 +136,19 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	 * @param token Got from cookie, but generated by FetchToken api.
 	 * @return
 	 */
-	private boolean validateEbayToken(String token) {
+	private boolean validateEbayToken(String token, String userId) {
 		if (token == null || token.isEmpty()) return false;
 		
 		TokenStatus tokenStatus = siteService.getTokenStatus(token);
 		if (tokenStatus != null) {
-			// Token is expired now.
-			return "Active".equalsIgnoreCase(tokenStatus.getStatus());
-		} else {
-			// Token is expired and removed from remote service.
-			return false;
-		}
+			if (userId != null && "Active".equalsIgnoreCase(tokenStatus.getStatus())) {
+				return userId.equalsIgnoreCase(SiteApiUtil.decodeUserId(tokenStatus.getEIASToken(), true));
+			} else {
+				return "Active".equalsIgnoreCase(tokenStatus.getStatus());
+			}
+		} 
+			
+		return false;
 	}
+	
 }

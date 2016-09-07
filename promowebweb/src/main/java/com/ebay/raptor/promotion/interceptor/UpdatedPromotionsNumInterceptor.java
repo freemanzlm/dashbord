@@ -10,16 +10,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
-import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
+import com.ebay.raptor.promotion.service.LoginService;
 
 public class UpdatedPromotionsNumInterceptor extends HandlerInterceptorAdapter {
 	
 	private static final CommonLogger _logger = CommonLogger.getInstance(UpdatedPromotionsNumInterceptor.class);
 	
+	@Autowired LoginService loginService;
 	@Autowired private PromotionService service;
 
 	@Override
@@ -31,7 +32,7 @@ public class UpdatedPromotionsNumInterceptor extends HandlerInterceptorAdapter {
 			return;
 		}
 		long start = System.currentTimeMillis();
-		UserData userDt = AppCookies.getUserDataFromCookie(request);
+		UserData userDt = loginService.getUserDataFromCookie(request);
 		List<Promotion> promos = service.getUpdatedPromotions(userDt.getUserId());
 		if(null != promos){
 			int num = 0;

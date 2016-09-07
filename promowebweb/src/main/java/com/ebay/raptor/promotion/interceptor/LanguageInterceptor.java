@@ -15,12 +15,12 @@ import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestException;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.config.AppConfig;
-import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.service.BRDataService;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
+import com.ebay.raptor.promotion.service.LoginService;
 
 /**
  * 
@@ -32,12 +32,10 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			.getInstance(LanguageInterceptor.class);
 
 	@Autowired
-	private CSApiService service;
-	@Autowired
-	BaseDataService baseService;
-	
-	@Autowired
 	BRDataService brdataService;
+	@Autowired LoginService loginService;
+	@Autowired private CSApiService service;
+	@Autowired BaseDataService baseService;
 
 	@Override
 	public void postHandle(HttpServletRequest request,
@@ -48,7 +46,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			return;
 		}
 
-		UserData user = AppCookies.getUserDataFromCookie(request);
+		UserData user = loginService.getUserDataFromCookie(request);
 
 		// get lang from cookie "eBayCBTLang" and parameter "lang"
 		RequestContext context = new RequestContext(request);
