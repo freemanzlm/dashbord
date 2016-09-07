@@ -1,4 +1,4 @@
-package com.ebay.raptor.promotion;
+package com.ebay.raptor.promotion.config;
 
 import java.util.Properties;
 

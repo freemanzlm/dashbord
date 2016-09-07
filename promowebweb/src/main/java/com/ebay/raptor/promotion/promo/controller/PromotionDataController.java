@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.kernel.context.IRaptorContext;
-import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -23,6 +23,7 @@ import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
+import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 
 @Controller
@@ -31,14 +32,11 @@ public class PromotionDataController{
 	private static CommonLogger logger =
             CommonLogger.getInstance(PromotionDataController.class);
 
-	@Inject
-	IRaptorContext raptorCtx;
+	@Inject IRaptorContext raptorCtx;
+	@Autowired LoginService loginService;
+	@Autowired PromotionService service;
 	
-	@Autowired
-	PromotionService service;
-	
-	@Autowired
-	PromotionViewService view;
+	@Autowired PromotionViewService view;
 	
 	@Autowired DealsListingService dealsListingService;
 	
@@ -49,7 +47,7 @@ public class PromotionDataController{
 	@ResponseBody
 	public ListDataWebResponse<Promotion> isAcceptAgreement(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = AppCookies.getUserDataFromCookie(request);
+		UserData userData = loginService.getUserDataFromCookie(request);
 
 		try {
 			resp.setData(service.getIngPromotion(userData.getUserId()));
@@ -65,7 +63,7 @@ public class PromotionDataController{
 	@ResponseBody
 	public ListDataWebResponse<Promotion> acceptAgreement(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = AppCookies.getUserDataFromCookie(request);
+		UserData userData = loginService.getUserDataFromCookie(request);
 
 		try {
 			resp.setData(service.getIngPromotion(userData.getUserId()));
@@ -76,12 +74,13 @@ public class PromotionDataController{
 		return resp;
 	}
 	
+	@AuthNeed
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getUnconfirmedPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getUnconfirmedPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = AppCookies.getUserDataFromCookie(request);
+		UserData userData = loginService.getUserDataFromCookie(request);
 
 		try {
 			resp.setData(service.getUnconfirmedPromotions(userData.getUserId()));
@@ -91,13 +90,14 @@ public class PromotionDataController{
 		}
 		return resp;
 	}
-
+	
+	@AuthNeed
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getIngPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getIngPromotion(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = AppCookies.getUserDataFromCookie(request);
+		UserData userData = loginService.getUserDataFromCookie(request);
 
 		try {
 			resp.setData(service.getIngPromotion(userData.getUserId()));
@@ -108,12 +108,13 @@ public class PromotionDataController{
 		return resp;
 	}
 	
+	@AuthNeed
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getSubsidyPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getSubsidyPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = AppCookies.getUserDataFromCookie(request);
+		UserData userData = loginService.getUserDataFromCookie(request);
 		try {
 			resp.setData(service.getSubsidyPromotions(userData.getUserId()));
 		} catch (PromoException e) {
@@ -123,12 +124,13 @@ public class PromotionDataController{
 		return resp;
 	}
 	
+	@AuthNeed
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getEndPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getEndPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = AppCookies.getUserDataFromCookie(request);
+		UserData userData = loginService.getUserDataFromCookie(request);
 		try {
 			resp.setData(service.getEndPromotions(userData.getUserId()));
 		} catch (PromoException e) {
@@ -138,7 +140,6 @@ public class PromotionDataController{
 		return resp;
 	}
 	
-	
 	@GET
 	@RequestMapping(ResourceProvider.PromotionRes._getPromotionById)
 	@ResponseBody
@@ -146,7 +147,7 @@ public class PromotionDataController{
 			@RequestParam("promoId")String promoId, 
 			@RequestParam("uid") Long uid) throws MissingArgumentException {
 		DataWebResponse<Promotion> resp = new DataWebResponse<Promotion>();
-		UserData userData = AppCookies.getUserDataFromCookie(request);
+		UserData userData = loginService.getUserDataFromCookie(request);
 		try {
 			resp.setData(service.getPromotionById(promoId, uid, userData.getAdmin()));
 		} catch (PromoException e) {

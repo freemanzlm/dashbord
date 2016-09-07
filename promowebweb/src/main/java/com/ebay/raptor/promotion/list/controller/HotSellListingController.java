@@ -25,6 +25,7 @@ import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.HotSellListing;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
+import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 
@@ -33,14 +34,11 @@ import com.ebay.raptor.promotion.util.PojoConvertor;
 @RequestMapping(ResourceProvider.ListingRes.hotsellBase)
 public class HotSellListingController extends AbstractListingController{
 	
-	@Inject
-	IRaptorContext raptorCtx;
+	@Inject IRaptorContext raptorCtx;
 	
-	@Autowired
-	HotSellListingService service;
-	
-	@Autowired
-	PromotionService promoService;
+	@Autowired LoginService loginService;
+	@Autowired HotSellListingService service;
+	@Autowired PromotionService promoService;
 	
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.confirmHotSellListings)
@@ -51,7 +49,7 @@ public class HotSellListingController extends AbstractListingController{
 		if(null != listings){
 			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
-				UserData userData = AppCookies.getUserDataFromCookie(req);
+				UserData userData = loginService.getUserDataFromCookie(req);
 				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), userData.getUserId())){
 					responseData.setStatus(Boolean.TRUE);
 				}
@@ -70,7 +68,7 @@ public class HotSellListingController extends AbstractListingController{
 	public ListDataWebResponse<HotSellListing> getPromotionListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
 		try {
-			UserData userData = AppCookies.getUserDataFromCookie(req);
+			UserData userData = loginService.getUserDataFromCookie(req);
 			resp.setData(service.getPromotionListing(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -84,7 +82,7 @@ public class HotSellListingController extends AbstractListingController{
 	public ListDataWebResponse<HotSellListing> getApplicableListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
 		try {
-			UserData userData = AppCookies.getUserDataFromCookie(req);
+			UserData userData = loginService.getUserDataFromCookie(req);
 			resp.setData(service.getApplicableListings(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -98,7 +96,7 @@ public class HotSellListingController extends AbstractListingController{
 	public ListDataWebResponse<HotSellListing> getAppliedListings(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<HotSellListing> resp = new ListDataWebResponse<HotSellListing>();
 		try {
-			UserData userData = AppCookies.getUserDataFromCookie(req);
+			UserData userData = loginService.getUserDataFromCookie(req);
 			resp.setData(service.getAppliedListings(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);

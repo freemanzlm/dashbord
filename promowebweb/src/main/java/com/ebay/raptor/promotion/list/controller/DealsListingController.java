@@ -53,6 +53,7 @@ import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
+import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 
@@ -63,11 +64,11 @@ public class DealsListingController extends AbstractDealsListingController{
 
 	private static CommonLogger logger = CommonLogger.getInstance(DealsListingController.class);
 
-	@Inject
-	IRaptorContext raptorCtx;
+	@Inject IRaptorContext raptorCtx;
 	
-	@Autowired
-	DealsListingService service;
+	@Autowired LoginService loginService;
+	
+	@Autowired DealsListingService service;
 	
 	// TODO, it used to be com.ebay.raptor.promotion.excel.writer.ExcelService
 	@Autowired ExcelService excelService;
@@ -92,7 +93,7 @@ public class DealsListingController extends AbstractDealsListingController{
 			throw new MissingArgumentException("PromoSubType");
 		}
 
-		UserData userData = AppCookies.getUserDataFromCookie(req);
+		UserData userData = loginService.getUserDataFromCookie(req);
 		XSSFWorkbook workBook = null;
 
 //        try {
@@ -123,7 +124,7 @@ public class DealsListingController extends AbstractDealsListingController{
 	public ModelAndView uploadDealsListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile dealsListings, @RequestParam String promoId, @RequestParam String promoSubType) throws MissingArgumentException{
 		ModelAndView mav = new ModelAndView(ViewResource.DU_UPLOAD_RESPONSE.getPath());
-		UserData userData = AppCookies.getUserDataFromCookie(req);
+		UserData userData = loginService.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 		
 		PromotionSubType pSubType = null;
@@ -224,7 +225,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		String promoId = req.getParameter("promoId");
 
 		try {
-			UserData userData = AppCookies.getUserDataFromCookie(req);
+			UserData userData = loginService.getUserDataFromCookie(req);
 			boolean result = service.submitDealsListings(promoId, userData.getUserId());
 			responseData.setStatus(result);
 		} catch (PromoException | MissingArgumentException e) {
@@ -271,7 +272,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		if(null != listings){
 			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
-				UserData userData = AppCookies.getUserDataFromCookie(req);
+				UserData userData = loginService.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
 				responseData.setStatus(result);
 				this.acceptAgreement(listings.getPromoId(), userData.getUserId());
@@ -315,7 +316,7 @@ public class DealsListingController extends AbstractDealsListingController{
 			@ModelAttribute ListingWebParam param)  {
 		ListDataWebResponse<DealsListing> resp = new ListDataWebResponse<DealsListing>();
 		try {
-			UserData userData = AppCookies.getUserDataFromCookie(req);
+			UserData userData = loginService.getUserDataFromCookie(req);
 			List<DealsListing> listings = service.getApplicableListings(param.getPromoId(), userData.getUserId());
 			if (listings != null && listings.size() > 0) {
 				resp.setData(listings);
@@ -349,7 +350,7 @@ public class DealsListingController extends AbstractDealsListingController{
 	public ListDataWebResponse<Sku> getSKUsByPromotionId(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();
 		try {
-			UserData userData = AppCookies.getUserDataFromCookie(req);
+			UserData userData = loginService.getUserDataFromCookie(req);
 			resp.setData(service.getSkusByPromotionId(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -363,7 +364,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		UserData userData = null;
 
 		try {
-			userData = AppCookies.getUserDataFromCookie(req);
+			userData = loginService.getUserDataFromCookie(req);
 		} catch (MissingArgumentException e) {
 			logger.error("Missing required argument.", e);
 			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();

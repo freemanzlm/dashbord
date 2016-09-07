@@ -9,13 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.ebay.raptor.promotion.config.AppCookies;
 
 public class CookieUtil {
-	// *Start--Note: used the same cookie as bizreport, in order
-	// to support switch between 2 APPs without re-login.
 
 	public final static int ONE_DAY_COOKIE_LIFESPAN = 3600 * 24; // 1 Day
 	public final static int TEN_MIN_COOKIE_LIFESPAN = 600; // 10 min
 	public final static int SESSION_COOKIE_LIFESPAN = -1; // session cookie
-
+	public final static int EXPIRED_COOKIE_LIFESPAN = 0; // remove cookie
+	
 	/**
 	 * Set a new cookie in http reponse.
 	 * 
@@ -75,13 +74,13 @@ public class CookieUtil {
 			response.addCookie(cookie);
 		}
 	}
-
+	
 	public static void setOneDayCookie(HttpServletResponse response,
 			String cookieName, String cookieVal, String path, String domain) {
 		setCookie(response, cookieName, cookieVal, ONE_DAY_COOKIE_LIFESPAN,
 				path, domain, false);
 	}
-
+	
 	public static void setCBTCookie(HttpServletResponse response,
 			String cookieName, String cookieVal, int maxAge) {
 		setCookie(response, cookieName, cookieVal, maxAge,

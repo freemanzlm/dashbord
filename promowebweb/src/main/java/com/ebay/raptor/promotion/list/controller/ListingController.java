@@ -30,7 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.UploadedListingFileHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
@@ -53,6 +52,7 @@ import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
+import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
@@ -71,12 +71,9 @@ public class ListingController extends AbstractListingController {
 	
 	private final ObjectMapper mapper = new ObjectMapper();
 	
-	@Autowired
-	ListingService listingService;
-
-	@Autowired
-	PromotionViewService promoViewService;
-	
+	@Autowired LoginService loginService;
+	@Autowired ListingService listingService;
+	@Autowired PromotionViewService promoViewService;
 	@Autowired ExcelService excelService;
 
 	/**
@@ -92,7 +89,7 @@ public class ListingController extends AbstractListingController {
 	public ListDataWebResponse<Sku> getSKUsByPromotionId(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
 		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();
 		try {
-			UserData userData = AppCookies.getUserDataFromCookie(req);
+			UserData userData = loginService.getUserDataFromCookie(req);
 			resp.setData(listingService.getSkusByPromotionId(param.getPromoId(), userData.getUserId()));
 		} catch (PromoException | MissingArgumentException e) {
 			resp.setStatus(Boolean.FALSE);
@@ -114,7 +111,7 @@ public class ListingController extends AbstractListingController {
     		HttpServletResponse resp, @ModelAttribute RequestParameter param)
     				throws MissingArgumentException {
 		
-		UserData userData = AppCookies.getUserDataFromCookie(req);
+		UserData userData = loginService.getUserDataFromCookie(req);
 		XSSFWorkbook workBook = null;
 
         try {
@@ -151,7 +148,7 @@ public class ListingController extends AbstractListingController {
 	public ModelAndView uploadListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile uploadFile, @RequestParam String promoId) throws MissingArgumentException{
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
-		UserData userData = AppCookies.getUserDataFromCookie(req);
+		UserData userData = loginService.getUserDataFromCookie(req);
 		ResponseData <String> responseData = new ResponseData <String>();
 		
 		XSSFWorkbook workbook = null;
@@ -223,7 +220,7 @@ public class ListingController extends AbstractListingController {
 		if(null != listings){
 			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
-				UserData userData = AppCookies.getUserDataFromCookie(req);
+				UserData userData = loginService.getUserDataFromCookie(req);
 				boolean result = listingService.confirmListings(listingAry, listings.getPromoId(), userData.getUserId());
 				responseData.setStatus(result);
 			} catch (PromoException | MissingArgumentException e) {
@@ -241,7 +238,7 @@ public class ListingController extends AbstractListingController {
 			@RequestPart MultipartFile uploadFile, @RequestParam String skuId, @RequestParam String promoId) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
 		ResponseData <String> responseData = new ResponseData <String>();
-		UserData userData = AppCookies.getUserDataFromCookie(req);
+		UserData userData = loginService.getUserDataFromCookie(req);
 		AttachmentFileValidator attachmentFileValidator = AttachmentFileValidator.getInstance();
 		attachmentFileValidator.setLocale(LocaleUtil.getCurrentLocale());
 		try {
@@ -271,7 +268,7 @@ public class ListingController extends AbstractListingController {
 			@PathVariable("promoId") String promoId, @PathVariable("userId") Long userId, 
 			@PathVariable("skuId") String skuId) throws MissingArgumentException, IOException, PromoException {
 		resp.setContentType("application/x-msdownload;");
-		UserData userData = AppCookies.getUserDataFromCookie(req);
+		UserData userData = loginService.getUserDataFromCookie(req);
 		if(userData.getUserId()!=userId) {
 			//throw new PromoException();
 		}
@@ -327,7 +324,7 @@ public class ListingController extends AbstractListingController {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> context = new HashMap<String, Object>();
 		
-		UserData userData = AppCookies.getUserDataFromCookie(req);
+		UserData userData = loginService.getUserDataFromCookie(req);
 
 		Promotion promo;
 		try {
@@ -360,7 +357,7 @@ public class ListingController extends AbstractListingController {
 		String promoId = req.getParameter("promoId");
 
 		try {
-			UserData userData = AppCookies.getUserDataFromCookie(req);
+			UserData userData = loginService.getUserDataFromCookie(req);
 			boolean result = listingService.submitListings(promoId, userData.getUserId());
 			responseData.setStatus(result);
 		} catch (PromoException | MissingArgumentException e) {
@@ -384,7 +381,7 @@ public class ListingController extends AbstractListingController {
 		UserData userData = null;
 
 		try {
-			userData = AppCookies.getUserDataFromCookie(req);
+			userData = loginService.getUserDataFromCookie(req);
 		} catch (MissingArgumentException e) {
 			logger.error("Missing required argument.", e);
 			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();

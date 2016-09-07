@@ -53,14 +53,6 @@ public abstract class AbstractSiteApi {
 	 */
 	public static SiteInfo getSiteInfo() {
 		if (siteInfor == null) {
-//			Properties props = new Properties();
-//			try {
-//				props.load(AbstractSiteApi.class.getResourceAsStream("config.properties"));
-//				
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 			String apiVersion = "865"; // The Site API version
 			String siteId = "201"; // HongKong site id
 
@@ -80,22 +72,13 @@ public abstract class AbstractSiteApi {
 				siteInfor = new SiteInfo(edpDevId, edpAppId, edpCertId, ruName,
 						siteApiUrl, apiVersion, siteId, siteSignInUrl);
 			} else {
-				 String edpDevId = "d84ae3bf-b369-43af-a2ae-5e998fd64f30";
-				 String edpAppId = "ebay87daa-ea38-4cd3-b4af-8703f00ec7d";
-				 String edpCertId = "a0ce6911-41dc-4f16-95d1-a2409136fcc9";
-				 String ruName = "ebay-ebay87daa-ea38--foqneviyn";
-				 String siteApiUrl =
-				 "https://api.sandbox.ebay.com/ws/api.dll";
-				 String siteSignInUrl =
-				 "https://signin.sandbox.ebay.com.hk/ws/eBayISAPI.dll";
-
-				// TODO change to real site information
-//				String edpAppId = "ebayaf9f4-bcdb-4e22-9195-bc48eb3add7";
-//				String edpDevId = "888c1d20-aa70-40e7-906f-bcbe72f5c279";
-//				String edpCertId = "71bae07d-9d55-438a-9552-9b8a362bac88";
-//				String ruName = "ebay-ebayaf9f4-bcdb--psuiyifhk";
-//				String siteApiUrl = "https://api.sandbox.ebay.com/ws/api.dll";
-//				String siteSignInUrl = "https://signin.sandbox.ebay.com.hk/ws/eBayISAPI.dll";
+				// Sandbox key set of Linus on developer site.
+				String edpAppId = "ebayaf9f4-bcdb-4e22-9195-bc48eb3add7";
+				String edpDevId = "888c1d20-aa70-40e7-906f-bcbe72f5c279";
+				String edpCertId = "71bae07d-9d55-438a-9552-9b8a362bac88";
+				String ruName = "ebay-ebayaf9f4-bcdb--psuiyifhk";
+				String siteApiUrl = "https://api.sandbox.ebay.com/ws/api.dll";
+				String siteSignInUrl = "https://signin.sandbox.ebay.com.hk/ws/eBayISAPI.dll";
 
 				siteInfor = new SiteInfo(edpDevId, edpAppId, edpCertId, ruName,
 						siteApiUrl, apiVersion, siteId, siteSignInUrl);
