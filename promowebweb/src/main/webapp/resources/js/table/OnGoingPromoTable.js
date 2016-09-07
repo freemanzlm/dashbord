@@ -169,6 +169,9 @@ var BizReport = BizReport || {};
 						}
 
 						if (type == "sort") {
+							if(full.state=='ReEnroll') {
+								return -1;
+							}
 							switch (data) {
 							case 'Seller nomination_Need approve':
 							case 'Seller Feedback':
@@ -180,7 +183,6 @@ var BizReport = BizReport || {};
 							case 'Promotion in validation':
 								return 3;
 							}
-
 							return 20;
 						}
 
