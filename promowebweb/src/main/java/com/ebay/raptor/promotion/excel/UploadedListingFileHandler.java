@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import com.ebay.raptor.promotion.enums.ListingState;
 import com.ebay.raptor.promotion.excep.PromoException;
+import com.ebay.raptor.promotion.excep.UploadListingIsNullException;
 import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -36,13 +37,13 @@ public class UploadedListingFileHandler {
 		mapper.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
 	}
 	
-	public Set<ConstraintViolation<Object>> handleSheet(Sheet sheet, List<ColumnConfiguration> configs) throws PromoException {
+	public Set<ConstraintViolation<Object>> handleSheet(Sheet sheet, List<ColumnConfiguration> configs) throws PromoException, UploadListingIsNullException {
 		ISheetReader reader = new SheetReader();
 		Set<ConstraintViolation<Object>> violations = new HashSet<ConstraintViolation<Object>>();
 		List<Map<String, Object>> list = reader.readSheet(sheet, configs, 2, violations);
 		List<Listing> listings = new ArrayList<Listing>();
 		
-		if (list != null) {
+		if (list != null && list.size()!=0) {
 			for (Map<String, Object> row : list) {
 				Listing listing = new Listing();
 				if(row.get("skuId")!=null) {
@@ -61,6 +62,8 @@ public class UploadedListingFileHandler {
 			}
 			
 			listingService.uploadListings(listings, promoId, userId);
+		} else {
+			throw new UploadListingIsNullException("Uploaded Listing is null");
 		}
 		
 		try {

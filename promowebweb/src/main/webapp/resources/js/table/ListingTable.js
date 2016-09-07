@@ -349,6 +349,7 @@ var BizReport = BizReport || {};
 						});
 						
 						$(listingBtn).click(function(event){
+							console.log($(nTd).find("#form"+oRow.skuId).find("input[type=file]").val());
 							event.preventDefault();
 							listingForm.submit();
 						});	
