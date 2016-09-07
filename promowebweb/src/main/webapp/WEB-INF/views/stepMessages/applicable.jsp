@@ -16,11 +16,22 @@
 			</div>
 		</c:if>
 		
-		<c:if test="${currentStep eq 'Seller Feedback' }">
+		<c:if test="${currentStep eq 'Seller Feedback' and state ne 'ReEnroll'}">
 			<div class="promo-state-message success">
 				<div class="message-content">
 					<h3>您已成功提交报名！</h3>
 					<p class="desc">在报名截止时间内您可以随时修改您的报名。</p>
+				</div>
+				<menu>
+					<li><a href="index" class="btn">返回活动列表</a></li>
+				</menu>
+			</div>
+		</c:if>
+		
+		<c:if test="${currentStep eq 'Seller Feedback' and state eq 'ReEnroll'}">
+			<div class="promo-state-message success">
+				<div class="message-content">
+					<h3>您有以下顶置并标红的报名信息失效，请确认后重新提交报名。</h3>
 				</div>
 				<menu>
 					<li><a href="index" class="btn">返回活动列表</a></li>

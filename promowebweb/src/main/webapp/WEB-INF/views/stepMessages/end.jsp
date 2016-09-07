@@ -85,6 +85,14 @@
 			<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
 		</div>
 	</c:when>
+	<c:when test="${endReason == 'isDeleted' }">
+		<div class="promo-state-message">
+			<div class="message-content">
+				<h3>很遗憾，您未通过报名资格审核不能参与本活动，如有疑问请联系您的客户经理。</h3>
+			</div>
+			<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
+		</div>
+	</c:when>
 	<c:otherwise>
 		<div class="promo-state-message">
 			<div class="message-content">

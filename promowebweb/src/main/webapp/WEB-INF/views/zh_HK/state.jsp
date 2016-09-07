@@ -14,6 +14,7 @@
 <c:set var="timeSlot" value="${promoStart} ~ ${promoEnd}"></c:set>
 <c:set var="state" value="${ promo.state }"></c:set>
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
+<c:set var="now" value="<%=new java.util.Date()%>" />
 			
 <c:choose>
 	<c:when test="${promo.endReason ne 'claimExpired' and promo.endReason ne 'subsidyRetrieved' && promo.state == 'End'}">
