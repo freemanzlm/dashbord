@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,6 +38,7 @@ import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
+import com.ebay.raptor.promotion.excep.UploadListingIsNullException;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
@@ -160,6 +162,7 @@ public class ListingController extends AbstractListingController {
 			Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 			String fieldsDefinitions = promo.getListingFields();
 
+			Locale locale = LocaleUtil.getLocale(promo.getRegion());
 			Set<ConstraintViolation<Object>> violations = null;
 			
 			// read uploaded excel file.
@@ -170,8 +173,8 @@ public class ListingController extends AbstractListingController {
 			if (fieldsDefinitions != null) {
 				JsonNode tree = mapper.readTree(fieldsDefinitions);
 				if (tree.isArray()) {
-					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, LocaleUtil.getCurrentLocale());
-					excelService.adjustColumnConfigurations(columnConfigs, LocaleUtil.getCurrentLocale());
+					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
+					excelService.adjustColumnConfigurations(columnConfigs, locale);
 					violations = handler.handleSheet(sheet, columnConfigs);
 				}
 			}
@@ -202,6 +205,9 @@ public class ListingController extends AbstractListingController {
 			logger.error("Got error when to read uploaded listings.", e);
 			responseData.setData(e.getErrorType().getCode() + "");
 			responseData.setStatus(false);
+		} catch(UploadListingIsNullException e) {
+			responseData.setStatus(false);
+			responseData.setMessage(messageSource.getMessage("excel.validation.listing.notnull.message", null, LocaleUtil.getCurrentLocale()));
 		} finally {
 			if (workbook != null) {
 				try {

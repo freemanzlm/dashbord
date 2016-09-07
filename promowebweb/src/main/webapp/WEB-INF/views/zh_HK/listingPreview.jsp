@@ -11,7 +11,7 @@
 <html>
 <head>
 
-	<title>已选择的刊登预览:请补充上传相关报名所需材料</title>
+	<title>已選擇的刊登預覽:請補充上傳相關報名所需材料</title>
 	<meta name="description" content="Deals招募">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
@@ -73,7 +73,7 @@
 		<div id="page">
 			<div id="page-pane">
 				<div class="pane">
-					<h2>已选择的刊登预览</h2>
+					<h2>已選擇的刊登預覽</h2>
 
 					<div class="mt20">
 						<%@ include file="table/listings_no_id_no_state.jsp" %>
@@ -82,7 +82,7 @@
 					<div class="mt20 page-bottom-actions">
 						<div id="submit-form">
 							<a href="/promotion/${promoId}">返回修改</a>
-							<button id="submit-btn" class="btn">提交预审</button>
+							<button id="submit-btn" class="btn">提交預審</button>
 						</div>
 					</div>
 				</div>
