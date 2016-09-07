@@ -349,7 +349,9 @@ var BizReport = BizReport || {};
 						});
 						
 						$(listingBtn).click(function(event){
-							console.log($(nTd).find("#form"+oRow.skuId).find("input[type=file]").val());
+							if(!$(nTd).find("#form"+oRow.skuId).find("input[type=file]").val()) {
+								return;
+							}
 							event.preventDefault();
 							listingForm.submit();
 						});	
