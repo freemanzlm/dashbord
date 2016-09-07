@@ -22,7 +22,16 @@
 						</c:if>
 					</c:forEach>
 					
-					<th class="state">狀態</th>
+					<th class="state">
+						<c:choose>
+							<c:when test="${promo.region eq 'CN' }">
+								状态
+							</c:when>
+							<c:otherwise>
+								狀態
+							</c:otherwise>
+						</c:choose>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
