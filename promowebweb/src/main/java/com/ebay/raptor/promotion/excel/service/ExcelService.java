@@ -80,8 +80,8 @@ public class ExcelService {
 				map.put("skuId", listing.getSkuId());
 				map.put("state", listing.getState());
 				map.put("currency", listing.getCurrency());
-				if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equals("NotEnrolled")
-						|| listing.getState().equalsIgnoreCase("UploadEnroll")) {
+				if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equalsIgnoreCase("NotEnrolled")
+						|| listing.getState().equalsIgnoreCase("UploadEnroll") || listing.getState().equalsIgnoreCase("ReEnroll")) {
 					map.put("toUpload", "N");
 				} else {
 					map.put("toUpload", "Y");
