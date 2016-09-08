@@ -21,35 +21,35 @@
 					</c:otherwise>
 				</c:choose>
 				
-				<c:if test="${step eq 'Seller nomination_Need approve'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動報名</span></div>
+				<c:if test="${step eq 'SELLER NOMINATION_NEED APPROVE'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動報名中</span></div>
 				</c:if>
-				<c:if test="${step eq 'Seller Feedback'}">
+				<c:if test="${step eq 'SELLER FEEDBACK'}">
 					<c:choose>
-						<c:when test="${fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') }">
-							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">正式報名</span></div>
+						<c:when test="${fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE') }">
+							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">正式報名中</span></div>
 						</c:when>
 						<c:otherwise>
-							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動報名</span></div>
+							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動報名中</span></div>
 						</c:otherwise>
 					</c:choose>
 				</c:if>
-				<c:if test="${step eq 'Promotion Submitted'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">報名審核</span></div>
+				<c:if test="${step eq 'PROMOTION SUBMITTED'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">報名審核中</span></div>
 				</c:if>
-				<c:if test="${step eq 'Promotion in progress'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動進行</span></div>
+				<c:if test="${step eq 'PROMOTION IN PROGRESS'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活動進行中</span></div>
 				</c:if>				
-				<c:if test="${step eq 'Promotion in validation'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">獎勵審核</span></div>
+				<c:if test="${step eq 'PROMOTION IN VALIDATION'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">獎勵審核中</span></div>
 				</c:if>
-				<c:if test="${step eq 'Promotion validated'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">申領獎勵</span></div>
+				<c:if test="${step eq 'PROMOTION VALIDATED'}">
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">申領獎勵中</span></div>
 				</c:if>
 			</c:forTokens>
 			
 			<c:choose>
-				<c:when test="${ (currentStep eq 'Promotion end')}">
+				<c:when test="${ (currentStep eq 'PROMOTION END')}">
 					<div class="post current-post last"><span class="label">活动结束</span></div>
 				</c:when>
 				

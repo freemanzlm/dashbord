@@ -36,7 +36,7 @@
 			<a class="cancel" href="javascript:void(0)">返回修改</a>
 			<button type="button" class="btn btn-s btn-prim ok">
 				<c:choose>
-				<c:when test="${promo.currentStep eq 'Seller nomination_Need approve'}">
+				<c:when test="${promo.currentStep eq 'SELLER NOMINATION_NEED APPROVE'}">
 					提交報名
 				</c:when>
 				<c:otherwise>
