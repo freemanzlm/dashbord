@@ -34,6 +34,15 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	@Autowired BaseDataService baseService;
 
 	@Override
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler) throws Exception {
+		 
+		response.setHeader("X-Frame-Options", "Allow-From http://www.ebay.cn");
+		
+		return super.preHandle(request, response, handler);
+	}
+
+	@Override
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse resp, Object handler, ModelAndView model)
 			throws Exception {
@@ -73,8 +82,6 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		addPageParameters(request, model, user);
-
-		resp.addHeader("X-Frame-Option", "Allow-From http://www.ebay.cn");
 	}
 
 	private void addPageParameters(HttpServletRequest req, ModelAndView model,

@@ -2,6 +2,8 @@
 .pretty-text {
 	font-size: 12px;
 	line-height: 1.25em;
+	word-wrap: break-word;
+	/* word-break: break-all; */
 }
 
 .pretty-text > div {
