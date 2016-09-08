@@ -37,7 +37,10 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		 
-		response.setHeader("X-Frame-Options", "Allow-From http://www.ebay.cn");
+		UserData user = loginService.getUserDataFromCookie(request);
+		if (user != null && user.getAdmin()) {
+			response.setHeader("X-Frame-Options", "Allow-From http://www.ebay.cn");
+		}
 		
 		return super.preHandle(request, response, handler);
 	}
