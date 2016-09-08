@@ -134,18 +134,20 @@ var BizReport = BizReport || {};
 					sType : 'numeric',
 					swidth: '120px',
 					mRender : function (data, type, full) {
+						data = data.toUpperCase();
 						if (type == "display") {
 							switch (data) {
-							case 'Seller nomination_Need approve':
-							case 'Seller Feedback':
+							case 'SELLER NOMINATION_NEED APPROVE':
+							case 'SELLER FEEDBACK':
 								if(full.state == 'Enrolled') {
 									return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								} else {
 									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + full.state) + "</a>";
 								}
-							case 'Promotion Submitted':
-							case 'Promotion in progress':
-							case 'Promotion in validation':
+							case 'PROMOTION SUBMITTED':
+							case 'PROMOTION IN PROGRESS':
+							case 'PROMOTION IN VALIDATION':
+								console.log(full.state);
 								return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 
@@ -154,15 +156,15 @@ var BizReport = BizReport || {};
 
 						if (type == "filter") {
 							switch (data) {
-							case 'Seller nomination_Need approve':
-							case 'Seller Feedback':
-								return 'Seller nomination_Need approve';			
-							case 'Promotion Submitted':
-								return 'Promotion Submitted';
-							case 'Promotion in progress':
-								return 'Promotion in progress';
-							case 'Promotion in validation':
-								return 'Promotion in validation';
+							case 'SELLER NOMINATION_NEED APPROVE':
+							case 'SELLER FEEDBACK':
+								return 'SELLER NOMINATION_NEED APPROVE';			
+							case 'PROMOTION SUBMITTED':
+								return 'PROMOTION SUBMITTED';
+							case 'PROMOTION IN PROGRESS':
+								return 'PROMOTION IN PROGRESS';
+							case 'PROMOTION IN VALIDATION':
+								return 'PROMOTION IN VALIDATION';
 							}
 
 							return 'Detailed';
@@ -173,14 +175,14 @@ var BizReport = BizReport || {};
 								return -1;
 							}
 							switch (data) {
-							case 'Seller nomination_Need approve':
-							case 'Seller Feedback':
+							case 'SELLER NOMINATION_NEED APPROVE':
+							case 'SELLER FEEDBACK':
 								return 0;							
-							case 'Promotion Submitted':
+							case 'PROMOTION SUBMITTED':
 								return 1;
-							case 'Promotion in progress':
+							case 'PROMOTION IN PROGRESS':
 								return 2;
-							case 'Promotion in validation':
+							case 'PROMOTION IN VALIDATION':
 								return 3;
 							}
 							return 20;

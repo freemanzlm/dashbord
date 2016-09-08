@@ -8,10 +8,10 @@
 
 <%-- <c:set var="currentStep" value="${ promo.adjustedCurrentStep }" /> --%>
 <%-- <c:set var="regType" value="${ promo.regType }" /> --%>
-<%-- <c:set var="currentStep" value="${ 'Seller nomination_Need approve' }" /> --%>
-<%-- <c:set var="currentStep" value="${ 'Promotion in progress' }" /> --%>
-<c:set var="currentStep" value="${ 'Seller Feedback' }" />
-<%-- <c:set var="currentStep" value="${ 'Promotion validated' }" /> --%>
+<%-- <c:set var="currentStep" value="${ 'SELLER NOMINATION_NEED APPROVE' }" /> --%>
+<%-- <c:set var="currentStep" value="${ 'PROMOTION IN PROGRESS' }" /> --%>
+<c:set var="currentStep" value="${ 'SELLER FEEDBACK' }" />
+<%-- <c:set var="currentStep" value="${ 'PROMOTION VALIDATED' }" /> --%>
 <c:set var="regType" value="${ false }" />
 <c:set var="hasListingsNominated" value="${false}" />
 <c:set var="isPreview" value="${ promo.isPreview }" />
@@ -94,7 +94,7 @@
 
 				<%@ include file="activity.jsp"%>
 
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or (currentStep eq 'Seller Feedback' and not fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve'))) and  regType  }">
+				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or (currentStep eq 'SELLER FEEDBACK' and not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE'))) and  regType  }">
 					<div class="mt20">
 						<%@ include file="upload_listings.jsp"%>
 					</div>
@@ -107,7 +107,7 @@
 					</div>
 				</c:if>
 				
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  not regType  }">
+				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK') and  not regType  }">
 				
 					<!-- 非上传形式报名, 或者正式报名 -->
 					<div class="mt20 my-listing">
@@ -127,8 +127,8 @@
 						
 				</c:if>
 				
-				<c:if test="${currentStep eq 'Promotion Submitted' or currentStep eq 'Promotion in progress'
-					or currentStep eq 'Promotion in validation' or currentStep eq 'Promotion validated' }">
+				<c:if test="${currentStep eq 'PROMOTION SUBMITTED' or currentStep eq 'PROMOTION IN PROGRESS'
+					or currentStep eq 'PROMOTION IN VALIDATION' or currentStep eq 'PROMOTION VALIDATED' }">
 					<div class="mt20 my-listing">
 						<h3><strong>提交的刊登</strong></h3>
 						<%@ include file="table/listings.jsp"%>

@@ -85,6 +85,14 @@
 			<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
 		</div>
 	</c:when>
+	<c:when test="${endReason == 'isDeleted' }">
+		<div class="promo-state-message">
+			<div class="message-content">
+				<h3>很遺憾，您未通過報名資格審核不能參與本活動，如有疑問請聯繫您的客戶經理。</h3>
+			</div>
+			<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
+		</div>
+	</c:when>
 	<c:otherwise>
 		<div class="promo-state-message">
 			<div class="message-content">

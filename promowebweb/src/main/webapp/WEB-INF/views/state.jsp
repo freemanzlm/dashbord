@@ -14,33 +14,34 @@
 <c:set var="timeSlot" value="${promoStart} ~ ${promoEnd}"></c:set>
 <c:set var="state" value="${ promo.state }"></c:set>
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
+<c:set var="now" value="<%=new java.util.Date()%>" />
 			
 <c:choose>
 	<c:when test="${promo.endReason ne 'claimExpired' and promo.endReason ne 'subsidyRetrieved' && promo.state == 'End'}">
 		<%@ include file="stepMessages/end.jsp" %>
 	</c:when>
-	<c:when test="${currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback'}">
+	<c:when test="${currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'}">
 		<%@ include file="stepMessages/applicable.jsp" %>
 	</c:when>
 	
-	<c:when test="${currentStep eq 'Promotion Submitted' }">
+	<c:when test="${currentStep eq 'PROMOTION SUBMITTED' }">
 		<%@ include file="stepMessages/audit.jsp" %>
 	</c:when>
 	
-	<c:when test="${currentStep eq 'Promotion in progress'}">
+	<c:when test="${currentStep eq 'PROMOTION IN PROGRESS'}">
 		<%@ include file="stepMessages/inprogress.jsp" %>
 	</c:when>
 	
-	<c:when test="${currentStep eq 'Promotion in validation' }">
+	<c:when test="${currentStep eq 'PROMOTION IN VALIDATION' }">
 		<%@ include file="stepMessages/rewarding.jsp" %>
 	</c:when>
 	
-	<c:when test="${currentStep eq 'Promotion validated' }">
+	<c:when test="${currentStep eq 'PROMOTION VALIDATED' }">
 		<%@ include file="stepMessages/rewarded.jsp" %>
 	</c:when>
 	
 	<c:otherwise>
-		<c:if test="${ currentStep eq 'Promotion end' }">
+		<c:if test="${ currentStep eq 'PROMOTION END' }">
 			<%@ include file="stepMessages/end.jsp" %>
 		</c:if>
 	</c:otherwise>

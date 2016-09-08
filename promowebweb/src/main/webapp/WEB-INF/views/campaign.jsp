@@ -94,7 +94,7 @@
 
 				<%@ include file="activity.jsp"%>
 				
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or (currentStep eq 'Seller Feedback' and not fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve'))) and not regType and not empty fieldsDefintions }">
+				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or (currentStep eq 'SELLER FEEDBACK' and not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE'))) and not regType and not empty fieldsDefintions }">
 					<c:if test="${hasListingsNominated }">
 						<div class="mt20 my-listing">
 							<h3><strong>提交的刊登</strong></h3>
@@ -124,7 +124,7 @@
 					
 				</c:if>
 				
-				<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback') and  regType and  not empty fieldsDefintions }">
+				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK') and  regType and  not empty fieldsDefintions }">
 				
 					<c:choose>
 						<c:when test="${ isRegEnd ne true }">
@@ -161,10 +161,10 @@
 						
 				</c:if>
 				
-				<c:if test="${(fn:containsIgnoreCase(stepList, 'Seller nomination_Need approve') or fn:containsIgnoreCase(stepList, 'Seller Feedback')) and 
-					(currentStep ne 'Seller nomination_Need approve' and currentStep ne 'Seller Feedback') and not empty fieldsDefintions }">
+				<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE') or fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and 
+					(currentStep ne 'SELLER NOMINATION_NEED APPROVE' and currentStep ne 'SELLER FEEDBACK') and not empty fieldsDefintions }">
 					<c:choose>
-						<c:when test="${not isRegEnd and currentStep eq 'Promotion in progress' }">
+						<c:when test="${not isRegEnd and currentStep eq 'PROMOTION IN PROGRESS' }">
 							<c:choose>
 								<c:when test="${regType}">
 									<div class="mt20 my-listing">
@@ -226,7 +226,15 @@
 
 	<%@ include file="dialog/alert.jsp"%>
 	<%@ include file="dialog/confirm.jsp" %>
-	<%@ include file="dialog/terms.jsp"%>
+	<c:choose>
+		<c:when test="${promo.region eq 'CN'}">
+			<%@ include file="dialog/terms.jsp"%>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="zh_HK/dialog/terms.jsp"%>
+		</c:otherwise>
+	</c:choose>
+	
 	<%@ include file="previewDialog.jsp" %>
 
 	<script type="text/javascript">

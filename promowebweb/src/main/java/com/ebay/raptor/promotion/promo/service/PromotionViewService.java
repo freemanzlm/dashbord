@@ -94,7 +94,7 @@ public class PromotionViewService {
 		
 		// We only leave visible step list for promotion display.
 		String visibleStepList = getVisibleStepList(pro.getStepList());
-		pro.setStepList(visibleStepList);
+		pro.setStepList(visibleStepList.toUpperCase());
 		
 		res.setContext(context);
 		
@@ -227,7 +227,7 @@ public class PromotionViewService {
 	private void handleCurrentStep(Promotion promo, String currentStep) {
 		String visibleCurrentStep = getVisibleCurrentStep(promo.getStepList(), currentStep);
 		if (isVisibleStep(visibleCurrentStep)) {
-			promo.setVisibleCurrentStep(visibleCurrentStep);
+			promo.setVisibleCurrentStep(visibleCurrentStep.toUpperCase());
 			promo.setHasValidCurrentStep(true);
 		} else {
 			promo.setHasValidCurrentStep(false);

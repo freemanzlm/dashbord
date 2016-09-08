@@ -111,6 +111,9 @@ public class IndexController {
 				ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
 				model.setViewName(res.getView().getPath());
 				model.addAllObjects(res.getContext());
+				if(promo.getCurrentStep()!=null) {
+					promo.setCurrentStep(promo.getCurrentStep().toUpperCase());
+				}
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
 				
 			} else {

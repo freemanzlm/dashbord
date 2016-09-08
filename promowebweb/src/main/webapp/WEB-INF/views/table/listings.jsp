@@ -11,7 +11,7 @@
 		<table id="listing-table" class="dataTable">
 			<thead>
 				<tr>
-					<c:if test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  regType  and isRegEnd ne true }">
+					<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK' ) and  regType  and isRegEnd ne true }">
 						<th class="check"><input type="checkbox" class="check-all" /></th>
 					</c:if>
 					
@@ -22,7 +22,16 @@
 						</c:if>
 					</c:forEach>
 					
-					<th class="state">状态</th>
+					<th class="state">
+						<c:choose>
+							<c:when test="${promo.region eq 'CN' }">
+								状态
+							</c:when>
+							<c:otherwise>
+								狀態
+							</c:otherwise>
+						</c:choose>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,7 +39,7 @@
 		</table>
 		
 		<c:choose>
-			<c:when test="${(currentStep eq 'Seller nomination_Need approve' or currentStep eq 'Seller Feedback' ) and  regType and isRegEnd ne true}">
+			<c:when test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK' ) and  regType and isRegEnd ne true}">
 				<c:set var="columns" value='[{"data:":"skuId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
 			</c:when>
 			<c:otherwise>

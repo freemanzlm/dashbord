@@ -95,10 +95,10 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">顯示所有活動</option>
-							<option value="Seller nomination_Need approve">報名階段的活動</option>
-							<option value="Promotion Submitted">審核階段的活動</option>
-							<option value="Promotion in progress">活動進行階段的活動</option>
-							<option value="Promotion in validation">獎勵審核階段的活動</option>
+							<option value="SELLER NOMINATION_NEED APPROVE">報名階段的活動</option>
+							<option value="PROMOTION SUBMITTED">審核階段的活動</option>
+							<option value="PROMOTION IN PROGRESS">活動進行階段的活動</option>
+							<option value="PROMOTION IN VALIDATION">獎勵審核階段的活動</option>
 						</select>
 					</span>
 				</div>
@@ -113,12 +113,12 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">顯示所有活動</option>
-							<option value="SubsidyWaiting">可申請獎勵的活動</option>
-							<option value="SubsidyAccessed">待填寫協議的活動</option>
-							<option value="SubsidyResubmittable">需要重新申請江離的活動</option>
-							<option value="SubsidyRetrievable">可領取獎勵的活動</option>
-							<option value="SubsidySubmitted">待上傳協議的活動</option>
-							<option value="SubsidyUploaded">申請審核中的活動</option>
+							<option value="Awarding">可申請獎勵的活動</option>
+							<option value="Visited">待填寫協議的活動</option>
+							<option value="AppliableAgain">需要重新申請江離的活動</option>
+							<option value="Appliable">可領取獎勵的活動</option>
+							<option value="Commited">待上傳協議的活動</option>
+							<option value="Uploaded">申請審核中的活動</option>
 						</select>
 					</span>
 				</div>

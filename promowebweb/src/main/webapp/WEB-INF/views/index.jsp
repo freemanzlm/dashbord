@@ -95,10 +95,10 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">显示所有活动</option>
-							<option value="Seller nomination_Need approve">报名阶段的活动</option>
-							<option value="Promotion Submitted">审核阶段的活动</option>
-							<option value="Promotion in progress">活动进行阶段的活动</option>
-							<option value="Promotion in validation">奖励审核阶段的活动</option>
+							<option value="SELLER NOMINATION_NEED APPROVE">报名阶段的活动</option>
+							<option value="PROMOTION SUBMITTED">审核阶段的活动</option>
+							<option value="PROMOTION IN PROGRESS">活动进行阶段的活动</option>
+							<option value="PROMOTION IN VALIDATION">奖励审核阶段的活动</option>
 						</select>
 					</span>
 				</div>
@@ -113,12 +113,12 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">显示所有活动</option>
-							<option value="SubsidyWaiting">可申领奖励的活动</option>
-							<option value="SubsidyAccessed">待填写协议的活动</option>
-							<option value="SubsidyResubmittable">需要重新申领奖励的活动</option>
-							<option value="SubsidyRetrievable">可领取奖励的活动</option>
-							<option value="SubsidySubmitted">待上传协议的活动</option>
-							<option value="SubsidyUploaded">申领审核中的活动</option>
+							<option value="Awarding">可申领奖励的活动</option>
+							<option value="Visited">待填写协议的活动</option>
+							<option value="AppliableAgain">需要重新申领奖励的活动</option>
+							<option value="Appliable">可领取奖励的活动</option>
+							<option value="Commited">待上传协议的活动</option>
+							<option value="Uploaded">申领审核中的活动</option>
 						</select>
 					</span>
 				</div>
@@ -133,7 +133,7 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">显示所有活动</option>
-							<option value="SubsidyRetrieved">领取奖励成功的活动</option>
+							<option value="Applied">领取奖励成功的活动</option>
 							<option value="Detailed">只能查看详情的活动</option>
 						</select>
 					</span>
