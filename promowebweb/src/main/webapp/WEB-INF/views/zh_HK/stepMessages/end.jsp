@@ -96,7 +96,7 @@
 	<c:otherwise>
 		<div class="promo-state-message">
 			<div class="message-content">
-				<h3>活動已結束，感謝您的參與！</h3>
+				<h3>活動報名已截止，感謝您的參與！</h3>
 			</div>
 			<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
 		</div>
