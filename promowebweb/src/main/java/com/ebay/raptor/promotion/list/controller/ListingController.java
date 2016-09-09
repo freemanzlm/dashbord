@@ -214,7 +214,6 @@ public class ListingController extends AbstractListingController {
 		}
 
 		mav.addObject("response", PojoConvertor.convertToJson(responseData));
-		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
 		return mav;
 	}
 	

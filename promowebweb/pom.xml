@@ -128,13 +128,6 @@
       		<artifactId>javax.el-api</artifactId>
       	</dependency>
       	
-      	<!-- Salesforce servcie -->
-		<dependency>
-		  <groupId>com.ebay.cbt</groupId>
-		  <artifactId>salesforceService</artifactId>
-		  <version>0.0.1-SNAPSHOT</version>
-		</dependency> 
-      	
 	</dependencies>
 
 	<build>
@@ -178,24 +171,6 @@
 			<plugin>
 				<groupId>com.ebay.raptor.build</groupId>
 				<artifactId>maven-content-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${basedir}/content</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
