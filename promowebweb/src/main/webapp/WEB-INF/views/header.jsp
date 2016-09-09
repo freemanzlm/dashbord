@@ -17,7 +17,7 @@
 			<span id="lang-switch" class="select-control">
 				<select name="lang" id="lang">
 					<option value="zh_CN" ${lang eq 'zh_CN' ? 'selected' : '' }>简体中文</option>
-					<option value="zh_HK" ${lang eq 'zh_HK' ? 'selected' : '' }>繁體中文</option>					
+					<option value="zh_HK" ${lang eq 'zh_HK' ? 'selected' : '' }>繁体中文</option>					
 				</select>
 			</span>
 		</div>		
