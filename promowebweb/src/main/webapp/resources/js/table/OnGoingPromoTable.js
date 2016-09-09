@@ -147,7 +147,6 @@ var BizReport = BizReport || {};
 							case 'PROMOTION SUBMITTED':
 							case 'PROMOTION IN PROGRESS':
 							case 'PROMOTION IN VALIDATION':
-								console.log(full.state);
 								return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 

@@ -161,10 +161,23 @@ var BizReport = BizReport || {};
 					sType : "numeric",
 					mRender : function (data, type, full) {
 						var display;
-
 						if (type == 'filter') {
 							// For oil card, WLT point/coin, only CN user can get. For WinIT Coupon, CN, HK and TW users all can get.
 							if (((full.rewardType == 1 || full.rewardType == 2) && full.region == 'CN') || full.rewardType == 3) {
+								switch(data) {
+								case 'Awarding':
+									return 'Awarding';
+								case 'Visited':
+									return 'Visited';			
+								case 'Commited':
+									return 'Commited';
+								case 'Appliable':
+									return 'Appliable';
+								case 'AppliableAgain':
+									return 'AppliableAgain';
+								case 'Uploaded':
+									return 'Uploaded';
+								}
 								return data;
 							} else if (full.rewardType != 0) {
 								data = 'Appliable'; // filter
@@ -283,7 +296,7 @@ var BizReport = BizReport || {};
 					});
 
 					that.container.parents(".pane-table").find(".state-filter").dropdown().change(function (e, data) {
-						oDataTable.column(5).search(data.value).draw();
+						oDataTable.column(4).search(data.value).draw();
 					});
 
 					that.publish("initialized");
