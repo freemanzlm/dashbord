@@ -37,8 +37,9 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
 		 
-		UserData user = loginService.getUserDataFromCookie(request);
-		if (user != null && user.getAdmin()) {
+		Map<String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
+		String adminUserName = cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME);
+		if (adminUserName != null && !adminUserName.isEmpty()) {
 			response.setHeader("X-Frame-Options", "Allow-From http://www.ebay.cn");
 		}
 		
