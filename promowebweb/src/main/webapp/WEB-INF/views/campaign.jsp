@@ -112,14 +112,14 @@
 								<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
 									<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
 								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">预览并提交报名</button>
-								<br /> <br /> <a href="index">返回活动列表</a>
+								<!-- <br /> <br /> <a href="index">返回活动列表</a> -->
 							</div>
 						</c:when>
-						<c:otherwise>
+						<%-- <c:otherwise>
 							<div class="mt20 page-bottom-actions">
 								<a href="index">返回活动列表</a>
 							</div>
-						</c:otherwise>
+						</c:otherwise> --%>
 					</c:choose>
 					
 				</c:if>
@@ -140,7 +140,7 @@
 									<input type="hidden" name="listings" value="[]" />
 									<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 									<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
-									<br /><br /> <a href="index">返回活动列表</a>
+									<!-- <br /><br /> <a href="index">返回活动列表</a> -->
 								</form>
 							</div>
 						</c:when>
@@ -152,9 +152,9 @@
 								</div>
 							</c:if>
 							
-							<div class="mt20 page-bottom-actions">
+							<!-- <div class="mt20 page-bottom-actions">
 								<a href="index">返回活动列表</a>
-							</div>
+							</div> -->
 						</c:otherwise>
 					</c:choose>
 					
@@ -178,7 +178,7 @@
 											<input type="hidden" name="listings" value="[]" />
 											<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept"/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
 											<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
-											<br /><br /> <a href="index">返回活动列表</a>
+											<!-- <br /><br /> <a href="index">返回活动列表</a> -->
 										</form>
 									</div>
 								</c:when>
@@ -204,15 +204,15 @@
 							</c:choose>
 						</c:when>
 						<c:otherwise>
-							<c:if test="${hasListingsNominated }">
+							<%-- <c:if test="${hasListingsNominated }"> --%>
 								<div class="mt20 my-listing">
-									<h3><strong>提交的刊登</strong></h3>
+									<h3><strong>报名刊登列表</strong></h3>
 									<%@ include file="table/listings.jsp"%>
 								</div>
-							</c:if>
-							<div class="mt20 page-bottom-actions">
+							<%-- </c:if> --%>
+							<!-- <div class="mt20 page-bottom-actions">
 								<a href="index">返回活动列表</a>
-							</div>
+							</div> -->
 						</c:otherwise>
 					</c:choose>
 				</c:if>

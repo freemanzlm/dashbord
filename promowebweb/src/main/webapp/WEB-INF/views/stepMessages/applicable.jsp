@@ -40,10 +40,10 @@
 		</c:if>
 	</c:when>
 	
-	<c:when test="${isNomitionEnd eq true}">
+	<c:when test="${isRegEnd eq true}">
 		<div class="promo-state-message">
 				<div class="message-content">
-					<h3>活动报名已截止，感谢您的参与！</h3>
+					<h3>已超过报名有效期，您未提交报名，期待您的下次参与！</h3>
 				</div>
 				<menu>
 					<li><a href="index" class="btn">返回活动列表</a></li>
