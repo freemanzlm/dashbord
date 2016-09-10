@@ -21,6 +21,7 @@ table.dataTable thead th, table.dataTable thead td {
 table.dataTable tbody td {
 	border-left: none;
 	border-right: none;
+	border-bottom: 1px solid #fff;
 }
 
 table.dataTable thead .sorting {
@@ -53,14 +54,12 @@ table.dataTable tbody tr.even {
   background-color: #f8f8f8;
 }
 
-table.dataTable tbody tr.odd,
-table.dataTable tbody tr.selected {
+table.dataTable tbody tr.odd {
   background-color: #E8e8e8;
 }
 
-table.dataTable tbody tr.selectable td,
-table.dataTable tbody tr.selected td {
-  border-bottom: 1px solid #ccc;
+table.dataTable tbody tr.selected {
+  background-color: #E8e8e8;
 }
 
 table.dataTable tbody tr.selectable:last-child td,
