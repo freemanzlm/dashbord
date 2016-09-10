@@ -245,7 +245,9 @@ $(function(){
 	var termsDialog = cbt.termsDialog;
 	termsDialog.subscribe({
 		"ok": function() {
-			acceptCheckbox.removeAttribute("disabled");
+			if (acceptCheckbox) {
+				acceptCheckbox.removeAttribute("disabled");
+			}
 		}
 	});
 	$(".terms-conditions").click(function(event){

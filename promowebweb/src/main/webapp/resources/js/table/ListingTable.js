@@ -436,9 +436,16 @@ var BizReport = BizReport || {};
 				    that.container.isLoading('hide');
 				    
 				    data.data = data.data.filter(function(oRow) {
-						if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
+						/*if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
 							if(pageData.regType=='false') {
 								return oRow.state != 'CanEnroll';
+							}
+						}*/
+						if(pageData.currentStep == 'SELLER NOMINATION_NEED APPROVE' || pageData.currentStep == 'SELLER FEEDBACK' || pageData.currentStep == 'PROMOTION SUBMITTED') {
+							if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
+								if(pageData.regType=='false') {
+									return oRow.state != 'CanEnroll';
+								}
 							}
 						}
 						return true;

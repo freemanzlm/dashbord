@@ -241,16 +241,14 @@ public class SheetWriter implements ISheetWriter {
 			if (config != null) {
 				if(!config.getKey().equals("toUpload")) {
 					String endMark =")";
-					if(!config.getWritable()) {
-						endMark = "";
-					}
-					if(config.getRequired()) {
-						config.setTitle(config.getTitle()+"(required/"+messageSource.getMessage("excel.header.require", null, this.locale)+endMark);
+					if(config.getWritable()) {
+						if(config.getRequired()) {
+							config.setTitle(config.getTitle()+"(required/"+messageSource.getMessage("excel.header.require", null, this.locale)+endMark);
+						} else {
+							config.setTitle(config.getTitle()+"(optional/"+messageSource.getMessage("excel.header.optional", null, this.locale)+endMark);
+						}
 					} else {
-						config.setTitle(config.getTitle()+"(optional/"+messageSource.getMessage("excel.header.optional", null, this.locale)+endMark);
-					}
-					
-					if(!config.getWritable()) {
+						endMark = "";
 						config.setTitle(config.getTitle()+", locked/"+messageSource.getMessage("excel.header.lock", null, this.locale)+")");
 					}
 				}

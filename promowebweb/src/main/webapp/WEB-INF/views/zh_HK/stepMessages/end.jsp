@@ -25,7 +25,7 @@
 </c:choose>
 
 <c:choose>
-	<c:when test="${promo.state eq 'SubsidyRetrieved'}">
+	<c:when test="${promo.state eq 'Applied'}">
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<c:choose>
@@ -77,10 +77,25 @@
 			<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
 		</div>
 	</c:when>
-	<c:when test="${endReason == 'noSub' or (rewarding and (empty promo.reward or promo.reward le 0)) }">
+	<c:when test="${rewarding and (empty promo.reward or promo.reward le 0) }">
 		<div class="promo-state-message">
 			<div class="message-content">
 				<h3>很遺憾！您的活動表現未達到獎勵標準，感謝您對活動的支持！希望下次努力！</h3>
+			</div>
+			<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
+		</div>
+	</c:when>
+	<c:when test="${endReason == 'noSub'}">
+		<div class="promo-state-message">
+			<div class="message-content">
+				<h3>
+					<c:when test="${hasListingsNominated }">
+						活動已結束，感謝您的參與！
+					</c:when>
+					<c:otherwise>
+						已超過報名有效期，您未提交報名，期待您的下次參與！
+					</c:otherwise>
+				</h3>
 			</div>
 			<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
 		</div>

@@ -41,7 +41,7 @@
 						<h3>恭喜!您的獎勵為等值 ${reward} ${promo.currency}的${rewardName }</h3>
 		
 						<c:choose>
-							<c:when test="${ state eq 'SubsidyRetrievable' }">
+							<c:when test="${ state eq 'Appliable' }">
 								<c:if test="${ promo.rewardType eq 1}">
 									<div class="note">
 										<p>再次感謝您參與了我們的活動。我們將通知第三方服務商“澳捷實業有限公司”發放獎勵。請予10個工作日以後及時領取，獎勵發放地址和時間如下：</p>
@@ -68,7 +68,7 @@
 						<h3>恭喜!您的獎勵為等值 ${reward} ${promo.currency}的${rewardName }</h3>
 						
 						<c:choose>
-							<c:when test="${ state eq 'SubsidyRetrievable' }">
+							<c:when test="${ state eq 'Appliable' }">
 								<div class="note">
 									<p>親愛的${unm}，再次感謝您參與了我們的活動。我們將在20個工作日內向您發放萬邑通禮品卡作為獎勵。請於收到禮品卡後30日內激活您的萬邑通禮品卡，禮品卡激活以及使用規則詳情請參考萬邑通網站的相關內容
 										（<a href="http://www.winit.com.cn/news/gcpolicy.html">http://www.winit.com.cn/news/gcpolicy.html</a>）。
@@ -97,14 +97,14 @@
 					<menu>
 						<li>
 							<c:choose>
-								<c:when test="${ state eq 'SubsidySubmitted' }">
+								<c:when test="${ state eq 'Commited' }">
 									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>上傳獎勵申請協議</a>
 									<br />
 									<br />
 									<a href="index">返回活動列表</a>
 								</c:when>
 								
-								<c:when test="${ state eq 'SubsidyRetrievable' }">
+								<c:when test="${ state eq 'Appliable' }">
 									<c:choose>
 										<c:when test="${ promo.rewardType eq 2 and promo.region == 'CN'}">
 											<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>領取獎勵</a>
@@ -118,17 +118,17 @@
 									</c:choose>
 								</c:when>
 								
-								<c:when test="${ state eq 'SubsidyResubmittable' }">
+								<c:when test="${ state eq 'AppliableAgain' }">
 									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>重新申領獎勵</a>
 									<br />
 									<br />
 									<a href="index">返回活動列表</a>
 								</c:when>
 								
-								<c:when test="${ state eq 'SubsidyUploaded' }">
+								<c:when test="${ state eq 'Uploaded' }">
 									<a href="index" class="btn">返回活動列表</a>
 								</c:when>
-								<c:when	test="${ state eq 'SubsidyWaiting' or state eq 'SubsidyAccessed' }">
+								<c:when	test="${ state eq 'Awarding' or state eq 'Visited' }">
 									<a href="${promo.rewardUrl}" class="btn"
 										${ isAdmin or isPreview ? 'disabled' : '' }>填寫獎勵申請協議</a>
 									<br />

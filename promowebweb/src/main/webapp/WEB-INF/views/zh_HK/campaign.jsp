@@ -112,14 +112,14 @@
 								<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閲讀並接受活動條款及
 									<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
 								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交報名</button>
-								<br /> <br /> <a href="index">返回活動列表</a>
+								<!-- <br /> <br /> <a href="index">返回活動列表</a> -->
 							</div>
 						</c:when>
-						<c:otherwise>
+						<%-- <c:otherwise>
 							<div class="mt20 page-bottom-actions">
 								<a href="index">返回活動列表</a>
 							</div>
-						</c:otherwise>
+						</c:otherwise> --%>
 					</c:choose>
 					
 				</c:if>
@@ -140,21 +140,21 @@
 									<input type="hidden" name="listings" value="[]" />
 									<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閲讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 									<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
-									<br /><br /> <a href="index">返回活動列表</a>
+									<!-- <br /><br /> <a href="index">返回活動列表</a> -->
 								</form>
 							</div>
 						</c:when>
 						<c:otherwise>
-							<c:if test="${hasListingsNominated }">
+							<%-- <c:if test="${hasListingsNominated }"> --%>
 								<div class="mt20 my-listing">
-									<h3><strong>提交的刊登</strong></h3>
+									<h3><strong>報名刊登列表</strong></h3>
 									<%@ include file="table/listings.jsp"%>
 								</div>
-							</c:if>
+							<%-- </c:if> --%>
 							
-							<div class="mt20 page-bottom-actions">
+							<!-- <div class="mt20 page-bottom-actions">
 								<a href="index">返回活動列表</a>
-							</div>
+							</div> -->
 						</c:otherwise>
 					</c:choose>
 					
@@ -178,7 +178,7 @@
 											<input type="hidden" name="listings" value="[]" />
 											<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept"/>我已閲讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 											<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
-											<br /><br /> <a href="index">返回活動列表</a>
+											<!-- <br /><br /> <a href="index">返回活動列表</a> -->
 										</form>
 									</div>
 								</c:when>
@@ -198,16 +198,16 @@
 										<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閲讀並接受活動條款及
 											<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
 										<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交報名</button>
-										<br /><br /> <a href="index">返回活動列表</a>
+										<!-- <br /><br /> <a href="index">返回活動列表</a> -->
 									</div>
 								</c:otherwise>
 							</c:choose>
 						</c:when>
-						<c:otherwise>
+						<%-- <c:otherwise>
 							<div class="mt20 page-bottom-actions">
 								<a href="index">返回活動列表</a>
 							</div>
-						</c:otherwise>
+						</c:otherwise> --%>
 					</c:choose>
 				</c:if>
 			</div>
