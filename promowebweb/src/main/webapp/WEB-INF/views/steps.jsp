@@ -27,10 +27,10 @@
 				<c:if test="${step eq 'SELLER FEEDBACK'}">
 					<c:choose>
 						<c:when test="${fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE') }">
-							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">正式报名中</span></div>
+							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">正式报名</span></div>
 						</c:when>
 						<c:otherwise>
-							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活动报名中</span></div>
+							<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">活动报名</span></div>
 						</c:otherwise>
 					</c:choose>
 				</c:if>
@@ -44,7 +44,7 @@
 					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">奖励审核中</span></div>
 				</c:if>
 				<c:if test="${step eq 'PROMOTION VALIDATED'}">
-					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">申领奖励中</span></div>
+					<div class="post ${!hasGotCurrentStep ? (hasValidCurrentStep ? 'done' : '') : (isCurrentStep ? 'current-post' : '')}"><span class="label">申领奖励</span></div>
 				</c:if>
 			</c:forTokens>
 			

@@ -1,11 +1,14 @@
 package com.ebay.raptor.promotion.promo.service;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.LinkedList;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -189,8 +192,22 @@ public class PromotionViewService {
 			}
 		}
 		
-		return visibleStepList;
+		return filterStepList(visibleStepList);
 	}
+	
+	/**
+	 * filter steplist.
+	 * @return
+	 */
+	public String filterStepList(String stepList) {
+		List<String> list = new LinkedList(Arrays.asList(stepList.split(">")));
+		if(!list.contains(PromotionStep.SELLER_NOMINATION_NEED_APPROVE.getName())
+				&&list.contains(PromotionStep.PROMOTION_SUBMITTED.getName())) {
+			list.remove(PromotionStep.PROMOTION_SUBMITTED.getName());
+		}
+		return StringUtils.join(list, ">");
+	}
+	
 	
 	/**
 	 * There are four not visible steps: Nomination eDM in approve flow, Nomination eDM approved, Notification eDM in approve flow, Notification eDM approved.
