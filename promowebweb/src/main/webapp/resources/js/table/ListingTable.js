@@ -361,7 +361,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["state"],
-					bSortable: false,
+					bSortable: true,
 					sClass: "text-center",
 					sDefaultContent: "NA",
 					sWidthOrig: "75",
@@ -372,6 +372,8 @@ var BizReport = BizReport || {};
 						
 						if (type == "sort") {
 							switch (data) {
+							case 'ReEnroll':
+								return 3;
 							case 'Enrolled':
 							case 'ReviewPassed':
 								return 2;
