@@ -43,6 +43,8 @@ public class UploadedListingFileHandler {
 		List<Map<String, Object>> list = reader.readSheet(sheet, configs, 2, violations);
 		List<Listing> listings = new ArrayList<Listing>();
 		
+		if (violations != null && violations.size() > 0) return violations;
+		
 		if (list != null && list.size()!=0) {
 			for (Map<String, Object> row : list) {
 				Listing listing = new Listing();
@@ -59,17 +61,11 @@ public class UploadedListingFileHandler {
 					logger.error("Listing nomination value is unresolvable.");
 				}
 				listings.add(listing);
-			}
+			}			
 			
 			listingService.uploadListings(listings, promoId, userId);
 		} else {
 			throw new UploadListingIsNullException("Uploaded Listing is null");
-		}
-		
-		try {
-			logger.warn(mapper.writeValueAsString(list));
-		} catch (Exception e) {
-			logger.error(e);
 		}
 		
 		return violations;
