@@ -249,7 +249,7 @@ public class SheetWriter implements ISheetWriter {
 						}
 					} else {
 						endMark = "";
-						config.setTitle(config.getTitle()+", locked/"+messageSource.getMessage("excel.header.lock", null, this.locale)+")");
+						config.setTitle(config.getTitle()+"(locked/"+messageSource.getMessage("excel.header.lock", null, this.locale)+")");
 					}
 				}
 				createCell(book, sheet, row, config.getWriteOrder(), config.getTitle(), headerStyle);
