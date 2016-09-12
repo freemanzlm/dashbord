@@ -33,6 +33,7 @@ var BizReport = BizReport || {};
 				'sScrollX': '100%',
 				'sScrollY': "600",
 				'oLanguage': {
+					sZeroRecords: local.getText('dataTable.emptyTable'),
 					sEmptyTable: local.getText('dataTable.emptyTable'),
 					sInfo: local.getText('dataTable.listing.info'),
 					sInfoEmpty: "",
@@ -246,7 +247,7 @@ var BizReport = BizReport || {};
 					aTargets: ["attachment"],
 					sType: "string",
 					sClass: "text-center",
-					sWidth: "230px",
+					sWidthOrig: "230px",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
 						if (type == "display") {
@@ -363,7 +364,7 @@ var BizReport = BizReport || {};
 					bSortable: false,
 					sClass: "text-center",
 					sDefaultContent: "NA",
-					width: "75",
+					sWidthOrig: "75",
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							return !!data ? local.getText('listing.state.' + data) : '';
@@ -435,21 +436,23 @@ var BizReport = BizReport || {};
 				ajaxfinished: function(data) {
 				    that.container.isLoading('hide');
 				    
-				    data.data = data.data.filter(function(oRow) {
-						/*if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
-							if(pageData.regType=='false') {
-								return oRow.state != 'CanEnroll';
-							}
-						}*/
-						if(pageData.currentStep == 'SELLER NOMINATION_NEED APPROVE' || pageData.currentStep == 'SELLER FEEDBACK' || pageData.currentStep == 'PROMOTION SUBMITTED') {
-							if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
+				    if (data && data.data) {
+				    	data.data = data.data.filter(function(oRow) {
+							/*if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
 								if(pageData.regType=='false') {
 									return oRow.state != 'CanEnroll';
 								}
+							}*/
+							if(pageData.currentStep == 'SELLER NOMINATION_NEED APPROVE' || pageData.currentStep == 'SELLER FEEDBACK' || pageData.currentStep == 'PROMOTION SUBMITTED') {
+								if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
+									if(pageData.regType=='false') {
+										return oRow.state != 'CanEnroll';
+									}
+								}
 							}
-						}
-						return true;
-					});
+							return true;
+						});
+				    }
 				    
 				    if (data && data.status) {
 				        that.container.find(".datatable_pager").show();
