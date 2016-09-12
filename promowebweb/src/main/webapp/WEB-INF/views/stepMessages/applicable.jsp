@@ -15,7 +15,6 @@
 				</menu>
 			</div>
 		</c:if>
-		
 		<c:if test="${currentStep eq 'SELLER FEEDBACK' and state ne 'ReEnroll'}">
 			<div class="promo-state-message success">
 				<div class="message-content">

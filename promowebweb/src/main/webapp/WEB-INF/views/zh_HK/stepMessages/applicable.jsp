@@ -8,15 +8,14 @@
 			<div class="promo-state-message success">
 				<div class="message-content">
 					<h3>您已成功提交報名！</h3>
-					<p class="desc">請耐心等待審核結果。並注意按照後繼操作的提示完成後繼步驟！</p>
+					<p class="desc">請耐心等待審核結果。並註意按照後繼操作的提示完成後繼步驟！</p>
 				</div>
 				<menu>
 					<li><a href="index" class="btn">返回活動列表</a></li>
 				</menu>
 			</div>
 		</c:if>
-		
-		<c:if test="${currentStep eq 'SELLER FEEDBACK' and state eq 'ReEnroll'}">
+		<c:if test="${currentStep eq 'SELLER FEEDBACK' and state ne 'ReEnroll'}">
 			<div class="promo-state-message success">
 				<div class="message-content">
 					<h3>您已成功提交報名！</h3>

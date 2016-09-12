@@ -17,7 +17,7 @@
 <c:set var="now" value="<%=new java.util.Date()%>" />
 			
 <c:choose>
-	<c:when test="${promo.endReason ne 'claimExpired' and promo.endReason ne 'subsidyRetrieved' && promo.state == 'End'}">
+	<c:when test="${promo.endReason ne 'claimExpired' and promo.endReason ne 'subsidyRetrieved' and promo.state == 'End'}">
 		<%@ include file="stepMessages/end.jsp" %>
 	</c:when>
 	<c:when test="${currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'}">

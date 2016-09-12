@@ -73,7 +73,7 @@
 		<div id="page">
 			<div id="page-pane">
 				<div class="pane">
-					<h2>已选择的刊登预览:请补充上传相关报名所需材料</h2>
+					<h2>已选择的刊登预览:如需上传相关报名所需材料,请补充</h2>
 
 					<div class="mt20">
 						<%@ include file="table/listings_no_id_no_state.jsp" %>
