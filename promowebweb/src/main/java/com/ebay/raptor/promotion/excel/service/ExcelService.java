@@ -112,7 +112,7 @@ public class ExcelService {
 			JsonNode tree = mapper.readTree(fieldsDefinitions);
 			if (tree.isArray()) {
 				List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
-				adjustColumnConfigurations(columnConfigs, locale);
+				adjustColumnConfigurations(columnConfigs, locale, promoId);
 				preHandleData(columnConfigs, skuListings, locale);
 				writer.writeSheet(workBook, sheet, columnConfigs, skuListings, true);
 			}
@@ -154,7 +154,7 @@ public class ExcelService {
 	 * prepend nomination id as the first column configuration.
 	 * @param columnConfigs
 	 */
-	public List<ColumnConfiguration> adjustColumnConfigurations(List<ColumnConfiguration> columnConfigs, Locale locale) {
+	public List<ColumnConfiguration> adjustColumnConfigurations(List<ColumnConfiguration> columnConfigs, Locale locale, String promoId) {
 		if (locale == null) locale = LocaleUtil.getCurrentLocale();
 		
 		// it's used to configure a hidden column, it will store nomination id.
@@ -165,6 +165,7 @@ public class ExcelService {
 		nominationConfig.setWritable(false);
 		nominationConfig.setDisplay(false);
 		nominationConfig.setRawType("string");
+		nominationConfig.setSample(promoId);
 		
 		ColumnConstraint constraint = new NotNullColumnConstraint();
 		constraint.setMessage("excel.validation.template.message");

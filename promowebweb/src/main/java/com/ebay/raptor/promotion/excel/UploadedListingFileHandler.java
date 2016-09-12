@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -27,6 +28,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class UploadedListingFileHandler {
 	private final ObjectMapper mapper = new ObjectMapper();
 	private Logger logger = Logger.getLogger(UploadedListingFileHandler.class);
+	private String bundleBaseName = "ExcelValidationMessages";
+	private ResourceBundle bundle;
 	
 	public UploadedListingFileHandler(ListingService listingService,
 			String promoId, Long userId) {
@@ -42,6 +45,15 @@ public class UploadedListingFileHandler {
 		Set<ConstraintViolation<Object>> violations = new HashSet<ConstraintViolation<Object>>();
 		List<Map<String, Object>> list = reader.readSheet(sheet, configs, 2, violations);
 		List<Listing> listings = new ArrayList<Listing>();
+		
+		Map<String, Object> sample = reader.readRow(configs, sheet.getRow(1));
+		if (sample != null) {
+			if (sample.get("skuId") == null) {
+				violations.add(new InvalidCellValueError(1, 1, null, getBundle().getString("excel.validation.template.wrong.message")));
+			} else if (!this.promoId.equalsIgnoreCase(sample.get("skuId").toString())) {
+				violations.add(new InvalidCellValueError(1, 1, null, getBundle().getString("excel.validation.template.wrong.message")));
+			}
+		}
 		
 		if (violations != null && violations.size() > 0) return violations;
 		
@@ -69,6 +81,14 @@ public class UploadedListingFileHandler {
 		}
 		
 		return violations;
+	}
+	
+	/**
+	 * Default return "ExcelValidationMessages" resource bundle.
+	 * @return
+	 */
+	public ResourceBundle getBundle() {
+		return bundle == null ? bundle = ResourceBundle.getBundle(bundleBaseName) : bundle;
 	}
 	
 	private ListingService listingService;
