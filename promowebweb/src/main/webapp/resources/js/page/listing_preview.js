@@ -36,9 +36,6 @@ $(function(){
 		};
 	
 	$(submitBtn).click(function(){
-
-		event.preventDefault();
-		
 		var withoutAttachSubmit = function() {
 			$.ajax({
 				url: "/promotion/listings/submitListings",
