@@ -448,7 +448,14 @@ var BizReport = BizReport || {};
 							if(pageData.currentStep == 'SELLER NOMINATION_NEED APPROVE' || pageData.currentStep == 'SELLER FEEDBACK' || pageData.currentStep == 'PROMOTION SUBMITTED') {
 								if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
 									if(pageData.regType=='false') {
-										return oRow.state != 'CanEnroll';
+										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
+									}
+								}
+							}
+							if(pageData.currentStep == 'PROMOTION IN PROGRESS' && pageData.isRegEnd == 'false') {
+								if(!pageData.isPreview || pageData.isPreview != 'true') {
+									if(pageData.regType=='false') {
+										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
 									}
 								}
 							}

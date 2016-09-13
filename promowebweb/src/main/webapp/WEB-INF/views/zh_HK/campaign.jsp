@@ -242,7 +242,8 @@
 			currentStep: '${currentStep}',
 			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
 			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}'),
-			regType : '${promo.regType}'
+			regType : '${promo.regType}',
+			isRegEnd : '${isRegEnd}'
 		};
 	</script>
 	
