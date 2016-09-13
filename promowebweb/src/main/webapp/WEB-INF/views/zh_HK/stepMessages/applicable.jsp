@@ -39,14 +39,33 @@
 		</c:if>
 	</c:when>
 	
-	<c:when test="${isRegEnd eq true}">
-		<div class="promo-state-message">
-				<div class="message-content">
-					<h3>已超過報名有效期，您未提交報名，期待您的下次參與！</h3>
-				</div>
-				<menu>
-					<li><a href="index" class="btn">返回活動列表</a></li>
-				</menu>
-			</div>
-	</c:when>
+	<c:otherwise>
+		<c:choose>
+			<c:when test="${isRegEnd eq true}">
+				<div class="promo-state-message">
+						<div class="message-content">
+							<h3>已超過報名有效期，您未提交報名，期待您的下次參與！</h3>
+						</div>
+						<menu>
+							<li><a href="index" class="btn">返回活動列表</a></li>
+						</menu>
+					</div>
+			</c:when>
+			<c:otherwise>
+				<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
+					<div class="promo-state-message success">
+						<div class="message-content">
+							<h3>您已通過預審！請於<span class="color-cyan">${promoDlDt}</span>前選擇並提交如下通過預審的刊登完成正式報名。</h3>
+							<p class="desc">活動時間為<span class="color-cyan">${promoStart }</span>到<span class="color-cyan">${promoEnd }</span></p>
+							<p class="desc">活動如有更改，以最終通知為準</p>
+						</div>
+						<br />
+						<menu>
+							<li><a href="#listing-form" class="btn">正式報名</a></li>
+						</menu>
+					</div>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+	</c:otherwise>
 </c:choose>

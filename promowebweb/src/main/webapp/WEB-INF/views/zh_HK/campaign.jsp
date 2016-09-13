@@ -94,7 +94,7 @@
 
 				<%@ include file="activity.jsp"%>
 				
-				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or (currentStep eq 'SELLER FEEDBACK' and not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE'))) and not regType and not empty fieldsDefintions }">
+				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK') and not regType and not empty fieldsDefintions }">
 					<c:if test="${hasListingsNominated }">
 						<div class="mt20 my-listing">
 							<h3><strong>提交的刊登</strong></h3>
@@ -112,7 +112,9 @@
 								<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閲讀並接受活動條款及
 									<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
 								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交報名</button>
-								<!-- <br /> <br /> <a href="index">返回活動列表</a> -->
+								<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
+									<br /> <br /> <a href="index">返回活動列表</a>
+								</c:if>
 							</div>
 						</c:when>
 						<%-- <c:otherwise>
@@ -140,7 +142,9 @@
 									<input type="hidden" name="listings" value="[]" />
 									<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled/>我已閲讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
 									<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
-									<!-- <br /><br /> <a href="index">返回活動列表</a> -->
+									<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
+										<br /><br /> <a href="index">返回活動列表</a>
+									</c:if>
 								</form>
 							</div>
 						</c:when>
@@ -198,7 +202,7 @@
 										<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閱讀並接受活動條款及
 											<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
 										<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交報名</button>
-										<br /><br /> <a href="index">返回活動列表</a>
+										<!-- <br /><br /> <a href="index">返回活動列表</a> -->
 									</div>
 								</c:otherwise>
 							</c:choose>
