@@ -66,8 +66,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
 		String backendToken = cookieMap.get(AppCookies.BACKEND_TOKEN_COOKIE_NAME);
     	if (backendToken == null || backendToken.isEmpty()) {
-    		if (modelAndView != null) {
-    			modelAndView.setViewName("maintain");
+    		backendToken = cookieMap.get(AppCookies.HACK_MODE_COOKIE_NAME);
+    		if(backendToken == null || backendToken.isEmpty()) {
+	    		if (modelAndView != null) {
+	    			modelAndView.setViewName("maintain");
+	    		}
     		}
     	}
 	}

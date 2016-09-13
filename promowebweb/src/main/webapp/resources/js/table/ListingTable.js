@@ -389,6 +389,24 @@ var BizReport = BizReport || {};
 
 						return data;
 					}
+				},
+				{
+					aTargets: ["Auction_Title_base__c"],
+					sDefaultContent: "",					
+					sType: "numeric",
+					sClass: "text-center",
+					sClass: "pic-id",
+					sDefaultContent: "NA",
+					mRender: function(data, type, full, meta) {
+						console.log(full);
+						if (type == "display") {
+							if(data) {
+								return "<p><a href='http://www.ebay.com/itm/" + full.Item_ID_base__c + "'>" + data + "</a></p>";
+							}
+						}
+						
+						return data;
+					}					
 				}] 
 			}
 		};
