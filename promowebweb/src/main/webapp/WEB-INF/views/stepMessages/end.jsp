@@ -61,7 +61,7 @@
 			<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
 		</div>
 	</c:when>
-	<c:when test="${endReason == 'noReg' }">
+	<c:when test="${endReason == 'notEnrolledBeforeEnrollEndDate' }">
 		<div class="promo-state-message fail">
 			<div class="message-content">
 				<h3>已超过报名有效期，您未提交报名，期待您的下次参与！</h3>
