@@ -40,7 +40,7 @@
 		<div class="actions">
 			<a id="btnSubscribe" class="btn" >點擊使用</a>
 			<br/>
-			<a href="http://community.ebay.cn/portal.php?mod=view&aid=246/">相關幫助</a>
+			<a href="http://community.ebay.cn/portal.php?mod=view&aid=246/" target="_blank">相關幫助</a>
 		</div>
 	</div>
 </div>

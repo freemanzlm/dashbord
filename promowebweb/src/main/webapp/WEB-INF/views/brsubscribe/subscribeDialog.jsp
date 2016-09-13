@@ -44,7 +44,7 @@
 		<div class="actions">
 			<a id="btnSubscribe" class="btn">点击使用</a> 
 			<br /> 
-			<a href="http://community.ebay.cn/portal.php?mod=view&aid=246/">相关帮助</a>
+			<a href="http://community.ebay.cn/portal.php?mod=view&aid=246/" target="_blank">相关帮助</a>
 		</div>
 	</div>
 </div>
