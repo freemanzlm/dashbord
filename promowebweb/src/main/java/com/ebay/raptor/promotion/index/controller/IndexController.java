@@ -94,6 +94,15 @@ public class IndexController {
        	mav.setViewName("index");
         return mav;
     }
+    
+	@RequestMapping(value = "/maintain", method = RequestMethod.GET)
+    public ModelAndView gotoMaintainPage(HttpServletRequest request,
+            HttpServletResponse response,
+            @ModelAttribute RequestParameter param) throws MissingArgumentException {
+        ModelAndView mav = new ModelAndView();
+       	mav.setViewName("maintain");
+        return mav;
+    }
 	
     @AuthNeed
 	@GET

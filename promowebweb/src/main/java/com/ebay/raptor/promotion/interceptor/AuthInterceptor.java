@@ -12,7 +12,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.ebay.app.raptor.cbtcommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.kernel.util.FastURLEncoder;
@@ -40,15 +39,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+    	
 		if (handler != null && handler.getClass().isAssignableFrom(HandlerMethod.class)) {
 			HandlerMethod handerMethod = (HandlerMethod)handler;
 			AuthNeed annotation = handerMethod.getMethodAnnotation(AuthNeed.class);
+			Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
 
 			// check the annotated method
 			if (annotation != null) {
-				Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
 			    boolean success = authenticate(request, response, cookieMap);
-			    
                 if (!success) {
                 	redirectToLogin(request, response);
                     return false;
@@ -63,7 +62,14 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(
 			HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
 			throws Exception {
-		// reset session in cookie?
+		
+		Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
+		String backendToken = cookieMap.get(AppCookies.BACKEND_TOKEN_COOKIE_NAME);
+    	if (backendToken == null || backendToken.isEmpty()) {
+    		if (modelAndView != null) {
+    			modelAndView.setViewName("maintain");
+    		}
+    	}
 	}
 	
 	private boolean authenticate (HttpServletRequest request,
