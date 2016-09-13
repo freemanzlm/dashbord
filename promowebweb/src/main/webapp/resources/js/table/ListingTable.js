@@ -392,10 +392,8 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["Auction_Title_base__c"],
-					sDefaultContent: "",					
 					sType: "numeric",
 					sClass: "text-center",
-					sClass: "pic-id",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full, meta) {
 						console.log(full);
