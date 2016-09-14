@@ -115,6 +115,9 @@
 								<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
 									<br /> <br /> <a href="index">返回活动列表</a>
 								</c:if>
+								<c:if test="${hasListingsNominated ne true and currentStep eq 'SELLER NOMINATION_NEED APPROVE'}">
+									<br /> <br /> <a href="index">返回活动列表</a>
+								</c:if>
 							</div>
 						</c:when>
 						<%-- <c:otherwise>
