@@ -465,6 +465,7 @@ public class SheetWriter implements ISheetWriter {
 		// sample data is locked;
 		CellStyle style = book.createCellStyle();
 		style.setLocked(true);
+		style.setWrapText(true);
 		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
