@@ -7,7 +7,7 @@ public enum ViewContext {
 	PromotionId(3, "promoId"),
 	ErrorMsg(4, "errorMsg"),
 	Agreement(5, "agreement"),
-	IsUnconfirmedVisable(6, "invisible"),
+	
 	//If user has promotion, then take region from the latest one, 
 	//used to identify whether show Subsidy Amount column.
 	Region(7, "region"),
@@ -15,12 +15,26 @@ public enum ViewContext {
 	SDUrl(9, "sdurl"),
 	BizUrl(10, "bizurl"),
 	TermsAccept(11, "termsAccpted"),
+	@Deprecated
 	Expired(12, "expired"),
 	PromoUpdatedNum(13, "promoUpdatedNum"),
 	PromoUpdatedDetail(14, "promoUpdatedDetail"),
 	IsAdmin(15, "isAdmin"),
 	PromotionSubType(16, "promoSubType"),
-	UserId(17, "userId");
+	
+	
+	IS_PREVIEW(6, "isPreview"),
+	IS_NOMINATION_END(17, "isNomitionEnd"),
+	HAS_LISTINGS_NOMINATED(18, "hasListingsNominated"),
+	// promotion end date is before now
+	IS_PROMOTION_STOP(19, "isPromotionStoped"),
+	IS_AWARD_END(20, "isAwardEnd"),
+	FIELDS_DEFINITIONS(21, "fieldsDefintions"),
+	IS_CONFIRM_END(22, "isConfirmEnd"),
+	IS_REG_END(24, "isRegEnd"),
+	Subsidy(23, "subsidy"),
+	HAS_REVIEWED(25, "hasReviewed"),
+	UserId(26, "userId");
 	
 	private Integer id;
 

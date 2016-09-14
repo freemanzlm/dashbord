@@ -58,11 +58,18 @@ BizReport.local = {
 		}
 	},
 	'promo': {
-		'type': {
-			'deals': 'Deals招募',
-			'dealsPreset': 'Deals招募预置',
-			'hotsell': '爆款促销',
-			'other': '其它活动'
+		'step': {
+			'null': '无',
+			'DRAFT': '草稿',
+			'NOMINATION EDM IN APPROVE FLOW': '报名阶段',
+			'SELLER NOMINATION_NEED APPROVE' : '报名阶段',
+			'PROMOTION SUBMITTED': '审核阶段',
+			'PROMOTION APPROVED': '审核阶段',
+			'SELLER FEEDBACK': '报名阶段',
+			'PROMOTION IN PROGRESS': '活动进行阶段',
+			'PROMOTION IN VALIDATION': '奖励审核阶段',
+			'PROMOTION VALIDATED': '申领奖励阶段',
+			'PROMOTION END': '活动结束阶段'
 		},
 		'state': {
 			'Created': '报名',
@@ -73,46 +80,65 @@ BizReport.local = {
 			'Applied': '已报名',
 			'Started': '活动进行中',
 			'SubsidyCounting': '奖励确认中',
-			'SubsidyWaiting': '申领奖励',
-			'SubsidyAccessed': '待填写协议',
-			'SubsidySubmitted': '待上传协议',
-			'SubsidyUploaded': '申领审核中',
-			'SubsidyRetrievable': '领取奖励',
-			'SubsidyResubmittable': '重新申领奖励',
-			'SubsidyRetrieved': '领取奖励成功',
-			'SubsidyRetrieveFailed': '奖励领取失败',	
-			'SubsidyExpired': '奖励领取过期',
+			//'SubsidyWaiting': '申领奖励',
+			//'SubsidyAccessed': '待填写协议',
+			//'SubsidySubmitted': '待上传协议',
+			//'SubsidyUploaded': '申领审核中',
+			//'SubsidyRetrievable': '领取奖励',
+			//'SubsidyResubmittable': '重新申领奖励',
+			//'SubsidyRetrieved': '领取奖励成功',
+			//'SubsidyRetrieveFailed': '奖励领取失败',	
+			//'SubsidyExpired': '奖励领取过期',
 			'Canceled': '活动已取消',
-			'End': '活动已结束',
 			'Claimed': '我已领取奖励',
-			'Detailed': '查看详情'
+			'Detailed': '查看详情',
+			'ReEnroll':'重新报名',
+			'Enrolled':'已提交报名',
+			'NotEnrolled':'活动报名',
+			'Reviewing':'报名审核中',
+			'ReviewPassed':'正式报名',
+			'RewardAuditing':'奖励审核中',
+			'InProgress':'活动进行中',
+			'Awarding':'申领奖励',
+			//'ReAwarding':'重新领取奖励',
+			'End':'活动已结束',
+			'Visited':'待填写协议',
+			'AppliableAgain':'重新申领奖励',
+			'Commited':'待上传协议',
+			'Appliable':'领取奖励',
+			'Uploaded':'申领审核中',
+			'Failed':'奖励领取失败',
+			'Expired':'奖励领取过期',
+			'Applied':'领取奖励成功'
 		},
-		'hotsell': {
+		'listings': {
 			'zeroSubmitted': '您没有勾选任何刊登，这意味着您将取消报名，确认吗？',
-			'applyCondition': '申请参与活动需要选择至少一条刊登报名。'
-		},
-		'deals': {
-			'upload': '提交刊登报名前请先阅读其他条款，并<strong>全部读完</strong>，然后点击确认接受该其他条款后方可提交报名。',
+			'applyCondition': '申请参与活动需要选择至少一条刊登报名。',
 			'onlyXls': '您选择提交的不是Excel文件，请重新选择刊登文件.',
-			'rrpLink': '链接'
+			'rrpLink': '链接',
+			'typeError' : '文件类型不合法',
+			'notEmpty' : '上传文件不能为空',
+			'needCheck' : '请勾选左边的复选框',
+			'attachdownload' : '下载附件'
 		},
 		'request': {
 			'fail': '请求提交失败',
-			'sending': '请求已发送，请稍候。。。'
+			'sending': '请求已发送，请稍候。。。',
+			'counting' : '已成功上传文件{0}/{1}'
 		}
 	},
 	'listing': {
 		'state': {
-			'Applicable': '可报名',
-			'Applied': '已报名', // hot sell and deals preset
-			'Nonapplied': '未报名',
-			'AuditSuccess': '通过审核',
-			'Pretrial': '待审核', // deals
-			'PretrialPass': '通过预审',
-			'PretrialFail': '未通过',
-			'Confirmed': '已确认报名',
-			'Nonsubmitted': '未提交'
-		}
+			'null':'N/A',
+			'CanEnroll':'可报名',
+			'Enrolled':'已报名',
+			'NotEnrolled':'未报名',
+			'Reviewing':'审核中',
+			'ReviewPassed':'审核通过',
+			'ReviewFailed':'审核未通过',
+			'ReEnroll':'重新报名'
+		},
+		attachment: '附件'
 	},
 	'errorMsg': {
 		'regDateExpired': '很遗憾，报名已经截止，如需继续报名，请联系客服！',

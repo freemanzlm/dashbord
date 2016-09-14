@@ -14,16 +14,13 @@ var BizReport = BizReport || {};
 	
 	var local = namespace.local;
 	
-	var promos = ['hotsell', 'deals', 'deals', 'other'];
-	
 	function getLink(promoId) {
 		return "/promotion/" + promoId;
 	}
 	
 	var defaultDataTableConfigs = {
 			tableConfig : {
-				'aLengthMenu': [20],
-				'aaSorting': [[4, 'asc'], [3, 'asc']],
+				'aaSorting': [[3, 'asc'], [2, 'asc']],
 				'bAutoWidth': true,
 				'bDeferRender': true,
 				'bFilter': true,
@@ -72,7 +69,6 @@ var BizReport = BizReport || {};
 				},
 				columns: [
 					{data: 'name'},
-					{data: 'type'},
 					{data: 'promoDlDt'},
 					{data: 'promoEdt'},
 					{data: 'state'}
@@ -86,24 +82,6 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
 							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
-						}
-						
-						return data;
-					}
-				},
-				{
-					aTargets: ["type"],
-					sClass: "text-center",
-					sDefaultContent: "",
-					mRender: function(data, type, full) {
-						if (type == "display") {
-							return local.getText('promo.type.' + promos[data]); 
-						}
-						
-						if (type == 'sort' || type == 'filter') {
-							if (data == '2') {
-								return 1;
-							}
 						}
 						
 						return data;
@@ -173,10 +151,6 @@ var BizReport = BizReport || {};
 				initialized: function() {
 					// get initialized DataTable instance
 					that.oDataTable = oDataTable = this.table.DataTable();
-					
-					that.container.parents(".pane-table").find(".type-filter").dropdown().change(function(e, data){
-						oDataTable.column(1).search(data.value).draw();
-					});
 				}, 
 				ajaxbegin: function() {
 					$(that.pane).isLoading({text: local.getText('dataTable.loading'), position: "inside"});

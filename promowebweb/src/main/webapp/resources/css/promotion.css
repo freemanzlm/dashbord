@@ -197,3 +197,16 @@ table.dataTable td.pic-id p {
 .page-bottom-actions .btn:first-child {
 	margin-left: 0;
 }
+
+table.dataTable tbody td.string {
+	text-align: left;
+}
+
+table.dataTable tbody td.double,
+table.dataTable tbody td.integer {
+	text-align: right;
+}
+
+table.dataTable tbody td.date {
+	text-align: center;
+}

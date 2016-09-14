@@ -114,9 +114,8 @@
                 case "overlay":
                     if( this.$element.is( "body") ) {
 						var max_height = this.element.scrollHeight > document.documentElement.scrollHeight ? this.element.scrollHeight : document.documentElement.scrollHeight;
-                        $( "body" ).prepend( '<div class="isloading-overlay" style="position:fixed; left:0; top:0; z-index: 10000; color: #fff; background: rgba(0,0,0,0.75); width: 100%; height: ' + max_height + 'px;" />' );
-                        
-                        this.$element.find(".isloading-overlay").html( this._loader );
+                        var _overlay = $( "body" ).prepend( '<div class="isloading-overlay" style="position:fixed; left:0; top:0; z-index: 10000; color: #fff; background: rgba(0,0,0,0.75); width: 100%; height: ' + max_height + 'px;" />' );
+                        _overlay.find(".isloading-overlay").html( this._loader );
                         this._loader.css({
                     		left: ($(window).width() - this._loader.innerWidth()) / 2 + document.documentElement.scrollLeft,
                     		top: ($(window).height() - this._loader.innerHeight()) / 2  + document.documentElement.scrollTop,
@@ -126,8 +125,8 @@
                     }
                     else {
                         var pos = this.$element.position();
-                        $( "body" ).prepend( '<div class="isloading-overlay" style="position:absolute; top: ' + pos.top + 'px; left: ' + pos.left + 'px; z-index: 10000; color: #fff;  background: rgba(0,0,0,0.75); width: ' + this.$element.outerWidth() + 'px; height: ' + this.$element.outerHeight() + 'px;" />' );
-                        this.$element.find(".isloading-overlay").html( this._loader );
+                        var _overlay = $( "body" ).prepend( '<div class="isloading-overlay" style="position:absolute; top: ' + pos.top + 'px; left: ' + pos.left + 'px; z-index: 10000; color: #fff;  background: rgba(0,0,0,0.75); width: ' + this.$element.outerWidth() + 'px; height: ' + this.$element.outerHeight() + 'px;" />' );
+                        _overlay.find(".isloading-overlay").html( this._loader );
                         this._loader.css({
                     		left: (this.$element.width() - this._loader.innerWidth()) / 2,
                     		top: (this.$element.height() - this._loader.innerHeight()) / 2,
@@ -202,7 +201,12 @@
                 var elt = $.data( this, "plugin_" + pluginName );
 
                 if( "hide" === options )    { elt.hide(); }
-                else                        { elt.show(); }
+                else if (options != null && typeof options == 'object') {
+                	// Re-create the isLoading component. 
+                	$.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
+                } else {
+                	elt.show();
+                }
             }
         });
     };

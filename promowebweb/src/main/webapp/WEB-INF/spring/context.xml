@@ -36,9 +36,11 @@
 	<context:component-scan base-package="com.ebay.raptor.promotion.list" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.promo" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.user" />
+	<context:component-scan base-package="com.ebay.raptor.promotion.subsidy" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.index.controller" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.controller" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.service" />
+	<context:component-scan base-package="com.ebay.raptor.subsidy.service" />
 
 	<!-- Handles HTTP GET requests by efficiently serving up static resources 
 		in the corresponding directory -->

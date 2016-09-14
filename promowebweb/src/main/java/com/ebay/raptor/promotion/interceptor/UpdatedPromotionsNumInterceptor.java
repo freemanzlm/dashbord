@@ -31,24 +31,30 @@ public class UpdatedPromotionsNumInterceptor extends HandlerInterceptorAdapter {
 		if(null == model){
 			return;
 		}
+		
 		long start = System.currentTimeMillis();
-		UserData userDt = loginService.getUserDataFromCookie(request);
-		List<Promotion> promos = service.getUpdatedPromotions(userDt.getUserId());
-		if(null != promos){
-			int num = 0;
-			StringBuffer ids = new StringBuffer();
-			for(Promotion promo : promos){
-				num++;
-				ids.append(promo.getPromoId())
-					.append(" : ")
-					.append(promo.getState())
-					.append(", ");
+		try {
+			UserData userDt = loginService.getUserDataFromCookie(request);
+			List<Promotion> promos = service.getUpdatedPromotions(userDt.getUserId());
+			if(null != promos){
+				int num = 0;
+				StringBuffer ids = new StringBuffer();
+				for(Promotion promo : promos){
+					num++;
+					ids.append(promo.getPromoId())
+						.append(" : ")
+						.append(promo.getState())
+						.append(", ");
+				}
+				System.out.println(ids.toString());
+				model.addObject(ViewContext.PromoUpdatedNum.getAttr(), num);
+				model.addObject(ViewContext.PromoUpdatedDetail.getAttr(), ids.toString());
 			}
-			System.out.println(ids.toString());
-			model.addObject(ViewContext.PromoUpdatedNum.getAttr(), num);
-			model.addObject(ViewContext.PromoUpdatedDetail.getAttr(), ids.toString());
+		} catch (Exception e) {
+			_logger.debug("Failed to get updated promo num.");
 		}
-		_logger.error(String.format("Finish setting the updated promotions number, used %s ms.", (System.currentTimeMillis()-start)));
+		
+		_logger.debug(String.format("Finish setting the updated promotions number, used %s ms.", (System.currentTimeMillis()-start)));
 	}
 	
 	

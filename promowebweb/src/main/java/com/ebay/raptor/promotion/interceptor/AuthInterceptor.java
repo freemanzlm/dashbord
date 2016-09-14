@@ -39,15 +39,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+    	
 		if (handler != null && handler.getClass().isAssignableFrom(HandlerMethod.class)) {
 			HandlerMethod handerMethod = (HandlerMethod)handler;
 			AuthNeed annotation = handerMethod.getMethodAnnotation(AuthNeed.class);
+			Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
 
 			// check the annotated method
 			if (annotation != null) {
-				Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
 			    boolean success = authenticate(request, response, cookieMap);
-			    
                 if (!success) {
                 	redirectToLogin(request, response);
                     return false;
@@ -62,7 +62,17 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(
 			HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
 			throws Exception {
-		// reset session in cookie?
+		
+		Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
+		String backendToken = cookieMap.get(AppCookies.BACKEND_TOKEN_COOKIE_NAME);
+    	if (backendToken == null || backendToken.isEmpty()) {
+    		backendToken = cookieMap.get(AppCookies.HACK_MODE_COOKIE_NAME);
+    		if(backendToken == null || backendToken.isEmpty()) {
+	    		if (modelAndView != null) {
+	    			modelAndView.setViewName("maintain");
+	    		}
+    		}
+    	}
 	}
 	
 	private boolean authenticate (HttpServletRequest request,

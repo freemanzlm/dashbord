@@ -15,12 +15,14 @@ import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestException;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.config.AppConfig;
+import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.service.BRDataService;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
+import com.ebay.raptor.promotion.util.CookieUtil;
 
 /**
  * 
@@ -38,6 +40,19 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	@Autowired BaseDataService baseService;
 
 	@Override
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler) throws Exception {
+		 
+		Map<String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
+		String adminUserName = cookieMap.get(AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME);
+		if (adminUserName != null && !adminUserName.isEmpty()) {
+			response.setHeader("X-Frame-Options", "Allow-From http://www.ebay.cn");
+		}
+		
+		return super.preHandle(request, response, handler);
+	}
+
+	@Override
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse resp, Object handler, ModelAndView model)
 			throws Exception {
@@ -52,6 +67,11 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		RequestContext context = new RequestContext(request);
 		Locale locale = context.getLocale();
 		String lang = locale.getLanguage() + "_" + locale.getCountry();
+		
+		// zh_HK and zh_TW are the same, so we just use zh_HK.
+		if (lang.equalsIgnoreCase("zh_TW")) {
+			lang = "zh_HK";
+		}
 		user.setLang(lang);
 
 		// zh_HK and zh_TW are the same, so we just use zh_HK.
@@ -72,8 +92,6 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		}
 
 		addPageParameters(request, model, user);
-
-		resp.addHeader("X-Frame-Option", "Allow-From http://www.ebay.cn");
 	}
 
 	private void addPageParameters(HttpServletRequest req, ModelAndView model,

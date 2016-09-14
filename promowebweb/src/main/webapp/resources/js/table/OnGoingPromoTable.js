@@ -14,16 +14,13 @@ var BizReport = BizReport || {};
 
 	var local = namespace.local;
 
-	var promos = ['hotsell', 'deals', 'deals', 'other'];
-
 	function getLink(promoId) {
 		return "/promotion/" + promoId;
 	}
 
 	var defaultDataTableConfigs = {
 		tableConfig : {
-			'aLengthMenu' : [20],
-			'aaSorting' : [[4, 'asc'], [3, 'asc']],
+			'aaSorting' : [[3, 'asc'], [2, 'asc']],
 			'bAutoWidth' : true,
 			'bDeferRender' : true,
 			'bFilter' : true,
@@ -82,20 +79,17 @@ var BizReport = BizReport || {};
 			columns : [{
 					data : 'name'
 				}, {
-					data : 'type'
-				}, {
 					data : 'promoDlDt'
 				}, {
 					data : 'promoEdt'
 				}, {
-					data : 'state'
+					data : 'currentStep'
 				}
 			],
 			aoColumnDefs : [{
 					aTargets : ["name"],
 					sDefaultContent : "",
 					sType : "string",
-					sWidth : "350px",
 					sClass : "item-title",
 					mRender : function (data, type, full, meta) {
 						if (type == "display") {
@@ -105,68 +99,55 @@ var BizReport = BizReport || {};
 						return data;
 					}
 				}, {
-					aTargets : ["type"],
-					sClass : "text-center",
-					sDefaultContent : "",
-					mRender : function (data, type, full) {
-						if (type == "display") {
-							return local.getText('promo.type.' + promos[data]);
-						}
-
-						if (type == 'sort' || type == 'filter') {
-							if (data == '2') {
-								return 1;
-							}
-						}
-
-						return data;
-					}
-				}, {
 					aTargets : ["promoDlDt"],
 					sType : "date",
 					sClass : "text-center",
 					sWidth : "120px",
-					sDefaultContent : " ",
+					sDefaultContent : "-",
 					mRender : function (data, type, full) {
+						if(!data) {
+							return '-';
+						}
+						/*var date = new Date(data);
+						return date.format("yyyy-MM-dd hh:mm");*/
 						return data;
 					}
 				}, {
 					aTargets : ["promoDt"],
 					sType : "date",
 					sClass : "text-center",
-					sWidth : "200px",
+					sWidth : "220px",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
 						if (type == "display") {
+							/*var date1 = new Date(data);
+							var date2 = new Date(full.promoSdt);
+							return date2.format("yyyy-MM-dd hh:mm") + " ~ " + date1.format("yyyy-MM-dd hh:mm");*/
 							return full.promoSdt + " ~ " + data;
 						}
 						return data;
 					}
 				}, {
-					aTargets : ["state"],
+					aTargets : ["currentStep"],
 					sClass : "text-center state",
 					sDefaultContent : "",
 					sType : 'numeric',
+					swidth: '120px',
 					mRender : function (data, type, full) {
+						data = data.toUpperCase();
 						if (type == "display") {
-							if (full.type != 3) {
-								switch (data) {
-								case 'Created':
-								case 'PromotionApproved':
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a>";
-								case 'Applied':
-								case 'Verifying':
-								case 'Submitted':
-								case 'Started':
-								case 'SubsidyCounting':
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+							switch (data) {
+							case 'SELLER NOMINATION_NEED APPROVE':
+							case 'SELLER FEEDBACK':
+								if(full.state == 'Enrolled') {
+									return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+								} else {
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + full.state) + "</a>";
 								}
-							} else {
-								switch (data) {
-								case 'Started':
-								case 'SubsidyCounting':
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-								}
+							case 'PROMOTION SUBMITTED':
+							case 'PROMOTION IN PROGRESS':
+							case 'PROMOTION IN VALIDATION':
+								return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 
 							return '<a href="' + getLink(full.promoId) + '" target="_self">'+ local.getText('promo.state.Detailed') + '</a>';
@@ -174,39 +155,35 @@ var BizReport = BizReport || {};
 
 						if (type == "filter") {
 							switch (data) {
-							case 'Created':
-								return full.type == 3 ? 'Detailed' : 'Created';
-							case 'PromotionApproved':
-								return 'PromotionApproved';
-							case 'Applied':
-								return 'Applied';
-							case 'Submitted':
-								return 'Submitted';
-							case 'Started':
-								return 'Started';
-							case 'SubsidyCounting':
-								return 'SubsidyCounting';
+							case 'SELLER NOMINATION_NEED APPROVE':
+							case 'SELLER FEEDBACK':
+								return 'SELLER NOMINATION_NEED APPROVE';			
+							case 'PROMOTION SUBMITTED':
+								return 'PROMOTION SUBMITTED';
+							case 'PROMOTION IN PROGRESS':
+								return 'PROMOTION IN PROGRESS';
+							case 'PROMOTION IN VALIDATION':
+								return 'PROMOTION IN VALIDATION';
 							}
 
 							return 'Detailed';
 						}
 
 						if (type == "sort") {
-							switch (data) {
-							case 'Created':
-								return full.type == 3 ? 20 : 0;
-							case 'PromotionApproved':
-								return 1;
-							case 'Applied':
-								return 2;
-							case 'Submitted':
-								return 3;
-							case 'Started':
-								return 4;
-							case 'SubsidyCounting':
-								return 5;
+							if(full.state=='ReEnroll') {
+								return -1;
 							}
-
+							switch (data) {
+							case 'SELLER NOMINATION_NEED APPROVE':
+							case 'SELLER FEEDBACK':
+								return 0;							
+							case 'PROMOTION SUBMITTED':
+								return 1;
+							case 'PROMOTION IN PROGRESS':
+								return 2;
+							case 'PROMOTION IN VALIDATION':
+								return 3;
+							}
 							return 20;
 						}
 
@@ -244,7 +221,7 @@ var BizReport = BizReport || {};
 					});
 
 					that.container.parents(".pane-table").find(".state-filter").dropdown().change(function (e, data) {
-						oDataTable.column(4).search(data.value).draw();
+						oDataTable.column(3).search(data.value).draw();
 					});
 				},
 				ajaxbegin : function () {

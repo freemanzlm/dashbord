@@ -1,16 +1,15 @@
 package com.ebay.raptor.promotion.list.controller;
 
-import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
-import com.ebay.raptor.promotion.promo.service.ViewContext;
 
+/**
+ * 
+ * @author lyan2
+ */
 public abstract class AbstractListingController {
 
 	@Autowired
@@ -19,26 +18,23 @@ public abstract class AbstractListingController {
 	@Autowired 
 	ResourceBundleMessageSource messageSource;
 
-	protected void addPromotionContext(ModelAndView model, String promoId, Long userId, String successView, boolean isAdmin) throws PromoException{
-		Promotion promotion = promoService.getPromotionById(promoId, userId, isAdmin);
-		model.addObject(ViewContext.Promotion.getAttr(), promotion);
-		if(null != successView){
-			model.setViewName(successView);
-		}
-	}
-	
-	protected String resource(String key){
-		//TODO Whether need to detect user region for SIMPLE or TRADITIONAL Chinese?
-		return messageSource.getMessage(key, null, Locale.SIMPLIFIED_CHINESE);
+	/**
+	 * Get messages from resource bundle. Locale is got from LocaleContextHolder. This means locale may be determined by ACCEPT header.
+	 * 
+	 * @param key
+	 * @return
+	 */
+	protected String getMessage(String key){
+		return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
 	}
 	
 	/**
-	 * Accept the agreement after finish upload or confirm listings.
+	 * Accept the agreement before enroll or confirm.
+	 * However, requirement wants user check legal terms every time, so, this method is useless. That's why it does nothing now.
 	 * 
 	 * @param promoId
 	 * @param uid
 	 */
-	@Deprecated
 	protected void acceptAgreement(String promoId, long uid){
 //		promoService.acceptAgreement(promoId, uid);
 	}

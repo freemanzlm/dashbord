@@ -1,11 +1,10 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
-<%@ taglib prefix="rui" uri="http://ebay.com/uicomponents" %>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 <%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader" %>
-<c:set var="categoryId" value="6000" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<%-- jQuery is included in body jsSlot by default --%>
 <r:includeJquery jsSlot="head" />
 <r:client />
 <r:includeHtml5Tags />
@@ -22,7 +21,8 @@
 	<script type="text/javascript">
 		var BizReport = BizReport || {};
 	</script>
-	<res:jsSlot id="head" />	
+	
+	<res:jsSlot id="head" />
 	<res:jsSlot id="head-js" />
 	
 	<%--module "ebay.page" add Resets and Global css --%>
@@ -42,10 +42,11 @@
 	<res:useCss value="${res.css.local.css.promotion_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	
-	<res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
-	<res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
-	<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head"></res:useJs>
-	<res:useJs value="${res.js.local.js['cookie.js']}" target="head"></res:useJs>
+	<res:useJs value="${res.js.local.js['extension.js']}" target="head-js" />
+	<res:useJs value="${res.js.local.js['util.js']}" target="head-js" />
+	<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head-js" />
+	<res:useJs value="${res.js.local.js['cookie.js']}" target="head-js"/>
+	
 	<res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
@@ -77,18 +78,10 @@
 			<h2>活动促销</h2>
 		</div>
 		
-		<c:if test="${ invisible eq true }">
+		<c:if test="${ isAdmin eq true }">
 			<div class="pane pane-table mt20">
 				<div class="header clr">
 					<div class="fr cl">
-						<span class="select-control type-filter fr">
-							<select name="" id="">
-								<option value="">全部活动类型</option>
-								<option value="0">爆款促销</option>
-								<option value="1">Deals招募</option>
-								<option value="3">其它活动</option>
-							</select>
-						</span>
 					</div>
 					<h3>等待开放的活动</h3>
 				</div>
@@ -102,22 +95,10 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">显示所有活动</option>
-							<option value="Created">可报名的活动</option>
-							<option value="PromotionApproved">待正式报名的活动</option>
-							<option value="Submitted">已提交预审的活动</option>
-							<option value="Verifying">预审中的活动</option>
-							<option value="Applied">已报名的活动</option>
-							<option value="Started">进行中的活动</option>
-							<option value="SubsidyCounting">奖励确认中的活动</option>
-							<option value="Detailed">只能查看详情的活动</option>
-						</select>
-					</span>
-					<span class="select-control type-filter fr">
-						<select name="" id="">
-							<option value="">全部活动类型</option>
-							<option value="0">爆款促销</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活动</option>
+							<option value="SELLER NOMINATION_NEED APPROVE">报名阶段的活动</option>
+							<option value="PROMOTION SUBMITTED">审核阶段的活动</option>
+							<option value="PROMOTION IN PROGRESS">活动进行阶段的活动</option>
+							<option value="PROMOTION IN VALIDATION">奖励审核阶段的活动</option>
 						</select>
 					</span>
 				</div>
@@ -132,20 +113,12 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">显示所有活动</option>
-							<option value="SubsidyWaiting">可申领奖励的活动</option>
-							<option value="SubsidyAccessed">待填写协议的活动</option>
-							<option value="SubsidyResubmittable">需要重新申领奖励的活动</option>
-							<option value="SubsidyRetrievable">可领取奖励的活动</option>
-							<option value="SubsidySubmitted">待上传协议的活动</option>
-							<option value="SubsidyUploaded">申领审核中的活动</option>
-						</select>
-					</span>
-					<span class="select-control type-filter fr">
-						<select name="" id="">
-							<option value="">全部活动类型</option>
-							<option value="0">爆款促销</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活动</option>
+							<option value="Awarding">可申领奖励的活动</option>
+							<option value="Visited">待填写协议的活动</option>
+							<option value="AppliableAgain">需要重新申领奖励的活动</option>
+							<option value="Appliable">可领取奖励的活动</option>
+							<option value="Commited">待上传协议的活动</option>
+							<option value="Uploaded">申领审核中的活动</option>
 						</select>
 					</span>
 				</div>
@@ -160,16 +133,8 @@
 					<span class="select-control state-filter fr">
 						<select name="" id="">
 							<option value="">显示所有活动</option>
-							<option value="SubsidyRetrieved">领取奖励成功的活动</option>
+							<option value="Applied">领取奖励成功的活动</option>
 							<option value="Detailed">只能查看详情的活动</option>
-						</select>
-					</span>
-					<span class="select-control type-filter fr">
-						<select name="" id="">
-							<option value="">全部活动类型</option>
-							<option value="0">爆款促销</option>
-							<option value="1">Deals招募</option>
-							<option value="3">其它活动</option>
 						</select>
 					</span>
 				</div>
@@ -189,7 +154,7 @@
 <script type="text/javascript">
 	var pageData = {
 		region: '${ region }',
-		admin: ${invisible}
+		admin: JSON.parse('${not empty isAdmin ? isAdmin : false}')
 	};
 	var clientContext = ${client.serialize(client.getContext())} ; 
 	var supportHTML5 = ${client.supportHtml5Tags()} ; 

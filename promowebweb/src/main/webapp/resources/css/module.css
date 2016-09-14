@@ -2,9 +2,8 @@
 	color: #f00;
 }
 
-.error-msg .icon {
-	margin-right: 10px;
-	margin-top: -5px;
+.error-msg td {
+	vertical-align:top;
 }
 
 /* breadcrumb begin */

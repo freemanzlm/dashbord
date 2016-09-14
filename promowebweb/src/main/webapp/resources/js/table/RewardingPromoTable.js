@@ -15,16 +15,13 @@ var BizReport = BizReport || {};
 	var local = namespace.local,
 	util = namespace.util;
 
-	var promos = ['hotsell', 'deals', 'deals', 'other'];
-
 	function getLink(promoId) {
 		return "/promotion/" + promoId;
 	}
 
 	var defaultDataTableConfigs = {
 		tableConfig : {
-			'aLengthMenu' : [20],
-			'aaSorting' : [[5, 'asc'], [3, 'asc']],
+			'aaSorting' : [[4, 'asc'], [2, 'asc']],
 			'bAutoWidth' : true,
 			'bDeferRender' : true,
 			'bFilter' : true,
@@ -82,8 +79,6 @@ var BizReport = BizReport || {};
 			columns : [{
 					data : 'name'
 				}, {
-					data : 'type'
-				}, {
 					data : 'rewardDlDt'
 				}, {
 					data : 'promoEdt'
@@ -102,23 +97,6 @@ var BizReport = BizReport || {};
 					mRender : function (data, type, full, meta) {
 						if (type == "display") {
 							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
-						}
-
-						return data;
-					}
-				}, {
-					aTargets : ["type"],
-					sClass : "text-center",
-					sDefaultContent : "",
-					mRender : function (data, type, full) {
-						if (type == "display") {
-							return local.getText('promo.type.' + promos[data]);
-						}
-
-						if (type == 'sort' || type == 'filter') {
-							if (data == '2') {
-								return 1;
-							}
 						}
 
 						return data;
@@ -183,13 +161,26 @@ var BizReport = BizReport || {};
 					sType : "numeric",
 					mRender : function (data, type, full) {
 						var display;
-
 						if (type == 'filter') {
 							// For oil card, WLT point/coin, only CN user can get. For WinIT Coupon, CN, HK and TW users all can get.
 							if (((full.rewardType == 1 || full.rewardType == 2) && full.region == 'CN') || full.rewardType == 3) {
+								switch(data) {
+								case 'Awarding':
+									return 'Awarding';
+								case 'Visited':
+									return 'Visited';			
+								case 'Commited':
+									return 'Commited';
+								case 'Appliable':
+									return 'Appliable';
+								case 'AppliableAgain':
+									return 'AppliableAgain';
+								case 'Uploaded':
+									return 'Uploaded';
+								}
 								return data;
 							} else if (full.rewardType != 0) {
-								data = 'SubsidyRetrievable'; // filter
+								data = 'Appliable'; // filter
 							}
 						}
 
@@ -197,11 +188,11 @@ var BizReport = BizReport || {};
 							// For WLT point/coin, only CN user can get.
 							if (full.rewardType == 2 && full.region == 'CN') {
 								switch (data) {
-								case 'SubsidyWaiting':
-								case 'SubsidyAccessed':
-								case 'SubsidySubmitted':
-								case 'SubsidyRetrievable':
-								case 'SubsidyResubmittable':
+								case 'Awarding':
+								case 'Visited':
+								case 'Commited':
+								case 'Appliable':
+								case 'AppliableAgain':
 									if (full.rewardUrl) {
 										display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + local.getText('promo.state.' + data) + "</a>";
 										display += "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
@@ -219,10 +210,10 @@ var BizReport = BizReport || {};
 							if ((full.rewardType == 1 && full.region == 'CN') || full.rewardType == 3) {
 								// Gas card, JD card
 								switch (data) {
-								case 'SubsidyWaiting':
-								case 'SubsidyAccessed':
-								case 'SubsidySubmitted':
-								case 'SubsidyResubmittable':
+								case 'Awarding':
+								case 'Visited':
+								case 'Commited':
+								case 'AppliableAgain':
 									if (full.rewardUrl) {
 										display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + local.getText('promo.state.' + data) + "</a>";
 										display += "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
@@ -231,14 +222,14 @@ var BizReport = BizReport || {};
 										display += '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 									}
 									return display;
-								case 'SubsidyRetrievable':
+								case 'Appliable':
 								default:
 									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								}
 							}
 
 							if (full.rewardType != 0) {
-								display = "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.SubsidyRetrievable') + "</a>";
+								display = "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Appliable') + "</a>";
 								return display;
 							} else {
 								return '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
@@ -249,23 +240,23 @@ var BizReport = BizReport || {};
 							// For oil card, WLT point/coin, only CN user can get. For WinIT Coupon, CN, HK and TW users all can get. 
 							if ((((full.rewardType == 1 || full.rewardType == 2) && full.region == 'CN') || full.rewardType == 3) && full.rewardUrl) {
 								switch (data) {
-								case 'SubsidyWaiting':
+								case 'Awarding':
 									return 8;
-								case 'SubsidyResubmittable':
+								case 'AppliableAgain':
 									return 9;
-								case 'SubsidyAccessed':
+								case 'Visited':
 									return 10;
-								case 'SubsidySubmitted':
+								case 'Commited':
 									return 11;
-								case 'SubsidyUploaded':
+								case 'Uploaded':
 									return 12;
-								case 'SubsidyRetrievable':
+								case 'Appliable':
 									return 13;
 								}
 							}
 
 							if (full.rewardType != 0) {
-								return 13; // SubsidyRetrievable
+								return 13; // Appliable
 							}
 
 							return 20;
@@ -305,7 +296,7 @@ var BizReport = BizReport || {};
 					});
 
 					that.container.parents(".pane-table").find(".state-filter").dropdown().change(function (e, data) {
-						oDataTable.column(5).search(data.value).draw();
+						oDataTable.column(4).search(data.value).draw();
 					});
 
 					that.publish("initialized");

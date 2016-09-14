@@ -17,18 +17,22 @@ public class CookieUtil {
 	
 	/**
 	 * Set a new cookie in http reponse.
+	 * 
 	 * @param response
 	 * @param name
 	 * @param value
-	 * @param maxAge, <0 session cookie; =0 delete; >0 seconds
+	 * @param maxAge
+	 *            , <0 session cookie; =0 delete; >0 seconds
 	 * @param path
 	 * @param domain
 	 * @param secure
 	 */
-	public static void setCookie(HttpServletResponse response, String name, String value, int maxAge, String path, String domain, boolean secure) {
-		if (name == null || name.isEmpty()) return;
-		
-		Cookie cookie = new Cookie (name, value);
+	public static void setCookie(HttpServletResponse response, String name,
+			String value, int maxAge, String path, String domain, boolean secure) {
+		if (name == null || name.isEmpty())
+			return;
+
+		Cookie cookie = new Cookie(name, value);
 		cookie.setMaxAge(maxAge); // <0 never store; =0 delete; >0 store
 		cookie.setPath(path);
 
@@ -39,29 +43,34 @@ public class CookieUtil {
 		cookie.setSecure(secure);
 		response.addCookie(cookie);
 	}
-	
+
 	/**
 	 * Set a new cookie in HTTP response, secure is false by default.
+	 * 
 	 * @param response
 	 * @param name
 	 * @param value
-	 * @param maxAge, <0 session cookie; =0 delete; >0 seconds
+	 * @param maxAge
+	 *            , <0 session cookie; =0 delete; >0 seconds
 	 * @param path
 	 * @param domain
 	 */
-	public static void setCookie(HttpServletResponse response, String name, String value, int maxAge, String path, String domain) {
+	public static void setCookie(HttpServletResponse response, String name,
+			String value, int maxAge, String path, String domain) {
 		setCookie(response, name, value, maxAge, path, domain, false);
 	}
-	
+
 	/**
 	 * Set a new cookie with default path and domain.
+	 * 
 	 * @param response
 	 * @param name
 	 * @param value
 	 */
-	public static void setCookie(HttpServletResponse response, String name, String value) {
+	public static void setCookie(HttpServletResponse response, String name,
+			String value) {
 		if (name != null && !name.isEmpty()) {
-			Cookie cookie = new Cookie (name, value);
+			Cookie cookie = new Cookie(name, value);
 			response.addCookie(cookie);
 		}
 	}
@@ -79,12 +88,14 @@ public class CookieUtil {
 	}
 
 	/**
-	 * Store cookies' name and value in a HashMap object. The same name cookie would be overridden.
+	 * Store cookies' name and value in a HashMap object. The same name cookie
+	 * would be overridden.
+	 * 
 	 * @param cookies
 	 * @return
 	 */
-	public static Map <String, String> convertCookieToMap (Cookie [] cookies) {
-		Map <String, String> cookieMap = new HashMap <String, String> ();
+	public static Map<String, String> convertCookieToMap(Cookie[] cookies) {
+		Map<String, String> cookieMap = new HashMap<String, String>();
 
 		if (cookies != null && cookies.length > 0) {
 			for (Cookie c : cookies) {

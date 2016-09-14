@@ -9,7 +9,7 @@ import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.req.Listing;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.pojo.business.HotSellListing;
 import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
@@ -86,10 +86,10 @@ public class HotSellListingService extends BaseService {
 	
 
 	@SuppressWarnings("unchecked")
-	public boolean confirmHotSellListings(Listing[] listingAry, String promoId, Long uid) throws PromoException {
+	public boolean confirmHotSellListings(SelectableListing[] listingAry, String promoId, Long uid) throws PromoException {
 		String uri = url(ResourceProvider.ListingRes.confirmHotSellListings);
-		List<Listing> listingList = Arrays.asList(listingAry);
-		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
+		List<SelectableListing> listingList = Arrays.asList(listingAry);
+		UploadListingRequest<SelectableListing> req = new UploadListingRequest<SelectableListing>();
 		req.setListings(listingList);;
 		req.setPromoId(promoId);
 		req.setUid(uid);

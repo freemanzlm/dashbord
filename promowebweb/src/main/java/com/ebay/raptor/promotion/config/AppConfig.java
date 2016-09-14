@@ -1,7 +1,6 @@
 package com.ebay.raptor.promotion.config;
 
 import com.ebay.kernel.context.AppBuildConfig;
-
 /**
  * 
  * @author lyan2

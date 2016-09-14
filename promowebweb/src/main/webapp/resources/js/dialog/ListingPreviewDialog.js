@@ -1,7 +1,7 @@
 (function(namespace) {
 	
 	var Dialog = cbt.Dialog;
-	var ListingTable = namespace.HotsellListingTable || namespace.DealsListingTable;
+	var ListingTable = namespace.ListingTable;
 	
 	var ListingPreviewDialog = function(element, option) {
 		if (element || option){
@@ -11,23 +11,25 @@
 	
 	ListingPreviewDialog.prototype = {
 		init : function(element, cfg) {
+			var that = this;
 			this._super(element, cfg);
 			
 			var listingTable = this.listingTable = new ListingTable();
-			listingTable.subscribe({
-				initialized: function() {
-					listingTable.hideCheckbox();
-					listingTable.hideStateColumn();
-				}
-			}, listingTable);
 			listingTable.init({
 				dataTableConfig: {
 					tableId: "listing-preview-table",
 					customTableConfig: {
 						'sScrollY': "400",
-						'iDisplayLength': 10
+						'iDisplayLength': 10,
+						'columns':pageData && pageData.previewColumns
 					}
 				}});
+			
+			listingTable.subscribe({
+				dataupdated: function() {
+					that.resizeUpdate();
+				}
+			});
 		},
 
 		delegate : function() {

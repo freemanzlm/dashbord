@@ -88,11 +88,21 @@
       		<groupId>javax.servlet</groupId>
       		<artifactId>javax.servlet-api</artifactId>
       	</dependency>
-      	<dependency>
-      		<groupId>org.apache.poi</groupId>
-      		<artifactId>poi-ooxml</artifactId>
-      		<version>3.12</version>
-      	</dependency>
+      	<!-- Excel writer and reader -->
+		<dependency>
+			<!-- .xls -->
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.14</version>
+		</dependency>
+
+		<dependency>
+			<!-- .xlsx, based on poi -->
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.14</version>
+		</dependency>
+		<!-- Excel writer and reader end -->
       	<dependency>
       		<groupId>commons-io</groupId>
       		<artifactId>commons-io</artifactId>
@@ -117,6 +127,7 @@
       		<groupId>javax.el</groupId>
       		<artifactId>javax.el-api</artifactId>
       	</dependency>
+      	
 	</dependencies>
 
 	<build>
@@ -160,24 +171,6 @@
 			<plugin>
 				<groupId>com.ebay.raptor.build</groupId>
 				<artifactId>maven-content-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${basedir}/content</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

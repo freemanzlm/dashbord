@@ -162,7 +162,7 @@ public class BackendTokenUtil {
 		
 		Date dt;
 		try {
-			dt = DateUtil.parseSimpleDateWithDash(dateStr);
+			dt = DateUtil.parseISODate(dateStr, null);
 			dt.setTime(dt.getTime() + 86400000);
 		} catch (ParseException e) {
 			return true;

@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.cbt.common.constant.pm.PMPromotionType;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -31,6 +30,7 @@ import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
+import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.siteApi.util.SiteApiUtil;
 
@@ -44,6 +44,7 @@ public class IndexController {
     @Autowired LoginService loginService;
     @Autowired PromotionService service;
     @Autowired PromotionViewService view;
+    @Autowired SubsidyService subsidyService;
 	
     @RequestMapping(value = "/backend", method = RequestMethod.GET)
     public void handleBackendRequest(HttpServletRequest request,
@@ -88,9 +89,18 @@ public class IndexController {
         ModelAndView mav = new ModelAndView();
         //Set unconfirmed status
         UserData userDt = loginService.getUserDataFromCookie(request);
-        mav.addObject(ViewContext.IsUnconfirmedVisable.getAttr(), userDt.getAdmin());
+        mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
         
        	mav.setViewName("index");
+        return mav;
+    }
+    
+	@RequestMapping(value = "/maintain", method = RequestMethod.GET)
+    public ModelAndView gotoMaintainPage(HttpServletRequest request,
+            HttpServletResponse response,
+            @ModelAttribute RequestParameter param) throws MissingArgumentException {
+        ModelAndView mav = new ModelAndView();
+       	mav.setViewName("maintain");
         return mav;
     }
 	
@@ -101,23 +111,44 @@ public class IndexController {
 			@PathVariable("promoId") String promoId) throws MissingArgumentException {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
-
+		Promotion promo = null;
+		
 		try {
-			Promotion promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-
-			if(null != promo){
+			promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+			
+			if(null != promo && promo.getActiveFlag()){
 				ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
 				model.setViewName(res.getView().getPath());
 				model.addAllObjects(res.getContext());
+				if(promo.getCurrentStep()!=null) {
+					promo.setCurrentStep(promo.getCurrentStep().toUpperCase());
+				}
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
+				
+			} else {
+				model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
 			}
+			
 		} catch (PromoException e) {
 			logger.error("Unable to get promotion for " + promoId, e);
 			model.setViewName(ViewResource.ERROR.getPath());
 		}
+		
+		/*try {
+			
+			// get subsidy details when promotion is validated.
+			if (promo != null && PromotionStep.PROMOTION_VALIDATED.getName().equalsIgnoreCase(promo.getCurrentStep())) {
+				Subsidy subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
+				if (subsidy != null) {
+					model.addObject(ViewContext.Subsidy.getAttr(), subsidy);
+				}
+			}
+		} catch (PromoException e) {
+			logger.error("Unable to get subsidy for " + promoId, e);
+		}*/
 		return model;
 	}
-	
+    
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
     public ModelAndView handleErrorRequest(HttpServletRequest request,
             HttpServletResponse response,
@@ -126,7 +157,7 @@ public class IndexController {
        	mav.setViewName("error");
         return mav;
     }
-    
+	
 	@ExceptionHandler(MissingArgumentException.class)
     public ModelAndView handleException(MissingArgumentException exception,
             HttpServletRequest request) {
@@ -137,23 +168,7 @@ public class IndexController {
 	
 	private ContextViewRes handleViewBasedOnPromotion(Promotion promo, long uid) throws PromoException{
 		ContextViewRes result = new ContextViewRes();
-		switch(PMPromotionType.valueOfPMType(promo.getType())){
-			case HIGH_VELOCITY:
-				result = view.highVelocityView(promo, uid);
-				break;
-			case DEALS_DASHBOARD_UPLOAD:
-				result = view.dealsUpload(promo, uid);
-				break;
-			case DEALS_AM_UPLOAD:
-				result = view.dealsPresetView(promo, uid);
-				break;
-			case STANDARD:
-				result = view.standard(promo);
-				break;
-			case PM_UNKNOWN_TYPE:
-				result.setView(ViewResource.ERROR);
-				break;
-		}
+		result = view.handleView(promo, uid);
 		return result;
 	}
 }

@@ -16,8 +16,8 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.HotSellListingService;
 import com.ebay.raptor.promotion.pojo.ResponseData;
@@ -27,10 +27,9 @@ import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
-import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 
-
+@Deprecated
 @Controller
 @RequestMapping(ResourceProvider.ListingRes.hotsellBase)
 public class HotSellListingController extends AbstractListingController{
@@ -48,7 +47,7 @@ public class HotSellListingController extends AbstractListingController{
 		ResponseData <String> responseData = new ResponseData <String>();
 		responseData.setStatus(Boolean.FALSE);
 		if(null != listings){
-			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
+			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
 				UserData userData = loginService.getUserDataFromCookie(req);
 				if(service.confirmHotSellListings(listingAry, listings.getPromoId(), userData.getUserId())){

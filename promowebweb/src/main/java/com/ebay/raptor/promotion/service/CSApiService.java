@@ -4,6 +4,7 @@ import java.beans.IntrospectionException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,13 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 
+import com.ebay.app.raptor.cbtcommon.util.EnviromentUtil;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.csApi.GetItemDetailResponse;
 import com.ebay.app.raptor.promocommon.csApi.GetTokenResponse;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestException;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestService;
-import com.ebay.app.raptor.promocommon.util.EnviromentUtil;
-import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.app.raptor.promocommon.xml.XmlParseException;
 import com.ebay.app.raptor.promocommon.xml.XmlParser;
 import com.ebay.integ.dal.dao.FinderException;
@@ -31,8 +31,8 @@ import com.ebay.integ.user.User;
 import com.ebay.integ.user.UserDAO;
 import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.soap.CSSOAPMessageFactory;
-import com.ebay.raptor.promotion.user.service.UserService;
 import com.ebay.raptor.promotion.util.DateUtil;
+import com.ebay.raptor.promotion.util.StringUtil;
 import com.ebay.raptor.promotion.xml.DOMResolver;
 
 public class CSApiService {
@@ -50,7 +50,6 @@ public class CSApiService {
 	private String token;
 	
 	@Autowired private HttpRequestService httpRequestService;
-	@Autowired private UserService userService;
 	
 	/**
 	 * Get the token to access CS APIs.
@@ -69,15 +68,21 @@ public class CSApiService {
 			
 			/* Each time call CSGetToken API, response will include the HardExpirationTime. But we don't know which time zone it is. 
 			 * So, we only use the time lag to infer the expiration time. */
-			Date responseTime = DateUtil.parseCSAPIDate(tokenInfor.getTimeStamp());
-			Date expectedExpiredTime = DateUtil.parseCSAPIDate(tokenInfor.getHardExpirationTime());
-			long lag = DateUtil.timeLag(responseTime, expectedExpiredTime);
-			expiredTime = new Date();
-			// reduce token life 5 minutes because there may have delay between CS server and client.
-			expiredTime.setTime(expiredTime.getTime() + lag - 300);
-			
+			Date responseTime;
+			try {
+				responseTime = DateUtil.parseUTCDateTime(tokenInfor.getTimeStamp(), null);
+				Date expectedExpiredTime = DateUtil.parseUTCDateTime(tokenInfor.getHardExpirationTime(), null);
+				long lag = DateUtil.timeLag(responseTime, expectedExpiredTime);
+				expiredTime = new Date();
+				// reduce token life 5 minutes because there may have delay between CS server and client.
+				expiredTime.setTime(expiredTime.getTime() + lag - 300);
+				tokenExpired = false;
+			} catch (ParseException e) {
+				tokenExpired = true;
+				e.printStackTrace();
+			}
+
 			token = tokenInfor.geteBayAuthToken();
-			tokenExpired = false;
 			return token;
 		} else {
 			_logger.error("Unable to get user token.");
@@ -105,15 +110,6 @@ public class CSApiService {
 	 */
 	public String getUserIdByName (String userName) {
 		//For production env, use dal instead of service
-		if(EnviromentUtil.isProduction()){
-			try {
-				long id = userService.getUserIdByNameFromDal(userName);
-				return id == -1 ? "" : String.valueOf(id);
-			} catch (Exception e) {
-				return "";
-			}
-		}
-		
 		String token = getToken();
 		
 		SOAPMessage soapMessage = null;

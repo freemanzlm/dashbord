@@ -7,6 +7,10 @@ import com.ebay.integ.dal.dao.FinderException;
 import com.ebay.integ.user.User;
 import com.ebay.integ.user.UserDAO;
 
+/**
+ * Don't use this service, we should get user information from CSApiService.
+ */
+@Deprecated
 @Service
 public class UserService {
 	private static final CommonLogger _logger = CommonLogger.getInstance(UserService.class);

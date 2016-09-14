@@ -15,10 +15,31 @@ public class Promotion {
 	private String desc;
 	
 	private String itemDesc;
+	
+	private Boolean regType = true;
 
 	private Integer type;
 	
-	private PromotionSubType promoSubType;
+	private String currentStep;
+	
+	private String visibleCurrentStep;
+	
+	private String draftPreviewStep;
+	
+	private Boolean hasValidCurrentStep;
+	
+	private String stepList;
+	
+	private Boolean legalTermFlag;
+	
+
+	public Boolean getLegalTermFlag() {
+		return legalTermFlag;
+	}
+
+	public void setLegalTermFlag(Boolean legalTermFlag) {
+		this.legalTermFlag = legalTermFlag;
+	}
 
 	@JsonSerialize(using=WebDateSerializer.class)
 	private Date promoDlDt;
@@ -59,6 +80,31 @@ public class Promotion {
 	
 	private String endReason;
 	
+	private Boolean activeFlag;
+	
+	/**
+	 * Listing fields definition. It's a JSON object string.
+	 */
+	private String listingFields;
+	
+	private Boolean isPreview = false;
+	
+	public Boolean getIsPreview() {
+		return isPreview;
+	}
+
+	public void setIsPreview(Boolean isPreview) {
+		this.isPreview = isPreview;
+	}
+
+	public String getListingFields() {
+		return listingFields;
+	}
+
+	public void setListingFields(String listingFields) {
+		this.listingFields = listingFields;
+	}
+
 	public String getEndReason() {
 		return endReason;
 	}
@@ -113,6 +159,14 @@ public class Promotion {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+
+	public String getItemDesc() {
+		return itemDesc;
+	}
+
+	public void setItemDesc(String itemDesc) {
+		this.itemDesc = itemDesc;
 	}
 
 	public String getName() {
@@ -219,20 +273,60 @@ public class Promotion {
 		this.currency = currency;
 	}
 
-	public PromotionSubType getPromoSubType() {
-		return promoSubType;
+	public String getCurrentStep() {
+		return currentStep;
 	}
 
-	public void setPromoSubType(PromotionSubType promoSubType) {
-		this.promoSubType = promoSubType;
+	public void setCurrentStep(String currentStep) {
+		this.currentStep = currentStep;
 	}
 
-	public String getItemDesc() {
-		return itemDesc;
+	public String getStepList() {
+		return stepList;
 	}
 
-	public void setItemDesc(String itemDesc) {
-		this.itemDesc = itemDesc;
+	public void setStepList(String stepList) {
+		this.stepList = stepList;
+	}
+
+	public String getDraftPreviewStep() {
+		return draftPreviewStep;
+	}
+
+	public void setDraftPreviewStep(String draftPreviewStep) {
+		this.draftPreviewStep = draftPreviewStep;
+	}
+
+	public Boolean getHasValidCurrentStep() {
+		return hasValidCurrentStep;
+	}
+
+	public void setHasValidCurrentStep(Boolean hasValidCurrentStep) {
+		this.hasValidCurrentStep = hasValidCurrentStep;
+	}
+
+	public String getVisibleCurrentStep() {
+		return visibleCurrentStep;
+	}
+
+	public void setVisibleCurrentStep(String visibleCurrentStep) {
+		this.visibleCurrentStep = visibleCurrentStep;
+	}
+
+	public Boolean getRegType() {
+		return regType;
+	}
+
+	public void setRegType(Boolean regType) {
+		this.regType = regType;
+	}
+
+	public Boolean getActiveFlag() {
+		return activeFlag;
+	}
+
+	public void setActiveFlag(Boolean activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 
 }

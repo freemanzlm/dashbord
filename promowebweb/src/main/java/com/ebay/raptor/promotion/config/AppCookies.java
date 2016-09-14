@@ -25,7 +25,7 @@ public class AppCookies {
 
 	public final static String COOKIE_DOMAIN;
 	public final static String COOKIE_PATH_ROOT = "/";
-	
+
 	static {
 		if (EnvironmentUtil.isProduction()) {
 			COOKIE_DOMAIN = ".ebay.com.hk"; // expand domain to all CBT app.

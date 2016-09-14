@@ -10,6 +10,7 @@ import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 
+@Deprecated
 public abstract class AbstractDealsListingController extends AbstractListingController {
 	private static CommonLogger logger = CommonLogger.getInstance(AbstractDealsListingController.class);
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.req.Listing;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
 import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
@@ -40,18 +40,18 @@ public class DealsListingService extends BaseService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Boolean confirmDealsListings(Listing[] listings, String promoId, Long uid) throws PromoException{
+	public Boolean confirmDealsListings(SelectableListing[] listings, String promoId, Long uid) throws PromoException{
 		String uri = url(ResourceProvider.ListingRes.confirmDealsListings);
-		List<Listing> listingList = Arrays.asList(listings);
-		UploadListingRequest<Listing> req = new UploadListingRequest<Listing>();
+		List<SelectableListing> listingList = Arrays.asList(listings);
+		UploadListingRequest<SelectableListing> req = new UploadListingRequest<SelectableListing>();
 		req.setListings(listingList);
 		req.setPromoId(promoId);
 		req.setUid(uid);
 		GingerClientResponse resp = httpPost(uri, req);
 		try{
-			GenericType<UploadListingResponse<Listing>> type = new GenericType<UploadListingResponse<Listing>>(){};
+			GenericType<UploadListingResponse<SelectableListing>> type = new GenericType<UploadListingResponse<SelectableListing>>(){};
 			if(null != resp){
-				UploadListingResponse<Listing> respEntity = resp.getEntity(type);
+				UploadListingResponse<SelectableListing> respEntity = resp.getEntity(type);
 				if(null != respEntity && respEntity.getAckValue() == AckValue.SUCCESS){
 					return Boolean.TRUE;
 				}

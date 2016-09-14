@@ -76,7 +76,7 @@
 			this.wrapper.find(".cancel, .close").click(function(){
 				self.close();
 			});
-
+			
 			$(document).keyup(function(e){
 				// "ESC" button is pressed.
 				if (e.keyCode == 27){
@@ -129,6 +129,10 @@
 
 			this.element && this.element.trigger('close');
 			this.publish && this.publish('close');
+		},
+		
+		resizeUpdate: function() {
+			posManager.center(this.wrapper);
 		}
 	});
 

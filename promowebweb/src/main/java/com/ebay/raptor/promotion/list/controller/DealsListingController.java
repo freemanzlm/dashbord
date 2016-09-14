@@ -32,24 +32,22 @@ import com.ebay.app.raptor.promocommon.excel.IExcelSheetHandler;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
 import com.ebay.raptor.kernel.context.IRaptorContext;
+import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excel.APACDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.FRESDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.GBHDealsListingSheetHandler;
 import com.ebay.raptor.promotion.excel.InvalidCellDataException;
 import com.ebay.raptor.promotion.excel.UploadListingSheetHandler;
-import com.ebay.raptor.promotion.excel.writer.ExcelService;
+import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.req.Listing;
 import com.ebay.raptor.promotion.list.req.ListingWebParam;
+import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.DealsListing;
-import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
-import com.ebay.raptor.promotion.pojo.business.GBHDealsListing;
 import com.ebay.raptor.promotion.pojo.business.PromotionSubType;
 import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
@@ -59,6 +57,7 @@ import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 
+@Deprecated
 @Controller
 @RequestMapping(ResourceProvider.ListingRes.dealsBase)
 public class DealsListingController extends AbstractDealsListingController{
@@ -71,6 +70,7 @@ public class DealsListingController extends AbstractDealsListingController{
 	
 	@Autowired DealsListingService service;
 	
+	// TODO, it used to be com.ebay.raptor.promotion.excel.writer.ExcelService
 	@Autowired ExcelService excelService;
 	
 	@Autowired SpringValidatorAdapter validator;
@@ -96,27 +96,27 @@ public class DealsListingController extends AbstractDealsListingController{
 		UserData userData = loginService.getUserDataFromCookie(req);
 		XSSFWorkbook workBook = null;
 
-        try {
-        	workBook = excelService.getDealListingWorkbook(param.getPromoId(),
-        			userData.getUserId(), promoSubType);
-        	
-        	excelService.addDocSheet(workBook, promoSubType);
-
-            resp.setContentType("application/x-msdownload;");
-    		resp.setHeader("Content-disposition", "attachment; filename="
-    				+ excelService.getExcelName(promoSubType));
-    		workBook.write(resp.getOutputStream());
-        } catch (IOException | PromoException e) {
-        	logger.error("Unable to download deals listing.", e);
-        } finally {
-        	if (workBook != null) {
-    			try {
-					workBook.close();
-				} catch (IOException e) {
-					// ignore
-				}
-    		}
-        }
+//        try {
+//        	workBook = excelService.getDealListingWorkbook(param.getPromoId(),
+//        			userData.getUserId(), promoSubType);
+//        	
+//        	excelService.addDocSheet(workBook, promoSubType);
+//
+//            resp.setContentType("application/x-msdownload;");
+//    		resp.setHeader("Content-disposition", "attachment; filename="
+//    				+ excelService.getExcelName(promoSubType));
+//    		workBook.write(resp.getOutputStream());
+//        } catch (IOException | PromoException e) {
+//        	logger.error("Unable to download deals listing.", e);
+//        } finally {
+//        	if (workBook != null) {
+//    			try {
+//					workBook.close();
+//				} catch (IOException e) {
+//					// ignore
+//				}
+//    		}
+//        }
     }
 
 	@POST
@@ -270,7 +270,7 @@ public class DealsListingController extends AbstractDealsListingController{
 		ResponseData <String> responseData = new ResponseData <String>();
 
 		if(null != listings){
-			Listing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), Listing[].class);
+			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
 			try {
 				UserData userData = loginService.getUserDataFromCookie(req);
 				boolean result = service.confirmDealsListings(listingAry, listings.getPromoId(), userData.getUserId());
@@ -372,7 +372,7 @@ public class DealsListingController extends AbstractDealsListingController{
 			return resp;
 		}
 
-		try {
+		/*try {
 			// if promotion sub type is empty, handle as general deals listings,
 			// and don't throw the NullPointerException
 			if (!StringUtil.isEmpty(param.getPromoSubType())) {
@@ -383,9 +383,9 @@ public class DealsListingController extends AbstractDealsListingController{
 			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
 			resp.setStatus(Boolean.FALSE);
 			return resp;
-		}
+		}*/
 		
-		if (pSubType != null) {
+		/*if (pSubType != null) {
 			switch (pSubType) {
 				case GBH :
 					ListDataWebResponse<GBHDealsListing> gbhResp = getListings(
@@ -403,12 +403,12 @@ public class DealsListingController extends AbstractDealsListingController{
 					ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
 					resp.setStatus(Boolean.FALSE);
 					return resp;
-			}
-		} else {
+			}*/
+//		} else {
 			ListDataWebResponse<DealsListing> resp = getListings(
 					param.getPromoId(), userData.getUserId(), null, listType);
 			return resp;
-		}
+//		}
 	}
 
 }

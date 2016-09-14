@@ -31,6 +31,7 @@ public class ResourceProvider {
 		
 		String _getPromotionById = "/getPromotionById";
 		String getPromotionById = "/getPromotionById/promoId/{promoId}/uid/{uid}/isAdmin/{isAdmin}";
+		String hasListingNominated = "/hasListingNominated/promoId/{promoId}/uid/{uid}";
 	}
 	
 	public interface UserPromotionRes {
@@ -39,6 +40,7 @@ public class ResourceProvider {
 	}
 	
 	public interface ListingRes {
+		String base = "listings";
 		String dealsBase = "deals";
 		String siteDeals = "sitedeals";
 		String hotsellBase = "hotsell";
@@ -58,7 +60,9 @@ public class ResourceProvider {
 		String getApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}";
 		String getTempApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}/type/{type}";
 
+		@Deprecated
 		String _getSKUsByPromotionId = "/getSKUsByPromotionId";
+		@Deprecated
 		String getSKUsByPromotionId = "/getSKUsByPromotionId/promoId/{promoId}/uid/{uid}";
 
 		String _getUploadedListings = "/getUploadedListings";
@@ -74,23 +78,38 @@ public class ResourceProvider {
 		String getSKUListingsByPromotionIdAndType = "/getSKUListingsByPromotionId/promoId/{promoId}/uid/{uid}/type/{type}";
 		String confirmDealsListings = "/confirmDealsListings";
 		String confirmHotSellListings = "/confirmHotSellListings";
+		
+		@Deprecated
 		String downloadSkuList = "/downloadSkuList";
+		String downloadTempldate = "/downloadTemplate";
+		String uploadListings = "/uploadListings";
+		String submitListings = "/submitListings";
+		String confirmListings = "/confirmListings";
 		String uploadDealsListings = "/uploadDealsListings";
 		String uploadGBHDealsListings = "/uploadGBHDealsListings";
 		String uploadAPACDealsListings = "/uploadAPACDealsListings";
 		String uploadFRESDealsListings = "/uploadFRESDealsListings";
+		@Deprecated
 		String submitDealsListings = "/submitDealsListings";
+		String submitPromoListings = "/submitPromoListings";
 		String getListingsByPromotionIdAndUserIdAndType = "/getPromotionListings/promoId/{promoId}/uid/{uid}/type/{type}";
 		
+		@Deprecated
 		String skuListFileName = "Deals_listing_template"; //TODO Here should be Chinese 
-		String gbhSkuListFileName = "Deals_listing_template_GBH"; //TODO Here should be Chinese 
-		String fresSkuListFileName = "Deals_listing_template_FRES"; //TODO Here should be Chinese 
+		@Deprecated
+		String gbhSkuListFileName = "Deals_listing_template_GBH"; //TODO Here should be Chinese
+		@Deprecated
+		String fresSkuListFileName = "Deals_listing_template_FRES"; //TODO Here should be Chinese
+		@Deprecated
 		String apacSkuListFileName = "Deals_listing_template_APAC"; //TODO Here should be Chinese 
+		
+		String uploadListingAttachment = "/uploadListingAttachment";
+		String downloadListingAttachment = "/downloadListingAttachment/promoId/{promoId}/userId/{userId}/skuId/{skuId}";
 	}
 	
 	public interface SubsidyRes {
 		String base = "subsidy";
-		String getSubSidy = "/{sid}";
+		String getSubSidy = "/getSubsidy/promoId/{promoId}/uid/{uid}";
 	}
 	
 	public interface Token{

@@ -12,6 +12,7 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
+import com.ebay.raptor.promotion.pojo.service.resp.HasListingNominatedResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromoAcceptResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromotionResponse;
@@ -133,6 +134,22 @@ public class PromotionService extends BaseService {
 			throw new PromoException("Internal Error happens.");
 		}
 		return null;
+	}
+	
+	public boolean hasListingNominated(String promoId, Long uid) {
+		try{
+			String uri = url(params(ResourceProvider.PromotionRes.hasListingNominated, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+			GingerClientResponse resp = httpGet(uri);
+			if(Status.OK.getStatusCode() == resp.getStatus()){
+				HasListingNominatedResponse nominated = resp.getEntity(HasListingNominatedResponse.class);
+				if(null != nominated && AckValue.SUCCESS == nominated.getAckValue()){
+					return nominated.getHasListingNominated();
+				}
+			}
+		} catch(Throwable e){
+			logger.error(String.format("Failed to get whether nominated informatin"));
+		}
+		return Boolean.FALSE;
 	}
 
 }
