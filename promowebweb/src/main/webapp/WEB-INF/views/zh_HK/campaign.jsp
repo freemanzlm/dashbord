@@ -223,6 +223,13 @@
 						</c:otherwise>
 					</c:choose>
 				</c:if>
+				
+				<c:if test="${(not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and not empty fieldsDefintions }">
+					<div class="mt20 my-listing">
+						<h3><strong>报名刊登列表</strong></h3>
+						<%@ include file="table/listings.jsp"%>
+					</div>
+				</c:if>
 			</div>
 		</div>
 

@@ -380,9 +380,9 @@ var BizReport = BizReport || {};
 							case 'CanEnroll':
 							case 'NotEnrolled':
 							case 'ReviewFailed':
-								return 1;
-							case 'Reviewing':
 								return 0;
+							case 'Reviewing':
+								return 1;
 							default: return -1;
 							}
 						}

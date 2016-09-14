@@ -18,7 +18,7 @@
 		</div>
 	</c:when>
 	<c:when test="${now lt promoStart}">
-		<div class="promo-state-message">
+		<div class="promo-state-message success">
 			<div class="message-content">
 				<h3>活动开始时间为${promoStart}，敬请期待！</h3>
 			</div>

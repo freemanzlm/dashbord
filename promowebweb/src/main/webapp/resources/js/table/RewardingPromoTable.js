@@ -115,7 +115,7 @@ var BizReport = BizReport || {};
 					sType : "date",
 					sClass : "text-center",
 					sDefaultContent : "-",
-					sWidth : "200px",
+					sWidth : "220px",
 					mRender : function (data, type, full) {
 						if (type == "display") {
 							return full.promoSdt + " ~ " + data;
@@ -159,6 +159,7 @@ var BizReport = BizReport || {};
 					sClass : "text-center state",
 					sDefaultContent : "",
 					sType : "numeric",
+					swidth: '120px',
 					mRender : function (data, type, full) {
 						var display;
 						if (type == 'filter') {

@@ -170,6 +170,9 @@
 				
 				<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE') or fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and 
 					(currentStep ne 'SELLER NOMINATION_NEED APPROVE' and currentStep ne 'SELLER FEEDBACK') and not empty fieldsDefintions }">
+					<c:if test="${not isRegEnd and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK'))}">
+						<c:set var="isRegEnd" value="${ true }"></c:set>
+					</c:if>
 					<c:choose>
 						<c:when test="${not isRegEnd and currentStep eq 'PROMOTION IN PROGRESS' }">
 							<c:choose>
@@ -222,6 +225,13 @@
 							</div> -->
 						</c:otherwise>
 					</c:choose>
+				</c:if>
+				
+				<c:if test="${(not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and not empty fieldsDefintions }">
+					<div class="mt20 my-listing">
+						<h3><strong>报名刊登列表</strong></h3>
+						<%@ include file="table/listings.jsp"%>
+					</div>
 				</c:if>
 			</div>
 		</div>

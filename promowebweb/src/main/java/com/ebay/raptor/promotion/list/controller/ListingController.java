@@ -416,6 +416,7 @@ public class ListingController extends AbstractListingController {
 						@SuppressWarnings("unchecked")
 						Map<String, Object> fields = mapper.readValue(listing.getNominationValues(), HashMap.class);
 						map.putAll(fields);
+						
 					} catch (IOException e) {
 						logger.error("Can't read listing normination values for listing with sku ID: " + listing.getSkuId());
 					}

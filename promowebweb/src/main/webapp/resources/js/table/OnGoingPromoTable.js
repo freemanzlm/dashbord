@@ -91,6 +91,7 @@ var BizReport = BizReport || {};
 					sDefaultContent : "",
 					sType : "string",
 					sClass : "item-title",
+					sWidth : "500px",
 					mRender : function (data, type, full, meta) {
 						if (type == "display") {
 							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";

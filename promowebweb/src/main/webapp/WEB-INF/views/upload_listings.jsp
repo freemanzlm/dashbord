@@ -17,6 +17,7 @@
 					<span style="float: left; font-weight: bold;">注：</span>
 					<ul>
 						<li>通过"确认报名"列标记参加活动的刊登或信息。标记为N的数据行不会被提交。</li>
+						<li>请勿修改下载模板的文件格式。</li>
 						<li>请勿修改、增减模板中的原有信息,包括每个单元格的属性.</li>
 						<li>报名的信息请填写完整，不可留空。除非标记为选填项，或参照模板标题说明。</li>
 						<li><a href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank">详细请查阅使用指南</a></li>
