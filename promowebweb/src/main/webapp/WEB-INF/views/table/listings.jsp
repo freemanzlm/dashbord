@@ -21,7 +21,6 @@
 							<c:set var="columns" value='${columns},{"data":"${field.key}"}' ></c:set>
 						</c:if>
 					</c:forEach>
-					
 					<th class="state">
 						<c:choose>
 							<c:when test="${promo.region eq 'CN' }">

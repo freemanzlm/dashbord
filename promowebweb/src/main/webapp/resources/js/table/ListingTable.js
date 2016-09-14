@@ -350,11 +350,26 @@ var BizReport = BizReport || {};
 						});
 						
 						$(listingBtn).click(function(event){
-							if(!$(nTd).find("#form"+oRow.skuId).find("input[type=file]").val()) {
+							var fileDir = $(nTd).find("#form"+oRow.skuId).find("input[type=file]").val();
+							if(!fileDir) {
 								return;
+							} else {
+								if (fileDir.indexOf(".xls")<0 && fileDir.indexOf(".pdf")<0
+										&& fileDir.indexOf(".doc")<0 && fileDir.indexOf(".docx")<0 && fileDir.indexOf(".xlsx")<0
+										&& fileDir.indexOf(".jpg")<0 && fileDir.indexOf(".JPG")<0 && fileDir.indexOf(".gif")<0
+										&& fileDir.indexOf(".xls")<0 && fileDir.indexOf(".zip")<0 && fileDir.indexOf(".rar")<0 
+										&& fileDir.indexOf(".pdf")<0 && fileDir.indexOf(".GIF")<0 && fileDir.indexOf(".ZIP")<0 
+										&& fileDir.indexOf(".RAR")<0 && fileDir.indexOf(".DOC")<0 && fileDir.indexOf(".DOCX")<0 
+										&& fileDir.indexOf(".XLSX")<0 && fileDir.indexOf(".PDF")<0 && fileDir.indexOf(".XLS")<0){
+									$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
+									$(nTd).find("#msg"+oRow.skuId).css({"color": "red"});
+									$(nTd).find("#msg"+oRow.skuId).find("b").html(local.getText("promo.listings.typeError"));
+									return false;
+								} else {
+									event.preventDefault();
+									listingForm.submit();
+								}
 							}
-							event.preventDefault();
-							listingForm.submit();
 						});	
 						}
 					}
