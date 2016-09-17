@@ -108,7 +108,10 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					sWidth : "120px",
 					mRender : function (data, type, full) {
-						return data;
+						if(!data) {
+							return data;
+						}
+						return data.split(" ")[0];
 					}
 				}, {
 					aTargets : ["promoDt"],
