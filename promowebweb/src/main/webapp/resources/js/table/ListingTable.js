@@ -205,7 +205,7 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["currency"],
+					aTargets: ["string"],
 					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: ""
@@ -411,7 +411,8 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["Auction_Title_base__c"],
 					sType: "numeric",
-					sClass: "text-center",
+					sClass: "text-left",
+					sWidthOrig: "350",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full, meta) {
 						console.log(full);
