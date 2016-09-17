@@ -36,7 +36,8 @@ $(function(){
 		};
 	
 	$(submitBtn).click(function(){
-		var withoutAttachSubmit = function() {
+		var listingSubmit = function() {
+			$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
 			$.ajax({
 				url: "/promotion/listings/submitListings",
 				type: 'POST',
@@ -44,11 +45,14 @@ $(function(){
 				dataType : 'json',
 				success : function(json){
 					if (json && json.status) {
+						$(document.body).isLoading('hide');
 						window.location.replace("/promotion/"+pageData.promoId);
 					} else if (json.data && json.data.length > 0) {
+						$(document.body).isLoading('hide');
 						//cbt.alert(local.getText("errorMsg.regDateExpired"));
 						window.location.replace("/promotion/"+pageData.promoId);
 					} else {
+						$(document.body).isLoading('hide');
 						//cbt.alert(local.getText('promo.request.fail'));
 						window.location.replace("/promotion/"+pageData.promoId);
 					}
@@ -57,6 +61,10 @@ $(function(){
 					cbt.alert(local.getText('promo.request.fail'));
 				}
 			});
+		};
+		
+		var withoutAttachSubmit = function() {
+			listingSubmit();
 		};
 		
 		var listings = listingTable.oDataTable.data();
@@ -85,7 +93,11 @@ $(function(){
 			var successCount = container.find("iframe").parent().find("a").length;
 			container.isLoading({text: local.getText("promo.request.counting", [successCount, total]), position: "overlay"});
 			var timer = setInterval(function() {
-				if($("#msg"+attachId).find("b").html().length != 0) {
+				if(successCount == total){
+					container.isLoading('hide');
+					clearInterval(timer);
+					listingSubmit();
+				} else if($("#msg"+attachId).find("b").html().length != 0) {
 					container.isLoading('hide');
 					clearInterval(timer);
 					attachIndex += 1;
@@ -94,26 +106,7 @@ $(function(){
 						attachSubmit();
 					} else {
 						if(successCount == total) {
-							$.ajax({
-								url: "/promotion/listings/submitListings",
-								type: 'POST',
-								data: data,
-								dataType : 'json',
-								success : function(json){
-									if (json && json.status) {
-										window.location.replace("/promotion/"+pageData.promoId);
-									} else if (json.data && json.data.length > 0) {
-										//cbt.alert(local.getText("errorMsg.regDateExpired"));
-										window.location.replace("/promotion/"+pageData.promoId);
-									} else {
-										//cbt.alert(local.getText('promo.request.fail'));
-										window.location.replace("/promotion/"+pageData.promoId);
-									}
-								},
-								error: function(){
-									cbt.alert(local.getText('promo.request.fail'));
-								}
-							});
+							listingSubmit();
 						}
 					}
 				}
