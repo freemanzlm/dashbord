@@ -382,6 +382,9 @@ var BizReport = BizReport || {};
 					sWidthOrig: "75",
 					mRender: function(data, type, full) {
 						if (type == "display") {
+							if(data == 'ReEnroll') {
+								return '<span class="color-red">'+local.getText('listing.state.' + data)+'</span>';
+							}
 							return !!data ? local.getText('listing.state.' + data) : '';
 						}
 						

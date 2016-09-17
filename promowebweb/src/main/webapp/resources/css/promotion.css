@@ -116,6 +116,10 @@ table.dataTable td.skuName a span {
 	color: #f00;
 }
 
+table.dataTable td span .color-red{
+	color: #f00;
+}
+
 #conv-item-table_info {
   clear: both;
   padding-left: 1em;
