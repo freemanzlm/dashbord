@@ -290,7 +290,8 @@ public class ListingController extends AbstractListingController {
 				attachmentName = attachment.getAttachmentName();
 				attachmentType = attachment.getAttachmentType();
 			}
-			resp.setHeader("Content-disposition", "attachment; filename="+attachmentName+"."+attachmentType);
+			resp.setHeader("Content-disposition", "attachment; filename=\""+attachmentName+"."+attachmentType+"\"");
+			System.out.println(resp.getHeaders("Content-disposition"));
 			outStream = resp.getOutputStream();
 			int len = 0;
 			byte[] buffer = new byte[4096];

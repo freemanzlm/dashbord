@@ -415,7 +415,6 @@ var BizReport = BizReport || {};
 					sWidthOrig: "350",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full, meta) {
-						console.log(full);
 						if (type == "display") {
 							if(data) {
 								return "<p><a href='http://www.ebay.com/itm/" + full.Item_ID_base__c + "'>" + data + "</a></p>";
