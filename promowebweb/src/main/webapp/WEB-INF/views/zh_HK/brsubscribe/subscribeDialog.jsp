@@ -9,7 +9,7 @@
 <c:set var="isDisplayDDS" value="${!isInDDSWhitelist && isCanSubscribeDDS}" />  <!-- !accessDDS && isCanSubscribeDDS -->
 <div style="display:none;">
 <div id="subscribe-dialog" class="subscribe-notice">
-	<h1 align=center>新功能提醒</h1>
+	<h1 align=center>賣家中心新功能提醒</h1>
 	<hr />
 
 	<div class="subscribe-content">
