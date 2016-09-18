@@ -63,7 +63,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
 			throws Exception {
 		
-		/*Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
+		Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
 		String backendToken = cookieMap.get(AppCookies.BACKEND_TOKEN_COOKIE_NAME);
     	if (backendToken == null || backendToken.isEmpty()) {
     		backendToken = cookieMap.get(AppCookies.HACK_MODE_COOKIE_NAME);
@@ -72,7 +72,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	    			modelAndView.setViewName("maintain");
 	    		}
     		}
-    	}*/
+    	}
 	}
 	
 	private boolean authenticate (HttpServletRequest request,
