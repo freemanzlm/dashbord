@@ -96,7 +96,11 @@
 			success : function(data) {
 				if (data.status == true) {
 					$("#subscribe-dialog").dialog("close");
-					window.location.href = "/promotion/index";
+					if (whitelistType == 1 || whitelistType == 3){
+						window.location.href = "http://biz.ebay.com.hk/bizreportweb/index";
+					} else {
+						window.location.href = "http://biz.ebay.com.hk/bizreportweb/index?type=skusad&lang=zh_HK";
+					}
 				} else {
 					closeByClickSubscribe = false;
 					cbt.alert(BizReport.local.getText('subscribe.fail'));
