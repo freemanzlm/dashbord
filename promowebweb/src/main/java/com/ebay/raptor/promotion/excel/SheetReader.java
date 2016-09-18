@@ -460,7 +460,17 @@ public class SheetReader implements ISheetReader {
 	protected Object resolveDouble(Cell cell, ColumnConfiguration config) {
 		if(cell.getCellType()==Cell.CELL_TYPE_BLANK)
 			return null;
-		Double cellVal = cell.getNumericCellValue();
+		
+		Double cellVal = null;
+		
+		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+			cellVal = cell.getNumericCellValue();
+		} else {
+			cellVal = (Double)readFromStringCell(cell, Double.class);
+		}
+		
+		if (cellVal == null) return null;
+		
 		for(ColumnConstraint constraint : config.getConstraints()) {
 			if(constraint instanceof DoubleColumnConstraint) {
 				DoubleColumnConstraint doubleConstraint = (DoubleColumnConstraint)constraint;
@@ -522,9 +532,12 @@ public class SheetReader implements ISheetReader {
 				|| Float.class.isAssignableFrom(type)
 				|| Short.class.isAssignableFrom(type) 
 				|| Byte.class.isAssignableFrom(type)) {
-			Double cellVal = new Double(text);
-			
-			return resolveDouble(cellVal, type);
+			try {
+				Double cellVal = new Double(text);
+				return resolveDouble(cellVal, type);
+			} catch (Exception e) {
+				logger.log(Level.WARNING, "Can't parse text '" + text + "' to double value.");
+			}
 		} else if (type.isEnum()) {
 			if (ICustomEnum.class.isAssignableFrom(type)) {
 				return resolveExcelEnum(text, (Class<ICustomEnum>)type);

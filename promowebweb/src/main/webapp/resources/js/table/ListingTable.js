@@ -255,7 +255,7 @@ var BizReport = BizReport || {};
 							var id = 'iframe'+ full.skuId;
 							var str = 'disabled';
 							var urlStr = '';
-							if(pageData.isPreview == 'true' || full.state== 'Enrolled') {
+							if(pageData.isListingPreview == 'true' || full.state== 'Enrolled') {
 								str = '';
 							}
 							
@@ -278,78 +278,81 @@ var BizReport = BizReport || {};
 						var required = this.fnSettings().aoHeader[0][iColIndex].required;
 						var listingBtn = $(nTd).find("#btn"+oRow.skuId);
 						var listingIframe = $(nTd).find("iframe[name=iframe"+oRow.skuId+"]");
+						var attachForm = $(nTd).find("#form"+oRow.skuId);
+						var errorMsgEle = $(nTd).find("#msg"+oRow.skuId);
 						
 						/*if(pageData.hasListingsNominated) {
 							$(nTd).find("#form"+oRow.skuId).remove();
 						}*/
-						if ($(nTd).find("#form"+oRow.skuId)) {
-							if((!pageData.isPreview || pageData.isPreview != 'true') && pageData.regType == 'false') {
-								$(nTd).find("#form"+oRow.skuId).remove();
+						if (attachForm && attachForm.length > 0) {
+							if(pageData.isListingPreview != 'true' && pageData.regType == 'false') {
+								// attachment file upload only happens in listing preview page. 
+								attachForm.remove();
 							}
 							if(oRow.hasUploaded) {
-								$(nTd).find("#msg"+oRow.skuId).removeClass("hide").find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+oRow.downloadAttachUrl+'>'+local.getText('promo.listings.attachdownload')+'</a>');
+								errorMsgEle.removeClass("hide").find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+oRow.downloadAttachUrl+'>'+local.getText('promo.listings.attachdownload')+'</a>');
 								oRow.uploadSuccess = true;
 								oRow.downloadUrl = oRow.downloadAttachUrl;
 							}
 							
 							var listingForm = $(nTd).find("#form"+oRow.skuId).submit(function(){
-							//$(nTd).find("#msg"+oRow.skuId).find("b").empty();
-							var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
-							var fileName = fileInput.val();
-							//文件不能为空
-							if(required) {
-								if(!fileName) {
-									$(nTd).find("#msg"+oRow.skuId).removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.notEmpty"));
-									return false;
-								}
-								//文件类型校验
-								if (!fileTypeReg.test(fileName)) {
-									$(nTd).find("#msg"+oRow.skuId).removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
-									return false;
-								}
-							}
-							
-							$(nTd).isLoading({text: local.getText('dataTable.handling'), position: "inside"});
-							
-							listingIframe.on("load", function(){
-								$(nTd).isLoading('hide');
-								if (listingIframe.contents().length != 0 && listingIframe.contents().find("body").html().length > 0) {
-									var response = listingIframe.contents().find("body").text();
-									var responseData = $.parseJSON(response);
-									if (responseData.message && responseData.message.length > 0) {
-										$(nTd).find("#msg"+oRow.skuId).removeClass("hide");
-										if(responseData.status==true) {
-											//$("#form"+oRow.skuId).remove();
-											$(nTd).find("#msg"+oRow.skuId).find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
-											oRow.uploadSuccess = true;
-											oRow.downloadUrl = responseData.message;
-										} else {
-											$(nTd).find("#msg"+oRow.skuId).css({"color": "red"}).find("b").html(responseData.message);
-										}
-									} 
-									else {
-										$(nTd).find("#msg"+oRow.skuId).removeClass("hide").css({"color": "red"}).find("b").html("upload file failed!");
+								//errorMsgEle.find("b").empty();
+								var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
+								var fileName = fileInput.val();
+								//文件不能为空
+								if(required) {
+									if(!fileName) {
+										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.notEmpty"));
+										return false;
+									}
+									//文件类型校验
+									if (!fileTypeReg.test(fileName)) {
+										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
+										return false;
 									}
 								}
+								
+								$(nTd).isLoading({text: local.getText('dataTable.handling'), position: "inside"});
+								
+								listingIframe.on("load", function(){
+									$(nTd).isLoading('hide');
+									if (listingIframe.contents().length != 0 && listingIframe.contents().find("body").html().length > 0) {
+										var response = listingIframe.contents().find("body").text();
+										var responseData = $.parseJSON(response);
+										if (responseData.message && responseData.message.length > 0) {
+											errorMsgEle.removeClass("hide");
+											if(responseData.status==true) {
+												//$("#form"+oRow.skuId).remove();
+												errorMsgEle.find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
+												oRow.uploadSuccess = true;
+												oRow.downloadUrl = responseData.message;
+											} else {
+												errorMsgEle.css({"color": "red"}).find("b").html(responseData.message);
+											}
+										} 
+										else {
+											errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html("upload file failed!");
+										}
+									}
+								});
+								return !!$(this).find("input[type=file]").attr("value");
 							});
-							return !!$(this).find("input[type=file]").attr("value");
-						});
 						
-						$(listingBtn).click(function(event){
-							var fileDir = $(nTd).find("#form"+oRow.skuId).find("input[type=file]").val();
-							if(!fileDir) {
-								return;
-							} else {
-								//文件类型校验
-								if (!fileTypeReg.test(fileDir)) {
-									$(nTd).find("#msg"+oRow.skuId).removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
+							$(listingBtn).click(function(event){
+								event.preventDefault();
+								var fileDir = $(nTd).find("#form"+oRow.skuId).find("input[type=file]").val();
+								if(!fileDir) {
 									return false;
 								} else {
-									event.preventDefault();
-									listingForm.submit();
+									//文件类型校验
+									if (!fileTypeReg.test(fileDir)) {
+										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
+										return false;
+									} else {
+										listingForm.submit();
+									}
 								}
-							}
-						});	
+							});	
 						}
 					}
 				},
@@ -453,20 +456,15 @@ var BizReport = BizReport || {};
 				    
 				    if (data && data.data) {
 				    	data.data = data.data.filter(function(oRow) {
-							/*if((pageData.isRegEnd == 'false') && (!pageData.isPreview || pageData.isPreview != 'true')) {
-								if(pageData.regType=='false') {
-									return oRow.state != 'CanEnroll';
-								}
-							}*/
 				    		if(pageData.regType=='false') {
 				    			if(pageData.currentStep == 'SELLER NOMINATION_NEED APPROVE' || pageData.currentStep == 'SELLER FEEDBACK' || pageData.currentStep == 'PROMOTION SUBMITTED') {
-									if(pageData.isRegEnd == 'false' && pageData.isPreview != 'true') {
+									if(pageData.isRegEnd == 'false' && pageData.isListingPreview != 'true') {
 										// promotion upload type
 										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
 									}
 								}
 								if(pageData.currentStep == 'PROMOTION IN PROGRESS' && pageData.isRegEnd == 'false') {
-									if(pageData.isPreview != 'true') {
+									if(pageData.isListingPreview != 'true') {
 										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
 									}
 								}
