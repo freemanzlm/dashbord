@@ -26,10 +26,11 @@ public class FractionColumnConstraint extends ColumnConstraint {
 				return false;
 			}
 			
+
 			if (dValue != null) {
 				String str = value.toString();
 				int dotIndex = str.indexOf(".") + 1;
-				if (dotIndex + precision < str.length()) {
+				if (dotIndex > 0 && dotIndex + precision < str.length()) {
 					return false;
 				}
 			}
