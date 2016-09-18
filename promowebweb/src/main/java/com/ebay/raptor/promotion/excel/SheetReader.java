@@ -302,11 +302,7 @@ public class SheetReader implements ISheetReader {
 				value = readCell(cell, header.getType());
 			} else {
 				if (!"attachment".equalsIgnoreCase(header.getRawType())) {
-					if("double".equalsIgnoreCase(header.getRawType()) && row.getRowNum()!=1) {
-						value = resolveDouble(cell, header);
-					} else {
-						value = readCell(cell);
-					}
+					value = readCell(cell);
 				} 
 			}		
 			

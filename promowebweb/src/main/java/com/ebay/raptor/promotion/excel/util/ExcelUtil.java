@@ -14,6 +14,7 @@ import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.annotation.Header;
 import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.DoubleColumnConstraint;
+import com.ebay.raptor.promotion.excel.validation.FractionColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.IntegerRangeColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.LengthColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
@@ -171,8 +172,11 @@ public class ExcelUtil {
 				config.getConstraints().add(constraint);
 			} else if (type.equalsIgnoreCase("double")) {
 				DoubleColumnConstraint constraint = new DoubleColumnConstraint();
+				FractionColumnConstraint fractionConstraint = new FractionColumnConstraint();
 				constraint.setDigits(typeNode.get("digits").asInt(0));
+				fractionConstraint.setPrecision(typeNode.get("digits").asInt(0));
 				config.getConstraints().add(constraint);
+				config.getConstraints().add(fractionConstraint);
 			} else if (type.equalsIgnoreCase("string")) {
 				config.setType(parseType(type));
 				
