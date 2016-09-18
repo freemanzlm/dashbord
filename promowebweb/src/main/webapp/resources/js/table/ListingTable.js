@@ -33,8 +33,8 @@ var BizReport = BizReport || {};
 				'sScrollX': '100%',
 				'sScrollY': "600",
 				'oLanguage': {
-					sZeroRecords: local.getText('dataTable.emptyTable'),
-					sEmptyTable: local.getText('dataTable.emptyTable'),
+					sZeroRecords: local.getText('dataTable.nofitdata'),
+					sEmptyTable: local.getText('dataTable.nofitdata'),
 					sInfo: local.getText('dataTable.listing.info'),
 					sInfoEmpty: "",
 					sLoadingRecords: local.getText('dataTable.loading'),

@@ -23,6 +23,7 @@ BizReport.local = {
 	},
 	'dataTable': {
 		'emptyTable': '<p>沒有相關數據，如果是網絡問題，請稍後再試。</p>',
+		'nofitdata': '<p>沒有相關報名刊登數據</p>',
 		'zeroRecords': '<p>沒有相關數據。</p>',
 		'open': '展開',
 		'close': '收起',
