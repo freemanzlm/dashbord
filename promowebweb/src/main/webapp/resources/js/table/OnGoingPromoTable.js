@@ -145,8 +145,9 @@ var BizReport = BizReport || {};
 								} else {
 									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + full.state) + "</a>";
 								}
-							case 'PROMOTION SUBMITTED':
 							case 'PROMOTION IN PROGRESS':
+								full.state = 'InProgress';
+							case 'PROMOTION SUBMITTED':
 							case 'PROMOTION IN VALIDATION':
 								return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
@@ -173,17 +174,20 @@ var BizReport = BizReport || {};
 						if (type == "sort") {
 							if(full.state=='ReEnroll') {
 								return -1;
+							} else if(full.state=='NotEnrolled') {
+								return 0;
 							}
 							switch (data) {
 							case 'SELLER NOMINATION_NEED APPROVE':
+								return 1
 							case 'SELLER FEEDBACK':
-								return 0;							
+								return 2;							
 							case 'PROMOTION SUBMITTED':
-								return 1;
-							case 'PROMOTION IN PROGRESS':
-								return 2;
-							case 'PROMOTION IN VALIDATION':
 								return 3;
+							case 'PROMOTION IN PROGRESS':
+								return 4;
+							case 'PROMOTION IN VALIDATION':
+								return 5;
 							}
 							return 20;
 						}
