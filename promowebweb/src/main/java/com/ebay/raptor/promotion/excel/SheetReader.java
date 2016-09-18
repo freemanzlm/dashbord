@@ -458,6 +458,8 @@ public class SheetReader implements ISheetReader {
 	 * @return
 	 */
 	protected Object resolveDouble(Cell cell, ColumnConfiguration config) {
+		if(cell.getCellType()==Cell.CELL_TYPE_BLANK)
+			return null;
 		Double cellVal = cell.getNumericCellValue();
 		for(ColumnConstraint constraint : config.getConstraints()) {
 			if(constraint instanceof DoubleColumnConstraint) {
