@@ -171,12 +171,15 @@ public class ExcelUtil {
 				IntegerRangeColumnConstraint constraint = new IntegerRangeColumnConstraint();
 				config.getConstraints().add(constraint);
 			} else if (type.equalsIgnoreCase("double")) {
-				DoubleColumnConstraint constraint = new DoubleColumnConstraint();
+/*				DoubleColumnConstraint constraint = new DoubleColumnConstraint();
 				FractionColumnConstraint fractionConstraint = new FractionColumnConstraint();
 				constraint.setDigits(typeNode.get("digits").asInt(0));
 				fractionConstraint.setPrecision(typeNode.get("digits").asInt(0));
 				config.getConstraints().add(constraint);
-				config.getConstraints().add(fractionConstraint);
+				config.getConstraints().add(fractionConstraint);*/
+				DoubleColumnConstraint constraint = new DoubleColumnConstraint();
+				constraint.setDigits(typeNode.get("digits").asInt(0));
+				config.getConstraints().add(constraint);
 			} else if (type.equalsIgnoreCase("string")) {
 				config.setType(parseType(type));
 				
