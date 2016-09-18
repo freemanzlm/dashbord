@@ -16,6 +16,8 @@ import org.apache.poi.ss.usermodel.Sheet;
  * @author lyan2
  */
 public interface ISheetReader {
+	public static final Integer SAMPLE_ROW_NUM =1;
+	public static final Integer TITLE_ROW_NUM = 0;
 	
 	/**
 	 * Read raw cell value. 

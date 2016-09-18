@@ -9,7 +9,7 @@
 <!-- enroll or confirm deadline -->
 <fmt:formatDate value="${promo.promoDlDt}" var="promoDlDt" pattern="yyyy-MM-dd HH:mm" type="date" />
 <!-- reward claim deadline -->
-<fmt:formatDate value="${promo.rewardDlDt}" var="rewardDeadline" pattern="yyyy-MM-dd HH:mm" type="date" />
+<fmt:formatDate value="${promo.rewardDlDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 <fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
 <c:set var="timeSlot" value="${promoStart} ~ ${promoEnd}"></c:set>
 <c:set var="state" value="${ promo.state }"></c:set>

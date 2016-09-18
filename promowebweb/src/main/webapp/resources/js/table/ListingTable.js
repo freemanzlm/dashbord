@@ -221,7 +221,7 @@ var BizReport = BizReport || {};
 							value = parseFloat(data.value);
 							
 							if (type == "display") {
-								return isNaN(value) ? 'NA' : (value > 0 ? value.toUSFixed(2) : '0') + '(' + data.currency + ')';
+								return isNaN(value) ? 'NA' : (value > 0 ? value : '0') + '(' + data.currency + ')';
 							}
 							
 							if (type == 'sort') {
@@ -232,7 +232,7 @@ var BizReport = BizReport || {};
 						} else {
 							value = parseFloat(data);
 							if (type == "display") {
-								return isNaN(value) ? 'NA' : (value > 0 ? value.toUSFixed(2) : '0');
+								return isNaN(value) ? 'NA' : (value > 0 ? value : '0');
 							}
 							
 							if (type == 'sort') {
