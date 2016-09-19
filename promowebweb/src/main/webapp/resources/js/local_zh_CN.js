@@ -54,8 +54,8 @@ BizReport.local = {
 			'infoFiltered': ' ',
 			'SubsidyCounting': '待评估',
 			'noReward': '无奖励',
-			'emptyTable': '<p>没有符合筛选条件的活动。</p>',
-			'zeroRecords': '<p>没有符合筛选条件的活动。</p>',
+			'emptyTable': '<p>该模块功能维护中，对您造成的不便我们深表歉意！</p>',
+			'zeroRecords': '<p>该模块功能维护中，对您造成的不便我们深表歉意！</p>',
 		}
 	},
 	'promo': {

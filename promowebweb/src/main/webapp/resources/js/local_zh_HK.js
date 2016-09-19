@@ -54,8 +54,8 @@ BizReport.local = {
 			'infoFiltered': ' ',
 			'SubsidyCounting': '待評估',
 			'noReward': '無獎勵',
-			'emptyTable': '<p>沒有符合篩選條件的活動。</p>',
-			'zeroRecords': '<p>沒有符合篩選條件的活動。</p>',
+			'emptyTable': '<p>該模塊功能維護中，對您造成的不便我們深表歉意！ </p>',
+			'zeroRecords': '<p>該模塊功能維護中，對您造成的不便我們深表歉意！ </p>',
 		}
 	},
 	'promo': {
