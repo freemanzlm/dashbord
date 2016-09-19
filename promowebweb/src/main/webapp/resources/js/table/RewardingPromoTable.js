@@ -318,6 +318,12 @@ var BizReport = BizReport || {};
 					that.pane.isLoading('hide');
 
 					if (data && data.status) {
+						if (data.data) {
+							// Remove it from UI if this promotion doesn't have name.
+							data.data = data.data.filter(function(promo){
+								return promo && promo.name;
+							});
+						}
 						that.container.find(".datatable_pager").show();
 					} else {
 						that.container.find(".datatable_pager").hide();
