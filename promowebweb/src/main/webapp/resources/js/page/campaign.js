@@ -254,6 +254,8 @@ $(function(){
 		termsDialog.show();
 	});	
 	
-	uploadForm.get(0).reset();
+	if (uploadForm && uploadForm.length > 0) {
+		uploadForm.get(0).reset();
+	}
 //	activityDetail.html(activityDetail.html().replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
 });
