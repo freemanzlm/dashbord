@@ -108,14 +108,19 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					sWidth : "120px",
 					mRender : function (data, type, full) {
-						return data;
+						/*var date = new Date(data.toString());
+						return date.format("yyyy-MM-dd");*/
+						if(!data) {
+							return data;
+						}
+						return data.split(" ")[0];
 					}
 				}, {
 					aTargets : ["promoDt"],
 					sType : "date",
 					sClass : "text-center",
 					sDefaultContent : "-",
-					sWidth : "200px",
+					sWidth : "220px",
 					mRender : function (data, type, full) {
 						if (type == "display") {
 							return full.promoSdt + " ~ " + data;
@@ -159,6 +164,7 @@ var BizReport = BizReport || {};
 					sClass : "text-center state",
 					sDefaultContent : "",
 					sType : "numeric",
+					swidth: '120px',
 					mRender : function (data, type, full) {
 						var display;
 						if (type == 'filter') {
@@ -312,6 +318,12 @@ var BizReport = BizReport || {};
 					that.pane.isLoading('hide');
 
 					if (data && data.status) {
+						if (data.data) {
+							// Remove it from UI if this promotion doesn't have name.
+							data.data = data.data.filter(function(promo){
+								return promo && promo.name;
+							});
+						}
 						that.container.find(".datatable_pager").show();
 					} else {
 						that.container.find(".datatable_pager").hide();

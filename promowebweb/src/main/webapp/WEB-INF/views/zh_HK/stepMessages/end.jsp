@@ -52,7 +52,7 @@
 			<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
 		</div>
 	</c:when>
-	<c:when test="${endReason == 'auFail' }">
+	<c:when test="${endReason == 'preFail' }">
 		<div class="promo-state-message fail">
 			<div class="message-content">
 				<h3>很遺憾，您的報名未通過審核</h3>

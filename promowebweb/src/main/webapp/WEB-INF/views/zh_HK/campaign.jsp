@@ -115,6 +115,9 @@
 								<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
 									<br /> <br /> <a href="index">返回活動列表</a>
 								</c:if>
+								<c:if test="${hasListingsNominated ne true and currentStep eq 'SELLER NOMINATION_NEED APPROVE'}">
+									<br /> <br /> <a href="index">返回活動列表</a>
+								</c:if>
 							</div>
 						</c:when>
 						<%-- <c:otherwise>
@@ -219,6 +222,13 @@
 							</div> -->
 						</c:otherwise>
 					</c:choose>
+				</c:if>
+				
+				<c:if test="${(not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and not empty fieldsDefintions }">
+					<div class="mt20 my-listing">
+						<h3><strong>报名刊登列表</strong></h3>
+						<%@ include file="table/listings.jsp"%>
+					</div>
 				</c:if>
 			</div>
 		</div>

@@ -4,7 +4,7 @@
 
 <c:choose>
 	<c:when test="${hasListingsNominated eq true}">
-		<c:if test="${currentStep eq 'SELLER NOMINATION_NEED APPROVE'}">
+		<c:if test="${currentStep eq 'SELLER NOMINATION_NEED APPROVE' and state ne 'ReEnroll'}">
 			<div class="promo-state-message success">
 				<div class="message-content">
 					<h3>您已成功提交報名！</h3>
@@ -15,6 +15,18 @@
 				</menu>
 			</div>
 		</c:if>
+		
+		<c:if test="${currentStep eq 'SELLER NOMINATION_NEED APPROVE' and state eq 'ReEnroll'}">
+			<div class="promo-state-message success">
+				<div class="message-content">
+					<h3>您有以下頂置並標紅的報名信息失效，請確認後重新提交報名。</h3>
+				</div>
+				<menu>
+					<li><a href="index" class="btn">返回活動列表</a></li>
+				</menu>
+			</div>
+		</c:if>
+		
 		<c:if test="${currentStep eq 'SELLER FEEDBACK' and state ne 'ReEnroll'}">
 			<div class="promo-state-message success">
 				<div class="message-content">

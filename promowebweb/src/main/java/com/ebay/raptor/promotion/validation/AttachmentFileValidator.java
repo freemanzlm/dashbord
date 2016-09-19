@@ -11,6 +11,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
+import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.util.AttachmentAllowedFileType;
 
 /**
@@ -97,7 +98,7 @@ public class AttachmentFileValidator {
 	}
 	
 	public Locale getLocale() {
-		return locale == null ? LocaleContextHolder.getLocale() : locale;
+		return locale == null ? LocaleUtil.getCurrentLocale() : locale;
 	}
 	
 	public void setLocale(Locale locale) {

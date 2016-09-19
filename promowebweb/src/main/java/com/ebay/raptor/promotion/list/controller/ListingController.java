@@ -290,7 +290,8 @@ public class ListingController extends AbstractListingController {
 				attachmentName = attachment.getAttachmentName();
 				attachmentType = attachment.getAttachmentType();
 			}
-			resp.setHeader("Content-disposition", "attachment; filename="+attachmentName+"."+attachmentType);
+			resp.setHeader("Content-disposition", "attachment; filename=\""+attachmentName+"."+attachmentType+"\"");
+			System.out.println(resp.getHeaders("Content-disposition"));
 			outStream = resp.getOutputStream();
 			int len = 0;
 			byte[] buffer = new byte[4096];
@@ -416,6 +417,7 @@ public class ListingController extends AbstractListingController {
 						@SuppressWarnings("unchecked")
 						Map<String, Object> fields = mapper.readValue(listing.getNominationValues(), HashMap.class);
 						map.putAll(fields);
+						
 					} catch (IOException e) {
 						logger.error("Can't read listing normination values for listing with sku ID: " + listing.getSkuId());
 					}

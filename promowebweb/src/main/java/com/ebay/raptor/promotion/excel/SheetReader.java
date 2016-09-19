@@ -4,6 +4,7 @@ import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import com.ebay.raptor.promotion.enums.ICustomEnum;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
+import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
+import com.ebay.raptor.promotion.excel.validation.DoubleColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.ExcelValidator;
 
 /**
@@ -299,8 +302,12 @@ public class SheetReader implements ISheetReader {
 				value = readCell(cell, header.getType());
 			} else {
 				if (!"attachment".equalsIgnoreCase(header.getRawType())) {
-					value = readCell(cell);
-				}
+					if("double".equalsIgnoreCase(header.getRawType()) && row.getRowNum()!=1) {
+						value = resolveDouble(cell, header);
+					} else {
+						value = readCell(cell);
+					}
+				} 
 			}		
 			
 			map.put(header.getKey(), value);
@@ -443,6 +450,38 @@ public class SheetReader implements ISheetReader {
 		
 		return null;
 	}
+	
+	/**
+	 * If cell type is double, its value is Double type.
+	 * @param cell
+	 * @param config
+	 * @return
+	 */
+	protected Object resolveDouble(Cell cell, ColumnConfiguration config) {
+		if(cell.getCellType()==Cell.CELL_TYPE_BLANK)
+			return null;
+		
+		Double cellVal = null;
+		
+		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+			cellVal = cell.getNumericCellValue();
+		} else {
+			cellVal = (Double)readFromStringCell(cell, Double.class);
+		}
+		
+		if (cellVal == null) return null;
+		
+		for(ColumnConstraint constraint : config.getConstraints()) {
+			if(constraint instanceof DoubleColumnConstraint) {
+				DoubleColumnConstraint doubleConstraint = (DoubleColumnConstraint)constraint;
+				int digits = doubleConstraint.getDigits();
+				BigDecimal bd = new BigDecimal(cellVal);
+				bd = bd.setScale(digits, BigDecimal.ROUND_HALF_UP);
+				return bd;
+			}
+		}
+		return cellVal;
+	}
 
 	/**
 	 * Read Integer, Long, Double, Short, Byte, Float, Boolean and String from number cell. 
@@ -493,9 +532,12 @@ public class SheetReader implements ISheetReader {
 				|| Float.class.isAssignableFrom(type)
 				|| Short.class.isAssignableFrom(type) 
 				|| Byte.class.isAssignableFrom(type)) {
-			Double cellVal = new Double(text);
-			
-			return resolveDouble(cellVal, type);
+			try {
+				Double cellVal = new Double(text);
+				return resolveDouble(cellVal, type);
+			} catch (Exception e) {
+				logger.log(Level.WARNING, "Can't parse text '" + text + "' to double value.");
+			}
 		} else if (type.isEnum()) {
 			if (ICustomEnum.class.isAssignableFrom(type)) {
 				return resolveExcelEnum(text, (Class<ICustomEnum>)type);

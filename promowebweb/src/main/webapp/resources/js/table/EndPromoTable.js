@@ -108,14 +108,17 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					sWidth : "120px",
 					mRender : function (data, type, full) {
-						return data;
+						if(!data) {
+							return data;
+						}
+						return data.split(" ")[0];
 					}
 				}, {
 					aTargets : ["promoDt"],
 					sType : "date",
 					sClass : "text-center",
 					sDefaultContent : "-",
-					sWidth : "200px",
+					sWidth : "220px",
 					mRender : function (data, type, full) {
 						if (type == "display") {
 							return full.promoSdt + " ~ " + data;
@@ -157,6 +160,7 @@ var BizReport = BizReport || {};
 				}, {
 					aTargets : ["state"],
 					sClass : "text-center state",
+					swidth: '120px',
 					sDefaultContent : "",
 					mRender : function (data, type, full) {
 						if (type == "display") {

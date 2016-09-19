@@ -123,6 +123,9 @@ public class IndexController {
 				if(promo.getCurrentStep()!=null) {
 					promo.setCurrentStep(promo.getCurrentStep().toUpperCase());
 				}
+				if(promo.getDraftPreviewStep()!=null) {
+					promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
+				}
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
 				
 			} else {

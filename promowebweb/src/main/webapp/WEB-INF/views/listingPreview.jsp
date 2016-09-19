@@ -101,7 +101,7 @@
 		var pageData = {
 			promoId : '${promoId}',
 			columns: JSON.parse('${not empty columns ? columns : "{}"}'),
-			isPreview: 'true'
+			isListingPreview: 'true'
 		};
 	</script>
 
