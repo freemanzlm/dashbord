@@ -47,8 +47,8 @@
 </div>
 <script type="text/javascript">
 	var userId = "${userId}";
+	var closeByClickSubscribe = false;
 	$(document.body).ready(function() {
-		var closeByClickSubscribe = false;
 		$("#subscribe-dialog").on('show', function() {
 		}).on('close', function(){
 			if (closeByClickSubscribe) return;
