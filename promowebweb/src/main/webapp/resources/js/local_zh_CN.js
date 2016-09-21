@@ -23,8 +23,7 @@ BizReport.local = {
 	},
 	'dataTable': {
 		'emptyTable': '<p>没有相关数据，如果是网络问题，请稍后再试。</p>',
-		'nofitdata': '<p>没有相关报名刊登数据</p>',
-		'zeroRecords': '<p>没有相关数据。</p>',
+		'zeroRecords': '<p>没有相关数据，如果是网络问题，请稍后再试。。</p>',
 		'open': '展开',
 		'close': '收起',
 		'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条',
@@ -44,18 +43,17 @@ BizReport.local = {
 		    'other': '其他站点'
 		},
 		'listing': {
-			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条刊登'
-		},
-		'skuList': {
-			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条SKU'
+			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条刊登',
+			'emptyTable': '<p>没有相关报名刊登数据,如果是网络问题，请稍后再试。</p>',
+			'zeroRecords': '<p>没有相关报名刊登数据,如果是网络问题，请稍后再试。</p>'
 		},
 		'promo': {
 			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_项活动',
 			'infoFiltered': ' ',
 			'SubsidyCounting': '待评估',
 			'noReward': '无奖励',
-			'emptyTable': '<p>该模块功能维护中，对您造成的不便我们深表歉意！</p>',
-			'zeroRecords': '<p>该模块功能维护中，对您造成的不便我们深表歉意！</p>',
+			'emptyTable': '<p>没有符合筛选条件的活动。</p>',
+			'zeroRecords': '<p>没有符合筛选条件的活动。</p>',
 		}
 	},
 	'promo': {

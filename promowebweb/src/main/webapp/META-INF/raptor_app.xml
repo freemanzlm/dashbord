@@ -36,6 +36,9 @@
 			<lifecycleState>Deployed</lifecycleState>
 			<security>
 				<supportOpenRedirects>true</supportOpenRedirects>
+				<xFrameOptions>
+					<allowFrom>http://www.ebay.cn</allowFrom>
+				</xFrameOptions>
 			</security>
 		</page>
 	</page-Map>
