@@ -13,7 +13,7 @@
 	<hr />
 
 	<div class="subscribe-content">
-		<p>為了提升廣大賣家在eBay的銷售業績，我們新增了銷售相關的分析數據，希望對您的銷售助一臂之力。</p>
+		<p>為了提升廣大賣家在eBay的銷售業績，我們新增了銷售相關的分析數據，希望助您的銷售一臂之力。</p>
 		<br />
 		<c:if test="${isDisplayConv eq true }">
 			<div id="divConv">
