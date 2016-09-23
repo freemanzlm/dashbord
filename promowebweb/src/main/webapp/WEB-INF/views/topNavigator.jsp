@@ -9,10 +9,15 @@
 		<div class="navigator-title">卖家中心</div>
 		<ul class="navigation-list">
 			<c:if test="${accessBiz == true}">
-				<li class=""><a href="${bizurl}">业务分析报告</a><c:if test="${isDisplayNewIcon eq true}"><span class="icon icon-new"></span></c:if></li>
+				<li class=""><a href="${bizurl}">业务分析报告</a>
+					<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=246" target="_blank"></a></small>
+					<c:if test="${isDisplayNewIcon eq true}"><span class="icon icon-new"></span></c:if>
+				</li>
 			</c:if>
-			<li class="no-sub-menu"><a href="${sdurl}">买家体验报告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=205#sell01" target="_blank"></a></small></li>
-			<li class="no-sub-menu active"><a id="promotion" href="/promotion/index" target="_self">活动促销<c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a></li>
+			<li class="no-sub-menu"><a href="${sdurl}">买家体验报告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
+			<li class="no-sub-menu active"><a id="promotion" href="/promotion/index" target="_self">活动促销<c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a>
+				<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank"></a></small>
+			</li>
 		</ul>
 	</div>	
 	<div style="display:none;">
