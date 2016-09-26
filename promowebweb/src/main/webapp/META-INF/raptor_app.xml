@@ -24,6 +24,9 @@
 				<authorization>true</authorization>
 				<roleId>true</roleId>
 				<supportOpenRedirects>true</supportOpenRedirects>
+				<xFrameOptions>
+					<disabled />
+				</xFrameOptions>
 			</security>
 			<parameters-Map>
 				<parameters key="xss.requestParameterCheck">false</parameters>
@@ -36,10 +39,12 @@
 			<lifecycleState>Deployed</lifecycleState>
 			<security>
 				<supportOpenRedirects>true</supportOpenRedirects>
+				<xFrameOptions>
+					<disabled />
+				</xFrameOptions>
 			</security>
 		</page>
 	</page-Map>
-	<!-- Optional field: true if your application invokes services that require 
-		an IAFToken -->
+	<!-- Optional field: true if your application invokes services that require an IAFToken -->
 	<secureService>true</secureService>
 </application>
