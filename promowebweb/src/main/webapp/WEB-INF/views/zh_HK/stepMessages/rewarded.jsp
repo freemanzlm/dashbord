@@ -36,7 +36,7 @@
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<c:choose>
-					<c:when	test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
+					<c:when	test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region eq 'CN' and promo.state ne 'End'}">
 		
 						<h3>恭喜!您的獎勵為等值 ${reward} ${promo.currency}的${rewardName }</h3>
 		
@@ -64,7 +64,7 @@
 		
 					</c:when>
 					
-					<c:when test="${ promo.rewardType eq 3 }">
+					<c:when test="${ promo.rewardType eq 3 and promo.state ne 'End'}">
 						<h3>恭喜!您的獎勵為等值 ${reward} ${promo.currency}的${rewardName }</h3>
 						
 						<c:choose>
@@ -82,6 +82,20 @@
 							</c:otherwise>
 						</c:choose>
 						
+					</c:when>
+					
+					<c:when test="${ (((promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region eq 'CN' )
+						or  (promo.rewardType eq 3)) and promo.state eq 'End' and promo.endReason eq 'subsidyRetrieved'}">
+						<h3>您已成功領取等值 ${reward} ${promo.currency} 的${rewardName }</h3>
+					</c:when>
+					
+					<c:when test="${promo.state eq 'End' and promo.endReason eq 'subsidyAmountIsZero'}">
+						<div class="promo-state-message">
+							<div class="message-content">
+								<h3>很遺憾！您的活動表現未達到獎勵標準，感謝您對活動的支持！希望下次努力！</h3>
+							</div>
+							<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
+						</div>
 					</c:when>
 					
 					<c:otherwise>

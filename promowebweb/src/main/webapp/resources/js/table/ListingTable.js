@@ -125,7 +125,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "",					
 					sType: "numeric",
 					sWidth: "150px",
-					sClass: "pic-id",
+					sClass: "pic-id dt-nowrap",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
@@ -207,7 +207,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["string"],
-					sType: "numeric",
+					sType: "string",
 					sClass: "text-right",
 					sDefaultContent: ""
 				},
@@ -359,7 +359,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["state"],
 					bSortable: true,
-					sClass: "text-center",
+					sClass: "text-center dt-nowrap",
 					sDefaultContent: "NA",
 					sWidthOrig: "75",
 					mRender: function(data, type, full) {
@@ -392,7 +392,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["Auction_Title_base__c"],
-					sType: "numeric",
+					sType: "string",
 					sClass: "text-left",
 					sWidthOrig: "350",
 					sDefaultContent: "NA",
