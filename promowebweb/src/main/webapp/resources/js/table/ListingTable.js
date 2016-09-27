@@ -247,7 +247,7 @@ var BizReport = BizReport || {};
 				{
 					aTargets: ["attachment"],
 					sType: "string",
-					sClass: "text-center",
+					sClass: "text-center dt-nowrap",
 					sWidthOrig: "230px",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {

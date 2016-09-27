@@ -40,9 +40,9 @@
 		
 						<h3>恭喜!您的奖励为等值&nbsp;${reward} ${promo.currency}的${rewardName }</h3>
 		
-						<c:choose>
-							<c:when test="${ state eq 'Appliable' }">
-								<c:if test="${ promo.rewardType eq 1}">
+						<c:if test="${ state ne 'Uploaded' }">
+							<c:choose>
+								<c:when test="${ promo.rewardType eq 1 and state eq 'Appliable'}">
 									<div class="note">
 										<p>再次感谢您参与了我们的活动。我们将通知第三方服务商“澳捷实业有限公司”发放奖励。请予10个工作日以后及时领取，奖励发放地址和时间如下：</p>
 										<ol>
@@ -53,14 +53,14 @@
 										</ol>
 										<p>工作时间为： AM9:00--PM6:00</p>
 									</div>
-								</c:if>
-							</c:when>
-							<c:otherwise>
-								<c:if test="${ not empty rewardDeadline }">
-									<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
-								</c:if>
-							</c:otherwise>
-						</c:choose>
+								</c:when>
+								<c:otherwise">
+									<c:if test="${ not empty rewardDeadline }">
+										<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
 		
 					</c:when>
 					
@@ -76,7 +76,7 @@
 								</div>
 							</c:when>
 							<c:otherwise>
-								<c:if test="${ not empty rewardDeadline }">
+								<c:if test="${ not empty rewardDeadline}">
 									<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
 								</c:if>
 							</c:otherwise>
