@@ -54,7 +54,7 @@
 										<p>工作时间为： AM9:00--PM6:00</p>
 									</div>
 								</c:when>
-								<c:otherwise">
+								<c:otherwise>
 									<c:if test="${ not empty rewardDeadline }">
 										<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
 									</c:if>
