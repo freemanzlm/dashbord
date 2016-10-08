@@ -105,35 +105,28 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
 		model.addObject(ViewContext.SDUrl.getAttr(), AppConfig.SELLER_DASHBOARD_URL);
 		
-		boolean accessBizReport = false;
+		boolean isAdmin = userData.getAdmin();
+		
+		boolean accessBizReport = isAdmin;
+		boolean isInDDSWhitelist = isAdmin;
+		boolean isSubscribeDialogClosed = isAdmin;
+		boolean isCanSubscribeConv = isAdmin;
+		boolean isCanSubscribeDDS = isAdmin;
+		boolean isInConvWhitelist = isAdmin;
 		try {
 //			accessBizReport = userData.getAdmin() || baseService.isUserAbleToAccessBizReport(userData.getUserId());
 
-			boolean isInDDSWhitelist = false;
-			boolean isSubscribeDialogClosed = false;
-			boolean isCanSubscribeConv = false;
-			boolean isCanSubscribeDDS = false;
-			boolean isInConvWhitelist = false;
-			Map<String, Boolean> subscriptionMsg  = brdataService.getSubscriptionMsg(userData.getUserId());
-
-			if (subscriptionMsg != null)
-			{
-				isInDDSWhitelist = subscriptionMsg.get("isInDDSWhitelist") == null ? false: subscriptionMsg.get("isInDDSWhitelist");
-				model.addObject("isInDDSWhitelist", isInDDSWhitelist);
-
-				isSubscribeDialogClosed = subscriptionMsg.get("isSubscribeDialogClosed") == null ? false : subscriptionMsg.get("isSubscribeDialogClosed");
-				model.addObject("isSubscribeDialogClosed", isSubscribeDialogClosed);
-
-				isCanSubscribeConv = subscriptionMsg.get("isCanSubscribeConv") == null ? false : subscriptionMsg.get("isCanSubscribeConv");
-				model.addObject("isCanSubscribeConv", isCanSubscribeConv);
-
-				isCanSubscribeDDS = subscriptionMsg.get("isCanSubscribeDDS") == null ? false : subscriptionMsg.get("isCanSubscribeDDS");
-				model.addObject("isCanSubscribeDDS", isCanSubscribeDDS);
-
-				isInConvWhitelist = subscriptionMsg.get("isInConvWhitelist") == null ? false : subscriptionMsg.get("isInConvWhitelist");
-				model.addObject("isInConvWhitelist", isInConvWhitelist);
-				
-				accessBizReport = userData.getAdmin() || isCanSubscribeConv || isCanSubscribeDDS;
+			if(!isAdmin) {
+				Map<String, Boolean> subscriptionMsg  = brdataService.getSubscriptionMsg(userData.getUserId());
+				if (subscriptionMsg != null)
+				{
+					isInDDSWhitelist = subscriptionMsg.get("isInDDSWhitelist") == null ? false: subscriptionMsg.get("isInDDSWhitelist");
+					isSubscribeDialogClosed = subscriptionMsg.get("isSubscribeDialogClosed") == null ? false : subscriptionMsg.get("isSubscribeDialogClosed");
+					isCanSubscribeConv = subscriptionMsg.get("isCanSubscribeConv") == null ? false : subscriptionMsg.get("isCanSubscribeConv");
+					isCanSubscribeDDS = subscriptionMsg.get("isCanSubscribeDDS") == null ? false : subscriptionMsg.get("isCanSubscribeDDS");
+					isInConvWhitelist = subscriptionMsg.get("isInConvWhitelist") == null ? false : subscriptionMsg.get("isInConvWhitelist");
+					accessBizReport = isCanSubscribeConv || isCanSubscribeDDS;
+				}
 			}
 			
 		} catch (HttpRequestException e1) {
@@ -141,6 +134,11 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		model.addObject("accessBiz", accessBizReport);
+		model.addObject("isInDDSWhitelist", isInDDSWhitelist);
+		model.addObject("isSubscribeDialogClosed", isSubscribeDialogClosed);
+		model.addObject("isCanSubscribeConv", isCanSubscribeConv);
+		model.addObject("isCanSubscribeDDS", isCanSubscribeDDS);
+		model.addObject("isInConvWhitelist", isInConvWhitelist);
 		
 		if (accessBizReport) {
 			model.addObject(ViewContext.BizUrl.getAttr(),

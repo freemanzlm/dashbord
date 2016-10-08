@@ -236,6 +236,7 @@ public class SheetWriter implements ISheetWriter {
 		ft.setFontName("Arial");
 		ft.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		headerStyle.setFont(ft);
+		headerStyle.setWrapText(true);
 		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {

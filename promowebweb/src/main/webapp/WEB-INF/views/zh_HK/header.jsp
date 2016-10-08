@@ -7,7 +7,7 @@
 
 <div id="header">
 	<div class="main"> 
-		<a href="http://www.ebay.com" class="logo"><res:img
+		<a href="http://www.ebay.cn" class="logo"><res:img
 			value="/img/ebay.png" alt="ebay logo" width="250" height="200"
 			style="clip: rect(47px, 118px, 95px, 0px); position: absolute;"></res:img></a>
 

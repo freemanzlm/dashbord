@@ -36,13 +36,13 @@
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<c:choose>
-					<c:when	test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region == 'CN'}">
+					<c:when	test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region eq 'CN' and promo.state ne 'End'}">
 		
 						<h3>恭喜!您的奖励为等值&nbsp;${reward} ${promo.currency}的${rewardName }</h3>
 		
-						<c:choose>
-							<c:when test="${ state eq 'Appliable' }">
-								<c:if test="${ promo.rewardType eq 1}">
+						<c:if test="${ state ne 'Uploaded' }">
+							<c:choose>
+								<c:when test="${ promo.rewardType eq 1 and state eq 'Appliable'}">
 									<div class="note">
 										<p>再次感谢您参与了我们的活动。我们将通知第三方服务商“澳捷实业有限公司”发放奖励。请予10个工作日以后及时领取，奖励发放地址和时间如下：</p>
 										<ol>
@@ -53,35 +53,50 @@
 										</ol>
 										<p>工作时间为： AM9:00--PM6:00</p>
 									</div>
-								</c:if>
-							</c:when>
-							<c:otherwise>
-								<c:if test="${ not empty rewardDeadline }">
-									<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
-								</c:if>
-							</c:otherwise>
-						</c:choose>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${ not empty rewardDeadline }">
+										<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
 		
 					</c:when>
 					
-					<c:when test="${ promo.rewardType eq 3 }">
+					<c:when test="${ promo.rewardType eq 3 and promo.state ne 'End'}">
 						<h3>恭喜!您的奖励为等值&nbsp;${reward} ${promo.currency}的${rewardName }</h3>
+						<c:if test="${ state ne 'Uploaded' }">
+							<c:choose>
+								<c:when test="${ state eq 'Appliable' }">
+									<div class="note">
+										<p>亲爱的${unm}，再次感谢您参与了我们的活动。我们将在20个工作日内向您发放万邑通礼品卡作为奖励。请于收到礼品卡后30日内激活您的万邑通礼品卡，礼品卡激活以及使用规则详情请参考万邑通网站的相关内容
+											（<a href="http://www.winit.com.cn/news/gcpolicy.html">http://www.winit.com.cn/news/gcpolicy.html</a>）。
+										</p>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${ not empty rewardDeadline}">
+										<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
 						
-						<c:choose>
-							<c:when test="${ state eq 'Appliable' }">
-								<div class="note">
-									<p>亲爱的${unm}，再次感谢您参与了我们的活动。我们将在20个工作日内向您发放万邑通礼品卡作为奖励。请于收到礼品卡后30日内激活您的万邑通礼品卡，礼品卡激活以及使用规则详情请参考万邑通网站的相关内容
-										（<a href="http://www.winit.com.cn/news/gcpolicy.html">http://www.winit.com.cn/news/gcpolicy.html</a>）。
-									</p>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<c:if test="${ not empty rewardDeadline }">
-									<p class="desc">请在${ rewardDeadline }前点击进入领奖流程完成申领。</p>
-								</c:if>
-							</c:otherwise>
-						</c:choose>
-						
+					</c:when>
+					
+					<c:when test="${ (((promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region eq 'CN' )
+						or  (promo.rewardType eq 3)) and promo.state eq 'End' and promo.endReason eq 'subsidyRetrieved'}">
+						<h3>您已成功领取等值&nbsp;${reward} ${promo.currency}&nbsp;的${rewardName }</h3>
+					</c:when>
+					
+					<c:when test="${promo.state eq 'End' and promo.endReason eq 'subsidyAmountIsZero'}">
+						<div class="promo-state-message">
+							<div class="message-content">
+								<h3>很遗憾！您的活动表现未达到奖励标准，感谢您对活动的支持！希望下次努力！</h3>
+							</div>
+							<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
+						</div>
 					</c:when>
 					
 					<c:otherwise>

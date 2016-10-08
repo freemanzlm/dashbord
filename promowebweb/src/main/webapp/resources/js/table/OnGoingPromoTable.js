@@ -117,7 +117,7 @@ var BizReport = BizReport || {};
 					aTargets : ["promoDt"],
 					sType : "date",
 					sClass : "text-center",
-					sWidth : "220px",
+					sWidth : "240px",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
 						if (type == "display") {
