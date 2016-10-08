@@ -15,8 +15,10 @@
 				</li>
 			</c:if>
 			<li class="no-sub-menu"><a href="${sdurl}">买家体验报告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
-			<li class="no-sub-menu active"><a id="promotion" href="/promotion/index" target="_self">活动促销<c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a>
+			<li class="no-sub-menu active">
+				<a id="promotion" href="/promotion/index" target="_self">活动促销</a>
 				<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank"></a></small>
+				<a><c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a>
 			</li>
 		</ul>
 	</div>	
