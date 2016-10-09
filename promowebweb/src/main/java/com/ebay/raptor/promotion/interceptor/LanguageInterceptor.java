@@ -125,7 +125,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 					isCanSubscribeConv = subscriptionMsg.get("isCanSubscribeConv") == null ? false : subscriptionMsg.get("isCanSubscribeConv");
 					isCanSubscribeDDS = subscriptionMsg.get("isCanSubscribeDDS") == null ? false : subscriptionMsg.get("isCanSubscribeDDS");
 					isInConvWhitelist = subscriptionMsg.get("isInConvWhitelist") == null ? false : subscriptionMsg.get("isInConvWhitelist");
-					accessBizReport = isCanSubscribeConv || isCanSubscribeDDS;
+					accessBizReport = isCanSubscribeConv || isCanSubscribeDDS || isInConvWhitelist;
 				}
 			}
 			
