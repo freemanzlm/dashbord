@@ -18,7 +18,7 @@
 			<li class="no-sub-menu active">
 				<a id="promotion" href="/promotion/index" target="_self">活动促销</a>
 				<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank"></a></small>
-				<a><c:if test="${ true }"><small>99</small></c:if></a>
+				<a><c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a>
 			</li>
 		</ul>
 	</div>	
