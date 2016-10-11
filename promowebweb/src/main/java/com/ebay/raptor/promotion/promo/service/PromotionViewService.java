@@ -228,12 +228,12 @@ public class PromotionViewService {
 	 * @param promo
 	 */
 	private void handleDraftPromotion(Promotion promo) {
-		if (PromotionStep.DRAFT.getName().equalsIgnoreCase(promo.getCurrentStep())) {
+		//if (PromotionStep.DRAFT.getName().equalsIgnoreCase(promo.getCurrentStep())) {
 			if (promo.getIsPreview() != null && promo.getIsPreview() == true) {
 				// use preview step as the current step if this promotion is in draft state.
 				handleCurrentStep(promo, promo.getDraftPreviewStep());
 			}
-		}
+		//}
 	}
 	
 	/**
