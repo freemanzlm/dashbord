@@ -22,6 +22,9 @@ public class AppCookies {
 	public final static String EBAY_CBT_USER_NAME_COOKIE_NAME = "eBayCBTUserName";
 	public final static String EBAY_CBT_SESSION_ID_COOKIE_NAME = "eBayCBTSession";
 	public final static String EBAY_CBT_LANGUAGE_COOKIE_NAME = "eBayCBTLang";
+	
+	public final static String EBAY_CBT_MAIN_ACCOUNT_ID_COOKIE_NAME = "ebayCBTMainAccId";
+	public final static String EBAY_CBT_MAIN_ACCOUNT_COOKIE_NAME = "ebayCBTMainAcc";
 
 	public final static String COOKIE_DOMAIN;
 	public final static String COOKIE_PATH_ROOT = "/";
