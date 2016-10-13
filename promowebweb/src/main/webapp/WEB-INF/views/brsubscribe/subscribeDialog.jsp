@@ -78,6 +78,7 @@
 	});
 
 	$("#btnSubscribe").click(function() {
+		$("#btnSubscribe").attr("disabled", "disabled");
 		closeByClickSubscribe = true;
 		var divConv = document.getElementById("divConv");
 
@@ -108,11 +109,13 @@
 				} else {
 					closeByClickSubscribe = false;
 					cbt.alert(BizReport.local.getText('subscribe.fail'));
+					$("#btnSubscribe").removeAttr("disabled");
 				}
 			},
 			error : function() {
 				closeByClickSubscribe = false;
 				cbt.alert(BizReport.local.getText('subscribe.fail'));
+				$("#btnSubscribe").removeAttr("disabled");
 			}
 		});
 
