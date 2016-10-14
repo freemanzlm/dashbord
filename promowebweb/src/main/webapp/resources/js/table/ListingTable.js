@@ -399,7 +399,11 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
 							if(data) {
-								return "<p><a href='http://www.ebay.com/itm/" + full.Item_ID_base__c + "'>" + data + "</a></p>";
+								if(full.Item_ID_base__c) {
+									return "<p><a href='http://www.ebay.com/itm/" + full.Item_ID_base__c + "'>" + data + "</a></p>";
+								} else {
+									return "<p>"+data+"</p>";
+								}
 							}
 						}
 						
