@@ -46,4 +46,14 @@ public class PromoConfiguration {
 	public CommonExecutorService getExecService(){
 		return new CommonExecutorService();
 	}
+	
+	@Bean
+	public com.ebay.app.raptor.cbtcommon.concurrent.CommonExecutorService getCommonExecService(){
+		return new com.ebay.app.raptor.cbtcommon.concurrent.CommonExecutorService();
+	}
+	
+	@Bean
+	public com.ebay.app.raptor.cbtcommon.httpRequest.HttpRequestService getCommonHttpRequestService () {
+		return new com.ebay.app.raptor.cbtcommon.httpRequest.HttpRequestService();
+	}
 }

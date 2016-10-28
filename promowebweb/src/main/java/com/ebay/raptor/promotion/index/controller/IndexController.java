@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.promotion.AuthNeed;
@@ -30,6 +31,7 @@ import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
+import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.siteApi.util.SiteApiUtil;
@@ -45,6 +47,7 @@ public class IndexController {
     @Autowired PromotionService service;
     @Autowired PromotionViewService view;
     @Autowired SubsidyService subsidyService;
+    @Autowired TrackService trackService;
 	
     @RequestMapping(value = "/backend", method = RequestMethod.GET)
     public void handleBackendRequest(HttpServletRequest request,
@@ -92,6 +95,9 @@ public class IndexController {
         mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
         
        	mav.setViewName("index");
+       	
+       	//add track record to DB
+       	trackService.logUserActivityAsync(userDt, AuditType.VisitToPromo, "");
         return mav;
     }
     
