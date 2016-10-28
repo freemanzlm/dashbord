@@ -67,12 +67,13 @@ public class TrackService{
 
         String content = "";
         String lastModifiedBy = audit.getLastModifiedBy();
+        Integer dataStatus = -1;
         if (!StringUtil.isEmpty(lastModifiedBy)) {
-            content = String.format("type=%d&createdby=%s&message=%s&lastmodifiedby=%s",
-                    audit.getType(), audit.getCreatedBy(), audit.getMessage(), lastModifiedBy);
+            content = String.format("type=%d&createdby=%s&message=%s&lastmodifiedby=%s&datastatus=%d",
+                    audit.getType(), audit.getCreatedBy(), audit.getMessage(), lastModifiedBy, dataStatus);
         } else {
-            content = String.format("type=%d&createdby=%s&message=%s",
-                    audit.getType(), audit.getCreatedBy(), audit.getMessage());
+            content = String.format("type=%d&createdby=%s&message=%s&datastatus=%d",
+                    audit.getType(), audit.getCreatedBy(), audit.getMessage(), dataStatus);
         }
 
         String json = httpRequestService.doHttpRequest(
