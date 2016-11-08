@@ -157,10 +157,43 @@ var BizReport = BizReport || {};
 					}
 				},
 				{
-					aTargets: ["date", "datetime", "time"],
+					aTargets: ["time"],
 					sType: "date",
 					sClass: "text-center",
-					sDefaultContent: "NA"
+					sDefaultContent: "NA",
+					mRender: function(data, type, full) {
+						if (type == "display" && data) {
+							return new Date(data).format('HH:mm:ss');
+						}
+						
+						return data;
+					}
+				},
+				{
+					aTargets: ["datetime"],
+					sType: "date",
+					sClass: "text-center",
+					sDefaultContent: "NA",
+					mRender: function(data, type, full) {
+						if (type == "display" && data) {
+							return new Date(data).format('yyyy-MM-dd HH:mm:ss');
+						}
+						
+						return data;
+					}
+				},
+				{
+					aTargets: ["date"],
+					sType: "date",
+					sClass: "text-center",
+					sDefaultContent: "NA",
+					mRender: function(data, type, full) {
+						if (type == "display" && data) {
+							return new Date(data).format('yyyy-MM-dd');
+						}
+						
+						return data;
+					}
 				},
 				{
 					aTargets: ["percent"],
