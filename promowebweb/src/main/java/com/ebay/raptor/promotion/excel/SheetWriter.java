@@ -363,11 +363,36 @@ public class SheetWriter implements ISheetWriter {
 		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_NUMERIC);
 		style.setAlignment(CellStyle.ALIGN_RIGHT);
 		
+		String currency = null;
+		String format = null;
+		
+		if(value instanceof LinkedHashMap) {
+			currency = (String)((LinkedHashMap<?, ?>) value).get("currency");
+			value = ((LinkedHashMap<?, ?>) value).get("value");
+		}
+		
 		for (ColumnConstraint constraint : config.getConstraints()) {
 			if (constraint instanceof DoubleColumnConstraint) {
-				style.setDataFormat(book.createDataFormat().getFormat("0." + StringUtil.repeat("0", ((DoubleColumnConstraint) constraint).getDigits())));
+				format = "0";
+				if (((DoubleColumnConstraint) constraint).getDigits() > 0) {
+					format += "." + StringUtil.repeat("0", ((DoubleColumnConstraint) constraint).getDigits());
+				}
+				style.setDataFormat(book.createDataFormat().getFormat(format));
 			}
 		}
+		
+		if (currency != null) {
+			if (format == null) {
+				format = "0.\"(" + currency + ")\"";
+			} else {
+				format += "\"(" + currency + ")\"";
+			}
+		}
+		
+		if (format != null) {
+			style.setDataFormat(book.createDataFormat().getFormat(format));
+		}
+		
 		cell.setCellStyle(style);
 		
 		if (value != null) {

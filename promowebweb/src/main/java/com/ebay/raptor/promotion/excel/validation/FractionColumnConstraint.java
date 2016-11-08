@@ -10,7 +10,7 @@ public class FractionColumnConstraint extends ColumnConstraint {
 	
 	public FractionColumnConstraint() {
 		super();
-		this.message = "excel.valiation.fraction.message";
+		this.message = "excel.validation.fraction.message";
 	}
 
 	/**

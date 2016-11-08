@@ -10,7 +10,7 @@ public class IntegerRangeColumnConstraint extends ColumnConstraint {
 
 	public IntegerRangeColumnConstraint() {
 		super();
-		this.message = "excel.valiation.integerrange.message";
+		this.message = "excel.validation.integerrange.message";
 	}
 
 	@Override

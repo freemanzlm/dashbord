@@ -142,6 +142,7 @@ public class ExcelUtil {
 		if (typeNode != null && !typeNode.isNull()) {
 			String type = typeNode.get("typeName").asText();
 			config.setRawType(type);
+			config.setType(parseType(type));
 			
 			if (type.equalsIgnoreCase("picklist")) {
 				String entries = typeNode.get("picklistEntry").asText();
@@ -150,7 +151,7 @@ public class ExcelUtil {
 				RangeColumnConstraint constraint = new RangeColumnConstraint();
 				constraint.setPickList(list);
 				config.getConstraints().add(constraint);
-			} if (type.equalsIgnoreCase("combobox")) {
+			} else if (type.equalsIgnoreCase("combobox")) {
 				String entries = typeNode.get("picklistEntry").asText();
 				String[] list = entries.split(";");
 				
@@ -158,7 +159,7 @@ public class ExcelUtil {
 				constraint.setMustInRange(false);
 				constraint.setPickList(list);
 				config.getConstraints().add(constraint);
-			} if (type.equalsIgnoreCase("MULTIPICKLIST")) {
+			} else if (type.equalsIgnoreCase("MULTIPICKLIST")) {
 				String entries = typeNode.get("picklistEntry").asText();
 				String[] list = entries.split(";");
 				
@@ -181,8 +182,6 @@ public class ExcelUtil {
 				constraint.setDigits(typeNode.get("digits").asInt(0));
 				config.getConstraints().add(constraint);
 			} else if (type.equalsIgnoreCase("string")) {
-				config.setType(parseType(type));
-				
 				int length = typeNode.get("length").asInt();
 				if (length > 0) {
 					ColumnConstraint constraint = new LengthColumnConstraint(length);

@@ -32,6 +32,7 @@ import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.DoubleColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.ExcelValidator;
+import com.ebay.raptor.promotion.util.DateUtil;
 
 /**
  * SheetReader.readSheet() support localization messages, default message bundle is "ValidationMessages.properties".
@@ -525,7 +526,7 @@ public class SheetReader implements ISheetReader {
 		} else if (Boolean.class.isAssignableFrom(type)) {
 			return "yes".equalsIgnoreCase(text) || "true".equalsIgnoreCase(text);
 		} else if (Date.class.isAssignableFrom(type)) {
-			return cell.getDateCellValue();
+			return DateUtil.resolveDate(text);
 		} else if (Integer.class.isAssignableFrom(type)
 				|| Long.class.isAssignableFrom(type)
 				|| Double.class.isAssignableFrom(type)
