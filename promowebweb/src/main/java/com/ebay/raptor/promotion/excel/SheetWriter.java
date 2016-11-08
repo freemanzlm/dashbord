@@ -1,5 +1,6 @@
 package com.ebay.raptor.promotion.excel;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -29,7 +30,6 @@ import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.DoubleColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.IntegerRangeColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.RangeColumnConstraint;
-import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.util.DateUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
 
@@ -428,6 +428,10 @@ public class SheetWriter implements ISheetWriter {
 			cell.setCellValue(DateUtil.formatISODate((Date)value, null));
 		} if (value instanceof String && value != null) {
 			cell.setCellValue((String)value);
+		} else if (value instanceof Number) {
+			Calendar date = Calendar.getInstance();
+			date.setTimeInMillis((long) value);
+			cell.setCellValue(DateUtil.formatISODate(date.getTime(), null));
 		} else {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
 		}		
