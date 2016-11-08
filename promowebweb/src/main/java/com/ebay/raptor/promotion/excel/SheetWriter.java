@@ -424,17 +424,19 @@ public class SheetWriter implements ISheetWriter {
 		style.setDataFormat(df.getFormat("yyyy-mm-dd"));
 		cell.setCellStyle(style);
 		
-		if (value instanceof Date && value != null) {
-			cell.setCellValue(DateUtil.formatISODate((Date)value, null));
-		} if (value instanceof String && value != null) {
-			cell.setCellValue((String)value);
-		} else if (value instanceof Number) {
-			Calendar date = Calendar.getInstance();
-			date.setTimeInMillis((long) value);
-			cell.setCellValue(DateUtil.formatISODate(date.getTime(), null));
+		if (value != null) {
+			if (value instanceof Date) {
+				cell.setCellValue(DateUtil.formatISODate((Date)value, null));
+			} if (value instanceof String) {
+				cell.setCellValue((String)value);
+			} else if (value instanceof Number) {
+				Calendar date = Calendar.getInstance();
+				date.setTimeInMillis((long) value);
+				cell.setCellValue(DateUtil.formatISODate(date.getTime(), null));
+			} 
 		} else {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
-		}		
+		}
 	}
 	
 	/**
