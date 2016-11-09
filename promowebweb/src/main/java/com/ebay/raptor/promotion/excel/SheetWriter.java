@@ -457,6 +457,10 @@ public class SheetWriter implements ISheetWriter {
 			cell.setCellValue(DateUtil.formatISODateTime((Date)value, null));
 		} if (value instanceof String && value != null) {
 			cell.setCellValue((String)value);
+		} else if (value instanceof Number) {
+			Calendar date = Calendar.getInstance();
+			date.setTimeInMillis((long) value);
+			cell.setCellValue(DateUtil.formatISODateTime(date.getTime(), null));
 		} else {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
 		}

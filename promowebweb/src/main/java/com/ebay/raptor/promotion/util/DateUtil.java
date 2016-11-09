@@ -336,17 +336,19 @@ private static final Logger logger = Logger.getLogger(DateUtil.class.getName());
 	public static Date parseDate(String text) {
 		Date date = null;
 		try {
-			date = getISODateFormat().parse(text);
+			date = getISODateTimeFormat().parse(text);
 		} catch (ParseException e) {
 			try {
-				date = getSlashDateFormat().parse(text);
-			} catch (ParseException e2) {
+				date = getISODateFormat().parse(text);
+			} catch (ParseException e1) {
 				try {
-					date = getDotDateFormat().parse(text);
-				} catch (ParseException e3) {
-					logger.log(Level.WARNING,
-							"Failed to parse text into Date object. Inputted text is: "
-									+ text);
+					date = getSlashDateFormat().parse(text);
+				} catch (ParseException e2) {
+					try {
+						date = getDotDateFormat().parse(text);
+					} catch (ParseException e3) {
+						logger.log(Level.WARNING, "Failed to parse text into Date object. Inputted text is: " + text);
+					}
 				}
 			}
 		}
