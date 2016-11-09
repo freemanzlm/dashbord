@@ -112,7 +112,8 @@ public class ExcelUtil {
 	}
 	
 	/**
-	 * Resolve title attribute from json node which contains column title.
+	 * Get key ("api_Name"), label ("labelName), writable ("input") and sample ("sample") properties values from JsonNode.
+	 * 
 	 * @param titleNode
 	 * @param locale
 	 * @return

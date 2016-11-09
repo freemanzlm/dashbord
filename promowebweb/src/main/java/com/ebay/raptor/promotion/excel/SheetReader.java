@@ -525,8 +525,10 @@ public class SheetReader implements ISheetReader {
 			return text;
 		} else if (Boolean.class.isAssignableFrom(type)) {
 			return "yes".equalsIgnoreCase(text) || "true".equalsIgnoreCase(text);
+		} else if (Time.class.isAssignableFrom(type)) {
+			return DateUtil.parseTime(text);
 		} else if (Date.class.isAssignableFrom(type)) {
-			return DateUtil.resolveDate(text);
+			return DateUtil.parseDate(text);
 		} else if (Integer.class.isAssignableFrom(type)
 				|| Long.class.isAssignableFrom(type)
 				|| Double.class.isAssignableFrom(type)

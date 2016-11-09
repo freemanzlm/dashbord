@@ -418,10 +418,10 @@ public class SheetWriter implements ISheetWriter {
 	 * @param value
 	 */
 	private void createDateCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
-		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_STRING);
+		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_NUMERIC);
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		DataFormat df = book.createDataFormat();
-		style.setDataFormat(df.getFormat("yyyy-mm-dd"));
+		style.setDataFormat(df.getFormat("yyyy-MM-dd"));
 		cell.setCellStyle(style);
 		
 		if (value != null) {
@@ -447,10 +447,10 @@ public class SheetWriter implements ISheetWriter {
 	 * @param value
 	 */
 	private void createDateTimeCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
-		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_STRING);
+		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_NUMERIC);
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		DataFormat df = book.createDataFormat();
-		style.setDataFormat(df.getFormat("yyyy-mm-dd hh:mm:ss"));
+		style.setDataFormat(df.getFormat("yyyy-MM-dd HH:mm:ss"));
 		cell.setCellStyle(style);
 		
 		if (value instanceof Date && value != null) {
@@ -463,17 +463,17 @@ public class SheetWriter implements ISheetWriter {
 	}
 	
 	/**
-	 * Horizontal align time center, and display time in format:hh:mm:ss.
+	 * Horizontal align time center, and display time in format:HH:mm:ss.
 	 * @param book
 	 * @param row
 	 * @param config
 	 * @param value
 	 */
 	private void createTimeCell(Workbook book, Row row, ColumnConfiguration config, Object value, CellStyle style) {
-		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_STRING);
+		Cell cell = row.createCell(config.getWriteOrder(), Cell.CELL_TYPE_NUMERIC);
 		style.setAlignment(CellStyle.ALIGN_CENTER);
 		DataFormat df = book.createDataFormat();
-		style.setDataFormat(df.getFormat("hh:mm:ss"));
+		style.setDataFormat(df.getFormat("HH:mm:ss"));
 		cell.setCellStyle(style);
 		
 		if (value instanceof Date && value != null) {

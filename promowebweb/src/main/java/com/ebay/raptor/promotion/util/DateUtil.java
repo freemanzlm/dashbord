@@ -122,6 +122,24 @@ private static final Logger logger = Logger.getLogger(DateUtil.class.getName());
 
 		return df;
 	}
+	
+	/**
+	 * Parse time text like: HH:mm:ss.
+	 * @param date
+	 * @return
+	 * @throws ParseException 
+	 */
+	public static Time parseTime(String text) {
+		Date date = null;
+		try {
+			date = getTimeFormat().parse(text);
+			return new Time(date.getTime());
+		} catch (ParseException e) {
+			logger.log(Level.WARNING, "Failed to parse time, input:" + text, e);
+		}
+		
+		return null;
+	}
 
 	/**
 	 * Parse date format: yyyy.MM.dd
@@ -315,7 +333,7 @@ private static final Logger logger = Logger.getLogger(DateUtil.class.getName());
 	 *            Date string representation.
 	 * @return Date Object
 	 */
-	public static Date resolveDate(String text) {
+	public static Date parseDate(String text) {
 		Date date = null;
 		try {
 			date = getISODateFormat().parse(text);
