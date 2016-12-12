@@ -19,7 +19,7 @@ public class ResourceProvider {
 		String _getPromotions = "/getPromotions";
 		String getPromotions = "/getPromotions/uid/{uid}";
 		String _getUnconfirmedPromotions = "/getUnconfirmedPromotions";
-		String getUnconfirmedPromotions = "/getUnconfirmedPromotions/uid/{uid}";
+		String getUnconfirmedPromotions = "/getUnconfirmedPromotions/uid/{uid}/isAdmin/{isadmin}";
 		String _getIngPromotions = "/getIngPromotions";
 		String getIngPromotions = "/getIngPromotions/uid/{uid}";
 		String _getSubsidyPromotions = "/getSubsidyPromotions";

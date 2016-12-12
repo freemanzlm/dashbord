@@ -83,7 +83,7 @@ public class PromotionDataController{
 		UserData userData = loginService.getUserDataFromCookie(request);
 
 		try {
-			resp.setData(service.getUnconfirmedPromotions(userData.getUserId()));
+			resp.setData(service.getUnconfirmedPromotions(userData.getUserId(), userData.getAdmin()));
 		} catch (PromoException e) {
 			logger.error("Unable to get unconfirmed promotions of user " + userData.getUserId(), e);
 			resp.setStatus(Boolean.FALSE);

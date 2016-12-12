@@ -32,6 +32,8 @@ public class Promotion {
 	
 	private Boolean legalTermFlag;
 	
+	private Boolean publishFlag;
+	
 
 	public Boolean getLegalTermFlag() {
 		return legalTermFlag;
@@ -327,6 +329,14 @@ public class Promotion {
 
 	public void setActiveFlag(Boolean activeFlag) {
 		this.activeFlag = activeFlag;
+	}
+
+	public Boolean getPublishFlag() {
+		return publishFlag;
+	}
+
+	public void setPublishFlag(Boolean publishFlag) {
+		this.publishFlag = publishFlag;
 	}
 
 }

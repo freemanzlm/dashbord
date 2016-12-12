@@ -72,8 +72,8 @@ public class PromotionService extends BaseService {
 		return Boolean.FALSE;
 	}
 	
-	public List<Promotion> getUnconfirmedPromotions(Long uid) throws PromoException{
-		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getUnconfirmedPromotions, uid);
+	public List<Promotion> getUnconfirmedPromotions(Long uid, Boolean isAdmin) throws PromoException{
+		return getPromotionsByUserBaseWithAdminFlag(ResourceProvider.PromotionRes.getUnconfirmedPromotions, uid, isAdmin);
 	}
 	
 	public List<Promotion> getUpdatedPromotions(Long uid) throws PromoException{
@@ -101,6 +101,32 @@ public class PromotionService extends BaseService {
 	 */
 	private List<Promotion> getPromotionsByUserBase(String target, Long uid) throws PromoException{
 		String uri = url(params(target, new Object[]{"{uid}", uid}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<ListDataServiceResponse<Promotion>> type = new GenericType<ListDataServiceResponse<Promotion>>(){};
+			ListDataServiceResponse<Promotion> promos = resp.getEntity(type);
+			if(null != promos && AckValue.SUCCESS == promos.getAckValue()){
+				return promos.getData();
+			} else {
+				if(null != promos && null != promos.getErrorMessage() && null != promos.getErrorMessage().getError()){
+					throw new PromoException(promos.getErrorMessage().getError().toString());
+				}
+			}
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return null;
+	}
+	
+	/**
+	 * Base method to get promotion list.
+	 * @param target
+	 * @param uid isAdmin
+	 * @return
+	 * @throws PromoException
+	 */
+	private List<Promotion> getPromotionsByUserBaseWithAdminFlag(String target, Long uid, Boolean isAdmin) throws PromoException{
+		String uri = url(params(target, new Object[]{"{uid}", uid, "{isadmin}", isAdmin}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<ListDataServiceResponse<Promotion>> type = new GenericType<ListDataServiceResponse<Promotion>>(){};
