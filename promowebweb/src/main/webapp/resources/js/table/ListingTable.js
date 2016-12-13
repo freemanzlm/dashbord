@@ -111,12 +111,11 @@ var BizReport = BizReport || {};
 					sClass: "text-center",
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex) {
 						oRow.checked = oRow.checked || (oRow.state == 'Enrolled');
-
 						$(nTd).html($("<input type=checkbox name=item>").attr({
 							value:sData,
 							rowindex : iRowIndex,
 							checked: oRow.checked,
-							disabled: (oRow.state == 'ReviewFailed')
+							disabled: (oRow.state == 'ReviewFailed' || oRow.lock == true)
 						}));
 					}
 				},

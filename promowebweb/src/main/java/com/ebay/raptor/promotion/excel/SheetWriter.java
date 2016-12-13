@@ -134,6 +134,11 @@ public class SheetWriter implements ISheetWriter {
 					cellStyle.setWrapText(true);
 					styleMapping.put(config.getWriteOrder(), cellStyle);
 				}
+				if(map.get("lock")!=null && map.get("lock").equals(true)) {
+					cellStyle = book.createCellStyle();
+					cellStyle.setLocked(true);
+					cellStyle.setWrapText(true);
+				}
 				createCell(book, sheet, row, config, map.get(config.getKey()), cellStyle);
 			}
 		}

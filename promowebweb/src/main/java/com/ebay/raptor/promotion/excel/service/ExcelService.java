@@ -91,7 +91,7 @@ public class ExcelService {
 				if (nominationValues != null) {
 					map.putAll(mapper.readValue(nominationValues, Map.class));
 				}
-				
+				map.put("lock", listing.getLocked());
 				skuListings.add(map);
 			}
 		}

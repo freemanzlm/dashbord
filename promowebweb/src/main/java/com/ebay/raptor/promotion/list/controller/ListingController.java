@@ -422,7 +422,7 @@ public class ListingController extends AbstractListingController {
 						logger.error("Can't read listing normination values for listing with sku ID: " + listing.getSkuId());
 					}
 				}
-				
+				map.put("lock", listing.getLocked());
 				data.add(map);
 			}
 			

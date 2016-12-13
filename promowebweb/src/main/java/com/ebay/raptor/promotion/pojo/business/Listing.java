@@ -22,6 +22,8 @@ public class Listing {
 	private String state;
 	
 	private Boolean hasUploaded;
+	
+	private Boolean locked;
 
 	public String getSkuId() {
 		return skuId;
@@ -62,4 +64,14 @@ public class Listing {
 	public void setHasUploaded(Boolean hasUploaded) {
 		this.hasUploaded = hasUploaded;
 	}
+
+	public Boolean getLocked() {
+		return locked;
+	}
+
+	public void setLocked(Boolean locked) {
+		this.locked = locked;
+	}
+	
+	
 }
