@@ -5,7 +5,7 @@ package com.ebay.raptor.promotion.pojo.business;
  * 
  * @author lyan2
  */
-public class Listing {
+public class Listing implements Comparable<Listing>{
 
 	/**
 	 *  This is not the real sku id, in fact, it's nomination id.
@@ -71,6 +71,14 @@ public class Listing {
 
 	public void setLocked(Boolean locked) {
 		this.locked = locked;
+	}
+
+	@Override
+	public int compareTo(Listing o) {
+		if(((Listing)o).locked!=null && ((Listing)o).locked.equals(true)) {
+			return 1;
+		}
+		return -1;
 	}
 	
 	

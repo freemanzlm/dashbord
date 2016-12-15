@@ -401,8 +401,10 @@ var BizReport = BizReport || {};
 							}
 							return !!data ? local.getText('listing.state.' + data) : '';
 						}
-						
 						if (type == "sort") {
+							if(full.lock == true) {
+								return 4;
+							}
 							switch (data) {
 							case 'ReEnroll':
 								return 3;

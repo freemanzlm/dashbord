@@ -3,6 +3,7 @@ package com.ebay.raptor.promotion.excel.service;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -72,6 +73,7 @@ public class ExcelService {
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		
 		List<Listing> listings = listingService.getSkuListingsByPromotionId(promoId, uid, false);
+		Collections.sort(listings);
 		List<Map<String, Object>> skuListings = new ArrayList<Map<String, Object>>();
 		
 		if (listings != null) {
