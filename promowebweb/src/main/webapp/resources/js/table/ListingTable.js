@@ -542,7 +542,7 @@ var BizReport = BizReport || {};
 					return !(listing.state == 6 || listing.state == 'PretrialFail' || listing.lock == true);
 				});
 				
-				lockRows = oDataTable.data().filter(function(listing) {
+				var lockRows = oDataTable.data().filter(function(listing) {
 					return !!(listing.lock == true && listing.state == 'Enrolled');
 				}) ;
 				
