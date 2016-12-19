@@ -111,7 +111,7 @@ BizReport.local = {
 			'Applied':'領取獎勵成功'
 		},
 		'listings': {
-			'zeroSubmitted': '您沒有勾選任何刊登，這意味著您將取消報名，確認嗎？',
+			'zeroSubmitted': '您沒有勾選任何刊登，點擊“確認”將取消本活動報名!',
 			'applyCondition': '申請參與活動需要選擇至少一條刊登報名。',
 			'onlyXls': '您選擇提交的不是Excel文件，請重新選擇刊登文件.',
 			'rrpLink': '連結',
