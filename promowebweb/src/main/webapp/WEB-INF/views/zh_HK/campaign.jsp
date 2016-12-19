@@ -262,7 +262,7 @@
 	</script>
 	
 	<script type="text/javascript">
-		var real_current_step = '${promo.realCurrentStep}';
+		var real_current_step = '${currentStep}';
 		var isAdmin = '${isAdmin}';
 		var publishFlag = '${promo.publishFlag}';
 		if(real_current_step == 'NOTIFICATION EDM APPROVED' && isAdmin == 'true' && publishFlag == 'false') {
