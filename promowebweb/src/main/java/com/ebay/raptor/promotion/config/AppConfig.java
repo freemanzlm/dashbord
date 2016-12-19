@@ -42,8 +42,8 @@ public class AppConfig {
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/sdt/secureResource/v1/";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isDev()) {
-			promoUrlPrefix = "http://l-shc-15008105.corp.ebay.com:8080";
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/sdt/secureResource/v1/";
+			promoUrlPrefix = "http://l-shc-00437469.corp.ebay.com/:8090";
+			sellerDashboardServicePrefix = "http://l-shc-00437469.corp.ebay.com/:8090/sdt/secureResource/v1/";
 			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
 		} else {
 			promoUrlPrefix = "http://promoweb-2.stratus.qa.ebay.com";
