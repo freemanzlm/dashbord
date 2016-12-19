@@ -539,12 +539,13 @@ var BizReport = BizReport || {};
 				
 				var aRows = oDataTable.data(), checkbox = this;
 				aRows = aRows.filter(function(listing){
-					return !(listing.state == 6 || listing.state == 'PretrialFail' || listing.lock == true);
+					return !(listing.state == 6 || listing.state == 'PretrialFail');
+					//return !(listing.state == 6 || listing.state == 'PretrialFail' || listing.lock == true);
 				});
 				
-				var lockRows = oDataTable.data().filter(function(listing) {
+				/*var lockRows = oDataTable.data().filter(function(listing) {
 					return !!(listing.lock == true && listing.state == 'Enrolled');
-				}) ;
+				}) ;*/
 				
 				aRows.each(function(item){
 					// mark each row is selected
@@ -555,19 +556,19 @@ var BizReport = BizReport || {};
 				
 				if (this.checked) {
 					that.selectedItems = Array.prototype.slice.apply(aRows) || [];
-					var lockRowArray = Array.prototype.slice.apply(lockRows) || [];
+					/*var lockRowArray = Array.prototype.slice.apply(lockRows) || [];
 					for(var i=0; i<lockRowArray.length; i++) {
 						that.selectedItems.push(lockRowArray[i]);
-					}
+					}*/
 					//that.selectedItems.push(Array.prototype.slice.apply(lockRows) || []);
 					enabledBoxes.parents('tr').addClass("selected");
 					that.dataTable.table.find("input[type=file]").prop('disabled', false);
 				} else {
 					that.selectedItems.splice(0); // empty selectedItems
-					var lockRowArray = Array.prototype.slice.apply(lockRows) || [];
+					/*var lockRowArray = Array.prototype.slice.apply(lockRows) || [];
 					for(var i=0; i<lockRowArray.length; i++) {
 						that.selectedItems.push(lockRowArray[i]);
-					}
+					}*/
 					//that.selectedItems.push(Array.prototype.slice.apply(lockRows) || []);
 					enabledBoxes.parents('tr').removeClass("selected");
 					that.dataTable.table.find("input[type=file]").prop('disabled', true);
