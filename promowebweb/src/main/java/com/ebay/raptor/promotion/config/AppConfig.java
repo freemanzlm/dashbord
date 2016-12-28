@@ -22,7 +22,7 @@ public class AppConfig {
 	private static String sellerDashboardServicePrefix = "";
 	private static String bizReportServicePrefix = "";
 	
-	private static AppBuildConfig bdCfg = AppBuildConfig.getInstance();
+	public static AppBuildConfig bdCfg = AppBuildConfig.getInstance();
 	
 	static {
 
