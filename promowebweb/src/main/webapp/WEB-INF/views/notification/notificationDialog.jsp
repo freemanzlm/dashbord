@@ -23,7 +23,7 @@
 	$(function() {
 		var isFirstLoad = true;
 		$.ajax({
-			url : "data/getNotification?userId="+"${userId}", 
+			url : "getNotification?userId="+"${userId}", 
 			type : 'GET',
 			contentType : 'application/json',
 			dataType : 'json',
@@ -58,7 +58,7 @@
 							$("#notification-dialog").on('show', function() {
 							}).on('close', function(){
 								  $.ajax({
-									url : "data/setSDNotifiStatus?userId="+"${userId}", 
+									url : "setSDNotifiStatus?userId="+"${userId}", 
 									type : 'GET',
 									contentType : 'application/json',
 									dataType : 'json',
@@ -77,7 +77,7 @@
 			$("#notification-dialog").on('close', function(){
 				  $("body").removeAttr("style");
 				  $.ajax({
-					url : "data/setSDNotifiStatus?userId="+"${userId}", 
+					url : "setSDNotifiStatus?userId="+"${userId}", 
 					type : 'GET',
 					contentType : 'application/json',
 					dataType : 'json',
@@ -94,7 +94,7 @@
 		$('#images').html(""); 
 		$("#notification-dialog").on('show', function() { 
 			$.ajax({
-				url : "data/getNotiIgnoreSatus?userId="+"${userId}", 
+				url : "getNotiIgnoreSatus?userId="+"${userId}", 
 				type : 'GET',
 				contentType : 'application/json',
 				dataType : 'json',
@@ -127,7 +127,7 @@
 							$("#notification-dialog").on('show', function() {
 							}).on('close', function(){
 								  $.ajax({
-									url : "data/setSDNotifiStatus?userId="+"${userId}", 
+									url : "setSDNotifiStatus?userId="+"${userId}", 
 									type : 'GET',
 									contentType : 'application/json',
 									dataType : 'json',
