@@ -39,7 +39,7 @@
 		<%@ include file="stepMessages/rewarded.jsp" %>
 	</c:when>
 	
-	<c:when test="${(currentStep eq 'NOTIFICATION EDM APPROVED' and not promo.publishFlag) or isAdmin }">
+	<c:when test="${currentStep eq 'NOTIFICATION EDM APPROVED' and (not promo.publishFlag or isAdmin) }">
 		<%@ include file="stepMessages/notificationEdm.jsp" %>
 	</c:when>
 	

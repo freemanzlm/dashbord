@@ -265,7 +265,7 @@
 		var real_current_step = '${promo.currentStep}';
 		var isAdmin = '${isAdmin}';
 		var publishFlag = '${promo.publishFlag}';
-		if((real_current_step == 'NOTIFICATION EDM APPROVED' && publishFlag == 'false') || isAdmin == 'true') {
+		if(real_current_step == 'NOTIFICATION EDM APPROVED' && (publishFlag == 'false' || isAdmin == 'true')) {
 			$(".signpost .post").toggleClass("done", false);
 			$(".signpost .post").toggleClass("current-post", false);
 		}
