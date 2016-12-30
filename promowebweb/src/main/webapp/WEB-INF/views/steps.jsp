@@ -7,6 +7,7 @@
 <c:set var="hasGotCurrentStep" value="${ false }" />
 <c:set var="isCurrentStep" value="${ false }" />
 
+<!-- Steps in stepList are all visible steps for real user -->
 <c:if test="${not empty stepList}">
 	<div class="signpost mb20">
 		<div class="signpost-posts">
