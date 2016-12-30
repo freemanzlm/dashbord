@@ -59,7 +59,7 @@
 							}).on('close', function(){
 								$("body").removeAttr("style");
 								$.ajax({
-									url : "/dashboard/setSDNotifiStatus?userId="+"${userId}", 
+									url : "setSDNotifiStatus?userId="+"${userId}", 
 									type : 'GET',
 									contentType : 'application/json',
 									dataType : 'json',
@@ -97,7 +97,7 @@
 		$('#images').html(""); 
 		$("#notification-dialog").on('show', function() { 
 			$.ajax({
-				url : "/dashboard/getNotiIgnoreSatus?userId="+"${userId}", 
+				url : "getNotiIgnoreSatus?userId="+"${userId}", 
 				type : 'GET',
 				contentType : 'application/json',
 				dataType : 'json',
@@ -132,7 +132,7 @@
 							$("#notification-dialog").on('show', function() {
 							}).on('close', function(){
 								  $.ajax({
-									url : "/dashboard/setSDNotifiStatus?userId="+"${userId}", 
+									url : "setSDNotifiStatus?userId="+"${userId}", 
 									type : 'GET',
 									contentType : 'application/json',
 									dataType : 'json',
