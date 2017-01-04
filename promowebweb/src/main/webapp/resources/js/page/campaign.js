@@ -231,6 +231,9 @@ $(function(){
 					attachSubmit();
 				} else {
 					previewDialog.show();
+					listings = listings && listings.filter(function(listing){
+						return !listing.lock;
+					});
 					previewDialog.listingTable.setData(listings);
 				}
 			} else {
