@@ -1,11 +1,14 @@
 package com.ebay.raptor.promotion.index.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 
+import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
@@ -29,6 +34,7 @@ import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
+import com.ebay.raptor.promotion.sd.service.SDDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.TrackService;
@@ -48,6 +54,7 @@ public class IndexController {
     @Autowired PromotionViewService view;
     @Autowired SubsidyService subsidyService;
     @Autowired TrackService trackService;
+    @Autowired SDDataService sdDataService;
 	
     @RequestMapping(value = "/backend", method = RequestMethod.GET)
     public void handleBackendRequest(HttpServletRequest request,
@@ -166,7 +173,63 @@ public class IndexController {
        	mav.setViewName("error");
         return mav;
     }
-	
+	 /**
+     * 
+     * @param req
+     * @param rsp
+     * @param itemId
+     */
+    @RequestMapping(value = "/getNotification", method = RequestMethod.GET)
+    public @ResponseBody Map <String, Object> getNotification(HttpServletRequest req
+    		,HttpServletResponse rsp,@RequestParam("userId") String userid) {
+    	
+    	String resultJson = null;
+		try {
+			resultJson = sdDataService.getNotification(userid);
+		} catch (HttpException e) {
+			logger.error("Unable to get getNotification for " + userid, e);
+		}
+		Map <String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("status", true);
+		jsonMap.put("data", resultJson);
+		return jsonMap;
+        
+    }
+    
+    @RequestMapping(value = "/getNotiIgnoreSatus", method = RequestMethod.GET)
+    public @ResponseBody Map <String, Object> getNotiIgnoreSatus(HttpServletRequest req
+    		,HttpServletResponse rsp,@RequestParam("userId") String userid) {
+    	
+    	String resultJson = null;
+    	try {
+    		resultJson = sdDataService.getNotiIgnoreSatus(userid);
+    	} catch (HttpException e) {
+    		logger.error("Unable to get getNotiIgnoreSatus for " + userid, e);
+    	}
+    	Map <String, Object> jsonMap = new HashMap<String, Object>();
+    	jsonMap.put("status", true);
+    	jsonMap.put("data", resultJson);
+    	return jsonMap;
+    	
+    }
+    
+    @RequestMapping(value = "/setSDNotifiStatus", method = RequestMethod.GET)
+    public @ResponseBody Map <String, Object> setSDNotifiStatus(HttpServletRequest req
+    		,HttpServletResponse rsp,@RequestParam("userId") String userid) {
+    	
+    	String resultJson = null;
+		try {
+			resultJson = sdDataService.setSDNotifiStatus(userid);
+		} catch (HttpException e) {
+			logger.error("Unable to get setSDNotifiStatus for " + userid, e);
+		}
+		Map <String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("status", true);
+		jsonMap.put("data", resultJson);
+		return jsonMap;
+    }    
+    
+    
 	@ExceptionHandler(MissingArgumentException.class)
     public ModelAndView handleException(MissingArgumentException exception,
             HttpServletRequest request) {

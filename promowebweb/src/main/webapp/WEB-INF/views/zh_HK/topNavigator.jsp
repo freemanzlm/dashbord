@@ -21,6 +21,7 @@
 				<a><c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a>
 			</li>
 		</ul>
+		<div class="latestNotification" style="display:block;"><a src="#" style="cursor: pointer;" >最新通知</a></div>
 	</div>	
 	<div style="display:none;">
 		${promoUpdatedDetail}
@@ -30,3 +31,6 @@
 <c:if test="${isDisplayDialog eq true }">
 <%@ include file="brsubscribe/subscribeDialog.jsp"%>
 </c:if>
+
+<!-- notification -->
+<%@ include file="notification/notificationDialog.jsp"%>

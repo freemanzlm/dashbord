@@ -143,3 +143,16 @@
 .navigator-top .site-data a {
 	margin-left: 20px;
 }
+
+.latestNotification {
+	text-align: right;
+	position:absolute;
+	right: 0px;
+	width: auto;
+}
+
+.latestNotification a {
+	position:relative;
+	bottom: -15px; 
+	padding-right: 10px;
+}
