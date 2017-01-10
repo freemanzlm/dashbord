@@ -133,6 +133,7 @@
 						$('#images').html(notificationImage); 
 							$("#notification-dialog").on('show', function() {
 							}).on('close', function(){
+								  if("${isAdmin}"==true) return;
 								  $.ajax({
 									url : "setSDNotifiStatus?userId="+"${userId}", 
 									type : 'GET',
@@ -153,6 +154,7 @@
 				});
 		}).on('close', function(){ 
 			$("body").removeAttr("style");
+			if("${isAdmin}"==true) return;
 		}).dialog({
 			 clazz : 'overlay'
 		}).dialog();
