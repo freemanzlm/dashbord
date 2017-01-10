@@ -28,13 +28,13 @@
 			contentType : 'application/json',
 			dataType : 'json',
 			success : function(data) {
-			if(!isFirstLoad) return; 
-				if (data.status == true && data.data.length > 0) {
-					
+				if(!isFirstLoad) return;
+				
+				/* enhancement */
+				var resData = eval("(" + data.data.replace(/\\/g, '') + ")");
+				
 					/*check if display latestnotification icon*/
-					var displayLatestnoti = data.data.split('\"')[3];
-					
-					switch (displayLatestnoti){
+					switch (resData.errormsg){
 					case "No notification" :
 						$(".latestNotification").hide();
 						break;
@@ -43,23 +43,12 @@
 					break;
 					};
 					
-					var dataNull = data.data.replace(/\\/g, '');
-					var dataNullJson = eval("(" + dataNull + ")");
-					if (dataNullJson.data.length > 0) {
+					if (data.status == true && resData.data !== "") {
 						
-						/* get notification title from db */
-						var notificationWhole = data.data.split('contentBoundary')[1];
-						var simplifiedNoti = notificationWhole.split('traditional')[0].replace(/\\/g, '').split('boundary').slice(0,2);
-						var tradtionalNoti = notificationWhole.split('traditional')[1].replace(/\\/g, '').split('boundary').slice(0,2);
+						/*get notification title from db*/
+						var notification = resData.data.split('boundary');
+						var notificationTitle = notification[0].replace('contentBoundary', '');
 						
-						/* if traditional or simplified chinese */
-						if (tradtionalNoti[0] == "") {
-								notification = simplifiedNoti
-						} else {
-							var notification = tradtionalNoti;
-						};
-						
-						var notificationTitle = notification[0];
 						$('#notification-title').html(notificationTitle);
 						
 						/*get notification content from db*/
@@ -68,7 +57,9 @@
 							$('#images').html(notificationImage); 
 							$("#notification-dialog").on('show', function() {
 							}).on('close', function(){
-								  $.ajax({
+								$("body").removeAttr("style");
+								if("${isAdmin}"==true) return;
+								$.ajax({
 									url : "setSDNotifiStatus?userId="+"${userId}", 
 									type : 'GET',
 									contentType : 'application/json',
@@ -79,14 +70,17 @@
 							}).dialog();
 						}
 						isFirstLoad = false;
-					}
-				} 
-			}
-		});
+						$("body").height($(window).height()).css({
+							  "overflow-y": "hidden"
+						});
+					} 
+				}
+			});
 		
 		$("#known").click(function () {
 			$("#notification-dialog").on('close', function(){
 				  $("body").removeAttr("style");
+				  if("${isAdmin}"==true) return;
 				  $.ajax({
 					url : "setSDNotifiStatus"+"?userId="+"${userId}", 
 					type : 'GET',
@@ -105,18 +99,20 @@
 		$('#images').html(""); 
 		$("#notification-dialog").on('show', function() { 
 			$.ajax({
-				url : "getNotiIgnoreSatus"+"?userId="+"${userId}", 
+				url : "getNotiIgnoreSatus?userId="+"${userId}", 
 				type : 'GET',
 				contentType : 'application/json',
 				dataType : 'json',
 				success : function(data) {
 				if(!isFirstLoad) return; 
-					if (data.status == true && data.data.length > 0) {
+				var resData = eval("(" + data.data.replace(/\\/g, '') + ")");
+				
+					if (data.status == true && resData.data !== "") {
 						
 						/* get notification title from db */
-						var notificationWhole = data.data.split('contentBoundary')[1];
-						var simplifiedNoti = notificationWhole.split('traditional')[0].replace(/\\/g, '').split('boundary').slice(0,2);
-						var tradtionalNoti = notificationWhole.split('traditional')[1].replace(/\\/g, '').split('boundary').slice(0,2);
+						var notificationWhole = resData.data.replace('contentBoundary', '').split('traditional');
+						var simplifiedNoti = notificationWhole[0].split('boundary');
+						var tradtionalNoti = notificationWhole[1].split('boundary');
 						
 						/* if traditional or simplified chinese */
 						var lang = $('#lang').val();
@@ -137,8 +133,9 @@
 						$('#images').html(notificationImage); 
 							$("#notification-dialog").on('show', function() {
 							}).on('close', function(){
+								  if("${isAdmin}"==true) return;
 								  $.ajax({
-									url : "setSDNotifiStatus"+"?userId="+"${userId}", 
+									url : "setSDNotifiStatus?userId="+"${userId}", 
 									type : 'GET',
 									contentType : 'application/json',
 									dataType : 'json',
@@ -157,6 +154,7 @@
 				});
 		}).on('close', function(){ 
 			$("body").removeAttr("style");
+			if("${isAdmin}"==true) return;
 		}).dialog({
 			 clazz : 'overlay'
 		}).dialog();

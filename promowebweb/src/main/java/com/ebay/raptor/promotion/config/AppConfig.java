@@ -30,7 +30,7 @@ public class AppConfig {
 			// TODO
 		} else if (bdCfg.isProduction()) {
 			promoUrlPrefix = "http://cbtpromo.ebay.com.hk";
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/";
+			sellerDashboardServicePrefix = "http://cbtsdws2.stratus.ebay.com";
 			bizReportServicePrefix = "http://www.bizser.stratus.ebay.com/br/v1/";
 		} else if ("staging".equals(bdCfg.getPoolType())) {
 			promoUrlPrefix = "http://promoweb.stratus.qa.ebay.com";
