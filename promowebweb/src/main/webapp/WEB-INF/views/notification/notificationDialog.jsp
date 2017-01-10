@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 
-<res:cssSlot id="head-css" />
 <res:useCss value="${res.css.local.css.notification_css}" target="head-css" />
 
 <div style="display:none;">
@@ -58,6 +57,7 @@
 						$("#notification-dialog").on('show', function() {
 						}).on('close', function(){
 							$("body").removeAttr("style");
+							if("${isAdmin}"==true) return;
 							$.ajax({
 								url : "setSDNotifiStatus?userId="+"${userId}", 
 								type : 'GET',
@@ -79,6 +79,7 @@
 		$("#known").click(function () {
 			$("#notification-dialog").on('close', function(){
 				  $("body").removeAttr("style");
+				  if("${isAdmin}"==true) return;
 				  $.ajax({
 					url : "setSDNotifiStatus?userId="+"${userId}", 
 					type : 'GET',

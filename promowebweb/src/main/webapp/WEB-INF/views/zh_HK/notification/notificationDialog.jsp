@@ -58,6 +58,7 @@
 							$("#notification-dialog").on('show', function() {
 							}).on('close', function(){
 								$("body").removeAttr("style");
+								if("${isAdmin}"==true) return;
 								$.ajax({
 									url : "setSDNotifiStatus?userId="+"${userId}", 
 									type : 'GET',
@@ -79,6 +80,7 @@
 		$("#known").click(function () {
 			$("#notification-dialog").on('close', function(){
 				  $("body").removeAttr("style");
+				  if("${isAdmin}"==true) return;
 				  $.ajax({
 					url : "setSDNotifiStatus"+"?userId="+"${userId}", 
 					type : 'GET',
