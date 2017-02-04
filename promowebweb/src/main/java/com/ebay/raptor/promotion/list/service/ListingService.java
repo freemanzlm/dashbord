@@ -27,7 +27,6 @@ import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.ListingAttachment;
-import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.service.req.SubmitListingRequest;
 import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
@@ -87,24 +86,35 @@ public class ListingService extends BaseService {
 	}
 
 	/**
-	 * Get seller sku list in this promotion. Returned list is for sku list table.
-	 * 
-	 * @param promoId Promotion SF ID
-	 * @param uid User oracle ID
+	 * Get seller applied sku listings in this promotion. These listings are uploaded by seller.
+	 * @param promoId
+	 * @param uid
+	 * @param promoSubType
 	 * @return
 	 * @throws PromoException
 	 */
-	public List<Sku> getSkusByPromotionId(String promoId, Long uid) throws PromoException{
-		String uri = url(params(ResourceProvider.ListingRes.getSKUsByPromotionId, new Object[]{"{promoId}", promoId, "{uid}", uid}));
+	public <T> List<T> getSkuListingsByPromotionId(String promoId, Long uid, boolean isUploaded) throws PromoException{
+		String uri = "";
+		GenericType<?> type = null;
+
+		if(isUploaded)
+			uri = url(params(ResourceProvider.ListingRes.getUploadedListings,
+					new Object[] { "{promoId}", promoId, "{uid}", uid }));
+		else
+			uri = url(params(ResourceProvider.ListingRes.getPromotionListings,
+				new Object[] { "{promoId}", promoId, "{uid}", uid }));
+//		type = new GenericType<ListDataServiceResponse<Map<String, Object>>>(){};
+		type = new GenericType<ListDataServiceResponse<Listing>>(){};
+
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<ListDataServiceResponse<Sku>> type = new GenericType<ListDataServiceResponse<Sku>>(){};
-			ListDataServiceResponse<Sku> data = resp.getEntity(type);
+			@SuppressWarnings("unchecked")
+			ListDataServiceResponse<T> data = (ListDataServiceResponse<T>)resp.getEntity(type);
 			if(null != data && AckValue.SUCCESS == data.getAckValue()){
 				return data.getData();
 			}
 		} else {
-			throw new PromoException("Failed to retrieve the SKU list with provided promo ID: " + promoId);
+			throw new PromoException("Failed to retrieve the SKU listing list with provided promo ID: " + promoId + ", user ID: " + uid);
 		}
 		return null;
 	}
@@ -117,7 +127,7 @@ public class ListingService extends BaseService {
 	 * @return
 	 * @throws PromoException
 	 */
-	public <T> List<T> getSkuListingsByPromotionId(String promoId, Long uid, boolean isUploaded) throws PromoException{
+	public <T> List<T> getListingsByPromotionId(String promoId, Long uid, boolean isUploaded) throws PromoException{
 		String uri = "";
 		GenericType<?> type = null;
 

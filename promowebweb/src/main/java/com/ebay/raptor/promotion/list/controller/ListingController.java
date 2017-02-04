@@ -49,7 +49,6 @@ import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.business.ListingAttachment;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.pojo.business.Sku;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -78,27 +77,6 @@ public class ListingController extends AbstractListingController {
 	@Autowired PromotionViewService promoViewService;
 	@Autowired ExcelService excelService;
 
-	/**
-	 * In promotion phase1,there is a SKU list. Its data source is from this API. 
-	 * To use this method, you need to pass in promotion id and user oracle id.
-	 * 
-	 * @return SKU list response.
-	 */
-	@Deprecated
-	@GET
-	@RequestMapping(ResourceProvider.ListingRes._getSKUsByPromotionId)
-	@ResponseBody
-	public ListDataWebResponse<Sku> getSKUsByPromotionId(HttpServletRequest req, @ModelAttribute ListingWebParam param) {
-		ListDataWebResponse<Sku> resp = new ListDataWebResponse<Sku>();
-		try {
-			UserData userData = loginService.getUserDataFromCookie(req);
-			resp.setData(listingService.getSkusByPromotionId(param.getPromoId(), userData.getUserId()));
-		} catch (PromoException | MissingArgumentException e) {
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
-	}
-	
 	/**
 	 * Generate listing upload template.
 	 * To use this method, you need to pass in promotion id and user oracle id.
@@ -455,5 +433,5 @@ public class ListingController extends AbstractListingController {
 
 		return resp;
 	} 
-
+	
 }

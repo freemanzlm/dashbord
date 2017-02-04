@@ -16,7 +16,6 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.list.service.DealsListingService;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
@@ -37,8 +36,6 @@ public class PromotionDataController{
 	@Autowired PromotionService service;
 	
 	@Autowired PromotionViewService view;
-	
-	@Autowired DealsListingService dealsListingService;
 	
 	@Autowired ResourceBundleMessageSource messageSource;
 	

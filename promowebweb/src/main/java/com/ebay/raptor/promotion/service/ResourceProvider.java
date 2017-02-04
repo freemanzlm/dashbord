@@ -60,11 +60,6 @@ public class ResourceProvider {
 		String getApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}";
 		String getTempApprovedListings = "/getApprovedListings/promoId/{promoId}/uid/{uid}/type/{type}";
 
-		@Deprecated
-		String _getSKUsByPromotionId = "/getSKUsByPromotionId";
-		@Deprecated
-		String getSKUsByPromotionId = "/getSKUsByPromotionId/promoId/{promoId}/uid/{uid}";
-
 		String _getUploadedListings = "/getUploadedListings";
 		String getUploadedListings = "/getUploadedListings/promoId/{promoId}/uid/{uid}";
 		String getTempUploadedListings = "/getUploadedListings/promoId/{promoId}/uid/{uid}/type/{type}";
@@ -79,8 +74,6 @@ public class ResourceProvider {
 		String confirmDealsListings = "/confirmDealsListings";
 		String confirmHotSellListings = "/confirmHotSellListings";
 		
-		@Deprecated
-		String downloadSkuList = "/downloadSkuList";
 		String downloadTempldate = "/downloadTemplate";
 		String uploadListings = "/uploadListings";
 		String submitListings = "/submitListings";
@@ -89,19 +82,9 @@ public class ResourceProvider {
 		String uploadGBHDealsListings = "/uploadGBHDealsListings";
 		String uploadAPACDealsListings = "/uploadAPACDealsListings";
 		String uploadFRESDealsListings = "/uploadFRESDealsListings";
-		@Deprecated
-		String submitDealsListings = "/submitDealsListings";
+		
 		String submitPromoListings = "/submitPromoListings";
 		String getListingsByPromotionIdAndUserIdAndType = "/getPromotionListings/promoId/{promoId}/uid/{uid}/type/{type}";
-		
-		@Deprecated
-		String skuListFileName = "Deals_listing_template"; //TODO Here should be Chinese 
-		@Deprecated
-		String gbhSkuListFileName = "Deals_listing_template_GBH"; //TODO Here should be Chinese
-		@Deprecated
-		String fresSkuListFileName = "Deals_listing_template_FRES"; //TODO Here should be Chinese
-		@Deprecated
-		String apacSkuListFileName = "Deals_listing_template_APAC"; //TODO Here should be Chinese 
 		
 		String uploadListingAttachment = "/uploadListingAttachment";
 		String downloadListingAttachment = "/downloadListingAttachment/promoId/{promoId}/userId/{userId}/skuId/{skuId}";
