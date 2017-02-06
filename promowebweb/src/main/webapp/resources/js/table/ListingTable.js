@@ -282,22 +282,39 @@ var BizReport = BizReport || {};
 					sClass: "text-center dt-nowrap",
 					sWidthOrig: "230px",
 					sDefaultContent: "NA",
-					mRender: function(data, type, full) {
+					mRender: function(data, type, full, meta) {
+						var key = meta.settings.aoColumns[meta.col].data;
+						var disabled = 'disabled', urlStr = '';
+						var id = full.skuId + "-" + key;
+						var iframeId = 'iframe-' + id;
+						var attachmentLink = data ? '<b><a href=/promotion/listings'+data+'>'+local.getText('promo.listings.attachdownload')+'</a></b>' : "<b></b>";
+						
 						if (type == "display") {
-							var id = 'iframe'+ full.skuId;
-							var str = 'disabled';
-							var urlStr = '';
-							if(pageData.isListingPreview == 'true' || full.state== 'Enrolled') {
-								str = '';
+							// For excel uploading application, attachment uploading only happens on listing preview page.
+							// And we can only upload attachments for enrolled listings.
+							if(pageData.isListingPreview || (pageData.regType == 'true' && pageData.isRegEnd == 'false')) {
+								return '<form id="form-' + id + '" target="'+ iframeId + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+ 
+									pageData.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+ 
+									full.skuId+'" /><input type="hidden" name="key" value="' + key + '"/><span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile" '+
+									disabled+'/></span><button class="btn" id="btn-'+id+'" type="button">上传</button></form>' +
+									'<iframe name="'+ iframeId + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
+									'<span id="msg-'+id+'">' + attachmentLink + '</span>';
+							} else {
+								return attachmentLink;
+							}
+							
+							/*if(pageData.isListingPreview || full.state== 'Enrolled') {
+								disabled = '';
 							}
 							
 							if (full.uploadSuccess && full.downloadUrl) {
-								return '<a href=/promotion/listings'+full.downloadUrl+'>'+local.getText('promo.listings.attachdownload')+'</a>';
+								// Property "uploadSuccess" and "downloadUrl" are local properties which are set in fnCreatedCell method.
+								return '<b><a href=/promotion/listings'+data+'>'+local.getText('promo.listings.attachdownload')+'</a></b>';
 							} else {
-								return '<form id="form' + full.skuId + '" target="'+ id + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+pageData.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+full.skuId+'" /><span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile" '+str+'/></span><button class="btn" id="btn'+full.skuId+'" type="button">上传</button></form>' +
-								'<iframe name="'+ id + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
-									'<span class="hide" id="msg'+full.skuId+'"><b></b></span>';
-							}
+								return '<form id="form-' + id + '" target="'+ iframeId + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+pageData.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+full.skuId+'" /><span class="file-input"><input type="text" style="height: 22px;" placeholder="选择文件" /> <input type="file" name="uploadFile" '+disabled+'/></span><button class="btn" id="btn-'+id+'" type="button">上传</button></form>' +
+								'<iframe name="'+ iframeId + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
+									'<span class="hide" id="msg-'+id+'"><b></b></span>';
+							}*/
 						}
 						
 						if (type == 'sort') {
@@ -307,81 +324,80 @@ var BizReport = BizReport || {};
 						return data;
 					},
 					fnCreatedCell: function(nTd, sData, oRow, iRowIndex, iColIndex) {
-						var required = this.fnSettings().aoHeader[0][iColIndex].required;
-						var listingBtn = $(nTd).find("#btn"+oRow.skuId);
-						var listingIframe = $(nTd).find("iframe[name=iframe"+oRow.skuId+"]");
-						var attachForm = $(nTd).find("#form"+oRow.skuId);
-						var errorMsgEle = $(nTd).find("#msg"+oRow.skuId);
+						console.log(oRow);
+						var $nTd = $(nTd), settings = this.fnSettings();
+						var key = settings.aoColumns[iColIndex].data, id = oRow.skuId + "-" + key;
+						var required = settings.aoHeader[0][iColIndex].required;
+						var listingIframe = $nTd.find("iframe[name=iframe-" + id +"]");
+						var $attachForm = $nTd.find("#form-" + id);
+						var $fileUploadBtn = $attachForm.find("#btn-" + id);
+						var errorMsgEle = $nTd.find("#msg-" + id);
 						
-						/*if(pageData.hasListingsNominated) {
-							$(nTd).find("#form"+oRow.skuId).remove();
-						}*/
-						if (attachForm && attachForm.length > 0) {
-							if(pageData.isListingPreview != 'true' && pageData.regType == 'false') {
-								// attachment file upload only happens in listing preview page. 
-								attachForm.remove();
-							}
-							if(oRow.hasUploaded) {
-								errorMsgEle.removeClass("hide").find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+oRow.downloadAttachUrl+'>'+local.getText('promo.listings.attachdownload')+'</a>');
-								oRow.uploadSuccess = true;
-								oRow.downloadUrl = oRow.downloadAttachUrl;
+						if ($attachForm && $attachForm.length > 0) {
+							/*if(pageData.isListingPreview != true && pageData.regType == 'false') {
+								// attachment file upload only happens in listing preview page for excel application. 
+								$attachForm.remove();
 							}
 							
-							var listingForm = $(nTd).find("#form"+oRow.skuId).submit(function(){
-								//errorMsgEle.find("b").empty();
-								var fileInput = $(nTd).find("#form"+oRow.skuId).find("input[type=file]");
+							if(oRow.hasUploaded) {
+								// Property "hasUploaded" and "downloadAttachUrl" come from server response.
+								errorMsgEle.removeClass("hide").find("b").html('<a href="/promotion/listings'+oRow.downloadAttachUrl+'">'+local.getText('promo.listings.attachdownload')+'</a>');
+								oRow.uploadSuccess = true; // "uploadSuccess" is just a local property.
+								oRow.downloadUrl = oRow.downloadAttachUrl;
+							}*/
+							
+							$attachForm.submit(function(){
+								var fileInput = $attachForm.find("input[type=file]");
 								var fileName = fileInput.val();
-								//文件不能为空
-								if(required) {
+								
+								if(required) { //attachment is a must
 									if(!fileName) {
 										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.notEmpty"));
 										return false;
 									}
-									//文件类型校验
-									if (!fileTypeReg.test(fileName)) {
+									
+									if (!fileTypeReg.test(fileName)) { // check attachment file type
 										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
 										return false;
 									}
 								}
 								
-								$(nTd).isLoading({text: local.getText('dataTable.handling'), position: "inside"});
+								$nTd.isLoading({text: local.getText('dataTable.handling'), position: "inside"});
 								
+								// get attachment upload result.
 								listingIframe.on("load", function(){
-									$(nTd).isLoading('hide');
+									$nTd.isLoading('hide');
 									if (listingIframe.contents().length != 0 && listingIframe.contents().find("body").html().length > 0) {
 										var response = listingIframe.contents().find("body").text();
 										var responseData = $.parseJSON(response);
 										if (responseData.message && responseData.message.length > 0) {
 											errorMsgEle.removeClass("hide");
 											if(responseData.status==true) {
-												//$("#form"+oRow.skuId).remove();
 												errorMsgEle.find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
-												oRow.uploadSuccess = true;
-												oRow.downloadUrl = responseData.message;
+												oRow[key] = responseData.message;
 											} else {
 												errorMsgEle.css({"color": "red"}).find("b").html(responseData.message);
 											}
-										} 
-										else {
+										} else {
 											errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html("upload file failed!");
 										}
 									}
 								});
-								return !!$(this).find("input[type=file]").attr("value");
+								return !!fileInput.attr("value");
 							});
-						
-							$(listingBtn).click(function(event){
+							
+							$fileUploadBtn.click(function(event){
 								event.preventDefault();
-								var fileDir = $(nTd).find("#form"+oRow.skuId).find("input[type=file]").val();
+								var fileDir = $attachForm.find("input[type=file]").val();
 								if(!fileDir) {
 									return false;
 								} else {
-									//文件类型校验
+									//validate file type
 									if (!fileTypeReg.test(fileDir)) {
 										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
 										return false;
 									} else {
-										listingForm.submit();
+										$attachForm.submit();
 									}
 								}
 							});	
@@ -496,13 +512,13 @@ var BizReport = BizReport || {};
 				    	data.data = data.data.filter(function(oRow) {
 				    		if(pageData.regType=='false') {
 				    			if(pageData.currentStep == 'SELLER NOMINATION_NEED APPROVE' || pageData.currentStep == 'SELLER FEEDBACK' || pageData.currentStep == 'PROMOTION SUBMITTED') {
-									if(pageData.isRegEnd == 'false' && pageData.isListingPreview != 'true') {
+									if(pageData.isRegEnd == 'false' && pageData.isListingPreview != true) {
 										// promotion upload type
 										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
 									}
 								}
 								if(pageData.currentStep == 'PROMOTION IN PROGRESS' && pageData.isRegEnd == 'false') {
-									if(pageData.isListingPreview != 'true') {
+									if(pageData.isListingPreview != true) {
 										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
 									}
 								}

@@ -1,5 +1,8 @@
 package com.ebay.raptor.promotion.pojo.business;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Each Listing has skuId, skuTitle. Promotion fields are stored in nominationValues. "nominationValues" is a JSON object string.
  * 
@@ -21,6 +24,12 @@ public class Listing implements Comparable<Listing>{
 	
 	private String state;
 	
+	/**
+	 * This property stores each attachment's filename, file size, file type and so on.
+	 */
+	private List<Map<String, Object>> attachments;
+	
+	@Deprecated
 	private Boolean hasUploaded;
 	
 	private Boolean locked;
@@ -79,6 +88,14 @@ public class Listing implements Comparable<Listing>{
 			return 1;
 		}
 		return -1;
+	}
+
+	public List<Map<String, Object>> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Map<String, Object>> attachments) {
+		this.attachments = attachments;
 	}
 	
 	

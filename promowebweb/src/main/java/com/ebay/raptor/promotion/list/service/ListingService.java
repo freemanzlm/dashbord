@@ -93,40 +93,6 @@ public class ListingService extends BaseService {
 	 * @return
 	 * @throws PromoException
 	 */
-	public <T> List<T> getSkuListingsByPromotionId(String promoId, Long uid, boolean isUploaded) throws PromoException{
-		String uri = "";
-		GenericType<?> type = null;
-
-		if(isUploaded)
-			uri = url(params(ResourceProvider.ListingRes.getUploadedListings,
-					new Object[] { "{promoId}", promoId, "{uid}", uid }));
-		else
-			uri = url(params(ResourceProvider.ListingRes.getPromotionListings,
-				new Object[] { "{promoId}", promoId, "{uid}", uid }));
-//		type = new GenericType<ListDataServiceResponse<Map<String, Object>>>(){};
-		type = new GenericType<ListDataServiceResponse<Listing>>(){};
-
-		GingerClientResponse resp = httpGet(uri);
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			@SuppressWarnings("unchecked")
-			ListDataServiceResponse<T> data = (ListDataServiceResponse<T>)resp.getEntity(type);
-			if(null != data && AckValue.SUCCESS == data.getAckValue()){
-				return data.getData();
-			}
-		} else {
-			throw new PromoException("Failed to retrieve the SKU listing list with provided promo ID: " + promoId + ", user ID: " + uid);
-		}
-		return null;
-	}
-	
-	/**
-	 * Get seller applied sku listings in this promotion. These listings are uploaded by seller.
-	 * @param promoId
-	 * @param uid
-	 * @param promoSubType
-	 * @return
-	 * @throws PromoException
-	 */
 	public <T> List<T> getListingsByPromotionId(String promoId, Long uid, boolean isUploaded) throws PromoException{
 		String uri = "";
 		GenericType<?> type = null;
@@ -234,7 +200,7 @@ public class ListingService extends BaseService {
 	 * @throws PromoException
 	 * @throws IOException 
 	 */
-	public String uploadListingAttachment(String skuId, String promoId, Long userId, final MultipartFile uploadFile, String fileType) throws Exception {
+	public String uploadListingAttachment(String skuId, String promoId, Long userId, String key, final MultipartFile uploadFile, String fileType) throws Exception {
 		String url = url(ResourceProvider.ListingRes.uploadListingAttachment);
 		FormDataMultiPart multiPart = new FormDataMultiPart();
 		File file = multipartToFile(uploadFile);
@@ -251,8 +217,8 @@ public class ListingService extends BaseService {
 			GeneralDataResponse<Boolean> general = resp.getEntity(type);
 			if(null != general){
 				if (AckValue.SUCCESS == general.getAckValue()) {
-					return params(ResourceProvider.ListingRes.downloadListingAttachment,
-							new Object[] { "{promoId}", promoId, "{userId}", userId, "{skuId}", skuId});
+					return params(ResourceProvider.ListingRes.listingAttachment,
+							new Object[] { "{promoId}", promoId, "{userId}", userId, "{skuId}", skuId, "{key}", key});
 				} else {
 					return null;
 				}
@@ -273,7 +239,7 @@ public class ListingService extends BaseService {
 	 * @return boolean
 	 * @throws PromoException 
 	 */
-	public ListingAttachment downloadListingAttachment(String promoId, Long userId, String skuId) throws PromoException {
+	public ListingAttachment downloadListingAttachment(String promoId, Long userId, String skuId, String key) throws PromoException {
 		String url = url(params(ResourceProvider.ListingRes.downloadListingAttachment,
 				new Object[] { "{promoId}", promoId, "{userId}", userId, "{skuId}", skuId}));
 		GingerWebTarget target = PromoClient.getClient().target(url);

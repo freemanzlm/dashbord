@@ -87,7 +87,9 @@ public class ResourceProvider {
 		String getListingsByPromotionIdAndUserIdAndType = "/getPromotionListings/promoId/{promoId}/uid/{uid}/type/{type}";
 		
 		String uploadListingAttachment = "/uploadListingAttachment";
+		@Deprecated
 		String downloadListingAttachment = "/downloadListingAttachment/promoId/{promoId}/userId/{userId}/skuId/{skuId}";
+		String listingAttachment = "/attachment/promoId/{promoId}/userId/{userId}/skuId/{skuId}/key/{key}";
 	}
 	
 	public interface SubsidyRes {

@@ -219,7 +219,7 @@ public class ListingController extends AbstractListingController {
 	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadListingAttachment)
 	public ModelAndView uploadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
-			@RequestPart MultipartFile uploadFile, @RequestParam String skuId, @RequestParam String promoId) throws MissingArgumentException {
+			@RequestPart MultipartFile uploadFile, @RequestParam String skuId, @RequestParam String promoId, @RequestParam String key) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
 		ResponseData <String> responseData = new ResponseData <String>();
 		UserData userData = loginService.getUserDataFromCookie(req);
@@ -229,7 +229,7 @@ public class ListingController extends AbstractListingController {
 			if(attachmentFileValidator.isValidate(uploadFile)) {
 				try {
 					String fileType = attachmentFileValidator.getType(uploadFile).toString();
-					String downloadUrl = listingService.uploadListingAttachment(skuId, promoId, userData.getUserId(), uploadFile, fileType);
+					String downloadUrl = listingService.uploadListingAttachment(skuId, promoId, userData.getUserId(), key, uploadFile, fileType);
 					responseData.setStatus(true);
 					responseData.setMessage(downloadUrl);
 				} catch (Exception e) {
@@ -247,10 +247,10 @@ public class ListingController extends AbstractListingController {
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.downloadListingAttachment)
+	@RequestMapping(ResourceProvider.ListingRes.listingAttachment)
 	public void downloadListingAttachment(HttpServletRequest req, HttpServletResponse resp,
 			@PathVariable("promoId") String promoId, @PathVariable("userId") Long userId, 
-			@PathVariable("skuId") String skuId) throws MissingArgumentException, IOException, PromoException {
+			@PathVariable("skuId") String skuId, @PathVariable("key") String key) throws MissingArgumentException, IOException, PromoException {
 		resp.setContentType("application/x-msdownload;");
 		UserData userData = loginService.getUserDataFromCookie(req);
 		if(userData.getUserId()!=userId) {
@@ -262,7 +262,7 @@ public class ListingController extends AbstractListingController {
 		String attachmentName = "";
 		String attachmentType = "";
 		try {
-			attachment = listingService.downloadListingAttachment(promoId, userId, skuId);
+			attachment = listingService.downloadListingAttachment(promoId, userId, skuId, key);
 			if(attachment!=null) {
 				inputStream = attachment.getContent();
 				attachmentName = attachment.getAttachmentName();
@@ -279,9 +279,11 @@ public class ListingController extends AbstractListingController {
 		} catch (PromoException e) {
 			e.printStackTrace();
 		} finally {
-			inputStream.close();
-			outStream.flush();
-			outStream.close();
+			if (inputStream != null) {
+				inputStream.close();
+				outStream.flush();
+				outStream.close();
+			}
 		}
 	}
 	
@@ -384,11 +386,6 @@ public class ListingController extends AbstractListingController {
 				map.put("skuId", listing.getSkuId());
 				map.put("state", listing.getState());
 				map.put("currency", listing.getCurrency());
-				map.put("hasUploaded", listing.getHasUploaded());
-				
-				if(listing.getHasUploaded()) {
-					map.put("downloadAttachUrl", "/downloadListingAttachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId());
-				}
 				
 				if (listing.getNominationValues() != null) {
 					try {
@@ -400,6 +397,24 @@ public class ListingController extends AbstractListingController {
 						logger.error("Can't read listing normination values for listing with sku ID: " + listing.getSkuId());
 					}
 				}
+				
+				List<Map<String, Object>> attachments = listing.getAttachments(); 
+				if (attachments != null) {
+					for (Map<String, Object> attachment : attachments) {
+						String key = attachment.get("key").toString();
+						Object filename = attachment.get("filename");
+						if (key != null && filename != null) {
+							String attachmentUrl = "/attachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId() + "/key/" + key;
+							map.put(key, attachmentUrl);
+						}
+					}
+				}
+				
+				// TODO, remove this test line
+				if(listing.getHasUploaded()) {
+					map.put("Account_List_Attachment_base__c", "/attachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId() + "/key/Account_List_Attachment_base__c");
+				}
+				
 				map.put("lock", listing.getLocked());
 				data.add(map);
 			}
@@ -414,12 +429,17 @@ public class ListingController extends AbstractListingController {
 		return mergedResp;
 	}
 	
-	// TODO - If there is no particular business logic on the meta data,
-	// it's no need to convert to an object, and add the json string in response.
+	/**
+	 * Get listings of specified user and promotion. If "isUploaded" is true, it will only get user uploaded listings by excel.
+	 * @param promoId
+	 * @param userId
+	 * @param isUploaded
+	 * @return
+	 */
 	protected <T> ListDataWebResponse<T> getListings (String promoId, Long userId, boolean isUploaded) {
 		ListDataWebResponse<T> resp = new ListDataWebResponse<T>();
 		try {
-			List<T> listings = listingService.getSkuListingsByPromotionId(promoId, userId, isUploaded);
+			List<T> listings = listingService.getListingsByPromotionId(promoId, userId, isUploaded);
 			
 			if (listings != null && listings.size() > 0) {
 				resp.setData(listings);
