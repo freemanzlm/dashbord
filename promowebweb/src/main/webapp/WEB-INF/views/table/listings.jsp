@@ -5,8 +5,7 @@
 
 <c:set var="columns" value=""></c:set>
 
-<div class="dataTable-outer-layer">
-<div class="dataTable-container">
+<div id="listing-table-container" class="dataTable-container">
 	<c:if test="${ not empty fieldsDefintions}">
 		<table id="listing-table" class="dataTable">
 			<thead>
@@ -18,7 +17,7 @@
 					<c:forEach items="${ fieldsDefintions }" var="field">
 						<c:if test="${field.key ne 'Listing_Local_Currency_base__c'}">
 							<th class="${fn:toLowerCase(field.rawType)} dt-nowrap ${field.key}">${field.title}</th>
-							<c:set var="columns" value='${columns},{"data":"${field.key}"}' ></c:set>
+							<c:set var="columns" value='${columns},{"data":"${field.key}", "bRequired":${field.required}}' ></c:set>
 						</c:if>
 					</c:forEach>
 					<th class="state">
@@ -48,5 +47,4 @@
 		
 		<%-- <c:out value="${columns}"></c:out> --%>
 	</c:if>
-</div>
 </div>

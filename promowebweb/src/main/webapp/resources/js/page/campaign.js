@@ -166,65 +166,74 @@ $(function(){
 			}
 		});
 		
+		/********************** Upload listings attachments ****************************************/
+		var container = $("#listing-table-container"), requriedAttachments = [], optionalAttachments, toUploadAttachments;
+		var attachmentTotalNum = attachmentUploadedNum = currentAttachIndex = 0, uploadingAttachment = false;
+		
+		// get the number of attachments that will be uploaded.
+		function sumAttachments() {
+			var allAttachForms = container.find("input[name=item]:checked").parent().parent().find("form");
+			requriedAttachments = allAttachForms.filter(function(){
+				return this.hasAttribute('required');
+			});
+			optionalAttachments = allAttachForms.filter(function(){
+				return !this.hasAttribute('required') && !!this['uploadFile'].value;
+			});
+			
+			toUploadAttachments = $.merge(requriedAttachments, optionalAttachments);
+			attachmentTotalNum = toUploadAttachments.length;
+			console.log(attachmentTotalNum);
+		}
+		
+		function submitAttachments() {
+			if (currentAttachIndex == attachmentTotalNum) {
+				container.isLoading('hide');
+				uploadingAttachment = false; // attachments uploading completed
+			} else if (currentAttachIndex == 0) {
+				container.isLoading({text: local.getText("promo.request.counting", [attachmentUploadedNum, attachmentTotalNum]), position: "overlay"});
+			}
+			
+			var $currentForm = toUploadAttachments.eq(currentAttachIndex);
+						
+			// check if an attachment is uploaded
+			var checkAttachmentUploaded = function() {
+				var $msg = $currentForm.siblings("span.msg");
+				
+				var timer = setInterval(function() {
+					if ($msg.find("b").html().length != 0 && !$currentForm.find("input[type=file]").val()) {
+						clearInterval(timer);
+						attachmentUploadedNum += 1;
+						currentAttachIndex += 1;
+						submitAttachments();
+					}
+				}, 1000);
+			}
+			
+			$currentForm.submit();
+			checkAttachmentUploaded();
+		}
+		
 		$(formBtn).click(function(event){
 			event.preventDefault();
+			if (uploadingAttachment) return;
 			
 			if (!acceptCheckbox.checked) {
 				acceptPopup.popup('show');
 				return false;
 			}
 			
+			uploadingAttachment = true;
+			sumAttachments();
+			
+			if (toUploadAttachments.length <= 0) {
+				uploadingAttachment = false; // no attachment
+			}
+			
+			currentAttachIndex = 0;
+			attachmentUploadedNum = 0;
+			submitAttachments();
+			
 			var listings = listingTable.selectedItems;
-			var attachIndex = 0;
-			var container = $(".dataTable-outer-layer");
-			var total = container.find("input[name=item]:checked").parent().parent().find("input[type=file]").length;
-			var attachSubmit = function() {
-				var attachId = listings[attachIndex].skuId;
-				var attachIframe = $("iframe[name=iframe"+attachId+"]");
-				var attachForm = $("#form"+attachId);
-				var required = $('#listing-table th').eq(attachForm.parent().index()).attr('required');
-				if(!required) {
-					total = container.find("input[type=file]").filter(function() {
-						return $(this).val();
-					}).length + container.find("iframe").parent().find("span a").length;
-				}
-				if($("#href"+attachId).length<=0) {
-					attachForm.submit();
-				}
-				var successCount = container.find("input[name=item]:checked").parent().parent().find("span a").length;
-				container.isLoading({text: local.getText("promo.request.counting", [successCount, total]), position: "overlay"});
-				var timer = setInterval(function() {
-					if($("#msg"+attachId).find("b").html().length != 0) {
-						container.isLoading('hide');
-						clearInterval(timer);
-						/*if(attachIframe.contents().length != 0 && attachIframe.contents().find("body").html().length > 0) {
-							if($.parseJSON(attachIframe.contents().find("body").html()).status==true && ahref.length<=0) {
-								successCount ++;
-							}
-						}*/
-						attachIndex += 1;
-						successCount = container.find("input[name=item]:checked").parent().parent().find("span a").length;
-						if(attachIndex<listings.length) {
-							attachSubmit();
-						} else {
-							if (listings && listings.length > 0) {
-								if(successCount == listings.length) {
-									previewDialog.show();
-									previewDialog.listingTable.setData(listings);
-								} else {
-									return false;
-								}
-							} else {
-								if (pageData && pageData.state == 'Applied') {
-									cbt.confirm(local.getText('promo.listings.zeroSubmitted'), submitListings);
-								} else {
-									cbt.alert(local.getText('promo.listings.applyCondition'));
-								}
-							}
-						}
-					}
-				}, 500);
-			};
 			
 			if(listings && listings.length > 0) {
 				if(total > 0) {
@@ -237,8 +246,6 @@ $(function(){
 					previewDialog.listingTable.setData(listings);
 				}
 			} else {
-/*				previewDialog.show();
-				previewDialog.listingTable.setData(listingTable.oDataTable.data());*/
 				cbt.confirm(local.getText('promo.listings.zeroSubmitted'), submitListings);
 			}
 			

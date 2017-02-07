@@ -5,8 +5,7 @@
 
 <c:set var="columns" value=""></c:set>
 
-<div class="dataTable-outer-layer">
-<div class="dataTable-container">
+<div id="listing-table-container" class="dataTable-container">
 	<c:if test="${ not empty fieldsDefintions}">
 		<table id="listing-table" class="dataTable">
 			<thead>
@@ -49,5 +48,4 @@
 		
 		<%-- <c:out value="${columns}"></c:out> --%>
 	</c:if>
-</div>
 </div>
