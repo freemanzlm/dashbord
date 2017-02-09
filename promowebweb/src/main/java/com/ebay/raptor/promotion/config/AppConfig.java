@@ -18,7 +18,6 @@ public class AppConfig {
     public final static String LOGIN_URL = "http://cbtreport.ebay.com.hk/dashboard/login";
     public final static String REFER_PARAM = "referUrl";
     
-    private static String promoUrlPrefix = "";
 	private static String sellerDashboardServicePrefix = "";
 	private static String bizReportServicePrefix = "";
 	
@@ -27,31 +26,26 @@ public class AppConfig {
 	static {
 
 		if (bdCfg.isPreProd()) { 
-			// TODO
+			// TODO 
 		} else if (bdCfg.isProduction()) {
-			promoUrlPrefix = "http://cbtpromo.ebay.com.hk";
 			sellerDashboardServicePrefix = "http://cbtsdws2.stratus.ebay.com";
 			bizReportServicePrefix = "http://www.bizser.stratus.ebay.com/br/v1/";
 		} else if ("staging".equals(bdCfg.getPoolType())) {
-			promoUrlPrefix = "http://promoweb.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isQATE()) {
 			// feature pool or staging pool
-			promoUrlPrefix = "http://promoweb.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isDev()) {
-			promoUrlPrefix = "http://L-SHC-15008567.corp.ebay.com:8080";
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/";
+			sellerDashboardServicePrefix = "http://l-shc-00437469.corp.ebay.com/:8090/sdt/secureResource/v1/";
 			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
 		} else {
-			promoUrlPrefix = "http://promoweb.stratus.qa.ebay.com";
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/sdt/secureResource/v1/";
 			bizReportServicePrefix = "http://cbtsdws2.qa.ebay.com/";
 		}
 	}
-	 
+	
 	public static String getBizReportServicePrefix() 
 	{
 		return bizReportServicePrefix;
@@ -62,12 +56,6 @@ public class AppConfig {
 		AppConfig.bizReportServicePrefix = bizReportServicePrefix;
 	}
 	
-	public static String getPromoUrlPrefix() {
-		return promoUrlPrefix;
-	}
-	public static void setPromoUrlPrefix(String promoUrlPrefix) {
-		AppConfig.promoUrlPrefix = promoUrlPrefix;
-	}
 	public static String getSellerDashboardServicePrefix() {
 		return sellerDashboardServicePrefix;
 	}
