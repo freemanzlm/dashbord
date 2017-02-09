@@ -287,23 +287,23 @@ var BizReport = BizReport || {};
 					sDefaultContent: "NA",
 					mRender: function(data, type, full, meta) {
 						var key = meta.settings.aoColumns[meta.col].data;
-						var disabled = 'disabled', urlStr = '';
+						var readonly = meta.settings.aoColumns[meta.col].bReadonly;
+						var disabled = meta.settings.aoColumns[meta.col].bDisabled;
+						var disabled = disabled ? 'disabled' : "";
 						var id = full.skuId + "-" + key;
 						var iframeId = 'iframe-' + id;
 						var attachmentLink = data ? '<b><a href=/promotion/listings'+data+'>'+local.getText('promo.listings.attachdownload')+'</a></b>' : "<b></b>";
 						
 						if (type == "display") {
-							// For excel uploading application, attachment uploading only happens on listing preview page.
-							// And we can only upload attachments for enrolled listings.
-							if(pageData.isListingPreview || (pageData.regType == 'true' && pageData.isRegEnd == 'false')) {
-								return '<form id="form-' + id + '" target="'+ iframeId + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+ 
-									pageData.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+ 
-									full.skuId+'" /><input type="hidden" name="key" value="' + key + '"/><span class="file-input"><input type="text" style="height: 22px;" value="" placeholder="选择文件" /> <input type="file" name="uploadFile" '+
-									disabled+'/></span><button class="btn" id="btn-'+id+'" type="button">上传</button></form>' +
-									'<iframe name="'+ iframeId + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
-									'<span id="msg-'+id+'" class="msg">' + attachmentLink + '</span>';
-							} else {
+							if(readonly) {
 								return attachmentLink;
+							} else {
+								return '<form class="attachment-form" uploading="false" id="form-' + id + '" target="'+ iframeId + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+ 
+								pageData.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+ 
+								full.skuId+'" /><input type="hidden" name="key" value="' + key + '"/><span class="file-input"><input type="text" style="height: 22px;" value="" placeholder="选择文件" /> <input type="file" name="uploadFile" '+
+								disabled+'/></span><button class="btn" id="btn-'+id+'" type="button">上传</button></form>' +
+								'<iframe name="'+ iframeId + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
+								'<span id="msg-'+id+'" class="msg">' + attachmentLink + '</span>';
 							}
 						}
 						
@@ -322,7 +322,7 @@ var BizReport = BizReport || {};
 						var $fileUploadBtn = $attachForm.find("#btn-" + id);
 						var errorMsgEle = $nTd.find("#msg-" + id);
 						
-						console.log(settings);
+//						console.log(settings);
 						required && $attachForm.attr("required", required);
 						
 						if ($attachForm && $attachForm.length > 0) {
@@ -331,27 +331,31 @@ var BizReport = BizReport || {};
 								var fileName = fileInput.val();
 								
 								if(required) { //attachment is a must
-									if(!fileName) {
-										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.notEmpty"));
-										return false;
-									}
-									
-									if (!fileTypeReg.test(fileName)) { // check attachment file type
-										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
+									if(!fileName && !oRow[key]) {
+										errorMsgEle.css({"color": "red"}).find("b").html(local.getText("promo.listings.notEmpty"));
 										return false;
 									}
 								}
 								
+								if (!fileName) return false;
+								
+								if (!fileTypeReg.test(fileName)) { // check attachment file type
+									errorMsgEle.css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
+									return false;
+								}
+								
+								$attachForm.attr('uploading', !!fileName);
 								$nTd.isLoading({text: local.getText('dataTable.handling'), position: "inside"});
 								
 								// get attachment upload result.
 								listingIframe.on("load", function(){
+									$attachForm.attr('uploading', false);
 									$nTd.isLoading('hide');
 									if (listingIframe.contents().length != 0 && listingIframe.contents().find("body").html().length > 0) {
 										var response = listingIframe.contents().find("body").text();
 										var responseData = $.parseJSON(response);
 										if (responseData.message && responseData.message.length > 0) {
-											errorMsgEle.removeClass("hide");
+											errorMsgEle;
 											if(responseData.status==true) {
 												errorMsgEle.find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
 												oRow[key] = responseData.message;
@@ -360,7 +364,7 @@ var BizReport = BizReport || {};
 												errorMsgEle.css({"color": "red"}).find("b").html(responseData.message);
 											}
 										} else {
-											errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html("upload file failed!");
+											errorMsgEle.css({"color": "red"}).find("b").html("upload file failed!");
 										}
 									}
 								});
@@ -375,7 +379,7 @@ var BizReport = BizReport || {};
 								} else {
 									//validate file type
 									if (!fileTypeReg.test(fileDir)) {
-										errorMsgEle.removeClass("hide").css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
+										errorMsgEle.css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
 										return false;
 									} else {
 										$attachForm.submit();

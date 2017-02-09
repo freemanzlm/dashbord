@@ -29,10 +29,8 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfiguration;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfigurationManager;
 import com.ebay.app.raptor.promocommon.util.DateUtil;
-import com.ebay.raptor.promotion.pojo.business.APACDealsListing;
 import com.ebay.raptor.promotion.pojo.business.Currency;
 import com.ebay.raptor.promotion.pojo.business.DeliveryTime;
-import com.ebay.raptor.promotion.pojo.business.FRESDealsListing;
 import com.ebay.raptor.promotion.pojo.business.IDescription;
 import com.ebay.raptor.promotion.pojo.business.Location;
 import com.ebay.raptor.promotion.pojo.business.ProductCategory;
@@ -101,20 +99,9 @@ public class ExcelSheetWriter <T> extends Writer<T>{
 						list.add(category.getDescription());
 					}
 				} else if(Currency.class.equals(dataType)) {
-					if(this.clazz.equals(FRESDealsListing.class)) {
-						list.add(Currency.USD.getDescription());
-						list.add(Currency.AUD.getDescription());
-						list.add(Currency.EURO.getDescription());
-						list.add(Currency.GBP.getDescription());
-					} else if(this.clazz.equals(APACDealsListing.class)) {
-						list.add(Currency.USD.getDescription());
-						list.add(Currency.AUD.getDescription());
-						list.add(Currency.CAD.getDescription());
-					} else {
-						for(Currency currency : EnumSet.allOf(Currency.class)) {
-							list.add(currency.getDescription());
-						}
-					} 
+					for(Currency currency : EnumSet.allOf(Currency.class)) {
+						list.add(currency.getDescription());
+					}
 				} else if(DeliveryTime.class.equals(dataType)) {
 					for(DeliveryTime time : EnumSet.allOf(DeliveryTime.class)) {
 						list.add(time.getDescription());

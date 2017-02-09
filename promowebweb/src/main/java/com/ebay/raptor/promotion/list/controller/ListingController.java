@@ -411,9 +411,9 @@ public class ListingController extends AbstractListingController {
 				}
 				
 				// TODO, remove this test line
-				if(listing.getHasUploaded()) {
-					map.put("Account_List_Attachment_base__c", "/attachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId() + "/key/Account_List_Attachment_base__c");
-				}
+//				if(listing.getHasUploaded()) {
+//					map.put("Account_List_Attachment_base__c", "/attachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId() + "/key/Account_List_Attachment_base__c");
+//				}
 				
 				map.put("lock", listing.getLocked());
 				data.add(map);

@@ -78,10 +78,6 @@ public class ResourceProvider {
 		String uploadListings = "/uploadListings";
 		String submitListings = "/submitListings";
 		String confirmListings = "/confirmListings";
-		String uploadDealsListings = "/uploadDealsListings";
-		String uploadGBHDealsListings = "/uploadGBHDealsListings";
-		String uploadAPACDealsListings = "/uploadAPACDealsListings";
-		String uploadFRESDealsListings = "/uploadFRESDealsListings";
 		
 		String submitPromoListings = "/submitPromoListings";
 		String getListingsByPromotionIdAndUserIdAndType = "/getPromotionListings/promoId/{promoId}/uid/{uid}/type/{type}";

@@ -29,95 +29,120 @@ $(function(){
 	listingTable.update({
 		promoId: pageData && pageData.promoId
 	});
-
-	var submitBtn = document.getElementById("submit-btn"),
-		data = {
-			promoId: pageData && pageData.promoId
-		};
 	
-	$(submitBtn).click(function(){
-		var listingSubmit = function() {
-			$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
-			$.ajax({
-				url: "/promotion/listings/submitListings",
-				type: 'POST',
-				data: data,
-				dataType : 'json',
-				success : function(json){
-					if (json && json.status) {
-						$(document.body).isLoading('hide');
-						window.location.replace("/promotion/"+pageData.promoId);
-					} else if (json.data && json.data.length > 0) {
-						$(document.body).isLoading('hide');
-						//cbt.alert(local.getText("errorMsg.regDateExpired"));
-						window.location.replace("/promotion/"+pageData.promoId);
-					} else {
-						$(document.body).isLoading('hide');
-						//cbt.alert(local.getText('promo.request.fail'));
-						window.location.replace("/promotion/"+pageData.promoId);
-					}
-				},
-				error: function(){
-					cbt.alert(local.getText('promo.request.fail'));
+	function submitListings() {
+		$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
+		$.ajax({
+			url: "/promotion/listings/submitListings",
+			type: 'POST',
+			dataType : 'json',
+			data: {promoId: pageData && pageData.promoId},
+			success : function(json){
+				if (json && json.status) {
+					$(document.body).isLoading('hide');
+					window.location.replace("/promotion/"+pageData.promoId);
+				} else if (json.data && json.data.length > 0) {
+					$(document.body).isLoading('hide');
+					//cbt.alert(local.getText("errorMsg.regDateExpired"));
+					window.location.replace("/promotion/"+pageData.promoId);
+				} else {
+					$(document.body).isLoading('hide');
+					//cbt.alert(local.getText('promo.request.fail'));
+					window.location.replace("/promotion/"+pageData.promoId);
 				}
-			});
-		};
+			},
+			error: function(){
+				cbt.alert(local.getText('promo.request.fail'));
+			}
+		});
+	}
+
+	/********************** Upload listings attachments ****************************************/
+	var container = $("#listing-table-container"), requriedAttachments = [], optionalAttachments, toUploadAttachments;
+	var attachmentTotalNum = attachmentUploadedNum = currentAttachIndex = 0, uploadingAttachment = false;
+	
+	// get the number of attachments that will be uploaded.
+	function sumAttachments() {
+		var allAttachForms = container.find(".attachment-form");
+		requriedAttachments = allAttachForms.filter(function(){
+			return this.hasAttribute('required');
+		});
+		optionalAttachments = allAttachForms.filter(function(){
+			return !this.hasAttribute('required') && !!this['uploadFile'].value;
+		});
 		
-		var withoutAttachSubmit = function() {
-			listingSubmit();
-		};
+		toUploadAttachments = $.merge(requriedAttachments, optionalAttachments);
+		attachmentTotalNum = toUploadAttachments.length;
+	}
+	
+	// single listing's attachments have been uploaded
+	function listingAttachmentsUploaded() {
+		currentAttachIndex += 1;
+		container.isLoading('hide');
+		
+		if (currentAttachIndex == attachmentTotalNum) {
+			uploadingAttachment = false; // attachments uploading completed
+			(attachmentUploadedNum == attachmentTotalNum) && submitListings();
+		} else {
+			uploadListingAttachments();
+		}
+	}
+	
+	// upload single listing's attachments
+	function uploadListingAttachments() {
+		var $currentForm = toUploadAttachments.eq(currentAttachIndex);
+		
+		container.isLoading({text: local.getText("promo.request.counting", [attachmentUploadedNum, attachmentTotalNum]), position: "overlay"});
+					
+		// check if an attachment is uploaded
+		var checkAttachmentsUploaded = function() {
+			var $msg = $currentForm.siblings("span.msg");
+			
+			function hasUploadCompleted() {
+				return $currentForm.attr('uploading') == "false";
+			}
+			
+			function hasUploadSuccess() {
+				// Note: Before call this method, you must have call hasUploadCompleted() first.
+				return !$currentForm.find("input[type=file]").val() && $msg.find("a").length > 0;
+			}
+			
+			if (hasUploadCompleted()) {
+				hasUploadSuccess() && (attachmentUploadedNum += 1);
+				listingAttachmentsUploaded();
+			} else {
+				var timer = setInterval(function() {
+					if (hasUploadCompleted()) {
+						clearInterval(timer);
+						hasUploadSuccess() && (attachmentUploadedNum += 1);
+						listingAttachmentsUploaded();
+					}
+				}, 500);
+			}
+		}
+		
+		$currentForm.submit();
+		checkAttachmentsUploaded();
+	}
+	
+	var submitBtn = document.getElementById("submit-btn");
+	$(submitBtn).click(function(event){
+		event.preventDefault();
+		if (uploadingAttachment) return;
+		
+		uploadingAttachment = true;
+		sumAttachments();
+		uploadingAttachment = !(toUploadAttachments.length <= 0); // no attachment
 		
 		var listings = listingTable.oDataTable.data();
-		var attachIndex = 0;
-		var container = $(".dataTable-container");
-		var total = container.find("input[type=file]").length;
-		var required = $('#listing-table th').eq($("iframe[name=iframe"+listings[0].skuId+"]").parent().index()).attr('required');
-		if(!required) {
-			total = container.find("input[type=file]").filter(function() {
-				return !!($(this).val()|| $(this).parent().parent().parent().find("span a").length);
-			}).length ;
-		}
-		var attachSubmit = function() {
-			var attachId = listings[attachIndex].skuId;
-			var attachIframe = $("iframe[name=iframe"+attachId+"]");
-			var attachForm = $("#form"+attachId);
-			/*var required = $('#listing-table th').eq(attachForm.parent().index()).attr('required');
-			if(!required) {
-				total = container.find("input[type=file]").filter(function() {
-					return $(this).val();
-				}).length + container.find("iframe").parent().find("span a").length;
-			}*/
-			if($("#href"+attachId).length<=0) {
-				attachForm.submit();
+		if(listings && listings.length > 0) {
+			if(attachmentTotalNum > 0) {
+				currentAttachIndex = 0;
+				attachmentUploadedNum = 0;
+				uploadListingAttachments();
+			} else {
+				submitListings();
 			}
-			var successCount = container.find("iframe").parent().find("a").length;
-			container.isLoading({text: local.getText("promo.request.counting", [successCount, total]), position: "overlay"});
-			var timer = setInterval(function() {
-				if(successCount == total){
-					container.isLoading('hide');
-					clearInterval(timer);
-					listingSubmit();
-				} else if($("#msg"+attachId).find("b").html().length != 0) {
-					container.isLoading('hide');
-					clearInterval(timer);
-					attachIndex += 1;
-					successCount = container.find("iframe").parent().find("span a").length;
-					if(attachIndex<total) {
-						attachSubmit();
-					} else {
-						if(successCount == total) {
-							listingSubmit();
-						}
-					}
-				}
-			}, 500);
-		};
-		
-		
-		if(total > 0) {
-			attachSubmit();
-		} else {
-			withoutAttachSubmit();
 		}
 	});	
 });

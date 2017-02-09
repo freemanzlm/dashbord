@@ -5,7 +5,7 @@
 
 <c:set var="columns" value=""></c:set>
 
-<div class="dataTable-container">
+<div id="listing-table-container" class="dataTable-container">
 	<c:if test="${ not empty fieldsDefintions}">
 		<table id="listing-table" class="dataTable">
 			<thead>
