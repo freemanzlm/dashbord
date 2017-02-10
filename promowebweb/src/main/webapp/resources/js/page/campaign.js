@@ -222,6 +222,7 @@ $(function(){
 				
 				function hasUploadSuccess() {
 					// Note: Before call this method, you should have call hasUploadCompleted() first.
+					// If uploading succeeded, file input will be emptied and there will have an attachment download link.
 					return !$currentForm.find("input[type=file]").val() && $msg.find("a").length > 0;
 				}
 				

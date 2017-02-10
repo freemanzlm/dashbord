@@ -15,6 +15,20 @@ var BizReport = BizReport || {};
 	var local = namespace.local;
 	var fileTypeReg = /\.(doc|docx|xls|xlsx|jpg|gif|zip|rar|pdf)$/i;
 	
+	function hasValidSize(inputElement, maxSize) {
+		if (inputElement && inputElement.files) {
+			for (var i = 0; i < inputElement.files.length; i++)	{
+				var file = inputElement.files[i];
+				if (file && file.size > maxSize) {
+					return false;
+				} else {
+					continue;
+				}
+			}
+		}
+		return true;
+	}
+	
 	var defaultDataTableConfigs = {
 			tableConfig : {
 				'aLengthMenu': [20],
@@ -322,7 +336,6 @@ var BizReport = BizReport || {};
 						var $fileUploadBtn = $attachForm.find("#btn-" + id);
 						var errorMsgEle = $nTd.find("#msg-" + id);
 						
-//						console.log(settings);
 						required && $attachForm.attr("required", required);
 						
 						if ($attachForm && $attachForm.length > 0) {
@@ -344,6 +357,12 @@ var BizReport = BizReport || {};
 									return false;
 								}
 								
+								if (!hasValidSize(fileInput.get(0), 4718592)) {
+									// attachment size should be less than 4.5M.
+									errorMsgEle.css({"color": "red"}).find("b").html(local.getText("promo.listings.attachmentSizeError"));
+									return false;
+								}
+								
 								$attachForm.attr('uploading', !!fileName);
 								$nTd.isLoading({text: local.getText('dataTable.handling'), position: "inside"});
 								
@@ -355,7 +374,7 @@ var BizReport = BizReport || {};
 										var response = listingIframe.contents().find("body").text();
 										var responseData = $.parseJSON(response);
 										if (responseData.message && responseData.message.length > 0) {
-											errorMsgEle;
+											// If uploading success, response should have attachemnt download URL.
 											if(responseData.status==true) {
 												errorMsgEle.find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
 												oRow[key] = responseData.message;
@@ -363,8 +382,8 @@ var BizReport = BizReport || {};
 											} else {
 												errorMsgEle.css({"color": "red"}).find("b").html(responseData.message);
 											}
-										} else {
-											errorMsgEle.css({"color": "red"}).find("b").html("upload file failed!");
+										} else if(responseData.status == false) {
+											errorMsgEle.css({"color": "red"}).find("b").html(local.getText("attachmentUploadFailed"));
 										}
 									}
 								});
