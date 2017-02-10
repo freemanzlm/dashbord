@@ -241,8 +241,8 @@ public class ListingService extends BaseService {
 	 * @throws PromoException 
 	 */
 	public ListingAttachment downloadListingAttachment(String promoId, Long userId, String skuId, String key) throws PromoException {
-		String url = url(params(ResourceProvider.ListingRes.downloadListingAttachment,
-				new Object[] { "{promoId}", promoId, "{userId}", userId, "{skuId}", skuId}));
+		String url = url(params(ResourceProvider.ListingRes.listingAttachment,
+				new Object[] { "{promoId}", promoId, "{userId}", userId, "{skuId}", skuId, "{key}", key}));
 		GingerWebTarget target = PromoClient.getClient().target(url);
 		Invocation.Builder build = target.request();
 		Response resp =  build.headers(authHeaders(IAFTokenService.getIAFToken())).get();
