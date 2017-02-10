@@ -7,7 +7,7 @@ public class PromoInitConfig extends BasePromoInitConfig{
 
 	@Override
 	public String getEndPoint() {
-		return "http://monterey-3699.slc01.dev.ebayc3.com:8080/promoservice/v1";
+		return "http://promocamp.stratus.qa.ebay.com/promoservice/v1";
 //		return "http://localhost:9080/promoservice/v1";
 	}
 

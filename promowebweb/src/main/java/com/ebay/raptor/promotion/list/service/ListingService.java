@@ -211,6 +211,7 @@ public class ListingService extends BaseService {
 	    multiPart.field("promoId", promoId);
 	    multiPart.field("userId", Long.toString(userId));
 	    multiPart.field("fileType", fileType);
+	    multiPart.field("key", key);
 		GingerClientResponse resp = uploadMultipart(url, multiPart);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
