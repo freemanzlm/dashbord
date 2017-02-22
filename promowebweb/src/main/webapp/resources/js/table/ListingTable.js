@@ -33,7 +33,7 @@ var BizReport = BizReport || {};
 			tableConfig : {
 				'aLengthMenu': [20],
 				'bAutoWidth': true,
-				'bDeferRender': true,
+				'bDeferRender': false,
 				'bFilter': false,
 				'bLengthChange': false,
 				'bDestroy': true,
@@ -45,7 +45,7 @@ var BizReport = BizReport || {};
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
 				'bScrollCollapse': true,
-				'sScrollX': '100%',
+				'sScrollX': true,
 				'sScrollY': "600",
 				'oLanguage': {
 					sZeroRecords: local.getText('dataTable.listing.zeroRecords'),
@@ -140,14 +140,14 @@ var BizReport = BizReport || {};
 					aTargets: ["Item_ID_base__c"],
 					sDefaultContent: "",					
 					sType: "numeric",
-					sWidth: "150px",
 					sClass: "pic-id dt-nowrap",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full, meta) {
 						if (type == "display") {
 							if(data) {
-								var display = "<img src='http://thumbs2.ebaystatic.com/pict/" + data + ".jpg' height='50' width='50'/>";
-								return display += "<p><a href='http://www.ebay.com/itm/" + data + "'>" + data + "</a></p>";
+								// 150px must set on div, it's useless in sWidth or sWidthOrg
+								var display = "<div style='width:150px;'><img src='http://thumbs2.ebaystatic.com/pict/" + data + ".jpg' style='height:50px;width:50px;'/>";
+								return display += "<p><a href='http://www.ebay.com/itm/" + data + "'>" + data + "</a></p></div>";
 							}
 						}
 						
