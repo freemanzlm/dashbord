@@ -212,6 +212,7 @@ public class ListingService extends BaseService {
 	    multiPart.field("userId", Long.toString(userId));
 	    multiPart.field("fileType", fileType);
 	    multiPart.field("key", key);
+	    multiPart.field("fileName", file.getName());
 		GingerClientResponse resp = uploadMultipart(url, multiPart);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
@@ -249,6 +250,9 @@ public class ListingService extends BaseService {
 		if(Status.OK.getStatusCode() == resp.getStatus()) {
 			MultivaluedMap<String, Object> headers = resp.getMetadata();
 			String attachmentName = (String) headers.get("attachmentName").get(0);
+			if(attachmentName==null || "".equals(attachmentName)) {
+				attachmentName = "download"; //default download file name
+			}
 			String attachmentType = (String) headers.get("attachmentType").get(0);
 			InputStream inputStream = (InputStream) resp.getEntity();
 			ListingAttachment attachment = new ListingAttachment();
