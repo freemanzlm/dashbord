@@ -3,6 +3,7 @@ package com.ebay.raptor.promotion.list.service;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
+import com.ebay.kernel.util.URLDecoder;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.pojo.business.Listing;
@@ -212,7 +214,7 @@ public class ListingService extends BaseService {
 	    multiPart.field("userId", Long.toString(userId));
 	    multiPart.field("fileType", fileType);
 	    multiPart.field("key", key);
-	    multiPart.field("fileName", file.getName());
+	    multiPart.field("fileName", decodefilePathOrfileName(file.getName()));
 		GingerClientResponse resp = uploadMultipart(url, multiPart);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>(){};
@@ -230,6 +232,15 @@ public class ListingService extends BaseService {
 		} else {
 			//TODO change the error type.
 			throw new Exception(getMessage("attachment.validation.message.notcorrecttype"));
+		}
+	}
+	
+	private String decodefilePathOrfileName(String value) {
+		try {
+			return URLDecoder.decode(
+					new String(value.getBytes(),"UTF-8"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return value;
 		}
 	}
 	
