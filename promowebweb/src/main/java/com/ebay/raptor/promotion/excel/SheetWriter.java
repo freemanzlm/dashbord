@@ -155,16 +155,18 @@ public class SheetWriter implements ISheetWriter {
 			writeRow(book, sheet, row, configs, map);
 		}
 		
+		for(ColumnConfiguration config : configs) {
+			if (!config.getDisplay()) {
+				hideColumn(sheet, config.getWriteOrder());
+			}
+		}
+		
 		if (firstDataRowNum > sheet.getLastRowNum()) {
 			// no data
 			return;
 		}
 		
 		for(ColumnConfiguration config : configs) {
-			if (!config.getDisplay()) {
-				hideColumn(sheet, config.getWriteOrder());
-			}
-			
 			List<ColumnConstraint> constraints = config.getConstraints();
 			for (ColumnConstraint constraint : constraints) {
 				if (constraint instanceof RangeColumnConstraint) {
