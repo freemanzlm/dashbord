@@ -25,7 +25,7 @@ public enum AttachmentAllowedFileType {
 	/**
 	 * XLS
 	 */
-	xls("504B0304"),
+	xls("D0CF11E0"),
 	
 	/**
 	 * XLSX
