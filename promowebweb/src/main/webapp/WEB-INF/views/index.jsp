@@ -71,6 +71,10 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<!-- end: Global Header -->
 	
+	<c:if test="${pgcReadyFlag eq true}">
+        	<jsp:include page="pgc_entrance.jsp"></jsp:include>
+    </c:if>
+	
 	<jsp:include page="topNavigator.jsp"></jsp:include>
 	
 	<div id="page-pane">

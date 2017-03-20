@@ -78,6 +78,26 @@ public class DES {
 
 		return urlEncode ? FastURLEncoder.encode(bas64Str, "UTF-8") : bas64Str;
 	}
+	
+	public String encrypt2(String input) throws Exception {
+		// Should encode the token in order to transfer through URL.
+		byte[] enc = desEncrypt(input.getBytes("UTF8"));
+		// replace the string in case XssCheckUtil would take affect
+		
+		return bytes2hex(enc);
+	} 
+	
+	private static String bytes2hex(byte[] bytes) {
+		StringBuffer hex = new StringBuffer();
+		for(int i=0; i<bytes.length; i++) {
+			String temp = Integer.toHexString(bytes[i] & 0xFF);
+			if(temp.length() == 1) {
+				hex.append("0");
+			}
+			hex.append(temp.toLowerCase());
+		}
+		return hex.toString();
+	}
 
 	public String decrypt(String input, boolean urlDecode) throws Exception {
 		return decrypt(input, true, urlDecode);

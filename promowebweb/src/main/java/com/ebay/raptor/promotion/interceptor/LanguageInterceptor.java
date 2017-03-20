@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -16,12 +17,15 @@ import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.config.AppConfig;
 import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.pojo.PGCSeller;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
+import com.ebay.raptor.promotion.security.DES;
 import com.ebay.raptor.promotion.service.BRDataService;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
+import com.ebay.raptor.promotion.service.PGCService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
 /**
@@ -38,6 +42,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	@Autowired LoginService loginService;
 	@Autowired private CSApiService service;
 	@Autowired BaseDataService baseService;
+	@Autowired PGCService pgcService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -140,11 +145,46 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		model.addObject("isCanSubscribeDDS", isCanSubscribeDDS);
 		model.addObject("isInConvWhitelist", isInConvWhitelist);
 		
+		// pgc quota
+		renderPgcQuota(model, userData);
+		
 		if (accessBizReport) {
 			model.addObject(ViewContext.BizUrl.getAttr(),
 					AppConfig.BIZ_REPORT_URL + "?lang" + language);
 		}
 
+	}
+	
+	private void renderPgcQuota(ModelAndView mav, UserData userData) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("LoggedCBTAccount", userData.getUserName());
+			obj.put("LoggedCBTAccountID", userData.getUserId());
+			obj.put("time", System.currentTimeMillis());
+			String secretParams = DES.getInstance().encrypt2(obj.toString());
+			mav.addObject("secretParams", secretParams);
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+		
+		boolean pgcReady = false;
+		try {
+			pgcReady = baseService.getPgcFlag(userData.getUserId());
+			mav.addObject("pgcReadyFlag", pgcReady);
+		} catch (HttpRequestException e1) {
+			mav.addObject("pgcReadyFlag", false);
+			return;
+		}
+		
+		if(pgcReady) {
+			PGCSeller seller = null;
+			try {
+				seller = pgcService.getPGCAccount(userData.getUserName());
+			} catch (NumberFormatException | HttpRequestException e) {
+				e.printStackTrace();
+			}
+			mav.addObject("pgcSeller", seller);
+		}
 	}
 
 }
