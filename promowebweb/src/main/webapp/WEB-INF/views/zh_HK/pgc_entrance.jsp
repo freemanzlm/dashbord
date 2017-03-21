@@ -25,7 +25,7 @@
 			<c:when test="${ pgcSeller.pgcEligibility eq true and pgcSeller.limitEligibility eq 'Eligible' and pgcSeller.remainingQuota>0}">
 				<p class=" mb20">
 					您可以註冊<b class="color-orange"> <f:formatNumber value="${pgcSeller.remainingQuota}" type="number" maxFractionDigits="0"/> </b>
-					個高額度新帳戶，<br/>每個帳戶將可能獲得
+					個高額度新帳戶<br/>每個帳戶將可能獲得
 					<b class="color-orange"> <f:formatNumber value="${pgcSeller.limitQty}" type="number" maxFractionDigits="0"/> </b>
 					的初始刊登數量額度
 				</p>
