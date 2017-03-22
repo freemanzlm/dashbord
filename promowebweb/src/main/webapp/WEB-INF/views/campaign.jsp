@@ -91,7 +91,7 @@
 				<%@ include file="steps.jsp"%>
 				
 				<%@ include file="state.jsp"%>
-
+				
 				<%@ include file="activity.jsp"%>
 				
 				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK') and not regType and not empty fieldsDefintions }">

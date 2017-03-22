@@ -1,0 +1,63 @@
+@white-color: #f00;
+
+.border-box {
+	-webkit-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+		 -o-box-sizing: border-box;
+			box-sizing: border-box;
+}
+
+fieldset {
+	border: none;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.form-group {
+	margin-bottom: 1em;
+	
+	.control-label {
+		margin-bottom: 5px;
+		padding-right: 1em;
+		font-weight: bold;
+	
+		display: block;
+	}
+	
+	.form-field, 
+	.field-note {
+		.border-box;
+	}
+	
+	&.error {
+		.form-control {
+			border-color: @white-color;
+		}
+		
+		.control-label {
+			color: @white-color;
+		}
+	}
+}
+
+.form-horizontal {
+	.form-group {
+		display: flex;
+		align-items: center;
+	}
+	
+	.control-label {
+		text-align: right;
+		float: left;
+		
+		label {
+			vertical-align: middle;
+		}
+	}
+	
+	 .field-note {
+		padding-left: 1em;
+		text-align: left;
+	}
+}
