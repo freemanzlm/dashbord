@@ -32,10 +32,11 @@
 			</c:when>
 			<c:otherwise>
 				<p class=" mb20">
-					新賣家最高可至<b class="color-orange"> <f:formatNumber value="3000" type="number" maxFractionDigits="0"/> </b>
+					<%-- 新賣家最高可至<b class="color-orange"> <f:formatNumber value="3000" type="number" maxFractionDigits="0"/> </b>
 					刊登數量額度<br/>有客戶經理的客戶可能獲得
 					<b class="color-orange"> <f:formatNumber value="1500" type="number" maxFractionDigits="0"/> </b>至
-					<b class="color-orange"> <f:formatNumber value="20000" type="number" maxFractionDigits="0"/> </b>之間的刊登數量額度
+					<b class="color-orange"> <f:formatNumber value="20000" type="number" maxFractionDigits="0"/> </b>之間的刊登數量額度 --%>
+					有客戶經理的賣家可能獲得最高<b class="color-orange"> <f:formatNumber value="20000" type="number" maxFractionDigits="0"/> </b>刊登數量額度
 				</p>
 			</c:otherwise>
 		</c:choose>
