@@ -44,18 +44,18 @@
 	font-weight: bold;
 }
 .viewdiv {
-	width:50%;
+	width:52%;
 	padding: 25px 10px;
 	float:right;
 }
 
 .viewdiv .leftfloatdiv {
 	float:left;
-	padding: 0px 10px;
+	padding: 0px 6px;
 	font-weight: bold;
 }
 .viewdiv .qutoanumberdiv {
-	width:60%;
+	width:62%;
 	float:left;
 	font-weight: bold;
 	text-align:right;
