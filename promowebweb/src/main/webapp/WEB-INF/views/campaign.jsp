@@ -5,7 +5,6 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 
 <c:set var="isPreview" value="${ promo.isPreview }" />
 <c:set var="currentStep" value="${ isPreview ? promo.draftPreviewStep : promo.currentStep }" />

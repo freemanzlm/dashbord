@@ -2,6 +2,8 @@
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
+
 <div class="tabbable confirm-letter-steps">
 	<div class="tab-list-container clr">
 		<ul class="tab-list clr" role="tablist">
@@ -32,7 +34,7 @@
 			<div class="form-group">
 				<div class="control-label">eBay账号：</div>
 				<div class="form-field">
-					ABC（不允许修改）
+					${unm}（不允许修改）
 				</div>
 			</div>
 			<div class="form-group">
@@ -44,7 +46,7 @@
 			<div class="form-group">
 				<div class="control-label">奖励金额：</div>
 				<div class="form-field">
-					100美金（不允许修改）（以下简称“活动奖励”）
+					${reward} ${promo.currency}（不允许修改）（以下简称“活动奖励”）
 				</div>
 			</div>
 			<div class="form-group">

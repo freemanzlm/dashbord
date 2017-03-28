@@ -6,15 +6,14 @@
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
 
-<fmt:formatDate value="${promo.rewardDlDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
-
 <c:set var="isPreview" value="${ promo.isPreview }" />
 <c:set var="currentStep" value="${ isPreview ? promo.draftPreviewStep : promo.currentStep }" />
 <c:set var="visibleCurrentStep" value="${ promo.visibleCurrentStep }" />
 <!-- visible step list -->
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
-<c:set var="hasListingsNominated" value="${hasListingsNominated}" />
+
+<fmt:formatDate value="${promo.rewardDlDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -95,7 +94,6 @@
 
 				<%@ include file="steps.jsp"%>
 
-
 				<%@ include file="subsidy/fill_contract.jsp"%>
 				
 
@@ -126,8 +124,6 @@
 	</script>
 
 	<script type="text/javascript">
-		/* var hasReviewed = '${hasReviewed}';
-		var hasListingsNominated = '${hasListingsNominated}'; */
 		var real_current_step = '${currentStep}';
 		var isAdmin = '${isAdmin}';
 		var publishFlag = '${promo.publishFlag}';
