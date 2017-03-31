@@ -1,22 +1,40 @@
 $(function(){
 	
-	var ListingTable = BizReport.ListingTable;
+	var app = new Vue({
+		el: "#page-pane",
+		data: {
+			user: {name: pageData.username},
+			hasAcceptLetter: false
+		},
+		methods: {
+			sendSellerCustomFields: function(event){
+				var $form = $("#custom-fields-form");
+				$.ajax($form.attr("action"), {
+					data: $form.serialize(),
+					type : 'POST',
+					contentType : 'application/json',
+					dataType : 'json',
+					headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
+					context : this,
+					success : function() {
+						console.log(this);
+					},
+					error: function() {
+						console.log("error")
+					}
+				});
+				
+			}
+		}
+	});
+	
+	window.app = app;
+	
 	var local = BizReport.local;
 
 	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn, listingCountJ;
 	
 	var hasState = false, customTableConfig;
-	
-	//var successCount = 0;
-	
-	if (pageData && pageData.columns && pageData.columns.length > 1) {
-		hasState = pageData.columns[pageData.columns.length - 1]['data'] == 'state';
-		
-		customTableConfig = {
-			'columns': pageData.columns,
-			'aaSorting': (hasState ? [[pageData.columns.length - 1, 'desc']] : null)
-		};
-	}
 	
 	uploadIFrame = $("iframe[name=uploadIframe]");
 	uploadBtn = document.getElementById("upload-btn");

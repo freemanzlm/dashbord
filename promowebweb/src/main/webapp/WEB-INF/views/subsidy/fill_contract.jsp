@@ -24,7 +24,7 @@
 		<h3 class="mt20 mb5 text-center">活动奖励确认函</h3>
 		<hr />
 		<h4 class="mt20 ml20">卖家基本信息：</h4>
-		<form action="" class="form-horizontal">
+		<form id="custom-fields-form" action="acknowledgment" class="form-horizontal" method="post">
 		
 			<c:forEach items="${ subsidyTerm.sellerFillingFields }" var="field">
 				<c:if test="${ not empty field}">
@@ -62,15 +62,17 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="control-label"><input type="checkbox" /></div>
+				<div class="control-label"><input v-model="hasAcceptLetter" type="checkbox" /></div>
 				<div class="form-field">
 					我已阅读并接受以下确认函内容
 				</div>
 			</div>
 			<div class="text-center">
-				<button type="button" class="btn">点击生成PDF共签署</button>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="button" class="btn">下一步：上传确认函</button>
+				<button type="button" class="btn" v-on:click="sendSellerCustomFields">点击生成PDF共签署</button>
+				<template v-if="hasAcceptLetter">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" class="btn">下一步：上传确认函</button>
+				</template>
 			</div>
 		</form>
 		<hr />

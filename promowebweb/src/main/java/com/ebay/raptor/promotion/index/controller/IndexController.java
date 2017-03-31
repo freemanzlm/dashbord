@@ -143,7 +143,7 @@ public class IndexController {
 					promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
 				}
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
-				model.addObject("subsidyTerm", subsidyService.getSubsidyLegalTerm(promo.getType()));
+				model.addObject("subsidyTerm", subsidyService.getSubsidyLegalTerm(promo.getType(), promo.getRegion()));
 				
 			} else {
 				model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());

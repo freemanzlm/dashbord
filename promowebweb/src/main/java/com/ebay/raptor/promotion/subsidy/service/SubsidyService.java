@@ -58,7 +58,7 @@ public class SubsidyService extends BaseService {
 	 * @param paymentType
 	 * @return
 	 */
-	public SubsidyLegalTermResponse getSubsidyLegalTerm(Integer paymentType) {
+	public SubsidyLegalTermResponse getSubsidyLegalTerm(Integer paymentType, String country) {
 		SubsidyLegalTermResponse term = new SubsidyLegalTermResponse();
 		ArrayList<SubsidyCustomField> sellerFillingFields =  new ArrayList<SubsidyCustomField>();
 		SubsidyCustomField field = new SubsidyCustomField();
@@ -67,7 +67,7 @@ public class SubsidyService extends BaseService {
 		field.setValue("4234324324234324");
 		sellerFillingFields.add(field);
 		
-		term.setCountry("CN");
+		term.setCountry(country);
 		term.setOnlingVettingFlag(1);
 		
 		term.setSellerFillingFields(sellerFillingFields);
