@@ -1,5 +1,6 @@
 package com.ebay.raptor.promotion.list.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,6 +32,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.po.Listing;
+import com.ebay.cbt.raptor.po.ListingAttachment;
+import com.ebay.cbt.raptor.route.ResourceProvider;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.UploadedListingFileHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
@@ -46,15 +50,12 @@ import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.business.Listing;
-import com.ebay.raptor.promotion.pojo.business.ListingAttachment;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.LoginService;
-import com.ebay.raptor.promotion.service.ResourceProvider;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -66,7 +67,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  * @author lyan2
  */
 @Controller
-@RequestMapping(ResourceProvider.ListingRes.base)
+@RequestMapping(ResourceProvider.ListingRes.listingBase)
 public class ListingController extends AbstractListingController {
 	private static CommonLogger logger = CommonLogger.getInstance(ListingController.class);
 	
@@ -264,7 +265,7 @@ public class ListingController extends AbstractListingController {
 		try {
 			attachment = listingService.downloadListingAttachment(promoId, userId, skuId, key);
 			if(attachment!=null) {
-				inputStream = attachment.getContent();
+				inputStream = new  ByteArrayInputStream(attachment.getContent());
 				attachmentName = attachment.getAttachmentName();
 				attachmentType = attachment.getAttachmentType();
 			}

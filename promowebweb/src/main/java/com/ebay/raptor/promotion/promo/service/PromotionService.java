@@ -9,6 +9,7 @@ import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
+import com.ebay.cbt.raptor.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
@@ -17,7 +18,6 @@ import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromoAcceptResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromotionResponse;
 import com.ebay.raptor.promotion.service.BaseService;
-import com.ebay.raptor.promotion.service.ResourceProvider;
 
 @Component
 public class PromotionService extends BaseService {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.po.WLTAccount;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
@@ -91,6 +92,24 @@ public class SubsidyController {
 		SubsidyLegalTerm term = new SubsidyLegalTerm();
 		
 		return term;
+	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public ModelAndView test(HttpServletRequest request, HttpServletResponse response)
+			throws MissingArgumentException, IOException {
+		ModelAndView model = new ModelAndView();
+		WLTAccount account = null;
+		UserData userData = loginService.getUserDataFromCookie(request);
+			System.out.println("i am in now can u see me");
+		try {
+			account = subsidyService.getTest("11111", 1L);
+//			account = new WLTAccount();
+//			account.setId(2222);
+			model.addObject("ha", account);
+			model.setViewName(ViewResource.TEST_PAGE.getPath());
+		} catch (Exception e) {
+		}
+		return model;
 	}
 	
 	@ExceptionHandler(Exception.class)

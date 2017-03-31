@@ -12,11 +12,11 @@ import javax.validation.ConstraintViolation;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 
+import com.ebay.cbt.raptor.po.Listing;
 import com.ebay.raptor.promotion.enums.ListingState;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.excep.UploadListingIsNullException;
 import com.ebay.raptor.promotion.list.service.ListingService;
-import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

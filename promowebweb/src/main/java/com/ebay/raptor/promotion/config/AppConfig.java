@@ -38,7 +38,7 @@ public class AppConfig {
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isDev()) {
-			sellerDashboardServicePrefix = "http://l-shc-00437469.corp.ebay.com/:8090/sdt/secureResource/v1/";
+			sellerDashboardServicePrefix = "http://l-shc-15008800.corp.ebay.com/:8180/sdt/secureResource/v1/";
 			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
 		} else {
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/sdt/secureResource/v1/";

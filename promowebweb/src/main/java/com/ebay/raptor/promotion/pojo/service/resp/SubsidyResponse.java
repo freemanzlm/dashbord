@@ -2,7 +2,8 @@ package com.ebay.raptor.promotion.pojo.service.resp;
 
 import javax.ws.rs.core.Response.Status;
 
-import com.ebay.raptor.promotion.pojo.business.Subsidy;
+import com.ebay.cbt.raptor.po.Subsidy;
+import com.ebay.cbt.raptor.po.WLTAccount;
 
 /**
  * 
@@ -15,6 +16,17 @@ public class SubsidyResponse extends BaseServiceResponse {
 	}
 
 	private Subsidy subsidy;
+	private WLTAccount wltAccount;
+	
+	
+	
+	public WLTAccount getWltAccount() {
+		return wltAccount;
+	}
+
+	public void setWltAccount(WLTAccount wltAccount) {
+		this.wltAccount = wltAccount;
+	}
 
 	public Subsidy getSubsidy() {
 		return subsidy;

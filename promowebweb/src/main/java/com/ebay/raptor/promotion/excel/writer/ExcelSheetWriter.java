@@ -29,13 +29,13 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfiguration;
 import com.ebay.app.raptor.promocommon.excel.header.HeaderConfigurationManager;
 import com.ebay.app.raptor.promocommon.util.DateUtil;
-import com.ebay.raptor.promotion.pojo.business.Currency;
-import com.ebay.raptor.promotion.pojo.business.DeliveryTime;
-import com.ebay.raptor.promotion.pojo.business.IDescription;
-import com.ebay.raptor.promotion.pojo.business.Location;
-import com.ebay.raptor.promotion.pojo.business.ProductCategory;
-import com.ebay.raptor.promotion.pojo.business.ShipOption;
-import com.ebay.raptor.promotion.pojo.business.Site;
+import com.ebay.cbt.raptor.enumcode.Currency;
+import com.ebay.cbt.raptor.enumcode.DeliveryTime;
+import com.ebay.cbt.raptor.enumcode.IDescription;
+import com.ebay.cbt.raptor.enumcode.Location;
+import com.ebay.cbt.raptor.enumcode.ProductCategory;
+import com.ebay.cbt.raptor.enumcode.ShipOption;
+import com.ebay.cbt.raptor.enumcode.Site;
 
 public class ExcelSheetWriter <T> extends Writer<T>{
 	private static CommonLogger logger = CommonLogger.getInstance(ExcelSheetWriter.class);

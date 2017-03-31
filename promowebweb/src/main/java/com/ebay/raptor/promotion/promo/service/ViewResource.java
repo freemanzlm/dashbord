@@ -49,6 +49,8 @@ public enum ViewResource {
 
 	ERROR("error"),
 	
+	TEST_PAGE("subsidy/test"),
+	
 	UNKNOW_CAMPAIGN("unknowCampaign");
 
 	private ViewResource(String path) {
