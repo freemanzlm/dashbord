@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.index.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
+import com.ebay.cbt.raptor.promotion.response.SubsidyLegalTermResponse;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -140,6 +143,7 @@ public class IndexController {
 					promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
 				}
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
+				model.addObject("subsidyTerm", subsidyService.getSubsidyLegalTerm(promo.getType()));
 				
 			} else {
 				model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
@@ -243,4 +247,5 @@ public class IndexController {
 		result = view.handleView(promo, uid);
 		return result;
 	}
+
 }

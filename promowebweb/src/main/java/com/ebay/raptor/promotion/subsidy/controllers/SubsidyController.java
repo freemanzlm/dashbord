@@ -16,13 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.po.WLTAccount;
+import com.ebay.cbt.raptor.promotion.response.SubsidyLegalTermResponse;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.pojo.business.SubsidyLegalTerm;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -52,11 +52,11 @@ public class SubsidyController {
 		UserData userData = loginService.getUserDataFromCookie(request);
 		Date now = new Date();
 		Promotion promo = null;
-		SubsidyLegalTerm term = null;
+		SubsidyLegalTermResponse term = null;
 		
 		try {
 			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-			term = getSubsidyLegalTerm(promo.getRewardType());
+			term = subsidyService.getSubsidyLegalTerm(promo.getRewardType());
 			
 			if (promo != null) {
 				view.calcualteCurentStep(promo);
@@ -81,17 +81,6 @@ public class SubsidyController {
 		}
 
 		return model;
-	}
-	
-	/**
-	 * 
-	 * @param paymentType
-	 * @return
-	 */
-	private SubsidyLegalTerm getSubsidyLegalTerm(Integer paymentType) {
-		SubsidyLegalTerm term = new SubsidyLegalTerm();
-		
-		return term;
 	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)

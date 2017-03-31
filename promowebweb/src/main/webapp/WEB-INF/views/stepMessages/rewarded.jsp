@@ -25,10 +25,12 @@
 			<div class="message-content">
 				<c:choose>
 					<c:when	test="${ promo.state ne 'End' }">
-						<h3>恭喜！您将获得等值 ${reward} ${promo.currency} 的奖励</h3>
+						<h3>恭喜！您将获得等值 ${reward} ${promo.currency} 的奖励！</h3>
 						<menu>
 							<li>
-								<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a> 
+								<c:if test="${ subsidyTerm.onlingVettingFlag == 1 }">
+									<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
+								</c:if>
 								<br />
 								<br />
 								<a href="index">返回活动列表</a>

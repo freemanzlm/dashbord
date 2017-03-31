@@ -78,7 +78,7 @@
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.table['ListingTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.page['campaign.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.page['subsidy.js']}" target="page-js2"></res:useJs>
 </head>
 
 <body>

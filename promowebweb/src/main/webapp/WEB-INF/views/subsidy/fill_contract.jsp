@@ -25,12 +25,18 @@
 		<hr />
 		<h4 class="mt20 ml20">卖家基本信息：</h4>
 		<form action="" class="form-horizontal">
-			<div class="form-group">
-				<div class="control-label">卖家姓名/公司名称：</div>
-				<div class="form-field">
-					<input type="text" />
-				</div>
-			</div>
+		
+			<c:forEach items="${ subsidyTerm.sellerFillingFields }" var="field">
+				<c:if test="${ not empty field}">
+					<div class="form-group">
+						<div class="control-label">${field.label }：</div>
+						<div class="form-field">
+							<input type="text" name="${field.key }" value="${field.value }"/>
+						</div>
+					</div>
+				</c:if>
+			</c:forEach>
+			
 			<div class="form-group">
 				<div class="control-label">eBay账号：</div>
 				<div class="form-field">

@@ -1,5 +1,7 @@
 package com.ebay.raptor.promotion.subsidy.service;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response.Status;
 
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Component;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.cbt.raptor.po.Subsidy;
 import com.ebay.cbt.raptor.po.WLTAccount;
+import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
+import com.ebay.cbt.raptor.promotion.response.SubsidyLegalTermResponse;
 import com.ebay.cbt.raptor.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
@@ -50,6 +54,28 @@ public class SubsidyService extends BaseService {
 	}
 	
 	/**
+	 * 
+	 * @param paymentType
+	 * @return
+	 */
+	public SubsidyLegalTermResponse getSubsidyLegalTerm(Integer paymentType) {
+		SubsidyLegalTermResponse term = new SubsidyLegalTermResponse();
+		ArrayList<SubsidyCustomField> sellerFillingFields =  new ArrayList<SubsidyCustomField>();
+		SubsidyCustomField field = new SubsidyCustomField();
+		field.setKey("id");
+		field.setLabel("中国公民身份证ID");
+		field.setValue("4234324324234324");
+		sellerFillingFields.add(field);
+		
+		term.setCountry("CN");
+		term.setOnlingVettingFlag(1);
+		
+		term.setSellerFillingFields(sellerFillingFields);
+		
+		return term;
+	}
+	
+	/**
 	 * Get subsidy detail.
 	 * @param promoId
 	 * @param userId
@@ -62,7 +88,7 @@ public class SubsidyService extends BaseService {
 		System.out.println("-------------------start-------------------"+start);
 		GingerClientResponse resp = httpGet(uri);
 		long stop1 = System.currentTimeMillis();
-		System.out.println("-------------------httpclient调用时间-------------------"+(stop1-start));
+		System.out.println("-------------------httpclientè°ç¨æ¶é´-------------------"+(stop1-start));
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			GenericType<GeneralDataResponse<WLTAccount>> type = new GenericType<GeneralDataResponse<WLTAccount>>(){};
 			GeneralDataResponse<WLTAccount> response = resp.getEntity(type);
@@ -74,7 +100,7 @@ public class SubsidyService extends BaseService {
 				}
 			}
 			long stop2 = System.currentTimeMillis();
-			System.out.println("-------------------数据解析时间-------------------"+(stop2-stop1));
+			System.out.println("-------------------æ°æ®è§£ææ¶é´-------------------"+(stop2-stop1));
 		} else {
 			throw new PromoException("Internal Error happens.");
 		}

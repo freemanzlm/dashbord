@@ -134,6 +134,11 @@
 			<artifactId>javax.el-api</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.ebay.cbt</groupId>
+			<artifactId>promocampLib</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
