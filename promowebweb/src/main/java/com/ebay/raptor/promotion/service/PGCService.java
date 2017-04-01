@@ -11,6 +11,7 @@ import com.ebay.kernel.context.AppBuildConfig;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.pojo.PGCSeller;
+import com.ebay.raptor.promotion.pojo.PgcEligiblity;
 import com.google.gson.reflect.TypeToken;
 
 /**
@@ -27,6 +28,7 @@ public class PGCService {
 	
 	public static String serviceUrlPrefix = null;
 	private static String pgcAccountUrl;
+	private static String pgcEligibleUrl;
 	//private static String authorization;
 	
 	private static AppBuildConfig bdCfg = AppBuildConfig.getInstance();
@@ -44,6 +46,7 @@ public class PGCService {
 		}
 		
 		pgcAccountUrl = serviceUrlPrefix + "/pgc/v1/resource/getquota/userid/";
+		pgcAccountUrl = serviceUrlPrefix + "/pgc/v1/resource/geteligibility/userid/";
 	}
 	
 	/**
@@ -70,6 +73,26 @@ public class PGCService {
 
 		if (json == null || json.isEmpty()) {
 			logger.log(LogLevel.ERROR, "No response is got when to get PGC account.");
+		}
+		
+		return null;
+	}
+	
+	public PgcEligiblity getPgcEliblity(String userId) throws HttpRequestException {
+		
+		String json = httpRequestService.doHttpRequest(pgcEligibleUrl+ userId, "GET", null, null);
+
+		TypeToken<HttpResponseData<PgcEligiblity>> type = new TypeToken<HttpResponseData<PgcEligiblity>>() {};
+		HttpResponseData<PgcEligiblity> response = httpRequestService.getResponseData(json, type);
+
+		if (response != null && response.getData() !=null) {
+				return response.getData();
+		}else {
+			logger.log(LogLevel.WARN, "Failed to get PgcEligiblity, with error msg: " + response.getErrorMmsg());
+		} 
+
+		if (json == null || json.isEmpty()) {
+			logger.log(LogLevel.ERROR, "No response is got when to get PgcEligiblity.");
 		}
 		
 		return null;

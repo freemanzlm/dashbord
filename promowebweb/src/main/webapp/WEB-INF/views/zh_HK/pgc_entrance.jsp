@@ -22,7 +22,7 @@
 		
 		<div class="qutoanumberdiv">
 		<c:choose>
-			<c:when test="${ pgcSeller.pgcEligibility eq true and pgcSeller.limitEligibility eq 'Eligible' and pgcSeller.remainingQuota>0}">
+			<c:when test="${!hasIssue463 eq true and pgcEligiblity eq true and pgcSeller.remainingQuota>0}">
 				<p class=" mb20">
 					您可以註冊<b class="color-orange"> <f:formatNumber value="${pgcSeller.remainingQuota}" type="number" maxFractionDigits="0"/> </b>
 					個高額度新帳戶<br/>每個帳戶將可能獲得
@@ -30,19 +30,32 @@
 					的初始刊登數量額度
 				</p>
 			</c:when>
+			<c:when test="${hasIssue463 eq true and pgcEligiblity eq true and pgcSeller.remainingQuota>0}">
+				<p class=" mb20">
+					当前帳戶已入駐為企業帳戶<br/>
+					您現在可申請<b class="color-orange"> <f:formatNumber value="${pgcSeller.remainingQuota}" type="number" maxFractionDigits="0"/> </b>
+					個高額度子帳戶<br/>每個子帳戶可能獲得最高
+					<b class="color-orange"> <f:formatNumber value="${pgcSeller.limitQty}" type="number" maxFractionDigits="0"/> </b>
+					刊登數量額度
+				</p>
+			</c:when>
 			<c:otherwise>
 				<p class=" mb20">
-					新賣家最高可至<b class="color-orange"> <f:formatNumber value="3000" type="number" maxFractionDigits="0"/> </b>
-					刊登數量額度<br/>有客戶經理的客戶可能獲得
-					<b class="color-orange"> <f:formatNumber value="1500" type="number" maxFractionDigits="0"/> </b>至
-					<b class="color-orange"> <f:formatNumber value="20000" type="number" maxFractionDigits="0"/> </b>之間的刊登數量額度
+					有客戶經理的賣家可能獲得最高<b class="color-orange"> <f:formatNumber value="3000" type="number" maxFractionDigits="0"/> </b>刊登數量額度
 				</p>
 			</c:otherwise>
 		</c:choose>
 		</div>
 		
 		<div class="leftfloatdiv">
-			<p class="text-center"><a href="http://pgc.ebay.com.hk/dashboard_entry/${secretParams}" class="btn btn-green btn-big btn-wider">登入需申請入駐的帳戶</a></p>
+			<c:choose>
+			<c:when test="${hasIssue463 eq true and pgcEligiblity eq true and pgcSeller.remainingQuota>0}">
+				<p class="text-center"><a href="http://pgc.ebay.com.hk/dashboard_entry/${secretParams}" class="btn btn-green btn-big btn-wider">登入子帳戶申請企業入駐</a></p>
+			</c:when>
+			<c:otherwise>
+				<p class="text-center"><a href="http://pgc.ebay.com.hk/dashboard_entry/${secretParams}" class="btn btn-green btn-big btn-wider">登入帳戶申請企業入駐</a></p>
+			</c:otherwise>
+		</c:choose>
 		</div>
 	</div>
 </div>

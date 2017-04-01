@@ -18,6 +18,7 @@ import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.config.AppConfig;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.pojo.PGCSeller;
+import com.ebay.raptor.promotion.pojo.PgcEligiblity;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.security.DES;
@@ -36,6 +37,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 
 	private final static Logger logger = Logger
 			.getInstance(LanguageInterceptor.class);
+	private static final String ISSUE_CODE_463  = "0";
 
 	@Autowired
 	BRDataService brdataService;
@@ -177,6 +179,15 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		if(pgcReady) {
+			PgcEligiblity pgcEligible = new PgcEligiblity();
+			try {
+				pgcEligible = pgcService.getPgcEliblity(userData.getUserName());
+			} catch (NumberFormatException | HttpRequestException e) {
+				e.printStackTrace();
+			}
+			mav.addObject("pgcEligiblity", pgcEligible.getPgcEligibility());
+			mav.addObject("hasIssue463", hasIssue463(pgcEligible));
+			
 			PGCSeller seller = null;
 			try {
 				seller = pgcService.getPGCAccount(userData.getUserName());
@@ -185,6 +196,17 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			}
 			mav.addObject("pgcSeller", seller);
 		}
+	}
+	
+	private boolean hasIssue463(PgcEligiblity pgcEligible) {
+		if(pgcEligible!=null && pgcEligible.getPgcStatusCode() !=null && pgcEligible.getPgcStatusCode().size()>0) {
+			for(String issueCode:pgcEligible.getPgcStatusCode()) {
+				if(issueCode.equalsIgnoreCase(ISSUE_CODE_463)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }
