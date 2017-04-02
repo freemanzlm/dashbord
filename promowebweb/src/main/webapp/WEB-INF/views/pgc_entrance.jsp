@@ -21,7 +21,7 @@
 		
 		<div class="qutoanumberdiv">
 		<c:choose>
-			<c:when test="${!hasIssue463 eq true and pgcEligiblity eq true and pgcSeller.remainingQuota>0}">
+			<c:when test="${!hasIssue463 eq true and pgcSeller.limitEligibility eq 'Eligible' and pgcSeller.remainingQuota>0}">
 				<p class=" mb20">
 					您当前可申请<b class="color-orange"> <f:formatNumber value="${pgcSeller.remainingQuota}" type="number" maxFractionDigits="0"/> </b>
 					个高额度企业帐户<br/>每个帐户可能获得最高
@@ -29,7 +29,7 @@
 					刊登数量额度
 				</p>
 			</c:when>
-			<c:when test="${hasIssue463 eq true and pgcEligiblity eq true and pgcSeller.remainingQuota>0}">
+			<c:when test="${hasIssue463 eq true and pgcSeller.limitEligibility eq 'Eligible' and pgcSeller.remainingQuota>0}">
 				<p class=" mb20">
 					当前帐户已入驻为企业帐户<br/>
 					您现在可申请<b class="color-orange"> <f:formatNumber value="${pgcSeller.remainingQuota}" type="number" maxFractionDigits="0"/> </b>
@@ -48,7 +48,7 @@
 		
 		<div class="leftfloatdiv">
 		<c:choose>
-			<c:when test="${hasIssue463 eq true and pgcEligiblity eq true and pgcSeller.remainingQuota>0}">
+			<c:when test="${hasIssue463 eq true and pgcSeller.limitEligibility eq 'Eligible' and pgcSeller.remainingQuota>0}">
 				<p class="text-center"><a href="http://pgc.ebay.com.hk/dashboard_entry/${secretParams}" class="btn btn-green btn-big btn-wider" style="background-color:#599a21;">登录子帐户申请企业入驻</a></p>
 			</c:when>
 			<c:otherwise>
