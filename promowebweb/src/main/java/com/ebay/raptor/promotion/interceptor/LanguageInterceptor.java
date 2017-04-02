@@ -165,25 +165,27 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			obj.put("time", System.currentTimeMillis());
 			String secretParams = DES.getInstance().encrypt2(obj.toString());
 			mav.addObject("secretParams", secretParams);
-		} catch (Exception e2) {
-			e2.printStackTrace();
+		} catch (Exception e) {
+			logger.log(LogLevel.ERROR, "secretParams failed."+e.getMessage());
 		}
 		
 		boolean pgcReady = false;
 		try {
 			pgcReady = baseService.getPgcFlag(userData.getUserId());
 			mav.addObject("pgcReadyFlag", pgcReady);
-		} catch (HttpRequestException e1) {
+		} catch (HttpRequestException e) {
 			mav.addObject("pgcReadyFlag", false);
+			logger.log(LogLevel.ERROR, "pgcReadyFlag failed."+e.getMessage());
 			return;
 		}
 		
 		if(pgcReady) {
-			PgcEligiblity pgcEligible = new PgcEligiblity();
+			PgcEligiblity pgcEligible = null;
 			try {
 				pgcEligible = pgcService.getPgcEliblity(userData.getUserName());
 			} catch (NumberFormatException | HttpRequestException e) {
-				e.printStackTrace();
+				pgcEligible = new PgcEligiblity();
+				logger.log(LogLevel.ERROR, "getPgcEliblity failed."+e.getMessage());
 			}
 			mav.addObject("pgcEligiblity", pgcEligible.getPgcEligibility());
 			mav.addObject("hasIssue463", hasIssue463(pgcEligible));
@@ -192,7 +194,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			try {
 				seller = pgcService.getPGCAccount(userData.getUserName());
 			} catch (NumberFormatException | HttpRequestException e) {
-				e.printStackTrace();
+				seller = new PGCSeller();
+				logger.log(LogLevel.ERROR, "getPGCAccount failed."+e.getMessage());
 			}
 			mav.addObject("pgcSeller", seller);
 		}

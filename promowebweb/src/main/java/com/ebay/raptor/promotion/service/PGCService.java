@@ -46,7 +46,7 @@ public class PGCService {
 		}
 		
 		pgcAccountUrl = serviceUrlPrefix + "/pgc/v1/resource/getquota/userid/";
-		pgcAccountUrl = serviceUrlPrefix + "/pgc/v1/resource/geteligibility/userid/";
+		pgcEligibleUrl = serviceUrlPrefix + "/pgc/v1/resource/geteligibility/userid/";
 	}
 	
 	/**
