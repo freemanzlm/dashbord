@@ -39,7 +39,7 @@
 				</p>
 			</c:when>
 			<c:otherwise>
-				<p class=" mb20" >
+				<p class=" mb20">
  					入驻申请成为企业帐户<br/>可能获得最高<b class="color-orange"> <f:formatNumber value="3000" type="number" maxFractionDigits="0"/> </b>刊登数量额度
 				</p>
 			</c:otherwise>
