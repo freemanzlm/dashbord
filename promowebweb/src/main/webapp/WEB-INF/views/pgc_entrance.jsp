@@ -6,7 +6,7 @@
 		<div class="qutoanumberdiv">
 		<c:choose>
 			<c:when test="${!hasIssue463 eq true and pgcSeller.limitEligibility eq 'Eligible' and pgcSeller.remainingQuota>0}">
-				<p class=" mb20">
+				<p class=" mb20"  style="font-size:15px;">
 					您当前可申请<b class="color-orange"> <f:formatNumber value="${pgcSeller.remainingQuota}" type="number" maxFractionDigits="0"/> </b>
 					个高额度企业帐户<br/>每个帐户可能获得最高
 					<b class="color-orange"> <f:formatNumber value="${pgcSeller.limitQty}" type="number" maxFractionDigits="0"/> </b>
@@ -23,7 +23,7 @@
 				</p>
 			</c:when>
 			<c:otherwise>
-				<p class=" mb20">
+				<p class=" mb20"  style="font-size:15px;">
  					入驻申请成为企业帐户<br/>可能获得最高<b class="color-orange"> <f:formatNumber value="3000" type="number" maxFractionDigits="0"/> </b>刊登数量额度
 				</p>
 			</c:otherwise>
