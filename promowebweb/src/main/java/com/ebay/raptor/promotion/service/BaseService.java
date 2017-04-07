@@ -10,7 +10,7 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.ebayopensource.ginger.client.GingerWebTarget;
 
-import com.ebay.cbt.raptor.route.ResourceProvider;
+import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
 public class BaseService {

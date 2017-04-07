@@ -66,16 +66,16 @@
 <res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js['dropdown.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
+<res:useJs value="${res.js.local.js.lib['vue.js']}" target="page-js"></res:useJs>
 
-<res:useJs value="${res.js.local.js['tabs_simple.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['confirm.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.lib['vue.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.page['subsidy.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js['tabs_simple.js']}" target="page-js2"></res:useJs>
 </head>
 
 <body>

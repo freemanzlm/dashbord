@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.cbt.raptor.route.ResourceProvider;
+import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.excep.PromoException;

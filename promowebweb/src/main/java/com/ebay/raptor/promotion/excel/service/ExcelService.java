@@ -16,7 +16,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.cbt.raptor.po.Listing;
+import com.ebay.cbt.raptor.promotion.po.Listing;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.SheetWriter;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;

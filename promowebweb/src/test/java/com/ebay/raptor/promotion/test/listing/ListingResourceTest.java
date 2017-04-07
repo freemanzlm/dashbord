@@ -23,7 +23,7 @@ import org.ebayopensource.ginger.client.GingerClient;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.junit.Before;
 
-import com.ebay.cbt.raptor.po.Listing;
+import com.ebay.cbt.raptor.promotion.po.Listing;
 import com.ebay.raptor.promotion.enums.ListingState;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.ISheetReader;

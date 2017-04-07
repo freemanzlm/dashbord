@@ -28,7 +28,7 @@
 						<h3>恭喜！您将获得等值 ${reward} ${promo.currency} 的奖励！</h3>
 						<menu>
 							<li>
-								<c:if test="${ subsidyTerm.onlingVettingFlag == 1 }">
+								<c:if test="${ subsidyTerm.ovFlag == 1 }">
 									<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
 								</c:if>
 								<br />

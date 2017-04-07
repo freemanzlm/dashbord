@@ -1,10 +1,28 @@
 $(function(){
 	
+	var fileTypeReg = /\.(doc|docx|xls|xlsx|jpg|gif|zip|rar|pdf)$/i;
+	
+	function hasValidSize(inputElement, maxSize) {
+		if (inputElement && inputElement.files) {
+			for (var i = 0; i < inputElement.files.length; i++)	{
+				var file = inputElement.files[i];
+				if (file && file.size > maxSize) {
+					return false;
+				} else {
+					continue;
+				}
+			}
+		}
+		return true;
+	}
+	
 	var app = new Vue({
 		el: "#page-pane",
 		data: {
 			user: {name: pageData.username},
-			hasAcceptLetter: false
+			hasAcceptLetter: false,
+			hasSubmitFields: true,
+			hasUploadLetter: false
 		},
 		methods: {
 			sendSellerCustomFields: function(event){
@@ -12,18 +30,20 @@ $(function(){
 				$.ajax($form.attr("action"), {
 					data: $form.serialize(),
 					type : 'POST',
-					contentType : 'application/json',
+					contentType : 'application/x-www-form-urlencoded',
 					dataType : 'json',
 					headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
 					context : this,
 					success : function() {
-						console.log(this);
+						this.hasSubmitFields = true;
 					},
 					error: function() {
-						console.log("error")
+						console.log(this)
 					}
 				});
-				
+			},
+			gotoSecondStep: function(event) {
+				$("[aria-controls=pane2]").trigger('click');
 			}
 		}
 	});
@@ -32,96 +52,78 @@ $(function(){
 	
 	var local = BizReport.local;
 
-	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn, listingCountJ;
+	var uploadForm, fileInput, acceptCheckbox, form, formBtn, listingCountJ;
 	
 	var hasState = false, customTableConfig;
 	
-	uploadIFrame = $("iframe[name=uploadIframe]");
-	uploadBtn = document.getElementById("upload-btn");
+	
 	acceptCheckbox = document.getElementById("accept");
-	form = $("#listing-form");
-	formBtn = document.getElementById("form-btn");
+	formBtn = document.getElementById("upload-form-btn");
 	listingCountJ = $(".my-listing h3 small span");
 	
 	var acceptPopup = $(acceptCheckbox).parent().each(function(){
 		$(this).popup({"trigger": "mannual", html: this.title});
 	});
 	
+	var $attachmentForms = $("form.attachment-form");
 	
-	if (document.getElementById('upload-form')) {
-		uploadForm = $("#upload-form").submit(function(){
-			if (!acceptCheckbox.checked) {
-				acceptPopup.popup('show');
+	$attachmentForms.submit(function(){
+		var $form = $(this), required = $form.attr("required");
+		var fileInput = $form.find("input[type=file]");
+		var fileName = fileInput.val();
+		var errorMsgEle = $form.find(".msg");
+		var uploadIframe = $form.next("iframe");
+		
+		if(required) { //attachment is a must
+			if(!fileName) {
+				errorMsgEle.css({"color": "red"}).html(local.getText("subsidy.attachment.notEmpty"));
 				return false;
 			}
+		}
+		
+		if (!fileName) return false;
+		
+		if (!hasValidSize(fileInput.get(0), 5242880)) {
+			// attachment size should be less than 5M.
+			errorMsgEle.css({"color": "red"}).html(local.getText("subsidy.attachment.attachmentSizeError"));
+			return false;
+		}
+		
+		$form.attr('uploading', !!fileName);
+		
+		// get attachment upload result.
+		uploadIframe.on("load", function(){
+			$form.attr('uploading', false);
 			
-			var fileName = fileInput.val();
-			if (!fileName || fileName.indexOf(".xls") < 0) {
-				cbt.alert(local.getText("promo.listings.onlyXls"));
-				return false;
-			}
-			
-			$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
-			
-			uploadIFrame.on("load", function(){
-				$(document.body).isLoading('hide');
-				
-				// check the response
-				if (uploadIFrame.contents().length != 0 && uploadIFrame.contents().find("body").html().length > 0) {
-					var response = uploadIFrame.contents().find("body").text();
-					var responseData = $.parseJSON(response);
-					// verification returns no error 
-					if (responseData && responseData.status) {
-						window.location.replace("/promotion/listings/reviewUploadedListings?promoId="+pageData.promoId);
+			if (uploadIframe.contents().length != 0 && uploadIframe.contents().find("body").html().length > 0) {
+				var response = uploadIframe.contents().find("body").text();
+				var responseData = $.parseJSON(response);
+				if (responseData.message && responseData.message.length > 0) {
+					// If uploading success, response should have attachemnt download URL.
+					if(responseData.status==true) {
+						errorMsgEle.html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
+						oRow[key] = responseData.message;
+						$form.find(".file-input input").val(""); // clear input[type=file] input value
+					} else {
+						errorMsgEle.css({"color": "red"}).html(responseData.message);
 					}
-					// handle error
-					else {
-						// show error infor
-						if (responseData.message && responseData.message.length > 0) {
-							$("#upload-error-msg").removeClass("hide");
-							$("#upload-error-msg").find("b").html(responseData.message);
-						} else if (responseData.data && responseData.data.length > 0) {
-							var errCode = parseInt(responseData.data);
-							
-							if (errCode == 32) {
-								cbt.alert(local.getText("errorMsg.regDateExpired"));
-							} else {
-								cbt.alert(local.getText("errorMsg.uploadListingError"));
-							}
-							
-							window.location.replace("/promotion/" + pageData.promoId);
-						}
-						// redirect to error page
-						else {
-							window.location.replace("promotion/error");
-						}
-					}
-				} else {
-					// redirect to error page
-					window.location.replace("promotion/error");
+				} else if(responseData.status == false) {
+					errorMsgEle.css({"color": "red"}).html(local.getText("attachmentUploadFailed"));
 				}
-			});
-			return !!$(this).find("input[type=file]").attr("value");
+			}
 		});
 		
-		fileInput = uploadForm.find("input[type=file]");
-		$(uploadBtn).click(function(event){
-			event.preventDefault();
-			
-			uploadForm.submit();
-		});	
-	}
+		return !!fileInput.val();
+	});
 	
 	if (formBtn) {
-		// confirm listings to apply.		
-		
 		/********************** Upload listings attachments ****************************************/
-		var container = $("#listing-table-container"), requriedAttachments = [], optionalAttachments, toUploadAttachments;
+		var container = $(".confirm-letter-submission-pane"), requriedAttachments = [], optionalAttachments, toUploadAttachments;
 		var attachmentTotalNum = attachmentUploadedNum = currentAttachIndex = 0, uploadingAttachment = false;
 		
 		// get the number of attachments that will be uploaded.
 		function sumAttachments() {
-			var allAttachForms = container.find("input[name=item]:checked").parent().parent().find(".attachment-form");
+			var allAttachForms = container.find("form.form-horizontal");
 			requriedAttachments = allAttachForms.filter(function(){
 				return this.hasAttribute('required');
 			});
@@ -134,7 +136,7 @@ $(function(){
 		}
 		
 		// single listing's attachments have been uploaded
-		function listingAttachmentsUploaded() {
+		function subsidyAttachmentsUploaded() {
 			currentAttachIndex += 1;
 			container.isLoading('hide');
 			
@@ -142,22 +144,23 @@ $(function(){
 				uploadingAttachment = false; // attachments uploading completed
 				(attachmentUploadedNum == attachmentTotalNum) && showPreviewDialog(listingTable.selectedItems);
 			} else {
-				uploadListingAttachments();
+				uploadSubsidyAttachments();
 			}
 		}
 		
 		// upload single listing's attachments
-		function uploadListingAttachments() {
+		function uploadSubsidyAttachments() {
 			var $currentForm = toUploadAttachments.eq(currentAttachIndex);
 			
 			container.isLoading({text: local.getText("promo.request.counting", [attachmentUploadedNum, attachmentTotalNum]), position: "overlay"});
 						
 			// check if an attachment is uploaded
 			var checkAttachmentsUploaded = function() {
-				var $msg = $currentForm.siblings("span.msg");
+				var $msg = $currentForm.find("span.msg");
 				
 				function hasUploadCompleted() {
-					return $currentForm.attr('uploading') == "false";
+					var uploading = $currentForm.attr('uploading');
+					return !uploading || $currentForm.attr('uploading') == 'false';
 				}
 				
 				function hasUploadSuccess() {
@@ -168,13 +171,13 @@ $(function(){
 				
 				if (hasUploadCompleted()) {
 					hasUploadSuccess() && (attachmentUploadedNum += 1);
-					listingAttachmentsUploaded();
+					subsidyAttachmentsUploaded();
 				} else {
 					var timer = setInterval(function() {
 						if (hasUploadCompleted()) {
 							clearInterval(timer);
 							hasUploadSuccess() && (attachmentUploadedNum += 1);
-							listingAttachmentsUploaded();
+							subsidyAttachmentsUploaded();
 						}
 					}, 500);
 				}
@@ -186,25 +189,19 @@ $(function(){
 		
 		$(formBtn).click(function(event){
 			event.preventDefault();
-			if (uploadingAttachment) return;
-			
-			if (!acceptCheckbox.checked) {
-				acceptPopup.popup('show');
-				return false;
-			}
+//			if (uploadingAttachment) return;
 			
 			uploadingAttachment = true;
 			sumAttachments();
 			uploadingAttachment = !(toUploadAttachments.length <= 0); // no attachment
 			
-			var listings = listingTable.selectedItems;
-			if(listings && listings.length > 0) {
+			if(toUploadAttachments && toUploadAttachments.length > 0) {
 				if(attachmentTotalNum > 0) {
 					currentAttachIndex = 0;
 					attachmentUploadedNum = 0;
-					uploadListingAttachments();
+					uploadSubsidyAttachments();
 				} else {
-					showPreviewDialog(listings);
+					app.hasUploadLetter = true;
 				}
 			} else {
 				cbt.confirm(local.getText('promo.listings.zeroSubmitted'), submitListings);

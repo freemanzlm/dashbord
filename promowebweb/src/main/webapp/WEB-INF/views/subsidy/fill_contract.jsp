@@ -7,12 +7,12 @@
 <div class="tabbable confirm-letter-steps">
 	<div class="tab-list-container clr">
 		<ul class="tab-list clr" role="tablist">
-			<li role="tab" aria-controls="pane1"  class="active"><span class="label"><a
-					href="#pane1">第一步：填写确认函</a></span></li>
-			<li role="tab" aria-controls="pane2"><span class="label"><a
-					href="#pane2">第二步：上传确认函</a></span></li>
-			<li role="tab" aria-controls="pane3"><span
-				class="label"><a href="#pane3">第三步：领取奖励</a></span></li>
+			<li role="tab" aria-controls="pane1"  class="active"><span class="label">
+				<a href="#pane1">第一步：填写确认函</a></span></li>
+			<li role="tab" aria-controls="pane2" v-show="hasSubmitFields"><span class="label">
+				<a href="#pane2">第二步：上传确认函</a></span></li>
+			<li role="tab" aria-controls="pane3" v-show="hasUploadLetter"><span class="label">
+				<a href="#pane3">第三步：领取奖励</a></span></li>
 		</ul>
 	</div>
 	<div id="pane1" class="tab-pane active confirm-letter-pane" role="tabpanel">
@@ -25,13 +25,17 @@
 		<hr />
 		<h4 class="mt20 ml20">卖家基本信息：</h4>
 		<form id="custom-fields-form" action="acknowledgment" class="form-horizontal" method="post">
-		
-			<c:forEach items="${ subsidyTerm.sellerFillingFields }" var="field">
+			<input type="hidden" value="${promo.promoId }" name="promoId"/>
+			
+			<c:forEach items="${ nonuploadFields }" var="field">
 				<c:if test="${ not empty field}">
 					<div class="form-group">
-						<div class="control-label">${field.label }：</div>
+						<div class="control-label">${field.displayLabel }：</div>
 						<div class="form-field">
 							<input type="text" name="${field.key }" value="${field.value }"/>
+							<c:if test="${field.key eq '_sellerName' }">
+								&nbsp;<span>(以下称为“我/本公司”或“卖家”)</span>
+							</c:if>
 						</div>
 					</div>
 				</c:if>
@@ -68,10 +72,10 @@
 				</div>
 			</div>
 			<div class="text-center">
-				<button type="button" class="btn" v-on:click="sendSellerCustomFields">点击生成PDF共签署</button>
-				<template v-if="hasAcceptLetter">
+				<button type="button" class="btn" v-bind:disabled="!hasAcceptLetter" v-on:click="sendSellerCustomFields">点击生成PDF共签署</button>
+				<template v-if="hasSubmitFields">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" class="btn">下一步：上传确认函</button>
+					<button type="button" class="btn" v-on:click="gotoSecondStep">下一步：上传确认函</button>
 				</template>
 			</div>
 		</form>
@@ -93,22 +97,45 @@
 				<li>上传截止日期为XXXX年XX月XX日（调用领取截止时间），未在该规定时间内上传文件的卖家将被视为自动放弃本活动奖励。</li>
 			</ol>
 		</div>
-		<form action="" class="form-horizontal">
-			<div class="form-group">
-				<div class="control-label">上传已签署的确认函：</div>
-				<div class="form-field">
-					<span class="file-input">
-						<input type="text" style="height: 22px;" placeholder="选择文件" />
-						<input type="file" name="uploadFile" accept="application/pdf" />
-						<button type="button" class="btn" style="margin-left: 3px;">选择</button>
-					</span>
-				</div>
-			</div>
-			
-			<div class="text-center" style="margin-top: 40px;">
-				<button type="submit" class="btn" style="width:120px;">上传</button>
-			</div>
-		</form>
+		
+		<c:forEach items="${ uploadFields }" var="field">
+			<c:if test="${ not empty field}">
+				<form target="uploadIframe_${field.key}" ${ field.required ? 'required':'' } action="uploadAttachment" class="form-horizontal attachment-form" method="post" enctype="multipart/form-data">
+					<input type="hidden" value="${promo.promoId }" name="promoId"/>
+					<input type="hidden" name="key" value="${field.key }"/>
+					<div class="form-group">
+						<div class="control-label">${field.displayLabel }：</div>
+						<div class="form-field">
+							<span class="file-input">
+								<input type="text" style="height: 20px;" placeholder="选择文件" value="${field.value }" />
+								<c:choose>
+									<c:when test="${field.key eq '_letter'}">
+										<input type="file" name="uploadFile" accept="application/pdf" />
+									</c:when>
+									<c:otherwise>
+										<input type="file" name="uploadFile" value="${field.value }"/>
+									</c:otherwise>
+								</c:choose>
+								<button type="button" class="btn" style="margin-left: 3px;">选择</button>
+							</span> <br />
+							<span class="font-bold msg">
+								<c:if test="${ not empty field.value }">
+									<a href=/promotion/subsidy/'>下载附件</a>
+								</c:if>
+							</span>
+						</div>
+					</div>
+				</form>
+				<iframe name="uploadIframe_${field.key}" src="about:blank" frameborder="0" class="hidden" ></iframe>
+			</c:if>
+		</c:forEach>
+		
+		
+		
+		<div class="text-center" style="margin-top: 40px;">
+			<button id="upload-form-btn" type="submit" class="btn" style="width:120px;">上传</button>
+		</div>
+		
 	</div>
 	<div id="pane3" class="tab-pane " role="tabpanel"
 		aria-live="polite" aria-relevant="text">Tab Pane 3</div>

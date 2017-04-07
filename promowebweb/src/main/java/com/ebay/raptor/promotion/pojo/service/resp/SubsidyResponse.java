@@ -2,8 +2,8 @@ package com.ebay.raptor.promotion.pojo.service.resp;
 
 import javax.ws.rs.core.Response.Status;
 
-import com.ebay.cbt.raptor.po.Subsidy;
-import com.ebay.cbt.raptor.po.WLTAccount;
+import com.ebay.cbt.raptor.promotion.po.Subsidy;
+import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 
 /**
  * 

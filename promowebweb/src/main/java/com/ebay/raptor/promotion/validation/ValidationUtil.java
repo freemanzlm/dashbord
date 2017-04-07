@@ -6,7 +6,7 @@ import java.util.Set;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.app.raptor.promocommon.excel.InvalidCellValueException;
 import com.ebay.app.raptor.promocommon.util.StringUtil;
-import com.ebay.cbt.raptor.po.Sku;
+import com.ebay.cbt.raptor.promotion.po.Sku;
 
 public class ValidationUtil {
 

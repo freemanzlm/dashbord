@@ -1,49 +1,81 @@
 package com.ebay.raptor.promotion.subsidy.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.ebayopensource.ginger.client.GingerClientResponse;
+import org.ebayopensource.ginger.client.GingerWebTarget;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
-import com.ebay.cbt.raptor.po.Subsidy;
-import com.ebay.cbt.raptor.po.WLTAccount;
+import com.ebay.app.raptor.promocommon.error.ErrorType;
+import com.ebay.cbt.raptor.promotion.po.Subsidy;
+import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
-import com.ebay.cbt.raptor.promotion.response.SubsidyLegalTermResponse;
-import com.ebay.cbt.raptor.route.ResourceProvider;
+import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
+import com.ebay.cbt.raptor.promotion.po.WLTAccount;
+import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
+import com.ebay.kernel.calwrapper.CalEventHelper;
+import com.ebay.kernel.util.URLDecoder;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.service.BaseService;
+import com.ebay.raptor.promotion.service.IAFTokenService;
+import com.ebay.raptor.promotion.service.PromoClient;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 @Component
 public class SubsidyService extends BaseService {
 	private CommonLogger logger = CommonLogger.getInstance(SubsidyService.class);
-	
-	private String url(String url){
+
+	@Autowired ResourceBundleMessageSource msgResource;
+	private Locale locale;
+
+	private String url(String url) {
 		return secureUrl(ResourceProvider.SubsidyRes.base) + url;
 	}
-	
+
 	/**
 	 * Get subsidy detail.
+	 * 
 	 * @param promoId
 	 * @param userId
 	 * @return
 	 * @throws PromoException
 	 */
 	public Subsidy getSubsidy(String promoId, Long userId) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getSubSidy, new Object[]{"{promoId}", promoId, "{uid}", userId}));
+		String uri = url(params(ResourceProvider.SubsidyRes.getSubSidy, new Object[] { "{promoId}", promoId, "{uid}",
+				userId }));
 		GingerClientResponse resp = httpGet(uri);
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<GeneralDataResponse<Subsidy>> type = new GenericType<GeneralDataResponse<Subsidy>>(){};
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<Subsidy>> type = new GenericType<GeneralDataResponse<Subsidy>>() {
+			};
 			GeneralDataResponse<Subsidy> response = resp.getEntity(type);
-			if(null != response && AckValue.SUCCESS == response.getAckValue()){
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();
 			} else {
-				if(null != response && null != response.getErrorMessage() && null != response.getErrorMessage().getError()){
+				if (null != response && null != response.getErrorMessage()
+						&& null != response.getErrorMessage().getError()) {
 					throw new PromoException(response.getErrorMessage().getError().toString());
 				}
 			}
@@ -52,59 +84,239 @@ public class SubsidyService extends BaseService {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param paymentType
 	 * @return
 	 */
-	public SubsidyLegalTermResponse getSubsidyLegalTerm(Integer paymentType, String country) {
-		SubsidyLegalTermResponse term = new SubsidyLegalTermResponse();
-		ArrayList<SubsidyCustomField> sellerFillingFields =  new ArrayList<SubsidyCustomField>();
+	public SubsidyLegalTerm getSubsidyLegalTerm(Integer paymentType, String country) {
+		SubsidyLegalTerm term = new SubsidyLegalTerm();
+		ArrayList<SubsidyCustomField> sellerFillingFields = new ArrayList<SubsidyCustomField>();
 		SubsidyCustomField field = new SubsidyCustomField();
-		field.setKey("id");
-		field.setLabel("中国公民身份证ID");
-		field.setValue("4234324324234324");
+		field.setKey("_sellerName");
+		field.setDisplayLabel("家姓名/公司名称");
+		field.setValue("");
+		field.setRequired(true);
 		sellerFillingFields.add(field);
 		
-		term.setCountry(country);
-		term.setOnlingVettingFlag(1);
+		SubsidyCustomField field2 = new SubsidyCustomField();
+		field2.setKey("_sellerID");
+		field2.setDisplayLabel("身份证号码/公司营业执照号码");
+		field2.setValue("4234324324234324");
+		field2.setRequired(true);
+		sellerFillingFields.add(field2);
 		
-		term.setSellerFillingFields(sellerFillingFields);
+		SubsidyCustomField field4 = new SubsidyCustomField();
+		field4.setKey("idImage");
+		field4.setDisplayLabel("身份证复印件");
+		field4.setRequired(true);
+		field4.setUpload(true);
+		sellerFillingFields.add(field4);
 		
+		SubsidyCustomField field3 = new SubsidyCustomField();
+		field3.setKey("_letter");
+		field3.setDisplayLabel("已签署的确认函");
+		field3.setValue("");
+		field3.setRequired(true);
+		field3.setUpload(true);
+		sellerFillingFields.add(field3);
+
+		// term.setCountry(country);
+		term.setOvFlag(1);
+
+		term.setSubsidyCustomFields(sellerFillingFields);
+
 		return term;
+	}
+
+	/**
+	 * Split custom fields into two kinds of fields: these for upload, and the
+	 * others for non upload.
+	 * 
+	 * The first element of the returned array is the fields for non upload.
+	 * 
+	 * @param term
+	 * @return
+	 */
+	public ArrayList<SubsidyCustomField>[] splitCustomFields(SubsidyLegalTerm term) {
+		@SuppressWarnings("unchecked")
+		ArrayList<SubsidyCustomField>[] array = (ArrayList<SubsidyCustomField>[]) Array.newInstance(ArrayList.class, 2);
+		
+		ArrayList<SubsidyCustomField> nonuploadFields = new ArrayList<SubsidyCustomField>();
+		ArrayList<SubsidyCustomField> uploadFields = new ArrayList<SubsidyCustomField>();
+
+		List<SubsidyCustomField> allFields = term.getSubsidyCustomFields();
+
+		for (SubsidyCustomField field : allFields) {
+			if (field.isUpload) {
+				uploadFields.add(field);
+			} else {
+				nonuploadFields.add(field);
+			}
+		}
+		 
+		array[0] = nonuploadFields;
+		array[1] = uploadFields;
+
+		return array;
 	}
 	
 	/**
+	 * Upload listing attachment into database.
+	 * 
+	 * @param listingId
+	 * @param uploadFile
+	 * @param fileType
+	 * @return
+	 * @throws
+	 * @throws PromoException
+	 * @throws IOException
+	 */
+	public String uploadSubsidyAttachment(String promoId, Long userId, String key, final MultipartFile uploadFile,
+			String fileType) throws Exception {
+		String url = url("/uploadAttachment");
+		FormDataMultiPart multiPart = new FormDataMultiPart();
+		File file = multipartToFile(uploadFile);
+		FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file", file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+		multiPart.bodyPart(fileDataBodyPart);
+		multiPart.field("promoId", promoId);
+		multiPart.field("userId", Long.toString(userId));
+		multiPart.field("fileType", fileType);
+		multiPart.field("key", key);
+		multiPart.field("fileName", decodefilePathOrfileName(file.getName()));
+		GingerClientResponse resp = uploadMultipart(url, multiPart);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>() {
+			};
+			GeneralDataResponse<Boolean> general = resp.getEntity(type);
+			if (null != general) {
+				if (AckValue.SUCCESS == general.getAckValue()) {
+					return params("downloadAttachment", new Object[] { "{promoId}", promoId, "{userId}", userId,
+							"{key}", key });
+				} else {
+					return null;
+				}
+			} else {
+				return null;
+			}
+		} else {
+			CalEventHelper.sendImmediate("ERROR", "SubsidyException", "1", "promoId=" + promoId + ",userId=" + userId
+					+ ",key=" + key + ",fileType=" + fileType);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Download attachment.
+	 * 
+	 * @param promoId
+	 * @param userId
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public SubsidyAttachment downloadSubsidyAttachment(String promoId, Long userId, String key) throws Exception {
+		String url = url(params(ResourceProvider.ListingRes.listingAttachment, new Object[] { "{promoId}", promoId,
+				"{userId}", userId, "{key}", key }));
+		GingerWebTarget target = PromoClient.getClient().target(url);
+		Invocation.Builder build = target.request();
+		Response resp = build.headers(authHeaders(IAFTokenService.getIAFToken())).get();
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			MultivaluedMap<String, Object> headers = resp.getMetadata();
+			String attachmentName = (String) headers.get("attachmentName").get(0);
+			if (attachmentName == null || "".equals(attachmentName)) {
+				attachmentName = "download"; // default download file name
+			}
+			String attachmentType = (String) headers.get("attachmentType").get(0);
+			InputStream inputStream = (InputStream) resp.getEntity();
+			SubsidyAttachment attachment = new SubsidyAttachment();
+			attachment.setFileName(attachmentName);
+			attachment.setFileType(attachmentType);
+
+			/******************** modified by chenping 2017-03-30 start ******************************/
+			/********************* change the input stream to byte[] ************************************/
+			ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
+			byte[] buff = new byte[1024];
+			int rc = 0;
+			try {
+				while ((rc = inputStream.read(buff, 0, 1024)) > 0) {
+					swapStream.write(buff, 0, rc);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			byte[] in2b = swapStream.toByteArray();
+			attachment.setFileContent(in2b);
+			/******************** modified by chenping 2017-03-30 end ******************************/
+
+			return attachment;
+		} else {
+			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
+		}
+
+	}
+
+	/**
 	 * Get subsidy detail.
+	 * 
 	 * @param promoId
 	 * @param userId
 	 * @return
 	 * @throws PromoException
 	 */
 	public WLTAccount getTest(String promoId, Long userId) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getTest, new Object[]{"{promoId}", promoId, "{uid}", userId}));
+		String uri = url(params(ResourceProvider.SubsidyRes.getTest, new Object[] { "{promoId}", promoId, "{uid}",
+				userId }));
 		long start = System.currentTimeMillis();
-		System.out.println("-------------------start-------------------"+start);
+		System.out.println("-------------------start-------------------" + start);
 		GingerClientResponse resp = httpGet(uri);
 		long stop1 = System.currentTimeMillis();
-		System.out.println("-------------------httpclientè°ç¨æ¶é´-------------------"+(stop1-start));
-		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<GeneralDataResponse<WLTAccount>> type = new GenericType<GeneralDataResponse<WLTAccount>>(){};
+		System.out.println("-------------------httpclientè°ç¨æ¶é´-------------------" + (stop1 - start));
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<WLTAccount>> type = new GenericType<GeneralDataResponse<WLTAccount>>() {
+			};
 			GeneralDataResponse<WLTAccount> response = resp.getEntity(type);
-			if(null != response && AckValue.SUCCESS == response.getAckValue()){
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();
 			} else {
-				if(null != response && null != response.getErrorMessage() && null != response.getErrorMessage().getError()){
+				if (null != response && null != response.getErrorMessage()
+						&& null != response.getErrorMessage().getError()) {
 					throw new PromoException(response.getErrorMessage().getError().toString());
 				}
 			}
 			long stop2 = System.currentTimeMillis();
-			System.out.println("-------------------æ°æ®è§£ææ¶é´-------------------"+(stop2-stop1));
+			System.out.println("-------------------æ°æ®è§£ææ¶é´-------------------" + (stop2 - stop1));
 		} else {
 			throw new PromoException("Internal Error happens.");
 		}
 		return null;
 	}
-	
+
+	private File multipartToFile(MultipartFile multipartFile) throws IllegalStateException, IOException {
+		File file = new File(multipartFile.getOriginalFilename());
+		multipartFile.transferTo(file);
+		return file;
+	}
+
+	private String decodefilePathOrfileName(String value) {
+		try {
+			return URLDecoder.decode(new String(value.getBytes(), "UTF-8"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return value;
+		}
+	}
+
+	public Locale getLocale() {
+		return locale == null ? LocaleContextHolder.getLocale() : locale;
+	}
+
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
+
+	private String getMessage(String key) {
+		return msgResource.getMessage(key, null, getLocale());
+	}
 }

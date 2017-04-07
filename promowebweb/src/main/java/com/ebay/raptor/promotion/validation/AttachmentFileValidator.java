@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
@@ -24,53 +23,55 @@ public class AttachmentFileValidator {
 	private ResourceBundle bundle;
 	private Locale locale;
 	private static AttachmentFileValidator attachmentFileValidator = null;
-	
-	private AttachmentFileValidator() {}
-	
+
+	private AttachmentFileValidator() {
+	}
+
 	public static AttachmentFileValidator getInstance() {
-		if(attachmentFileValidator == null) {
+		if (attachmentFileValidator == null) {
 			attachmentFileValidator = new AttachmentFileValidator();
 		}
 		return attachmentFileValidator;
 	}
-	
-	public  boolean isValidate(MultipartFile[] files) throws AttachmentUploadException {
-		for(MultipartFile file : files) {
+
+	public boolean isValidate(MultipartFile[] files) throws AttachmentUploadException {
+		for (MultipartFile file : files) {
 			return isValidate(file);
 		}
 		return true;
 	}
-	
-	public  boolean isValidate(MultipartFile file) throws AttachmentUploadException{
-		if(file.isEmpty()) {
+
+	public boolean isValidate(MultipartFile file) throws AttachmentUploadException {
+		if (file.isEmpty()) {
 			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notnull"));
 		}
-		if(file.getSize() > 4.5*1024*1024) {
+		if (file.getSize() > 4.5 * 1024 * 1024) {
 			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.toolarge"));
 		}
 		try {
 			AttachmentAllowedFileType type = getType(file);
-			if(type==null) {
-				throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notcorrecttype"));
+			if (type == null) {
+				throw new AttachmentUploadException(getBundle().getString(
+						"attachment.validation.message.notcorrecttype"));
 			}
 		} catch (IOException e) {
 			logger.log(Level.WARNING, e.getMessage());
 		}
 		return true;
 	}
-	
+
 	private static String bytes2hex(byte[] bytes) {
 		StringBuffer hex = new StringBuffer();
-		for(int i=0; i<bytes.length; i++) {
+		for (int i = 0; i < bytes.length; i++) {
 			String temp = Integer.toHexString(bytes[i] & 0xFF);
-			if(temp.length() == 1) {
+			if (temp.length() == 1) {
 				hex.append("0");
 			}
 			hex.append(temp.toLowerCase());
 		}
 		return hex.toString();
 	}
-	
+
 	private static String getFileHeader(MultipartFile file) throws IOException {
 		byte[] b = new byte[28];
 		InputStream inputStream = null;
@@ -79,32 +80,32 @@ public class AttachmentFileValidator {
 		inputStream.close();
 		return bytes2hex(b);
 	}
-	
-	public AttachmentAllowedFileType getType(MultipartFile file) throws IOException{
+
+	public AttachmentAllowedFileType getType(MultipartFile file) throws IOException {
 		String fileHead = getFileHeader(file);
-		if(fileHead == null || fileHead.length() == 0) {
+		if (fileHead == null || fileHead.length() == 0) {
 			return null;
 		}
 		fileHead = fileHead.toUpperCase();
 		AttachmentAllowedFileType[] fileTypes = AttachmentAllowedFileType.values();
-		for(AttachmentAllowedFileType type : fileTypes) {
-			if(fileHead.startsWith(type.getValue())) {
-				if(type.toString().equalsIgnoreCase(file.getOriginalFilename().split("\\.")[1])) {
+		for (AttachmentAllowedFileType type : fileTypes) {
+			if (fileHead.startsWith(type.getValue())) {
+				if (type.toString().equalsIgnoreCase(file.getOriginalFilename().split("\\.")[1])) {
 					return type;
 				}
 			}
 		}
 		return null;
 	}
-	
+
 	public Locale getLocale() {
 		return locale == null ? LocaleUtil.getCurrentLocale() : locale;
 	}
-	
+
 	public void setLocale(Locale locale) {
 		this.locale = locale;
 	}
-	
+
 	public ResourceBundle getBundle() {
 		return bundle == null ? bundle = ResourceBundle.getBundle(bundleBaseName, locale) : bundle;
 	}

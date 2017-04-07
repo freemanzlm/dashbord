@@ -25,9 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.error.ErrorType;
-import com.ebay.cbt.raptor.po.Listing;
-import com.ebay.cbt.raptor.po.ListingAttachment;
-import com.ebay.cbt.raptor.route.ResourceProvider;
+import com.ebay.cbt.raptor.promotion.po.Listing;
+import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
+import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.kernel.util.URLDecoder;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.req.SelectableListing;
