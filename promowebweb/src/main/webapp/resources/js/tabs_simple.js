@@ -1,7 +1,7 @@
 $(function(){
 	$("ul[role=tablist], .tab-list").each(function(){
 		var $list = $(this);
-		$list.on("click", "li[role=tab]", function(event){
+		$list.on("click", "li[role=tab]:not([disabled])", function(event){
 			if (!$(event.target).hasClass('icon')) {
 				event.preventDefault();
 			}

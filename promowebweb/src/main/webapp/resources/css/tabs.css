@@ -39,6 +39,10 @@
 	text-decoration: none;
 }
 
+.tabbable .tab-list li:disabled {
+	pointer-events: none;
+}
+
 .tabbable .tab-list li.active {
 	margin-bottom: -1px;
 

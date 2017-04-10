@@ -21,8 +21,9 @@ $(function(){
 		data: {
 			user: {name: pageData.username},
 			hasAcceptLetter: false,
-			hasSubmitFields: true,
-			hasUploadLetter: false
+			hasSubmitFields: false,
+			hasUploadLetter: false,
+			hasApproved: false
 		},
 		methods: {
 			sendSellerCustomFields: function(event){
@@ -52,14 +53,10 @@ $(function(){
 	
 	var local = BizReport.local;
 
-	var uploadForm, fileInput, acceptCheckbox, form, formBtn, listingCountJ;
-	
-	var hasState = false, customTableConfig;
-	
+	var uploadForm, acceptCheckbox, formBtn;
 	
 	acceptCheckbox = document.getElementById("accept");
 	formBtn = document.getElementById("upload-form-btn");
-	listingCountJ = $(".my-listing h3 small span");
 	
 	var acceptPopup = $(acceptCheckbox).parent().each(function(){
 		$(this).popup({"trigger": "mannual", html: this.title});
@@ -69,51 +66,50 @@ $(function(){
 	
 	$attachmentForms.submit(function(){
 		var $form = $(this), required = $form.attr("required");
-		var fileInput = $form.find("input[type=file]");
-		var fileName = fileInput.val();
-		var errorMsgEle = $form.find(".msg");
-		var uploadIframe = $form.next("iframe");
+		var $fileInput = $form.find("input[type=file]");
+		var fileName = $fileInput.val();
+		var $errorMsgEle = $form.find(".msg");
+		var $uploadIframe = $form.next("iframe");
+		var hasUploded = $form.data("hasuploaded");
 		
 		if(required) { //attachment is a must
-			if(!fileName) {
-				errorMsgEle.css({"color": "red"}).html(local.getText("subsidy.attachment.notEmpty"));
+			if(!fileName && !hasUploded) {
+				$errorMsgEle.css({"color": "red"}).html(local.getText("subsidy.attachment.notEmpty"));
 				return false;
 			}
 		}
 		
 		if (!fileName) return false;
 		
-		if (!hasValidSize(fileInput.get(0), 5242880)) {
+		if (!hasValidSize($fileInput.get(0), 5242880)) {
 			// attachment size should be less than 5M.
-			errorMsgEle.css({"color": "red"}).html(local.getText("subsidy.attachment.attachmentSizeError"));
+			$errorMsgEle.css({"color": "red"}).html(local.getText("subsidy.attachment.attachmentSizeError"));
 			return false;
 		}
 		
 		$form.attr('uploading', !!fileName);
 		
 		// get attachment upload result.
-		uploadIframe.on("load", function(){
+		$uploadIframe.on("load", function(){
 			$form.attr('uploading', false);
 			
-			if (uploadIframe.contents().length != 0 && uploadIframe.contents().find("body").html().length > 0) {
-				var response = uploadIframe.contents().find("body").text();
+			if ($uploadIframe.contents().length != 0 && $uploadIframe.contents().find("body").html().length > 0) {
+				var response = $uploadIframe.contents().find("body").text();
 				var responseData = $.parseJSON(response);
-				if (responseData.message && responseData.message.length > 0) {
-					// If uploading success, response should have attachemnt download URL.
-					if(responseData.status==true) {
-						errorMsgEle.html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
-						oRow[key] = responseData.message;
-						$form.find(".file-input input").val(""); // clear input[type=file] input value
-					} else {
-						errorMsgEle.css({"color": "red"}).html(responseData.message);
-					}
-				} else if(responseData.status == false) {
-					errorMsgEle.css({"color": "red"}).html(local.getText("attachmentUploadFailed"));
-				}
+				
+				if(responseData.status==true) {
+					$errorMsgEle.html('<a href=/promotion/subsidy/downloadAttachment/?promoId=' + pageData.promoId + '&key=' + $form.find("input[name=key]").val() +'>'+local.getText('promo.listings.attachdownload')+'</a>');
+					$form.find(".file-input input").val(""); // clear input[type=file] input value
+					$form.data("hasuploaded", true);
+				} else if(responseData.message && responseData.message.length > 0) {
+					$errorMsgEle.css({"color": "red"}).html(responseData.message);
+				} else {
+					$errorMsgEle.css({"color": "red"}).html(local.getText("attachmentUploadFailed"));
+				}				
 			}
 		});
 		
-		return !!fileInput.val();
+		return !!$fileInput.val();
 	});
 	
 	if (formBtn) {
@@ -142,7 +138,7 @@ $(function(){
 			
 			if (currentAttachIndex == attachmentTotalNum) {
 				uploadingAttachment = false; // attachments uploading completed
-				(attachmentUploadedNum == attachmentTotalNum) && showPreviewDialog(listingTable.selectedItems);
+				(attachmentUploadedNum == attachmentTotalNum) && (app.hasUploadLetter = true);
 			} else {
 				uploadSubsidyAttachments();
 			}
@@ -189,7 +185,7 @@ $(function(){
 		
 		$(formBtn).click(function(event){
 			event.preventDefault();
-//			if (uploadingAttachment) return;
+			if (uploadingAttachment) return;
 			
 			uploadingAttachment = true;
 			sumAttachments();

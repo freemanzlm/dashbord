@@ -7,15 +7,15 @@
 <div class="tabbable confirm-letter-steps">
 	<div class="tab-list-container clr">
 		<ul class="tab-list clr" role="tablist">
-			<li role="tab" aria-controls="pane1"  class="active"><span class="label">
+			<li role="tab" aria-controls="pane1" v-bind:class="{active: !hasSubmitFields}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane1">第一步：填写确认函</a></span></li>
-			<li role="tab" aria-controls="pane2" v-show="hasSubmitFields"><span class="label">
+			<li role="tab" aria-controls="pane2" v-show="hasSubmitFields" v-bind:class="{active: (hasSubmitFields && !hasUploadLetter)}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane2">第二步：上传确认函</a></span></li>
-			<li role="tab" aria-controls="pane3" v-show="hasUploadLetter"><span class="label">
+			<li role="tab" aria-controls="pane3" v-show="hasUploadLetter" v-bind:class="{active: hasApproved}"><span class="label">
 				<a href="#pane3">第三步：领取奖励</a></span></li>
 		</ul>
 	</div>
-	<div id="pane1" class="tab-pane active confirm-letter-pane" role="tabpanel">
+	<div id="pane1" class="tab-pane confirm-letter-pane" v-bind:class="{active: !hasSubmitFields}" role="tabpanel">
 		<div class="pane wlt-binding">
 			请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：xxx.
 			<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
@@ -86,7 +86,7 @@
 		</div>
 	</div>
 	
-	<div id="pane2" class="tab-pane confirm-letter-submission-pane" role="tabpanel">
+	<div id="pane2" class="tab-pane confirm-letter-submission-pane" v-bind:class="{active: (hasSubmitFields && !hasApproved)}" role="tabpanel">
 		<div class="hint">
 			<p>为了方便核实您的上传信息，确保您能尽快领取相关奖励，请仔细阅读以下内容：</p>
 			<ol>
@@ -100,7 +100,7 @@
 		
 		<c:forEach items="${ uploadFields }" var="field">
 			<c:if test="${ not empty field}">
-				<form target="uploadIframe_${field.key}" ${ field.required ? 'required':'' } action="uploadAttachment" class="form-horizontal attachment-form" method="post" enctype="multipart/form-data">
+				<form target="uploadIframe_${field.key}" ${ field.required ? 'required':'' } data-hasuploaded="${not empty field.value}" action="uploadAttachment" class="form-horizontal attachment-form" method="post" enctype="multipart/form-data">
 					<input type="hidden" value="${promo.promoId }" name="promoId"/>
 					<input type="hidden" name="key" value="${field.key }"/>
 					<div class="form-group">
@@ -113,14 +113,14 @@
 										<input type="file" name="uploadFile" accept="application/pdf" />
 									</c:when>
 									<c:otherwise>
-										<input type="file" name="uploadFile" value="${field.value }"/>
+										<input type="file" name="uploadFile"/>
 									</c:otherwise>
 								</c:choose>
 								<button type="button" class="btn" style="margin-left: 3px;">选择</button>
 							</span> <br />
 							<span class="font-bold msg">
 								<c:if test="${ not empty field.value }">
-									<a href=/promotion/subsidy/'>下载附件</a>
+									<a href=/promotion/subsidy/downloadAttachment?promoId=${promo.promoId}&key=${field.key}'>下载附件</a>
 								</c:if>
 							</span>
 						</div>
@@ -130,13 +130,21 @@
 			</c:if>
 		</c:forEach>
 		
-		
-		
 		<div class="text-center" style="margin-top: 40px;">
 			<button id="upload-form-btn" type="submit" class="btn" style="width:120px;">上传</button>
 		</div>
 		
 	</div>
-	<div id="pane3" class="tab-pane " role="tabpanel"
-		aria-live="polite" aria-relevant="text">Tab Pane 3</div>
+	
+	<div id="pane3" class="tab-pane" v-bind:class="{active: hasApproved}" role="tabpanel">
+		<div class="promo-state-message">
+			<div class="message-content">
+				<h3 class="color-green text-center">您已成功领取等值 ${reward} ${promo.currency} 的奖励。</h3>
+				<menu>
+					<li><a href="../index" class="btn">返回活动列表</a></li>
+				</menu>
+			</div>
+		</div>
+		
+	</div>
 </div>

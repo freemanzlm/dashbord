@@ -1,0 +1,206 @@
+.tabbable {
+	.tab-list-container {
+		font-size: 12px;
+		
+		.tabs-title {
+			margin: 0 10px 0 5px;
+			float: left;
+			line-height: 2em;
+			font-size: 12px;
+		}
+	}
+	
+	.tab-list {
+		margin: 0;
+		padding: 0;
+		list-style: none inside none;
+		line-height: 1em;
+		float: left;
+		
+		li {
+			margin: 0 5px 0 0;
+			padding: 0.5em 0.6em;	
+		
+			border: 1px solid #ccc;
+			border-bottom: none;
+			border-radius: 5px 5px 0 0;	
+		
+			background: #f9f9f9;
+			text-align: center;
+		
+			float: left;
+			
+			a, a:hover {
+				color: #333;
+				text-decoration: none;
+			}
+			
+			&[disabled] {
+				pointer-events: none;
+			}
+			
+			&.active {
+				margin-bottom: -1px;
+			
+				background-color: #fff;
+				border-bottom: 1px solid #fff;
+			}
+		}
+	}
+	
+	.tab-pane {
+		border-radius: 0 5px 5px 5px;
+		border: 1px solid #ccc;
+		
+		margin: 0;
+		padding: 10px 10px;
+		background: #fff;
+		
+		box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+	
+		display: none;
+		
+		&.active {
+			display: block;
+		}
+	}
+}
+
+
+.tabbable-with-title .tab-pane {
+	border-radius: 5px;
+}
+
+/* each tab display as a page */
+.tabbable .tab-list-page li {
+	border: none;
+	background: transparent;
+	
+	&.active {
+		border: 1px solid #ccc;
+		border-bottom: 1px solid #fff;
+	}
+}
+
+/* tabs menu on the right side */
+.tabbable .tab-list-right .tab-list {
+	float: right;
+}
+
+/* tab list on the left side */
+.tabbable-left,
+.tabbable-right {
+	box-sizing: border-box;
+}
+
+.tabbable-left .tab-list-container {
+	box-sizing: border-box;
+
+	position: relative;
+	z-index: 1;
+
+	float: left;
+}
+
+.tabbable-left .tab-list-container .tabs-title,
+.tabbable-right .tab-list-container .tabs-title {
+	float: none;
+}
+
+.tabbable-left .tab-list,
+.tabbable-right .tab-list {
+	float: none;
+}
+
+.tabbable-left .tab-list li,
+.tabbable-right .tab-list li {
+	margin: 0;
+
+	border: 1px solid #ccc;
+	border-top: none;
+	border-radius: 0;	
+
+	break-word: break-all;
+
+	float: none;
+	position: relative;
+}
+
+.tabbable-left .tab-list li {
+	box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.2);
+	text-align: left;
+	
+	&:first-child {
+		border-top: 1px solid #ccc;
+		border-radius: 5px 0 0 0;
+	}
+	
+	&:last-child {
+		border-radius: 0 0 0 5px;
+	}
+	
+	&.active {
+		margin-bottom: 0;
+		border-bottom: 1px solid #ccc;
+		border-right: none;
+		box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.2);
+		position: relative;
+	}
+}
+
+.tabbable-left .tab-pane {
+	box-sizing: border-box;
+	float: left;
+	margin-left: -1px;
+	min-height: 50px;
+	
+	&.active {
+		margin-top: 0;
+	}
+}
+
+/* tab list on the right side */
+
+.tabbable-right .tab-list-container {
+	position: relative;
+	z-index: 1;
+
+	float: right;
+}
+
+.tabbable-right .tab-list li {
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+	text-align: right;
+	
+	&:first-child {
+		border-top: 1px solid #ccc;
+		border-radius: 0 5px 0 0;
+	}
+	
+	&:last-child {
+		border-radius: 0 0 5px 0;
+	}
+	
+	&.active {
+		margin-bottom: 0;
+		border-left: none;
+		border-bottom: 1px solid #ccc;
+	}
+}
+
+.tabbable-right .tab-pane {
+	border-radius: 5px 0 5px 5px;
+	box-sizing: border-box;
+	float: right;
+	margin-right: -1px;
+	min-height: 50px;
+	
+	&.active {
+		margin-top: 0;
+	}
+}
+
+.tabbable-left.tabbable-with-title .tab-pane,
+.tabbable-right.tabbable-with-title .tab-pane {
+	border-radius: 5px;
+}
