@@ -17,6 +17,8 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import net.sf.json.JSONArray;
+
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.ebayopensource.ginger.client.GingerWebTarget;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
-import com.ebay.cbt.raptor.promotion.po.WLTAccount;
+import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.util.URLDecoder;
@@ -41,6 +43,7 @@ import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.service.IAFTokenService;
 import com.ebay.raptor.promotion.service.PromoClient;
+import com.ebay.raptor.promotion.util.StringUtil;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
@@ -89,46 +92,100 @@ public class SubsidyService extends BaseService {
 	 * 
 	 * @param paymentType
 	 * @return
+	 * @throws PromoException 
 	 */
-	public SubsidyLegalTerm getSubsidyLegalTerm(Integer paymentType, String country) {
-		SubsidyLegalTerm term = new SubsidyLegalTerm();
-		ArrayList<SubsidyCustomField> sellerFillingFields = new ArrayList<SubsidyCustomField>();
-		SubsidyCustomField field = new SubsidyCustomField();
-		field.setKey("_sellerName");
-		field.setDisplayLabel("家姓名/公司名称");
-		field.setValue("");
-		field.setRequired(true);
-		sellerFillingFields.add(field);
+	public SubsidyLegalTerm getSubsidyLegalTerm(Integer paymentType, String country) throws PromoException {
+		String uri = url(params(ResourceProvider.SubsidyRes.getSubsidyLegalTerm, new Object[] { "{paymentType}", paymentType, "{country}",
+				country }));
+		GingerClientResponse resp = httpGet(uri);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<SubsidyLegalTerm>> type = new GenericType<GeneralDataResponse<SubsidyLegalTerm>>(){};
+			GeneralDataResponse<SubsidyLegalTerm> response = resp.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				return response.getData();
+			} 
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return null;
 		
-		SubsidyCustomField field2 = new SubsidyCustomField();
-		field2.setKey("_sellerID");
-		field2.setDisplayLabel("身份证号码/公司营业执照号码");
-		field2.setValue("4234324324234324");
-		field2.setRequired(true);
-		sellerFillingFields.add(field2);
 		
-		SubsidyCustomField field4 = new SubsidyCustomField();
-		field4.setKey("idImage");
-		field4.setDisplayLabel("身份证复印件");
-		field4.setRequired(true);
-		field4.setUpload(true);
-		sellerFillingFields.add(field4);
-		
-		SubsidyCustomField field3 = new SubsidyCustomField();
-		field3.setKey("_letter");
-		field3.setDisplayLabel("已签署的确认函");
-		field3.setValue("");
-		field3.setRequired(true);
-		field3.setUpload(true);
-		sellerFillingFields.add(field3);
-
-		// term.setCountry(country);
-		term.setOvFlag(1);
-
-		term.setSubsidyCustomFields(sellerFillingFields);
-
-		return term;
+//		SubsidyLegalTerm term = new SubsidyLegalTerm();
+//		ArrayList<SubsidyCustomField> sellerFillingFields = new ArrayList<SubsidyCustomField>();
+//		SubsidyCustomField field = new SubsidyCustomField();
+//		field.setKey("_sellerName");
+//		field.setDisplayLabel("家姓名/公司名称");
+//		field.setValue("");
+//		field.setRequired(true);
+//		sellerFillingFields.add(field);
+//		
+//		SubsidyCustomField field2 = new SubsidyCustomField();
+//		field2.setKey("_sellerID");
+//		field2.setDisplayLabel("身份证号码/公司营业执照号码");
+//		field2.setValue("4234324324234324");
+//		field2.setRequired(true);
+//		sellerFillingFields.add(field2);
+//		
+//		SubsidyCustomField field4 = new SubsidyCustomField();
+//		field4.setKey("idImage");
+//		field4.setDisplayLabel("身份证复印件");
+//		field4.setRequired(true);
+//		field4.setUpload(true);
+//		sellerFillingFields.add(field4);
+//		
+//		SubsidyCustomField field3 = new SubsidyCustomField();
+//		field3.setKey("_letter");
+//		field3.setDisplayLabel("已签署的确认函");
+//		field3.setValue("");
+//		field3.setRequired(true);
+//		field3.setUpload(true);
+//		sellerFillingFields.add(field3);
+//
+//		// term.setCountry(country);
+//		term.setOvFlag(1);
+//
+//		term.setSubsidyCustomFields(sellerFillingFields);
+//
+//		return term;
 	}
+	
+	public SubsidySubmission getSubsidySubmission(String promoId, Long orcacleID) throws PromoException {
+		String uri = url(params(ResourceProvider.SubsidyRes.getSubsidySubmission, new Object[] { "{promoId}", promoId, "{orcacleID}",orcacleID }));
+		GingerClientResponse resp = httpGet(uri);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {};
+			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				return response.getData();
+			} 
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return null;
+	}
+	
+	/**
+	 * get the filling info from the subsidysubmission and convert into the subsidyLegalTerm
+	 * @return
+	 */
+	public SubsidyLegalTerm convertSubmissionToLegalTerm(SubsidyLegalTerm subsidyLegalTerm,SubsidySubmission subsidySubmission){
+		if(subsidySubmission==null||StringUtil.isEmpty(subsidySubmission.getContent())){
+			return subsidyLegalTerm;
+		}
+		List<SubsidyCustomField> subsidyCustomFields = subsidyLegalTerm.getSubsidyCustomFields();
+		String content = subsidySubmission.getContent();
+		JSONArray jsonArray = JSONArray.fromObject(content);
+		List<SubsidyCustomField> fields = (List<SubsidyCustomField>) JSONArray.toCollection(jsonArray,SubsidyCustomField.class);
+		for (SubsidyCustomField submissionField : fields) {
+			for (SubsidyCustomField subsidyField : subsidyCustomFields) {
+				if(subsidyField.equals(submissionField)){
+					subsidyField.setValue(submissionField.getValue());
+				}
+			}
+		}
+		return subsidyLegalTerm;
+	}
+	
 
 	/**
 	 * Split custom fields into two kinds of fields: these for upload, and the
@@ -258,41 +315,6 @@ public class SubsidyService extends BaseService {
 
 	}
 
-	/**
-	 * Get subsidy detail.
-	 * 
-	 * @param promoId
-	 * @param userId
-	 * @return
-	 * @throws PromoException
-	 */
-	public WLTAccount getTest(String promoId, Long userId) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getTest, new Object[] { "{promoId}", promoId, "{uid}",
-				userId }));
-		long start = System.currentTimeMillis();
-		System.out.println("-------------------start-------------------" + start);
-		GingerClientResponse resp = httpGet(uri);
-		long stop1 = System.currentTimeMillis();
-		System.out.println("-------------------httpclientè°ç¨æ¶é´-------------------" + (stop1 - start));
-		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			GenericType<GeneralDataResponse<WLTAccount>> type = new GenericType<GeneralDataResponse<WLTAccount>>() {
-			};
-			GeneralDataResponse<WLTAccount> response = resp.getEntity(type);
-			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
-				return response.getData();
-			} else {
-				if (null != response && null != response.getErrorMessage()
-						&& null != response.getErrorMessage().getError()) {
-					throw new PromoException(response.getErrorMessage().getError().toString());
-				}
-			}
-			long stop2 = System.currentTimeMillis();
-			System.out.println("-------------------æ°æ®è§£ææ¶é´-------------------" + (stop2 - stop1));
-		} else {
-			throw new PromoException("Internal Error happens.");
-		}
-		return null;
-	}
 
 	private File multipartToFile(MultipartFile multipartFile) throws IllegalStateException, IOException {
 		File file = new File(multipartFile.getOriginalFilename());

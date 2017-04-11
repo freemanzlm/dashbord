@@ -27,10 +27,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.common.constant.pm.PMSubsidyStatus;
+import com.ebay.cbt.raptor.promotion.enumcode.subsidyStatusCode;
+import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
-import com.ebay.cbt.raptor.promotion.po.WLTAccount;
+import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
@@ -44,9 +47,11 @@ import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
+import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.PojoConvertor;
+import com.ebay.raptor.promotion.util.StringUtil;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
 
 /**
@@ -62,23 +67,33 @@ public class SubsidyController {
 	@Autowired PromotionService promoService;
 	@Autowired PromotionViewService view;
 	@Autowired SubsidyService subsidyService;
+	@Autowired CSApiService csApiService;
 
 	@RequestMapping(value = "/acknowledgment", method = RequestMethod.GET)
 	public ModelAndView handleRequest(@RequestParam("promoId") String promoId, HttpServletRequest request,
 			HttpServletResponse response) throws MissingArgumentException, IOException {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
+		String userCountry = csApiService.getUserCountryByName(userData.getUserName());
+		userCountry = csApiService.getUserCountryByNameDAL(userData.getUserName());
+		Long userID = userData.getUserId();
 		Date now = new Date();
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
 
 		try {
-			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
 
 			if (promo != null) {
+				Subsidy subsidy = subsidyService.getSubsidy(promoId, userID);
+				String status = subsidy.getStatus();
 				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
-				ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
+				if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getAVStatus())||status.equals(PMSubsidyStatus.REWARD_VISITED.getAVStatus())){
+					SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
+					term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
+				}
 				
+				ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
 				view.calcualteCurentStep(promo);
 				view.appendPromoEndCheck(model.getModel(), promo, now);
 				view.appendPromoAwardEndCheck(model.getModel(), promo, now);
@@ -231,24 +246,6 @@ public class SubsidyController {
 				outStream.close();
 			}
 		}
-	}
-
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public ModelAndView test(HttpServletRequest request, HttpServletResponse response) throws MissingArgumentException,
-			IOException {
-		ModelAndView model = new ModelAndView();
-		WLTAccount account = null;
-		UserData userData = loginService.getUserDataFromCookie(request);
-		System.out.println("i am in now can u see me");
-		try {
-			account = subsidyService.getTest("11111", 1L);
-			// account = new WLTAccount();
-			// account.setId(2222);
-			model.addObject("ha", account);
-			model.setViewName(ViewResource.TEST_PAGE.getPath());
-		} catch (Exception e) {
-		}
-		return model;
 	}
 
 	@ExceptionHandler(Exception.class)
