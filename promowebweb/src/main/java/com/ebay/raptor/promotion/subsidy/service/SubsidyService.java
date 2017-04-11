@@ -108,45 +108,6 @@ public class SubsidyService extends BaseService {
 			throw new PromoException("Internal Error happens.");
 		}
 		return null;
-		
-		
-//		SubsidyLegalTerm term = new SubsidyLegalTerm();
-//		ArrayList<SubsidyCustomField> sellerFillingFields = new ArrayList<SubsidyCustomField>();
-//		SubsidyCustomField field = new SubsidyCustomField();
-//		field.setKey("_sellerName");
-//		field.setDisplayLabel("家姓名/公司名称");
-//		field.setValue("");
-//		field.setRequired(true);
-//		sellerFillingFields.add(field);
-//		
-//		SubsidyCustomField field2 = new SubsidyCustomField();
-//		field2.setKey("_sellerID");
-//		field2.setDisplayLabel("身份证号码/公司营业执照号码");
-//		field2.setValue("4234324324234324");
-//		field2.setRequired(true);
-//		sellerFillingFields.add(field2);
-//		
-//		SubsidyCustomField field4 = new SubsidyCustomField();
-//		field4.setKey("idImage");
-//		field4.setDisplayLabel("身份证复印件");
-//		field4.setRequired(true);
-//		field4.setUpload(true);
-//		sellerFillingFields.add(field4);
-//		
-//		SubsidyCustomField field3 = new SubsidyCustomField();
-//		field3.setKey("_letter");
-//		field3.setDisplayLabel("已签署的确认函");
-//		field3.setValue("");
-//		field3.setRequired(true);
-//		field3.setUpload(true);
-//		sellerFillingFields.add(field3);
-//
-//		// term.setCountry(country);
-//		term.setOvFlag(1);
-//
-//		term.setSubsidyCustomFields(sellerFillingFields);
-//
-//		return term;
 	}
 	
 	public SubsidySubmission getSubsidySubmission(String promoId, Long orcacleID) throws PromoException {
@@ -162,6 +123,37 @@ public class SubsidyService extends BaseService {
 			throw new PromoException("Internal Error happens.");
 		}
 		return null;
+	}
+	
+	public SubsidySubmission getNewSubsidySubmission() throws PromoException {
+		String uri = url(params(ResourceProvider.SubsidyRes.getNewSubsidySubmission));
+		GingerClientResponse resp = httpGet(uri);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {};
+			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				return response.getData();
+			} 
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return null;
+	}
+	
+	public boolean updateSubsidySubmission(SubsidySubmission subsidySubmission) throws PromoException {
+		boolean flag = false;
+		String uri = url(params(ResourceProvider.SubsidyRes.updateSubsidySubmission));
+		GingerClientResponse resp = httpPost(uri, subsidySubmission);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {};
+			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				flag = true;
+			} 
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return flag;
 	}
 	
 	/**

@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,9 +52,14 @@ import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
+import com.ebay.raptor.promotion.util.JsonUtils;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.util.StringUtil;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
+import com.ebay.res.core.handler.out.JsonUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * 
@@ -127,6 +134,7 @@ public class SubsidyController {
 			HttpServletRequest request, HttpServletResponse response) throws MissingArgumentException, IOException,
 			PromoException {
 		UserData userData = loginService.getUserDataFromCookie(request);
+		Long userID = userData.getUserId();
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
 		ResponseData<String> responseData = new ResponseData<String>();
@@ -141,8 +149,17 @@ public class SubsidyController {
 		for (SubsidyCustomField field : fields) {
 			map.put(field.getKey(), request.getParameter(field.getKey()));
 		}
-
-		// TODO Save map into database
+		
+		String ret = JsonUtils.objectToJsonString(map);
+		SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
+		if(null==subsidySubmission){
+			subsidySubmission = subsidyService.getNewSubsidySubmission();
+			subsidySubmission.setOracleId(userID);
+			subsidySubmission.setSfId(promoId);
+		}
+		subsidySubmission.setContent(ret);
+		
+		boolean flag = subsidyService.updateSubsidySubmission(subsidySubmission);
 
 		responseData.setStatus(true);
 		responseData.setData(map.toString());

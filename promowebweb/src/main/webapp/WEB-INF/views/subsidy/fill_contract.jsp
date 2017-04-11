@@ -72,7 +72,7 @@
 				</div>
 			</div>
 			<div class="text-center">
-				<button type="button" class="btn" v-bind:disabled="!hasAcceptLetter" v-on:click="sendSellerCustomFields">点击生成PDF共签署</button>
+				<button type="button" class="btn" v-bind:disabled="!hasAcceptLetter" v-on:click="sendSellerCustomFields">点击生成PDF供签署</button>
 				<template v-if="hasSubmitFields">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<button type="button" class="btn" v-on:click="gotoSecondStep">下一步：上传确认函</button>
