@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
-
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -23,11 +21,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  *
  */
 public class JsonUtils {
-	private static final CommonLogger logger = CommonLogger
-			.getInstance(JsonUtils.class);
-	
+	private static final CommonLogger logger = CommonLogger.getInstance(JsonUtils.class);
+
 	/**
 	 * convert Object to jsonString
+	 * 
 	 * @param obj
 	 * @return
 	 */
@@ -43,9 +41,10 @@ public class JsonUtils {
 		}
 		return resultJson;
 	}
-	
+
 	/**
 	 * convert jsonString to Object
+	 * 
 	 * @param json
 	 * @param cls
 	 * @return
@@ -58,17 +57,17 @@ public class JsonUtils {
 			if (StringUtil.isEmpty(json)) {
 				return obj;
 			}
-			objectMapper.configure(
-					DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			obj = (T) objectMapper.readValue(json, cls);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return obj;
 	}
-	
+
 	/**
 	 * get value correspond to target key from a jsonString
+	 * 
 	 * @param jsonText
 	 * @param key
 	 * @return
@@ -92,9 +91,10 @@ public class JsonUtils {
 		}
 		return map.get(key) == null ? null : map.get(key);
 	}
-	
+
 	/**
 	 * get a map from a jsonString
+	 * 
 	 * @param jsonText
 	 * @return
 	 */
@@ -119,13 +119,13 @@ public class JsonUtils {
 		}
 		return map == null ? null : map;
 	}
-	
+
 	public static void main(String[] args) {
-		HashMap< String, String> map = new HashMap<String, String>();
+		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("one", "1111");
-			map.put("two", "2222");
-				map.put("three", "3333");
-				String ret = objectToJsonString(map);
-				System.out.println(ret);
+		map.put("two", "2222");
+		map.put("three", "3333");
+		String ret = objectToJsonString(map);
+		System.out.println(ret);
 	}
 }

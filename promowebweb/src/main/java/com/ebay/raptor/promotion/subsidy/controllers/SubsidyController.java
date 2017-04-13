@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,12 +28,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.common.constant.pm.PMSubsidyStatus;
-import com.ebay.cbt.raptor.promotion.enumcode.subsidyStatusCode;
+import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
+import com.ebay.cbt.raptor.promotion.po.WLTAccount;
+import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
@@ -54,12 +54,7 @@ import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.JsonUtils;
 import com.ebay.raptor.promotion.util.PojoConvertor;
-import com.ebay.raptor.promotion.util.StringUtil;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
-import com.ebay.res.core.handler.out.JsonUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * 
@@ -87,6 +82,7 @@ public class SubsidyController {
 		Date now = new Date();
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
+		WLTAccount wltAccount = null;
 
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
@@ -94,10 +90,15 @@ public class SubsidyController {
 			if (promo != null) {
 				Subsidy subsidy = subsidyService.getSubsidy(promoId, userID);
 				String status = subsidy.getStatus();
-				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
+				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+				
 				if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getAVStatus())||status.equals(PMSubsidyStatus.REWARD_VISITED.getAVStatus())){
 					SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
-					term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
+					if (subsidySubmission != null) {
+						term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
+					}
+					
+					model.addObject("hasSubmitFields", subsidySubmission != null);
 				}
 				
 				ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
@@ -106,6 +107,7 @@ public class SubsidyController {
 				view.appendPromoAwardEndCheck(model.getModel(), promo, now);
 
 				model.addObject("subsidyTerm", term);
+				model.addObject("wltAccount", wltAccount);
 				model.addObject("nonuploadFields", fields[0]);
 				model.addObject("uploadFields", fields[1]);
 
@@ -140,7 +142,7 @@ public class SubsidyController {
 		ResponseData<String> responseData = new ResponseData<String>();
 
 		promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-		term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
+		term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 
 		List<SubsidyCustomField> fields = term.getSubsidyCustomFields();
 
@@ -153,7 +155,7 @@ public class SubsidyController {
 		String ret = JsonUtils.objectToJsonString(map);
 		SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
 		if(null==subsidySubmission){
-			subsidySubmission = subsidyService.getNewSubsidySubmission();
+			subsidySubmission = new SubsidySubmission();
 			subsidySubmission.setOracleId(userID);
 			subsidySubmission.setSfId(promoId);
 		}
@@ -165,6 +167,33 @@ public class SubsidyController {
 		responseData.setData(map.toString());
 
 		return responseData;
+	}
+	
+	@GET
+	@RequestMapping(value="/downloadLetter", method=RequestMethod.GET)
+	public void createConfirmLetter(HttpServletRequest req, HttpServletResponse resp,
+			 @RequestParam String promoId) throws MissingArgumentException, IOException, PromoException {
+		resp.setContentType("application/pdf");
+		UserData userData = loginService.getUserDataFromCookie(req);
+		InputStream inputStream = null;
+		OutputStream outStream = null;
+		SubsidyAttachment attachment = null;
+		String attachmentName = "";
+		String attachmentType = "";
+		
+		resp.setHeader("Content-disposition", "attachment; filename=\""+attachmentName+"."+attachmentType+"\"");
+		System.out.println(resp.getHeaders("Content-disposition"));
+		outStream = resp.getOutputStream();
+		int len = 0;
+		byte[] buffer = new byte[4096];
+		while((len = inputStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, len);
+        }
+		if (inputStream != null) {
+			inputStream.close();
+			outStream.flush();
+			outStream.close();
+		}
 	}
 
 	/**

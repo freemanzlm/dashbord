@@ -4,12 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <c:choose>
-	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardName" value="ebay万里通积分" />
-	</c:when>
-</c:choose>
-
-<c:choose>
 	<c:when test="${isAwardEnd eq true}">
 		<div class="promo-state-message">
 			<div class="message-content">
@@ -26,13 +20,17 @@
 				<c:choose>
 					<c:when	test="${ promo.state ne 'End' }">
 						<h3>恭喜！您将获得等值 ${reward} ${promo.currency} 的奖励！</h3>
+						
+						<c:if test="${ subsidyTerm.subsidyType ne 2 }">
+							<p class="desc">${ subsidyTerm.successInfo }</p> <br />
+						</c:if>
+
 						<menu>
 							<li>
 								<c:if test="${ subsidyTerm.ovFlag == 1 }">
 									<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
+									<br /><br />
 								</c:if>
-								<br />
-								<br />
 								<a href="index">返回活动列表</a>
 							</li>
 						</menu>

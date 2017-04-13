@@ -35,8 +35,13 @@ $(function(){
 					dataType : 'json',
 					headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
 					context : this,
-					success : function() {
-						this.hasSubmitFields = true;
+					success : function(data) {
+						if (data && data.status === true) {
+							this.hasSubmitFields = true;
+							// download confirm letter
+							window.open("generateLetter?promoId=" + pageData.promoId);
+							console.log("hello");
+						}
 					},
 					error: function() {
 						console.log(this)

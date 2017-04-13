@@ -17,7 +17,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.ebayopensource.ginger.client.GingerWebTarget;
@@ -92,92 +92,82 @@ public class SubsidyService extends BaseService {
 	 * 
 	 * @param paymentType
 	 * @return
-	 * @throws PromoException 
+	 * @throws PromoException
 	 */
 	public SubsidyLegalTerm getSubsidyLegalTerm(Integer paymentType, String country) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getSubsidyLegalTerm, new Object[] { "{paymentType}", paymentType, "{country}",
-				country }));
+		String uri = url(params(ResourceProvider.SubsidyRes.getSubsidyLegalTerm, new Object[] { "{paymentType}",
+				paymentType, "{country}", country }));
 		GingerClientResponse resp = httpGet(uri);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			GenericType<GeneralDataResponse<SubsidyLegalTerm>> type = new GenericType<GeneralDataResponse<SubsidyLegalTerm>>(){};
+			GenericType<GeneralDataResponse<SubsidyLegalTerm>> type = new GenericType<GeneralDataResponse<SubsidyLegalTerm>>() {
+			};
 			GeneralDataResponse<SubsidyLegalTerm> response = resp.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();
-			} 
+			}
 		} else {
 			throw new PromoException("Internal Error happens.");
 		}
 		return null;
 	}
-	
+
 	public SubsidySubmission getSubsidySubmission(String promoId, Long orcacleID) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getSubsidySubmission, new Object[] { "{promoId}", promoId, "{orcacleID}",orcacleID }));
+		String uri = url(params(ResourceProvider.SubsidyRes.getSubsidySubmission, new Object[] { "{promoId}", promoId,
+				"{orcacleID}", orcacleID }));
 		GingerClientResponse resp = httpGet(uri);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {};
+			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {
+			};
 			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();
-			} 
+			}
 		} else {
 			throw new PromoException("Internal Error happens.");
 		}
 		return null;
 	}
-	
-	public SubsidySubmission getNewSubsidySubmission() throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getNewSubsidySubmission));
-		GingerClientResponse resp = httpGet(uri);
-		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {};
-			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
-			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
-				return response.getData();
-			} 
-		} else {
-			throw new PromoException("Internal Error happens.");
-		}
-		return null;
-	}
-	
+
 	public boolean updateSubsidySubmission(SubsidySubmission subsidySubmission) throws PromoException {
 		boolean flag = false;
 		String uri = url(params(ResourceProvider.SubsidyRes.updateSubsidySubmission));
 		GingerClientResponse resp = httpPost(uri, subsidySubmission);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {};
+			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {
+			};
 			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				flag = true;
-			} 
+			}
 		} else {
 			throw new PromoException("Internal Error happens.");
 		}
 		return flag;
 	}
-	
+
 	/**
-	 * get the filling info from the subsidysubmission and convert into the subsidyLegalTerm
+	 * get the filling info from the subsidy submission and convert into the
+	 * subsidyLegalTerm
+	 * 
 	 * @return
 	 */
-	public SubsidyLegalTerm convertSubmissionToLegalTerm(SubsidyLegalTerm subsidyLegalTerm,SubsidySubmission subsidySubmission){
-		if(subsidySubmission==null||StringUtil.isEmpty(subsidySubmission.getContent())){
+	public SubsidyLegalTerm convertSubmissionToLegalTerm(SubsidyLegalTerm subsidyLegalTerm,
+			SubsidySubmission subsidySubmission) {
+		if (subsidySubmission == null || StringUtil.isEmpty(subsidySubmission.getContent())) {
 			return subsidyLegalTerm;
 		}
 		List<SubsidyCustomField> subsidyCustomFields = subsidyLegalTerm.getSubsidyCustomFields();
 		String content = subsidySubmission.getContent();
-		JSONArray jsonArray = JSONArray.fromObject(content);
-		List<SubsidyCustomField> fields = (List<SubsidyCustomField>) JSONArray.toCollection(jsonArray,SubsidyCustomField.class);
-		for (SubsidyCustomField submissionField : fields) {
-			for (SubsidyCustomField subsidyField : subsidyCustomFields) {
-				if(subsidyField.equals(submissionField)){
-					subsidyField.setValue(submissionField.getValue());
-				}
+		JSONObject json = JSONObject.fromObject(content);
+		
+		for (SubsidyCustomField subsidyField : subsidyCustomFields) {
+			if (json.containsKey(subsidyField.getKey())) {
+				subsidyField.setValue(json.getString(subsidyField.getKey()));
 			}
 		}
+		
 		return subsidyLegalTerm;
 	}
-	
 
 	/**
 	 * Split custom fields into two kinds of fields: these for upload, and the
@@ -191,7 +181,7 @@ public class SubsidyService extends BaseService {
 	public ArrayList<SubsidyCustomField>[] splitCustomFields(SubsidyLegalTerm term) {
 		@SuppressWarnings("unchecked")
 		ArrayList<SubsidyCustomField>[] array = (ArrayList<SubsidyCustomField>[]) Array.newInstance(ArrayList.class, 2);
-		
+
 		ArrayList<SubsidyCustomField> nonuploadFields = new ArrayList<SubsidyCustomField>();
 		ArrayList<SubsidyCustomField> uploadFields = new ArrayList<SubsidyCustomField>();
 
@@ -204,13 +194,13 @@ public class SubsidyService extends BaseService {
 				nonuploadFields.add(field);
 			}
 		}
-		 
+
 		array[0] = nonuploadFields;
 		array[1] = uploadFields;
 
 		return array;
 	}
-	
+
 	/**
 	 * Upload listing attachment into database.
 	 * 
@@ -306,7 +296,6 @@ public class SubsidyService extends BaseService {
 		}
 
 	}
-
 
 	private File multipartToFile(MultipartFile multipartFile) throws IllegalStateException, IOException {
 		File file = new File(multipartFile.getOriginalFilename());

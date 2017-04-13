@@ -92,7 +92,14 @@
 
 				<%@ include file="steps.jsp"%>
 
-				<%@ include file="subsidy/fill_contract.jsp"%>
+				<c:choose>
+					<c:when test="${ promo.rewardType eq 2 && empty wltAccount }">
+						<%@ include file="stepMessages/wlt_to_bind.jsp"%>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="subsidy/fill_contract.jsp"%>
+					</c:otherwise>
+				</c:choose>
 				
 			</div>
 		</div>
@@ -120,7 +127,8 @@
 			promoId : '${promo.promoId}',
 			currentStep : '${currentStep}',
 			regType : '${promo.regType}',
-			username: '${unm}'
+			username: '${unm}',
+			hasSubmitFields: ${hasSubmitFields}
 		};
 	</script>
 

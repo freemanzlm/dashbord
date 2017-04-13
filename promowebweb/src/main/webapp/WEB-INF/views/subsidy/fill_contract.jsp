@@ -15,11 +15,15 @@
 				<a href="#pane3">第三步：领取奖励</a></span></li>
 		</ul>
 	</div>
+	
 	<div id="pane1" class="tab-pane confirm-letter-pane" v-bind:class="{active: !hasSubmitFields}" role="tabpanel">
-		<div class="pane wlt-binding">
-			请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：xxx.
-			<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
-		</div>
+		
+		<c:if test="${ promo.rewardType eq 2 && not empty wltAccount }">
+			<div class="pane wlt-binding">
+				请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：${wltAccount.ebayId }.
+				<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
+			</div>
+		</c:if>
 		
 		<h3 class="mt20 mb5 text-center">活动奖励确认函</h3>
 		<hr />
@@ -113,7 +117,7 @@
 										<input type="file" name="uploadFile" accept="application/pdf" />
 									</c:when>
 									<c:otherwise>
-										<input type="file" name="uploadFile"/>
+										<input type="file" name="uploadFile" accept="image/jpeg, application/zip"/>
 									</c:otherwise>
 								</c:choose>
 								<button type="button" class="btn" style="margin-left: 3px;">选择</button>
