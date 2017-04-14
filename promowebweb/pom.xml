@@ -139,6 +139,20 @@
 			<artifactId>promocampLib</artifactId>
 			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
+		<!-- itextpdf start -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.itextpdf.tool</groupId>
+			<artifactId>xmlworker</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+
+		<!-- itextpdf end -->
 	</dependencies>
 
 	<build>

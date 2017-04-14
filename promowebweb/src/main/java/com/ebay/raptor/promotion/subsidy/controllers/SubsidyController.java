@@ -1,6 +1,8 @@
 package com.ebay.raptor.promotion.subsidy.controllers;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.common.constant.pm.PMSubsidyStatus;
-import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
+import com.ebay.cbt.raptor.promotion.enumcode.subsidyStatusCode;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
@@ -53,8 +55,22 @@ import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.JsonUtils;
+import com.ebay.raptor.promotion.util.MyXMLWorkerHelper;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
+import com.ebay.res.core.handler.out.JsonUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.ElementList;
+
 
 /**
  * 
@@ -140,16 +156,15 @@ public class SubsidyController {
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
 		ResponseData<String> responseData = new ResponseData<String>();
+		HashMap<String, String> map = new HashMap<String, String>();
 
 		promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 		term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-
 		List<SubsidyCustomField> fields = term.getSubsidyCustomFields();
-
-		HashMap<String, String> map = new HashMap<String, String>();
-
 		for (SubsidyCustomField field : fields) {
-			map.put(field.getKey(), request.getParameter(field.getKey()));
+			if(!field.isUpload){
+				map.put(field.getKey(), request.getParameter(field.getKey()));
+			}
 		}
 		
 		String ret = JsonUtils.objectToJsonString(map);
@@ -163,7 +178,57 @@ public class SubsidyController {
 		
 		boolean flag = subsidyService.updateSubsidySubmission(subsidySubmission);
 
-		responseData.setStatus(true);
+		//generate pdf START
+		Document document = null;
+		BaseFont bf = null;
+		Font fontChinese = null;
+		try {
+			bf = BaseFont.createFont("D:\\simsun.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
+			/** create the right font for CHINESE **/
+			fontChinese = new Font(bf, 10);
+			document = new Document(PageSize.A4);
+			String out = "d:\\HAHAHA.PDF";
+			File file = new File(out);
+			OutputStream outputStream = new FileOutputStream(file);
+			/** get the html content from javabean and convert to string **/
+			PdfWriter pdfWriter = PdfWriter.getInstance(document,outputStream);
+			document.open();
+			
+			/** add the head of the PDF **/
+			Paragraph head = new Paragraph("卖家确认函", new Font(bf, 12));
+			head.setAlignment(1); // 0 align to the left , 1 align to the center
+			document.add(head);
+			
+			/** add the fill term of the PDF **/
+			for (String key : map.keySet()) {
+				document.add(new Paragraph(key+":"+map.get(key),fontChinese));
+			}
+			
+			/** add the content of the PDF**/
+			Paragraph context = new Paragraph();
+			String pdfContent = new String(term.getContent());
+	        ElementList elementList =MyXMLWorkerHelper.parseToElementList(pdfContent, null);
+	        for (Element element : elementList) {
+	            context.add(element);
+	        }
+	        document.add(context);
+	        
+	        /** add the content of the PDF **/
+			document.add(new Paragraph("   "));
+			for (String key : map.keySet()) {
+				document.add(new Paragraph(key+":",fontChinese));
+			}
+			document.add(new Paragraph("卖家（印刷体）：qichi（543290854326423）",fontChinese));
+			document.add(new Paragraph("亲笔签名/公司公章： _______________________________", fontChinese));
+			document.add(new Paragraph("日期： ", fontChinese));
+			document.close();
+			System.out.println("-----------ok--------------");
+		} catch (Exception e) {
+			logger.log(LogLevel.ERROR,"error occur while create PDF");
+		}
+//		response.setContentType("application/pdf");  
+//		response.setHeader("Content-Disposition", "attachment; filename=Contract.pdf");  
+		responseData.setStatus(flag);
 		responseData.setData(map.toString());
 
 		return responseData;

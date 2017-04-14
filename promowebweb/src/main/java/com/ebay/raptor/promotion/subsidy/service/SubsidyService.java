@@ -9,6 +9,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.GenericType;
@@ -43,7 +44,9 @@ import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.service.IAFTokenService;
 import com.ebay.raptor.promotion.service.PromoClient;
+import com.ebay.raptor.promotion.util.JsonUtils;
 import com.ebay.raptor.promotion.util.StringUtil;
+import com.ebay.res.core.handler.out.JsonUtil;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
@@ -116,12 +119,16 @@ public class SubsidyService extends BaseService {
 				"{orcacleID}", orcacleID }));
 		GingerClientResponse resp = httpGet(uri);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
+
 			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {
 			};
 			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();
 			}
+
+		
+
 		} else {
 			throw new PromoException("Internal Error happens.");
 		}
@@ -158,6 +165,7 @@ public class SubsidyService extends BaseService {
 		}
 		List<SubsidyCustomField> subsidyCustomFields = subsidyLegalTerm.getSubsidyCustomFields();
 		String content = subsidySubmission.getContent();
+
 		JSONObject json = JSONObject.fromObject(content);
 		
 		for (SubsidyCustomField subsidyField : subsidyCustomFields) {
@@ -226,8 +234,7 @@ public class SubsidyService extends BaseService {
 		multiPart.field("fileName", decodefilePathOrfileName(file.getName()));
 		GingerClientResponse resp = uploadMultipart(url, multiPart);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>() {
-			};
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>() {};
 			GeneralDataResponse<Boolean> general = resp.getEntity(type);
 			if (null != general) {
 				if (AckValue.SUCCESS == general.getAckValue()) {

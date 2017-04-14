@@ -1,10 +1,15 @@
 package com.ebay.raptor.promotion.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+
 import com.ebay.app.raptor.promocommon.CommonLogger;
+import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -121,11 +126,54 @@ public class JsonUtils {
 	}
 
 	public static void main(String[] args) {
+
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("one", "1111");
 		map.put("two", "2222");
 		map.put("three", "3333");
 		String ret = objectToJsonString(map);
 		System.out.println(ret);
+//		HashMap< String, String> map = new HashMap<String, String>();
+//		map.put("one", "1111");
+//			map.put("two", "2222");
+//				map.put("three", "3333");
+//				String ret = objectToJsonString(map);
+//				System.out.println(ret);
+//		List<HashMap< String, String>> lsArrayList = new ArrayList<HashMap< String, String>>();
+//		lsArrayList.add(map);
+//		lsArrayList.add(map);
+//		lsArrayList.add(map);
+//		System.out.println(objectToJsonString(lsArrayList));
+		
+//		String content = 
+//		JSONArray jsonArray = JSONArray.fromObject(content);
+//		List<SubsidyCustomField> fields = (List<SubsidyCustomField>) JSONArray.toCollection(jsonArray,SubsidyCustomField.class);
+		SubsidyCustomField field = new SubsidyCustomField();
+		field.setDisplayLabel("姓名");
+		field.setKey("userName");
+		field.setValue("");
+		field.setInput(false);
+		field.setUpload(false);
+		field.setRequired(false);
+		SubsidyCustomField field1 = new SubsidyCustomField();
+		field1.setDisplayLabel("性别");
+		field1.setKey("gender");
+		field1.setValue("");
+		field1.setInput(true);
+		field1.setUpload(false);
+		field1.setRequired(true);
+		SubsidyCustomField field2 = new SubsidyCustomField();
+		field1.setDisplayLabel("class");
+		field1.setKey("class");
+		field1.setValue("");
+		field1.setInput(true);
+		field1.setUpload(false);
+		field1.setRequired(true);
+		List<SubsidyCustomField> list = new ArrayList<SubsidyCustomField>();
+		list.add(field);
+		list.add(field1);
+		list.add(field2);
+		String retString = objectToJsonString(list);
+		System.out.println(retString);
 	}
 }
