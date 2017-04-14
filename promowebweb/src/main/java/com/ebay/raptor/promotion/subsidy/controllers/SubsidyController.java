@@ -105,7 +105,8 @@ public class SubsidyController {
 			if (promo != null) {
 				Subsidy subsidy = subsidyService.getSubsidy(promoId, userID);
 				String status = subsidy.getStatus();
-				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
+//				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 				
 				if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getAVStatus())||status.equals(PMSubsidyStatus.REWARD_VISITED.getAVStatus())){
 					SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
@@ -187,6 +188,18 @@ public class SubsidyController {
 		Font fontChinese = null;
 		try {
 			bf = BaseFont.createFont("D:\\simsun.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
+			String title = null;
+			String sellertext = null;
+			String signtext = null;
+			if("CN".equalsIgnoreCase(promo.getRegion())){
+				title= "卖家确认函";
+				sellertext= "卖家（印刷体）";
+				signtext="亲笔签名/公司公章";
+			}else if("HK".equalsIgnoreCase(promo.getRegion())||"TW".equalsIgnoreCase(promo.getRegion())){
+				title= "賣家確認函";
+				sellertext="賣家（印刷體）";
+				signtext="親筆簽名/公司公章";
+			}
 			/** create the right font for CHINESE **/
 			fontChinese = new Font(bf, 10);
 			document = new Document(PageSize.A4);
@@ -198,7 +211,7 @@ public class SubsidyController {
 			document.open();
 			
 			/** add the head of the PDF **/
-			Paragraph head = new Paragraph("卖家确认函", new Font(bf, 12));
+			Paragraph head = new Paragraph(title, new Font(bf, 12));
 			head.setAlignment(1); // 0 align to the left , 1 align to the center
 			document.add(head);
 			
@@ -221,8 +234,8 @@ public class SubsidyController {
 			for (String key : map.keySet()) {
 				document.add(new Paragraph(key+":",fontChinese));
 			}
-			document.add(new Paragraph("卖家（印刷体）：qichi（543290854326423）",fontChinese));
-			document.add(new Paragraph("亲笔签名/公司公章： _______________________________", fontChinese));
+			document.add(new Paragraph(sellertext+"：",fontChinese));
+			document.add(new Paragraph(signtext+"： _________________________", fontChinese));
 			document.add(new Paragraph("日期： ", fontChinese));
 			document.close();
 			System.out.println("-----------ok--------------");
@@ -233,7 +246,6 @@ public class SubsidyController {
 //		response.setHeader("Content-Disposition", "attachment; filename=Contract.pdf");  
 		responseData.setStatus(flag);
 		responseData.setData(map.toString());
-
 		return responseData;
 	}
 	

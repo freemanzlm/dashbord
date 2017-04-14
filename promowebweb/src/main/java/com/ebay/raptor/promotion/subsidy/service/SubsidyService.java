@@ -238,8 +238,10 @@ public class SubsidyService extends BaseService {
 			GeneralDataResponse<Boolean> general = resp.getEntity(type);
 			if (null != general) {
 				if (AckValue.SUCCESS == general.getAckValue()) {
-					return params("downloadAttachment", new Object[] { "{promoId}", promoId, "{userId}", userId,
-							"{key}", key });
+					if(general.getData()){
+						return params("downloadAttachment", new Object[] { "{promoId}", promoId, "{userId}", userId,
+								"{key}", key });
+					}
 				} else {
 					return null;
 				}

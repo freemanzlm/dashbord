@@ -29,7 +29,7 @@ public class MyXMLWorkerHelper {
 		@Override
 		public Font getFont(final String fontname, String encoding, float size,
 				final int style) {
-
+			size = 12.0F;
 			String fntname = fontname;
 			if (fntname == null) {
 				fntname = "宋体";
