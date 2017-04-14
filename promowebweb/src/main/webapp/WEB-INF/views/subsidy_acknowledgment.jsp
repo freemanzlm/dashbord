@@ -13,7 +13,8 @@
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
 
-<fmt:formatDate value="${promo.rewardDlDt}" var="rewardDeadline" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatDate var="rewardDeadline" value="${promo.rewardDlDt}" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatNumber var="reward" value="${promo.reward }" minFractionDigits="2"></fmt:formatNumber>
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -96,6 +97,9 @@
 					<c:when test="${ promo.rewardType eq 2 && empty wltAccount }">
 						<%@ include file="stepMessages/wlt_to_bind.jsp"%>
 					</c:when>
+					<c:when test="${isWltFirstBound}"> <!-- Parameter 'isWltFirstBound' comes from bound backURL parameter -->
+						<%@ include file="stepMessages/wlt_bound.jsp"%>
+					</c:when>
 					<c:otherwise>
 						<%@ include file="subsidy/fill_contract.jsp"%>
 					</c:otherwise>
@@ -128,7 +132,8 @@
 			currentStep : '${currentStep}',
 			regType : '${promo.regType}',
 			username: '${unm}',
-			hasSubmitFields: ${hasSubmitFields}
+			hasSubmitFields: JSON.parse('${hasSubmitFields}'),
+			isAwardEnd: JSON.parse('${isAwardEnd}')
 		};
 	</script>
 

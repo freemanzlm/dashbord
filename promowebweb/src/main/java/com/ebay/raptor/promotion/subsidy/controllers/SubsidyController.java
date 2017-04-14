@@ -37,7 +37,6 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.cbt.raptor.promotion.po.WLTAccount;
-import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
@@ -92,13 +91,13 @@ public class SubsidyController {
 			HttpServletResponse response) throws MissingArgumentException, IOException {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		String userCountry = csApiService.getUserCountryByName(userData.getUserName());
-		userCountry = csApiService.getUserCountryByNameDAL(userData.getUserName());
 		Long userID = userData.getUserId();
 		Date now = new Date();
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
 		WLTAccount wltAccount = null;
+		String wltBindURL = null;
+		String wltBoundBackURL = request.getRequestURL() + "?isWltFirstBound=true";
 
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
@@ -121,6 +120,10 @@ public class SubsidyController {
 				view.calcualteCurentStep(promo);
 				view.appendPromoEndCheck(model.getModel(), promo, now);
 				view.appendPromoAwardEndCheck(model.getModel(), promo, now);
+				
+				if (wltAccount == null) {
+					model.addObject("wltBindURL", wltBindURL);
+				}
 
 				model.addObject("subsidyTerm", term);
 				model.addObject("wltAccount", wltAccount);

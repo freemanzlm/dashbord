@@ -2,16 +2,17 @@
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
+<fmt:formatNumber var="reward" value="${promo.reward }" minFractionDigits="2"></fmt:formatNumber>
+<fmt:formatDate   var="rewardDeadline" value="${promo.rewardDlDt}" pattern="yyyy-MM-dd" type="date" />
 
 <div class="tabbable confirm-letter-steps">
 	<div class="tab-list-container clr">
 		<ul class="tab-list clr" role="tablist">
 			<li role="tab" aria-controls="pane1" v-bind:class="{active: !hasSubmitFields}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane1">第一步：填写确认函</a></span></li>
-			<li role="tab" aria-controls="pane2" v-show="hasSubmitFields" v-bind:class="{active: (hasSubmitFields && !hasUploadLetter)}" v-bind:disabled="hasApproved"><span class="label">
+			<li role="tab" aria-controls="pane2" v-show="hasSubmitFields" v-bind:class="{active: hasSubmitFields && !hasApproved}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane2">第二步：上传确认函</a></span></li>
-			<li role="tab" aria-controls="pane3" v-show="hasUploadLetter" v-bind:class="{active: hasApproved}"><span class="label">
+			<li role="tab" aria-controls="pane3" v-show="hasApproved" v-bind:class="{active: hasApproved}"><span class="label">
 				<a href="#pane3">第三步：领取奖励</a></span></li>
 		</ul>
 	</div>
@@ -20,7 +21,7 @@
 		
 		<c:if test="${ promo.rewardType eq 2 && not empty wltAccount }">
 			<div class="pane wlt-binding">
-				请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：${wltAccount.ebayId }.
+				请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：${wltAccount.wltUserId }.
 				<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
 			</div>
 		</c:if>
@@ -98,20 +99,20 @@
 				<li>上传文件内容须清晰，可识别且应完整齐全；</li>
 				<li>不得在同一文件栏重复上传多个文件，一旦在同一上传文件栏重复上传文件时，我们将以提交前最后上传的那份为准；</li>
 				<li>若未能按照上述要求操作的，我们将作“审核未通过”处理；</li>
-				<li>上传截止日期为XXXX年XX月XX日（调用领取截止时间），未在该规定时间内上传文件的卖家将被视为自动放弃本活动奖励。</li>
+				<li>上传截止日期为${rewardDeadline}，未在该规定时间内上传文件的卖家将被视为自动放弃本活动奖励。</li>
 			</ol>
 		</div>
 		
 		<c:forEach items="${ uploadFields }" var="field">
 			<c:if test="${ not empty field}">
 				<form target="uploadIframe_${field.key}" ${ field.required ? 'required':'' } data-hasuploaded="${not empty field.value}" action="uploadAttachment" class="form-horizontal attachment-form" method="post" enctype="multipart/form-data">
-					<input type="hidden" value="${promo.promoId }" name="promoId"/>
+					<input type="hidden" name="promoId" value="${promo.promoId }"/>
 					<input type="hidden" name="key" value="${field.key }"/>
 					<div class="form-group">
 						<div class="control-label">${field.displayLabel }：</div>
 						<div class="form-field">
-							<span class="file-input">
-								<input type="text" style="height: 20px;" placeholder="选择文件" value="${field.value }" />
+							<span class="file-input" v-if="!isAwardEnd">
+								<input type="text" style="height: 20px;" placeholder="选择文件" />
 								<c:choose>
 									<c:when test="${field.key eq '_letter'}">
 										<input type="file" name="uploadFile" accept="application/pdf" />
@@ -121,20 +122,21 @@
 									</c:otherwise>
 								</c:choose>
 								<button type="button" class="btn" style="margin-left: 3px;">选择</button>
-							</span> <br />
+							</span> <br v-if="!isAwardEnd"/>
 							<span class="font-bold msg">
 								<c:if test="${ not empty field.value }">
-									<a href=/promotion/subsidy/downloadAttachment?promoId=${promo.promoId}&key=${field.key}'>下载附件</a>
+									<a href="/promotion/subsidy/downloadAttachment?promoId=${promo.promoId}&key=${field.key}">下载附件</a>
 								</c:if>
 							</span>
 						</div>
 					</div>
 				</form>
+				
 				<iframe name="uploadIframe_${field.key}" src="about:blank" frameborder="0" class="hidden" ></iframe>
 			</c:if>
 		</c:forEach>
 		
-		<div class="text-center" style="margin-top: 40px;">
+		<div class="text-center" style="margin-top: 40px;" v-if="!isAwardEnd">
 			<button id="upload-form-btn" type="submit" class="btn" style="width:120px;">上传</button>
 		</div>
 		
@@ -143,7 +145,16 @@
 	<div id="pane3" class="tab-pane" v-bind:class="{active: hasApproved}" role="tabpanel">
 		<div class="promo-state-message">
 			<div class="message-content">
-				<h3 class="color-green text-center">您已成功领取等值 ${reward} ${promo.currency} 的奖励。</h3>
+				
+				<c:choose>
+					<c:when test="${ subsidyTerm.subsidyType eq 2 }">
+						<h3 class="color-green text-center">您已成功领取等值 ${reward} ${promo.currency} 的奖励。</h3>
+					</c:when>
+					<c:otherwise>
+						<p class="desc">${ subsidyTerm.successInfo }</p> <br />
+					</c:otherwise>
+				</c:choose>
+				
 				<menu>
 					<li><a href="../index" class="btn">返回活动列表</a></li>
 				</menu>

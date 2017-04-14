@@ -21,9 +21,10 @@ $(function(){
 		data: {
 			user: {name: pageData.username},
 			hasAcceptLetter: false,
-			hasSubmitFields: false,
+			hasSubmitFields: pageData.hasSubmitFields,
 			hasUploadLetter: false,
-			hasApproved: false
+			hasApproved: false,
+			isAwardEnd: pageData.isAwardEnd
 		},
 		methods: {
 			sendSellerCustomFields: function(event){
@@ -40,7 +41,6 @@ $(function(){
 							this.hasSubmitFields = true;
 							// download confirm letter
 							window.open("generateLetter?promoId=" + pageData.promoId);
-							console.log("hello");
 						}
 					},
 					error: function() {
