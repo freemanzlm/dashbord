@@ -133,6 +133,12 @@
 			<groupId>javax.el</groupId>
 			<artifactId>javax.el-api</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.ebay.cbt.raptor</groupId>
+			<artifactId>CBTWltApi</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.ebay.cbt</groupId>

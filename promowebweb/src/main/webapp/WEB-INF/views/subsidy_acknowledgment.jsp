@@ -44,7 +44,7 @@
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.signpost_css}" target="head-css" />
-<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+<res:useCss value="${res.css.local.less.module_less}" target="head-css" />
 <res:useCss value="${res.css.local.less.form_layout_less}" target="head-css" />
 <res:useCss value="${res.css.local.less.form_less}" target="head-css" />
 <res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
@@ -92,12 +92,12 @@
 				<h2>${promo.name}</h2>
 
 				<%@ include file="steps.jsp"%>
-
+				
 				<c:choose>
 					<c:when test="${ promo.rewardType eq 2 && empty wltAccount }">
 						<%@ include file="stepMessages/wlt_to_bind.jsp"%>
 					</c:when>
-					<c:when test="${isWltFirstBound}"> <!-- Parameter 'isWltFirstBound' comes from bound backURL parameter -->
+					<c:when test="${not empty param.isWltFirstBound and not empty wltAccount}"> <!-- Parameter 'isWltFirstBound' comes from bound backURL parameter -->
 						<%@ include file="stepMessages/wlt_bound.jsp"%>
 					</c:when>
 					<c:otherwise>

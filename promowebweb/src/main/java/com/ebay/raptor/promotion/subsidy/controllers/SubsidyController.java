@@ -38,6 +38,8 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.cbt.raptor.promotion.po.WLTAccount;
+import com.ebay.cbt.raptor.wltapi.resp.WltResponse;
+import com.ebay.cbt.raptor.wltapi.service.WltApiService;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
@@ -82,6 +84,7 @@ public class SubsidyController {
 	@Autowired PromotionViewService view;
 	@Autowired SubsidyService subsidyService;
 	@Autowired CSApiService csApiService;
+	@Autowired WltApiService wltApiService;
 
 	@RequestMapping(value = "/acknowledgment", method = RequestMethod.GET)
 	public ModelAndView handleRequest(@RequestParam("promoId") String promoId, HttpServletRequest request,
@@ -93,8 +96,8 @@ public class SubsidyController {
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
 		WLTAccount wltAccount = null;
-		String wltBindURL = null;
-		String wltBoundBackURL = request.getRequestURL() + "?isWltFirstBound=true";
+		
+		String wltBoundBackURL = request.getRequestURL() + "?isWltFirstBound=true&" + request.getQueryString();
 
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
@@ -121,7 +124,8 @@ public class SubsidyController {
 				view.appendPromoAwardEndCheck(model.getModel(), promo, now);
 				
 				if (wltAccount == null) {
-					model.addObject("wltBindURL", wltBindURL);
+					String bindURL = wltApiService.bindWltAccount(userData.getUserName(), wltBoundBackURL);
+					model.addObject("wltBindURL", bindURL);
 				}
 
 				model.addObject("subsidyTerm", term);
