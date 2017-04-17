@@ -52,9 +52,11 @@ import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 @Component
 public class SubsidyService extends BaseService {
-	private CommonLogger logger = CommonLogger.getInstance(SubsidyService.class);
+	private CommonLogger logger = CommonLogger
+			.getInstance(SubsidyService.class);
 
-	@Autowired ResourceBundleMessageSource msgResource;
+	@Autowired
+	ResourceBundleMessageSource msgResource;
 	private Locale locale;
 
 	private String url(String url) {
@@ -69,9 +71,10 @@ public class SubsidyService extends BaseService {
 	 * @return
 	 * @throws PromoException
 	 */
-	public Subsidy getSubsidy(String promoId, Long userId) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getSubSidy, new Object[] { "{promoId}", promoId, "{uid}",
-				userId }));
+	public Subsidy getSubsidy(String promoId, Long userId)
+			throws PromoException {
+		String uri = url(params(ResourceProvider.SubsidyRes.getSubSidy,
+				new Object[] { "{promoId}", promoId, "{uid}", userId }));
 		GingerClientResponse resp = httpGet(uri);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
 			GenericType<GeneralDataResponse<Subsidy>> type = new GenericType<GeneralDataResponse<Subsidy>>() {
@@ -82,7 +85,8 @@ public class SubsidyService extends BaseService {
 			} else {
 				if (null != response && null != response.getErrorMessage()
 						&& null != response.getErrorMessage().getError()) {
-					throw new PromoException(response.getErrorMessage().getError().toString());
+					throw new PromoException(response.getErrorMessage()
+							.getError().toString());
 				}
 			}
 		} else {
@@ -97,14 +101,17 @@ public class SubsidyService extends BaseService {
 	 * @return
 	 * @throws PromoException
 	 */
-	public SubsidyLegalTerm getSubsidyLegalTerm(Integer paymentType, String country) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getSubsidyLegalTerm, new Object[] { "{paymentType}",
-				paymentType, "{country}", country }));
+	public SubsidyLegalTerm getSubsidyLegalTerm(Integer paymentType,
+			String country) throws PromoException {
+		String uri = url(params(
+				ResourceProvider.SubsidyRes.getSubsidyLegalTerm, new Object[] {
+						"{paymentType}", paymentType, "{country}", country }));
 		GingerClientResponse resp = httpGet(uri);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
 			GenericType<GeneralDataResponse<SubsidyLegalTerm>> type = new GenericType<GeneralDataResponse<SubsidyLegalTerm>>() {
 			};
-			GeneralDataResponse<SubsidyLegalTerm> response = resp.getEntity(type);
+			GeneralDataResponse<SubsidyLegalTerm> response = resp
+					.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();
 			}
@@ -114,20 +121,21 @@ public class SubsidyService extends BaseService {
 		return null;
 	}
 
-	public SubsidySubmission getSubsidySubmission(String promoId, Long orcacleID) throws PromoException {
-		String uri = url(params(ResourceProvider.SubsidyRes.getSubsidySubmission, new Object[] { "{promoId}", promoId,
-				"{orcacleID}", orcacleID }));
+	public SubsidySubmission getSubsidySubmission(String promoId, Long oracleID)
+			throws PromoException {
+		String uri = url(params(
+				ResourceProvider.SubsidyRes.getSubsidySubmission, new Object[] {
+						"{promoId}", promoId, "{oracleID}", oracleID }));
 		GingerClientResponse resp = httpGet(uri);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
 
 			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {
 			};
-			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
+			GeneralDataResponse<SubsidySubmission> response = resp
+					.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();
 			}
-
-		
 
 		} else {
 			throw new PromoException("Internal Error happens.");
@@ -135,14 +143,16 @@ public class SubsidyService extends BaseService {
 		return null;
 	}
 
-	public boolean updateSubsidySubmission(SubsidySubmission subsidySubmission) throws PromoException {
+	public boolean updateSubsidySubmission(SubsidySubmission subsidySubmission)
+			throws PromoException {
 		boolean flag = false;
 		String uri = url(params(ResourceProvider.SubsidyRes.updateSubsidySubmission));
 		GingerClientResponse resp = httpPost(uri, subsidySubmission);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
 			GenericType<GeneralDataResponse<SubsidySubmission>> type = new GenericType<GeneralDataResponse<SubsidySubmission>>() {
 			};
-			GeneralDataResponse<SubsidySubmission> response = resp.getEntity(type);
+			GeneralDataResponse<SubsidySubmission> response = resp
+					.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				flag = true;
 			}
@@ -158,22 +168,25 @@ public class SubsidyService extends BaseService {
 	 * 
 	 * @return
 	 */
-	public SubsidyLegalTerm convertSubmissionToLegalTerm(SubsidyLegalTerm subsidyLegalTerm,
+	public SubsidyLegalTerm convertSubmissionToLegalTerm(
+			SubsidyLegalTerm subsidyLegalTerm,
 			SubsidySubmission subsidySubmission) {
-		if (subsidySubmission == null || StringUtil.isEmpty(subsidySubmission.getContent())) {
+		if (subsidySubmission == null
+				|| StringUtil.isEmpty(subsidySubmission.getContent())) {
 			return subsidyLegalTerm;
 		}
-		List<SubsidyCustomField> subsidyCustomFields = subsidyLegalTerm.getSubsidyCustomFields();
+		List<SubsidyCustomField> subsidyCustomFields = subsidyLegalTerm
+				.getSubsidyCustomFields();
 		String content = subsidySubmission.getContent();
 
 		JSONObject json = JSONObject.fromObject(content);
-		
+
 		for (SubsidyCustomField subsidyField : subsidyCustomFields) {
 			if (json.containsKey(subsidyField.getKey())) {
 				subsidyField.setValue(json.getString(subsidyField.getKey()));
 			}
 		}
-		
+
 		return subsidyLegalTerm;
 	}
 
@@ -186,9 +199,11 @@ public class SubsidyService extends BaseService {
 	 * @param term
 	 * @return
 	 */
-	public ArrayList<SubsidyCustomField>[] splitCustomFields(SubsidyLegalTerm term) {
+	public ArrayList<SubsidyCustomField>[] splitCustomFields(
+			SubsidyLegalTerm term) {
 		@SuppressWarnings("unchecked")
-		ArrayList<SubsidyCustomField>[] array = (ArrayList<SubsidyCustomField>[]) Array.newInstance(ArrayList.class, 2);
+		ArrayList<SubsidyCustomField>[] array = (ArrayList<SubsidyCustomField>[]) Array
+				.newInstance(ArrayList.class, 2);
 
 		ArrayList<SubsidyCustomField> nonuploadFields = new ArrayList<SubsidyCustomField>();
 		ArrayList<SubsidyCustomField> uploadFields = new ArrayList<SubsidyCustomField>();
@@ -220,40 +235,61 @@ public class SubsidyService extends BaseService {
 	 * @throws PromoException
 	 * @throws IOException
 	 */
-	public String uploadSubsidyAttachment(String promoId, Long userId, String key, final MultipartFile uploadFile,
-			String fileType) throws Exception {
-		String url = url("/uploadAttachment");
+	public String uploadSubsidyAttachment(String promoId, Long userId,
+			String key, final MultipartFile uploadFile, String fileType)
+			throws Exception {
+		String url = url(ResourceProvider.SubsidyRes.uploadAttachment);
+		// this method will response a the file id;
+		String urlbak = url(ResourceProvider.SubsidyRes.uploadAttachmentBak);
 		FormDataMultiPart multiPart = new FormDataMultiPart();
 		File file = multipartToFile(uploadFile);
-		FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file", file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
+		FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file", file,
+				MediaType.APPLICATION_OCTET_STREAM_TYPE);
 		multiPart.bodyPart(fileDataBodyPart);
 		multiPart.field("promoId", promoId);
 		multiPart.field("userId", Long.toString(userId));
 		multiPart.field("fileType", fileType);
 		multiPart.field("key", key);
-		multiPart.field("fileName", decodefilePathOrfileName(file.getName()));
-		GingerClientResponse resp = uploadMultipart(url, multiPart);
-		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>() {};
-			GeneralDataResponse<Boolean> general = resp.getEntity(type);
-			if (null != general) {
-				if (AckValue.SUCCESS == general.getAckValue()) {
-					if(general.getData()){
-						return params("downloadAttachment", new Object[] { "{promoId}", promoId, "{userId}", userId,
-								"{key}", key });
-					}
-				} else {
-					return null;
-				}
-			} else {
-				return null;
-			}
-		} else {
-			CalEventHelper.sendImmediate("ERROR", "SubsidyException", "1", "promoId=" + promoId + ",userId=" + userId
-					+ ",key=" + key + ",fileType=" + fileType);
-		}
+		String fileNameString = decodefilePathOrfileName(file.getName());
+		String fileName = fileNameString.substring(0,fileNameString.lastIndexOf("."));
+		multiPart.field("fileName", fileName);
+		// GingerClientResponse resp = uploadMultipart(url, multiPart);
+		// if (Status.OK.getStatusCode() == resp.getStatus()) {
+		// GenericType<GeneralDataResponse<Boolean>> type = new
+		// GenericType<GeneralDataResponse<Boolean>>() {};
+		// GeneralDataResponse<Boolean> general = resp.getEntity(type);
+		// if (null != general) {
+		// if (AckValue.SUCCESS == general.getAckValue()) {
+		// if(general.getData()){
+		// return params("downloadAttachment", new Object[] { "{promoID}",
+		// promoId, "{userId}", userId,
+		// "{key}", key });
+		// }
+		// }
+		// }
+		// } else {
+		// CalEventHelper.sendImmediate("ERROR", "SubsidyException", "1",
+		// "promoId=" + promoId + ",userId=" + userId
+		// + ",key=" + key + ",fileType=" + fileType);
+		// }
+		// return null;
 
+		GingerClientResponse resp = uploadMultipart(urlbak, multiPart);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<Long>> type = new GenericType<GeneralDataResponse<Long>>() {
+			};
+			GeneralDataResponse<Long> ret = resp.getEntity(type);
+			if (null != ret) {
+				if (AckValue.SUCCESS == ret.getAckValue()) {
+					if (null != ret.getData()) {
+						return params("downloadAttachment", new Object[] {
+								"{id}", ret.getData() });
+					}
+				}
+			}
+		}
 		return null;
+
 	}
 
 	/**
@@ -265,48 +301,54 @@ public class SubsidyService extends BaseService {
 	 * @return
 	 * @throws Exception
 	 */
-	public SubsidyAttachment downloadSubsidyAttachment(String promoId, Long userId, String key) throws Exception {
-		String url = url(params(ResourceProvider.ListingRes.listingAttachment, new Object[] { "{promoId}", promoId,
-				"{userId}", userId, "{key}", key }));
-		GingerWebTarget target = PromoClient.getClient().target(url);
-		Invocation.Builder build = target.request();
-		Response resp = build.headers(authHeaders(IAFTokenService.getIAFToken())).get();
+	public SubsidyAttachment downloadSubsidyAttachment(String promoId,
+			Long oracleID, String key) throws Exception {
+		String url = url(params(ResourceProvider.SubsidyRes.downloadAttachment,
+				new Object[] { "{promoId}", promoId, "{oracleID}", oracleID,
+						"{key}", key }));
+		GingerClientResponse resp = httpGet(url);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			MultivaluedMap<String, Object> headers = resp.getMetadata();
-			String attachmentName = (String) headers.get("attachmentName").get(0);
-			if (attachmentName == null || "".equals(attachmentName)) {
-				attachmentName = "download"; // default download file name
+			GenericType<GeneralDataResponse<SubsidyAttachment>> type = new GenericType<GeneralDataResponse<SubsidyAttachment>>() {
+			};
+			GeneralDataResponse<SubsidyAttachment> response = resp
+					.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				return response.getData();
 			}
-			String attachmentType = (String) headers.get("attachmentType").get(0);
-			InputStream inputStream = (InputStream) resp.getEntity();
-			SubsidyAttachment attachment = new SubsidyAttachment();
-			attachment.setFileName(attachmentName);
-			attachment.setFileType(attachmentType);
-
-			/******************** modified by chenping 2017-03-30 start ******************************/
-			/********************* change the input stream to byte[] ************************************/
-			ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-			byte[] buff = new byte[1024];
-			int rc = 0;
-			try {
-				while ((rc = inputStream.read(buff, 0, 1024)) > 0) {
-					swapStream.write(buff, 0, rc);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			byte[] in2b = swapStream.toByteArray();
-			attachment.setFileContent(in2b);
-			/******************** modified by chenping 2017-03-30 end ******************************/
-
-			return attachment;
 		} else {
-			throw new PromoException(ErrorType.UnableSubmitDealsListing, Status.fromStatusCode(resp.getStatus()));
+			throw new PromoException("Internal Error happens.");
 		}
-
+		return null;
+	}
+	
+	/**
+	 * Download attachment.
+	 * 
+	 * @param promoId
+	 * @param userId
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public SubsidyAttachment downloadSubsidyAttachment(Long id) throws Exception {
+		String url = url(params(ResourceProvider.SubsidyRes.downloadAttachmentById,	new Object[] { "{id}", id}));
+		GingerClientResponse resp = httpGet(url);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<SubsidyAttachment>> type = new GenericType<GeneralDataResponse<SubsidyAttachment>>() {
+			};
+			GeneralDataResponse<SubsidyAttachment> response = resp
+					.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				return response.getData();
+			}
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return null;
 	}
 
-	private File multipartToFile(MultipartFile multipartFile) throws IllegalStateException, IOException {
+	private File multipartToFile(MultipartFile multipartFile)
+			throws IllegalStateException, IOException {
 		File file = new File(multipartFile.getOriginalFilename());
 		multipartFile.transferTo(file);
 		return file;
@@ -314,7 +356,8 @@ public class SubsidyService extends BaseService {
 
 	private String decodefilePathOrfileName(String value) {
 		try {
-			return URLDecoder.decode(new String(value.getBytes(), "UTF-8"), "UTF-8");
+			return URLDecoder.decode(new String(value.getBytes(), "UTF-8"),
+					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			return value;
 		}

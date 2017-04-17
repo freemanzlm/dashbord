@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javassist.expr.NewArray;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -30,7 +32,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.common.constant.pm.PMSubsidyStatus;
-import com.ebay.cbt.raptor.promotion.enumcode.subsidyStatusCode;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
@@ -57,10 +58,6 @@ import com.ebay.raptor.promotion.util.JsonUtils;
 import com.ebay.raptor.promotion.util.MyXMLWorkerHelper;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
-import com.ebay.res.core.handler.out.JsonUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -118,6 +115,7 @@ public class SubsidyController {
 				}
 				
 				ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
+				System.out.println(new String(term.getContent()));
 				view.calcualteCurentStep(promo);
 				view.appendPromoEndCheck(model.getModel(), promo, now);
 				view.appendPromoAwardEndCheck(model.getModel(), promo, now);
@@ -335,8 +333,8 @@ public class SubsidyController {
 	@GET
 	@RequestMapping(value = "/downloadAttachment")
 	public void downloadAttachment(HttpServletRequest req, HttpServletResponse resp,
-			@PathVariable("promoId") String promoId, @PathVariable("userId") Long userId,
-			@PathVariable("key") String key) throws Exception {
+			@RequestParam("promoId") String promoId,
+			@RequestParam("key") String key) throws Exception {
 
 		resp.setContentType("application/x-msdownload;");
 		UserData userData = loginService.getUserDataFromCookie(req);
@@ -349,6 +347,54 @@ public class SubsidyController {
 
 		try {
 			attachment = subsidyService.downloadSubsidyAttachment(promoId, userData.getUserId(), key);
+			if (attachment != null) {
+				inputStream = new ByteArrayInputStream(attachment.getFileContent());
+				attachmentName = attachment.getFileName();
+				attachmentType = attachment.getFileType();
+			}
+			resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType
+					+ "\"");
+			outStream = resp.getOutputStream();
+			int len = 0;
+			byte[] buffer = new byte[4096];
+			while ((len = inputStream.read(buffer)) != -1) {
+				outStream.write(buffer, 0, len);
+			}
+		} catch (Exception e) {
+			logger.log(LogLevel.ERROR, "Failed to downlaod attachment", e);
+			CalEventHelper.writeException("ERROR", e, "Failed to download attachment: " + e.getMessage());
+		} finally {
+			if (inputStream != null) {
+				inputStream.close();
+				outStream.flush();
+				outStream.close();
+			}
+		}
+	}
+	
+	/**
+	 * download subsidy attachments with id 
+	 * @param req
+	 * @param resp
+	 * @param id
+	 * @throws Exception
+	 */
+	@GET
+	@RequestMapping(value = "/downloadAttachmentById")
+	public void downloadAttachmentById(HttpServletRequest req, HttpServletResponse resp,
+			@RequestParam("id") Long id) throws Exception {
+
+		resp.setContentType("application/x-msdownload;");
+		UserData userData = loginService.getUserDataFromCookie(req);
+
+		InputStream inputStream = null;
+		OutputStream outStream = null;
+		SubsidyAttachment attachment = null;
+		String attachmentName = "";
+		String attachmentType = "";
+
+		try {
+			attachment = subsidyService.downloadSubsidyAttachment(id);
 			if (attachment != null) {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				attachmentName = attachment.getFileName();
