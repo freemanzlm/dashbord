@@ -121,11 +121,11 @@ public class SubsidyService extends BaseService {
 		return null;
 	}
 
-	public SubsidySubmission getSubsidySubmission(String promoId, Long oracleID)
+	public SubsidySubmission getSubsidySubmission(String promoId, Long id)
 			throws PromoException {
 		String uri = url(params(
 				ResourceProvider.SubsidyRes.getSubsidySubmission, new Object[] {
-						"{promoId}", promoId, "{oracleID}", oracleID }));
+						"{promoId}", promoId, "{id}", id }));
 		GingerClientResponse resp = httpGet(uri);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
 
@@ -302,9 +302,9 @@ public class SubsidyService extends BaseService {
 	 * @throws Exception
 	 */
 	public SubsidyAttachment downloadSubsidyAttachment(String promoId,
-			Long oracleID, String key) throws Exception {
+			Long id, String key) throws Exception {
 		String url = url(params(ResourceProvider.SubsidyRes.downloadAttachment,
-				new Object[] { "{promoId}", promoId, "{oracleID}", oracleID,
+				new Object[] { "{promoId}", promoId, "{id}", id,
 						"{key}", key }));
 		GingerClientResponse resp = httpGet(url);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
