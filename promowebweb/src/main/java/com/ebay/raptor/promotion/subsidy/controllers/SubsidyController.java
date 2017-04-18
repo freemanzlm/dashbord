@@ -1,12 +1,10 @@
 package com.ebay.raptor.promotion.subsidy.controllers;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,9 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 
-import net.sf.json.JSONObject;
-
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -42,6 +37,8 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.cbt.raptor.promotion.po.WLTAccount;
+import com.ebay.cbt.raptor.wltapi.pojo.SearchBindAck;
+import com.ebay.cbt.raptor.wltapi.resp.WltResponse;
 import com.ebay.cbt.raptor.wltapi.service.WltApiService;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
@@ -99,12 +96,8 @@ public class SubsidyController {
 		Date now = new Date();
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
-		WLTAccount wltAccount = null;
 		
-		StringBuffer backUrl = request.getRequestURL();
-		int lastSlash = backUrl.lastIndexOf("/");
-		backUrl = backUrl.replace(lastSlash, backUrl.length(), "/bindWlt");
-		backUrl.append("?").append(request.getQueryString());
+		String backURL = getBindWltURL(request, userData.getUserName());
 
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
@@ -112,8 +105,8 @@ public class SubsidyController {
 			if (promo != null) {
 				Subsidy subsidy = subsidyService.getSubsidy(promoId, userID);
 				String status = subsidy.getStatus();
-				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
-//				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+//				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
+				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 				
 				if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getAVStatus())||status.equals(PMSubsidyStatus.REWARD_VISITED.getAVStatus())){
 					SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
@@ -124,21 +117,22 @@ public class SubsidyController {
 					model.addObject("hasSubmitFields", subsidySubmission != null);
 				}
 				
-				ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
-				System.out.println(new String(term.getContent()));
+				if (term != null) {
+					System.out.println(new String(term.getContent()));
+					
+					if (term.getSubsidyType() == 2) {
+						putWltAccountInfo(model, userData.getUserName(), backURL);
+					}
+					
+					ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
+					model.addObject("nonuploadFields", fields[0]);
+					model.addObject("uploadFields", fields[1]);
+				}
+				
 				view.calcualteCurentStep(promo);
 				view.appendPromoEndCheck(model.getModel(), promo, now);
 				view.appendPromoAwardEndCheck(model.getModel(), promo, now);
-				
-				if (wltAccount == null) {
-					String bindURL = wltApiService.bindWltAccount(userData.getUserName(), backUrl.toString());
-					model.addObject("wltBindURL", bindURL);
-				}
-
 				model.addObject("subsidyTerm", term);
-				model.addObject("wltAccount", wltAccount);
-				model.addObject("nonuploadFields", fields[0]);
-				model.addObject("uploadFields", fields[1]);
 
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
 				model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
@@ -432,35 +426,33 @@ public class SubsidyController {
 		}
 	}
 	
+	/**
+	 * Called by WLT service when binding WLT account succeeds.
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 * @throws MissingArgumentException
+	 */
 	@RequestMapping(value = "/bindWlt", method = RequestMethod.POST)
-	public void bindWltAccount(@RequestParam("promoId") String promoId, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		InputStream is = request.getInputStream();
-		StringBuilder sb = new StringBuilder();
+	public void bindWltAccount(HttpServletRequest request, HttpServletResponse response) throws IOException, MissingArgumentException {
+		// returned by WLT
+		String mobile = request.getParameter("mobile");
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
-		String line = null;
-		while ((line = br.readLine()) != null) {
-			sb.append(line);
+		// returned in backURL as query parameters.
+		String userName = request.getParameter("ebayId");
+		String promoId = request.getParameter("promoId");
+		
+		if (mobile == null || mobile.isEmpty()) {
+			WltResponse<SearchBindAck>  wltResponse = wltApiService.searchIsBind(userName);
+			SearchBindAck data = wltResponse.getData();
+			if (data != null && "00".equals(data.getCode())) {
+				// TODO create WLT account
+				response.sendRedirect("acknowledgment?isWltFirstBound=true&promoId=" + promoId);
+			}
+		} else {
+			// TODO create WLT account
+			response.sendRedirect("acknowledgment?isWltFirstBound=true&promoId=" + promoId);
 		}
-		
-		String responseText = sb.toString();
-		responseText = new String(Base64.decodeBase64(responseText), "GBK");
-		System.out.println(responseText);
-		
-		responseText = new String(responseText.getBytes("UTF-8"), "UTF-8");
-		
-		System.out.println(responseText);
-		
-		JSONObject json = JSONObject.fromObject(responseText);
-		JSONObject data = json.getJSONObject("data");
-		if (data != null && data.containsKey("bindFlag") && "Y".equalsIgnoreCase(data.getString("bindFlag"))) {
-			String mobile = data.getString("mobile");
-			String ebayId = data.getString("partnerId");
-			
-			// TODO, save WLT account
-		}
-		
-		response.sendRedirect("acknowledgment?isWltFirstBound=true&promoId=" + promoId);
 	}
 
 	@ExceptionHandler(Exception.class)
@@ -468,6 +460,39 @@ public class SubsidyController {
 		ModelAndView mav = new ModelAndView("error");
 		CalEventHelper.writeException(exception.getErrorType().name(), exception);
 		return mav;
+	}
+	
+	/**
+	 * Put WLT account information into Model.
+	 * @param mav
+	 * @param userName
+	 * @param backURL
+	 */
+	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) {
+		// TODO, get WLT account from DB
+		WLTAccount wltAccount = null;
+		if (wltAccount == null) {
+			String bindURL = wltApiService.bindWltAccount(userName, backURL);
+			mav.addObject("wltBindURL", bindURL);
+		}
+		
+		mav.addObject("wltAccount", wltAccount);
+	}
+	
+	/**
+	 * Return http://host/promotion/subisdy/bindWlt?queryString&ebayId=userName.
+	 * @param request
+	 * @param userName
+	 * @return
+	 */
+	private String getBindWltURL(HttpServletRequest request, String userName) {
+		StringBuffer backUrl = request.getRequestURL();
+		int lastSlash = backUrl.lastIndexOf("/");
+		backUrl = backUrl.replace(lastSlash, backUrl.length(), "/bindWlt");
+		backUrl.append("?").append(request.getQueryString());
+		backUrl.append("&ebayId=").append(userName);
+		
+		return backUrl.toString();
 	}
 	
 	private String getMessage(String key) {
