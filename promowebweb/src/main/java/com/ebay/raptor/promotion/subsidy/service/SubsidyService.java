@@ -35,6 +35,7 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
+import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.util.URLDecoder;
@@ -345,6 +346,55 @@ public class SubsidyService extends BaseService {
 			throw new PromoException("Internal Error happens.");
 		}
 		return null;
+	}
+	
+	/**
+	 * get WLTAccount by ebayID
+	 * 
+	 * @param promoId
+	 * @param userId
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public WLTAccount getWLTAccount(String ebayId) throws Exception {
+		String url = url(params(ResourceProvider.SubsidyRes.getWLTAccount,	new Object[] { "{ebayId}", ebayId}));
+		GingerClientResponse resp = httpGet(url);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<WLTAccount>> type = new GenericType<GeneralDataResponse<WLTAccount>>() {};
+			GeneralDataResponse<WLTAccount> response = resp.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				return response.getData();
+			}
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return null;
+	}
+	
+	/**
+	 * bind wltaccount with ebayid
+	 * 
+	 * @param promoId
+	 * @param userId
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean saveWLTAccount(String ebayId,String wltId) throws Exception {
+		boolean flag = false;
+		String url = url(params(ResourceProvider.SubsidyRes.saveWLTAccount,	new Object[] { "{ebayId}", ebayId,"{wltId}",wltId}));
+		GingerClientResponse resp = httpGet(url);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>() {};
+			GeneralDataResponse<Boolean> response = resp.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				flag = response.getData();
+			}
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return flag;
 	}
 
 	private File multipartToFile(MultipartFile multipartFile)

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -118,8 +119,6 @@ public class SubsidyController {
 				}
 				
 				if (term != null) {
-					System.out.println(new String(term.getContent()));
-					
 					if (term.getSubsidyType() == 2) {
 						putWltAccountInfo(model, userData.getUserName(), backURL);
 					}
@@ -191,19 +190,11 @@ public class SubsidyController {
 		Font fontChinese = null;
 		try {
 			bf = BaseFont.createFont("D:\\simsun.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
-			String title = null;
-			String sellertext = null;
-			String signtext = null;
-			if("CN".equalsIgnoreCase(promo.getRegion())){
-				
-				title= "卖家确认函";
-				sellertext= "卖家（印刷体）";
-				signtext="亲笔签名/公司公章";
-			}else if("HK".equalsIgnoreCase(promo.getRegion())||"TW".equalsIgnoreCase(promo.getRegion())){
-				title= "賣家確認函";
-				sellertext="賣家（印刷體）";
-				signtext="親筆簽名/公司公章";
-			}
+			Locale locale = LocaleContextHolder.getLocale();
+			String title = msgResource.getMessage("subsidy.pdf.title",null, locale);
+			String sellertext = msgResource.getMessage("subsidy.pdf.seller",null, locale);
+			String signtext = msgResource.getMessage("subsidy.pdf.signature",null, locale);
+			
 			/** create the right font for CHINESE **/
 			fontChinese = new Font(bf, 10);
 			document = new Document(PageSize.A4);
@@ -238,8 +229,8 @@ public class SubsidyController {
 			for (String key : map.keySet()) {
 				document.add(new Paragraph(key+":",fontChinese));
 			}
-			document.add(new Paragraph(sellertext+"：",fontChinese));
-			document.add(new Paragraph(signtext+"： _________________________", fontChinese));
+			document.add(new Paragraph(sellertext+"：_____________________",fontChinese));
+			document.add(new Paragraph(signtext+"：_____________________", fontChinese));
 			document.add(new Paragraph("日期： ", fontChinese));
 			document.close();
 			System.out.println("-----------ok--------------");
@@ -446,7 +437,11 @@ public class SubsidyController {
 			WltResponse<SearchBindAck>  wltResponse = wltApiService.searchIsBind(userName);
 			SearchBindAck data = wltResponse.getData();
 			if (data != null && "00".equals(data.getCode())) {
-				// TODO create WLT account
+				try {
+					subsidyService.saveWLTAccount(userName,mobile);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				response.sendRedirect("acknowledgment?isWltFirstBound=true&promoId=" + promoId);
 			}
 		} else {
@@ -471,6 +466,11 @@ public class SubsidyController {
 	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) {
 		// TODO, get WLT account from DB
 		WLTAccount wltAccount = null;
+		try {
+			wltAccount = subsidyService.getWLTAccount(userName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (wltAccount == null) {
 			String bindURL = wltApiService.bindWltAccount(userName, backURL);
 			mav.addObject("wltBindURL", bindURL);
