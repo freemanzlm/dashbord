@@ -99,6 +99,7 @@ public class SubsidyController {
 		SubsidyLegalTerm term = null;
 		
 		String backURL = getBindWltURL(request, userData.getUserName());
+		model.setViewName(ViewResource.ERROR.getPath());
 
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
@@ -109,16 +110,18 @@ public class SubsidyController {
 //				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
 				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 				
-				if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getAVStatus())||status.equals(PMSubsidyStatus.REWARD_VISITED.getAVStatus())){
-					SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
-					if (subsidySubmission != null) {
-						term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
+				if (term != null) {
+					if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getAVStatus())||status.equals(PMSubsidyStatus.REWARD_VISITED.getAVStatus())){
+						SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
+						if (subsidySubmission != null) {
+							term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
+						}
+						
+						model.addObject("hasSubmitFields", subsidySubmission != null);
 					}
 					
-					model.addObject("hasSubmitFields", subsidySubmission != null);
-				}
-				
-				if (term != null) {
+					System.out.println(new String(term.getContent()));
+					
 					if (term.getSubsidyType() == 2) {
 						putWltAccountInfo(model, userData.getUserName(), backURL);
 					}
@@ -136,17 +139,11 @@ public class SubsidyController {
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
 				model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
 				model.setViewName("subsidy_acknowledgment");
-			} else {
-				model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
 			}
 		} catch (PromoException e) {
 			String message = "Failed to get promotion: promoId=" + promoId + ",userId:" + userData.getUserId();
 			CalEventHelper.writeException("SubsidyError", e, message);
 			logger.log(LogLevel.ERROR, message, e);
-		}
-
-		if (promo == null) {
-			model.setViewName(ViewResource.ERROR.getPath());
 		}
 
 		return model;
@@ -421,11 +418,10 @@ public class SubsidyController {
 	 * Called by WLT service when binding WLT account succeeds.
 	 * @param request
 	 * @param response
-	 * @throws IOException
-	 * @throws MissingArgumentException
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/bindWlt", method = RequestMethod.POST)
-	public void bindWltAccount(HttpServletRequest request, HttpServletResponse response) throws IOException, MissingArgumentException {
+	public void bindWltAccount(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// returned by WLT
 		String mobile = request.getParameter("mobile");
 		
@@ -437,15 +433,11 @@ public class SubsidyController {
 			WltResponse<SearchBindAck>  wltResponse = wltApiService.searchIsBind(userName);
 			SearchBindAck data = wltResponse.getData();
 			if (data != null && "00".equals(data.getCode())) {
-				try {
-					subsidyService.saveWLTAccount(userName,mobile);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				subsidyService.saveWLTAccount(userName,mobile);
 				response.sendRedirect("acknowledgment?isWltFirstBound=true&promoId=" + promoId);
 			}
 		} else {
-			// TODO create WLT account
+			subsidyService.saveWLTAccount(userName,mobile);
 			response.sendRedirect("acknowledgment?isWltFirstBound=true&promoId=" + promoId);
 		}
 	}
@@ -464,13 +456,13 @@ public class SubsidyController {
 	 * @param backURL
 	 */
 	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) {
-		// TODO, get WLT account from DB
 		WLTAccount wltAccount = null;
 		try {
 			wltAccount = subsidyService.getWLTAccount(userName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		if (wltAccount == null) {
 			String bindURL = wltApiService.bindWltAccount(userName, backURL);
 			mav.addObject("wltBindURL", bindURL);

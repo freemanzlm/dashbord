@@ -1,27 +1,20 @@
 package com.ebay.raptor.promotion.subsidy.service;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import javax.ws.rs.client.Invocation;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import net.sf.json.JSONObject;
 
 import org.ebayopensource.ginger.client.GingerClientResponse;
-import org.ebayopensource.ginger.client.GingerWebTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -29,7 +22,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
-import com.ebay.app.raptor.promocommon.error.ErrorType;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
@@ -37,17 +29,12 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
-import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.util.URLDecoder;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.service.BaseService;
-import com.ebay.raptor.promotion.service.IAFTokenService;
-import com.ebay.raptor.promotion.service.PromoClient;
-import com.ebay.raptor.promotion.util.JsonUtils;
 import com.ebay.raptor.promotion.util.StringUtil;
-import com.ebay.res.core.handler.out.JsonUtil;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
