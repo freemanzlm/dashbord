@@ -6,11 +6,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javassist.expr.NewArray;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -125,7 +130,8 @@ public class SubsidyController {
 					if (term.getSubsidyType() == 2) {
 						putWltAccountInfo(model, userData.getUserName(), backURL);
 					}
-					
+					System.out.println(new String(term.getContent()));
+					System.out.println(URLDecoder.decode(new String(term.getContent())));
 					ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
 					model.addObject("nonuploadFields", fields[0]);
 					model.addObject("uploadFields", fields[1]);
@@ -169,7 +175,6 @@ public class SubsidyController {
 				map.put(field.getKey(), request.getParameter(field.getKey()));
 			}
 		}
-		
 		String ret = JsonUtils.objectToJsonString(map);
 		SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
 		if(null==subsidySubmission){
@@ -178,15 +183,31 @@ public class SubsidyController {
 			subsidySubmission.setSfId(promoId);
 		}
 		subsidySubmission.setContent(ret);
-		
 		boolean flag = subsidyService.updateSubsidySubmission(subsidySubmission);
-
+		responseData.setStatus(flag);
+		responseData.setData(map.toString());
+		return responseData;
+	}
+	
+	@GET
+	@RequestMapping(value="/downloadLetter", method=RequestMethod.GET)
+	public void createConfirmLetter(HttpServletRequest req, HttpServletResponse resp,
+			 @RequestParam String promoId) throws MissingArgumentException, IOException, PromoException {
+		resp.setContentType("application/pdf");
+		resp.setHeader("Content-disposition", "attachment; filename="+"contract.pdf");
+		UserData userData = loginService.getUserDataFromCookie(req);
+		Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+		SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+		Map<String, Object> map = new HashMap<String, Object>();
+		SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId, userData.getUserId());
+		String fillItems = subsidySubmission.getContent();
+		map = JsonUtils.parseJson(fillItems);
 		//generate pdf START
 		Document document = null;
 		BaseFont bf = null;
 		Font fontChinese = null;
 		try {
-			bf = BaseFont.createFont("D:\\simsun.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
+			bf = BaseFont.createFont("simsun.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
 			Locale locale = LocaleContextHolder.getLocale();
 			String title = msgResource.getMessage("subsidy.pdf.title",null, locale);
 			String sellertext = msgResource.getMessage("subsidy.pdf.seller",null, locale);
@@ -195,11 +216,8 @@ public class SubsidyController {
 			/** create the right font for CHINESE **/
 			fontChinese = new Font(bf, 10);
 			document = new Document(PageSize.A4);
-			String out = "d:\\HAHAHA.PDF";
-			File file = new File(out);
-			OutputStream outputStream = new FileOutputStream(file);
 			/** get the html content from javabean and convert to string **/
-			PdfWriter pdfWriter = PdfWriter.getInstance(document,outputStream);
+			PdfWriter pdfWriter = PdfWriter.getInstance(document,resp.getOutputStream());
 			document.open();
 			
 			/** add the head of the PDF **/
@@ -214,8 +232,8 @@ public class SubsidyController {
 			
 			/** add the content of the PDF**/
 			Paragraph context = new Paragraph();
-			String pdfContent = new String(term.getContent());
-	        ElementList elementList =MyXMLWorkerHelper.parseToElementList(pdfContent, null);
+			String pdfContent = URLDecoder.decode(new String(term.getContent()));
+	        ElementList elementList =MyXMLWorkerHelper.parseToElementList(pdfContent, "div{style=\"font-size:14px;\"}");
 	        for (Element element : elementList) {
 	            context.add(element);
 	        }
@@ -233,38 +251,6 @@ public class SubsidyController {
 			System.out.println("-----------ok--------------");
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR,"error occur while create PDF");
-		}
-//		response.setContentType("application/pdf");  
-//		response.setHeader("Content-Disposition", "attachment; filename=Contract.pdf");  
-		responseData.setStatus(flag);
-		responseData.setData(map.toString());
-		return responseData;
-	}
-	
-	@GET
-	@RequestMapping(value="/downloadLetter", method=RequestMethod.GET)
-	public void createConfirmLetter(HttpServletRequest req, HttpServletResponse resp,
-			 @RequestParam String promoId) throws MissingArgumentException, IOException, PromoException {
-		resp.setContentType("application/pdf");
-		UserData userData = loginService.getUserDataFromCookie(req);
-		InputStream inputStream = null;
-		OutputStream outStream = null;
-		SubsidyAttachment attachment = null;
-		String attachmentName = "";
-		String attachmentType = "";
-		
-		resp.setHeader("Content-disposition", "attachment; filename=\""+attachmentName+"."+attachmentType+"\"");
-		System.out.println(resp.getHeaders("Content-disposition"));
-		outStream = resp.getOutputStream();
-		int len = 0;
-		byte[] buffer = new byte[4096];
-		while((len = inputStream.read(buffer)) != -1) {
-            outStream.write(buffer, 0, len);
-        }
-		if (inputStream != null) {
-			inputStream.close();
-			outStream.flush();
-			outStream.close();
 		}
 	}
 
