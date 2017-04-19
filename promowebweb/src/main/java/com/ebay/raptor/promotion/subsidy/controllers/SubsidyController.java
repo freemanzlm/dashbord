@@ -114,9 +114,8 @@ public class SubsidyController {
 				String status = subsidy.getStatus();
 //				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
 				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-				
 				if (term != null) {
-					if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getAVStatus())||status.equals(PMSubsidyStatus.REWARD_VISITED.getAVStatus())){
+					if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName())||status.equals(PMSubsidyStatus.REWARD_VISITED.getSfName())){
 						SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
 						if (subsidySubmission != null) {
 							term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
@@ -125,17 +124,14 @@ public class SubsidyController {
 						model.addObject("hasSubmitFields", subsidySubmission != null);
 					}
 					
-					System.out.println(new String(term.getContent()));
-					
 					if (term.getSubsidyType() == 2) {
 						putWltAccountInfo(model, userData.getUserName(), backURL);
 					}
-					System.out.println(new String(term.getContent()));
-					System.out.println(URLDecoder.decode(new String(term.getContent())));
 					ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
 					model.addObject("nonuploadFields", fields[0]);
 					model.addObject("uploadFields", fields[1]);
 				}
+				subsidyService.updateSubsidy(promoId, userID, PMSubsidyStatus.REWARD_VISITED.getAVStatus());
 				
 				view.calcualteCurentStep(promo);
 				view.appendPromoEndCheck(model.getModel(), promo, now);
@@ -184,6 +180,7 @@ public class SubsidyController {
 		}
 		subsidySubmission.setContent(ret);
 		boolean flag = subsidyService.updateSubsidySubmission(subsidySubmission);
+		subsidyService.updateSubsidy(promoId, userID, PMSubsidyStatus.REWARD_COMMITED.getAVStatus());
 		responseData.setStatus(flag);
 		responseData.setData(map.toString());
 		return responseData;
@@ -212,6 +209,7 @@ public class SubsidyController {
 			String title = msgResource.getMessage("subsidy.pdf.title",null, locale);
 			String sellertext = msgResource.getMessage("subsidy.pdf.seller",null, locale);
 			String signtext = msgResource.getMessage("subsidy.pdf.signature",null, locale);
+			String datetext = msgResource.getMessage("subsidy.pdf.date",null, locale);
 			
 			/** create the right font for CHINESE **/
 			fontChinese = new Font(bf, 10);
@@ -233,7 +231,7 @@ public class SubsidyController {
 			/** add the content of the PDF**/
 			Paragraph context = new Paragraph();
 			String pdfContent = URLDecoder.decode(new String(term.getContent()));
-	        ElementList elementList =MyXMLWorkerHelper.parseToElementList(pdfContent, "div{style=\"font-size:14px;\"}");
+	        ElementList elementList =MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 	        for (Element element : elementList) {
 	            context.add(element);
 	        }
@@ -246,7 +244,7 @@ public class SubsidyController {
 			}
 			document.add(new Paragraph(sellertext+"：_____________________",fontChinese));
 			document.add(new Paragraph(signtext+"：_____________________", fontChinese));
-			document.add(new Paragraph("日期： ", fontChinese));
+			document.add(new Paragraph(datetext+"：", fontChinese));
 			document.close();
 			System.out.println("-----------ok--------------");
 		} catch (Exception e) {
@@ -284,6 +282,7 @@ public class SubsidyController {
 							uploadFile, fileType);
 					responseData.setStatus(true);
 					responseData.setMessage(downloadUrl);
+					subsidyService.updateSubsidy(promoId, userData.getUserId(), PMSubsidyStatus.REWARD_UPLOADED.getAVStatus());
 				} catch (Exception e) {
 					responseData.setStatus(false);
 					responseData.setMessage(e.getMessage());

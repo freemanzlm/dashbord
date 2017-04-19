@@ -82,6 +82,25 @@ public class SubsidyService extends BaseService {
 		}
 		return null;
 	}
+	
+	public boolean updateSubsidy(String promoId, Long userId,String status) throws PromoException {
+		Subsidy subsidy = new Subsidy();
+		subsidy.setPromoId(promoId);
+		subsidy.setOracleId(userId);
+		subsidy.setStatus(status);
+		String url = url(params(ResourceProvider.SubsidyRes.updateSubsidy));
+		GingerClientResponse resp = httpPost(url, subsidy);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<Boolean>> type = new GenericType<GeneralDataResponse<Boolean>>() {};
+			GeneralDataResponse<Boolean> response = resp.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				return response.getData();
+			} 
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return false;
+	}
 
 	/**
 	 * 
