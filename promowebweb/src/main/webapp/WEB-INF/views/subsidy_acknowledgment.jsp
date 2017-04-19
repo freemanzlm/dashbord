@@ -97,9 +97,6 @@
 					<c:when test="${ promo.rewardType eq 2 && empty wltAccount }">
 						<%@ include file="stepMessages/wlt_to_bind.jsp"%>
 					</c:when>
-					<c:when test="${not empty param.isWltFirstBound and not empty wltAccount}"> <!-- Parameter 'isWltFirstBound' comes from bound backURL parameter -->
-						<%@ include file="stepMessages/wlt_bound.jsp"%>
-					</c:when>
 					<c:otherwise>
 						<%@ include file="subsidy/fill_contract.jsp"%>
 					</c:otherwise>

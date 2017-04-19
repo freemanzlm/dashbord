@@ -10,20 +10,29 @@
 		<ul class="tab-list clr" role="tablist">
 			<li role="tab" aria-controls="pane1" v-bind:class="{active: !hasSubmitFields}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane1">第一步：填写确认函</a></span></li>
-			<li role="tab" aria-controls="pane2" v-show="hasSubmitFields" v-bind:class="{active: hasSubmitFields && !hasApproved}" v-bind:disabled="hasApproved"><span class="label">
+			<li role="tab" aria-controls="pane2" v-if="hasSubmitFields" v-bind:class="{active: hasSubmitFields && !hasApproved}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane2">第二步：上传确认函</a></span></li>
-			<li role="tab" aria-controls="pane3" v-show="hasApproved" v-bind:class="{active: hasApproved}"><span class="label">
+			<li role="tab" aria-controls="pane3" v-if="hasApproved" v-bind:class="{active: hasApproved}"><span class="label">
 				<a href="#pane3">第三步：领取奖励</a></span></li>
 		</ul>
 	</div>
 	
 	<div id="pane1" class="tab-pane confirm-letter-pane" v-bind:class="{active: !hasSubmitFields}" role="tabpanel">
 		
-		<c:if test="${ promo.rewardType eq 2 && not empty wltAccount }">
-			<div class="pane wlt-binding">
-				请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：${wltAccount.wltUserId }.
-				<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
-			</div>
+		<c:if test="${promo.rewardType eq 2 and not empty wltAccount}">
+			<c:choose>
+				<c:when test="${not empty param.isWltFirstBound}"> <!-- Parameter 'isWltFirstBound' comes from bound backURL parameter -->
+					<div class="pane wlt-binding">
+						恭喜！您已完成eBay万里通账号的绑定。绑定的eBay账号为：${unm}，对应的万里通账号为：${wltAccount.wltUserId}。
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="pane wlt-binding">
+						请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：${wltAccount.wltUserId}，
+						<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 		
 		<h3 class="mt20 mb5 text-center">活动奖励确认函</h3>

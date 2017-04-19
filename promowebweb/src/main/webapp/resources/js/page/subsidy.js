@@ -40,7 +40,7 @@ $(function(){
 						if (data && data.status === true) {
 							this.hasSubmitFields = true;
 							// download confirm letter
-							window.open("generateLetter?promoId=" + pageData.promoId);
+							window.open("downloadLetter?promoId=" + pageData.promoId);
 						}
 					},
 					error: function() {

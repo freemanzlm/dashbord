@@ -1,21 +1,16 @@
 package com.ebay.raptor.promotion.subsidy.controllers;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javassist.expr.NewArray;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -118,10 +113,9 @@ public class SubsidyController {
 					if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName())||status.equals(PMSubsidyStatus.REWARD_VISITED.getSfName())){
 						SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
 						if (subsidySubmission != null) {
+							model.addObject("hasSubmitFields", subsidySubmission != null);
 							term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
 						}
-						
-						model.addObject("hasSubmitFields", subsidySubmission != null);
 					}
 					
 					if (term.getSubsidyType() == 2) {
@@ -186,7 +180,6 @@ public class SubsidyController {
 		return responseData;
 	}
 	
-	@GET
 	@RequestMapping(value="/downloadLetter", method=RequestMethod.GET)
 	public void createConfirmLetter(HttpServletRequest req, HttpServletResponse resp,
 			 @RequestParam String promoId) throws MissingArgumentException, IOException, PromoException {
