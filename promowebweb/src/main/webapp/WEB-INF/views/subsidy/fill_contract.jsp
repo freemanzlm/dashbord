@@ -6,7 +6,7 @@
 <fmt:formatDate   var="rewardDeadline" value="${promo.rewardDlDt}" pattern="yyyy-MM-dd" type="date" />
 
 <div class="tabbable confirm-letter-steps">
-	<div class="tab-list-container clr">
+	<div class="tab-list-container clr" v-cloak>
 		<ul class="tab-list clr" role="tablist">
 			<li role="tab" aria-controls="pane1" v-bind:class="{active: !hasSubmitFields}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane1">第一步：填写确认函</a></span></li>
@@ -122,14 +122,7 @@
 						<div class="form-field">
 							<span class="file-input" v-if="!isAwardEnd">
 								<input type="text" style="height: 20px;" placeholder="选择文件" />
-								<c:choose>
-									<c:when test="${field.key eq '_letter'}">
-										<input type="file" name="uploadFile" accept="application/pdf" />
-									</c:when>
-									<c:otherwise>
-										<input type="file" name="uploadFile" accept="image/jpeg, application/zip"/>
-									</c:otherwise>
-								</c:choose>
+								<input type="file" name="uploadFile" accept="image/jpeg, application/pdf, application/zip"/>
 								<button type="button" class="btn" style="margin-left: 3px;">选择</button>
 							</span> <br v-if="!isAwardEnd"/>
 							<span class="font-bold msg">

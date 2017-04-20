@@ -271,10 +271,10 @@ public class SubsidyController {
 			if (attachmentFileValidator.isValidate(uploadFile)) {
 				try {
 					String fileType = attachmentFileValidator.getType(uploadFile).toString();
-					String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserId(), key,
+					String fildId = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserId(), key,
 							uploadFile, fileType);
 					responseData.setStatus(true);
-					responseData.setMessage(downloadUrl);
+					responseData.setMessage(fildId);
 					subsidyService.updateSubsidy(promoId, userData.getUserId(), PMSubsidyStatus.REWARD_UPLOADED.getAVStatus());
 				} catch (Exception e) {
 					responseData.setStatus(false);
@@ -357,7 +357,6 @@ public class SubsidyController {
 			@RequestParam("id") Long id) throws Exception {
 
 		resp.setContentType("application/x-msdownload;");
-		UserData userData = loginService.getUserDataFromCookie(req);
 
 		InputStream inputStream = null;
 		OutputStream outStream = null;

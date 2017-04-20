@@ -1,5 +1,5 @@
 $(function(){
-	
+	Vue.config.devtools = false;
 	var fileTypeReg = /\.(doc|docx|xls|xlsx|jpg|gif|zip|rar|pdf)$/i;
 	
 	function hasValidSize(inputElement, maxSize) {
@@ -29,6 +29,7 @@ $(function(){
 		methods: {
 			sendSellerCustomFields: function(event){
 				var $form = $("#custom-fields-form");
+				$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
 				$.ajax($form.attr("action"), {
 					data: $form.serialize(),
 					type : 'POST',
@@ -37,6 +38,7 @@ $(function(){
 					headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
 					context : this,
 					success : function(data) {
+						$(document.body).isLoading('hide');
 						if (data && data.status === true) {
 							this.hasSubmitFields = true;
 							// download confirm letter
@@ -44,7 +46,7 @@ $(function(){
 						}
 					},
 					error: function() {
-						console.log(this)
+						$(document.body).isLoading('hide');
 					}
 				});
 			},
@@ -103,7 +105,7 @@ $(function(){
 				var responseData = $.parseJSON(response);
 				
 				if(responseData.status==true) {
-					$errorMsgEle.html('<a href=/promotion/subsidy/downloadAttachment/?promoId=' + pageData.promoId + '&key=' + $form.find("input[name=key]").val() +'>'+local.getText('promo.listings.attachdownload')+'</a>');
+					$errorMsgEle.html('<a href=/promotion/subsidy/downloadAttachmentById/?id=' + responseData.message +'>'+local.getText('promo.listings.attachdownload')+'</a>');
 					$form.find(".file-input input").val(""); // clear input[type=file] input value
 					$form.data("hasuploaded", true);
 				} else if(responseData.message && responseData.message.length > 0) {
