@@ -57,6 +57,7 @@ import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
+import com.ebay.raptor.promotion.util.AESUtil;
 import com.ebay.raptor.promotion.util.JsonUtils;
 import com.ebay.raptor.promotion.util.MyXMLWorkerHelper;
 import com.ebay.raptor.promotion.util.PojoConvertor;
@@ -100,7 +101,6 @@ public class SubsidyController {
 		
 		String backURL = getBindWltURL(request, userData.getUserName());
 		model.setViewName(ViewResource.ERROR.getPath());
-
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
 
@@ -189,9 +189,18 @@ public class SubsidyController {
 		Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 		SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> retMap = new HashMap<String, Object>();
 		SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId, userData.getUserId());
 		String fillItems = subsidySubmission.getContent();
+		List<SubsidyCustomField> termList = term.getSubsidyCustomFields();
 		map = JsonUtils.parseJson(fillItems);
+		for (String key : map.keySet()) {
+			for (SubsidyCustomField subsidyCustomField : termList) {
+				if(key.equals(subsidyCustomField.getKey())){
+					retMap.put(subsidyCustomField.getDisplayLabel(), map.get(key));
+				}
+			}
+		}
 		//generate pdf START
 		Document document = null;
 		BaseFont bf = null;
@@ -217,8 +226,8 @@ public class SubsidyController {
 			document.add(head);
 			
 			/** add the fill term of the PDF **/
-			for (String key : map.keySet()) {
-				document.add(new Paragraph(key+":"+map.get(key),fontChinese));
+			for (String key : retMap.keySet()) {
+				document.add(new Paragraph(key+":"+retMap.get(key),fontChinese));
 			}
 			
 			/** add the content of the PDF**/
@@ -232,7 +241,7 @@ public class SubsidyController {
 	        
 	        /** add the content of the PDF **/
 			document.add(new Paragraph("   "));
-			for (String key : map.keySet()) {
+			for (String key : retMap.keySet()) {
 				document.add(new Paragraph(key+":",fontChinese));
 			}
 			document.add(new Paragraph(sellertext+"：_____________________",fontChinese));
@@ -271,10 +280,11 @@ public class SubsidyController {
 			if (attachmentFileValidator.isValidate(uploadFile)) {
 				try {
 					String fileType = attachmentFileValidator.getType(uploadFile).toString();
-					String fildId = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserId(), key,
+					String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserId(), key,
 							uploadFile, fileType);
+					String fileId = AESUtil.encrypt(downloadUrl);
 					responseData.setStatus(true);
-					responseData.setMessage(fildId);
+					responseData.setMessage(fileId);
 					subsidyService.updateSubsidy(promoId, userData.getUserId(), PMSubsidyStatus.REWARD_UPLOADED.getAVStatus());
 				} catch (Exception e) {
 					responseData.setStatus(false);
@@ -307,8 +317,6 @@ public class SubsidyController {
 	public void downloadAttachment(HttpServletRequest req, HttpServletResponse resp,
 			@RequestParam("promoId") String promoId,
 			@RequestParam("key") String key) throws Exception {
-
-		resp.setContentType("application/x-msdownload;");
 		UserData userData = loginService.getUserDataFromCookie(req);
 
 		InputStream inputStream = null;
@@ -319,18 +327,21 @@ public class SubsidyController {
 
 		try {
 			attachment = subsidyService.downloadSubsidyAttachment(promoId, userData.getUserId(), key);
-			if (attachment != null) {
+			if (attachment != null && null != attachment.getFileContent()) {
+				resp.setContentType("application/x-msdownload;");
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				attachmentName = attachment.getFileName();
 				attachmentType = attachment.getFileType();
-			}
-			resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType
-					+ "\"");
-			outStream = resp.getOutputStream();
-			int len = 0;
-			byte[] buffer = new byte[4096];
-			while ((len = inputStream.read(buffer)) != -1) {
-				outStream.write(buffer, 0, len);
+				resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType
+						+ "\"");
+				outStream = resp.getOutputStream();
+				int len = 0;
+				byte[] buffer = new byte[4096];
+				while ((len = inputStream.read(buffer)) != -1) {
+					outStream.write(buffer, 0, len);
+				}
+			}else{
+				return;
 			}
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "Failed to downlaod attachment", e);
@@ -354,7 +365,7 @@ public class SubsidyController {
 	@GET
 	@RequestMapping(value = "/downloadAttachmentById")
 	public void downloadAttachmentById(HttpServletRequest req, HttpServletResponse resp,
-			@RequestParam("id") Long id) throws Exception {
+			@RequestParam("id") String id) throws Exception {
 
 		resp.setContentType("application/x-msdownload;");
 
@@ -365,7 +376,8 @@ public class SubsidyController {
 		String attachmentType = "";
 
 		try {
-			attachment = subsidyService.downloadSubsidyAttachment(id);
+			Long fileId = Long.parseLong(AESUtil.decrypt(id));
+			attachment = subsidyService.downloadSubsidyAttachment(fileId);
 			if (attachment != null) {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				attachmentName = attachment.getFileName();
