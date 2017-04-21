@@ -6,12 +6,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -24,7 +22,6 @@ import javax.ws.rs.POST;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.jca.cci.object.SimpleRecordOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,7 +63,7 @@ import com.ebay.raptor.promotion.util.JsonUtils;
 import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.ebay.raptor.promotion.util.MyXMLWorkerHelper;
 import com.ebay.raptor.promotion.util.PojoConvertor;
-import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
+import com.ebay.raptor.promotion.validation.SubsidyAttachmentFileValidator;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -339,15 +336,15 @@ public class SubsidyController {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
 		ResponseData<String> responseData = new ResponseData<String>();
 		UserData userData = loginService.getUserDataFromCookie(req);
-		AttachmentFileValidator attachmentFileValidator = AttachmentFileValidator.getInstance();
+		SubsidyAttachmentFileValidator attachmentFileValidator = SubsidyAttachmentFileValidator.getInstance();
 		attachmentFileValidator.setLocale(LocaleUtil.getCurrentLocale());
 		try {
-			if (attachmentFileValidator.isValidSubsidyFile(uploadFile)) {
+			if (attachmentFileValidator.validate(uploadFile)) {
 				try {
 					String fileType = attachmentFileValidator.getType(uploadFile).toString();
 					String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserName(),userData.getUserId(), key,
 							uploadFile, fileType);
-					String fileId = URLEncoder.encode(EncryptUtil.encrypt(downloadUrl));
+					String fileId = URLEncoder.encode(EncryptUtil.encrypt(downloadUrl), "UTF-8");
 					responseData.setStatus(true);
 					responseData.setMessage(fileId);
 					subsidyService.updateSubsidy(promoId, userData.getUserId(), PMSubsidyStatus.REWARD_UPLOADED.getAVStatus());
@@ -442,7 +439,7 @@ public class SubsidyController {
 		Long fileId = null;
 		
 		try {
-			fileId = Long.parseLong(AESUtil.decrypt(id));
+			fileId = Long.parseLong(EncryptUtil.decrypt(id));
 		} catch (Exception e) {
 			resp.sendError(404, String.format("File attachment id is not valid: %s", id));
 		}

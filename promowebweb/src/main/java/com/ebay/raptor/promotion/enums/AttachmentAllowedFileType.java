@@ -1,4 +1,4 @@
-package com.ebay.raptor.promotion.util;
+package com.ebay.raptor.promotion.enums;
 
 /**
  * 

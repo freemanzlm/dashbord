@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.raptor.promotion.enums.AttachmentAllowedFileType;
+import com.ebay.raptor.promotion.enums.SubsidyAttachmentAllowedType;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.util.LocaleUtil;
 
@@ -17,39 +18,39 @@ import com.ebay.raptor.promotion.util.LocaleUtil;
  * 
  * @author xiatu
  */
-public class AttachmentFileValidator {
-	private Logger logger = Logger.getLogger(AttachmentFileValidator.class.getName());
+public class SubsidyAttachmentFileValidator {
+	private Logger logger = Logger.getLogger(SubsidyAttachmentFileValidator.class.getName());
 	private String bundleBaseName = "Message";
 	private ResourceBundle bundle;
 	private Locale locale;
-	private static AttachmentFileValidator attachmentFileValidator = null;
+	private static SubsidyAttachmentFileValidator attachmentFileValidator = null;
 
-	private AttachmentFileValidator() {
+	private SubsidyAttachmentFileValidator() {
 	}
 
-	public static AttachmentFileValidator getInstance() {
+	public static SubsidyAttachmentFileValidator getInstance() {
 		if (attachmentFileValidator == null) {
-			attachmentFileValidator = new AttachmentFileValidator();
+			attachmentFileValidator = new SubsidyAttachmentFileValidator();
 		}
 		return attachmentFileValidator;
 	}
 
-	public boolean isValidate(MultipartFile[] files) throws AttachmentUploadException {
+	public boolean validate(MultipartFile[] files) throws AttachmentUploadException {
 		for (MultipartFile file : files) {
-			return isValidate(file);
+			return validate(file);
 		}
 		return true;
 	}
 
-	public boolean isValidate(MultipartFile file) throws AttachmentUploadException {
+	public boolean validate(MultipartFile file) throws AttachmentUploadException {
 		if (file.isEmpty()) {
 			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notnull"));
 		}
-		if (file.getSize() > 4.5 * 1024 * 1024) {
+		if (file.getSize() > 5 * 1024 * 1024) {
 			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.toolarge"));
 		}
 		try {
-			AttachmentAllowedFileType type = getType(file);
+			SubsidyAttachmentAllowedType type = getType(file);
 			if (type == null) {
 				throw new AttachmentUploadException(getBundle().getString(
 						"attachment.validation.message.notcorrecttype"));
@@ -60,31 +61,6 @@ public class AttachmentFileValidator {
 		return true;
 	}
 	
-	/**
-	 * Check if subsidy attachment file is valid.
-	 * @param file
-	 * @return
-	 * @throws AttachmentUploadException
-	 */
-	public boolean isValidSubsidyFile(MultipartFile file) throws AttachmentUploadException {
-		if (file.isEmpty()) {
-			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notnull"));
-		}
-		if (file.getSize() > 5 * 1024 * 1024) {
-			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.toolarge"));
-		}
-		try {
-			AttachmentAllowedFileType type = getType(file);
-			if (type == null) {
-				throw new AttachmentUploadException(getBundle().getString(
-						"attachment.validation.message.notcorrecttype"));
-			}
-		} catch (IOException e) {
-			logger.log(Level.WARNING, e.getMessage());
-		}
-		return true;
-	}
-
 	private static String bytes2hex(byte[] bytes) {
 		StringBuffer hex = new StringBuffer();
 		for (int i = 0; i < bytes.length; i++) {
@@ -106,14 +82,14 @@ public class AttachmentFileValidator {
 		return bytes2hex(b);
 	}
 
-	public AttachmentAllowedFileType getType(MultipartFile file) throws IOException {
+	public SubsidyAttachmentAllowedType getType(MultipartFile file) throws IOException {
 		String fileHead = getFileHeader(file);
 		if (fileHead == null || fileHead.length() == 0) {
 			return null;
 		}
 		fileHead = fileHead.toUpperCase();
-		AttachmentAllowedFileType[] fileTypes = AttachmentAllowedFileType.values();
-		for (AttachmentAllowedFileType type : fileTypes) {
+		SubsidyAttachmentAllowedType[] fileTypes = SubsidyAttachmentAllowedType.values();
+		for (SubsidyAttachmentAllowedType type : fileTypes) {
 			if (fileHead.startsWith(type.getValue())) {
 				if (type.toString().equalsIgnoreCase(file.getOriginalFilename().split("\\.")[1])) {
 					return type;

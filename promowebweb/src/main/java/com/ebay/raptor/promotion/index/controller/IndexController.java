@@ -192,10 +192,12 @@ public class IndexController {
 		} else {
 			RaptorErrorData errorData = (RaptorErrorData) request.getAttribute(RaptorConstants.RAPTOR_ERROR_DATA);
 			
-			if (errorData.getException() != null) {
-				CalEventHelper.writeException("ERROR", errorData.getException(), true, errorData.getErrorMessage());
-			} else {
-				CalEventHelper.sendImmediate("Error", "AppHandledError", "1", errorData.getErrorMessage());
+			if (errorData != null) {
+				if (errorData.getException() != null) {
+					CalEventHelper.writeException("ERROR", errorData.getException(), true, errorData.getErrorMessage());
+				} else {
+					CalEventHelper.sendImmediate("Error", "AppHandledError", "1", errorData.getErrorMessage());
+				}
 			}
 		}
 		
