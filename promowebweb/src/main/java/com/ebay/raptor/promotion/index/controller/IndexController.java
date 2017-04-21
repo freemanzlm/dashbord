@@ -179,7 +179,7 @@ public class IndexController {
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public ModelAndView handleErrorRequest(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("error");
+		mav.setViewName("errors/error");
 		
 		if (response.getStatus() == 404) {
 			/* In web applications today if the response error code is 404, then it will be logged in CAL with a 
