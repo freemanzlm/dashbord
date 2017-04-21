@@ -34,14 +34,14 @@
 </head>
 
 <body>
-	
+
 	<div style="display:table;height:100%;width:100%;">
 		
 		<div style="display:table-row" >
 			<div style="display:table-cell; vertical-align:middle;" >
 				<div class="error-box text-center mb15 clr">
-					<h2 class="mb20"><i class="fa fa-times"></i>错误</h2>
-					<p>很抱歉，请求发生异常，请稍后再试或联系客户经理。</p>
+					<h2 class="mb20"><i class="fa fa-times"></i>錯誤</h2>
+					<p>很抱歉，您請求的頁面或檔案不存在！</p>
 				</div>
 			</div>
 		</div>	

@@ -40,8 +40,8 @@
 		<div style="display:table-row" >
 			<div style="display:table-cell; vertical-align:middle;" >
 				<div class="error-box text-center mb15 clr">
-					<h2 class="mb20"><i class="fa fa-times"></i>错误</h2>
-					<p>很抱歉，请求发生异常，请稍后再试或联系客户经理。</p>
+					<h2 class="mb20"><i class="fa fa-times"></i>没有找到</h2>
+					<p>很抱歉，您请求的页面或文件不存在！</p>
 				</div>
 			</div>
 		</div>	

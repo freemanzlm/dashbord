@@ -407,7 +407,7 @@ public class SubsidyController {
 					outStream.write(buffer, 0, len);
 				}
 			}else{
-				return;
+				resp.sendError(404, String.format("Subsidy attachment doesn't exist!"));
 			}
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "Failed to downlaod attachment", e);
@@ -439,36 +439,39 @@ public class SubsidyController {
 		SubsidyAttachment attachment = null;
 		String attachmentName = "";
 		String attachmentType = "";
-
+		Long fileId = null;
+		
 		try {
-			Long fileId = Long.parseLong(EncryptUtil.decrypt(id));
+			fileId = Long.parseLong(AESUtil.decrypt(id));
+		} catch (Exception e) {
+			resp.sendError(404, String.format("File attachment id is not valid: %s", id));
+		}
+		
+		if (fileId != null) {
 			attachment = subsidyService.downloadSubsidyAttachment(fileId);
-			if (attachment != null) {
+			if (attachment == null) {
+				resp.sendError(404, String.format("Subsidy attachment %s doesn't exist!", id));
+			} else {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				attachmentName = URLEncoder.encode(attachment.getFileName(), "utf-8");
 				attachmentType = attachment.getFileType();
-			} else {
-				resp.sendRedirect(req.getServletPath() + "/404");
-			}
-			resp.setContentType("application/x-msdownload;");
-			resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType
-					+ "\"");
-			outStream = resp.getOutputStream();
-			int len = 0;
-			byte[] buffer = new byte[4096];
-			while ((len = inputStream.read(buffer)) != -1) {
-				outStream.write(buffer, 0, len);
-			}
-		} catch (Exception e) {
-			logger.log(LogLevel.ERROR, "Failed to downlaod attachment", e);
-			CalEventHelper.writeException("ERROR", e, "Failed to download attachment: " + e.getMessage());
-		} finally {
-			if (inputStream != null) {
-				inputStream.close();
-				outStream.flush();
-				outStream.close();
+				resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType
+						+ "\"");
+				outStream = resp.getOutputStream();
+				int len = 0;
+				byte[] buffer = new byte[4096];
+				while ((len = inputStream.read(buffer)) != -1) {
+					outStream.write(buffer, 0, len);
+				}
+				
+				if (inputStream != null) {
+					inputStream.close();
+					outStream.flush();
+					outStream.close();
+				}
 			}
 		}
+			
 	}
 	
 	/**

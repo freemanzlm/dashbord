@@ -22,8 +22,10 @@
 			</div>
 			<menu>
 				<li>
-					<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
-					<br /><br />
+					<c:if test="${ not empty subsidyTerm and subsidyTerm.ovFlag == 1 }">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
+						<br /><br />
+					</c:if> 
 					<a href="index">返回活动列表</a>
 				</li>
 			</menu>
@@ -44,7 +46,7 @@
 			
 			<menu>
 				<li>
-					<c:if test="${ subsidyTerm.ovFlag == 1 }">
+					<c:if test="${ not empty subsidyTerm and subsidyTerm.ovFlag == 1 }">
 						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
 						<br /><br />
 					</c:if> 

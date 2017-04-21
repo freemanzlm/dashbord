@@ -24,6 +24,9 @@ import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.kernel.calwrapper.CalEventHelper;
+import com.ebay.raptor.kernel.context.IRaptorContext;
+import com.ebay.raptor.kernel.error.RaptorErrorData;
+import com.ebay.raptor.kernel.util.RaptorConstants;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -49,6 +52,7 @@ public class IndexController {
 
 	private static CommonLogger logger = CommonLogger.getInstance(IndexController.class);
 
+	@Autowired IRaptorContext raptorCtx;
 	@Autowired CSApiService csApiService;
 	@Autowired LoginService loginService;
 	@Autowired PromotionService service;
@@ -173,10 +177,28 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
-	public ModelAndView handleErrorRequest(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+	public ModelAndView handleErrorRequest(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("error");
+		
+		if (response.getStatus() == 404) {
+			/* In web applications today if the response error code is 404, then it will be logged in CAL with a 
+			 * PNR(Page Not Responding) event and top level transaction will be failed. Ops scan the CAL for PNR's and 
+			 * if there are too many PNR's then the pool will be marked as bad. 
+			 * It will not log PNR if we see that "appHandledError" is set in request. 
+			 */
+			request.setAttribute(RaptorConstants.APP_HANDLED_ERROR, true);
+			mav.setViewName("errors/404");
+		} else {
+			RaptorErrorData errorData = (RaptorErrorData) request.getAttribute(RaptorConstants.RAPTOR_ERROR_DATA);
+			
+			if (errorData.getException() != null) {
+				CalEventHelper.writeException("ERROR", errorData.getException(), true, errorData.getErrorMessage());
+			} else {
+				CalEventHelper.sendImmediate("Error", "AppHandledError", "1", errorData.getErrorMessage());
+			}
+		}
+		
 		return mav;
 	}
 
