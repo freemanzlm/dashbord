@@ -226,7 +226,7 @@ public class SubsidyService extends BaseService {
 	 * @throws PromoException
 	 * @throws IOException
 	 */
-	public String uploadSubsidyAttachment(String promoId, Long userId, String key, final MultipartFile uploadFile,
+	public String uploadSubsidyAttachment(String promoId,String ebayID, Long userId, String key, final MultipartFile uploadFile,
 			String fileType) throws Exception {
 		// this method will response a the file id;
 		String urlbak = url(ResourceProvider.SubsidyRes.uploadAttachmentBak);
@@ -238,6 +238,8 @@ public class SubsidyService extends BaseService {
 		multiPart.field("userId", Long.toString(userId));
 		multiPart.field("fileType", fileType);
 		multiPart.field("key", key);
+		multiPart.field("userName", ebayID);
+		multiPart.field("size", uploadFile.getSize()+"");
 		String fileNameString = decodefilePathOrfileName(file.getName());
 		String fileName = fileNameString.substring(0, fileNameString.lastIndexOf("."));
 		multiPart.field("fileName", fileName);

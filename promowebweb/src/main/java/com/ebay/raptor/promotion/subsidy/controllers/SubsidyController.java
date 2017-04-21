@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -20,6 +24,7 @@ import javax.ws.rs.POST;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.jca.cci.object.SimpleRecordOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +51,6 @@ import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.locale.LocaleUtil;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
@@ -57,8 +61,9 @@ import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
-import com.ebay.raptor.promotion.util.AESUtil;
+import com.ebay.raptor.promotion.util.EncryptUtil;
 import com.ebay.raptor.promotion.util.JsonUtils;
+import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.ebay.raptor.promotion.util.MyXMLWorkerHelper;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
@@ -183,6 +188,7 @@ public class SubsidyController {
 	@RequestMapping(value="/downloadLetter", method=RequestMethod.GET)
 	public void createConfirmLetter(HttpServletRequest req, HttpServletResponse resp,
 			 @RequestParam String promoId) throws MissingArgumentException, IOException, PromoException {
+		long time1 = System.currentTimeMillis();
 		resp.setContentType("application/pdf");
 		resp.setHeader("Content-disposition", "attachment; filename="+"contract.pdf");
 		UserData userData = loginService.getUserDataFromCookie(req);
@@ -196,7 +202,7 @@ public class SubsidyController {
 		map = JsonUtils.parseJson(fillItems);
 		for (String key : map.keySet()) {
 			for (SubsidyCustomField subsidyCustomField : termList) {
-				if(key.equals(subsidyCustomField.getKey())){
+				if((!key.equals("_sellerCode"))&&(!key.equals("_sellerName"))&&key.equals(subsidyCustomField.getKey())){
 					retMap.put(subsidyCustomField.getDisplayLabel(), map.get(key));
 				}
 			}
@@ -205,30 +211,86 @@ public class SubsidyController {
 		Document document = null;
 		BaseFont bf = null;
 		Font fontChinese = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-			bf = BaseFont.createFont("simsun.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
+			bf = BaseFont.createFont("msYaHei.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
+			fontChinese = new Font(bf, 10);
 			Locale locale = LocaleContextHolder.getLocale();
-			String title = msgResource.getMessage("subsidy.pdf.title",null, locale);
-			String sellertext = msgResource.getMessage("subsidy.pdf.seller",null, locale);
-			String signtext = msgResource.getMessage("subsidy.pdf.signature",null, locale);
-			String datetext = msgResource.getMessage("subsidy.pdf.date",null, locale);
+			String v_title = msgResource.getMessage("subsidy.pdf.title",null, locale);
+			String v_sellerinfo = msgResource.getMessage("subsidy.pdf.sellerinfo",null, locale);
+			String v_sellerNamequote = msgResource.getMessage("subsidy.pdf.sellernamequote",null, locale);
+			String v_ebayid = msgResource.getMessage("subsidy.pdf.ebayid",null, locale);
+			String v_promotion = msgResource.getMessage("subsidy.pdf.promotion",null, locale);
+			String v_promotionquote = msgResource.getMessage("subsidy.pdf.promotionquote",null, locale);
+			String v_bonus = msgResource.getMessage("subsidy.pdf.bonus",null, locale);
+			String v_bonusquote = msgResource.getMessage("subsidy.pdf.bonusquote",null, locale);
+			String v_applytime = msgResource.getMessage("subsidy.pdf.applytime",null, locale);
+			String v_applytimequote = msgResource.getMessage("subsidy.pdf.applytimequote",null, locale);
+			String v_seller = msgResource.getMessage("subsidy.pdf.seller",null, locale);
+			String v_signtext = msgResource.getMessage("subsidy.pdf.signature",null, locale);
+			String v_datetext = msgResource.getMessage("subsidy.pdf.date",null, locale);
 			
 			/** create the right font for CHINESE **/
-			fontChinese = new Font(bf, 10);
 			document = new Document(PageSize.A4);
 			/** get the html content from javabean and convert to string **/
 			PdfWriter pdfWriter = PdfWriter.getInstance(document,resp.getOutputStream());
 			document.open();
 			
 			/** add the head of the PDF **/
-			Paragraph head = new Paragraph(title, new Font(bf, 12));
+			Paragraph head = new Paragraph(v_title, new Font(bf, 14));
 			head.setAlignment(1); // 0 align to the left , 1 align to the center
 			document.add(head);
+			document.add(new Paragraph("   "));
 			
 			/** add the fill term of the PDF **/
-			for (String key : retMap.keySet()) {
-				document.add(new Paragraph(key+":"+retMap.get(key),fontChinese));
+			/** add seller basic info **/
+			Paragraph p_sellerinfo = new Paragraph(v_sellerinfo+"：", fontChinese);
+			document.add(p_sellerinfo);
+			
+			/** add seller name**/
+			String v_sellerName = (String) map.get("_sellerName");
+			String v_sellerNameKey = "";
+			for (SubsidyCustomField field : termList) {
+				if("_sellerName".equals(field.getKey())){
+					v_sellerNameKey = field.getDisplayLabel();
+				}
 			}
+			Paragraph p1 = new Paragraph(v_sellerNameKey+"："+v_sellerName+v_sellerNamequote, fontChinese);
+			document.add(p1);
+			
+			/** add seller code**/
+			String v_sellerCode = (String) map.get("_sellerCode");
+			String v_sellerCodeKey = "";
+			for (SubsidyCustomField field : termList) {
+				if("_sellerCode".equals(field.getKey())){
+					v_sellerCodeKey = field.getDisplayLabel();
+				}
+			}
+			Paragraph p2 = new Paragraph(v_sellerCodeKey+"："+v_sellerCode, fontChinese);
+			document.add(p2);
+			
+			/** add the extra info **/
+			for (String key : retMap.keySet()) {
+				document.add(new Paragraph(key+"："+retMap.get(key), fontChinese));
+			}
+			
+			/** add ebayid info **/
+			Paragraph p_ebayid = new Paragraph(v_ebayid+"："+userData.getUserName(), fontChinese);
+			document.add(p_ebayid);
+			
+			/** add promotion basic info **/
+			Paragraph p_promotion = new Paragraph(v_promotion+"："+promo.getName()+v_promotionquote, fontChinese);
+			document.add(p_promotion);
+			
+			/** add bonus basic info **/
+			Paragraph p_bonus = new Paragraph(v_bonus+"："+promo.getReward()+v_bonusquote, fontChinese);
+			document.add(p_bonus);
+			
+			/** add bonus basic info **/
+			Paragraph p_applytime = new Paragraph(v_applytime+"："+sdf.format(promo.getRewardDlDt())+v_applytimequote,fontChinese);
+			document.add(p_applytime);
+			
+			document.add(new Paragraph("   "));
 			
 			/** add the content of the PDF**/
 			Paragraph context = new Paragraph();
@@ -238,17 +300,20 @@ public class SubsidyController {
 	            context.add(element);
 	        }
 	        document.add(context);
-	        
-	        /** add the content of the PDF **/
 			document.add(new Paragraph("   "));
+			
+			/** add the end of the PDF **/
+			document.add(new Paragraph(v_seller+"："+map.get("_sellerName")+"（"+map.get("_sellerCode")+"）", fontChinese));
+			/** add the extra info **/
 			for (String key : retMap.keySet()) {
-				document.add(new Paragraph(key+":",fontChinese));
+				document.add(new Paragraph(key+"："+retMap.get(key), fontChinese));
 			}
-			document.add(new Paragraph(sellertext+"：_____________________",fontChinese));
-			document.add(new Paragraph(signtext+"：_____________________", fontChinese));
-			document.add(new Paragraph(datetext+"：", fontChinese));
+			document.add(new Paragraph(v_signtext+"：_____________________", fontChinese));
+			document.add(new Paragraph(v_datetext+"：_____________________", fontChinese));
 			document.close();
+			long time2 = System.currentTimeMillis();
 			System.out.println("-----------ok--------------");
+			System.out.println("cost time:"+(time2-time1));
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR,"error occur while create PDF");
 		}
@@ -280,9 +345,9 @@ public class SubsidyController {
 			if (attachmentFileValidator.isValidSubsidyFile(uploadFile)) {
 				try {
 					String fileType = attachmentFileValidator.getType(uploadFile).toString();
-					String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserId(), key,
+					String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserName(),userData.getUserId(), key,
 							uploadFile, fileType);
-					String fileId = AESUtil.encrypt(downloadUrl);
+					String fileId = URLEncoder.encode(EncryptUtil.encrypt(downloadUrl));
 					responseData.setStatus(true);
 					responseData.setMessage(fileId);
 					subsidyService.updateSubsidy(promoId, userData.getUserId(), PMSubsidyStatus.REWARD_UPLOADED.getAVStatus());
@@ -330,7 +395,8 @@ public class SubsidyController {
 			if (attachment != null && null != attachment.getFileContent()) {
 				resp.setContentType("application/x-msdownload;");
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
-				attachmentName = attachment.getFileName();
+				// avoid messy code of the chinese
+				attachmentName = URLEncoder.encode(attachment.getFileName(), "utf-8");
 				attachmentType = attachment.getFileType();
 				resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType
 						+ "\"");
@@ -367,7 +433,6 @@ public class SubsidyController {
 	public void downloadAttachmentById(HttpServletRequest req, HttpServletResponse resp,
 			@RequestParam("id") String id) throws Exception {
 
-		resp.setContentType("application/x-msdownload;");
 
 		InputStream inputStream = null;
 		OutputStream outStream = null;
@@ -376,15 +441,16 @@ public class SubsidyController {
 		String attachmentType = "";
 
 		try {
-			Long fileId = Long.parseLong(AESUtil.decrypt(id));
+			Long fileId = Long.parseLong(EncryptUtil.decrypt(id));
 			attachment = subsidyService.downloadSubsidyAttachment(fileId);
 			if (attachment != null) {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
-				attachmentName = attachment.getFileName();
+				attachmentName = URLEncoder.encode(attachment.getFileName(), "utf-8");
 				attachmentType = attachment.getFileType();
 			} else {
 				resp.sendRedirect(req.getServletPath() + "/404");
 			}
+			resp.setContentType("application/x-msdownload;");
 			resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType
 					+ "\"");
 			outStream = resp.getOutputStream();
