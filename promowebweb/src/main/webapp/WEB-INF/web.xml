@@ -26,4 +26,5 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>/promotion/*</url-pattern>
   </servlet-mapping>
+
 </web-app>

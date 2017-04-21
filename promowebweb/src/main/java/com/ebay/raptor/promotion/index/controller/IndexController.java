@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -43,6 +44,7 @@ import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.siteApi.util.SiteApiUtil;
 
 @Controller
+@RequestMapping("/")
 public class IndexController {
 
 	private static CommonLogger logger = CommonLogger.getInstance(IndexController.class);
@@ -234,10 +236,16 @@ public class IndexController {
 		return jsonMap;
 	}
 
-	@ExceptionHandler(MissingArgumentException.class)
-	public ModelAndView handleException(MissingArgumentException exception, HttpServletRequest request) {
+	@RequestMapping(value = "/404", method = RequestMethod.GET)
+	public ModelAndView notFound(Exception exception, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("404");
+		return mav;
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ModelAndView handleException(Exception exception, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("error");
-		logger.error("Missing required arguments from cookie.", exception);
+		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
 	}
 

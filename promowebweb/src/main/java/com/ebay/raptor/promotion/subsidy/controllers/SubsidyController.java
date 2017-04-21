@@ -277,7 +277,7 @@ public class SubsidyController {
 		AttachmentFileValidator attachmentFileValidator = AttachmentFileValidator.getInstance();
 		attachmentFileValidator.setLocale(LocaleUtil.getCurrentLocale());
 		try {
-			if (attachmentFileValidator.isValidate(uploadFile)) {
+			if (attachmentFileValidator.isValidSubsidyFile(uploadFile)) {
 				try {
 					String fileType = attachmentFileValidator.getType(uploadFile).toString();
 					String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserId(), key,
@@ -382,6 +382,8 @@ public class SubsidyController {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				attachmentName = attachment.getFileName();
 				attachmentType = attachment.getFileType();
+			} else {
+				resp.sendRedirect(req.getServletPath() + "/404");
 			}
 			resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType
 					+ "\"");
@@ -432,9 +434,9 @@ public class SubsidyController {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ModelAndView handleException(MissingArgumentException exception, HttpServletRequest request) {
+	public ModelAndView handleException(Exception exception, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("error");
-		CalEventHelper.writeException(exception.getErrorType().name(), exception);
+		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
 	}
 	

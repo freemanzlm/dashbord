@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>錯誤</title>
+	<title>错误</title>
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -48,10 +48,10 @@
 	<jsp:include page="header.jsp"></jsp:include>
 	<!-- end: Global Header -->
 	
-	<div id="page-pane">
+	<div id="page-pane" >
 		<div class="error-box text-center mb15 clr">
 			<h2 class="mb20"><i class="fa fa-times"></i>錯誤</h2>
-			<p>很抱歉，請求發生異常，請稍後再試。</p>
+			<p>很抱歉，您請求的頁面或檔案不存在！</p>
 		</div>
 	</div>	
 

@@ -27,9 +27,10 @@
 	<res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.reset_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.base_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+	<res:useCss value="${res.css.local.less.module_less}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
@@ -48,10 +49,10 @@
 	<!-- end: Global Header -->
 	
 	<div id="page-pane">
-		<div class="error mb15 clr">
-			<h2><i class="fa fa-times"></i>错误</h2>
+		<div class="error-box text-center mb15 clr">
+			<h2 class="mb20"><i class="fa fa-times"></i>错误</h2>
+			<p>很抱歉，请求发生异常，请稍后再试。</p>
 		</div>
-		<p>很抱歉，请求发生异常，请稍后再试。</p>			
 	</div>	
 
 	<!-- Global Footer -->

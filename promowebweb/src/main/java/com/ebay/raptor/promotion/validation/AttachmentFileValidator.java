@@ -59,6 +59,31 @@ public class AttachmentFileValidator {
 		}
 		return true;
 	}
+	
+	/**
+	 * Check if subsidy attachment file is valid.
+	 * @param file
+	 * @return
+	 * @throws AttachmentUploadException
+	 */
+	public boolean isValidSubsidyFile(MultipartFile file) throws AttachmentUploadException {
+		if (file.isEmpty()) {
+			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.notnull"));
+		}
+		if (file.getSize() > 5 * 1024 * 1024) {
+			throw new AttachmentUploadException(getBundle().getString("attachment.validation.message.toolarge"));
+		}
+		try {
+			AttachmentAllowedFileType type = getType(file);
+			if (type == null) {
+				throw new AttachmentUploadException(getBundle().getString(
+						"attachment.validation.message.notcorrecttype"));
+			}
+		} catch (IOException e) {
+			logger.log(Level.WARNING, e.getMessage());
+		}
+		return true;
+	}
 
 	private static String bytes2hex(byte[] bytes) {
 		StringBuffer hex = new StringBuffer();

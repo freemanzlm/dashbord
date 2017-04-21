@@ -127,7 +127,7 @@
 							</span> <br v-if="!isAwardEnd"/>
 							<span class="font-bold msg">
 								<c:if test="${ not empty field.value }">
-									<a href="/promotion/subsidy/downloadAttachment?id=${fileId}">下载附件</a>
+									<a href="/promotion/subsidy/downloadAttachmentById?id=${field.value}">下载附件</a>
 								</c:if>
 							</span>
 						</div>

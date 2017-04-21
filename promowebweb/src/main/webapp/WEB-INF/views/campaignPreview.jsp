@@ -44,7 +44,7 @@
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.signpost_css}" target="head-css"/>
-<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+<res:useCss value="${res.css.local.less.module_less}" target="head-css" />
 <res:useCss value="${res.css.local.less.form_less}" target="head-css" />
 <res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dialog_css}" target="head-css" />
