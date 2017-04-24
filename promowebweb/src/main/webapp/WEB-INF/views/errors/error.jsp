@@ -1,6 +1,6 @@
 <%@ page trimDirectiveWhitespaces="true" isErrorPage="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,8 +40,18 @@
 		<div style="display:table-row" >
 			<div style="display:table-cell; vertical-align:middle;" >
 				<div class="error-box text-center mb15 clr">
-					<h2 class="mb20"><i class="fa fa-times"></i>错误</h2>
+					<h2 class="mb20"><i class="fa fa-times"></i>系统错误</h2>
 					<p>很抱歉，请求发生异常，请稍后再试或联系客户经理。</p>
+					<c:if test="${ not empty RaptorErrorData }">
+						<c:choose>
+							<c:when test="${ not empty RaptorErrorData.exception }">
+								<br /><p>${RaptorErrorData.exception.message }</p>
+							</c:when>
+							<c:otherwise>
+								<br /><p>${RaptorErrorData.errorMessage }</p>
+							</c:otherwise>
+						</c:choose>
+					</c:if>		
 				</div>
 			</div>
 		</div>	

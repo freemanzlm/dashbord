@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.kernel.error.RaptorErrorData;
@@ -130,8 +131,8 @@ public class IndexController {
 	@AuthNeed
 	@GET
 	@RequestMapping("/{promoId}")
-	public ModelAndView promotion(HttpServletRequest request, @PathVariable("promoId") String promoId)
-			throws MissingArgumentException {
+	public ModelAndView promotion(@PathVariable("promoId") String promoId, HttpServletRequest request, HttpServletResponse response)
+			throws MissingArgumentException, IOException {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		Promotion promo = null;
@@ -150,7 +151,13 @@ public class IndexController {
 					promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
 				}
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
-				model.addObject("subsidyTerm", subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion()));
+				SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+				
+				if (promo.getRewardType() > 0 && subsidyTerm == null) {
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Subsidy Legal Term Not Found!");
+				} else {
+					model.addObject("subsidyTerm", subsidyTerm);
+				}
 
 			} else {
 				model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
@@ -158,21 +165,9 @@ public class IndexController {
 
 		} catch (PromoException e) {
 			logger.error("Unable to get promotion for " + promoId, e);
-			model.setViewName(ViewResource.ERROR.getPath());
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "The specified promotion can't be found for you!");
 		}
 
-		/*
-		 * try {
-		 * 
-		 * // get subsidy details when promotion is validated. if (promo != null
-		 * &&
-		 * PromotionStep.PROMOTION_VALIDATED.getName().equalsIgnoreCase(promo.
-		 * getCurrentStep())) { Subsidy subsidy =
-		 * subsidyService.getSubsidy(promoId, userData.getUserId()); if (subsidy
-		 * != null) { model.addObject(ViewContext.Subsidy.getAttr(), subsidy); }
-		 * } } catch (PromoException e) {
-		 * logger.error("Unable to get subsidy for " + promoId, e); }
-		 */
 		return model;
 	}
 
@@ -262,13 +257,13 @@ public class IndexController {
 
 	@RequestMapping(value = "/404", method = RequestMethod.GET)
 	public ModelAndView notFound(Exception exception, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("404");
+		ModelAndView mav = new ModelAndView("errors/404");
 		return mav;
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception exception, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("error");
+		ModelAndView mav = new ModelAndView("errors/error");
 		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
 	}

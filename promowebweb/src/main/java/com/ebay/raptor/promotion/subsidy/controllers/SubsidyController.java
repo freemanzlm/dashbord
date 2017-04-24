@@ -100,20 +100,46 @@ public class SubsidyController {
 		Date now = new Date();
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
-		
+		Subsidy subsidy = null;
 		String backURL = getBindWltURL(request, userData.getUserName());
-		model.setViewName(ViewResource.ERROR.getPath());
+		String status = null;
+		
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
-
-			if (promo != null) {
-				Subsidy subsidy = subsidyService.getSubsidy(promoId, userID);
-				String status = subsidy.getStatus();
-//				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), "CN");
-				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+		} catch (PromoException e) {
+			String message = "Failed to get promotion: promoId=" + promoId + ",userId:" + userData.getUserId();
+			logger.log(LogLevel.ERROR, message, e);
+			CalEventHelper.writeException("SubsidyError", e, message);
+		}
+		
+		if (promo != null) {
+			try {
+				subsidy = subsidyService.getSubsidy(promoId, userID);
+				status = subsidy.getStatus();
+			} catch (PromoException e) {
+				logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s, user:%s", promoId, userID), e);
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Subsidy Information Not Found!");
+				return model;
+			}
+			
+			if (promo.getRewardType() != null && promo.getRewardType() > 0) {
+				try {
+					term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+				} catch (PromoException e) {
+					logger.log(LogLevel.ERROR, String.format("Subsidy legal term not found for promotion:%s, user:%s", promoId, userID), e);
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Subsidy Legal Term Not Found!");
+					return model;
+				}
+				
 				if (term != null) {
-					if(status.equals(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName())||status.equals(PMSubsidyStatus.REWARD_VISITED.getSfName())){
-						SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
+					if(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName().equalsIgnoreCase(status)|| PMSubsidyStatus.REWARD_VISITED.getSfName().equalsIgnoreCase(status)){
+						SubsidySubmission subsidySubmission = null;
+						try {
+							subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
+						} catch (PromoException e) {
+							logger.log(LogLevel.ERROR, String.format("Subsidy submission not found for promotion:%s, user:%s", promoId, userID), e);
+						}
+						
 						if (subsidySubmission != null) {
 							model.addObject("hasSubmitFields", subsidySubmission != null);
 							term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
@@ -127,21 +153,20 @@ public class SubsidyController {
 					model.addObject("nonuploadFields", fields[0]);
 					model.addObject("uploadFields", fields[1]);
 				}
-				subsidyService.updateSubsidy(promoId, userID, PMSubsidyStatus.REWARD_VISITED.getAVStatus());
-				
-				view.calcualteCurentStep(promo);
-				view.appendPromoEndCheck(model.getModel(), promo, now);
-				view.appendPromoAwardEndCheck(model.getModel(), promo, now);
-				model.addObject("subsidyTerm", term);
-
-				model.addObject(ViewContext.Promotion.getAttr(), promo);
-				model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
-				model.setViewName("subsidy_acknowledgment");
 			}
-		} catch (PromoException e) {
-			String message = "Failed to get promotion: promoId=" + promoId + ",userId:" + userData.getUserId();
-			CalEventHelper.writeException("SubsidyError", e, message);
-			logger.log(LogLevel.ERROR, message, e);
+			
+//			subsidyService.updateSubsidy(promoId, userID, PMSubsidyStatus.REWARD_VISITED.getAVStatus());
+			
+			view.calcualteCurentStep(promo);
+			view.appendPromoEndCheck(model.getModel(), promo, now);
+			view.appendPromoAwardEndCheck(model.getModel(), promo, now);
+			model.addObject("subsidyTerm", term);
+
+			model.addObject(ViewContext.Promotion.getAttr(), promo);
+			model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
+			model.setViewName("subsidy_acknowledgment");
+		} else {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "The specified promotion can't be found for you!");
 		}
 
 		return model;
