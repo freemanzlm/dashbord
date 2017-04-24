@@ -40,7 +40,7 @@
 		<div style="display:table-row" >
 			<div style="display:table-cell; vertical-align:middle;" >
 				<div class="error-box text-center mb15 clr">
-					<h2 class="mb20"><i class="fa fa-times"></i>系統錯誤</h2>
+					<h2 class="mb20"><i class="fa fa-times"></i>未知錯誤</h2>
 					<p>很抱歉，請求發生异常，請稍後再試或聯系客戶經理。</p>
 					<c:if test="${ not empty RaptorErrorData }">
 						<c:choose>

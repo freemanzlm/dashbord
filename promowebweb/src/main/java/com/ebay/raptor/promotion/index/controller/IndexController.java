@@ -10,6 +10,8 @@ import javax.ws.rs.GET;
 
 import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +32,7 @@ import com.ebay.raptor.kernel.error.RaptorErrorData;
 import com.ebay.raptor.kernel.util.RaptorConstants;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.enums.PromoError;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -61,6 +64,7 @@ public class IndexController {
 	@Autowired SubsidyService subsidyService;
 	@Autowired TrackService trackService;
 	@Autowired SDDataService sdDataService;
+	@Autowired ResourceBundleMessageSource msgResource;
 
 	@RequestMapping(value = "/backend", method = RequestMethod.GET)
 	public void handleBackendRequest(HttpServletRequest request, HttpServletResponse response)
@@ -153,19 +157,18 @@ public class IndexController {
 				model.addObject(ViewContext.Promotion.getAttr(), promo);
 				SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 				
-				if (promo.getRewardType() > 0 && subsidyTerm == null) {
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Subsidy Legal Term Not Found!");
+				if (promo.getRewardType() != null && promo.getRewardType() > 0 && subsidyTerm == null) {
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
 				} else {
 					model.addObject("subsidyTerm", subsidyTerm);
 				}
-
 			} else {
 				model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
 			}
 
 		} catch (PromoException e) {
 			logger.error("Unable to get promotion for " + promoId, e);
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "The specified promotion can't be found for you!");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
 		}
 
 		return model;
@@ -176,7 +179,7 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("errors/error");
 		
-		if (response.getStatus() == 404) {
+		if (response.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
 			/* In web applications today if the response error code is 404, then it will be logged in CAL with a 
 			 * PNR(Page Not Responding) event and top level transaction will be failed. Ops scan the CAL for PNR's and 
 			 * if there are too many PNR's then the pool will be marked as bad. 
@@ -184,15 +187,16 @@ public class IndexController {
 			 */
 			request.setAttribute(RaptorConstants.APP_HANDLED_ERROR, true);
 			mav.setViewName("errors/404");
-		} else {
-			RaptorErrorData errorData = (RaptorErrorData) request.getAttribute(RaptorConstants.RAPTOR_ERROR_DATA);
-			
-			if (errorData != null) {
-				if (errorData.getException() != null) {
-					CalEventHelper.writeException("ERROR", errorData.getException(), true, errorData.getErrorMessage());
-				} else {
-					CalEventHelper.sendImmediate("Error", "AppHandledError", "1", errorData.getErrorMessage());
-				}
+		} else if (response.getStatus() == HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
+			mav.setViewName("errors/500");
+		}
+		
+		RaptorErrorData errorData = (RaptorErrorData) request.getAttribute(RaptorConstants.RAPTOR_ERROR_DATA);
+		if (errorData != null) {
+			if (errorData.getException() != null) {
+				CalEventHelper.writeException("ERROR", errorData.getException(), true, errorData.getErrorMessage());
+			} else {
+				CalEventHelper.sendImmediate("Error", "AppHandledError", "1", errorData.getErrorMessage());
 			}
 		}
 		
@@ -272,6 +276,10 @@ public class IndexController {
 		ContextViewRes result = new ContextViewRes();
 		result = view.handleView(promo, uid);
 		return result;
+	}
+	
+	private String getMessage(String key) {
+		return msgResource.getMessage(key, null, LocaleContextHolder.getLocale());
 	}
 
 }

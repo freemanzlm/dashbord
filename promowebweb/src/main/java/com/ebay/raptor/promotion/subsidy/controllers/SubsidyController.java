@@ -46,6 +46,7 @@ import com.ebay.cbt.raptor.wltapi.service.WltApiService;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
+import com.ebay.raptor.promotion.enums.PromoError;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.ResponseData;
@@ -101,73 +102,76 @@ public class SubsidyController {
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
 		Subsidy subsidy = null;
-		String backURL = getBindWltURL(request, userData.getUserName());
 		String status = null;
+		String backURL = getBindWltURL(request, userData.getUserName());
 		
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
 		} catch (PromoException e) {
-			String message = "Failed to get promotion: promoId=" + promoId + ",userId:" + userData.getUserId();
+			String message = String.format("Failed to get promotion: %s, user: %s.", promoId, userData.getUserName());
 			logger.log(LogLevel.ERROR, message, e);
 			CalEventHelper.writeException("SubsidyError", e, message);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
+			return model;
 		}
 		
-		if (promo != null) {
+		try {
+			subsidy = subsidyService.getSubsidy(promoId, userID);
+			status = subsidy.getStatus();
+		} catch (PromoException e) {
+			logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s, user:%s", promoId, userID), e);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_NOT_FOUND.getKey()));
+			return model;
+		}
+		
+		if (promo.getRewardType() != null && promo.getRewardType() > 0) {
 			try {
-				subsidy = subsidyService.getSubsidy(promoId, userID);
-				status = subsidy.getStatus();
+				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 			} catch (PromoException e) {
-				logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s, user:%s", promoId, userID), e);
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Subsidy Information Not Found!");
+				logger.log(LogLevel.ERROR, String.format("Subsidy legal term not found for promotion:%s, user:%s", promoId, userID), e);
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
 				return model;
 			}
 			
-			if (promo.getRewardType() != null && promo.getRewardType() > 0) {
+			if (term != null) {
+				
+				SubsidySubmission subsidySubmission = null;
 				try {
-					term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+					subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
 				} catch (PromoException e) {
-					logger.log(LogLevel.ERROR, String.format("Subsidy legal term not found for promotion:%s, user:%s", promoId, userID), e);
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Subsidy Legal Term Not Found!");
-					return model;
+					if(PMSubsidyStatus.REWARD_COMMITED.getSfName().equalsIgnoreCase(status) 
+							|| PMSubsidyStatus.REWARD_UPLOADED.getSfName().equalsIgnoreCase(status)
+							|| PMSubsidyStatus.REWARD_APPLIABLE_AGAIN.getSfName().equalsIgnoreCase(status)
+							|| PMSubsidyStatus.REWARD_APPLIED.getSfName().equalsIgnoreCase(status)){
+						logger.log(LogLevel.ERROR, String.format("Subsidy submission not found for promotion:%s, user:%s", promoId, userID), e);
+						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_SUBMISSION_NOT_FOUND.getKey()));
+					}
 				}
 				
-				if (term != null) {
-					if(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName().equalsIgnoreCase(status)|| PMSubsidyStatus.REWARD_VISITED.getSfName().equalsIgnoreCase(status)){
-						SubsidySubmission subsidySubmission = null;
-						try {
-							subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
-						} catch (PromoException e) {
-							logger.log(LogLevel.ERROR, String.format("Subsidy submission not found for promotion:%s, user:%s", promoId, userID), e);
-						}
-						
-						if (subsidySubmission != null) {
-							model.addObject("hasSubmitFields", subsidySubmission != null);
-							term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
-						}
-					}
-					
-					if (term.getSubsidyType() == 2) {
-						putWltAccountInfo(model, userData.getUserName(), backURL);
-					}
-					ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
-					model.addObject("nonuploadFields", fields[0]);
-					model.addObject("uploadFields", fields[1]);
+				if (subsidySubmission != null) {
+					model.addObject("hasSubmitFields", subsidySubmission != null);
+					term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
 				}
+				
+				if (term.getSubsidyType() == 2) {
+					putWltAccountInfo(model, userData.getUserName(), backURL);
+				}
+				ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
+				model.addObject("nonuploadFields", fields[0]);
+				model.addObject("uploadFields", fields[1]);
 			}
-			
-//			subsidyService.updateSubsidy(promoId, userID, PMSubsidyStatus.REWARD_VISITED.getAVStatus());
-			
-			view.calcualteCurentStep(promo);
-			view.appendPromoEndCheck(model.getModel(), promo, now);
-			view.appendPromoAwardEndCheck(model.getModel(), promo, now);
-			model.addObject("subsidyTerm", term);
-
-			model.addObject(ViewContext.Promotion.getAttr(), promo);
-			model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
-			model.setViewName("subsidy_acknowledgment");
-		} else {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "The specified promotion can't be found for you!");
 		}
+		
+//			subsidyService.updateSubsidy(promoId, userID, PMSubsidyStatus.REWARD_VISITED.getAVStatus());
+		
+		view.calcualteCurentStep(promo);
+		view.appendPromoEndCheck(model.getModel(), promo, now);
+		view.appendPromoAwardEndCheck(model.getModel(), promo, now);
+		model.addObject("subsidyTerm", term);
+
+		model.addObject(ViewContext.Promotion.getAttr(), promo);
+		model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
+		model.setViewName("subsidy_acknowledgment");
 
 		return model;
 	}
