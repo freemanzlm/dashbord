@@ -16,9 +16,7 @@
 	<c:when test="${promo.state eq 'AppliableAgain'}">
 		<div class="promo-state-message">
 			<div class="message-content">
-				<h3>很遗憾，您的申领未通过审核，请按照如下提示重新提交申领: </h3>
-
-				<p class="desc">${ "Verification Reject Reason" }</p><br />
+				<h3>很遗憾，您的申领未通过审核，请重新提交申领. </h3>
 			</div>
 			<menu>
 				<li>
@@ -32,28 +30,36 @@
 		</div>
 	</c:when>
 
-	<c:otherwise>
-		
+	<c:when test="${ not empty subsidyTerm and subsidyTerm.ovFlag eq 1 }">
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<h3>恭喜！您将获得等值 ${reward} ${promo.currency} 的奖励！</h3>
-
-				<c:if test="${ subsidyTerm.ovFlag != 1 }">
-					<p class="desc">${ subsidyTerm.successInfo }</p>
-					<br />
-				</c:if>
 			</div>
 			
 			<menu>
 				<li>
-					<c:if test="${ not empty subsidyTerm and subsidyTerm.ovFlag == 1 }">
-						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
-						<br /><br />
-					</c:if> 
+					<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
+					<br /><br />
 					<a href="index">返回活动列表</a>
 				</li>
 			</menu>
-
 		</div>
-	</c:otherwise>
+	</c:when>
+	
+	<c:when test="${ not empty subsidyTerm and subsidyTerm.ovFlag ne 1 }">
+		<div class="promo-state-message success">
+			<div class="message-content">
+				<h3>恭喜！您已经成功领取等值 ${reward} ${promo.currency} 的奖励！</h3>
+
+				<div class="pretty-text">${ subsidyTerm.successInfo }</div>
+				<br />
+			</div>
+			
+			<menu>
+				<li>
+					<a href="index">返回活动列表</a>
+				</li>
+			</menu>
+		</div>
+	</c:when>
 </c:choose>

@@ -114,10 +114,10 @@
 	<%@ include file="dialog/confirm.jsp"%>
 	<c:choose>
 		<c:when test="${promo.region eq 'CN'}">
-			<%@ include file="dialog/terms.jsp"%>
+			<%@ include file="../dialog/terms.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@ include file="zh_HK/dialog/terms.jsp"%>
+			<%@ include file="dialog/terms.jsp"%>
 		</c:otherwise>
 	</c:choose>
 

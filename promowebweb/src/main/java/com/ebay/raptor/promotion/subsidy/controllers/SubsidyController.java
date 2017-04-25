@@ -145,6 +145,7 @@ public class SubsidyController {
 							|| PMSubsidyStatus.REWARD_APPLIED.getSfName().equalsIgnoreCase(status)){
 						logger.log(LogLevel.ERROR, String.format("Subsidy submission not found for promotion:%s, user:%s", promoId, userID), e);
 						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_SUBMISSION_NOT_FOUND.getKey()));
+						return model;
 					}
 				}
 				

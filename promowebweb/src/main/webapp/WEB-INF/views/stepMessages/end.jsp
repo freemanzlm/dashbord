@@ -10,9 +10,14 @@
 	<c:when test="${promo.state eq 'Applied'}">
 		<div class="promo-state-message success">
 			<div class="message-content">
-				<c:if test="${ promo.reward gt 0 }">
-					<h3>您已成功领取等值&nbsp;${reward} ${promo.currency}&nbsp;的奖励</h3>
-				</c:if>
+				<c:choose>
+					<c:when test="${ promo.rewardType eq 2 }">
+						<h3>您已成功领取等值 ${reward} ${promo.currency}的ebay万里通积分！</h3>
+					</c:when>
+					<c:when test="${ promo.reward gt 0 }">
+						<h3>您已成功领取等值${reward} ${promo.currency}的奖励</h3>
+					</c:when>
+				</c:choose>
 			</div>
 		
 			<menu>
