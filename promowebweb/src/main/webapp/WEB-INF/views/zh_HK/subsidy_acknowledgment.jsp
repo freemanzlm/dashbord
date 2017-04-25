@@ -130,6 +130,7 @@
 			regType : JSON.parse('${promo.regType eq true}'),
 			username: '${unm}',
 			hasSubmitFields: JSON.parse('${hasSubmitFields eq true}'),
+			hasSubsidyApproved: JSON.parse('${hasSubsidyApproved eq true}'),
 			isAwardEnd: JSON.parse('${isAwardEnd eq true}')
 		};
 	</script>

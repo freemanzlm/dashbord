@@ -115,6 +115,10 @@ public class SubsidyController {
 			return model;
 		}
 		
+		if ("Awarding".equalsIgnoreCase(promo.getState())) {
+			model.addObject("hasSubsidyApproved", true);
+		}
+		
 		try {
 			subsidy = subsidyService.getSubsidy(promoId, userID);
 			status = subsidy.getStatus();
@@ -321,7 +325,7 @@ public class SubsidyController {
 			
 			/** add the content of the PDF**/
 			Paragraph context = new Paragraph();
-			String pdfContent = URLDecoder.decode(new String(term.getContent()));
+			String pdfContent = URLDecoder.decode(new String(term.getContent()), "UTF-8");
 	        ElementList elementList =MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 	        for (Element element : elementList) {
 	            context.add(element);
@@ -434,7 +438,7 @@ public class SubsidyController {
 					outStream.write(buffer, 0, len);
 				}
 			}else{
-				resp.sendError(404, String.format("Subsidy attachment doesn't exist!"));
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.SUBSIDY_ATTACHMENT_NOT_FOUND.getKey()));
 			}
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "Failed to downlaod attachment", e);
@@ -471,13 +475,13 @@ public class SubsidyController {
 		try {
 			fileId = Long.parseLong(EncryptUtil.decrypt(id));
 		} catch (Exception e) {
-			resp.sendError(404, String.format("File attachment id is not valid: %s", id));
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.SUBSIDY_ATTACHMENT_ID_NOT_VALID.getKey()));
 		}
 		
 		if (fileId != null) {
 			attachment = subsidyService.downloadSubsidyAttachment(fileId);
 			if (attachment == null) {
-				resp.sendError(404, String.format("Subsidy attachment %s doesn't exist!", id));
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.SUBSIDY_ATTACHMENT_NOT_FOUND.getKey()));
 			} else {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				attachmentName = URLEncoder.encode(attachment.getFileName(), "utf-8");

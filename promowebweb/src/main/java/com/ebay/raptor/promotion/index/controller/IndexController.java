@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.raptor.kernel.context.IRaptorContext;
@@ -135,42 +136,44 @@ public class IndexController {
 	@AuthNeed
 	@GET
 	@RequestMapping("/{promoId}")
-	public ModelAndView promotion(@PathVariable("promoId") String promoId, HttpServletRequest request, HttpServletResponse response)
-			throws MissingArgumentException, IOException {
+	public ModelAndView promotion(@PathVariable("promoId") String promoId, HttpServletRequest request,
+			HttpServletResponse response) throws MissingArgumentException, IOException, PromoException {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		Promotion promo = null;
+		Subsidy subsidy = null;
 
-		try {
-			promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-
-			if (null != promo && promo.getActiveFlag()) {
-				ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
-				model.setViewName(res.getView().getPath());
-				model.addAllObjects(res.getContext());
-				if (promo.getCurrentStep() != null) {
-					promo.setCurrentStep(promo.getCurrentStep().toUpperCase());
-				}
-				if (promo.getDraftPreviewStep() != null) {
-					promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
-				}
-				model.addObject(ViewContext.Promotion.getAttr(), promo);
-				SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-				
-				if (promo.getRewardType() != null && promo.getRewardType() > 0 && subsidyTerm == null) {
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
-				} else {
-					model.addObject("subsidyTerm", subsidyTerm);
-				}
-			} else {
-				model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
-			}
-
-		} catch (PromoException e) {
-			logger.error("Unable to get promotion for " + promoId, e);
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
+		promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+		subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
+		model.addObject("subsidy", subsidy);
+		
+		if (promo == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
 		}
 
+		if (promo.getActiveFlag()) {
+			ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
+			model.setViewName(res.getView().getPath());
+			model.addAllObjects(res.getContext());
+			if (promo.getCurrentStep() != null) {
+				promo.setCurrentStep(promo.getCurrentStep().toUpperCase());
+			}
+			if (promo.getDraftPreviewStep() != null) {
+				promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
+			}
+			model.addObject(ViewContext.Promotion.getAttr(), promo);
+			SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+
+			if (promo.getRewardType() != null && promo.getRewardType() > 0 && subsidyTerm == null) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
+			} else {
+				model.addObject("subsidyTerm", subsidyTerm);
+			}
+		} else {
+			model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
+		}
+		
 		return model;
 	}
 
@@ -178,19 +181,22 @@ public class IndexController {
 	public ModelAndView handleErrorRequest(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("errors/error");
-		
+
 		if (response.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
-			/* In web applications today if the response error code is 404, then it will be logged in CAL with a 
-			 * PNR(Page Not Responding) event and top level transaction will be failed. Ops scan the CAL for PNR's and 
-			 * if there are too many PNR's then the pool will be marked as bad. 
-			 * It will not log PNR if we see that "appHandledError" is set in request. 
+			/*
+			 * In web applications today if the response error code is 404, then
+			 * it will be logged in CAL with a PNR(Page Not Responding) event
+			 * and top level transaction will be failed. Ops scan the CAL for
+			 * PNR's and if there are too many PNR's then the pool will be
+			 * marked as bad. It will not log PNR if we see that
+			 * "appHandledError" is set in request.
 			 */
 			request.setAttribute(RaptorConstants.APP_HANDLED_ERROR, true);
 			mav.setViewName("errors/404");
 		} else if (response.getStatus() == HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
 			mav.setViewName("errors/500");
 		}
-		
+
 		RaptorErrorData errorData = (RaptorErrorData) request.getAttribute(RaptorConstants.RAPTOR_ERROR_DATA);
 		if (errorData != null) {
 			if (errorData.getException() != null) {
@@ -199,7 +205,7 @@ public class IndexController {
 				CalEventHelper.sendImmediate("Error", "AppHandledError", "1", errorData.getErrorMessage());
 			}
 		}
-		
+
 		return mav;
 	}
 
@@ -264,7 +270,7 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("errors/404");
 		return mav;
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception exception, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("errors/error");
@@ -277,7 +283,7 @@ public class IndexController {
 		result = view.handleView(promo, uid);
 		return result;
 	}
-	
+
 	private String getMessage(String key) {
 		return msgResource.getMessage(key, null, LocaleContextHolder.getLocale());
 	}

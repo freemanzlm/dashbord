@@ -30,6 +30,25 @@
 		</div>
 	</c:when>
 
+	<c:when test="${promo.state eq 'End' }">
+		<div class="promo-state-message success">
+			<div class="message-content">
+				<c:choose>
+					<c:when test="${ promo.rewardType eq 2 }">
+						<h3>您已成功领取等值 ${reward} ${promo.currency}的ebay万里通积分！</h3>
+					</c:when>
+					<c:when test="${ promo.reward gt 0 }">
+						<h3>您已成功领取等值${reward} ${promo.currency}的奖励</h3>
+					</c:when>
+				</c:choose>
+			</div>
+		
+			<menu>
+				<li><a href="index" class="btn">返回活动列表</a></li>
+			</menu>
+		</div>
+	</c:when>
+	
 	<c:when test="${ not empty subsidyTerm and subsidyTerm.ovFlag eq 1 }">
 		<div class="promo-state-message success">
 			<div class="message-content">

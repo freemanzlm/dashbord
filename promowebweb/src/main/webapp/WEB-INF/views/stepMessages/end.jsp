@@ -7,7 +7,7 @@
 <fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
 
 <c:choose>
-	<c:when test="${promo.state eq 'Applied'}">
+	<c:when test="${promo.state eq 'SubsidyRetrieved'}">
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<c:choose>
@@ -53,7 +53,29 @@
 	<c:when test="${endReason == 'claimExpired' }">
 		<div class="promo-state-message">
 			<div class="message-content">
-				<h3>您的活动奖励申领已过期</h3>
+				<c:choose>
+					<c:when test="${subsidy.status eq 'Visited' }">
+						<h3>已超过奖励申领有效期，您未提交申领，期待您的下次参与！</h3>
+					</c:when>
+					<c:when test="${subsidy.status eq 'Commited' }">
+						<h3>已超过奖励申领有效期，您未完成申领，期待您的下次参与！</h3>
+					</c:when>
+					<c:when test="${subsidy.status eq 'Uploaded' }">
+						<h3>很遗憾，您的申领未通过审核且已超过奖励申领有效期。期待您的下次参与！</h3>
+					</c:when>
+					<c:when test="${subsidy.status eq 'Appliable' }">
+						<h3>已超过奖励申领有效期，您未完成申领，期待您的下次参与！</h3>
+					</c:when>
+					<c:when test="${subsidy.status eq 'AppliableAgain' }">
+						<h3>很遗憾，您的申领未通过审核且已超过奖励申领有效期。期待您的下次参与！</h3>
+					</c:when>
+					<c:when test="${subsidy.status eq 'Failed' }">
+						<h3>抱歉！领取奖励遇到问题，请联系您的客户经理反映情况！</h3>
+					</c:when>
+					<c:otherwise>
+						<h3> 已超过奖励申领有效期，您未提交申领，期待您的下次参与！</h3>
+					</c:otherwise>
+				</c:choose>
 			</div>
 			<menu><li><a href="index" class="btn">返回活动列表</a></li></menu>
 		</div>

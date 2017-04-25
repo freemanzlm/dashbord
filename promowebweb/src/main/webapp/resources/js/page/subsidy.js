@@ -23,7 +23,7 @@ $(function(){
 			hasAcceptLetter: false,
 			hasSubmitFields: pageData.hasSubmitFields,
 			hasUploadLetter: false,
-			hasApproved: false,
+			hasApproved: pageData.hasSubsidyApproved,
 			isAwardEnd: pageData.isAwardEnd
 		},
 		methods: {
