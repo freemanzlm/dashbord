@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
+import com.ebay.cbt.common.constant.pm.PMSubsidyStatus;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
@@ -31,10 +33,15 @@ import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.kernel.util.URLDecoder;
 import com.ebay.raptor.promotion.excep.PromoException;
+import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
+import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.service.BaseService;
+import com.ebay.raptor.promotion.util.EncryptUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
@@ -43,6 +50,7 @@ public class SubsidyService extends BaseService {
 	private CommonLogger logger = CommonLogger.getInstance(SubsidyService.class);
 
 	@Autowired ResourceBundleMessageSource msgResource;
+	@Autowired PromotionService promoService;
 	private Locale locale;
 
 	private String url(String url) {
@@ -74,16 +82,71 @@ public class SubsidyService extends BaseService {
 				}
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			logger.log("1111");
+//			throw new PromoException("Internal Error happens.");
 		}
 		return null;
+		
+		
 	}
-
-	public boolean updateSubsidy(String promoId, Long userId, String status) throws PromoException {
+	
+	/**
+	 * if subsidy's status in the db is forward than current,skip it!!
+	 * if the step is upload you need judge whether the user have upload all the file needed, if so update the status else not!
+	 * @param promoId
+	 * @param userId
+	 * @param status
+	 * @return 
+	 * @throws PromoException
+	 */
+	public boolean updateSubsidy(String promoId, UserData userData, int status) {
+		boolean flag = false;
 		Subsidy subsidy = new Subsidy();
 		subsidy.setPromoId(promoId);
-		subsidy.setOracleId(userId);
-		subsidy.setStatus(status);
+		subsidy.setOracleId(userData.getUserId());
+		subsidy.setStatus(PMSubsidyStatus.valueOfPMStatus(status).getAVStatus());
+		Promotion promo = null;
+		int promoStatus = PMSubsidyStatus.PM_UNKNOWN_STATUS.getPMStatus(); //-1
+		try {
+			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+			if(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName().equals(promo.getState())){
+				flag = updateSubsidy(subsidy); 
+			}else{
+				// the status of the promo in the db
+				promoStatus = getSubsidyStatus(promo.getState());
+				if(promoStatus<status){
+					//update upload file status
+					if(PMSubsidyStatus.REWARD_UPLOADED.getPMStatus()==status){
+						SubsidyLegalTerm term = getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+						List<String> needtouploadList = new ArrayList<String>();
+						List<SubsidyCustomField> fields = term.getSubsidyCustomFields();
+						for (SubsidyCustomField field : fields) {
+							if(field.isUpload){
+								needtouploadList.add(field.getKey());
+							}
+						}
+						//query for all uploaded attachment
+						List<SubsidyAttachment> subsidyAttachments = getSubsidyAttachment(promoId,userData.getUserId());
+						for (SubsidyAttachment subsidyAttachment : subsidyAttachments) {
+							needtouploadList.remove(subsidyAttachment.getKey());
+						}
+						if(needtouploadList.size()==0){
+							flag = updateSubsidy(subsidy);
+						}
+					}else{
+							flag = updateSubsidy(subsidy);
+					}
+				}else{
+					flag = true;
+				}
+			}
+		} catch (PromoException e) {
+			e.printStackTrace();
+		}
+		return flag;
+	}
+	
+	private boolean updateSubsidy(Subsidy subsidy) throws PromoException{
 		String url = url(params(ResourceProvider.SubsidyRes.updateSubsidy));
 		GingerClientResponse resp = httpPost(url, subsidy);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
@@ -97,6 +160,16 @@ public class SubsidyService extends BaseService {
 			throw new PromoException("Internal Error happens.");
 		}
 		return false;
+	}
+	
+	// as the origin enum did not provider the method so i have to add it here
+	private int getSubsidyStatus(String status){
+		for(PMSubsidyStatus subsidyStatus : PMSubsidyStatus.values()) {
+			if (subsidyStatus.getSfName().equals(status)) {
+				return subsidyStatus.getPMStatus();
+			}
+		}
+		return -1;
 	}
 
 	/**
@@ -182,6 +255,33 @@ public class SubsidyService extends BaseService {
 
 		return subsidyLegalTerm;
 	}
+	
+	/**
+	 * get the filling info from the subsidy submission and convert into the
+	 * subsidyLegalTerm
+	 * 
+	 * @return
+	 */
+	public SubsidyLegalTerm convertSubmissionToLegalTerm(SubsidyLegalTerm subsidyLegalTerm,
+			List<SubsidyAttachment> subsidyAttachmentLists) {
+		if (subsidyAttachmentLists == null || subsidyAttachmentLists.size()==0) {
+			return subsidyLegalTerm;
+		}
+		List<SubsidyCustomField> subsidyCustomFields = subsidyLegalTerm.getSubsidyCustomFields();
+		try {
+			for (SubsidyCustomField subsidyField : subsidyCustomFields) {
+				for (SubsidyAttachment subsidyAttachment : subsidyAttachmentLists) {
+					if(subsidyField.getKey().equals(subsidyAttachment.getKey())){
+							subsidyField.setValue(URLEncoder.encode(EncryptUtil.encrypt(subsidyAttachment.getId()+""), "UTF-8"));
+					}
+				}
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		return subsidyLegalTerm;
+	}
 
 	/**
 	 * Split custom fields into two kinds of fields: these for upload, and the
@@ -265,7 +365,7 @@ public class SubsidyService extends BaseService {
 	 * Download attachment.
 	 * 
 	 * @param promoId
-	 * @param userId
+	 * @param userId id
 	 * @param key
 	 * @return
 	 * @throws Exception
@@ -278,6 +378,33 @@ public class SubsidyService extends BaseService {
 			GenericType<GeneralDataResponse<SubsidyAttachment>> type = new GenericType<GeneralDataResponse<SubsidyAttachment>>() {
 			};
 			GeneralDataResponse<SubsidyAttachment> response = resp.getEntity(type);
+			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
+				return response.getData();
+			}
+		} else {
+			throw new PromoException("Internal Error happens.");
+		}
+		return null;
+	}
+	
+	/**
+	 * get attachment.
+	 * 
+	 * @param promoId
+	 * @param userId id
+	 * @param key
+	 * @return
+	 * @throws PromoException 
+	 * @throws Exception
+	 */
+	public List<SubsidyAttachment> getSubsidyAttachment(String promoId, Long id) throws PromoException{
+		String url = url(params(ResourceProvider.SubsidyRes.getAttachment, new Object[] { "{promoId}", promoId,
+				"{id}", id}));
+		GingerClientResponse resp = httpGet(url);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<List<SubsidyAttachment>>> type = new GenericType<GeneralDataResponse<List<SubsidyAttachment>>>() {
+			};
+			GeneralDataResponse<List<SubsidyAttachment>> response = resp.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();
 			}

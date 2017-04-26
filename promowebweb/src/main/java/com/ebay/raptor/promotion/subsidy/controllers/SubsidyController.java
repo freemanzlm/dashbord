@@ -72,6 +72,7 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.itextpdf.tool.xml.ElementList;
 
 
@@ -102,9 +103,7 @@ public class SubsidyController {
 		Promotion promo = null;
 		SubsidyLegalTerm term = null;
 		Subsidy subsidy = null;
-		String status = null;
 		String backURL = getBindWltURL(request, userData.getUserName());
-		
 		try {
 			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
 		} catch (PromoException e) {
@@ -121,7 +120,6 @@ public class SubsidyController {
 		
 		try {
 			subsidy = subsidyService.getSubsidy(promoId, userID);
-			status = subsidy.getStatus();
 		} catch (PromoException e) {
 			logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s, user:%s", promoId, userID), e);
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_NOT_FOUND.getKey()));
@@ -131,53 +129,44 @@ public class SubsidyController {
 		if (promo.getRewardType() != null && promo.getRewardType() > 0) {
 			try {
 				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+				subsidy = subsidyService.getSubsidy(promoId, userID);
 			} catch (PromoException e) {
 				logger.log(LogLevel.ERROR, String.format("Subsidy legal term not found for promotion:%s, user:%s", promoId, userID), e);
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
 				return model;
 			}
-			
 			if (term != null) {
-				
-				SubsidySubmission subsidySubmission = null;
-				try {
-					subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
-				} catch (PromoException e) {
-					if(PMSubsidyStatus.REWARD_COMMITED.getSfName().equalsIgnoreCase(status) 
-							|| PMSubsidyStatus.REWARD_UPLOADED.getSfName().equalsIgnoreCase(status)
-							|| PMSubsidyStatus.REWARD_APPLIABLE_AGAIN.getSfName().equalsIgnoreCase(status)
-							|| PMSubsidyStatus.REWARD_APPLIED.getSfName().equalsIgnoreCase(status)){
+					SubsidySubmission subsidySubmission = null;
+					try {
+						subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
+					} catch (PromoException e) {
 						logger.log(LogLevel.ERROR, String.format("Subsidy submission not found for promotion:%s, user:%s", promoId, userID), e);
-						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_SUBMISSION_NOT_FOUND.getKey()));
-						return model;
 					}
-				}
-				
-				if (subsidySubmission != null) {
-					model.addObject("hasSubmitFields", subsidySubmission != null);
-					term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
-				}
-				
-				if (term.getSubsidyType() == 2) {
-					putWltAccountInfo(model, userData.getUserName(), backURL);
-				}
+					subsidyService.updateSubsidy(promoId, userData, PMSubsidyStatus.REWARD_VISITED.getPMStatus());
+					if (subsidySubmission != null) {
+						model.addObject("hasSubmitFields", true);
+						term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
+					}
+					List<SubsidyAttachment> subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userID);
+					if (subsidyAttachmentList != null && subsidyAttachmentList.size()>0) {
+						model.addObject("hasSubmitAttachments", true);
+						term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
+					}
+					if (term.getSubsidyType() == 2) {
+						putWltAccountInfo(model, userData.getUserName(), backURL);
+					}
 				ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
 				model.addObject("nonuploadFields", fields[0]);
 				model.addObject("uploadFields", fields[1]);
 			}
 		}
-		
-//			subsidyService.updateSubsidy(promoId, userID, PMSubsidyStatus.REWARD_VISITED.getAVStatus());
-		
 		view.calcualteCurentStep(promo);
 		view.appendPromoEndCheck(model.getModel(), promo, now);
 		view.appendPromoAwardEndCheck(model.getModel(), promo, now);
 		model.addObject("subsidyTerm", term);
-
 		model.addObject(ViewContext.Promotion.getAttr(), promo);
 		model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
 		model.setViewName("subsidy_acknowledgment");
-
 		return model;
 	}
 
@@ -189,10 +178,13 @@ public class SubsidyController {
 		UserData userData = loginService.getUserDataFromCookie(request);
 		Long userID = userData.getUserId();
 		Promotion promo = null;
+		Subsidy subsidy = null;
+		String status = null;
 		SubsidyLegalTerm term = null;
 		ResponseData<String> responseData = new ResponseData<String>();
 		HashMap<String, String> map = new HashMap<String, String>();
 
+		
 		promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 		term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 		List<SubsidyCustomField> fields = term.getSubsidyCustomFields();
@@ -210,7 +202,15 @@ public class SubsidyController {
 		}
 		subsidySubmission.setContent(ret);
 		boolean flag = subsidyService.updateSubsidySubmission(subsidySubmission);
-		subsidyService.updateSubsidy(promoId, userID, PMSubsidyStatus.REWARD_COMMITED.getAVStatus());
+		try {
+			subsidy = subsidyService.getSubsidy(promoId, userID);
+			status = subsidy.getStatus();
+			subsidyService.updateSubsidy(promoId, userData, PMSubsidyStatus.REWARD_COMMITED.getPMStatus());
+		} catch (PromoException e) {
+			logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s, user:%s", promoId, userID), e);
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Subsidy Information Not Found!");
+		}
+		
 		responseData.setStatus(flag);
 		responseData.setData(map.toString());
 		return responseData;
@@ -219,7 +219,6 @@ public class SubsidyController {
 	@RequestMapping(value="/downloadLetter", method=RequestMethod.GET)
 	public void createConfirmLetter(HttpServletRequest req, HttpServletResponse resp,
 			 @RequestParam String promoId) throws MissingArgumentException, IOException, PromoException {
-		long time1 = System.currentTimeMillis();
 		resp.setContentType("application/pdf");
 		resp.setHeader("Content-disposition", "attachment; filename="+"contract.pdf");
 		UserData userData = loginService.getUserDataFromCookie(req);
@@ -342,9 +341,6 @@ public class SubsidyController {
 			document.add(new Paragraph(v_signtext+"：_____________________", fontChinese));
 			document.add(new Paragraph(v_datetext+"：_____________________", fontChinese));
 			document.close();
-			long time2 = System.currentTimeMillis();
-			System.out.println("-----------ok--------------");
-			System.out.println("cost time:"+(time2-time1));
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR,"error occur while create PDF");
 		}
@@ -372,6 +368,14 @@ public class SubsidyController {
 		UserData userData = loginService.getUserDataFromCookie(req);
 		SubsidyAttachmentFileValidator attachmentFileValidator = SubsidyAttachmentFileValidator.getInstance();
 		attachmentFileValidator.setLocale(LocaleUtil.getCurrentLocale());
+		List<String> fileList = new ArrayList<String>();
+		Promotion promo = null;
+		SubsidyLegalTerm term = null;
+		try {
+			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+			term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+		} catch (Exception e) {
+		}
 		try {
 			if (attachmentFileValidator.validate(uploadFile)) {
 				try {
@@ -379,9 +383,28 @@ public class SubsidyController {
 					String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserName(),userData.getUserId(), key,
 							uploadFile, fileType);
 					String fileId = URLEncoder.encode(EncryptUtil.encrypt(downloadUrl), "UTF-8");
+					List<SubsidyAttachment> subsidyAttachmentList = null;
+					try {
+						subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userData.getUserId());
+					} catch (PromoException e) {
+						logger.log(LogLevel.ERROR, String.format("Subsidy attachment not found for promotion:%s, user:%s", promoId, userData.getUserId()), e);
+					}
+					if (subsidyAttachmentList != null) {
+						mav.addObject("hasSubmitAttachments", true);
+						term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
+					}
+					ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
+					mav.addObject("uploadFields", fields[1]);
+//					List<SubsidyCustomField> fields = term.getSubsidyCustomFields();
+//					for (SubsidyCustomField subsidyCustomField : fields) {
+//						if(key.equals(subsidyCustomField.getKey())){
+//							subsidyCustomField.setValue(fileId);
+//						}
+//					}
 					responseData.setStatus(true);
 					responseData.setMessage(fileId);
-					subsidyService.updateSubsidy(promoId, userData.getUserId(), PMSubsidyStatus.REWARD_UPLOADED.getAVStatus());
+					//judge whether the user has upload all the file required;
+					subsidyService.updateSubsidy(promoId, userData, PMSubsidyStatus.REWARD_UPLOADED.getPMStatus());
 				} catch (Exception e) {
 					responseData.setStatus(false);
 					responseData.setMessage(e.getMessage());
@@ -475,13 +498,13 @@ public class SubsidyController {
 		try {
 			fileId = Long.parseLong(EncryptUtil.decrypt(id));
 		} catch (Exception e) {
-			resp.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.SUBSIDY_ATTACHMENT_ID_NOT_VALID.getKey()));
+			resp.sendError(404, String.format("File attachment id is not valid: %s", id));
 		}
 		
 		if (fileId != null) {
 			attachment = subsidyService.downloadSubsidyAttachment(fileId);
 			if (attachment == null) {
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.SUBSIDY_ATTACHMENT_NOT_FOUND.getKey()));
+				resp.sendError(404, String.format("Subsidy attachment doesn't exist!"));
 			} else {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				attachmentName = URLEncoder.encode(attachment.getFileName(), "utf-8");
