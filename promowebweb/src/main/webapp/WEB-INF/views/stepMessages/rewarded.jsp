@@ -30,7 +30,7 @@
 		</div>
 	</c:when>
 
-	<c:when test="${promo.state eq 'End' }">
+	<c:when test="${promo.state eq 'Applied' }">
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<c:choose>
@@ -68,7 +68,7 @@
 	<c:when test="${ not empty subsidyTerm and subsidyTerm.ovFlag ne 1 }">
 		<div class="promo-state-message success">
 			<div class="message-content">
-				<h3>恭喜！您已经成功领取等值 ${reward} ${promo.currency} 的奖励！</h3>
+				<h3>恭喜！您将获得等值 ${reward} ${promo.currency} 的奖励！</h3>
 
 				<div class="pretty-text">${ subsidyTerm.successInfo }</div>
 				<br />

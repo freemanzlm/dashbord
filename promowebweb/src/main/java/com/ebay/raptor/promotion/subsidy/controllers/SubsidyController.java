@@ -72,7 +72,6 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.itextpdf.tool.xml.ElementList;
 
 
@@ -95,79 +94,56 @@ public class SubsidyController {
 
 	@RequestMapping(value = "/acknowledgment", method = RequestMethod.GET)
 	public ModelAndView handleRequest(@RequestParam("promoId") String promoId, HttpServletRequest request,
-			HttpServletResponse response) throws MissingArgumentException, IOException {
+			HttpServletResponse response) throws MissingArgumentException, IOException, PromoException {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		Long userID = userData.getUserId();
 		Date now = new Date();
-		Promotion promo = null;
 		SubsidyLegalTerm term = null;
-		Subsidy subsidy = null;
 		String backURL = getBindWltURL(request, userData.getUserName());
-		try {
-			promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
-		} catch (PromoException e) {
-			String message = String.format("Failed to get promotion: %s, user: %s.", promoId, userData.getUserName());
-			logger.log(LogLevel.ERROR, message, e);
-			CalEventHelper.writeException("SubsidyError", e, message);
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
-			return model;
-		}
 		
-		if ("Awarding".equalsIgnoreCase(promo.getState())) {
-			model.addObject("hasSubsidyApproved", true);
-		}
-		
-		try {
-			subsidy = subsidyService.getSubsidy(promoId, userID);
-		} catch (PromoException e) {
-			logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s, user:%s", promoId, userID), e);
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_NOT_FOUND.getKey()));
-			return model;
-		}
+		Promotion promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
+		Subsidy subsidy = subsidyService.getSubsidy(promoId, userID);
 		
 		if (promo.getRewardType() != null && promo.getRewardType() > 0) {
-			try {
-				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-			} catch (PromoException e) {
-				logger.log(LogLevel.ERROR, String.format("Subsidy legal term not found for promotion:%s, user:%s", promoId, userID), e);
+			term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+			if (term == null) {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
 				return model;
 			}
-			if (term != null) {
-					SubsidySubmission subsidySubmission = null;
-					try {
-						subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
-					} catch (PromoException e) {
-						logger.log(LogLevel.ERROR, String.format("Subsidy submission not found for promotion:%s, user:%s", promoId, userID), e);
-					}
-					subsidyService.updateSubsidy(promoId, userData, PMSubsidyStatus.REWARD_VISITED.getPMStatus());
-					if (subsidySubmission != null) {
-						model.addObject("hasSubmitFields", true);
-						term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
-					}
-					List<SubsidyAttachment> subsidyAttachmentList = null;
-					try {
-						subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userID);
-					} catch (PromoException e) {
-						e.printStackTrace();
-					}
-					if (subsidyAttachmentList != null && subsidyAttachmentList.size()>0) {
-						model.addObject("hasSubmitAttachments", true);
-						term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
-					}
-					if (term.getSubsidyType() == 2) {
-						putWltAccountInfo(model, userData.getUserName(), backURL);
-					}
-				ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
-				model.addObject("nonuploadFields", fields[0]);
-				model.addObject("uploadFields", fields[1]);
+			
+			if (subsidy != null && (subsidy.getStatus() == null || subsidy.getStatus().isEmpty())) {
+				// Visit subsidy legal term first
+				subsidyService.updateSubsidy(promoId, userData, PMSubsidyStatus.REWARD_VISITED.getPMStatus());
 			}
+
+			SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
+			if (subsidySubmission != null) {
+				model.addObject("hasSubmitFields", true);
+				term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
+			}
+
+			List<SubsidyAttachment> subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userID);
+			if (subsidyAttachmentList != null && subsidyAttachmentList.size() > 0) {
+				model.addObject("hasSubmitAttachments", true);
+				term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
+			}
+			
+			if (term.getSubsidyType() == 2) {
+				putWltAccountInfo(model, userData.getUserName(), backURL);
+			}
+			
+			ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
+			model.addObject("nonuploadFields", fields[0]);
+			model.addObject("uploadFields", fields[1]);
 		}
+		
+		model.addObject("hasSubsidyApproved", PMSubsidyStatus.REWARD_APPLIABLE.getSfName().equalsIgnoreCase(subsidy.getStatus()));
 		view.calcualteCurentStep(promo);
 		view.appendPromoEndCheck(model.getModel(), promo, now);
 		view.appendPromoAwardEndCheck(model.getModel(), promo, now);
 		model.addObject("subsidyTerm", term);
+		model.addObject("subsidy", subsidy);
 		model.addObject(ViewContext.Promotion.getAttr(), promo);
 		model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
 		model.setViewName("subsidy_acknowledgment");
@@ -562,7 +538,7 @@ public class SubsidyController {
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception exception, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("error");
+		ModelAndView mav = new ModelAndView("errors/500");
 		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
 	}

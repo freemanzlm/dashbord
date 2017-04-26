@@ -113,7 +113,7 @@ public class PromotionService extends BaseService {
 				}
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Filed to get promotions.");
 		}
 		return null;
 	}
@@ -139,7 +139,7 @@ public class PromotionService extends BaseService {
 				}
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Failed to get promotions.");
 		}
 		return null;
 	}
@@ -157,7 +157,7 @@ public class PromotionService extends BaseService {
 				}
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Filed to get promotion.");
 		}
 		return null;
 	}

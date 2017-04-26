@@ -42,16 +42,18 @@
 				<div class="error-box text-center mb15 clr">
 					<h2 class="mb20"><i class="fa fa-times"></i>未知错误</h2>
 					<p>很抱歉，请求发生异常，请稍后再试或联系客户经理。</p>
-					<c:if test="${ not empty RaptorErrorData }">
-						<c:choose>
-							<c:when test="${ not empty RaptorErrorData.exception }">
-								<br /><p>${RaptorErrorData.exception.message }</p>
-							</c:when>
-							<c:otherwise>
-								<br /><p>${RaptorErrorData.errorMessage }</p>
-							</c:otherwise>
-						</c:choose>
-					</c:if>		
+					<c:if test="${(not empty bdCfg and not bdCfg.isProduction()) or showError }">
+						<c:if test="${ not empty RaptorErrorData }">
+							<c:choose>
+								<c:when test="${ not empty RaptorErrorData.exception }">
+									<br /><p>${RaptorErrorData.exception.message }</p>
+								</c:when>
+								<c:otherwise>
+									<br /><p>${RaptorErrorData.errorMessage }</p>
+								</c:otherwise>
+							</c:choose>
+						</c:if>		
+					</c:if>
 				</div>
 			</div>
 		</div>	

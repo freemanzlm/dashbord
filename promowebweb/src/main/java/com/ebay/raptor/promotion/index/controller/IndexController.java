@@ -28,6 +28,7 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.kernel.calwrapper.CalEventHelper;
+import com.ebay.kernel.context.AppBuildConfig;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.kernel.error.RaptorErrorData;
 import com.ebay.raptor.kernel.util.RaptorConstants;
@@ -180,6 +181,8 @@ public class IndexController {
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public ModelAndView handleErrorRequest(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("bdCfg", AppBuildConfig.getInstance());
+		mav.addObject("showError", request.getParameter("showError"));
 		mav.setViewName("errors/error");
 
 		if (response.getStatus() == HttpServletResponse.SC_NOT_FOUND) {
@@ -273,7 +276,7 @@ public class IndexController {
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception exception, HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("errors/error");
+		ModelAndView mav = new ModelAndView("errors/500");
 		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
 	}

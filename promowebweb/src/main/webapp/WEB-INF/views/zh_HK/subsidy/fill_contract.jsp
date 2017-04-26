@@ -159,8 +159,7 @@
 			<c:otherwise>
 				<div class="promo-state-message">
 					<div class="message-content">
-						<h3 class="color-green text-center">您已成功領取等值${reward} ${promo.currency}的獎勵！</h3>
-						<p class="pretty-text">${ subsidyTerm.successInfo }</p> <br />
+						<div class="pretty-text">${ subsidyTerm.successInfo }</div> <br />
 					</div>
 					<menu>
 						<li><a href="../index" class="btn">返回活動清單</a></li>
