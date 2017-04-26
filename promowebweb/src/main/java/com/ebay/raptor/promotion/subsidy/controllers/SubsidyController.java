@@ -129,7 +129,6 @@ public class SubsidyController {
 		if (promo.getRewardType() != null && promo.getRewardType() > 0) {
 			try {
 				term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-				subsidy = subsidyService.getSubsidy(promoId, userID);
 			} catch (PromoException e) {
 				logger.log(LogLevel.ERROR, String.format("Subsidy legal term not found for promotion:%s, user:%s", promoId, userID), e);
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
@@ -147,7 +146,12 @@ public class SubsidyController {
 						model.addObject("hasSubmitFields", true);
 						term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
 					}
-					List<SubsidyAttachment> subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userID);
+					List<SubsidyAttachment> subsidyAttachmentList = null;
+					try {
+						subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userID);
+					} catch (PromoException e) {
+						e.printStackTrace();
+					}
 					if (subsidyAttachmentList != null && subsidyAttachmentList.size()>0) {
 						model.addObject("hasSubmitAttachments", true);
 						term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);

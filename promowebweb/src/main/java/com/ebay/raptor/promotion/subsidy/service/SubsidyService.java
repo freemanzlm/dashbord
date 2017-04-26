@@ -102,18 +102,18 @@ public class SubsidyService extends BaseService {
 	public boolean updateSubsidy(String promoId, UserData userData, int status) {
 		boolean flag = false;
 		Subsidy subsidy = new Subsidy();
-		subsidy.setPromoId(promoId);
-		subsidy.setOracleId(userData.getUserId());
-		subsidy.setStatus(PMSubsidyStatus.valueOfPMStatus(status).getAVStatus());
-		Promotion promo = null;
+		String orginalStatus = PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName();
 		int promoStatus = PMSubsidyStatus.PM_UNKNOWN_STATUS.getPMStatus(); //-1
 		try {
-			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-			if(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName().equals(promo.getState())){
+			Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+			subsidy = getSubsidy(promoId, userData.getUserId());
+			orginalStatus = subsidy.getStatus();
+			subsidy.setStatus(PMSubsidyStatus.valueOfPMStatus(status).getAVStatus());
+			if(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName().equals(orginalStatus)){
 				flag = updateSubsidy(subsidy); 
 			}else{
 				// the status of the promo in the db
-				promoStatus = getSubsidyStatus(promo.getState());
+				promoStatus = getSubsidyStatus(orginalStatus);
 				if(promoStatus<status){
 					//update upload file status
 					if(PMSubsidyStatus.REWARD_UPLOADED.getPMStatus()==status){
