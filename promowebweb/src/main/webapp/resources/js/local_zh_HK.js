@@ -71,6 +71,7 @@ BizReport.local = {
 			'PROMOTION END': '活動結束階段'
 		},
 		'state': {
+			'Unknown': '',
 			'Created': '報名',
 			'Submitted': '已提交預審',
 			'Verifying': '預審進行中',

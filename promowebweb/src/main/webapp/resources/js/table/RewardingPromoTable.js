@@ -180,8 +180,10 @@ var BizReport = BizReport || {};
 							case 'Commited':
 							case 'Appliable':
 							case 'AppliableAgain':
-								if (full.reward > 0) {
+								if (full.onlineVettingFlag) {
 									display = "<a class='btn' target='_blank' href='" + getSubsidyLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a><br/>";
+								} else if (full.onlineVettingFlag) {
+									display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a><br/>";
 								}
 								
 								display += '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
