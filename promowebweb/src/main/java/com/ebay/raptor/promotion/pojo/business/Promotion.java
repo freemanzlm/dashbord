@@ -35,6 +35,17 @@ public class Promotion {
 	private Boolean publishFlag;
 	
 	private Boolean onlineVettingFlag;
+	
+	private String subsidyStatus;
+	
+
+	public String getSubsidyStatus() {
+		return subsidyStatus;
+	}
+
+	public void setSubsidyStatus(String subsidyStatus) {
+		this.subsidyStatus = subsidyStatus;
+	}
 
 	public Boolean getOnlineVettingFlag() {
 		return onlineVettingFlag;
