@@ -6,9 +6,11 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response.Status;
 
 import org.ebayopensource.ginger.client.GingerClientResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
+import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
@@ -18,12 +20,15 @@ import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromoAcceptResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromotionResponse;
 import com.ebay.raptor.promotion.service.BaseService;
+import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 
 @Component
 public class PromotionService extends BaseService {
 	
 	private CommonLogger logger = CommonLogger.getInstance(PromotionService.class);
-
+	
+	@Autowired
+	private SubsidyService subsidyService;
 	private String url(String url){
 		return secureUrl(ResourceProvider.PromotionRes.base) + url;
 	}
@@ -85,7 +90,22 @@ public class PromotionService extends BaseService {
 	}
 	
 	public List<Promotion> getSubsidyPromotions(Long uid) throws PromoException{
-		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getSubsidyPromotions, uid);
+		List<Promotion> promoList =  getPromotionsByUserBase(ResourceProvider.PromotionRes.getSubsidyPromotions, uid);
+		if(null!=promoList){
+			for (Promotion promo : promoList) {
+				SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+				if(null!=term){
+					if(term.getOvFlag()==0){
+						promo.setOnlineVettingFlag(false);
+					}else if (term.getOvFlag()==1) {
+						promo.setOnlineVettingFlag(true);
+					}else{
+						promo.setOnlineVettingFlag(false);
+					}
+				}
+			}
+		}
+		return promoList;
 	}
 	
 	public List<Promotion> getEndPromotions(Long uid) throws PromoException{

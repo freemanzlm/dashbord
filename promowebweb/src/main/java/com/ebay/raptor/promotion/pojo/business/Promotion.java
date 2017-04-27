@@ -34,6 +34,15 @@ public class Promotion {
 	
 	private Boolean publishFlag;
 	
+	private Boolean onlineVettingFlag;
+
+	public Boolean getOnlineVettingFlag() {
+		return onlineVettingFlag;
+	}
+
+	public void setOnlineVettingFlag(Boolean onlineVettingFlag) {
+		this.onlineVettingFlag = onlineVettingFlag;
+	}
 
 	public Boolean getLegalTermFlag() {
 		return legalTermFlag;
