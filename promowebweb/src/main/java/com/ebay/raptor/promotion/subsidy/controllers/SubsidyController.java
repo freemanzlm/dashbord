@@ -119,16 +119,18 @@ public class SubsidyController {
 				subsidyService.updateSubsidy(promoId, userData, PMSubsidyStatus.REWARD_VISITED.getPMStatus());
 			}
 
-			SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
-			if (subsidySubmission != null) {
-				hasSubmitFields = true;
-				term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
-			}
-
-			List<SubsidyAttachment> subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userID);
-			if (subsidyAttachmentList != null && subsidyAttachmentList.size() > 0) {
-				hasSubmitAttachments = true;
-				term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
+			if (subsidy != null && subsidy.getStatus() != null) {
+				SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
+				if (subsidySubmission != null) {
+					hasSubmitFields = true;
+					term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
+				}
+				
+				List<SubsidyAttachment> subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userID);
+				if (subsidyAttachmentList != null && subsidyAttachmentList.size() > 0) {
+					hasSubmitAttachments = true;
+					term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
+				}
 			}
 			
 			if (term.getSubsidyType() == 2) {
@@ -163,7 +165,6 @@ public class SubsidyController {
 		Long userID = userData.getUserId();
 		Promotion promo = null;
 		Subsidy subsidy = null;
-		String status = null;
 		SubsidyLegalTerm term = null;
 		ResponseData<String> responseData = new ResponseData<String>();
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -188,8 +189,9 @@ public class SubsidyController {
 		boolean flag = subsidyService.updateSubsidySubmission(subsidySubmission);
 		try {
 			subsidy = subsidyService.getSubsidy(promoId, userID);
-			status = subsidy.getStatus();
-			subsidyService.updateSubsidy(promoId, userData, PMSubsidyStatus.REWARD_COMMITED.getPMStatus());
+			if (subsidy != null && PMSubsidyStatus.REWARD_COMMITED.getSfName().equalsIgnoreCase(subsidy.getStatus())) {
+				subsidyService.updateSubsidy(promoId, userData, PMSubsidyStatus.REWARD_COMMITED.getPMStatus());
+			}
 		} catch (PromoException e) {
 			logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s, user:%s", promoId, userID), e);
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Subsidy Information Not Found!");
