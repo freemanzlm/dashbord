@@ -10,7 +10,7 @@
 		<ul class="tab-list clr" role="tablist">
 			<li role="tab" aria-controls="pane1" v-bind:class="{active: !hasSubmitFields}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane1">第一步：填写确认函</a></span></li>
-			<li role="tab" aria-controls="pane2" v-if="hasSubmitFields" v-bind:class="{active: hasSubmitFields && !hasApproved && hasSubmitAttachments}" v-bind:disabled="hasApproved"><span class="label">
+			<li role="tab" aria-controls="pane2" v-if="hasSubmitFields" v-bind:class="{active: hasSubmitFields && !hasApproved}" v-bind:disabled="hasApproved"><span class="label">
 				<a href="#pane2">第二步：上传确认函</a></span></li>
 			<li role="tab" aria-controls="pane3" v-if="hasApproved" v-bind:class="{active: hasApproved}"><span class="label">
 				<a href="#pane3">第三步：领取奖励</a></span></li>

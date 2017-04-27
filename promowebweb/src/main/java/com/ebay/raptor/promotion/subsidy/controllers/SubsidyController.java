@@ -100,6 +100,8 @@ public class SubsidyController {
 		Long userID = userData.getUserId();
 		Date now = new Date();
 		SubsidyLegalTerm term = null;
+		boolean hasSubmitFields = false;
+		boolean hasSubmitAttachments = false;
 		String backURL = getBindWltURL(request, userData.getUserName());
 		
 		Promotion promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
@@ -119,13 +121,13 @@ public class SubsidyController {
 
 			SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId,userID);
 			if (subsidySubmission != null) {
-				model.addObject("hasSubmitFields", true);
+				hasSubmitFields = true;
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
 			}
 
 			List<SubsidyAttachment> subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId,userID);
 			if (subsidyAttachmentList != null && subsidyAttachmentList.size() > 0) {
-				model.addObject("hasSubmitAttachments", true);
+				hasSubmitAttachments = true;
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
 			}
 			
@@ -144,6 +146,8 @@ public class SubsidyController {
 		view.appendPromoAwardEndCheck(model.getModel(), promo, now);
 		model.addObject("subsidyTerm", term);
 		model.addObject("subsidy", subsidy);
+		model.addObject("hasSubmitFields", hasSubmitFields);
+		model.addObject("hasSubmitAttachments", hasSubmitAttachments);
 		model.addObject(ViewContext.Promotion.getAttr(), promo);
 		model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
 		model.setViewName("subsidy_acknowledgment");
