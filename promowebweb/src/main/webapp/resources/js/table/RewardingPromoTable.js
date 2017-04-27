@@ -171,7 +171,7 @@ var BizReport = BizReport || {};
 					swidth: '120px',
 					mRender : function (data, type, full) {
 						// data: Awarding, Visited, Commited(Spell Mistake, ignore it), Appliable, AppliableAgain, Uploaded
-						var display, sortOrder={Awarding:8, AppliableAgain:9, Visited:10, Commited:11, Uploaded:12, Appliable:12};
+						var display, sortOrder={Awarding:8, AppliableAgain:9, Visited:10, Commited:11, Uploaded:12, Appliable:13};
 
 						if (type == "display") {
 							switch (data) {
