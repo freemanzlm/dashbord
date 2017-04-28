@@ -82,8 +82,7 @@ public class SubsidyService extends BaseService {
 				}
 			}
 		} else {
-			logger.log("1111");
-//			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Internal Error happens.");
 		}
 		return null;
 		
@@ -382,7 +381,7 @@ public class SubsidyService extends BaseService {
 				return response.getData();
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("call remote method DownloadAttachment fail");
 		}
 		return null;
 	}
@@ -409,7 +408,7 @@ public class SubsidyService extends BaseService {
 				return response.getData();
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("call remote method GetAttachment fail");
 		}
 		return null;
 	}
@@ -434,7 +433,7 @@ public class SubsidyService extends BaseService {
 				return response.getData();
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("call remote method DownloadAttachmentById fail");
 		}
 		return null;
 	}
@@ -459,7 +458,7 @@ public class SubsidyService extends BaseService {
 				return response.getData();
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("call remote method GetWLTAccount fail");
 		}
 		return null;
 	}
