@@ -21,3 +21,75 @@
 	border: none;
 	box-shadow: none;
 }
+
+.post-pgc {
+	/* background-color: #dcf1dd; */
+	background: url(../img/PGC_banner_SC_no_button.jpg) no-repeat;
+	padding: 5px 10px;
+	height:120px;
+}
+
+.post-pgc-tc {
+	/* background-color: #dcf1dd; */
+	background: url(../img/PGC_banner_TC_no_button.jpg) no-repeat;
+	padding: 5px 10px;
+	height:120px;
+}
+
+.post-pgc h2 {
+	margin-bottom: 0;
+	color: #599a21;
+	font-style: italic;
+	font-weight: bold;
+}
+.viewdiv {
+	width:52%;
+	padding: 20px 10px;
+	float:right;
+}
+
+.viewdiv .leftfloatdiv {
+	float:left;
+	padding: 0px 6px;
+	font-weight: bold;
+}
+.viewdiv .qutoanumberdiv {
+	width:61%;
+	float:left;
+	font-weight: bold;
+	text-align:right;
+}
+
+.post-pgc .subtitle {
+	color: #599a21;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+	font-family: 黑体;
+}
+
+.post-pgc .subtitle2 {
+	margin-bottom: 0;
+	color: #599a21;
+	font-size: 26px;
+	font-weight: bold;
+	font-style: italic;
+	font-family: 黑体;
+}
+
+.post-pgc-tc .subtitle {
+	color: #599a21;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+	font-family: 黑体;
+}
+
+.post-pgc-tc .subtitle2 {
+	margin-bottom: 0;
+	color: #599a21;
+	font-size: 26px;
+	font-weight: bold;
+	font-style: italic;
+	font-family: 黑体;
+}

@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -16,12 +17,16 @@ import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.config.AppConfig;
 import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.pojo.PGCSeller;
+import com.ebay.raptor.promotion.pojo.PgcEligiblity;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
+import com.ebay.raptor.promotion.security.DES;
 import com.ebay.raptor.promotion.service.BRDataService;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
+import com.ebay.raptor.promotion.service.PGCService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
 /**
@@ -32,12 +37,14 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 
 	private final static Logger logger = Logger
 			.getInstance(LanguageInterceptor.class);
+	private static final String ISSUE_CODE_463  = "0";
 
 	@Autowired
 	BRDataService brdataService;
 	@Autowired LoginService loginService;
 	@Autowired private CSApiService service;
 	@Autowired BaseDataService baseService;
+	@Autowired PGCService pgcService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -140,11 +147,69 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		model.addObject("isCanSubscribeDDS", isCanSubscribeDDS);
 		model.addObject("isInConvWhitelist", isInConvWhitelist);
 		
+		// pgc quota
+		renderPgcQuota(model, userData);
+		
 		if (accessBizReport) {
 			model.addObject(ViewContext.BizUrl.getAttr(),
 					AppConfig.BIZ_REPORT_URL + "?lang" + language);
 		}
 
+	}
+	
+	private void renderPgcQuota(ModelAndView mav, UserData userData) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("LoggedCBTAccount", userData.getUserName());
+			obj.put("LoggedCBTAccountID", userData.getUserId());
+			obj.put("time", System.currentTimeMillis());
+			String secretParams = DES.getInstance().encrypt2(obj.toString());
+			mav.addObject("secretParams", secretParams);
+		} catch (Exception e) {
+			logger.log(LogLevel.ERROR, "secretParams failed."+e.getMessage());
+		}
+		
+		boolean pgcReady = false;
+		try {
+			pgcReady = baseService.getPgcFlag(userData.getUserId());
+			mav.addObject("pgcReadyFlag", pgcReady);
+		} catch (HttpRequestException e) {
+			mav.addObject("pgcReadyFlag", false);
+			logger.log(LogLevel.ERROR, "pgcReadyFlag failed."+e.getMessage());
+			return;
+		}
+		
+		if(pgcReady) {
+			PgcEligiblity pgcEligible = null;
+			try {
+				pgcEligible = pgcService.getPgcEliblity(userData.getUserName());
+			} catch (NumberFormatException | HttpRequestException e) {
+				pgcEligible = new PgcEligiblity();
+				logger.log(LogLevel.ERROR, "getPgcEliblity failed."+e.getMessage());
+			}
+			mav.addObject("pgcEligiblity", pgcEligible.getPgcEligibility());
+			mav.addObject("hasIssue463", hasIssue463(pgcEligible));
+			
+			PGCSeller seller = null;
+			try {
+				seller = pgcService.getPGCAccount(userData.getUserName());
+			} catch (NumberFormatException | HttpRequestException e) {
+				seller = new PGCSeller();
+				logger.log(LogLevel.ERROR, "getPGCAccount failed."+e.getMessage());
+			}
+			mav.addObject("pgcSeller", seller);
+		}
+	}
+	
+	private boolean hasIssue463(PgcEligiblity pgcEligible) {
+		if(pgcEligible!=null && pgcEligible.getPgcStatusCode() !=null && pgcEligible.getPgcStatusCode().size()>0) {
+			for(String issueCode:pgcEligible.getPgcStatusCode()) {
+				if(issueCode.equalsIgnoreCase(ISSUE_CODE_463)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

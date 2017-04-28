@@ -13,8 +13,6 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestException;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestService;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpResponseData;
-import com.ebay.app.raptor.promocommon.pojo.db.Audit;
-import com.ebay.app.raptor.promocommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.pojo.db.Parameter;
 import com.ebay.app.raptor.promocommon.pojo.db.ParameterType;
 import com.ebay.app.raptor.promocommon.util.CommonConstant;
@@ -32,6 +30,7 @@ public class BaseDataService {
     protected static String updateSdParameterUrl = "listing/parameter/save";
     protected static String selectSdAuditUrl = "listing/audit/";
     protected static String insertSdAuditUrl = "listing/audit/save";
+    private static String pgcReadyUrl = "listing/pgcReady/";
     protected static String authorization;
     
     // biz report service
@@ -114,6 +113,29 @@ public class BaseDataService {
 
         return null;
     }
+    
+    public boolean getPgcFlag(Long userId) throws HttpRequestException {
+		Map<String, String> headers = new HashMap<String, String>();
+		headers.put("Authorization", authorization);
+		String json = httpRequestService.doHttpRequest(buildServiceUrl(AppConfig.getSellerDashboardServicePrefix(), pgcReadyUrl) + userId, GET_METHOD, null, null);
+		
+		TypeToken<HttpResponseData<Boolean>> type = new TypeToken<HttpResponseData<Boolean>>() {};
+		HttpResponseData<Boolean> response = httpRequestService
+				.getResponseData(json, type);
+		
+		if (response != null) {
+			if (response.getIsSuccess()) {
+				return response.getData();
+			} else {
+				logger.warn("Get pgc ready flag error, with error msg: "
+						+ response.getErrorMmsg());
+			}
+		} else {
+			logger.warn("Unable to get pgc entrance flag.");
+		}
+
+		return false;
+	}
 
     /**
      * Get SellerDashboard configurations from back-end server.
