@@ -514,7 +514,7 @@ var BizReport = BizReport || {};
 				    
 				    if (data && data.data) {
 				    	data.data = data.data.filter(function(oRow) {
-				    		if(pageData.regType=='false') {
+				    		if(!pageData.regType) {
 				    			if(pageData.currentStep == 'SELLER NOMINATION_NEED APPROVE' || pageData.currentStep == 'SELLER FEEDBACK' || pageData.currentStep == 'PROMOTION SUBMITTED') {
 									if(pageData.isRegEnd == 'false' && pageData.isListingPreview != true) {
 										// promotion upload type

@@ -47,4 +47,5 @@ menu li {
 hr {
 	margin-bottom: 0;
 	border-top: 1px solid #ccc;
+	border-bottom: 0;
 }

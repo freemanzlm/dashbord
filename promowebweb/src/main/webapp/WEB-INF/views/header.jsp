@@ -20,7 +20,7 @@
 					<option value="zh_HK" ${lang eq 'zh_HK' ? 'selected' : '' }>繁体中文</option>					
 				</select>
 			</span>
-		</div>		
+		</div>
 	</div>
 	
 </div>

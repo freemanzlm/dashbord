@@ -71,6 +71,7 @@ BizReport.local = {
 			'PROMOTION END': '活动结束阶段'
 		},
 		'state': {
+			'Unknown': '',
 			'Created': '报名',
 			'Submitted': '已提交预审',
 			'Verifying': '预审进行中',
@@ -147,6 +148,13 @@ BizReport.local = {
 	},
 	'subscribe': {
 		'fail': '<p>订阅失败！请联系客服查询具体原因！</p>'
+	},
+	subsidy: {
+		attachment: {
+			notEmpty : '上传文件不能为空',
+			attachmentSizeError: '上传文件大小不能超过5M',
+			attachdownload : '下载附件'
+		}
 	}
 };
 

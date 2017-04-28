@@ -1,0 +1,205 @@
+.tabbable .tab-list-container {
+	font-size: 12px;
+}
+
+.tabbable .tab-list-container .tabs-title {
+	margin: 0 10px 0 5px;
+	float: left;
+	line-height: 2em;
+	font-size: 12px;
+}
+
+.tabbable .tab-list {
+	margin: 0;
+	padding: 0;
+	list-style: none inside none;
+
+	line-height: 1em;
+
+	float: left;
+}
+
+.tabbable .tab-list li {
+	margin: 0 5px 0 0;
+	padding: 0.5em 0.6em;	
+
+	border: 1px solid #ccc;
+	border-bottom: none;
+	border-radius: 5px 5px 0 0;	
+
+	background: #f9f9f9;
+	text-align: center;
+
+	float: left;
+}
+
+.tabbable .tab-list li a,
+.tabbable .tab-list li a:hover {
+	color: #333;
+	text-decoration: none;
+}
+
+.tabbable .tab-list li:disabled {
+	pointer-events: none;
+}
+
+.tabbable .tab-list li.active {
+	margin-bottom: -1px;
+
+	background-color: #fff;
+	border-bottom: 1px solid #fff;
+}
+
+.tabbable .tab-pane {
+	background: #fff;
+	margin: 0;
+	padding: 10px 10px;
+
+	border: 1px solid #ccc;
+	border-radius: 0 5px 5px 5px;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+
+	display: none;
+}
+
+.tabbable-with-title .tab-pane {
+	border-radius: 5px;
+}
+
+.tabbable .tab-pane.active {
+	display: block;
+}
+
+/* each tab display as a page */
+.tabbable .tab-list-page li {
+	border: none;
+	background: transparent;
+}
+
+.tabbable .tab-list-page li.active {
+	border: 1px solid #ccc;
+	border-bottom: 1px solid #fff;
+}
+
+/* tabs menu on the right side */
+.tabbable .tab-list-right .tab-list {
+	float: right;
+}
+
+/* tab list on the left side */
+.tabbable-left,
+.tabbable-right {
+	box-sizing: border-box;
+}
+
+.tabbable-left .tab-list-container {
+	box-sizing: border-box;
+
+	position: relative;
+	z-index: 1;
+
+	float: left;
+}
+
+.tabbable-left .tab-list-container .tabs-title,
+.tabbable-right .tab-list-container .tabs-title {
+	float: none;
+}
+
+.tabbable-left .tab-list,
+.tabbable-right .tab-list {
+	float: none;
+}
+
+.tabbable-left .tab-list li,
+.tabbable-right .tab-list li {
+	margin: 0;
+
+	border: 1px solid #ccc;
+	border-top: none;
+	border-radius: 0;	
+
+	break-word: break-all;
+
+	float: none;
+	position: relative;
+}
+
+.tabbable-left .tab-list li {
+	box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.2);
+	text-align: left;
+}
+
+.tabbable-left .tab-list li:first-child {
+	border-top: 1px solid #ccc;
+	border-radius: 5px 0 0 0;
+}
+
+.tabbable-left .tab-list li:last-child {
+	border-radius: 0 0 0 5px;
+}
+
+.tabbable-left .tab-list li.active {
+	margin-bottom: 0;
+	border-bottom: 1px solid #ccc;
+	border-right: none;
+	box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+.tabbable-left .tab-pane {
+	box-sizing: border-box;
+	float: left;
+	margin-left: -1px;
+	min-height: 50px;
+}
+
+.tabbable-left .tab-pane.active {
+	margin-top: 0;
+}
+
+/* tab list on the right side */
+
+.tabbable-right .tab-list-container {
+	position: relative;
+	z-index: 1;
+
+	float: right;
+}
+
+.tabbable-right .tab-list li {
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+	text-align: right;
+}
+
+.tabbable-right .tab-list li:first-child {
+	border-top: 1px solid #ccc;
+	border-radius: 0 5px 0 0;
+}
+
+.tabbable-right .tab-list li:last-child {
+	border-radius: 0 0 5px 0;
+}
+
+.tabbable-right .tab-pane {
+	border-radius: 5px 0 5px 5px;
+	box-sizing: border-box;
+	float: right;
+	margin-right: -1px;
+	min-height: 50px;
+}
+
+.tabbable-right .tab-pane.active {
+	margin-top: 0;
+}
+
+.tabbable-right .tab-list li.active {
+	margin-bottom: 0;
+	border-left: none;
+	border-bottom: 1px solid #ccc;
+}
+
+.tabbable-left.tabbable-with-title .tab-pane,
+.tabbable-right.tabbable-with-title .tab-pane {
+	border-radius: 5px;
+}

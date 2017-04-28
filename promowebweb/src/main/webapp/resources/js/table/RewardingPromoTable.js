@@ -18,6 +18,10 @@ var BizReport = BizReport || {};
 	function getLink(promoId) {
 		return "/promotion/" + promoId;
 	}
+	
+	function getSubsidyLink(promoId) {
+		return "/promotion/subsidy/acknowledgment?promoId=" + promoId;
+	}
 
 	var defaultDataTableConfigs = {
 		tableConfig : {
@@ -166,106 +170,31 @@ var BizReport = BizReport || {};
 					sType : "numeric",
 					swidth: '120px',
 					mRender : function (data, type, full) {
-						var display;
-						if (type == 'filter') {
-							// For oil card, WLT point/coin, only CN user can get. For WinIT Coupon, CN, HK and TW users all can get.
-							if (((full.rewardType == 1 || full.rewardType == 2) && full.region == 'CN') || full.rewardType == 3) {
-								switch(data) {
-								case 'Awarding':
-									return 'Awarding';
-								case 'Visited':
-									return 'Visited';			
-								case 'Commited':
-									return 'Commited';
-								case 'Appliable':
-									return 'Appliable';
-								case 'AppliableAgain':
-									return 'AppliableAgain';
-								case 'Uploaded':
-									return 'Uploaded';
-								}
-								return data;
-							} else if (full.rewardType != 0) {
-								data = 'Appliable'; // filter
-							}
-						}
+						// data: Awarding, Visited, Commited(Spell Mistake, ignore it), Appliable, AppliableAgain, Uploaded
+						var display, sortOrder={Awarding:8, AppliableAgain:9, Visited:10, Commited:11, Uploaded:12, Appliable:13};
 
 						if (type == "display") {
-							// For WLT point/coin, only CN user can get.
-							if (full.rewardType == 2 && full.region == 'CN') {
-								switch (data) {
-								case 'Awarding':
-								case 'Visited':
-								case 'Commited':
-								case 'Appliable':
-								case 'AppliableAgain':
-									if (full.rewardUrl) {
-										display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + local.getText('promo.state.' + data) + "</a>";
-										display += "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-									} else {
-										display = local.getText('promo.state.' + data);
-										display += '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-									}
-									return display;
-								default:
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+							switch (data) {
+							case 'Awarding':
+							case 'Visited':
+							case 'Commited':
+							case 'Appliable':
+							case 'AppliableAgain':
+								if (full.onlineVettingFlag) {
+									display = "<a class='btn' target='_blank' href='" + getSubsidyLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a><br/>";
+								} else if (full.onlineVettingFlag) {
+									display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a><br/>";
 								}
-							}
-							
-							// For oil card, only CN user can get. For WinIT Coupon, CN, HK and TW users all can get.
-							if ((full.rewardType == 1 && full.region == 'CN') || full.rewardType == 3) {
-								// Gas card, JD card
-								switch (data) {
-								case 'Awarding':
-								case 'Visited':
-								case 'Commited':
-								case 'AppliableAgain':
-									if (full.rewardUrl) {
-										display = "<a class='btn' target='_blank' href='" + full.rewardUrl + "'>" + local.getText('promo.state.' + data) + "</a>";
-										display += "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-									} else {
-										display = local.getText('promo.state.' + data);
-										display += '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-									}
-									return display;
-								case 'Appliable':
-								default:
-									return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-								}
-							}
-
-							if (full.rewardType != 0) {
-								display = "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Appliable') + "</a>";
+								
+								display += '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								return display;
-							} else {
-								return '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+							default:
+								return local.getText('promo.state.' + data) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 						}
 
 						if (type == "sort") {
-							// For oil card, WLT point/coin, only CN user can get. For WinIT Coupon, CN, HK and TW users all can get. 
-							if ((((full.rewardType == 1 || full.rewardType == 2) && full.region == 'CN') || full.rewardType == 3) && full.rewardUrl) {
-								switch (data) {
-								case 'Awarding':
-									return 8;
-								case 'AppliableAgain':
-									return 9;
-								case 'Visited':
-									return 10;
-								case 'Commited':
-									return 11;
-								case 'Uploaded':
-									return 12;
-								case 'Appliable':
-									return 13;
-								}
-							}
-
-							if (full.rewardType != 0) {
-								return 13; // Appliable
-							}
-
-							return 20;
+							return sortOrder[data] || 20;
 						}
 
 						return data;

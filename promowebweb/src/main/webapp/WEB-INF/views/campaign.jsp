@@ -5,7 +5,6 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
-<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 
 <c:set var="isPreview" value="${ promo.isPreview }" />
 <c:set var="currentStep" value="${ isPreview ? promo.draftPreviewStep : promo.currentStep }" />
@@ -43,8 +42,8 @@
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.signpost_css}" target="head-css"/>
-<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
-<res:useCss value="${res.css.local.css.form_css}" target="head-css" />
+<res:useCss value="${res.css.local.less.module_less}" target="head-css" />
+<res:useCss value="${res.css.local.less.form_less}" target="head-css" />
 <res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dialog_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.popup_css}" target="head-css" />
@@ -91,7 +90,7 @@
 				<%@ include file="steps.jsp"%>
 				
 				<%@ include file="state.jsp"%>
-
+				
 				<%@ include file="activity.jsp"%>
 				
 				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK') and not regType and not empty fieldsDefintions }">
@@ -254,7 +253,7 @@
 			currentStep: '${currentStep}',
 			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
 			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}'),
-			regType : '${promo.regType}',
+			regType : JSON.parse('${promo.regType eq true}'),
 			isRegEnd : '${isRegEnd}'
 		};
 	</script>

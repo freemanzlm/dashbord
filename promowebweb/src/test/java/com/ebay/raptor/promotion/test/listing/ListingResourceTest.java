@@ -2,12 +2,10 @@ package com.ebay.raptor.promotion.test.listing;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,8 +22,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.ebayopensource.ginger.client.GingerClient;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.junit.Before;
-import org.junit.Test;
 
+import com.ebay.cbt.raptor.promotion.po.Listing;
 import com.ebay.raptor.promotion.enums.ListingState;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.ISheetReader;
@@ -33,11 +31,10 @@ import com.ebay.raptor.promotion.excel.SheetReader;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.list.service.ListingService;
-import com.ebay.raptor.promotion.locale.LocaleUtil;
-import com.ebay.raptor.promotion.pojo.business.Listing;
 import com.ebay.raptor.promotion.pojo.service.req.UploadListingRequest;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.service.PromoClient;
+import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
