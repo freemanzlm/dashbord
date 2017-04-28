@@ -181,7 +181,7 @@ public class IndexController {
 	@RequestMapping(value = "/error", method = RequestMethod.GET)
 	public ModelAndView handleErrorRequest(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("bdCfg", AppBuildConfig.getInstance());
+		mav.addObject("isProd", AppBuildConfig.getInstance().isProduction());
 		mav.addObject("showError", request.getParameter("showError"));
 		mav.setViewName("errors/error");
 
