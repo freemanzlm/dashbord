@@ -96,7 +96,8 @@
 		<hr />
 		
 		<div class="pretty-text">
-			${promo.desc}
+			${pdfContent}
+			<%-- ${promo.desc} --%>
 		</div>
 	</div>
 	

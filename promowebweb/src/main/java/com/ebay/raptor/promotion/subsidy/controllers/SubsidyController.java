@@ -141,11 +141,12 @@ public class SubsidyController {
 			model.addObject("nonuploadFields", fields[0]);
 			model.addObject("uploadFields", fields[1]);
 		}
-		
+		String pdfContent = URLDecoder.decode(new String(term.getContent()), "UTF-8");
 		model.addObject("hasSubsidyApproved", PMSubsidyStatus.REWARD_APPLIABLE.getSfName().equalsIgnoreCase(subsidy.getStatus()));
 		view.calcualteCurentStep(promo);
 		view.appendPromoEndCheck(model.getModel(), promo, now);
 		view.appendPromoAwardEndCheck(model.getModel(), promo, now);
+		model.addObject("pdfContent", pdfContent);
 		model.addObject("subsidyTerm", term);
 		model.addObject("subsidy", subsidy);
 		model.addObject("hasSubmitFields", hasSubmitFields);
