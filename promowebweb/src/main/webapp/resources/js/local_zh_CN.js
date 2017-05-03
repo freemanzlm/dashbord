@@ -153,6 +153,7 @@ BizReport.local = {
 		attachment: {
 			notEmpty : '上传文件不能为空',
 			attachmentSizeError: '上传文件大小不能超过5M',
+			attachmentFileTypeError: '只能上传PDF，ZIP，JPG文件',
 			attachdownload : '下载附件'
 		}
 	}

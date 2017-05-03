@@ -123,7 +123,7 @@
 						<div class="form-field">
 							<span class="file-input" v-if="!isAwardEnd">
 								<input type="text" style="height: 20px;" placeholder="选择文件" />
-								<input type="file" name="uploadFile" accept="image/jpeg, application/pdf, application/zip"/>
+								<input type="file" name="uploadFile" v-on:change="validateFileType"/>
 								<button type="button" class="btn" style="margin-left: 3px;">选择</button>
 							</span> <br v-if="!isAwardEnd"/>
 							<span class="font-bold msg">

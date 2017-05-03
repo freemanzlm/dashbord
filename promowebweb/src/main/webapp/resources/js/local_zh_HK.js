@@ -148,6 +148,14 @@ BizReport.local = {
 	},
 	'subscribe': {
 		'fail': '<p>訂閱失敗！請聯系客服查詢具體原因！</p>'
+	},
+	subsidy: {
+		attachment: {
+			notEmpty : '上傳文件不能為空',
+			attachmentSizeError: '上傳文件大小不能超過5M',
+			attachmentFileTypeError: '只能上傳PDF，ZIP，JPG檔案',
+			attachdownload : '下載附件'
+		}
 	}
 };
 
