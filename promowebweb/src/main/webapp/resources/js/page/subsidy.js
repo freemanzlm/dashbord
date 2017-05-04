@@ -40,7 +40,7 @@ $(function(){
 			validateFileType: function(event) {
 				if (!hasValidFileType(event.target)) {
 					alert(local.getText("subsidy.attachment.attachmentFileTypeError"));
-					file.value = "";
+					event.target.value = "";
 				}
 			},
 			sendSellerCustomFields: function(event){
