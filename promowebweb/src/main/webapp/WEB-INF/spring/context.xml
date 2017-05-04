@@ -53,6 +53,7 @@
 	
 	<mvc:interceptors>
 		<beans:bean class="com.ebay.raptor.promotion.interceptor.AuthInterceptor"></beans:bean>
+		<beans:bean class="com.ebay.raptor.promotion.interceptor.PathInterceptor"></beans:bean>
 		<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<beans:property name="paramName" value="lang" />
 		</beans:bean>

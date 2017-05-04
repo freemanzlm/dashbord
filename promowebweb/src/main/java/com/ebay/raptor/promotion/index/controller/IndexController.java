@@ -125,6 +125,20 @@ public class IndexController {
 		trackService.logUserActivityAsync(userDt, AuditType.VisitToPromo, "");
 		return mav;
 	}
+	
+	@AuthNeed
+	@RequestMapping(value = "/brands", method = RequestMethod.GET)
+	public ModelAndView handleBrandRequest(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+		ModelAndView mav = new ModelAndView();
+		// Set unconfirmed status
+		UserData userDt = loginService.getUserDataFromCookie(request);
+		mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
+
+		mav.setViewName("brands_index");
+		
+		return mav;
+	}
 
 	@RequestMapping(value = "/maintain", method = RequestMethod.GET)
 	public ModelAndView gotoMaintainPage(HttpServletRequest request, HttpServletResponse response,
