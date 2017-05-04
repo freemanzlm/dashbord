@@ -141,11 +141,12 @@ public class SubsidyController {
 			model.addObject("nonuploadFields", fields[0]);
 			model.addObject("uploadFields", fields[1]);
 		}
-		
+		String pdfContent = URLDecoder.decode(new String(term.getContent()), "UTF-8");
 		model.addObject("hasSubsidyApproved", PMSubsidyStatus.REWARD_APPLIABLE.getSfName().equalsIgnoreCase(subsidy.getStatus()));
 		view.calcualteCurentStep(promo);
 		view.appendPromoEndCheck(model.getModel(), promo, now);
 		view.appendPromoAwardEndCheck(model.getModel(), promo, now);
+		model.addObject("pdfContent", pdfContent);
 		model.addObject("subsidyTerm", term);
 		model.addObject("subsidy", subsidy);
 		model.addObject("hasSubmitFields", hasSubmitFields);
@@ -310,7 +311,14 @@ public class SubsidyController {
 			
 			/** add the content of the PDF**/
 			Paragraph context = new Paragraph();
-			String pdfContent = URLDecoder.decode(new String(term.getContent()), "UTF-8");
+			String pdfContent = URLDecoder.decode(new String(term.getContent()));// assign the code with utf-8 will cause error
+			System.out.println("**************************URLDecoder.decode(new String(term.getContent()))" + pdfContent);
+			String pdfContent1 = URLDecoder.decode(new String(term.getContent()),"UTF-8");// assign the code with utf-8 will cause error
+			System.out.println("**************************URLDecoder.decode(new String(term.getContent()),'utf-8')" + pdfContent1);
+			String pdfContent2 = new String(term.getContent());// assign the code with utf-8 will cause error
+			System.out.println("**************************new String(term.getContent())" + pdfContent2);
+			String pdfContent3 = new String(term.getContent(),"utf-8");// assign the code with utf-8 will cause error
+			System.out.println("**************************new String(term.getContent(),'utf-8')" + pdfContent3);
 	        ElementList elementList =MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 	        for (Element element : elementList) {
 	            context.add(element);

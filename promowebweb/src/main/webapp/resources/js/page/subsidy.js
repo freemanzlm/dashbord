@@ -1,6 +1,6 @@
 $(function(){
 	Vue.config.devtools = false;
-	var fileTypeReg = /\.(doc|docx|xls|xlsx|jpg|gif|zip|rar|pdf)$/i;
+	var supportedFileTypes = ['image/jpeg', 'application/pdf', 'application/zip'];
 	
 	function hasValidSize(inputElement, maxSize) {
 		if (inputElement && inputElement.files) {
@@ -11,6 +11,16 @@ $(function(){
 				} else {
 					continue;
 				}
+			}
+		}
+		return true;
+	}
+	
+	function hasValidFileType(inputElement) {
+		if (inputElement && inputElement.files) {
+			var file = inputElement.files[0];
+			if (file && supportedFileTypes.indexOf(file.type) < 0) {
+				return false;
 			}
 		}
 		return true;
@@ -27,6 +37,12 @@ $(function(){
 			isAwardEnd: pageData.isAwardEnd
 		},
 		methods: {
+			validateFileType: function(event) {
+				if (!hasValidFileType(event.target)) {
+					alert(local.getText("subsidy.attachment.attachmentFileTypeError"));
+					event.target.value = "";
+				}
+			},
 			sendSellerCustomFields: function(event){
 				var $form = $("#custom-fields-form");
 				$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
@@ -91,6 +107,12 @@ $(function(){
 		if (!hasValidSize($fileInput.get(0), 5242880)) {
 			// attachment size should be less than 5M.
 			$errorMsgEle.css({"color": "red"}).html(local.getText("subsidy.attachment.attachmentSizeError"));
+			return false;
+		}
+		
+		if (!hasValidFileType($fileInput.get(0))) {
+			// attachment size should be less than 5M.
+			$errorMsgEle.css({"color": "red"}).html(local.getText("subsidy.attachment.attachmentFileTypeError"));
 			return false;
 		}
 		
