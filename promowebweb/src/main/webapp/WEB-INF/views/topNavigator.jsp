@@ -32,8 +32,8 @@
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/brands') ? 'active': ''}">
 			<a href="/promotion/brands">品牌认证与推广</a>
 		</li>
-		<li role="menuitem">
-			<a href="">Deals活动</a>
+		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/deals') ? 'active': ''}">
+			<a href="/promotion/deals">Deals活动</a>
 		</li>
 	</ul>
 	<div style="display:none;">

@@ -33,6 +33,7 @@ import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.kernel.error.RaptorErrorData;
 import com.ebay.raptor.kernel.util.RaptorConstants;
 import com.ebay.raptor.promotion.AuthNeed;
+import com.ebay.raptor.promotion.brand.service.BrandService;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.enums.PromoError;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -50,6 +51,7 @@ import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
+import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.ebay.raptor.siteApi.util.SiteApiUtil;
 
 @Controller
@@ -66,6 +68,7 @@ public class IndexController {
 	@Autowired SubsidyService subsidyService;
 	@Autowired TrackService trackService;
 	@Autowired SDDataService sdDataService;
+	@Autowired BrandService brandService;
 	@Autowired ResourceBundleMessageSource msgResource;
 
 	@RequestMapping(value = "/backend", method = RequestMethod.GET)
@@ -134,8 +137,26 @@ public class IndexController {
 		// Set unconfirmed status
 		UserData userDt = loginService.getUserDataFromCookie(request);
 		mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
+		
+		int passedBrandsCnt = brandService.countPassedBrandAmount(userDt.getUserId());
 
+		mav.addObject("passedBrandsCnt", passedBrandsCnt);
+		mav.addObject("introduction", brandService.getBrandIntroduction(LocaleUtil.getCurrentLocale()));
 		mav.setViewName("brands_index");
+		
+		return mav;
+	}
+	
+	@AuthNeed
+	@RequestMapping(value = "/deals", method = RequestMethod.GET)
+	public ModelAndView handleDealsRequest(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+		ModelAndView mav = new ModelAndView();
+		// Set unconfirmed status
+		UserData userDt = loginService.getUserDataFromCookie(request);
+		mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
+		
+		mav.setViewName("deals_index");
 		
 		return mav;
 	}

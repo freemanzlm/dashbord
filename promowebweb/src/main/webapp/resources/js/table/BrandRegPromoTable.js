@@ -31,7 +31,7 @@ var BizReport = BizReport || {};
 			'bSort' : true,
 			'iDisplayLength' : 10,
 			'sPaginationType' : 'full_numbers',
-			'sDom' : '<"datatable_header">t<"datatable_pager"ip>',
+			'sDom' : '<"datatable_header">t<"datatable_pager"i>',
 			'oLanguage' : {
 				sEmptyTable : local.getText('dataTable.promo.emptyTable'),
 				sInfoFiltered : local.getText('dataTable.promo.infoFiltered'),
@@ -46,7 +46,7 @@ var BizReport = BizReport || {};
 					sNext : local.getText('dataTable.nextPage')
 				}
 			},
-			sAjaxSource : "promotion/getIngPromotions", 
+			sAjaxSource : "promotion/brandRegPromotions", 
 			'fnServerParams' : function (aoData) {
 				var settings = this.fnSettings();
 				if (settings.aaSorting[0]) {
@@ -85,7 +85,6 @@ var BizReport = BizReport || {};
 					sDefaultContent : "",
 					sType : "string",
 					sClass : "item-title",
-					sWidth : "500px",
 					mRender : function (data, type, full, meta) {
 						if (type == "display") {
 							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";

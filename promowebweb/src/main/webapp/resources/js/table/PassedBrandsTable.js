@@ -31,14 +31,14 @@ var BizReport = BizReport || {};
 			'bSort' : true,
 			'iDisplayLength' : 10,
 			'sPaginationType' : 'full_numbers',
-			'sDom' : '<"datatable_header">t<"datatable_pager"ip>',
+			'sDom' : '<"datatable_header">t<"datatable_pager"i>',
 			'oLanguage' : {
-				sEmptyTable : local.getText('dataTable.promo.emptyTable'),
+				sEmptyTable : local.getText('dataTable.brand.emptyTable'),
 				sInfoFiltered : local.getText('dataTable.promo.infoFiltered'),
-				sInfo : local.getText('dataTable.promo.info'),
+				sInfo : local.getText('dataTable.brand.info'),
 				sInfoEmpty : "",
 				sLoadingRecords : local.getText('dataTable.loading'),
-				sZeroRecords : local.getText('dataTable.promo.zeroRecords'),
+				sZeroRecords : local.getText('dataTable.brand.zeroRecords'),
 				oPaginate : {
 					sFirst : local.getText('dataTable.firstPage'),
 					sLast : local.getText('dataTable.lastPage'),
@@ -46,7 +46,7 @@ var BizReport = BizReport || {};
 					sNext : local.getText('dataTable.nextPage')
 				}
 			},
-			sAjaxSource : "promotion/getIngPromotions", 
+			sAjaxSource : "/promotion/brands/passed", 
 			//sAjaxSource: "js/data/ongoing.json",
 			'fnServerParams' : function (aoData) {
 				var settings = this.fnSettings();
@@ -78,13 +78,13 @@ var BizReport = BizReport || {};
 			columns : [{
 					data : 'name'
 				}, {
-					data : 'promoDlDt'
+					data : 'lastAuditDt'
 				}, {
-					data : 'promoDlDt'
+					data : 'nextAuditDt'
 				}, {
-					data : 'promoEdt'
+					data : 'state'
 				}, {
-					data : 'currentStep'
+					data : 'defectRateNCompliantAmount'
 				}
 			],
 			aoColumnDefs : [{
@@ -92,7 +92,7 @@ var BizReport = BizReport || {};
 					sDefaultContent : "",
 					sType : "string",
 					sClass : "item-title",
-					sWidth : "500px",
+					sWidth : "300px",
 					mRender : function (data, type, full, meta) {
 						if (type == "display") {
 							return "<a href='" + getLink(full.promoId) + "'>" + data + "</a>";
@@ -101,101 +101,40 @@ var BizReport = BizReport || {};
 						return data;
 					}
 				}, {
-					aTargets : ["promoDlDt"],
+					aTargets : ["date"],
 					sType : "date",
+					sClass : "text-center",
+					sDefaultContent : "-",
+					mRender : function (data, type, full) {
+						return !data ? '-' : (new Date(data)).format("yyyy-MM-dd");
+					}
+				}, {
+					aTargets : ["state"],
+					sType : "string",
 					sClass : "text-center",
 					sWidth : "120px",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
-						if(!data) {
-							return '-';
+						if (data == '1') {
+							return '<b class="color-green fa fa-circle-o font16"></b>';
+						} else if (data == '0') {
+							return '<b class="color-orange fa fa-times font16"></b>'
 						}
-						/*var date = new Date(data);
-						return date.format("yyyy-MM-dd hh:mm");*/
-						return data;
+						
+						return '-';
 					}
 				}, {
-					aTargets : ["promoDt"],
-					sType : "date",
-					sClass : "text-center",
-					sWidth : "240px",
+					aTargets : ["number"],
+					sType : "string",
+					sClass : "text-right",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
-						if (type == "display") {
-							/*var date1 = new Date(data);
-							var date2 = new Date(full.promoSdt);
-							return date2.format("yyyy-MM-dd hh:mm") + " ~ " + date1.format("yyyy-MM-dd hh:mm");*/
-							return full.promoSdt + " ~ " + data;
-						}
-						return data;
-					}
-				}, {
-					aTargets : ["currentStep"],
-					sClass : "text-center state",
-					sDefaultContent : "",
-					sType : 'numeric',
-					swidth: '120px',
-					mRender : function (data, type, full) {
-						data = data.toUpperCase();
-						if (type == "display") {
-							switch (data) {
-							case 'SELLER NOMINATION_NEED APPROVE':
-							case 'SELLER FEEDBACK':
-								if(full.state == 'Enrolled') {
-									return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-								} else {
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + full.state) + "</a>";
-								}
-							case 'PROMOTION IN PROGRESS':
-								full.state = 'InProgress';
-							case 'PROMOTION SUBMITTED':
-							case 'PROMOTION IN VALIDATION':
-								return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-							}
-
-							return '<a href="' + getLink(full.promoId) + '" target="_self">'+ local.getText('promo.state.Detailed') + '</a>';
-						}
-
-						if (type == "filter") {
-							switch (data) {
-							case 'SELLER NOMINATION_NEED APPROVE':
-							case 'SELLER FEEDBACK':
-								return 'SELLER NOMINATION_NEED APPROVE';			
-							case 'PROMOTION SUBMITTED':
-								return 'PROMOTION SUBMITTED';
-							case 'PROMOTION IN PROGRESS':
-								return 'PROMOTION IN PROGRESS';
-							case 'PROMOTION IN VALIDATION':
-								return 'PROMOTION IN VALIDATION';
-							}
-
-							return 'Detailed';
-						}
-
 						if (type == "sort") {
-							if(full.state=='ReEnroll') {
-								return -1;
-							} else if(full.state=='NotEnrolled') {
-								return 0;
-							}
-							switch (data) {
-							case 'SELLER NOMINATION_NEED APPROVE':
-								return 1
-							case 'SELLER FEEDBACK':
-								return 2;							
-							case 'PROMOTION SUBMITTED':
-								return 3;
-							case 'PROMOTION IN PROGRESS':
-								return 4;
-							case 'PROMOTION IN VALIDATION':
-								return 5;
-							}
-							return 20;
+							return isNaN(data) ? -1 : parseInt(data);
 						}
-
-						return data;
 					}
 				}
+				
 			]
 		}
 	};

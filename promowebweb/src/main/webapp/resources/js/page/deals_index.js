@@ -1,31 +1,15 @@
 $(function(){
-	var BrandRegPromoTable = BizReport.BrandRegPromoTable;
-	var PassedBrandsTable = BizReport.PassedBrandsTable;
-	var OnGoingPromoTable = BizReport.OnGoingPromoTable;	
+	var OnGoingPromoTable = BizReport.OnGoingPromoTable;
 	var RewardingPromoTable = BizReport.RewardingPromoTable;
 	var EndPromoTable = BizReport.EndPromoTable;
 	var PendingPromoTable = BizReport.PendingPromoTable;
-	
-	var brandsRegTable = new BrandRegPromoTable();
-	brandsRegTable.init({
-		dataTableConfig: {
-			tableId: "brand-reg-promotions-table"
-		}});
-	brandsRegTable.update();
-	
-	var passedBrandsTable = new PassedBrandsTable();
-	passedBrandsTable.init({
-		dataTableConfig: {
-			tableId: "passed-brands-table"
-		}});
-	passedBrandsTable.update();
 	
 	var onGogingTable = new OnGoingPromoTable();
 	onGogingTable.init({
 		dataTableConfig: {
 			tableId: "ongoing-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/ongoingBrandPromotions"
+				sAjaxSource: "promotion/ongoingDealsPromotions"
 			}
 		}});
 	onGogingTable.update();
@@ -35,7 +19,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "rewarding-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/awardingBrandPromotions"
+				sAjaxSource: "promotion/awardingDealsPromotions"
 			}
 		}});
 	rewardingPromoTable.update();
@@ -45,7 +29,7 @@ $(function(){
 		dataTableConfig: {
 			tableId: "end-promo-table",
 			customTableConfig: {
-				sAjaxSource: "promotion/endedBrandPromotions"
+				sAjaxSource: "promotion/endedDealsPromotions"
 			}
 		}});
 	endPromoTable.update();
@@ -56,7 +40,7 @@ $(function(){
 			dataTableConfig: {
 				tableId: "pending-promo-table",
 				customTableConfig: {
-					sAjaxSource: "promotion/unpublishedBrandPromotions"
+					sAjaxSource: "promotion/unpublishedDealsPromotions"
 				}
 			}});
 		pendingPromoTable.update();

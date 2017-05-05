@@ -54,6 +54,11 @@ BizReport.local = {
 			'noReward': '无奖励',
 			'emptyTable': '<p>没有符合筛选条件的活动。</p>',
 			'zeroRecords': '<p>没有符合筛选条件的活动。</p>',
+		},
+		brand: {
+			info: '当前显示 _START_ 至 _END_，总共_TOTAL_个品牌',
+			emptyTable: '<p>没有通过认证的品牌。</p>',
+			zeroRecords: '<p>没有通过认证的品牌。</p>'
 		}
 	},
 	'promo': {
@@ -141,6 +146,9 @@ BizReport.local = {
 			'ReEnroll':'重新报名'
 		},
 		attachment: '附件'
+	},
+	brand: {
+		
 	},
 	'errorMsg': {
 		'regDateExpired': '很遗憾，报名已经截止，如需继续报名，请联系客服！',

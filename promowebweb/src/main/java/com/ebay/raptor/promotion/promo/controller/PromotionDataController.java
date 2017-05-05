@@ -1,5 +1,7 @@
 package com.ebay.raptor.promotion.promo.controller;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -134,6 +136,190 @@ public class PromotionDataController{
 			logger.error("Unable to get end promotions of user " + userData.getUserId(), e);
 			resp.setStatus(Boolean.FALSE);
 		}
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("brandRegPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getBrandRegPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		
+		data.add(p);
+		
+		resp.setData(data);
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("endedDealsPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getEndedDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		
+		data.add(p);
+		
+		resp.setData(data);
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("ongoingDealsPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getOngoingDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		p.setCurrentStep("SELLER NOMINATION_NEED APPROVE");
+		
+		data.add(p);
+		
+		resp.setData(data);
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("awardingDealsPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getAwardingDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		
+		data.add(p);
+		
+		resp.setData(data);
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("unpublishedDealsPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getUnpublishedDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		p.setCurrentStep("SELLER NOMINATION_NEED APPROVE");
+		
+		data.add(p);
+		
+		resp.setData(data);
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("endedBrandPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getEndedBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		
+		data.add(p);
+		
+		resp.setData(data);
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("ongoingBrandPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getOngoingBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		p.setCurrentStep("SELLER NOMINATION_NEED APPROVE");
+		
+		data.add(p);
+		
+		resp.setData(data);
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("awardingBrandPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getAwardingBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		
+		data.add(p);
+		
+		resp.setData(data);
+		return resp;
+	}
+	
+	@AuthNeed
+	@GET
+	@RequestMapping("unpublishedBrandPromotions")
+	@ResponseBody
+	public ListDataWebResponse<Promotion> getUnpublishedBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		// TODO get brand registration promotions
+		ArrayList<Promotion> data = new ArrayList<Promotion>();
+		
+		Promotion p = new Promotion();
+		p.setName("Brand registion promotion");
+		p.setCurrentStep("SELLER NOMINATION_NEED APPROVE");
+		
+		data.add(p);
+		
+		resp.setData(data);
 		return resp;
 	}
 	
