@@ -188,16 +188,14 @@
 						</div>
 						<div class="form-group">
 							<div class="control-label">
-								<input id="readFlag" checked="<c:if test='${subsidy.status lt 2 }'>checked</c:if>" type="checkbox" />
+								<input id="readFlag" <c:if test="${subsidy.status gt 2 }">checked='checked'</c:if> type="checkbox" />
 							</div>
 							<div class="form-field">我已阅读并接受以下确认函内容</div>
 						</div>
 						<div class="text-center">
 							<button type="button" class="btn" id="genPdf" >点击生成PDF供签署</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							 <c:if test="${subsidy.status gt 1}"> 
-								<a class="btn" href="subsidyStepTwo?promoId=${promo.promoId}">下一步：上传确认函</a>
-							 </c:if> 
+							<button class="btn" id="uploadPdf" disabled="<c:if test='${subsidy.status lt 2}'>disabled</c:if>">下一步：上传确认函</button>
 						</div>
 					</form>
 					<hr />
@@ -226,7 +224,6 @@
 </body>
 <script type="text/javascript">
  		$("#genPdf").click(function(){
- 			$("#genPdf").attr("disabled","disabled");
  			var id = $("#promoId").val();
  			var data = {};
  			var flag = false;
@@ -246,6 +243,7 @@
  				alert("请阅读并确认以下确认函内容");
  				return;
  			}
+ 			$("#genPdf").attr("disabled","disabled");
  			$.ajax({
  				url:"acknowledgment?promoId="+id,
  				type:'POST',
@@ -262,7 +260,6 @@
 		});
  		
  		$("#uploadPdf").click(function(){
- 			alert(11);
  			var id = $("#promoId").val();
  			window.location.href="subsidyStepTwo?promoId="+id;
  		});
