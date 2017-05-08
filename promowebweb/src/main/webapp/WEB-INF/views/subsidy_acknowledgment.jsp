@@ -97,7 +97,7 @@
 					<c:when test="${ promo.rewardType eq 2 && empty wltAccount }">
 						<%@ include file="stepMessages/wlt_to_bind.jsp"%>
 					</c:when>
-					<c:when test="${ not empty subsidyTerm }">
+					<c:when test="${ not empty subsidy }">
 						<%@ include file="subsidy/fill_contract.jsp"%>
 					</c:when>
 				</c:choose>
@@ -124,11 +124,13 @@
 	<%@ include file="previewDialog.jsp"%>
 
 	<script type="text/javascript">
+		
 		var pageData = {
 			promoId : '${promo.promoId}',
 			currentStep : '${currentStep}',
 			regType : JSON.parse('${promo.regType eq true}'),
 			username: '${unm}',
+			status: '${subsidy.status}',
 			hasSubmitFields: JSON.parse('${hasSubmitFields eq true}'),
 			hasSubsidyApproved: JSON.parse('${hasSubsidyApproved eq true}'),
 			isAwardEnd: JSON.parse('${isAwardEnd eq true}')

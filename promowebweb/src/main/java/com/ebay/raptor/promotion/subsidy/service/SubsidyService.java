@@ -31,9 +31,9 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
+import com.ebay.cbt.sf.service.ServiceExecutor;
 import com.ebay.kernel.util.URLDecoder;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
@@ -41,7 +41,7 @@ import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.util.EncryptUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+import com.sforce.ws.ConnectionException;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
@@ -96,26 +96,22 @@ public class SubsidyService extends BaseService {
 	 * @param userId
 	 * @param status
 	 * @return 
+	 * @throws ConnectionException 
 	 * @throws PromoException
 	 */
-	public boolean updateSubsidy(String promoId, UserData userData, int status) {
+	public boolean updateSubsidy(Promotion promo, Subsidy subsidy, int status) throws ConnectionException {
 		boolean flag = false;
-		Subsidy subsidy = new Subsidy();
-		String orginalStatus = PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName();
-		int promoStatus = PMSubsidyStatus.PM_UNKNOWN_STATUS.getPMStatus(); //-1
+		int orginalStatus = PMSubsidyStatus.PM_UNKNOWN_STATUS.getPmStatus(); //100 moren
 		try {
-			Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-			subsidy = getSubsidy(promoId, userData.getUserId());
 			orginalStatus = subsidy.getStatus();
-			subsidy.setStatus(PMSubsidyStatus.valueOfPMStatus(status).getAVStatus());
-			if(PMSubsidyStatus.PM_UNKNOWN_STATUS.getSfName().equals(orginalStatus)){
+			subsidy.setStatus(status);
+			if(PMSubsidyStatus.PM_UNKNOWN_STATUS.getPmStatus()==orginalStatus){
 				flag = updateSubsidy(subsidy); 
 			}else{
 				// the status of the promo in the db
-				promoStatus = getSubsidyStatus(orginalStatus);
-				if(promoStatus<status){
+				if(orginalStatus<status){
 					//update upload file status
-					if(PMSubsidyStatus.REWARD_UPLOADED.getPMStatus()==status){
+					if(PMSubsidyStatus.REWARD_UPLOADED.getPmStatus()==status){
 						SubsidyLegalTerm term = getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 						List<String> needtouploadList = new ArrayList<String>();
 						List<SubsidyCustomField> fields = term.getSubsidyCustomFields();
@@ -124,8 +120,7 @@ public class SubsidyService extends BaseService {
 								needtouploadList.add(field.getKey());
 							}
 						}
-						//query for all uploaded attachment
-						List<SubsidyAttachment> subsidyAttachments = getSubsidyAttachment(promoId,userData.getUserId());
+						List<SubsidyAttachment> subsidyAttachments = getSubsidyAttachment(promo.getPromoId(),subsidy.getOracleId());
 						for (SubsidyAttachment subsidyAttachment : subsidyAttachments) {
 							needtouploadList.remove(subsidyAttachment.getKey());
 						}
@@ -145,7 +140,13 @@ public class SubsidyService extends BaseService {
 		return flag;
 	}
 	
-	private boolean updateSubsidy(Subsidy subsidy) throws PromoException{
+	public boolean updateSubsidy(Subsidy subsidy) throws PromoException, ConnectionException{
+		/** when the status is visited and Commited, i need to call the sf service to update the subsidy status **/
+		int status = subsidy.getStatus();
+		if(PMSubsidyStatus.REWARD_VISITED.getPmStatus()==status||PMSubsidyStatus.REWARD_COMMITED.getPmStatus()==status){
+			ServiceExecutor sfService = ServiceExecutor.getInstance();
+			sfService.updateSubsidyStatus(subsidy.getSubsidyId(),PMSubsidyStatus.valueOf(status).getSfStatus());
+		}
 		String url = url(params(ResourceProvider.SubsidyRes.updateSubsidy));
 		GingerClientResponse resp = httpPost(url, subsidy);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
@@ -161,15 +162,6 @@ public class SubsidyService extends BaseService {
 		return false;
 	}
 	
-	// as the origin enum did not provider the method so i have to add it here
-	private int getSubsidyStatus(String status){
-		for(PMSubsidyStatus subsidyStatus : PMSubsidyStatus.values()) {
-			if (subsidyStatus.getSfName().equals(status)) {
-				return subsidyStatus.getPMStatus();
-			}
-		}
-		return -1;
-	}
 
 	/**
 	 * 
@@ -325,10 +317,12 @@ public class SubsidyService extends BaseService {
 	 * @throws PromoException
 	 * @throws IOException
 	 */
-	public String uploadSubsidyAttachment(String promoId,String ebayID, Long userId, String key, final MultipartFile uploadFile,
-			String fileType) throws Exception {
+	public String uploadSubsidyAttachment(String promoId,String ebayID, Long userId, String key, final MultipartFile uploadFile) throws Exception {
 		// this method will response a the file id;
 		String urlbak = url(ResourceProvider.SubsidyRes.uploadAttachmentBak);
+		String fileNameString = uploadFile.getOriginalFilename();
+		String fileName = fileNameString.substring(0, fileNameString.lastIndexOf("."));
+		String fileType = fileNameString.substring(fileNameString.lastIndexOf(".")+1);
 		FormDataMultiPart multiPart = new FormDataMultiPart();
 		File file = multipartToFile(uploadFile);
 		FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file", file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
@@ -339,8 +333,6 @@ public class SubsidyService extends BaseService {
 		multiPart.field("key", key);
 		multiPart.field("userName", ebayID);
 		multiPart.field("size", uploadFile.getSize()+"");
-		String fileNameString = decodefilePathOrfileName(file.getName());
-		String fileName = fileNameString.substring(0, fileNameString.lastIndexOf("."));
 		multiPart.field("fileName", fileName);
 
 		GingerClientResponse resp = uploadMultipart(urlbak, multiPart);

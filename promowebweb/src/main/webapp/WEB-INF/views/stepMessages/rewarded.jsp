@@ -57,7 +57,15 @@
 			
 			<menu>
 				<li>
-					<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
+					<c:if test="${subsidy.status eq 0 or subsidy.status eq 1 }">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写领奖协议</a>
+					</c:if> 
+					<c:if test="${subsidy.status eq 2 or subsidy.status eq 3 }">
+						<a class="btn" href="subsidy/subsidyStepTwo?promoId=${promo.promoId }">上传领奖协议</a>
+					</c:if> 
+					<c:if test="${subsidy.status eq 4 }">
+						<a class="btn" href="#">奖励发放中</a>
+					</c:if> 
 					<br /><br />
 					<a href="index">返回活动列表</a>
 				</li>
