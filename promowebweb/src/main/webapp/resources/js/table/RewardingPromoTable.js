@@ -182,7 +182,7 @@ var BizReport = BizReport || {};
 							case 'AppliableAgain':
 								if (full.onlineVettingFlag) {
 									display = "<a class='btn' target='_blank' href='" + getSubsidyLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a><br/>";
-								} else if (full.onlineVettingFlag) {
+								} else if (!full.onlineVettingFlag) {
 									display = "<a class='btn' target='_blank' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + data) + "</a><br/>";
 								}
 								
