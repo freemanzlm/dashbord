@@ -111,6 +111,7 @@ public class SubsidyController {
 			Subsidy subsidy = subsidyService.getSubsidy(promoId, userID);
 			SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 			String pdfContent = URLDecoder.decode(new String(term.getContent()), "UTF-8");
+			
 			Integer subsidyStatus = subsidy.getStatus();
 			if (PMSubsidyStatus.PM_UNKNOWN_STATUS.getPmStatus() == subsidyStatus) { // 初次访问 需要更新状态
 				subsidy.setStatus(PMSubsidyStatus.REWARD_VISITED.getPmStatus());
@@ -119,25 +120,23 @@ public class SubsidyController {
 				SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId, userID);
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
 			}
+			
 			if (term.getSubsidyType() == 2) { // 奖励类型为wlt积分
 				String backURL = getBindWltURL(request, userData.getUserName());
-				WLTAccount wltAccount = subsidyService.getWLTAccount(userData.getUserName());
-				model.addObject("wltAccount", wltAccount);
-				if (wltAccount == null) {
-					String bindURL = wltApiService.bindWltAccount(userData.getUserName(), backURL);
-					model.addObject("wltBindURL", bindURL);
-				}
+				putWltAccountInfo(model, userData.getUserName(), backURL);
 			}
+			
 			ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
 			view.calcualteCurentStep(promo);
 			view.appendPromoEndCheck(model.getModel(), promo, now);
 			view.appendPromoAwardEndCheck(model.getModel(), promo, now);
 			model.addObject("nonuploadFields", fields[0]);
+			model.addObject("uploadFields", fields[1]);
 			model.addObject("pdfContent", pdfContent);
 			model.addObject("subsidy", subsidy);
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
 			model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
-			model.setViewName("subsidy/subsidy_step1");
+			model.setViewName("subsidy_acknowledgment");
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s", promoId), e);
 			e.printStackTrace();
@@ -613,6 +612,28 @@ public class SubsidyController {
 		ModelAndView mav = new ModelAndView("errors/500");
 		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
+	}
+	
+	/**
+	 * Put WLT account information into Model.
+	 * @param mav
+	 * @param userName
+	 * @param backURL
+	 */
+	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) {
+		WLTAccount wltAccount = null;
+		try {
+			wltAccount = subsidyService.getWLTAccount(userName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (wltAccount == null) {
+			String bindURL = wltApiService.bindWltAccount(userName, backURL);
+			mav.addObject("wltBindURL", bindURL);
+		}
+		
+		mav.addObject("wltAccount", wltAccount);
 	}
 
 	/**
