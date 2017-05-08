@@ -113,16 +113,11 @@
 								<a href="/promotion/subsidy/acknowledgment?promoId=${promo.promoId }">第一步：填写确认函</a>
 							</span>
 						</li>
-						<li role="tab" id="tab2" aria-controls="pane2" class="active">
+						<li role="tab" id="tab2" aria-controls="pane2" class="<c:if test='${subsidy.status eq 2 or subsidy.status eq 3 or subsidy.status eq 5}'>active</c:if>">
 							<span class="label"> 
 								<a href="/promotion/subsidy/subsidyStepTwo?promoId=${promo.promoId }">第二步：上传确认函</a>
 							</span>
-						</li>
-<%-- 						<li role="tab" id="tab2" aria-controls="pane2" class="<c:if test='${subsidy.status eq 2 or subsidy.status eq 3 or subsidy.status eq 5}'>active</c:if>">
-							<span class="label"> 
-								<a href="/promotion/subsidy/subsidyStepTwo?promoId=${promo.promoId }">第二步：上传确认函</a>
-							</span>
-						</li> --%>
+						</li> 
 						<li role="tab" aria-controls="pane3" class="<c:if test='${subsidy.status eq 4}'>active</c:if>">
 							<span class="label">
 								<a href="#pane3">第三步：领取奖励</a>
@@ -188,14 +183,14 @@
 						</div>
 						<div class="form-group">
 							<div class="control-label">
-								<input id="readFlag" <c:if test="${subsidy.status gt 2 }">checked='checked'</c:if> type="checkbox" />
+								<input id="readFlag" <c:if test="${subsidy.status gt 1 }">checked='checked'</c:if> type="checkbox" />
 							</div>
 							<div class="form-field">我已阅读并接受以下确认函内容</div>
 						</div>
 						<div class="text-center">
 							<button type="button" class="btn" id="genPdf" >点击生成PDF供签署</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<button class="btn" id="uploadPdf" disabled="<c:if test='${subsidy.status lt 2}'>disabled</c:if>">下一步：上传确认函</button>
+							<input id="uploadPdf" type="button" class="btn" <c:if test="${subsidy.status lt 1}">disabled='disabled'</c:if> value="下一步：上传确认函"></input>
 						</div>
 					</form>
 					<hr />
@@ -261,7 +256,7 @@
  		
  		$("#uploadPdf").click(function(){
  			var id = $("#promoId").val();
- 			window.location.href="subsidyStepTwo?promoId="+id;
+ 			window.location.href="/promotion/subsidy/subsidyStepTwo?promoId="+id;
  		});
  </script>
 </html>
