@@ -329,18 +329,7 @@ public class SubsidyController {
 
 			/** add the content of the PDF **/
 			Paragraph context = new Paragraph();
-			String pdfContent = URLDecoder.decode(new String(term.getContent(),"UTF-8"));
-			// assign the code with utf-8 will cause error
-//			System.out.println("**************************URLDecoder.decode(new String(term.getContent()))" + pdfContent);
-//			String pdfContent1 = URLDecoder.decode(new String(term.getContent()), "UTF-8");
-			// assign the code with utf-8 will cause error
-//			System.out.println("**************************URLDecoder.decode(new String(term.getContent()),'utf-8')" + pdfContent1);
-//			String pdfContent2 = new String(term.getContent());
-			// assign the code with utf-8 will cause error
-//			System.out.println("**************************new String(term.getContent())" + pdfContent2);
-//			String pdfContent3 = new String(term.getContent(), "utf-8");
-			// assign the code with utf-8 will cause error
-//			System.out.println("**************************new String(term.getContent(),'utf-8')" + pdfContent3);
+			String pdfContent = URLDecoder.decode(new String(term.getContent()),"UTF-8");
 			ElementList elementList = MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 			for (Element element : elementList) {
 				context.add(element);
