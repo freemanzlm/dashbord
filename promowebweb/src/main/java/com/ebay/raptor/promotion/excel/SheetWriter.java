@@ -251,13 +251,13 @@ public class SheetWriter implements ISheetWriter {
 					String endMark =")";
 					if(config.getWritable()) {
 						if(config.getRequired()) {
-							config.setTitle(config.getTitle()+"(required/"+messageSource.getMessage("excel.header.require", null, this.locale)+endMark);
+							config.setTitle(config.getTitle()+"\n(required/"+messageSource.getMessage("excel.header.require", null, this.locale)+endMark);
 						} else {
-							config.setTitle(config.getTitle()+"(optional/"+messageSource.getMessage("excel.header.optional", null, this.locale)+endMark);
+							config.setTitle(config.getTitle()+"\n(optional/"+messageSource.getMessage("excel.header.optional", null, this.locale)+endMark);
 						}
 					} else {
 						endMark = "";
-						config.setTitle(config.getTitle()+"(locked/"+messageSource.getMessage("excel.header.lock", null, this.locale)+")");
+						config.setTitle(config.getTitle()+"\n(locked/"+messageSource.getMessage("excel.header.lock", null, this.locale)+")");
 					}
 				}
 				createCell(book, sheet, row, config.getWriteOrder(), config.getTitle(), headerStyle);
