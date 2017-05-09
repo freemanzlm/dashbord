@@ -113,7 +113,7 @@ public class SubsidyController {
 			String pdfContent = URLDecoder.decode(new String(term.getContent()), "UTF-8");
 			
 			Integer subsidyStatus = subsidy.getStatus();
-			if (PMSubsidyStatus.PM_UNKNOWN_STATUS.getPmStatus() == subsidyStatus) { // 初次访问 需要更新状态
+			if (PMSubsidyStatus.PM_UNKNOWN_STATUS.getPmStatus() == subsidyStatus||PMSubsidyStatus.REWARD_APPLIABLE_AGAIN.getPmStatus()==subsidyStatus) { // 初次访问 需要更新状态
 				subsidy.setStatus(PMSubsidyStatus.REWARD_VISITED.getPmStatus());
 				boolean ret = subsidyService.updateSubsidy(subsidy);
 			} else if (PMSubsidyStatus.REWARD_VISITED.getPmStatus() != subsidyStatus) {// 不是第一次访问了 不需要更新状态为已访问 同时需要拿出用户填写的数据
