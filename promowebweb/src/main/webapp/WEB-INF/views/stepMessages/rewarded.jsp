@@ -64,13 +64,14 @@
 			<menu>
 				<li>
 					<c:if test="${subsidy.status eq 0 or subsidy.status eq 1 }">
-						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写领奖协议</a>
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写领奖确认函</a>
 					</c:if> 
 					<c:if test="${subsidy.status eq 2}">
-						<a class="btn" href="subsidy/subsidyStepTwo?promoId=${promo.promoId }">上传领奖协议</a>
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">上传领奖确认函</a>
 					</c:if> 
 					<c:if test="${subsidy.status eq 3 or  subsidy.status eq 4 }">
-						<p>奖励申领中，请耐心等待。</p>
+						<p>奖励申领审核中，请耐心等待。</p> <br />
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">修改已上传的确认函</a>
 					</c:if> 
 					<br /><br />
 					<a href="index">返回活动列表</a>

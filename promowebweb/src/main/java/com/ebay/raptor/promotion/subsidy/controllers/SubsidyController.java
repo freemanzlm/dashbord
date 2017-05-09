@@ -121,6 +121,11 @@ public class SubsidyController {
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
 			}
 			
+			if (null != subsidyStatus && PMSubsidyStatus.REWARD_VISITED.getPmStatus() != subsidyStatus) { 
+				List<SubsidyAttachment> subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId, userID);
+				term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
+			}
+			
 			if (term.getSubsidyType() == 2) { // 奖励类型为wlt积分
 				String backURL = getBindWltURL(request, userData.getUserName());
 				putWltAccountInfo(model, userData.getUserName(), backURL);
@@ -160,7 +165,7 @@ public class SubsidyController {
 			if (null != subsidyStatus || PMSubsidyStatus.REWARD_VISITED.getPmStatus() != subsidyStatus) { 
 				List<SubsidyAttachment> subsidyAttachmentList = subsidyService.getSubsidyAttachment(promoId, userID);
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
-			} 
+			}
 			ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
 			view.calcualteCurentStep(promo);
 			view.appendPromoEndCheck(model.getModel(), promo, now);

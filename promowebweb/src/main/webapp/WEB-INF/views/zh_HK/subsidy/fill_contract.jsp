@@ -15,6 +15,7 @@
 			<li role="tab" aria-controls="pane3" v-if="hasApproved" v-bind:class="{active: hasApproved}"><span class="label">
 				<a href="#pane3">第三步：領取獎勵</a></span></li>
 		</ul>
+		<a class="fr mt10" href="/promotion/${promo.promoId}">查看活動詳情</a>
 	</div>
 	
 	<div id="pane1" class="tab-pane confirm-letter-pane" v-bind:class="{active: !hasSubmitFields}" role="tabpanel">
@@ -101,6 +102,10 @@
 	</div>
 	
 	<div id="pane2" class="tab-pane confirm-letter-submission-pane" v-bind:class="{active: (hasSubmitFields && !hasApproved)}" role="tabpanel">
+		<c:if test="${ subsidy.status eq 3 }">
+			<div style="background:#e8ecaf;padding:10px;">您的檔案已上傳成功！請耐心等待我們的稽核結果，由於數據量龐大，更新稽核狀態可能需要10個工作日。<br />您也可以隨時返回<a href="/promotion/index">活動清單</a>頁查看最新的稽核狀態。</div>
+		</c:if>
+		
 		<div class="hint">
 			<p>為了方便核實您的上傳資訊，確保您能儘快領取相關獎勵，請仔細閱讀以下內容：</p>
 			<ol>
@@ -127,7 +132,7 @@
 							</span> <br v-if="!isAwardEnd"/>
 							<span class="font-bold msg">
 								<c:if test="${ not empty field.value }">
-									<a href="/promotion/subsidy/downloadAttachmentById?id=${field.value}">下載附件</a>
+									<a href="/promotion/subsidy/downloadAttachmentById?id=${field.value}">查看</a>
 								</c:if>
 							</span>
 						</div>

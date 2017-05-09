@@ -106,7 +106,7 @@ BizReport.local = {
 			'AppliableAgain':'重新申领奖励',
 			'Commited':'待上传确认函',
 			'Appliable':'领取奖励',
-			'Uploaded':'申领审核中',
+			'Uploaded':'修改已上传确认函',
 			'Failed':'奖励领取失败',
 			'Expired':'奖励领取过期',
 			'Applied':'领取奖励成功'
