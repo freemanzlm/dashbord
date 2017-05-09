@@ -134,6 +134,7 @@ public class SubsidyController {
 			model.addObject("uploadFields", fields[1]);
 			model.addObject("pdfContent", pdfContent);
 			model.addObject("subsidy", subsidy);
+			model.addObject("subsidyTerm", term);
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
 			model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
 			model.setViewName("subsidy_acknowledgment");
