@@ -102,7 +102,6 @@ var BizReport = BizReport || {};
 					sType: "date",
 					sClass: "text-center",
 					sDefaultContent: "-",
-					sWidth: "200px",
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							return full.promoSdt + " ~ " + data;
@@ -115,6 +114,7 @@ var BizReport = BizReport || {};
 					sClass: "text-center state",
 					sDefaultContent: "",
 					sType: 'numeric',
+					sWidth: "120px",
 					mRender: function(data, type, full) {
 						if (type == "display") {
 							return '<a href="' + getLink(full.promoId) + '" target="_blank">' + local.getText('promo.state.Detailed') + "</a>";
