@@ -53,6 +53,12 @@
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<h3>恭喜！您将获得等值 ${promo.reward} ${promo.currency} 的奖励！</h3>
+				<c:if test="${ not empty wltAccount }">
+					<p class="wlt-binding">
+						请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：${wltAccount.wltUserId}，
+						<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
+					</p>
+				</c:if>
 			</div>
 			
 			<menu>

@@ -27,6 +27,7 @@ import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
+import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.context.AppBuildConfig;
 import com.ebay.raptor.kernel.context.IRaptorContext;
@@ -138,7 +139,7 @@ public class IndexController {
 	@GET
 	@RequestMapping("/{promoId}")
 	public ModelAndView promotion(@PathVariable("promoId") String promoId, HttpServletRequest request,
-			HttpServletResponse response) throws MissingArgumentException, IOException, PromoException {
+			HttpServletResponse response) throws Exception {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		Promotion promo = null;
@@ -169,6 +170,9 @@ public class IndexController {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
 			} else {
+				if (subsidyTerm != null && subsidyTerm.getSubsidyType() == 2) { // 奖励类型为wlt积分
+					putWltAccountInfo(model, userData.getUserName(), null);
+				}
 				model.addObject("subsidyTerm", subsidyTerm);
 			}
 		} else {
@@ -279,6 +283,18 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("errors/500");
 		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
+	}
+	
+	/**
+	 * Put WLT account information into Model.
+	 * @param mav
+	 * @param userName
+	 * @param backURL
+	 * @throws Exception 
+	 */
+	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) throws Exception {
+		WLTAccount wltAccount = subsidyService.getWLTAccount(userName);
+		mav.addObject("wltAccount", wltAccount);
 	}
 
 	private ContextViewRes handleViewBasedOnPromotion(Promotion promo, long uid) throws PromoException {
