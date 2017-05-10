@@ -164,7 +164,7 @@
 			<c:otherwise>
 				<div class="promo-state-message">
 					<div class="message-content">
-						<div class="pretty-text">${ subsidyTerm.successInfo }</div> <br />
+						<div class="pretty-text pt10 padding_lr10">${ subsidyTerm.successInfo }</div> <br />
 					</div>
 					<menu>
 						<li><a href="../index" class="btn">返回活動清單</a></li>

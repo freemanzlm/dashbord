@@ -69,10 +69,14 @@
 					<c:if test="${subsidy.status eq 2}">
 						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">上傳領獎協定</a>
 					</c:if> 
-					<c:if test="${subsidy.status eq 3 or  subsidy.status eq 4 }">
+					<c:if test="${subsidy.status eq 3 }">
 						<p>獎勵申領稽核中，請耐心等待。</p> <br />
 						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">修改已上傳的確認函</a>
-					</c:if> 
+					</c:if>
+					<c:if test="${subsidy.status eq 4 }">
+						<h3>恭喜！您將獲得等值 ${reward} ${promo.currency} 的獎勵！</h3>
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">領取獎勵</a>
+					</c:if>
 					<br /><br />
 					<a href="index">返回活動清單</a>
 				</li>
