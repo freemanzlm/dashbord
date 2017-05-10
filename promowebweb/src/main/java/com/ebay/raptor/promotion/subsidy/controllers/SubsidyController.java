@@ -132,9 +132,9 @@ public class SubsidyController {
 			}
 			
 			ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
-			view.calcualteCurentStep(promo);
-			view.appendPromoEndCheck(model.getModel(), promo, now);
-			view.appendPromoAwardEndCheck(model.getModel(), promo, now);
+			view.handleCurentStep(promo);
+			view.appendPromoEndCheck(model, promo, now);
+			view.appendPromoAwardEndCheck(model, promo, now);
 			model.addObject("nonuploadFields", fields[0]);
 			model.addObject("uploadFields", fields[1]);
 			model.addObject("pdfContent", pdfContent);
@@ -167,9 +167,9 @@ public class SubsidyController {
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
 			}
 			ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
-			view.calcualteCurentStep(promo);
-			view.appendPromoEndCheck(model.getModel(), promo, now);
-			view.appendPromoAwardEndCheck(model.getModel(), promo, now);
+			view.handleCurentStep(promo);
+			view.appendPromoEndCheck(model, promo, now);
+			view.appendPromoAwardEndCheck(model, promo, now);
 			model.addObject("uploadFields", fields[1]);
 			model.addObject("subsidy", subsidy);
 			model.addObject(ViewContext.Promotion.getAttr(), promo);

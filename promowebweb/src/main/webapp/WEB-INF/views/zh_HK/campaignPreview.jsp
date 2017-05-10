@@ -92,7 +92,7 @@
 				
 				<%@ include file="state.jsp"%>
 
-				<%@ include file="activity.jsp"%>
+				<%@ include file="description.jsp"%>
 
 				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or (currentStep eq 'SELLER FEEDBACK' and not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE'))) and  regType  }">
 					<div class="mt20">

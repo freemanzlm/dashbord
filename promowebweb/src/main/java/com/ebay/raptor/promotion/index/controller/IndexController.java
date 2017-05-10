@@ -189,15 +189,6 @@ public class IndexController {
 		}
 
 		if (promo.getActiveFlag()) {
-			ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
-			model.setViewName(res.getView().getPath());
-			model.addAllObjects(res.getContext());
-			if (promo.getCurrentStep() != null) {
-				promo.setCurrentStep(promo.getCurrentStep().toUpperCase());
-			}
-			if (promo.getDraftPreviewStep() != null) {
-				promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
-			}
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
 			SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 
@@ -210,6 +201,8 @@ public class IndexController {
 				}
 				model.addObject("subsidyTerm", subsidyTerm);
 			}
+			
+			view.handlePromotion(model, promo, userData.getUserId());
 		} else {
 			model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
 		}
@@ -306,7 +299,7 @@ public class IndexController {
 		jsonMap.put("data", resultJson);
 		return jsonMap;
 	}
-
+	
 	@RequestMapping(value = "/404", method = RequestMethod.GET)
 	public ModelAndView notFound(Exception exception, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("errors/404");

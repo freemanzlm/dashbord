@@ -3,20 +3,18 @@ package com.ebay.raptor.promotion.promo.service;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.raptor.promotion.enums.PromotionStep;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
-import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.controller.ListingController;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.util.DateUtil;
@@ -24,6 +22,8 @@ import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 @Component
 public class PromotionViewService {
@@ -35,30 +35,59 @@ public class PromotionViewService {
 	
 	public PromotionViewService() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
-	public ContextViewRes handleView(Promotion pro, long uid) throws PromoException{
-		ContextViewRes res = new ContextViewRes();
-		Map<String, Object> context = new HashMap<String, Object>();
+	/**
+	 * Entry for all promotions.
+	 * @param model
+	 * @param promo
+	 * @param userId
+	 */
+	public void handlePromotion(ModelAndView model, Promotion promo, Long userId) {
+		switch(promo.getType()) {
+		case 1:
+			handleBrandPromotion(model, promo, userId);
+			break;
+		default:
+			handleGeneralPromotion(model, promo, userId);
+			break;
+		}
+	}
+	
+	/**
+	 * Render general campaign.
+	 * @param model
+	 * @param promo
+	 * @param userId
+	 */
+	public void handleGeneralPromotion(ModelAndView model, Promotion promo, Long userId) {
 		Date now = new Date();
 		
-		appendRegEndCheck(context, pro, now, uid);
-		appendPromoEndCheck(context, pro, now);
-		appendPromoAwardEndCheck(context, pro, now);
+		appendRegEndCheck(model, promo, now, userId);
+		appendPromoEndCheck(model, promo, now);
+		appendPromoAwardEndCheck(model, promo, now);
 		
-		context.put(ViewContext.HAS_LISTINGS_NOMINATED.getAttr(), service.hasListingNominated(pro.getPromoId(), uid));
+		model.addObject(ViewContext.HAS_LISTINGS_NOMINATED.getAttr(), service.hasListingNominated(promo.getPromoId(), userId));
 		
-		String fieldsDefinitions = pro.getListingFields(); 
-		handleListingFields(fieldsDefinitions, context, pro.getRegion());
+		String fieldsDefinitions = promo.getListingFields(); 
+		handleListingFields(fieldsDefinitions, model, promo.getRegion());
 		
-		calcualteCurentStep(pro);
+		handleCurentStep(promo);
 		
-		res.setContext(context);
+		model.setViewName(ViewResource.CAMPAIGN.getPath());
+	}
+	
+	/**
+	 * Render brand campaign.
+	 * @param model
+	 * @param promo
+	 * @param userId
+	 */
+	public void handleBrandPromotion(ModelAndView model, Promotion promo, Long userId) {
+		String fieldsDefinitions = promo.getListingFields(); 
+		handleListingFields(fieldsDefinitions, model, promo.getRegion());
 		
-		res.setView(ViewResource.CAMPAIGN);
-		
-		return res;
+		model.setViewName(ViewResource.BRAND_CAMPAIGN.getPath());
 	}
 	
 	/**
@@ -68,17 +97,17 @@ public class PromotionViewService {
 	 * @param now
 	 * @param uid
 	 */
-	public void appendRegEndCheck(Map<String, Object> context, Promotion pro, Date now, long uid) {
+	public void appendRegEndCheck(ModelAndView context, Promotion pro, Date now, long uid) {
 		Date regEndDate = pro.getPromoDlDt();
 		boolean isRegEnded = false;
 		if (regEndDate != null) {
 			regEndDate = DateUtil.convertToSystemTime(regEndDate, DateUtil.BEIJING_TIMEZONE);
-			context.put(ViewContext.IS_REG_END.getAttr(), isRegEnded = regEndDate.before(now));
+			context.addObject(ViewContext.IS_REG_END.getAttr(), isRegEnded = regEndDate.before(now));
 		}
 		
 		if (!isRegEnded) {
 			// Enroll and confirm need to check if user has accept the terms. 
-			context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
+			context.addObject(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
 		}
 	}
 	
@@ -89,10 +118,10 @@ public class PromotionViewService {
 	 * @param now
 	 * @param uid
 	 */
-	public void appendPromoEndCheck(Map<String, Object> context, Promotion pro, Date now) {
+	public void appendPromoEndCheck(ModelAndView context, Promotion pro, Date now) {
 		// whether promotion has stopped
 		Date endDate = DateUtil.convertToSystemTime(pro.getPromoEdt(), DateUtil.BEIJING_TIMEZONE);
-		context.put(ViewContext.IS_PROMOTION_STOP.getAttr(), endDate.before(now));
+		context.addObject(ViewContext.IS_PROMOTION_STOP.getAttr(), endDate.before(now));
 	}
 	
 	/**
@@ -101,26 +130,33 @@ public class PromotionViewService {
 	 * @param context
 	 * @param uid
 	 */
-	public void appendPromoAwardEndCheck(Map<String, Object> context, Promotion pro, Date now) {
+	public void appendPromoAwardEndCheck(ModelAndView context, Promotion pro, Date now) {
 
 		// whether promotion reward deadline has expired
 		Date awardEndDate = pro.getRewardDlDt();
 		if (awardEndDate != null) {
 			awardEndDate = DateUtil.convertToSystemTime(pro.getRewardDlDt(), DateUtil.BEIJING_TIMEZONE);
-			context.put(ViewContext.IS_AWARD_END.getAttr(), awardEndDate.before(now));
+			context.addObject(ViewContext.IS_AWARD_END.getAttr(), awardEndDate.before(now));
 		}
 	}
 	
-	public void calcualteCurentStep(Promotion pro) {
+	public void handleCurentStep(Promotion promo) {
 		// Promotion current step may be not an visible step, we need to adjust it. 
-		handleCurrentStep(pro, pro.getCurrentStep());
+		handleVisibleCurrentStep(promo, promo.getCurrentStep());
 		
 		// if promotion is in draft step, it may be a preview-able promotion.
-		handleDraftPromotion(pro);
+		handleDraftPromotion(promo);
 		
 		// We only leave visible step list for promotion display.
-		String visibleStepList = getVisibleStepList(pro.getStepList());
-		pro.setStepList(visibleStepList.toUpperCase());
+		String visibleStepList = getVisibleStepList(promo.getStepList());
+		promo.setStepList(visibleStepList.toUpperCase());
+		
+		if (promo.getCurrentStep() != null) {
+			promo.setCurrentStep(promo.getCurrentStep().toUpperCase());
+		}
+		if (promo.getDraftPreviewStep() != null) {
+			promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
+		}
 	}
 	
 	/**
@@ -128,14 +164,14 @@ public class PromotionViewService {
 	 * @param promo
 	 * @param context
 	 */
-	public void handleListingFields(String fieldsDefinitions, Map<String, Object> context, String region){
+	public void handleListingFields(String fieldsDefinitions, ModelAndView context, String region){
 		if (fieldsDefinitions != null) {
 			JsonNode tree;
 			try {
 				tree = mapper.readTree(fieldsDefinitions);
 				if (tree != null && tree.isArray()) {
 					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, LocaleUtil.getLocale(region));
-					context.put(ViewContext.FIELDS_DEFINITIONS.getAttr(), columnConfigs);
+					context.addObject(ViewContext.FIELDS_DEFINITIONS.getAttr(), columnConfigs);
 				}
 			} catch (IOException e) {
 				logger.error("ObjectMapper can't read listing fields definition from promotion.");
@@ -217,7 +253,8 @@ public class PromotionViewService {
 	 * @return
 	 */
 	public String filterStepList(String stepList) {
-		List<String> list = new LinkedList(Arrays.asList(stepList.split(">")));
+		String[] steps = stepList.split(">");
+		LinkedList<String> list = new LinkedList<String>(Arrays.asList(steps));
 		if(!list.contains(PromotionStep.SELLER_NOMINATION_NEED_APPROVE.getName())
 				&&list.contains(PromotionStep.PROMOTION_SUBMITTED.getName())) {
 			list.remove(PromotionStep.PROMOTION_SUBMITTED.getName());
@@ -248,7 +285,7 @@ public class PromotionViewService {
 		//if (PromotionStep.DRAFT.getName().equalsIgnoreCase(promo.getCurrentStep())) {
 			if (promo.getIsPreview() != null && promo.getIsPreview() == true) {
 				// use preview step as the current step if this promotion is in draft state.
-				handleCurrentStep(promo, promo.getDraftPreviewStep());
+				handleVisibleCurrentStep(promo, promo.getDraftPreviewStep());
 			}
 		//}
 	}
@@ -258,7 +295,7 @@ public class PromotionViewService {
 	 * @param promo
 	 * @param currentStep
 	 */
-	private void handleCurrentStep(Promotion promo, String currentStep) {
+	private void handleVisibleCurrentStep(Promotion promo, String currentStep) {
 		String visibleCurrentStep = getVisibleCurrentStep(promo.getStepList(), currentStep);
 		if (isVisibleStep(visibleCurrentStep)) {
 			promo.setVisibleCurrentStep(visibleCurrentStep.toUpperCase());
