@@ -102,9 +102,9 @@ BizReport.local = {
 			'Awarding':'申领奖励',
 			//'ReAwarding':'重新领取奖励',
 			'End':'活动已结束',
-			'Visited':'待填写确认函',
+			'Visited':'填写确认函',
 			'AppliableAgain':'重新申领奖励',
-			'Commited':'待上传确认函',
+			'Commited':'上传确认函',
 			'Appliable':'领取奖励',
 			'Uploaded':'修改已上传确认函',
 			'Failed':'奖励领取失败',
@@ -154,7 +154,7 @@ BizReport.local = {
 			notEmpty : '上传文件不能为空',
 			attachmentSizeError: '上传文件大小不能超过5M',
 			attachmentFileTypeError: '只能上传PDF，ZIP，JPG文件',
-			attachdownload : '下载附件'
+			attachdownload : '查看'
 		}
 	}
 };

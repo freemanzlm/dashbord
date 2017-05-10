@@ -102,9 +102,9 @@ BizReport.local = {
 			'Awarding':'申領獎勵',
 			//'ReAwarding':'重新領取獎勵',
 			'End':'活動已結束',
-			'Visited':'待填寫確認函',
+			'Visited':'填寫確認函',
 			'AppliableAgain':'重新申領獎勵',
-			'Commited':'待上傳確認函',
+			'Commited':'上傳確認函',
 			'Appliable':'領取獎勵',
 			'Uploaded':'修改已上傳確認函',
 			'Failed':'獎勵領取失敗',
@@ -154,7 +154,7 @@ BizReport.local = {
 			notEmpty : '上傳文件不能為空',
 			attachmentSizeError: '上傳文件大小不能超過5M',
 			attachmentFileTypeError: '只能上傳PDF，ZIP，JPG檔案',
-			attachdownload : '下載附件'
+			attachdownload : '查看'
 		}
 	}
 };
