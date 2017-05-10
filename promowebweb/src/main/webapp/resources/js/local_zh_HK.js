@@ -80,15 +80,6 @@ BizReport.local = {
 			'Applied': '已報名',
 			'Started': '活動進行中',
 			'SubsidyCounting': '獎勵確認中',
-			//'SubsidyWaiting': '申領獎勵',
-			//'SubsidyAccessed': '待填寫協議',
-			//'SubsidySubmitted': '待上傳協議',
-			//'SubsidyUploaded': '申領審核中',
-			//'SubsidyRetrievable': '領取獎勵',
-			//'SubsidyResubmittable': '重新申領獎勵',
-			//'SubsidyRetrieved': '領取獎勵成功',
-			//'SubsidyRetrieveFailed': '獎勵領取失敗',	
-			//'SubsidyExpired': '獎勵領取過期',
 			'Canceled': '活動已取消',
 			'Claimed': '我已領取獎勵',
 			'Detailed': '查看詳情',
@@ -102,11 +93,11 @@ BizReport.local = {
 			'Awarding':'申領獎勵',
 			//'ReAwarding':'重新領取獎勵',
 			'End':'活動已結束',
-			'Visited':'待填寫協議',
+			'Visited':'填寫確認函',
 			'AppliableAgain':'重新申領獎勵',
-			'Commited':'待上傳協議',
+			'Commited':'上傳確認函',
 			'Appliable':'領取獎勵',
-			'Uploaded':'申領審核中',
+			'Uploaded':'申領稽核中',
 			'Failed':'獎勵領取失敗',
 			'Expired':'獎勵領取過期',
 			'Applied':'領取獎勵成功'
@@ -154,7 +145,7 @@ BizReport.local = {
 			notEmpty : '上傳文件不能為空',
 			attachmentSizeError: '上傳文件大小不能超過5M',
 			attachmentFileTypeError: '只能上傳PDF，ZIP，JPG檔案',
-			attachdownload : '下載附件'
+			attachdownload : '查看'
 		}
 	}
 };

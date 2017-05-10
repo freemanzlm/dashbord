@@ -163,7 +163,7 @@ table.dataTable td.pic-id p {
 #ongoing-promo-table td .btn,
 #end-promo-table td .btn,
 #pending-promo-table td .btn {
-	width: 76px;
+	width: 100px;
 	font-size: 12px;
 	display: inline-block;
 }

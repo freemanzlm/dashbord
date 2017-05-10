@@ -95,7 +95,6 @@ public class PromotionService extends BaseService {
 		if(null!=promoList){
 			for (Promotion promo : promoList) {
 				SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-				Subsidy subsidy = subsidyService.getSubsidy(promo.getPromoId(), uid);
 				if(null!=term){
 					if(term.getOvFlag()==0){
 						promo.setOnlineVettingFlag(false);
@@ -104,9 +103,6 @@ public class PromotionService extends BaseService {
 					}else{
 						promo.setOnlineVettingFlag(false);
 					}
-				}
-				if(null!=subsidy){
-					promo.setSubsidyStatus(subsidy.getStatus());
 				}
 			}
 		}
@@ -171,7 +167,6 @@ public class PromotionService extends BaseService {
 	
 	public Promotion getPromotionById(String promoId, Long uid, boolean isAdmin) throws PromoException{
 		String uri = url(params(ResourceProvider.PromotionRes.getPromotionById, new Object[]{"{promoId}", promoId, "{uid}", uid, "{isAdmin}", isAdmin}));
-//		throw new PromoException("Filed to get promotion.");
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
 			PromotionResponse promo = resp.getEntity(PromotionResponse.class);

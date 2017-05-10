@@ -118,10 +118,10 @@
 						<select name="" id="">
 							<option value="">顯示所有活動</option>
 							<option value="Awarding">可申請獎勵的活動</option>
-							<option value="Visited">待填寫協議的活動</option>
+							<option value="Visited">待填寫確認函的活動</option>
 							<option value="AppliableAgain">需要重新申請江離的活動</option>
 							<option value="Appliable">可領取獎勵的活動</option>
-							<option value="Commited">待上傳協議的活動</option>
+							<option value="Commited">待上傳確認函的活動</option>
 							<option value="Uploaded">申請審核中的活動</option>
 						</select>
 					</span>

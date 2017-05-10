@@ -35,10 +35,10 @@
 			<div class="message-content">
 				<c:choose>
 					<c:when test="${ promo.rewardType eq 2 }">
-						<h3>您已成功领取等值 ${reward} ${promo.currency}的ebay万里通积分！</h3>
+						<h3>您已成功领取等值 ${promo.reward} ${promo.currency}的ebay万里通积分！</h3>
 					</c:when>
 					<c:when test="${ promo.reward gt 0 }">
-						<h3>您已成功领取等值${reward} ${promo.currency}的奖励</h3>
+						<h3>您已成功领取等值${promo.reward} ${promo.currency}的奖励</h3>
 					</c:when>
 				</c:choose>
 			</div>
@@ -52,12 +52,27 @@
 	<c:when test="${ not empty subsidyTerm and subsidyTerm.ovFlag eq 1 }">
 		<div class="promo-state-message success">
 			<div class="message-content">
-				<h3>恭喜！您将获得等值 ${reward} ${promo.currency} 的奖励！</h3>
+				<h3>恭喜！您将获得等值 ${promo.reward} ${promo.currency} 的奖励！</h3>
+				<c:if test="${ not empty wltAccount }">
+					<p class="wlt-binding">
+						请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：${wltAccount.wltUserId}，
+						<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
+					</p>
+				</c:if>
 			</div>
 			
 			<menu>
 				<li>
-					<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写奖励申领确认函</a>
+					<c:if test="${subsidy.status eq 0 or subsidy.status eq 1 }">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填写领奖确认函</a>
+					</c:if> 
+					<c:if test="${subsidy.status eq 2}">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">上传领奖确认函</a>
+					</c:if> 
+					<c:if test="${subsidy.status eq 3 or  subsidy.status eq 4 }">
+						<p>奖励申领审核中，请耐心等待。</p> <br />
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">修改已上传的确认函</a>
+					</c:if> 
 					<br /><br />
 					<a href="index">返回活动列表</a>
 				</li>
@@ -68,7 +83,7 @@
 	<c:when test="${ not empty subsidyTerm and subsidyTerm.ovFlag ne 1 }">
 		<div class="promo-state-message success">
 			<div class="message-content">
-				<h3>恭喜！您将获得等值 ${reward} ${promo.currency} 的奖励！</h3>
+				<h3>恭喜！您将获得等值 ${promo.reward} ${promo.currency} 的奖励！</h3>
 
 				<div class="pretty-text">${ subsidyTerm.successInfo }</div>
 				<br />

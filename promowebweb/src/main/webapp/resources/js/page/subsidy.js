@@ -1,6 +1,6 @@
 $(function(){
 	Vue.config.devtools = false;
-	var supportedFileTypes = ['image/jpeg', 'application/pdf', 'application/zip'];
+	var supportedFileSuffix = /(\.zip|\.pdf|\.jpg|\.jpeg)$/i;
 	
 	function hasValidSize(inputElement, maxSize) {
 		if (inputElement && inputElement.files) {
@@ -19,7 +19,7 @@ $(function(){
 	function hasValidFileType(inputElement) {
 		if (inputElement && inputElement.files) {
 			var file = inputElement.files[0];
-			if (file && supportedFileTypes.indexOf(file.type) < 0) {
+			if (file && !supportedFileSuffix.test(file.name)) {
 				return false;
 			}
 		}
