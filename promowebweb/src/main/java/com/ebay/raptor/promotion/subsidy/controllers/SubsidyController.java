@@ -334,7 +334,9 @@ public class SubsidyController {
 
 			/** add the content of the PDF **/
 			Paragraph context = new Paragraph();
-			String pdfContent = URLDecoder.decode(new String(term.getContent()),"ISO-8859-1");
+//			String pdfContent = URLDecoder.decode(new String(term.getContent()),"ISO-8859-1");
+			String pdfContent  = new String("<p>我是中文测试</p>");
+			logger.log(LogLevel.WARN,"test for pdf content"+pdfContent);
 			ElementList elementList = MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 			for (Element element : elementList) {
 				context.add(element);
