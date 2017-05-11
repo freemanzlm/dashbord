@@ -67,6 +67,8 @@
 <res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js['dropdown.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
+<res:useJs value="${res.js.local.js.jquery['jquery.validate.min.js']}" target="page-js"></res:useJs>
+<res:useJs value="${res.js.local.js.jquery['messages_zh_TW.min.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['vue.js']}" target="page-js"></res:useJs>
 
 <res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>

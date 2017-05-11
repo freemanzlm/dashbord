@@ -81,7 +81,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="control-label"><input v-model="hasAcceptLetter" type="checkbox" /></div>
+				<div class="control-label"><input v-model="hasAcceptLetter" type="checkbox" name="accept" required/></div>
 				<div class="form-field">
 					我已閱讀並接受以下確認函內容
 				</div>

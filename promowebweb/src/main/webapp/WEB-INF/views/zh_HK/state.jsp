@@ -44,9 +44,7 @@
 		<%@ include file="stepMessages/notificationEdm.jsp" %>
 	</c:when>
 	
-	<c:otherwise>
-		<c:if test="${ currentStep eq 'PROMOTION END' }">
-			<%@ include file="stepMessages/end.jsp" %>
-		</c:if>
-	</c:otherwise>
+	<c:when test="${ currentStep eq 'PROMOTION END' }">
+		<%@ include file="stepMessages/end.jsp" %>
+	</c:when>
 </c:choose>
