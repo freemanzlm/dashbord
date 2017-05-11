@@ -3,7 +3,9 @@ package com.ebay.raptor.promotion.util;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.tool.xml.ElementList;
 import com.itextpdf.tool.xml.XMLWorker;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
@@ -29,12 +31,27 @@ public class MyXMLWorkerHelper {
 		@Override
 		public Font getFont(final String fontname, String encoding, float size,
 				final int style) {
-			size = 9.0F;
+			/*size = 9.0F;
 			String fntname = fontname;
 			if (fntname == null) {
 				fntname = "宋体";
 			}
-			return super.getFont(fntname, encoding, size, style);
+			return super.getFont(fntname, encoding, size, style);*/
+			size = 9.0f;
+			/*String fntname = fontname;
+			if (fntname == null) {
+				fntname = "宋体";
+			}
+			return super.getFont(fntname, encoding, size, style);*/
+			BaseFont bf = null;
+			try {
+				bf = BaseFont.createFont("D:\\msYaHei.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
+			} catch (DocumentException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return new Font(bf,size);
 		}
 	}
 
