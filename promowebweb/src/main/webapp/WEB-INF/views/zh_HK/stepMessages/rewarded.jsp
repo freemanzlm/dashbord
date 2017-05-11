@@ -74,7 +74,6 @@
 						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">修改已上傳的確認函</a>
 					</c:if>
 					<c:if test="${subsidy.status eq 4 }">
-						<h3>恭喜！您將獲得等值 ${reward} ${promo.currency} 的獎勵！</h3>
 						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">領取獎勵</a>
 					</c:if>
 					<br /><br />
@@ -90,7 +89,7 @@
 			<div class="message-content">
 				<h3>恭喜！您將獲得等值 ${reward} ${promo.currency} 的獎勵！</h3>
 
-				<div class="pretty-text">${ subsidyTerm.successInfo }</div>
+				<div class="pretty-text text-left">${ subsidyTerm.successInfo }</div>
 				<br />
 			</div>
 			
