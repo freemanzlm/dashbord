@@ -340,16 +340,16 @@ public class SubsidyController {
 			String pdfContent = new String("<p>中中国人</p>");
 			logger.log(LogLevel.WARN,"test for pdf content"+pdfContent);
 			for (byte c : pdfContent.getBytes()) {
-				System.out.println("not set charset");
-				System.out.println(c);
+				logger.log(LogLevel.WARN,"not set charset");
+				logger.log(LogLevel.WARN,c+"");
 			}
 			for (byte c : pdfContent.getBytes("utf-8")) {
-				System.out.println("utf-8 charset");
-				System.out.println(c);
+				logger.log(LogLevel.WARN,"utf-8 charset");
+				logger.log(LogLevel.WARN,c+"");
 			}
 			for (byte c : pdfContent.getBytes("iso-8859-1")) {
-				System.out.println("iso-8859-1 charset");
-				System.out.println(c);
+				logger.log(LogLevel.WARN,"iso-8859-1 charset");
+				logger.log(LogLevel.WARN,c+"");
 			}
 			ElementList elementList = MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 			for (Element element : elementList) {
