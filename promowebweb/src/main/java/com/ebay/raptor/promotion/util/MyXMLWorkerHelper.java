@@ -31,13 +31,13 @@ public class MyXMLWorkerHelper {
 		@Override
 		public Font getFont(final String fontname, String encoding, float size,
 				final int style) {
-			size = 9.0f;
-			String fntname = fontname;
-			if (fntname == null) {
-				fntname = "宋体";
-			}
-			return super.getFont(fntname, encoding, size, style);
-			/*BaseFont bf = null;
+//			size = 9.0f;
+//			String fntname = fontname;
+//			if (fntname == null) {
+//				fntname = "宋体";
+//			}
+//			return super.getFont(fntname, encoding, size, style);
+			BaseFont bf = null;
 			try {
 				bf = BaseFont.createFont("msYaHei.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 			} catch (DocumentException e) {
@@ -45,7 +45,7 @@ public class MyXMLWorkerHelper {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			return new Font(bf,size);*/
+			return new Font(bf,size);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class MyXMLWorkerHelper {
 		html = html.replace("<br>", "").replace("<hr>", "")
 				.replace("<img>", "").replace("<param>", "")
 				.replace("<link>", "");
-		p.parse(new ByteArrayInputStream(html.getBytes("ISO-8859-1")));
+		p.parse(new ByteArrayInputStream(html.getBytes("UTF-8")),true);
 		return elements;
 	}
 
