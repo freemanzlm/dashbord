@@ -85,7 +85,7 @@ public class MyXMLWorkerHelper {
 		html = html.replace("<br>", "").replace("<hr>", "")
 				.replace("<img>", "").replace("<param>", "")
 				.replace("<link>", "");
-		p.parse(new ByteArrayInputStream(html.getBytes()));
+		p.parse(new ByteArrayInputStream(html.getBytes("UTF-8")));
 		return elements;
 	}
 
