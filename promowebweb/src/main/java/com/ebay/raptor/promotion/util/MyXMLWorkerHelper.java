@@ -45,7 +45,7 @@ public class MyXMLWorkerHelper {
 			return super.getFont(fntname, encoding, size, style);*/
 			BaseFont bf = null;
 			try {
-				bf = BaseFont.createFont("D:\\msYaHei.ttf", BaseFont.IDENTITY_H,BaseFont.NOT_EMBEDDED);
+				bf = BaseFont.createFont("msYaHei.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 			} catch (DocumentException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
