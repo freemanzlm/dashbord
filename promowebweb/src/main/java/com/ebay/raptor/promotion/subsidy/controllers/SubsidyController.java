@@ -335,20 +335,32 @@ public class SubsidyController {
 			/** add the content of the PDF **/
 			Paragraph context = new Paragraph();
 			Paragraph context2 = new Paragraph();
-			String pdfContent = URLDecoder.decode(new String(term.getContent()),"utf-8");
+//			String pdfContent = URLDecoder.decode(new String(term.getContent()),"utf-8");
 			String pdfContent2 = URLDecoder.decode(new String(term.getContent()),"ISO-8859-1");
-//			String pdfContent  = new String("<p>我是中文测试</p>");
+			String pdfContent = new String("<p>中中国人</p>");
 			logger.log(LogLevel.WARN,"test for pdf content"+pdfContent);
+			for (byte c : pdfContent.getBytes()) {
+				System.out.println("not set charset");
+				System.out.println(c);
+			}
+			for (byte c : pdfContent.getBytes("utf-8")) {
+				System.out.println("utf-8 charset");
+				System.out.println(c);
+			}
+			for (byte c : pdfContent.getBytes("iso-8859-1")) {
+				System.out.println("iso-8859-1 charset");
+				System.out.println(c);
+			}
 			ElementList elementList = MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 			for (Element element : elementList) {
 				context.add(element);
 			}
 			document.add(context);
-			ElementList elementList2 = MyXMLWorkerHelper.parseToElementList(pdfContent2, null);
+			/*ElementList elementList2 = MyXMLWorkerHelper.parseToElementList(pdfContent2, null);
 			for (Element element : elementList2) {
 				context2.add(element);
 			}
-			document.add(context2);
+			document.add(context2);*/
 			document.add(new Paragraph("   "));
 
 			/** add the end of the PDF **/
