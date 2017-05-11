@@ -335,7 +335,7 @@ public class SubsidyController {
 			/** add the content of the PDF **/
 			Paragraph context = new Paragraph();
 			Paragraph context2 = new Paragraph();
-			String pdfContent = URLDecoder.decode(new String(term.getContent()),"UTF-8");
+			String pdfContent = URLDecoder.decode(new String(term.getContent(),"UTF-8"),"UTF-8");
 			String pdfContent2 = URLDecoder.decode(new String(term.getContent()),"ISO-8859-1");
 			logger.log(LogLevel.WARN,"test for pdf content"+pdfContent);
 			logger.log(LogLevel.WARN,"test for pdf content"+pdfContent2);
