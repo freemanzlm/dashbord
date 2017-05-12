@@ -341,12 +341,6 @@ public class SubsidyController {
 			String pdfContent = URLDecoder.decode(new String(term.getContent()),"UTF-8");
 			ElementList elementList = MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 			for (Element element : elementList) {
-				List<Chunk> chunks = element.getChunks();
-				for (Chunk chunk: chunks) {
-					System.out.println("Chunk: " + chunk.getContent());
-				}
-				
-				System.out.println("Element: ");
 				context.add(element);
 			}
 			document.add(context);
