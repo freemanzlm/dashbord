@@ -98,7 +98,6 @@
 		
 		<div class="pretty-text">
 			${pdfContent}
-			<%-- ${promo.desc} --%>
 		</div>
 	</div>
 	

@@ -2,10 +2,10 @@ package com.ebay.raptor.promotion.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.StringReader;
+import java.nio.charset.Charset;
 
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.tool.xml.ElementList;
 import com.itextpdf.tool.xml.XMLWorker;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
@@ -32,15 +32,14 @@ public class MyXMLWorkerHelper {
 		public Font getFont(final String fontname, String encoding, float size,
 				final int style) {
 			size = 9.0f;
-			BaseFont bf = null;
-			try {
-				bf = BaseFont.createFont("msYaHei.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-			} catch (DocumentException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+
+			String fntname = fontname;
+			if (fntname == null) {
+				// font song.
+				char[] fontName = new char[]{0x5B8B, 0x4F53};
+				fntname = String.valueOf(fontName);
 			}
-			return new Font(bf,size);
+			return super.getFont(fntname, encoding, size, style);
 		}
 	}
 
@@ -70,11 +69,13 @@ public class MyXMLWorkerHelper {
 
 		// XML Worker
 		XMLWorker worker = new XMLWorker(cssPipeline, true);
-		XMLParser p = new XMLParser(worker);
+		XMLParser p = new XMLParser(true, worker, Charset.forName("UTF-8"));
+		
 		html = html.replace("<br>", "").replace("<hr>", "")
 				.replace("<img>", "").replace("<param>", "")
 				.replace("<link>", "");
-		p.parse(new ByteArrayInputStream(html.getBytes("UTF-8")),true);
+		
+		p.parse(new StringReader(html));
 		return elements;
 	}
 

@@ -67,6 +67,7 @@ import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.ebay.raptor.promotion.util.MyXMLWorkerHelper;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.SubsidyAttachmentFileValidator;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -272,6 +273,7 @@ public class SubsidyController {
 
 			/** create the right font for CHINESE **/
 			document = new Document(PageSize.A4);
+			document.addHeader("charset", "utf-8");
 			/** get the html content from javabean and convert to string **/
 			PdfWriter pdfWriter = PdfWriter.getInstance(document, resp.getOutputStream());
 			document.open();
@@ -334,9 +336,17 @@ public class SubsidyController {
 
 			/** add the content of the PDF **/
 			Paragraph context = new Paragraph();
+			context.setFont(fontChinese);
+
 			String pdfContent = URLDecoder.decode(new String(term.getContent()),"UTF-8");
 			ElementList elementList = MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 			for (Element element : elementList) {
+				List<Chunk> chunks = element.getChunks();
+				for (Chunk chunk: chunks) {
+					System.out.println("Chunk: " + chunk.getContent());
+				}
+				
+				System.out.println("Element: ");
 				context.add(element);
 			}
 			document.add(context);
