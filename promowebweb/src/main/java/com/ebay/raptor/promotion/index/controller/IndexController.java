@@ -37,11 +37,9 @@ import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.brand.service.BrandService;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.enums.PromoError;
-import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.promo.service.ContextViewRes;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -323,12 +321,6 @@ public class IndexController {
 	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) throws Exception {
 		WLTAccount wltAccount = subsidyService.getWLTAccount(userName);
 		mav.addObject("wltAccount", wltAccount);
-	}
-
-	private ContextViewRes handleViewBasedOnPromotion(Promotion promo, long uid) throws PromoException {
-		ContextViewRes result = new ContextViewRes();
-		result = view.handleView(promo, uid);
-		return result;
 	}
 
 	private String getMessage(String key) {

@@ -310,8 +310,6 @@ public class ListingController extends AbstractListingController {
 	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
 	public ModelAndView reviewUploadedListings(HttpServletRequest req, @RequestParam String promoId) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView();
-		Map<String, Object> context = new HashMap<String, Object>();
-		
 		UserData userData = loginService.getUserDataFromCookie(req);
 
 		Promotion promo;
@@ -319,13 +317,12 @@ public class ListingController extends AbstractListingController {
 			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 			String fieldsDefinitions = promo.getListingFields();
 						
-			promoViewService.handleListingFields(fieldsDefinitions, context, promo.getRegion());
+			promoViewService.handleListingFields(fieldsDefinitions, mav, promo.getRegion());
 		} catch (PromoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		mav.addAllObjects(context);
 		//mav.addObject("formUrl", "/promotion/listings/submitDealsListings");
 		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
 		mav.setViewName(ViewResource.LISTING_PREVIEW.getPath());

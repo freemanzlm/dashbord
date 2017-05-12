@@ -23,8 +23,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
 @Component
 public class PromotionViewService {
 	private static CommonLogger logger = CommonLogger.getInstance(ListingController.class);
