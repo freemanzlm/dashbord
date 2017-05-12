@@ -14,9 +14,9 @@ public class PromoInitConfig extends BasePromoInitConfig{
 //		return "http://10.249.74.112:7080/promoservice/v1";
 //		return "http://l-shc-15008105.corp.ebay.com:9090/promoservice/v1";
 //		return "http://phx5qa01c-ee86.stratus.phx.qa.ebay.com:8080/promoservice/v1";
-//		return "http://l-shc-00437469.corp.ebay.com:8090/promoservice/v1";
+		return "http://l-shc-00437469.corp.ebay.com:8090/promoservice/v1";
 //		return "http://promocamp.stratus.qa.ebay.com/promoservice/v1";
-		return "http://l-shc-15008800.corp.ebay.com:8180/promoservice/v1";
+//		return "http://l-shc-15008800.corp.ebay.com:8180/promoservice/v1";
 	}
 	
 	/*@Override
