@@ -14,10 +14,12 @@
 <c:set var="state" value="${ promo.state }"></c:set>
 <c:set var="rewarding" value="${ !(promo.rewardType eq 0 or promo.rewardType eq -1)}" />
 <c:set var="now" value="<%=new java.util.Date()%>" />
+
 <c:choose>
-	<c:when test="${promo.endReason ne 'claimExpired' and promo.endReason ne 'subsidyRetrieved' and promo.state == 'End'}">
+	<c:when test="${currentStep eq 'PROMOTION END' or promo.state eq 'End'}">
 		<%@ include file="stepMessages/end.jsp" %>
 	</c:when>
+	
 	<c:when test="${currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'}">
 		<%@ include file="stepMessages/applicable.jsp" %>
 	</c:when>
@@ -40,9 +42,5 @@
 	
 	<c:when test="${currentStep eq 'NOTIFICATION EDM APPROVED' and (not promo.publishFlag or isAdmin) }">
 		<%@ include file="stepMessages/notificationEdm.jsp" %>
-	</c:when>
-	
-	<c:when test="${ currentStep eq 'PROMOTION END' }">
-		<%@ include file="stepMessages/end.jsp" %>
 	</c:when>
 </c:choose>

@@ -6,6 +6,7 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 
 import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.tool.xml.ElementList;
 import com.itextpdf.tool.xml.XMLWorker;
 import com.itextpdf.tool.xml.XMLWorkerFontProvider;
@@ -33,13 +34,13 @@ public class MyXMLWorkerHelper {
 				final int style) {
 			size = 9.0f;
 
-			String fntname = fontname;
-			if (fntname == null) {
-				// font song.
-				char[] fontName = new char[]{0x5B8B, 0x4F53};
-				fntname = String.valueOf(fontName);
+			BaseFont bf = null;
+			try {
+				bf = BaseFont.createFont("msYaHei.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			return super.getFont(fntname, encoding, size, style);
+			return new Font(bf,size);
 		}
 	}
 

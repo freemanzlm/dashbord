@@ -67,7 +67,6 @@ import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.ebay.raptor.promotion.util.MyXMLWorkerHelper;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.SubsidyAttachmentFileValidator;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -116,7 +115,7 @@ public class SubsidyController {
 			Integer subsidyStatus = subsidy.getStatus();
 			if (PMSubsidyStatus.PM_UNKNOWN_STATUS.getPmStatus() == subsidyStatus||PMSubsidyStatus.REWARD_APPLIABLE_AGAIN.getPmStatus()==subsidyStatus) { // first visited or apply again we need to update the status
 				subsidy.setStatus(PMSubsidyStatus.REWARD_VISITED.getPmStatus());
-				boolean ret = subsidyService.updateSubsidy(subsidy);
+				subsidyService.updateSubsidy(subsidy);
 			} else if (PMSubsidyStatus.REWARD_VISITED.getPmStatus() != subsidyStatus||PMSubsidyStatus.REWARD_APPLIABLE_AGAIN.getPmStatus()==subsidyStatus) {// otherwise we do not have to update the status and get the subsidysubmission
 				SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId, userID);
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
@@ -276,7 +275,7 @@ public class SubsidyController {
 			document = new Document(PageSize.A4);
 			document.addHeader("charset", "utf-8");
 			/** get the html content from javabean and convert to string **/
-			PdfWriter pdfWriter = PdfWriter.getInstance(document, resp.getOutputStream());
+			PdfWriter.getInstance(document, resp.getOutputStream());
 			document.open();
 
 			/** add the head of the PDF **/
@@ -376,7 +375,7 @@ public class SubsidyController {
 				MultipartFile file = fileMap.get(key);
 				if(!file.isEmpty()){
 					if (fileValidator.validate(file)) {//check whether the file type is legal pdf jpg zip;
-						String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserName(), userData.getUserId(), key, file);
+						subsidyService.uploadSubsidyAttachment(promoId, userData.getUserName(), userData.getUserId(), key, file);
 					}else{
 						errorMsg.put(key, "file type error");
 					}
@@ -433,7 +432,6 @@ public class SubsidyController {
 		UserData userData = loginService.getUserDataFromCookie(req);
 		SubsidyAttachmentFileValidator attachmentFileValidator = SubsidyAttachmentFileValidator.getInstance();
 		attachmentFileValidator.setLocale(LocaleUtil.getCurrentLocale());
-		List<String> fileList = new ArrayList<String>();
 		Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 		SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 		Subsidy subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());

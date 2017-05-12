@@ -267,13 +267,7 @@
 		if(real_current_step == 'NOTIFICATION EDM APPROVED' && (publishFlag == 'false'|| isAdmin == 'true')) {
 			$(".signpost .post").toggleClass("done", false);
 			$(".signpost .post").toggleClass("current-post", false);
-		}
-		var endReason = '${promo.endReason}';
-		var state = '${promo.state}';
-		if((endReason != 'claimExpired' && endReason != 'subsidyRetrieved') && state == 'End') {
-			$(".signpost .post").remove();
-			$(".signpost-posts").html("<div class='post current-post'><span class='label'>活动结束</span></div>");
-		}
+		}		
 	</script>
 
 	<res:jsSlot id="body" />
