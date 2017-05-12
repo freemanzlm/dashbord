@@ -113,10 +113,10 @@ public class SubsidyController {
 			String pdfContent = URLDecoder.decode(new String(term.getContent()), "UTF-8");
 			
 			Integer subsidyStatus = subsidy.getStatus();
-			if (PMSubsidyStatus.PM_UNKNOWN_STATUS.getPmStatus() == subsidyStatus||PMSubsidyStatus.REWARD_APPLIABLE_AGAIN.getPmStatus()==subsidyStatus) { // 初次访问 需要更新状态
+			if (PMSubsidyStatus.PM_UNKNOWN_STATUS.getPmStatus() == subsidyStatus||PMSubsidyStatus.REWARD_APPLIABLE_AGAIN.getPmStatus()==subsidyStatus) { // first visited or apply again we need to update the status
 				subsidy.setStatus(PMSubsidyStatus.REWARD_VISITED.getPmStatus());
-				boolean ret = subsidyService.updateSubsidy(subsidy);
-			} else if (PMSubsidyStatus.REWARD_VISITED.getPmStatus() != subsidyStatus) {// 不是第一次访问了 不需要更新状态为已访问 同时需要拿出用户填写的数据
+				subsidyService.updateSubsidy(subsidy);
+			} else if (PMSubsidyStatus.REWARD_VISITED.getPmStatus() != subsidyStatus||PMSubsidyStatus.REWARD_APPLIABLE_AGAIN.getPmStatus()==subsidyStatus) {// otherwise we do not have to update the status and get the subsidysubmission
 				SubsidySubmission subsidySubmission = subsidyService.getSubsidySubmission(promoId, userID);
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidySubmission);
 			}
@@ -126,7 +126,7 @@ public class SubsidyController {
 				term = subsidyService.convertSubmissionToLegalTerm(term, subsidyAttachmentList);
 			}
 			
-			if (term.getSubsidyType() == 2) { // 奖励类型为wlt积分
+			if (term.getSubsidyType() == 2) { // type = 2 means the bonus is wlt count
 				String backURL = getBindWltURL(request, userData.getUserName());
 				putWltAccountInfo(model, userData.getUserName(), backURL);
 			}
@@ -211,7 +211,7 @@ public class SubsidyController {
 			boolean flag = subsidyService.updateSubsidySubmission(subsidySubmission);
 			if (flag) {
 				int orginalStatus = subsidy.getStatus();
-				if(orginalStatus<PMSubsidyStatus.REWARD_COMMITED.getPmStatus()){// 如果现阶段状态小于已提交 则更新 否则不更新状态
+				if(orginalStatus<PMSubsidyStatus.REWARD_COMMITED.getPmStatus()){// if the current status is behind commited ,update the status
 					subsidy.setStatus(PMSubsidyStatus.REWARD_COMMITED.getPmStatus());
 					subsidyService.updateSubsidy(subsidy);
 				}
@@ -256,6 +256,7 @@ public class SubsidyController {
 			bf = BaseFont.createFont("msYaHei.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 			fontChinese = new Font(bf, 10);
 			Locale locale = LocaleContextHolder.getLocale();
+			String maohao = URLDecoder.decode("\uFF1A");
 			String v_title = msgResource.getMessage("subsidy.pdf.title", null, locale);
 			String v_sellerinfo = msgResource.getMessage("subsidy.pdf.sellerinfo", null, locale);
 			String v_sellerNamequote = msgResource.getMessage("subsidy.pdf.sellernamequote", null, locale);
@@ -272,8 +273,9 @@ public class SubsidyController {
 
 			/** create the right font for CHINESE **/
 			document = new Document(PageSize.A4);
+			document.addHeader("charset", "utf-8");
 			/** get the html content from javabean and convert to string **/
-			PdfWriter pdfWriter = PdfWriter.getInstance(document, resp.getOutputStream());
+			PdfWriter.getInstance(document, resp.getOutputStream());
 			document.open();
 
 			/** add the head of the PDF **/
@@ -284,7 +286,7 @@ public class SubsidyController {
 
 			/** add the fill term of the PDF **/
 			/** add seller basic info **/
-			Paragraph p_sellerinfo = new Paragraph(v_sellerinfo + "：", fontChinese);
+			Paragraph p_sellerinfo = new Paragraph(v_sellerinfo + maohao, fontChinese);
 			document.add(p_sellerinfo);
 
 			/** add seller name **/
@@ -295,7 +297,7 @@ public class SubsidyController {
 					v_sellerNameKey = field.getDisplayLabel();
 				}
 			}
-			Paragraph p1 = new Paragraph(v_sellerNameKey + "：" + v_sellerName + v_sellerNamequote, fontChinese);
+			Paragraph p1 = new Paragraph(v_sellerNameKey + maohao + v_sellerName + v_sellerNamequote, fontChinese);
 			document.add(p1);
 
 			/** add seller code **/
@@ -306,34 +308,36 @@ public class SubsidyController {
 					v_sellerCodeKey = field.getDisplayLabel();
 				}
 			}
-			Paragraph p2 = new Paragraph(v_sellerCodeKey + "：" + v_sellerCode, fontChinese);
+			Paragraph p2 = new Paragraph(v_sellerCodeKey + maohao + v_sellerCode, fontChinese);
 			document.add(p2);
 
 			/** add the extra info **/
 			for (String key : retMap.keySet()) {
-				document.add(new Paragraph(key + "：" + retMap.get(key), fontChinese));
+				document.add(new Paragraph(key + maohao + retMap.get(key), fontChinese));
 			}
 
 			/** add ebayid info **/
-			Paragraph p_ebayid = new Paragraph(v_ebayid + "：" + userData.getUserName(), fontChinese);
+			Paragraph p_ebayid = new Paragraph(v_ebayid + maohao + userData.getUserName(), fontChinese);
 			document.add(p_ebayid);
 
 			/** add promotion basic info **/
-			Paragraph p_promotion = new Paragraph(v_promotion + "：" + promo.getName() + v_promotionquote, fontChinese);
+			Paragraph p_promotion = new Paragraph(v_promotion + maohao + promo.getName() + v_promotionquote, fontChinese);
 			document.add(p_promotion);
 
 			/** add bonus basic info **/
-			Paragraph p_bonus = new Paragraph(v_bonus + "：" + promo.getReward() + promo.getCurrency() + v_bonusquote, fontChinese);
+			Paragraph p_bonus = new Paragraph(v_bonus + maohao + promo.getReward() + promo.getCurrency() + v_bonusquote, fontChinese);
 			document.add(p_bonus);
 
 			/** add bonus basic info **/
-			Paragraph p_applytime = new Paragraph(v_applytime + "：" + sdf.format(promo.getRewardDlDt()) + v_applytimequote, fontChinese);
+			Paragraph p_applytime = new Paragraph(v_applytime + maohao + sdf.format(promo.getRewardDlDt()) + v_applytimequote, fontChinese);
 			document.add(p_applytime);
 
 			document.add(new Paragraph("   "));
 
 			/** add the content of the PDF **/
 			Paragraph context = new Paragraph();
+			context.setFont(fontChinese);
+
 			String pdfContent = URLDecoder.decode(new String(term.getContent()),"UTF-8");
 			ElementList elementList = MyXMLWorkerHelper.parseToElementList(pdfContent, null);
 			for (Element element : elementList) {
@@ -343,13 +347,13 @@ public class SubsidyController {
 			document.add(new Paragraph("   "));
 
 			/** add the end of the PDF **/
-			document.add(new Paragraph(v_seller + "：" + map.get("_sellerName") + "（" + map.get("_sellerCode") + "）", fontChinese));
+			document.add(new Paragraph(v_seller + maohao + map.get("_sellerName") + "（" + map.get("_sellerCode") + "）", fontChinese));
 			/** add the extra info **/
 			for (String key : retMap.keySet()) {
-				document.add(new Paragraph(key + "：" + retMap.get(key), fontChinese));
+				document.add(new Paragraph(key + maohao + retMap.get(key), fontChinese));
 			}
-			document.add(new Paragraph(v_signtext + "：_____________________", fontChinese));
-			document.add(new Paragraph(v_datetext + "：_____________________", fontChinese));
+			document.add(new Paragraph(v_signtext + maohao+"_____________________", fontChinese));
+			document.add(new Paragraph(v_datetext + maohao+"_____________________", fontChinese));
 			document.close();
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "error occur while create PDF");
@@ -371,7 +375,7 @@ public class SubsidyController {
 				MultipartFile file = fileMap.get(key);
 				if(!file.isEmpty()){
 					if (fileValidator.validate(file)) {//check whether the file type is legal pdf jpg zip;
-						String downloadUrl = subsidyService.uploadSubsidyAttachment(promoId, userData.getUserName(), userData.getUserId(), key, file);
+						subsidyService.uploadSubsidyAttachment(promoId, userData.getUserName(), userData.getUserId(), key, file);
 					}else{
 						errorMsg.put(key, "file type error");
 					}
@@ -428,7 +432,6 @@ public class SubsidyController {
 		UserData userData = loginService.getUserDataFromCookie(req);
 		SubsidyAttachmentFileValidator attachmentFileValidator = SubsidyAttachmentFileValidator.getInstance();
 		attachmentFileValidator.setLocale(LocaleUtil.getCurrentLocale());
-		List<String> fileList = new ArrayList<String>();
 		Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 		SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 		Subsidy subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());

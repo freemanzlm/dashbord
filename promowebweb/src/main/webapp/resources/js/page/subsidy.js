@@ -26,6 +26,7 @@ $(function(){
 		return true;
 	}
 	
+	// Vue plugin.
 	var app = new Vue({
 		el: "#page-pane",
 		data: {
@@ -45,26 +46,28 @@ $(function(){
 			},
 			sendSellerCustomFields: function(event){
 				var $form = $("#custom-fields-form");
-				$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
-				$.ajax($form.attr("action"), {
-					data: $form.serialize(),
-					type : 'POST',
-					contentType : 'application/x-www-form-urlencoded',
-					dataType : 'json',
-					headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
-					context : this,
-					success : function(data) {
-						$(document.body).isLoading('hide');
-						if (data && data.status === true) {
-							this.hasSubmitFields = true;
-							// download confirm letter
-							window.open("downloadLetter?promoId=" + pageData.promoId);
+				if ($form.valid()) { // jquery validation plugin
+					$(document.body).isLoading({text: local.getText('promo.request.sending'), position: "overlay"});
+					$.ajax($form.attr("action"), {
+						data: $form.serialize(),
+						type : 'POST',
+						contentType : 'application/x-www-form-urlencoded',
+						dataType : 'json',
+						headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
+						context : this,
+						success : function(data) {
+							$(document.body).isLoading('hide');
+							if (data && data.status === true) {
+								this.hasSubmitFields = true;
+								// download confirm letter
+								window.open("downloadLetter?promoId=" + pageData.promoId);
+							}
+						},
+						error: function() {
+							$(document.body).isLoading('hide');
 						}
-					},
-					error: function() {
-						$(document.body).isLoading('hide');
-					}
-				});
+					});
+				}
 			},
 			gotoSecondStep: function(event) {
 				$("[aria-controls=pane2]").trigger('click');
@@ -73,18 +76,10 @@ $(function(){
 	});
 	
 	window.app = app;
+	$("#custom-fields-form").validate(); // jquery validation plugin
 	
 	var local = BizReport.local;
-
-	var uploadForm, acceptCheckbox, formBtn;
-	
-	acceptCheckbox = document.getElementById("accept");
-	formBtn = document.getElementById("upload-form-btn");
-	
-	var acceptPopup = $(acceptCheckbox).parent().each(function(){
-		$(this).popup({"trigger": "mannual", html: this.title});
-	});
-	
+	var formBtn = document.getElementById("upload-form-btn");
 	var $attachmentForms = $("form.attachment-form");
 	
 	$attachmentForms.submit(function(){
@@ -233,9 +228,5 @@ $(function(){
 			}
 			
 		});
-	}
-	
-	if (uploadForm && uploadForm.length > 0) {
-		uploadForm.get(0).reset();
 	}
 });

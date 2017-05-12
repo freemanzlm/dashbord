@@ -7,7 +7,7 @@
 <fmt:formatNumber value="${promo.reward }" var="reward" minFractionDigits="2"></fmt:formatNumber>
 
 <c:choose>
-	<c:when test="${promo.state eq 'SubsidyRetrieved'}">
+	<c:when test="${endReason eq 'subsidyRetrieved'}">
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<c:choose>

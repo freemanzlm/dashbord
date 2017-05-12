@@ -82,7 +82,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="control-label"><input v-model="hasAcceptLetter" type="checkbox" /></div>
+				<div class="control-label"><input v-model="hasAcceptLetter" type="checkbox" name="accept" required/></div>
 				<div class="form-field">
 					我已閱讀並接受以下確認函內容
 				</div>
@@ -98,7 +98,7 @@
 		<hr />
 		
 		<div class="pretty-text">
-			${promo.desc}
+			${pdfContent}
 		</div>
 	</div>
 	
@@ -165,7 +165,7 @@
 			<c:otherwise>
 				<div class="promo-state-message">
 					<div class="message-content">
-						<div class="pretty-text">${ subsidyTerm.successInfo }</div> <br />
+						<div class="pretty-text pt10 padding_lr10">${ subsidyTerm.successInfo }</div> <br />
 					</div>
 					<menu>
 						<li><a href="../index" class="btn">返回活動清單</a></li>

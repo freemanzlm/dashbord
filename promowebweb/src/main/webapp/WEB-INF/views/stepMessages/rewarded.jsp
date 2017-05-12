@@ -69,10 +69,13 @@
 					<c:if test="${subsidy.status eq 2}">
 						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">上传领奖确认函</a>
 					</c:if> 
-					<c:if test="${subsidy.status eq 3 or  subsidy.status eq 4 }">
+					<c:if test="${subsidy.status eq 3}">
 						<p>奖励申领审核中，请耐心等待。</p> <br />
 						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">修改已上传的确认函</a>
-					</c:if> 
+					</c:if>
+					<c:if test="${subsidy.status eq 4 }">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">领取奖励</a>
+					</c:if>
 					<br /><br />
 					<a href="index">返回活动列表</a>
 				</li>
@@ -85,7 +88,7 @@
 			<div class="message-content">
 				<h3>恭喜！您将获得等值 ${promo.reward} ${promo.currency} 的奖励！</h3>
 
-				<div class="pretty-text">${ subsidyTerm.successInfo }</div>
+				<div class="pretty-text text-left">${ subsidyTerm.successInfo }</div>
 				<br />
 			</div>
 			

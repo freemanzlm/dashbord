@@ -48,7 +48,7 @@
 					<div class="form-group">
 						<div class="control-label">${field.displayLabel }：</div>
 						<div class="form-field">
-							<input type="text" name="${field.key }" value="${field.value }"/>
+							<input type="text" name="${field.key }" value="${field.value }" ${field.required ? 'required':'' }/>
 							<c:if test="${field.key eq '_sellerName' }">
 								&nbsp;<span>(以下称为“我/本公司”或“卖家”)</span>
 							</c:if>
@@ -82,7 +82,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="control-label"><input v-model="hasAcceptLetter" type="checkbox" /></div>
+				<div class="control-label"><input v-model="hasAcceptLetter" type="checkbox" name="accept" required /></div>
 				<div class="form-field">
 					我已阅读并接受以下确认函内容
 				</div>
@@ -99,7 +99,6 @@
 		
 		<div class="pretty-text">
 			${pdfContent}
-			<%-- ${promo.desc} --%>
 		</div>
 	</div>
 	
@@ -170,7 +169,7 @@
 			<c:otherwise>
 				<div class="promo-state-message">
 					<div class="message-content">
-						<div class="pretty-text">${ subsidyTerm.successInfo }</div> <br />
+						<div class="pretty-text pt10 padding_lr10">${ subsidyTerm.successInfo }</div> <br />
 					</div>
 					<menu>
 						<li><a href="../index" class="btn">返回活动列表</a></li>
