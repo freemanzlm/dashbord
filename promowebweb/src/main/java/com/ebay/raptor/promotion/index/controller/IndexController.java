@@ -194,7 +194,7 @@ public class IndexController {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
 			} else {
-				if (subsidyTerm != null && subsidyTerm.getSubsidyType() == 2) { // 奖励类型为wlt积分
+				if (subsidyTerm != null && subsidyTerm.getSubsidyType() == 2) { // WLT
 					putWltAccountInfo(model, userData.getUserName(), null);
 				}
 				model.addObject("subsidyTerm", subsidyTerm);

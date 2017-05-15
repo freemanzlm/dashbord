@@ -3,42 +3,36 @@ $(function(){
 	var ListingTable = BizReport.ListingTable;
 	var local = BizReport.local;
 
-	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn, listingCountJ;
+	var uploadForm, fileInput, uploadBtn, uploadIFrame, form, formBtn, listingCountJ;
 	
-	var hasState = false, customTableConfig;
-	
-	//var successCount = 0;
+	var hasState = false, stateColumnIndex = 0, customTableConfig;
 	
 	if (pageData && pageData.columns && pageData.columns.length > 1) {
-		hasState = pageData.columns[pageData.columns.length - 1]['data'] == 'state';
+		// state column must the first column or the second column
+		hasState = pageData.columns[0]['data'] == 'state' || (stateColumnIndex = 1, pageData.columns[1]['data'] == 'state');
 		
 		customTableConfig = {
 			'columns': pageData.columns,
-			'aaSorting': (hasState ? [[pageData.columns.length - 1, 'desc']] : []),
+			'aaSorting': (hasState ? [[stateColumnIndex, 'desc']] : []), // empty aaSorting must be [], it can't be null
 			'promo': {promoId:pageData.promoId, regType:pageData.regType, currentStep: pageData.currentStep, isRegEnd:pageData.isRegEnd, isListingPreview:pageData.isListingPreview}
 		};
 	}
 	
 	uploadIFrame = $("iframe[name=uploadIframe]");
 	uploadBtn = document.getElementById("upload-btn");
-	acceptCheckbox = document.getElementById("accept");
 	form = $("#listing-form");
 	formBtn = document.getElementById("form-btn");
 	listingCountJ = $(".my-listing h3 small span");
-	
-	var acceptPopup = $(acceptCheckbox).parent().each(function(){
-		$(this).popup({"trigger": "mannual", html: this.title});
-	});
 	
 	if (document.getElementById('listing-table')) {
 		// Listing Table
 		listingTable = new ListingTable();
 		listingTable.subscribe({
 			selectChange: function(){
-				listingCountJ.text(this.selectedItems.length);
+				listingCountJ.text(this.selectedItems.length + "/" + this.oDataTable.data().length);
 			}
 		}, listingTable);
-		listingTable.init({
+		listingTable.init({			
 			dataTableConfig: {
 				tableId: "listing-table",
 				customTableConfig: customTableConfig
@@ -58,10 +52,6 @@ $(function(){
 	
 	if (document.getElementById('upload-form')) {
 		uploadForm = $("#upload-form").submit(function(){
-			if (!acceptCheckbox.checked) {
-				acceptPopup.popup('show');
-				return false;
-			}
 			
 			var fileName = fileInput.val();
 			if (!fileName || fileName.indexOf(".xls") < 0) {
@@ -248,12 +238,7 @@ $(function(){
 		$(formBtn).click(function(event){
 			event.preventDefault();
 			if (uploadingAttachment) return;
-			
-			if (!acceptCheckbox.checked) {
-				acceptPopup.popup('show');
-				return false;
-			}
-			
+						
 			uploadingAttachment = true;
 			sumAttachments();
 			uploadingAttachment = !(toUploadAttachments.length <= 0); // no attachment
@@ -272,19 +257,7 @@ $(function(){
 			}
 			
 		});
-	}
-	
-	var termsDialog = cbt.termsDialog;
-	termsDialog.subscribe({
-		"ok": function() {
-			if (acceptCheckbox) {
-				acceptCheckbox.removeAttribute("disabled");
-			}
-		}
-	});
-	$(".terms-conditions").click(function(event){
-		termsDialog.show();
-	});	
+	}	
 	
 	if (uploadForm && uploadForm.length > 0) {
 		uploadForm.get(0).reset();

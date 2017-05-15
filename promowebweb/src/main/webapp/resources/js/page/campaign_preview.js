@@ -13,7 +13,8 @@ $(function(){
 	
 	var customTableConfig = {
 		'columns': pageData && pageData.columns,
-		'aaSorting': (hasState ? [[pageData.columns.length - 1, 'desc']] : null)
+		'aaSorting': (hasState ? [[pageData.columns.length - 1, 'desc']] : []),
+		'promo': {promoId:pageData.promoId, regType:pageData.regType, currentStep: pageData.currentStep, isRegEnd:pageData.isRegEnd, isListingPreview:pageData.isListingPreview}
 	};
 	
 	uploadIFrame = $("iframe[name=uploadIframe]");

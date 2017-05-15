@@ -20,7 +20,7 @@ var BizReport = BizReport || {};
 
 	var defaultDataTableConfigs = {
 		tableConfig : {
-			'aaSorting' : [[3, 'asc']],
+			'aaSorting' : [[3, 'desc']],
 			'bAutoWidth' : true,
 			'bDeferRender' : true,
 			'bFilter' : true,

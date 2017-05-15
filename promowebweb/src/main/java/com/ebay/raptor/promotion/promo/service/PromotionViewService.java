@@ -42,13 +42,18 @@ public class PromotionViewService {
 	 * @param userId
 	 */
 	public void handlePromotion(ModelAndView model, Promotion promo, Long userId) {
-		switch(promo.getType()) {
-		case 1:
+		if (promo.getType() !=  null) {
+			switch(promo.getType()) {
+			case 1:
+				handleBrandPromotion(model, promo, userId);
+				break;
+			default:
+				handleGeneralPromotion(model, promo, userId);
+				break;
+			}
+		} else {
 			handleBrandPromotion(model, promo, userId);
-			break;
-		default:
-			handleGeneralPromotion(model, promo, userId);
-			break;
+//			handleGeneralPromotion(model, promo, userId);
 		}
 	}
 	
@@ -82,8 +87,14 @@ public class PromotionViewService {
 	 * @param userId
 	 */
 	public void handleBrandPromotion(ModelAndView model, Promotion promo, Long userId) {
-		String fieldsDefinitions = promo.getListingFields(); 
+		Date now = new Date();
+		String fieldsDefinitions = promo.getListingFields();
+		
+		appendRegEndCheck(model, promo, now, userId);
+		
 		handleListingFields(fieldsDefinitions, model, promo.getRegion());
+		
+		handleCurentStep(promo);
 		
 		model.setViewName(ViewResource.BRAND_CAMPAIGN.getPath());
 	}

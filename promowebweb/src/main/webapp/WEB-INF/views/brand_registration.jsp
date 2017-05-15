@@ -41,7 +41,6 @@
 <res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
-<res:useCss value="${res.css.local.css.signpost_css}" target="head-css"/>
 <res:useCss value="${res.css.local.less.module_less}" target="head-css" />
 <res:useCss value="${res.css.local.less.form_less}" target="head-css" />
 <res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
@@ -73,7 +72,7 @@
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.table['ListingTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.page['campaign.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.page['campaign_brand.js']}" target="page-js2"></res:useJs>
 </head>
 
 <body>
@@ -89,13 +88,11 @@
 
 				<%@ include file="description_brand.jsp"%>
 				
-				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK') and not regType and not empty fieldsDefintions }">
-					<c:if test="${hasListingsNominated }">
-						<div class="mt20 my-listing">
-							<h3><strong>提交的刊登</strong></h3>
-							<%@ include file="table/listings.jsp"%>
-						</div>
-					</c:if>
+				<%-- <c:if test="${ currentStep eq 'SELLER NOMINATION_NEED APPROVE' and not regType and not empty fieldsDefintions }"> --%>
+					<div class="mt20 my-listing">
+						<h3>提交审核 <small>（ <span></span>）</small></h3>
+						<%@ include file="table/listings_brand.jsp"%>
+					</div>
 					
 					<c:choose>
 						<c:when test="${ isRegEnd ne true }">
@@ -104,8 +101,6 @@
 							</div>
 							
 							<div class="mt20 page-bottom-actions">
-								<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
-									<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
 								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">预览并提交报名</button>
 								<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
 									<br /> <br /> <a href="index">返回活动列表</a>
@@ -116,112 +111,7 @@
 							</div>
 						</c:when>
 					</c:choose>
-					
-				</c:if>
-				
-				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK') and  regType and  not empty fieldsDefintions }">
-				
-					<c:choose>
-						<c:when test="${ isRegEnd ne true }">
-							<!-- 非上传形式报名, 或者正式报名 -->
-							<div class="mt20 my-listing">
-								<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
-								<%@ include file="table/listings.jsp"%>
-							</div>
-							
-							<div class="mt20 page-bottom-actions">
-								<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
-									<input type="hidden" name="promoId" value="${promo.promoId}"/>
-									<input type="hidden" name="listings" value="[]" />
-									<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-									<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
-									<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
-										<br /><br /> <a href="index">返回活动列表</a>
-									</c:if>
-								</form>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<c:if test="${hasListingsNominated }">
-								<div class="mt20 my-listing">
-									<h3><strong>提交的刊登</strong></h3>
-									<%@ include file="table/listings.jsp"%>
-								</div>
-							</c:if>
-							
-							<!-- <div class="mt20 page-bottom-actions">
-								<a href="index">返回活动列表</a>
-							</div> -->
-						</c:otherwise>
-					</c:choose>
-					
-						
-				</c:if>
-				
-				<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE') or fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and 
-					(currentStep ne 'SELLER NOMINATION_NEED APPROVE' and currentStep ne 'SELLER FEEDBACK') and not empty fieldsDefintions }">
-					<c:if test="${not isRegEnd and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK'))}">
-						<c:set var="isRegEnd" value="${ true }"></c:set>
-					</c:if>
-					<c:choose>
-						<c:when test="${not isRegEnd and currentStep eq 'PROMOTION IN PROGRESS' }">
-							<c:choose>
-								<c:when test="${regType}">
-									<div class="mt20 my-listing">
-										<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
-										<%@ include file="table/listings.jsp"%>
-									</div>
-									
-									<div class="mt20 page-bottom-actions">
-										<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
-											<input type="hidden" name="promoId" value="${promo.promoId}"/>
-											<input type="hidden" name="listings" value="[]" />
-											<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-											<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
-										</form>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<c:if test="${hasListingsNominated }">
-										<div class="mt20 my-listing">
-											<h3><strong>提交的刊登</strong></h3>
-											<%@ include file="table/listings.jsp"%>
-										</div>
-									</c:if>
-									
-									<div class="mt20">
-										<%@ include file="upload_listings.jsp"%>
-									</div>
-									
-									<div class="mt20 page-bottom-actions">
-										<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
-											<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
-										<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">预览并提交报名</button>
-										<!-- <br /><br /> <a href="index">返回活动列表</a> -->
-									</div>
-								</c:otherwise>
-							</c:choose>
-						</c:when>
-						<c:otherwise>
-							<%-- <c:if test="${hasListingsNominated }"> --%>
-								<div class="mt20 my-listing">
-									<h3><strong>报名刊登列表</strong></h3>
-									<%@ include file="table/listings.jsp"%>
-								</div>
-							<%-- </c:if> --%>
-							<!-- <div class="mt20 page-bottom-actions">
-								<a href="index">返回活动列表</a>
-							</div> -->
-						</c:otherwise>
-					</c:choose>
-				</c:if>
-				
-				<c:if test="${(not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and not empty fieldsDefintions }">
-					<div class="mt20 my-listing">
-						<h3><strong>报名刊登列表</strong></h3>
-						<%@ include file="table/listings.jsp"%>
-					</div>
-				</c:if>
+				<%-- </c:if> --%>
 			</div>
 		</div>
 
@@ -250,20 +140,11 @@
 			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
 			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}'),
 			regType : JSON.parse('${promo.regType eq true}'),
-			isRegEnd : '${isRegEnd}'
+			isRegEnd : JSON.parse('${isRegEnd eq true}')
 		};
 	</script>
 	
 	<script type="text/javascript">
-		/* var hasReviewed = '${hasReviewed}';
-		var hasListingsNominated = '${hasListingsNominated}'; */
-		var real_current_step = '${currentStep}';
-		var isAdmin = '${isAdmin}';
-		var publishFlag = '${promo.publishFlag}';
-		if(real_current_step == 'NOTIFICATION EDM APPROVED' && (publishFlag == 'false'|| isAdmin == 'true')) {
-			$(".signpost .post").toggleClass("done", false);
-			$(".signpost .post").toggleClass("current-post", false);
-		}
 		var endReason = '${promo.endReason}';
 		var state = '${promo.state}';
 		if((endReason != 'claimExpired' && endReason != 'subsidyRetrieved') && state == 'End') {

@@ -265,7 +265,7 @@ var BizReport = BizReport || {};
 					sType: "numeric",
 					sClass: "text-right",
 					sDefaultContent: "NA",
-					mRender: function(data, type, full) {
+					mRender: function(data, type, full, meta) {
 						var value;
 						if (typeof data === 'object' && data != null) {
 							value = parseFloat(data.value);
@@ -312,8 +312,9 @@ var BizReport = BizReport || {};
 							if(readonly) {
 								return attachmentLink;
 							} else {
+								// promoId is stored in meta.settings.oInit.promo object.
 								return '<form class="attachment-form" uploading="false" id="form-' + id + '" target="'+ iframeId + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+ 
-								pageData.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+ 
+								meta.settings.oInit.promo.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+ 
 								full.skuId+'" /><input type="hidden" name="key" value="' + key + '"/><span class="file-input"><input type="text" style="height: 22px;" value="" placeholder="选择文件" /> <input type="file" name="uploadFile" '+
 								disabled+'/></span><button class="btn" id="btn-'+id+'" type="button">上传</button></form>' +
 								'<iframe name="'+ iframeId + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
@@ -480,6 +481,7 @@ var BizReport = BizReport || {};
 			this.dataTable = new namespace.DataTable(this.dataTableConfig);
 			this.selectedItems = []; // the selected items in current page
 			this.checkedBoxes = [];
+			this.promo = this.dataTableConfig.tableConfig.promo || {};
 			
 			// this statement must be put before this.dataTable.initDataTable();
 			this.checkAllBox = this.dataTable.table.find(".check-all").prop("checked", false);
@@ -514,15 +516,15 @@ var BizReport = BizReport || {};
 				    
 				    if (data && data.data) {
 				    	data.data = data.data.filter(function(oRow) {
-				    		if(!pageData.regType) {
-				    			if(pageData.currentStep == 'SELLER NOMINATION_NEED APPROVE' || pageData.currentStep == 'SELLER FEEDBACK' || pageData.currentStep == 'PROMOTION SUBMITTED') {
-									if(pageData.isRegEnd == 'false' && pageData.isListingPreview != true) {
+				    		if(!that.promo.regType) {
+				    			if(that.promo.currentStep == 'SELLER NOMINATION_NEED APPROVE' || that.promo.currentStep == 'SELLER FEEDBACK' || that.promo.currentStep == 'PROMOTION SUBMITTED') {
+									if(that.promo.isRegEnd == false && that.promo.isListingPreview != true) {
 										// promotion upload type
-										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
+										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');9
 									}
 								}
-								if(pageData.currentStep == 'PROMOTION IN PROGRESS' && pageData.isRegEnd == 'false') {
-									if(pageData.isListingPreview != true) {
+								if(that.promo.currentStep == 'PROMOTION IN PROGRESS' && that.promo.isRegEnd == false) {
+									if(that.promo.isListingPreview != true) {
 										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
 									}
 								}

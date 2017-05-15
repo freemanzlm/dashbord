@@ -254,7 +254,7 @@
 			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
 			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}'),
 			regType : JSON.parse('${promo.regType eq true}'),
-			isRegEnd : '${isRegEnd}'
+			isRegEnd : JSON.parse('${isRegEnd eq true}')
 		};
 	</script>
 	
