@@ -13,7 +13,7 @@ public enum SubsidyAttachmentAllowedType {
 	/**
 	 * JPEG
 	 */
-	jpeg("255044462"),
+	jpeg("FFD8FF"),
 	
 	/**
 	 * JPG
