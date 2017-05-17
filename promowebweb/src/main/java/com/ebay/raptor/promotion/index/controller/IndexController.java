@@ -200,6 +200,7 @@ public class IndexController {
 						putWltAccountInfo(model, userData.getUserName(), null);
 					}
 					model.addObject("subsidyTerm", subsidyTerm);
+				}
 			}
 			
 			view.handlePromotion(model, promo, userData.getUserId());
