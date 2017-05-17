@@ -28,7 +28,7 @@ public class UpdatedPromotionsNumInterceptor extends HandlerInterceptorAdapter {
 			HttpServletResponse response, Object handler,
 			ModelAndView model) throws Exception {
 		super.postHandle(request, response, handler, model);
-		if(null == model || response.getStatus() != HttpServletResponse.SC_OK){
+		if(null == model || response.getStatus() >= HttpServletResponse.SC_OK){
 			return;
 		}
 		

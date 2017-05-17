@@ -4,11 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +29,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.cbt.raptor.promotion.po.Listing;
 import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
@@ -42,7 +38,6 @@ import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.excep.UploadListingIsNullException;
-import com.ebay.raptor.promotion.list.req.ListingWebParam;
 import com.ebay.raptor.promotion.list.req.SelectableListing;
 import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.ListingService;
@@ -50,7 +45,6 @@ import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
-import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -197,27 +191,6 @@ public class ListingController extends AbstractListingController {
 	}
 	
 	@POST
-	@RequestMapping(ResourceProvider.ListingRes.confirmListings)
-	@ResponseBody
-	public ResponseData <String> confirmListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
-		ResponseData <String> responseData = new ResponseData <String>();
-
-		if(null != listings){
-			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
-			try {
-				UserData userData = loginService.getUserDataFromCookie(req);
-				boolean result = listingService.confirmListings(listingAry, listings.getPromoId(), userData.getUserId());
-				responseData.setStatus(result);
-			} catch (PromoException | MissingArgumentException e) {
-				// do not throw but set the error status.
-				responseData.setStatus(false);
-				responseData.setMessage("Internal Error happens.");
-			}
-		}
-		return responseData;
-	}
-	
-	@POST
 	@RequestMapping(ResourceProvider.ListingRes.uploadListingAttachment)
 	public ModelAndView uploadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile uploadFile, @RequestParam String skuId, @RequestParam String promoId, @RequestParam String key) throws MissingArgumentException {
@@ -289,24 +262,6 @@ public class ListingController extends AbstractListingController {
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
-	@ResponseBody
-	public ListDataWebResponse<?> getPromotionListings(HttpServletRequest req,
-			@ModelAttribute ListingWebParam param)  {
-		
-		return getListings(req, param, false);
-	}
-	
-	@GET
-	@RequestMapping(ResourceProvider.ListingRes._getUploadedListings)
-	@ResponseBody
-	public ListDataWebResponse<?> getUploadListings(HttpServletRequest req,
-			@ModelAttribute ListingWebParam param)  {
-		
-		return getListings(req, param, true);
-	}
-	
-	@GET
 	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
 	public ModelAndView reviewUploadedListings(HttpServletRequest req, @RequestParam String promoId) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView();
@@ -328,128 +283,5 @@ public class ListingController extends AbstractListingController {
 		mav.setViewName(ViewResource.LISTING_PREVIEW.getPath());
 		return mav;
 	}
-	
-	/**
-	 * After user confirm his listing, submit all of his listings to SalesForce.
-	 * @param req
-	 * @param listings
-	 * @return
-	 */
-	@POST
-	@RequestMapping(ResourceProvider.ListingRes.submitListings)
-	public @ResponseBody ResponseData <String> submitDealsListings(HttpServletRequest req, HttpServletResponse resp) throws MissingArgumentException{
-		ResponseData <String> responseData = new ResponseData <String>();
-		String promoId = req.getParameter("promoId");
-
-		try {
-			UserData userData = loginService.getUserDataFromCookie(req);
-			boolean result = listingService.submitListings(promoId, userData.getUserId());
-			responseData.setStatus(result);
-		} catch (PromoException | MissingArgumentException e) {
-			// do not throw but set the error status.
-			responseData.setStatus(false);
-			responseData.setMessage("Internal Error happens: " + e.getMessage());
-			responseData.setData(e.getErrorType().getCode() + "");
-		}
-		return responseData;
-	}
-	
-	/**
-	 * In phase1, there are several kinds of getListings() by state. We keep this method for future usage.
-	 * 
-	 * @param req
-	 * @param param
-	 * @return
-	 */
-	protected ListDataWebResponse<?> getListings (HttpServletRequest req,
-			ListingWebParam param, boolean isUploaded) {
-		UserData userData = null;
-
-		try {
-			userData = loginService.getUserDataFromCookie(req);
-		} catch (MissingArgumentException e) {
-			logger.error("Missing required argument.", e);
-			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
-			resp.setStatus(Boolean.FALSE);
-			return resp;
-		}
-
-		ListDataWebResponse<Listing> resp = getListings(param.getPromoId(), userData.getUserId(), isUploaded);
-		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-		ListDataWebResponse<Map<String, Object>> mergedResp = new ListDataWebResponse<Map<String, Object>>();
-		
-		if (resp != null && resp.getData() != null) {
-			for (Listing listing : resp.getData()) {
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("skuId", listing.getSkuId());
-				map.put("state", listing.getState());
-				map.put("currency", listing.getCurrency());
-				
-				if (listing.getNominationValues() != null) {
-					try {
-						@SuppressWarnings("unchecked")
-						Map<String, Object> fields = mapper.readValue(listing.getNominationValues(), HashMap.class);
-						map.putAll(fields);
-						
-					} catch (IOException e) {
-						logger.error("Can't read listing normination values for listing with sku ID: " + listing.getSkuId());
-					}
-				}
-				
-				List<Map<String, Object>> attachments = listing.getAttachments(); 
-				if (attachments != null) {
-					for (Map<String, Object> attachment : attachments) {
-						String key = attachment.get("key").toString();
-						Object filename = attachment.get("filename");
-						if (key != null && filename != null) {
-							String attachmentUrl = "/attachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId() + "/key/" + key;
-							map.put(key, attachmentUrl);
-						}
-					}
-				}
-				
-				// TODO, remove this test line
-//				if(listing.getHasUploaded()) {
-//					map.put("Account_List_Attachment_base__c", "/attachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId() + "/key/Account_List_Attachment_base__c");
-//				}
-				
-				map.put("lock", listing.getLocked());
-				data.add(map);
-			}
-			
-			mergedResp.setStatus(resp.isStatus());
-			mergedResp.setData(data);
-		} else {
-			mergedResp.setStatus(resp.isStatus());
-		}
-		
-		
-		return mergedResp;
-	}
-	
-	/**
-	 * Get listings of specified user and promotion. If "isUploaded" is true, it will only get user uploaded listings by excel.
-	 * @param promoId
-	 * @param userId
-	 * @param isUploaded
-	 * @return
-	 */
-	protected <T> ListDataWebResponse<T> getListings (String promoId, Long userId, boolean isUploaded) {
-		ListDataWebResponse<T> resp = new ListDataWebResponse<T>();
-		try {
-			List<T> listings = listingService.getListingsByPromotionId(promoId, userId, isUploaded);
-			
-			if (listings != null && listings.size() > 0) {
-				resp.setData(listings);
-			} else {
-				logger.error("No listings found for promotion: " + promoId + ", user:" + userId);
-			}
-		} catch (PromoException e) {
-			logger.error("No listings found for promotion: " + promoId + ", user:" + userId + ", with error", e);
-			resp.setStatus(Boolean.FALSE);
-		}
-
-		return resp;
-	} 
 	
 }

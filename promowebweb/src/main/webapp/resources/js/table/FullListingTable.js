@@ -9,8 +9,8 @@
 var BizReport = BizReport || {};
 
 (function(namespace){
-	var ListingTable = function() {};
-	ListingTable.prototype = new cbt.Widget();
+	var FullListingTable = function() {};
+	FullListingTable.prototype = new cbt.Widget();
 	
 	var local = namespace.local;
 	var fileTypeReg = /\.(doc|docx|xls|xlsx|jpg|gif|zip|rar|pdf)$/i;
@@ -468,7 +468,7 @@ var BizReport = BizReport || {};
 			}
 		};
 	
-	$.extend(ListingTable.prototype, {
+	$.extend(FullListingTable.prototype, {
 		init: function(config) {
 			var that = this;
 
@@ -513,26 +513,6 @@ var BizReport = BizReport || {};
 				},
 				ajaxfinished: function(data) {
 				    that.container.isLoading('hide');
-				    
-				    if (data && data.data) {
-				    	data.data = data.data.filter(function(oRow) {
-				    		if(!that.promo.regType) {
-				    			if(that.promo.currentStep == 'SELLER NOMINATION_NEED APPROVE' || that.promo.currentStep == 'SELLER FEEDBACK' || that.promo.currentStep == 'PROMOTION SUBMITTED') {
-									if(that.promo.isRegEnd == false && that.promo.isListingPreview != true) {
-										// promotion upload type
-										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
-									}
-								}
-								if(that.promo.currentStep == 'PROMOTION IN PROGRESS' && that.promo.isRegEnd == false) {
-									if(that.promo.isListingPreview != true) {
-										return (oRow.state != 'CanEnroll' && oRow.state!='NotEnrolled');
-									}
-								}
-				    		}
-							
-							return true;
-						});
-				    }
 				    
 				    if (data && data.status) {
 				        that.container.find(".datatable_pager").show();
@@ -662,5 +642,5 @@ var BizReport = BizReport || {};
 		}
 	});
 	
-	namespace.ListingTable = ListingTable;
+	namespace.FullListingTable = FullListingTable;
 })(BizReport = BizReport || {});

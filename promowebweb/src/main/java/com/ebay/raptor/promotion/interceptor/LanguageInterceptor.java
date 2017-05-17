@@ -98,7 +98,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		if (resp.getStatus() == HttpServletResponse.SC_OK) {
+		if (resp.getStatus() < HttpServletResponse.SC_BAD_REQUEST) {
 			addPageParameters(request, model, user);
 		}
 	}

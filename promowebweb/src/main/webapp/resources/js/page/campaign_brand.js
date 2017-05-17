@@ -1,6 +1,6 @@
 $(function(){
 	
-	var ListingTable = BizReport.ListingTable;
+	var ListingTable = BizReport.FullListingTable;
 	var local = BizReport.local;
 
 	var uploadForm, fileInput, uploadBtn, uploadIFrame, form, formBtn, listingCountJ;
