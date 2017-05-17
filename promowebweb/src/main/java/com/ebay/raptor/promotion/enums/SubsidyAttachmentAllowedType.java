@@ -10,6 +10,10 @@ public enum SubsidyAttachmentAllowedType {
 	 * JPEG
 	 */
 	zip("504B0304"),
+	/**
+	 * JPEG
+	 */
+	jpeg("FFD8FF"),
 	
 	/**
 	 * JPG

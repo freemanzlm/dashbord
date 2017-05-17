@@ -54,22 +54,22 @@
 		<div class="promo-state-message">
 			<div class="message-content">
 				<c:choose>
-					<c:when test="${subsidy.status eq 'Visited' }">
+					<c:when test="${subsidy.status eq 1 }">
 						<h3>已超过奖励申领有效期，您未提交申领，期待您的下次参与！</h3>
 					</c:when>
-					<c:when test="${subsidy.status eq 'Commited' }">
+					<c:when test="${subsidy.status eq 2 }">
 						<h3>已超过奖励申领有效期，您未完成申领，期待您的下次参与！</h3>
 					</c:when>
-					<c:when test="${subsidy.status eq 'Uploaded' }">
+					<c:when test="${subsidy.status eq 3 }">
 						<h3>很遗憾，您的申领未通过审核且已超过奖励申领有效期。期待您的下次参与！</h3>
 					</c:when>
-					<c:when test="${subsidy.status eq 'Appliable' }">
+					<c:when test="${subsidy.status eq 4 }">
 						<h3>已超过奖励申领有效期，您未完成申领，期待您的下次参与！</h3>
 					</c:when>
-					<c:when test="${subsidy.status eq 'AppliableAgain' }">
+					<c:when test="${subsidy.status eq 5 }">
 						<h3>很遗憾，您的申领未通过审核且已超过奖励申领有效期。期待您的下次参与！</h3>
 					</c:when>
-					<c:when test="${subsidy.status eq 'Failed' }">
+					<c:when test="${subsidy.status eq 8 }">
 						<h3>抱歉！领取奖励遇到问题，请联系您的客户经理反映情况！</h3>
 					</c:when>
 					<c:otherwise>

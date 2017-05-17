@@ -32,7 +32,6 @@ import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.cbt.sf.service.ServiceExecutor;
-import com.ebay.kernel.util.URLDecoder;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
@@ -82,7 +81,7 @@ public class SubsidyService extends BaseService {
 				}
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Failed to get subsidy data.");
 		}
 		return null;
 		
@@ -157,7 +156,7 @@ public class SubsidyService extends BaseService {
 				return response.getData();
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Failed to update subsidy status.");
 		}
 		return false;
 	}
@@ -181,7 +180,7 @@ public class SubsidyService extends BaseService {
 				return response.getData();
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Subsidy legal term not found!");
 		}
 		return null;
 	}
@@ -200,7 +199,7 @@ public class SubsidyService extends BaseService {
 			}
 
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Failed to get subsidy submission.");
 		}
 		return null;
 	}
@@ -217,7 +216,7 @@ public class SubsidyService extends BaseService {
 				flag = true;
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Update subsidy submission failed.");
 		}
 		return flag;
 	}
@@ -477,7 +476,7 @@ public class SubsidyService extends BaseService {
 				flag = response.getData();
 			}
 		} else {
-			throw new PromoException("Internal Error happens.");
+			throw new PromoException("Failed to bind WLT account with ebayId.");
 		}
 		return flag;
 	}
@@ -486,14 +485,6 @@ public class SubsidyService extends BaseService {
 		File file = new File(multipartFile.getOriginalFilename());
 		multipartFile.transferTo(file);
 		return file;
-	}
-
-	private String decodefilePathOrfileName(String value) {
-		try {
-			return URLDecoder.decode(new String(value.getBytes(), "UTF-8"), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			return value;
-		}
 	}
 
 	public Locale getLocale() {

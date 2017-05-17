@@ -188,16 +188,18 @@ public class IndexController {
 
 		if (promo.getActiveFlag()) {
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
-			SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+			
+			if (promo.getRewardType() != null && promo.getRewardType() > 0) {
+				SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
 
-			if (promo.getRewardType() != null && promo.getRewardType() > 0 && subsidyTerm == null) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
-			} else {
-				if (subsidyTerm != null && subsidyTerm.getSubsidyType() == 2) { // WLT
-					putWltAccountInfo(model, userData.getUserName(), null);
-				}
-				model.addObject("subsidyTerm", subsidyTerm);
+				if (subsidyTerm == null) {
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+							getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
+				} else {
+					if (subsidyTerm.getSubsidyType() == 2) { // 奖励类型为wlt积分
+						putWltAccountInfo(model, userData.getUserName(), null);
+					}
+					model.addObject("subsidyTerm", subsidyTerm);
 			}
 			
 			view.handlePromotion(model, promo, userData.getUserId());
