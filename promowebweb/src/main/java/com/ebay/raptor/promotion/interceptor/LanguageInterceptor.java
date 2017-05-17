@@ -97,8 +97,10 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 				model.setViewName(viewName);
 			}
 		}
-
-		addPageParameters(request, model, user);
+		
+		if (resp.getStatus() == HttpServletResponse.SC_OK) {
+			addPageParameters(request, model, user);
+		}
 	}
 
 	private void addPageParameters(HttpServletRequest req, ModelAndView model,
