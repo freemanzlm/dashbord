@@ -8,8 +8,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import com.ebay.kernel.util.FastURLEncoder;
 import com.ebay.kernel.util.URLDecoder;
@@ -116,16 +115,15 @@ public class DES {
 	public static String base64Encode(byte[] s) {
 		if (s == null)
 			return null;
-		BASE64Encoder b = new BASE64Encoder();
-		return b.encode(s);
+		
+		return Base64.encodeBase64String(s);
 	}
 
 	public static byte[] base64Decode(String s) throws IOException {
 		if (s == null)
 			return null;
-		BASE64Decoder decoder = new BASE64Decoder();
-		byte[] b = decoder.decodeBuffer(s);
-		return b;
+		
+		return Base64.decodeBase64(s);
 	}
 
 	/**
@@ -165,6 +163,8 @@ public class DES {
 
 	private byte[] desKey;
 	public static void main(String[] args) throws Exception{
-		System.out.println(DES.getInstance().encrypt("1", true));
+		System.out.println(base64Encode("hello".getBytes())); //aGVsbG8=
+		System.out.println(DES.getInstance().encrypt("1", true)); //Dl3YGwmmKXU%3D
+
 	}
 }

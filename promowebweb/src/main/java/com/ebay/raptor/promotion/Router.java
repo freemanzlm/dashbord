@@ -3,7 +3,7 @@ package com.ebay.raptor.promotion;
 public interface Router {
 
 	public interface Promotion {
-		String base = "promotions";
+		String base = "promotion";
 		
 		String getUnconfirmedPromotions = "/getUnconfirmedPromotions";
 		String getIngPromotions = "/getIngPromotions";
@@ -48,5 +48,11 @@ public interface Router {
 		String downloadAttachmentById = "/downloadAttachmentById";
 		
 		String bindWlt = "/bindWlt";
+	}
+	
+	public interface Brand {
+		String base = "brands";
+		
+		String passed = "/passed";
 	}
 }
