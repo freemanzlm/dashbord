@@ -23,14 +23,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
-import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
+import com.ebay.kernel.calwrapper.CalEvent;
+import com.ebay.kernel.calwrapper.CalEventHelper;
+import com.ebay.kernel.logger.LogLevel;
+import com.ebay.kernel.logger.Logger;
+import com.ebay.raptor.promotion.Router;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.UploadedListingFileHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
@@ -38,13 +40,12 @@ import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.excep.UploadListingIsNullException;
-import com.ebay.raptor.promotion.list.req.SelectableListing;
-import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
+import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -52,6 +53,7 @@ import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -61,10 +63,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  * @author lyan2
  */
 @Controller
-@RequestMapping(ResourceProvider.ListingRes.listingBase)
+@RequestMapping(Router.Listing.base)
 public class ListingController extends AbstractListingController {
-	private static CommonLogger logger = CommonLogger.getInstance(ListingController.class);
-	
+	private Logger logger = Logger.getInstance(ListingController.class);
 	private final ObjectMapper mapper = new ObjectMapper();
 	
 	@Autowired LoginService loginService;
@@ -79,64 +80,55 @@ public class ListingController extends AbstractListingController {
 	 * @param resp
 	 * @param param
 	 * @throws MissingArgumentException
+	 * @throws IOException 
+	 * @throws JsonProcessingException 
+	 * @throws PromoException 
 	 */
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.downloadTempldate)
+	@RequestMapping(Router.Listing.downloadTempldate)
     public void createListingUploadTemplet(HttpServletRequest req,
     		HttpServletResponse resp, @ModelAttribute RequestParameter param)
-    				throws MissingArgumentException {
+    				throws MissingArgumentException, PromoException, JsonProcessingException, IOException {
 		
 		UserData userData = loginService.getUserDataFromCookie(req);
-		XSSFWorkbook workBook = null;
+		XSSFWorkbook workBook = excelService.getListingWorkbook(param.getPromoId(),	userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
+    	
+        resp.setContentType("application/x-msdownload;");
+		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
+		workBook.write(resp.getOutputStream());
+		workBook.close();
 
-        try {
-        	workBook = excelService.getListingWorkbook(param.getPromoId(),
-        			userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
-        	
-            resp.setContentType("application/x-msdownload;");
-    		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
-    		workBook.write(resp.getOutputStream());
-        } catch (IOException | PromoException e) {
-        	logger.error("Failed to generate upload template.", e);
-        } finally {
-        	if (workBook != null) {
-    			try {
-					workBook.close();
-				} catch (IOException e) {
-					// ignore
-				}
-    		}
-        }
     }
 	
 	/**
 	 * Read user uploaded template file.
 	 * Use this method, you need to pass in promotion id and user oracle id.
+	 * Response is a HTML page, but its body is a JSON string.
 	 * @param req
 	 * @param resp
 	 * @param uploadFile
 	 * @param promoId
-	 * @throws MissingArgumentException
 	 */
 	@POST
-	@RequestMapping(ResourceProvider.ListingRes.uploadListings)
+	@RequestMapping(Router.Listing.uploadListings)
 	public ModelAndView uploadListings(HttpServletRequest req, HttpServletResponse resp, 
-			@RequestPart MultipartFile uploadFile, @RequestParam String promoId) throws MissingArgumentException{
+			@RequestPart MultipartFile uploadFile, @RequestParam String promoId) {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
-		UserData userData = loginService.getUserDataFromCookie(req);
-		ResponseData <String> responseData = new ResponseData <String>();
+		DataWebResponse <String> responseData = new DataWebResponse <String>();
+		Set<ConstraintViolation<Object>> violations = null;
+		UserData userData = null;
 		
-		XSSFWorkbook workbook = null;
 		try {
+			userData = loginService.getUserDataFromCookie(req);
+			
 			// get listing fields definitions
 			Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 			String fieldsDefinitions = promo.getListingFields();
 
 			Locale locale = LocaleUtil.getLocale(promo.getRegion());
-			Set<ConstraintViolation<Object>> violations = null;
 			
 			// read uploaded excel file.
-			workbook = new XSSFWorkbook(uploadFile.getInputStream());			
+			XSSFWorkbook workbook = new XSSFWorkbook(uploadFile.getInputStream());			
 			Sheet sheet = workbook.getSheetAt(0);
 			UploadedListingFileHandler handler = new UploadedListingFileHandler(listingService, promoId, userData.getUserId());
 			
@@ -145,53 +137,49 @@ public class ListingController extends AbstractListingController {
 				if (tree.isArray()) {
 					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
 					excelService.adjustColumnConfigurations(columnConfigs, locale, promoId);
+					
 					violations = handler.handleSheet(sheet, columnConfigs);
 				}
 			}
 			
-			// if there is listing that not comply with validation rules
-			if (violations == null || violations.size() == 0) {
-				responseData.setStatus(true);
-				this.acceptAgreement(promoId, userData.getUserId());
-			} else {
-				responseData.setStatus(false);
-				StringBuffer errorMessage = new StringBuffer();
-				
-				boolean first = true;
-				for (ConstraintViolation<Object> violation : violations) {
-					errorMessage.append((first ? "" : "&lt;br/&gt;") + violation.getMessage());
-					first = false;
-				}
-				
-				responseData.setMessage(errorMessage.toString());
-			}
-			
-		} catch (IOException e) {
-			// Got IO or PromoException exception -> means app level error -> show error page.
-			logger.error("Unable to read upload file", e);
-			responseData.setStatus(false);
-		} catch (PromoException e) {
-			// Got IO or PromoException exception -> means app level error -> show error page.
-			logger.error("Got error when to read uploaded listings.", e);
-			responseData.setData(e.getErrorType().getCode() + "");
-			responseData.setStatus(false);
-		} catch(UploadListingIsNullException e) {
+			workbook.close();
+		} catch (UploadListingIsNullException e) {
 			responseData.setStatus(false);
 			responseData.setMessage(messageSource.getMessage("excel.validation.listing.notnull.message", null, LocaleUtil.getCurrentLocale()));
-		} finally {
-			if (workbook != null) {
-				try {
-					workbook.close();
-				} catch (IOException e) {}
-			}
+			mav.addObject("response", PojoConvertor.convertToJson(responseData));
+			return mav;
+		} catch (Exception e) {
+			String message = String.format("Failed to upload listings for user(ID is %s)", userData != null ? userData.getUserId() : null);
+			logger.log(LogLevel.ERROR, message, e);
+			CalEventHelper.writeLog(CalEvent.CAL_ERROR, "ListingController", message, e, "Error");
+			responseData.setStatus(false);
+			responseData.setMessage(e.getMessage());
+			mav.addObject("response", PojoConvertor.convertToJson(responseData));
+			return mav;
 		}
-
+		
+		// if there is listing that not comply with validation rules
+		if (violations == null || violations.size() == 0) {
+			responseData.setStatus(true);
+		} else {
+			responseData.setStatus(false);
+			StringBuffer errorMessage = new StringBuffer();
+			
+			boolean first = true;
+			for (ConstraintViolation<Object> violation : violations) {
+				errorMessage.append((first ? "" : "&lt;br/&gt;") + violation.getMessage());
+				first = false;
+			}
+			
+			responseData.setMessage(errorMessage.toString());
+		}
+			
 		mav.addObject("response", PojoConvertor.convertToJson(responseData));
 		return mav;
 	}
 	
 	@POST
-	@RequestMapping(ResourceProvider.ListingRes.uploadListingAttachment)
+	@RequestMapping(Router.Listing.uploadListingAttachment)
 	public ModelAndView uploadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile uploadFile, @RequestParam String skuId, @RequestParam String promoId, @RequestParam String key) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
@@ -221,64 +209,46 @@ public class ListingController extends AbstractListingController {
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.listingAttachment)
+	@RequestMapping(Router.Listing.listingAttachment)
 	public void downloadListingAttachment(HttpServletRequest req, HttpServletResponse resp,
 			@PathVariable("promoId") String promoId, @PathVariable("userId") Long userId, 
 			@PathVariable("skuId") String skuId, @PathVariable("key") String key) throws MissingArgumentException, IOException, PromoException {
 		resp.setContentType("application/x-msdownload;");
-		UserData userData = loginService.getUserDataFromCookie(req);
-		if(userData.getUserId()!=userId) {
-			//throw new PromoException();
-		}
 		InputStream inputStream = null;
-		OutputStream outStream = null;
-		ListingAttachment attachment = null;
 		String attachmentName = "";
 		String attachmentType = "";
-		try {
-			attachment = listingService.downloadListingAttachment(promoId, userId, skuId, key);
-			if(attachment!=null) {
-				inputStream = new  ByteArrayInputStream(attachment.getContent());
-				attachmentName = attachment.getAttachmentName();
-				attachmentType = attachment.getAttachmentType();
-			}
-			resp.setHeader("Content-disposition", "attachment; filename=\""+attachmentName+"."+attachmentType+"\"");
-			System.out.println(resp.getHeaders("Content-disposition"));
-			outStream = resp.getOutputStream();
-			int len = 0;
-			byte[] buffer = new byte[4096];
-			while((len = inputStream.read(buffer)) != -1) {
-	            outStream.write(buffer, 0, len);
-	        }
-		} catch (PromoException e) {
-			e.printStackTrace();
-		} finally {
-			if (inputStream != null) {
-				inputStream.close();
-				outStream.flush();
-				outStream.close();
-			}
+		
+		ListingAttachment attachment = listingService.downloadListingAttachment(promoId, userId, skuId, key);
+		if(attachment!=null) {
+			inputStream = new  ByteArrayInputStream(attachment.getContent());
+			attachmentName = attachment.getAttachmentName();
+			attachmentType = attachment.getAttachmentType();
 		}
+		resp.setHeader("Content-disposition", "attachment; filename=\""+attachmentName+"."+attachmentType+"\"");
+		
+		OutputStream outStream = resp.getOutputStream();
+		int len = 0;
+		byte[] buffer = new byte[4096];
+		while((len = inputStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, len);
+        }
+
+		inputStream.close();
+		outStream.flush();
+		outStream.close();
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
-	public ModelAndView reviewUploadedListings(HttpServletRequest req, @RequestParam String promoId) throws MissingArgumentException {
+	@RequestMapping(Router.Listing.reviewUploadedListings)
+	public ModelAndView reviewUploadedListings(HttpServletRequest req, @RequestParam String promoId) throws MissingArgumentException, PromoException {
 		ModelAndView mav = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(req);
 
-		Promotion promo;
-		try {
-			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-			String fieldsDefinitions = promo.getListingFields();
+		Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+		String fieldsDefinitions = promo.getListingFields();
 						
-			promoViewService.handleListingFields(fieldsDefinitions, mav, promo.getRegion());
-		} catch (PromoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		promoViewService.handleListingFields(fieldsDefinitions, mav, promo.getRegion());
 		
-		//mav.addObject("formUrl", "/promotion/listings/submitDealsListings");
 		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
 		mav.setViewName(ViewResource.LISTING_PREVIEW.getPath());
 		return mav;

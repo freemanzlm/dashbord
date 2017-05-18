@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,7 @@ import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
+import com.ebay.raptor.promotion.pojo.web.resp.BaseWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
@@ -337,6 +339,15 @@ public class PromotionDataController{
 			logger.error("Unable to get promotion of user " + uid + " and promotionID " + promoId, e);
 			resp.setStatus(Boolean.FALSE);
 		}
+		return resp;
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public BaseWebResponse handleException(Exception exception, HttpServletRequest request) {
+		logger.error(exception.getMessage(), exception);
+		BaseWebResponse resp = new BaseWebResponse();
+		resp.setStatus(false);
+		resp.setMessage(exception.getMessage());
 		return resp;
 	}
 }

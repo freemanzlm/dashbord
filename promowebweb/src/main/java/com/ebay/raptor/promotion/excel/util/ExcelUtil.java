@@ -14,13 +14,11 @@ import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.annotation.Header;
 import com.ebay.raptor.promotion.excel.validation.ColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.DoubleColumnConstraint;
-import com.ebay.raptor.promotion.excel.validation.FractionColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.IntegerRangeColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.LengthColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.RangeColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.UniqueColumnConstraint;
-import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
@@ -99,10 +97,10 @@ public class ExcelUtil {
 	 * @return
 	 */
 	private static String getTitle(JsonNode titleNode, Locale locale) {
-		if (titleNode != null && titleNode.isArray()) {
+		if (titleNode != null && titleNode.isArray() && locale != null) {
 			for (int i = 0; i < titleNode.size(); i++) {
 				JsonNode label = titleNode.get(i);
-				if (LocaleUtil.getLocale(locale).equalsIgnoreCase(label.get("locale").asText())) {
+				if (locale.getCountry().equalsIgnoreCase(label.get("locale").asText())) {
 					return label.get("labelName").asText();
 				}
 			}
