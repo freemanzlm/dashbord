@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
-import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -79,19 +78,19 @@ public class PromotionService extends BaseService {
 	}
 	
 	public List<Promotion> getUnconfirmedPromotions(Long uid, Boolean isAdmin) throws PromoException{
-		return getPromotionsByUserBaseWithAdminFlag(ResourceProvider.PromotionRes.getUnconfirmedPromotions, uid, isAdmin);
+		return getPromotionsByUserWithAdminFlag(ResourceProvider.PromotionRes.getUnconfirmedPromotions, uid, isAdmin);
 	}
 	
 	public List<Promotion> getUpdatedPromotions(Long uid) throws PromoException{
-		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getUpdatedPromotions, uid);
+		return getPromotionsByUser(ResourceProvider.PromotionRes.getUpdatedPromotions, uid);
 	}
 	
 	public List<Promotion> getIngPromotion(Long uid) throws PromoException{
-		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getIngPromotions, uid);
+		return getPromotionsByUser(ResourceProvider.PromotionRes.getIngPromotions, uid);
 	}
 	
 	public List<Promotion> getSubsidyPromotions(Long uid) throws PromoException{
-		List<Promotion> promoList =  getPromotionsByUserBase(ResourceProvider.PromotionRes.getSubsidyPromotions, uid);
+		List<Promotion> promoList =  getPromotionsByUser(ResourceProvider.PromotionRes.getSubsidyPromotions, uid);
 		if(null!=promoList){
 			for (Promotion promo : promoList) {
 				SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
@@ -110,7 +109,7 @@ public class PromotionService extends BaseService {
 	}
 	
 	public List<Promotion> getEndPromotions(Long uid) throws PromoException{
-		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getEndPromotions, uid);
+		return getPromotionsByUser(ResourceProvider.PromotionRes.getEndPromotions, uid);
 	}
 	
 	/**
@@ -120,7 +119,7 @@ public class PromotionService extends BaseService {
 	 * @return
 	 * @throws PromoException
 	 */
-	private List<Promotion> getPromotionsByUserBase(String target, Long uid) throws PromoException{
+	private List<Promotion> getPromotionsByUser(String target, Long uid) throws PromoException{
 		String uri = url(params(target, new Object[]{"{uid}", uid}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
@@ -146,7 +145,7 @@ public class PromotionService extends BaseService {
 	 * @return
 	 * @throws PromoException
 	 */
-	private List<Promotion> getPromotionsByUserBaseWithAdminFlag(String target, Long uid, Boolean isAdmin) throws PromoException{
+	private List<Promotion> getPromotionsByUserWithAdminFlag(String target, Long uid, Boolean isAdmin) throws PromoException{
 		String uri = url(params(target, new Object[]{"{uid}", uid, "{isadmin}", isAdmin}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){

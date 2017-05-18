@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.AuthNeed;
+import com.ebay.raptor.promotion.Router;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.business.Promotion;
@@ -30,7 +30,7 @@ import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.service.LoginService;
 
 @Controller
-@RequestMapping(ResourceProvider.PromotionRes.base)
+@RequestMapping(Router.Promotion.base)
 public class PromotionDataController{
 	private static CommonLogger logger =
             CommonLogger.getInstance(PromotionDataController.class);
@@ -43,41 +43,9 @@ public class PromotionDataController{
 	
 	@Autowired ResourceBundleMessageSource messageSource;
 	
-	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._isAcceptAgreement)
-	@ResponseBody
-	public ListDataWebResponse<Promotion> isAcceptAgreement(HttpServletRequest request) throws MissingArgumentException {
-		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = loginService.getUserDataFromCookie(request);
-
-		try {
-			resp.setData(service.getIngPromotion(userData.getUserId()));
-		} catch (PromoException e) {
-			logger.error("Unable to get in-progress promotion of user " + userData.getUserId(), e);
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
-	}
-	
-	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._acceptAgreement)
-	@ResponseBody
-	public ListDataWebResponse<Promotion> acceptAgreement(HttpServletRequest request) throws MissingArgumentException {
-		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
-		UserData userData = loginService.getUserDataFromCookie(request);
-
-		try {
-			resp.setData(service.getIngPromotion(userData.getUserId()));
-		} catch (PromoException e) {
-			logger.error("Unable to get in-progress promotion of user " + userData.getUserId(), e);
-			resp.setStatus(Boolean.FALSE);
-		}
-		return resp;
-	}
-	
 	@AuthNeed
 	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._getUnconfirmedPromotions)
+	@RequestMapping(Router.Promotion.getUnconfirmedPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getUnconfirmedPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -94,7 +62,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._getIngPromotions)
+	@RequestMapping(Router.Promotion.getIngPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getIngPromotion(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -111,7 +79,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._getSubsidyPromotions)
+	@RequestMapping(Router.Promotion.getSubsidyPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getSubsidyPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -127,7 +95,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._getEndPromotions)
+	@RequestMapping(Router.Promotion.getEndPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getEndPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -143,7 +111,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("brandRegPromotions")
+	@RequestMapping(Router.Promotion.brandRegPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getBrandRegPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -163,7 +131,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("endedDealsPromotions")
+	@RequestMapping(Router.Promotion.endedDealsPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getEndedDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -183,7 +151,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("ongoingDealsPromotions")
+	@RequestMapping(Router.Promotion.ongoingDealsPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getOngoingDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -204,7 +172,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("awardingDealsPromotions")
+	@RequestMapping(Router.Promotion.awardingDealsPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getAwardingDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -224,7 +192,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("unpublishedDealsPromotions")
+	@RequestMapping(Router.Promotion.unpublishedDealsPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getUnpublishedDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -245,7 +213,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("endedBrandPromotions")
+	@RequestMapping(Router.Promotion.endedBrandPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getEndedBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -265,7 +233,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("ongoingBrandPromotions")
+	@RequestMapping(Router.Promotion.ongoingBrandPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getOngoingBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -286,7 +254,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("awardingBrandPromotions")
+	@RequestMapping(Router.Promotion.awardingBrandPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getAwardingBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -306,7 +274,7 @@ public class PromotionDataController{
 	
 	@AuthNeed
 	@GET
-	@RequestMapping("unpublishedBrandPromotions")
+	@RequestMapping(Router.Promotion.unpublishedBrandPromotions)
 	@ResponseBody
 	public ListDataWebResponse<Promotion> getUnpublishedBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
@@ -326,7 +294,7 @@ public class PromotionDataController{
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.PromotionRes._getPromotionById)
+	@RequestMapping(Router.Promotion.getPromotionById)
 	@ResponseBody
 	public DataWebResponse<Promotion> getPromotionById(HttpServletRequest request, 
 			@RequestParam("promoId")String promoId, 

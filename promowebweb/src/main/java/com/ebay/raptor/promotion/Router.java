@@ -4,6 +4,22 @@ public interface Router {
 
 	public interface Promotion {
 		String base = "promotions";
+		
+		String getUnconfirmedPromotions = "/getUnconfirmedPromotions";
+		String getIngPromotions = "/getIngPromotions";
+		String getSubsidyPromotions = "/getSubsidyPromotions";
+		String getEndPromotions = "/getEndPromotions";
+		String brandRegPromotions = "brandRegPromotions";
+		String endedDealsPromotions = "/endedDealsPromotions";
+		String ongoingDealsPromotions = "/ongoingDealsPromotions";
+		String awardingDealsPromotions = "/awardingDealsPromotions";
+		String unpublishedDealsPromotions = "/unpublishedDealsPromotions";
+		String endedBrandPromotions = "/endedBrandPromotions";
+		String ongoingBrandPromotions = "/ongoingBrandPromotions";
+		String awardingBrandPromotions = "/awardingBrandPromotions";
+		String unpublishedBrandPromotions = "/unpublishedBrandPromotions";
+		
+		String getPromotionById = "/getPromotionById";
 	}
 	
 	public interface Listing {
@@ -19,5 +35,18 @@ public interface Router {
 		
 		String uploadListingAttachment = "/uploadListingAttachment";
 		String listingAttachment = "/attachment/promoId/{promoId}/userId/{userId}/skuId/{skuId}/key/{key}";
+	}
+	
+	public interface Subsidy {
+		String base = "subsidy";
+		
+		String acknowledgment = "/acknowledgment";
+		String downloadLetter = "/downloadLetter";
+		String upload = "/upload";
+		String uploadAttachment = "/uploadAttachment";
+		String downloadAttachment = "/downloadAttachment";
+		String downloadAttachmentById = "/downloadAttachmentById";
+		
+		String bindWlt = "/bindWlt";
 	}
 }

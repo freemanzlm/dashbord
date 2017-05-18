@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +47,7 @@ import com.ebay.cbt.raptor.wltapi.service.WltApiService;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
+import com.ebay.raptor.promotion.Router;
 import com.ebay.raptor.promotion.enums.PromoError;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -81,7 +81,7 @@ import com.itextpdf.tool.xml.ElementList;
  * @author lyan2 2017-3-17
  */
 @Controller
-@RequestMapping("subsidy")
+@RequestMapping(Router.Subsidy.base)
 public class SubsidyController {
 	private static final Logger logger = Logger.getInstance(SubsidyController.class);
 
@@ -100,13 +100,15 @@ public class SubsidyController {
 	@Autowired
 	ResourceBundleMessageSource msgResource;
 
-	@RequestMapping(value = "/acknowledgment", method = RequestMethod.GET)
-	public ModelAndView subsidyStepOne(@RequestParam("promoId") String promoId, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = Router.Subsidy.acknowledgment, method = RequestMethod.GET)
+	public ModelAndView subsidyStepOne(@RequestParam("promoId") String promoId, HttpServletRequest request, HttpServletResponse response) throws MissingArgumentException {
 		ModelAndView model = new ModelAndView();
 		Date now = new Date();
+		
+		UserData userData = loginService.getUserDataFromCookie(request);
+		Long userID = userData.getUserId();
+		
 		try {
-			UserData userData = loginService.getUserDataFromCookie(request);
-			Long userID = userData.getUserId();
 			Promotion promo = promoService.getPromotionById(promoId, userID, userData.getAdmin());
 			Subsidy subsidy = subsidyService.getSubsidy(promoId, userID);
 			SubsidyLegalTerm term = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
@@ -151,7 +153,7 @@ public class SubsidyController {
 
 	}
 
-	@RequestMapping(value = "/subsidyStepTwo", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/subsidyStepTwo", method = RequestMethod.GET)
 	public ModelAndView subsidyStepTwo(@RequestParam("promoId") String promoId, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView();
 		Date now = new Date();
@@ -180,9 +182,9 @@ public class SubsidyController {
 			e.printStackTrace();
 		}
 		return model;
-	}
+	}*/
 
-	@RequestMapping(value = "/acknowledgment", method = RequestMethod.POST)
+	@RequestMapping(value = Router.Subsidy.acknowledgment, method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseData<String> subsidyStepTwot(HttpServletRequest request, HttpServletResponse response) {
 		ResponseData<String> responseData = new ResponseData<String>();
@@ -226,7 +228,7 @@ public class SubsidyController {
 
 	}
 
-	@RequestMapping(value = "/downloadLetter", method = RequestMethod.GET)
+	@RequestMapping(value = Router.Subsidy.downloadLetter, method = RequestMethod.GET)
 	public void createConfirmLetter(HttpServletRequest req, HttpServletResponse resp, @RequestParam String promoId) throws MissingArgumentException,
 			IOException, PromoException {
 		resp.setContentType("application/pdf");
@@ -255,21 +257,19 @@ public class SubsidyController {
 		try {
 			bf = BaseFont.createFont("msYaHei.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 			fontChinese = new Font(bf, 10);
-			Locale locale = LocaleContextHolder.getLocale();
-			String maohao = URLDecoder.decode("\uFF1A");
-			String v_title = msgResource.getMessage("subsidy.pdf.title", null, locale);
-			String v_sellerinfo = msgResource.getMessage("subsidy.pdf.sellerinfo", null, locale);
-			String v_sellerNamequote = msgResource.getMessage("subsidy.pdf.sellernamequote", null, locale);
-			String v_ebayid = msgResource.getMessage("subsidy.pdf.ebayid", null, locale);
-			String v_promotion = msgResource.getMessage("subsidy.pdf.promotion", null, locale);
-			String v_promotionquote = msgResource.getMessage("subsidy.pdf.promotionquote", null, locale);
-			String v_bonus = msgResource.getMessage("subsidy.pdf.bonus", null, locale);
-			String v_bonusquote = msgResource.getMessage("subsidy.pdf.bonusquote", null, locale);
-			String v_applytime = msgResource.getMessage("subsidy.pdf.applytime", null, locale);
-			String v_applytimequote = msgResource.getMessage("subsidy.pdf.applytimequote", null, locale);
-			String v_seller = msgResource.getMessage("subsidy.pdf.seller", null, locale);
-			String v_signtext = msgResource.getMessage("subsidy.pdf.signature", null, locale);
-			String v_datetext = msgResource.getMessage("subsidy.pdf.date", null, locale);
+			String v_title = getMessage("subsidy.pdf.title");
+			String v_sellerinfo = getMessage("subsidy.pdf.sellerinfo");
+			String v_sellerNamequote = getMessage("subsidy.pdf.sellernamequote");
+			String v_ebayid = getMessage("subsidy.pdf.ebayid");
+			String v_promotion = getMessage("subsidy.pdf.promotion");
+			String v_promotionquote = getMessage("subsidy.pdf.promotionquote");
+			String v_bonus = getMessage("subsidy.pdf.bonus");
+			String v_bonusquote = getMessage("subsidy.pdf.bonusquote");
+			String v_applytime = getMessage("subsidy.pdf.applytime");
+			String v_applytimequote = getMessage("subsidy.pdf.applytimequote");
+			String v_seller = getMessage("subsidy.pdf.seller");
+			String v_signtext = getMessage("subsidy.pdf.signature");
+			String v_datetext = getMessage("subsidy.pdf.date");
 
 			/** create the right font for CHINESE **/
 			document = new Document(PageSize.A4);
@@ -286,7 +286,7 @@ public class SubsidyController {
 
 			/** add the fill term of the PDF **/
 			/** add seller basic info **/
-			Paragraph p_sellerinfo = new Paragraph(v_sellerinfo + maohao, fontChinese);
+			Paragraph p_sellerinfo = new Paragraph(v_sellerinfo + getMessage("colon"), fontChinese);
 			document.add(p_sellerinfo);
 
 			/** add seller name **/
@@ -297,7 +297,7 @@ public class SubsidyController {
 					v_sellerNameKey = field.getDisplayLabel();
 				}
 			}
-			Paragraph p1 = new Paragraph(v_sellerNameKey + maohao + v_sellerName + v_sellerNamequote, fontChinese);
+			Paragraph p1 = new Paragraph(v_sellerNameKey + getMessage("colon") + v_sellerName + v_sellerNamequote, fontChinese);
 			document.add(p1);
 
 			/** add seller code **/
@@ -308,28 +308,28 @@ public class SubsidyController {
 					v_sellerCodeKey = field.getDisplayLabel();
 				}
 			}
-			Paragraph p2 = new Paragraph(v_sellerCodeKey + maohao + v_sellerCode, fontChinese);
+			Paragraph p2 = new Paragraph(v_sellerCodeKey + getMessage("colon") + v_sellerCode, fontChinese);
 			document.add(p2);
 
 			/** add the extra info **/
 			for (String key : retMap.keySet()) {
-				document.add(new Paragraph(key + maohao + retMap.get(key), fontChinese));
+				document.add(new Paragraph(key + getMessage("colon") + retMap.get(key), fontChinese));
 			}
 
 			/** add ebayid info **/
-			Paragraph p_ebayid = new Paragraph(v_ebayid + maohao + userData.getUserName(), fontChinese);
+			Paragraph p_ebayid = new Paragraph(v_ebayid + getMessage("colon") + userData.getUserName(), fontChinese);
 			document.add(p_ebayid);
 
 			/** add promotion basic info **/
-			Paragraph p_promotion = new Paragraph(v_promotion + maohao + promo.getName() + v_promotionquote, fontChinese);
+			Paragraph p_promotion = new Paragraph(v_promotion + getMessage("colon") + promo.getName() + v_promotionquote, fontChinese);
 			document.add(p_promotion);
 
 			/** add bonus basic info **/
-			Paragraph p_bonus = new Paragraph(v_bonus + maohao + promo.getReward() + promo.getCurrency() + v_bonusquote, fontChinese);
+			Paragraph p_bonus = new Paragraph(v_bonus + getMessage("colon") + promo.getReward() + promo.getCurrency() + v_bonusquote, fontChinese);
 			document.add(p_bonus);
 
 			/** add bonus basic info **/
-			Paragraph p_applytime = new Paragraph(v_applytime + maohao + sdf.format(promo.getRewardDlDt()) + v_applytimequote, fontChinese);
+			Paragraph p_applytime = new Paragraph(v_applytime + getMessage("colon") + sdf.format(promo.getRewardDlDt()) + v_applytimequote, fontChinese);
 			document.add(p_applytime);
 
 			document.add(new Paragraph("   "));
@@ -347,13 +347,13 @@ public class SubsidyController {
 			document.add(new Paragraph("   "));
 
 			/** add the end of the PDF **/
-			document.add(new Paragraph(v_seller + maohao + map.get("_sellerName") + "（" + map.get("_sellerCode") + "）", fontChinese));
+			document.add(new Paragraph(v_seller + getMessage("colon") + map.get("_sellerName") + getMessage("parenthesis.left") + map.get("_sellerCode") + getMessage("parenthesis.right"), fontChinese));
 			/** add the extra info **/
 			for (String key : retMap.keySet()) {
-				document.add(new Paragraph(key + maohao + retMap.get(key), fontChinese));
+				document.add(new Paragraph(key + getMessage("colon") + retMap.get(key), fontChinese));
 			}
-			document.add(new Paragraph(v_signtext + maohao+"_____________________", fontChinese));
-			document.add(new Paragraph(v_datetext + maohao+"_____________________", fontChinese));
+			document.add(new Paragraph(v_signtext + getMessage("colon")+"_____________________", fontChinese));
+			document.add(new Paragraph(v_datetext + getMessage("colon")+"_____________________", fontChinese));
 			document.close();
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "error occur while create PDF");
@@ -361,7 +361,7 @@ public class SubsidyController {
 	}
 
 	@POST
-	@RequestMapping(value = "/upload")
+	@RequestMapping(value = Router.Subsidy.upload)
 	public String upload(HttpServletRequest req, HttpServletResponse resp,ModelMap modelMap){
 		String promoId = req.getParameter("promoId");
 		try {
@@ -424,7 +424,7 @@ public class SubsidyController {
 	 * @throws PromoException
 	 */
 	@POST
-	@RequestMapping(value = "/uploadAttachment")
+	@RequestMapping(value = Router.Subsidy.uploadAttachment)
 	public ModelAndView uploadAttachment(HttpServletRequest req, HttpServletResponse resp, @RequestPart MultipartFile uploadFile, @RequestParam String promoId,
 			@RequestParam String key) throws MissingArgumentException, PromoException {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
@@ -484,7 +484,7 @@ public class SubsidyController {
 	 * @throws Exception
 	 */
 	@GET
-	@RequestMapping(value = "/downloadAttachment")
+	@RequestMapping(value = Router.Subsidy.downloadAttachment)
 	public void downloadAttachment(HttpServletRequest req, HttpServletResponse resp, @RequestParam("promoId") String promoId, @RequestParam("key") String key)
 			throws Exception {
 		UserData userData = loginService.getUserDataFromCookie(req);
@@ -534,7 +534,7 @@ public class SubsidyController {
 	 * @throws Exception
 	 */
 	@GET
-	@RequestMapping(value = "/downloadAttachmentById")
+	@RequestMapping(value = Router.Subsidy.downloadAttachmentById)
 	public void downloadAttachmentById(HttpServletRequest req, HttpServletResponse resp, @RequestParam("id") String id) throws Exception {
 
 		InputStream inputStream = null;
@@ -583,7 +583,7 @@ public class SubsidyController {
 	 * @param response
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/bindWlt", method = RequestMethod.POST)
+	@RequestMapping(value = Router.Subsidy.bindWlt, method = RequestMethod.POST)
 	public void bindWltAccount(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// returned by WLT
 		String mobile = request.getParameter("mobile");
@@ -617,14 +617,10 @@ public class SubsidyController {
 	 * @param mav
 	 * @param userName
 	 * @param backURL
+	 * @throws Exception 
 	 */
-	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) {
-		WLTAccount wltAccount = null;
-		try {
-			wltAccount = subsidyService.getWLTAccount(userName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) throws Exception {
+		WLTAccount wltAccount = subsidyService.getWLTAccount(userName);
 		
 		if (wltAccount == null) {
 			String bindURL = wltApiService.bindWltAccount(userName, backURL);

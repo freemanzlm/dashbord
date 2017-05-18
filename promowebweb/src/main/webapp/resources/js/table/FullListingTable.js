@@ -498,7 +498,7 @@ var BizReport = BizReport || {};
 					var aRows = oDataTable.data();
 					
 					that.selectedItems = aRows.filter(function(oRow){
-						oRow.checked = oRow.state == 'Applied' || oRow.state == 'Confirmed' || oRow.state == 'Enrolled';
+						oRow.checked = oRow.state == 'Enrolled' || oRow.state == 'Applied' || oRow.state == 'Confirmed';
 						return oRow.checked;
 					});
 					
