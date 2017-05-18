@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
+import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.Router;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.web.resp.BaseWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
@@ -42,6 +43,38 @@ public class PromotionDataController{
 	@Autowired PromotionViewService view;
 	
 	@Autowired ResourceBundleMessageSource messageSource;
+	
+	@GET
+	@RequestMapping(ResourceProvider.PromotionRes._isAcceptAgreement)
+	@ResponseBody
+	public ListDataWebResponse<Promotion> isAcceptAgreement(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+
+		try {
+			resp.setData(service.getIngPromotion(userData.getUserId()));
+		} catch (PromoException e) {
+			logger.error("Unable to get in-progress promotion of user " + userData.getUserId(), e);
+			resp.setStatus(Boolean.FALSE);
+		}
+		return resp;
+	}
+	
+	@GET
+	@RequestMapping(ResourceProvider.PromotionRes._acceptAgreement)
+	@ResponseBody
+	public ListDataWebResponse<Promotion> acceptAgreement(HttpServletRequest request) throws MissingArgumentException {
+		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+
+		try {
+			resp.setData(service.getIngPromotion(userData.getUserId()));
+		} catch (PromoException e) {
+			logger.error("Unable to get in-progress promotion of user " + userData.getUserId(), e);
+			resp.setStatus(Boolean.FALSE);
+		}
+		return resp;
+	}
 	
 	@AuthNeed
 	@GET

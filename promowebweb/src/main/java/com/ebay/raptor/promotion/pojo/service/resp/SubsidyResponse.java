@@ -19,7 +19,6 @@ public class SubsidyResponse extends BaseServiceResponse {
 	private WLTAccount wltAccount;
 	
 	
-	
 	public WLTAccount getWltAccount() {
 		return wltAccount;
 	}

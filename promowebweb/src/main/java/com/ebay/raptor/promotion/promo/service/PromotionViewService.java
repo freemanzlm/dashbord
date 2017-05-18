@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.raptor.promotion.enums.PromotionStep;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.list.controller.ListingController;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.util.DateUtil;
 import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.fasterxml.jackson.databind.JsonNode;

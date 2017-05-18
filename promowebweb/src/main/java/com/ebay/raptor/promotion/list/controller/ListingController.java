@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
 import com.ebay.kernel.calwrapper.CalEvent;
@@ -33,6 +34,8 @@ import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.Router;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
+import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.UploadedListingFileHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
@@ -44,7 +47,6 @@ import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -91,13 +93,25 @@ public class ListingController extends AbstractListingController {
     				throws MissingArgumentException, PromoException, JsonProcessingException, IOException {
 		
 		UserData userData = loginService.getUserDataFromCookie(req);
-		XSSFWorkbook workBook = excelService.getListingWorkbook(param.getPromoId(),	userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
+		XSSFWorkbook workBook = null;
+
+        try {
+		 workBook = excelService.getListingWorkbook(param.getPromoId(),	userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
     	
         resp.setContentType("application/x-msdownload;");
 		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
 		workBook.write(resp.getOutputStream());
+        } catch (IOException | PromoException e) {
+        	logger.log(LogLevel.ERROR, "Failed to generate upload template.", e);
+        } finally {
+        	if (workBook != null) {
+    			try {
 		workBook.close();
-
+				} catch (IOException e) {
+					// ignore
+				}
+    		}
+        }
     }
 	
 	/**
