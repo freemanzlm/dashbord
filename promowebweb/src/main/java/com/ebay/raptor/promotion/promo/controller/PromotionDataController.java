@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.promo.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.ws.rs.GET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.common.constant.pm.PMPromoTabType;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.kernel.context.IRaptorContext;
@@ -142,6 +145,8 @@ public class PromotionDataController{
 		return resp;
 	}
 	
+	// **************************** need test *********************//
+	
 	@AuthNeed
 	@GET
 	@RequestMapping(Router.Promotion.brandRegPromotions)
@@ -149,16 +154,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getBrandRegPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getIngPromotion(userData.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	
@@ -169,16 +180,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getEndedDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getEndPromotions(userData.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	
@@ -189,17 +206,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getOngoingDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		p.setCurrentStep("SELLER NOMINATION_NEED APPROVE");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getIngPromotion(userData.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	
@@ -210,16 +232,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getAwardingDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getSubsidyPromotions(userData.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	
@@ -230,17 +258,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getUnpublishedDealsPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		p.setCurrentStep("SELLER NOMINATION_NEED APPROVE");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getUnconfirmedPromotions(userData.getUserId(),userData.getAdmin());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	
@@ -251,16 +284,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getEndedBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getEndPromotions(userData.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	
@@ -271,17 +310,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getOngoingBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		p.setCurrentStep("SELLER NOMINATION_NEED APPROVE");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getIngPromotion(userData.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	
@@ -292,16 +336,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getAwardingBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getSubsidyPromotions(userData.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	
@@ -312,17 +362,22 @@ public class PromotionDataController{
 	public ListDataWebResponse<Promotion> getUnpublishedBrandPromotions(HttpServletRequest request) throws MissingArgumentException {
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
-		// TODO get brand registration promotions
-		ArrayList<Promotion> data = new ArrayList<Promotion>();
-		
-		Promotion p = new Promotion();
-		p.setName("Brand registion promotion");
-		p.setCurrentStep("SELLER NOMINATION_NEED APPROVE");
-		
-		data.add(p);
-		
-		resp.setData(data);
+		List<Promotion> data = null;
+		List<Promotion> result = new ArrayList<Promotion>();
+		try {
+			data = service.getUnconfirmedPromotions(userData.getUserId(),userData.getAdmin());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			for (Promotion promo : data) {
+				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+					result.add(promo);
+				}
+			}
+		}
+		resp.setData(result);
 		return resp;
 	}
 	

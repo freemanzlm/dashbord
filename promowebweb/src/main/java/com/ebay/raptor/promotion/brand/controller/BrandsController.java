@@ -31,7 +31,6 @@ public class BrandsController {
 	
 	@Autowired LoginService loginService;
 	@Autowired BrandService brandService;
-	@Autowired 
 	
 	@AuthNeed
 	@GET
