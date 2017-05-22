@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 
+import oracle.net.aso.b;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.Router;
+import com.ebay.raptor.promotion.brand.service.BrandService;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.web.resp.BaseWebResponse;
@@ -42,6 +45,7 @@ public class PromotionDataController{
 	@Inject IRaptorContext raptorCtx;
 	@Autowired LoginService loginService;
 	@Autowired PromotionService service;
+	@Autowired BrandService brandService;
 	
 	@Autowired PromotionViewService view;
 	
@@ -155,21 +159,15 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		List<Promotion> data = null;
-		List<Promotion> result = new ArrayList<Promotion>();
 		try {
-			data = service.getIngPromotion(userData.getUserId());
+			data = brandService.getBrandAuthPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
 		}
 		if(!CollectionUtils.isEmpty(data)){
-			for (Promotion promo : data) {
-				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
-					result.add(promo);
-				}
-			}
+			resp.setData(data);
 		}
-		resp.setData(result);
 		return resp;
 	}
 	
@@ -339,7 +337,7 @@ public class PromotionDataController{
 		List<Promotion> data = null;
 		List<Promotion> result = new ArrayList<Promotion>();
 		try {
-			data = service.getSubsidyPromotions(userData.getUserId());
+			data = service.awardingBrandPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());

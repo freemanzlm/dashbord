@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.ebay.app.raptor.cbtcommon.CommonLogger;
+import com.ebay.cbt.raptor.promotion.po.BrandPerformance;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.pojo.BrandPerformance;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.service.BaseService;

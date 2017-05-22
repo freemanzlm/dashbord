@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.promotion.po.BrandPerformance;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.Router;
 import com.ebay.raptor.promotion.brand.service.BrandService;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.pojo.BrandPerformance;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.web.resp.BaseWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
