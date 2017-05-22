@@ -233,7 +233,7 @@ public class PromotionDataController{
 		List<Promotion> data = null;
 		List<Promotion> result = new ArrayList<Promotion>();
 		try {
-			data = service.getSubsidyPromotions(userData.getUserId());
+			data = service.awardingDealsPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());

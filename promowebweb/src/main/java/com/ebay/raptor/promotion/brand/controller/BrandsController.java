@@ -39,29 +39,8 @@ public class BrandsController {
 	public ListDataWebResponse<BrandPerformance> getBrandRegPromotions(HttpServletRequest request) throws MissingArgumentException, PromoException {
 		ListDataWebResponse<BrandPerformance> resp = new ListDataWebResponse<BrandPerformance>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		
 		List<BrandPerformance> brands = brandService.getBrandPerformance(userData.getUserId());
 		resp.setData(brands);
-		
-		/*BrandPerformance p1 = new BrandPerformance();
-		p1.setName("hello world");
-		p1.setLastAuditDt(new Date());
-		p1.setNextAuditDt(new Date());
-		p1.setState("1");
-		p1.setDefectRateNCompliantAmount(3);
-		
-		BrandPerformance p2 = new BrandPerformance();
-		p2.setName("hello world 2");
-		p2.setLastAuditDt(new Date());
-		p2.setNextAuditDt(new Date());
-		p2.setState("0");
-		p2.setDefectRateNCompliantAmount(5);
-		
-		List<BrandPerformance> list = new ArrayList<BrandPerformance>();
-		list.add(p1);
-		list.add(p2);
-		resp.setData(list);*/
-		
 		return resp;
 	}
 	
