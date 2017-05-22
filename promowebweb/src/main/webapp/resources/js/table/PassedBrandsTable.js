@@ -82,9 +82,9 @@ var BizReport = BizReport || {};
 				}, {
 					data : 'nextAuditDt'
 				}, {
-					data : 'state'
+					data : 'status'
 				}, {
-					data : 'defectRateNCompliantAmount'
+					data : 'count'
 				}
 			],
 			aoColumnDefs : [{
@@ -109,7 +109,7 @@ var BizReport = BizReport || {};
 						return !data ? '-' : (new Date(data)).format("yyyy-MM-dd");
 					}
 				}, {
-					aTargets : ["state"],
+					aTargets : ["status"],
 					sType : "string",
 					sClass : "text-center",
 					sWidth : "120px",
@@ -124,7 +124,7 @@ var BizReport = BizReport || {};
 						return '-';
 					}
 				}, {
-					aTargets : ["number"],
+					aTargets : ["count"],
 					sType : "string",
 					sClass : "text-right",
 					sDefaultContent : "-",
