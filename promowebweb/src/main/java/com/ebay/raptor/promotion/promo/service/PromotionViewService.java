@@ -44,7 +44,7 @@ public class PromotionViewService {
 	public void handlePromotion(ModelAndView model, Promotion promo, Long userId) {
 		if (promo.getType() !=  null) {
 			switch(promo.getType()) {
-			case 1:
+			case 2:
 				handleBrandPromotion(model, promo, userId);
 				break;
 			default:
@@ -52,8 +52,8 @@ public class PromotionViewService {
 				break;
 			}
 		} else {
-			handleBrandPromotion(model, promo, userId);
-//			handleGeneralPromotion(model, promo, userId);
+//			handleBrandPromotion(model, promo, userId);
+			handleGeneralPromotion(model, promo, userId);
 		}
 	}
 	
