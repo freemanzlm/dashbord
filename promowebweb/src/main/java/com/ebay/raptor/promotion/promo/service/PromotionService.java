@@ -23,8 +23,6 @@ import com.ebay.raptor.promotion.pojo.service.resp.PromotionResponse;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
 @Component
 public class PromotionService extends BaseService {
 	

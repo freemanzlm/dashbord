@@ -112,12 +112,7 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					sWidth : "120px",
 					mRender : function (data, type, full) {
-						/*var date = new Date(data.toString());
-						return date.format("yyyy-MM-dd");*/
-						if(!data) {
-							return data;
-						}
-						return data.split(" ")[0];
+						return (new Date(data)).format("yyyy-MM-dd hh:mm");
 					}
 				}, {
 					aTargets : ["promoDt"],
@@ -127,7 +122,7 @@ var BizReport = BizReport || {};
 					sWidth : "220px",
 					mRender : function (data, type, full) {
 						if (type == "display") {
-							return full.promoSdt + " ~ " + data;
+							return (full.promoSdt ? (new Date(full.promoSdt)).format("yyyy-MM-dd hh:mm") : '-') + " ~ " + (data ? (new Date(data)).format("yyyy-MM-dd hh:mm") : '-');
 						}
 						return data;
 					}
