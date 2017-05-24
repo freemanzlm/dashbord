@@ -186,7 +186,7 @@ public class PromotionDataController{
 		}
 		if(!CollectionUtils.isEmpty(data)){
 			for (Promotion promo : data) {
-				if(PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+				if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
 					result.add(promo);
 				}
 			}
@@ -212,7 +212,7 @@ public class PromotionDataController{
 		}
 		if(!CollectionUtils.isEmpty(data)){
 			for (Promotion promo : data) {
-				if(PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+				if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
 					result.add(promo);
 				}
 			}
@@ -238,7 +238,7 @@ public class PromotionDataController{
 		}
 		if(!CollectionUtils.isEmpty(data)){
 			for (Promotion promo : data) {
-				if(PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+				if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
 					result.add(promo);
 				}
 			}
@@ -264,7 +264,7 @@ public class PromotionDataController{
 		}
 		if(!CollectionUtils.isEmpty(data)){
 			for (Promotion promo : data) {
-				if(PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+				if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
 					result.add(promo);
 				}
 			}
@@ -290,7 +290,7 @@ public class PromotionDataController{
 		}
 		if(!CollectionUtils.isEmpty(data)){
 			for (Promotion promo : data) {
-				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
 					result.add(promo);
 				}
 			}
@@ -316,7 +316,7 @@ public class PromotionDataController{
 		}
 		if(!CollectionUtils.isEmpty(data)){
 			for (Promotion promo : data) {
-				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
 					result.add(promo);
 				}
 			}
@@ -342,7 +342,7 @@ public class PromotionDataController{
 		}
 		if(!CollectionUtils.isEmpty(data)){
 			for (Promotion promo : data) {
-				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
 					result.add(promo);
 				}
 			}
@@ -368,7 +368,7 @@ public class PromotionDataController{
 		}
 		if(!CollectionUtils.isEmpty(data)){
 			for (Promotion promo : data) {
-				if(PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
 					result.add(promo);
 				}
 			}
