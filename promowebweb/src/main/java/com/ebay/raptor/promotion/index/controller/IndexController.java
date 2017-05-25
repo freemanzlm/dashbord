@@ -301,6 +301,19 @@ public class IndexController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value = "/notification", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> getPromotionNotification(HttpServletRequest req, HttpServletResponse rsp,
+			@RequestParam("userId") String userid) {
+
+		String resultJson = "Notification Content";
+		
+		// TODO Get notification content from service.
+		Map<String, Object> jsonMap = new HashMap<String, Object>();
+		jsonMap.put("status", true);
+		jsonMap.put("data", resultJson);
+		return jsonMap;
+	}
+	
 	@RequestMapping(value = "/404", method = RequestMethod.GET)
 	public ModelAndView notFound(Exception exception, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("errors/404");

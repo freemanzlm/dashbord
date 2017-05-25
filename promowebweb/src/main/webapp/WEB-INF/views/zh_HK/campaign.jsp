@@ -64,6 +64,7 @@
 <res:useJs value="${res.js.local.js['dropdown.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
+<res:useJs value="${res.js.local.js.lib['vue.js']}" target="page-js"></res:useJs>
 
 <res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>

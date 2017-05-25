@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals活动</title>
-	<meta name="description" content="Deals活动">
+	<title>品牌認證與推廣</title>
+	<meta name="description" content="品牌認證與推廣">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -58,11 +58,13 @@
 	<res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['BrandRegPromoTable.js']}" target="page-js2"></res:useJs>
+	<res:useJs value="${res.js.local.js.table['PassedBrandsTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['OnGoingPromoTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['RewardingPromoTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['EndPromoTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['PendingPromoTable.js']}" target="page-js2"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['index.js']}" target="exec-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['brands_index.js']}" target="exec-js"></res:useJs>
 	
 </head>
 
@@ -79,74 +81,107 @@
 	<jsp:include page="topNavigator.jsp"></jsp:include>
 	
 	<div id="page-pane">
-		<div class="clr" style="margin-bottom: 15px;">
-			<h2>Deals活动</h2>
-		</div>
-		
 		<c:if test="${ isAdmin eq true }">
 			<div class="pane pane-table mt20">
 				<div class="header clr">
 					<div class="fr cl">
 					</div>
-					<h3>等待开放的活动</h3>
+					<h3>等待開放的活動</h3>
 				</div>
 				<jsp:include page="table/pending.jsp"></jsp:include>
 			</div>
-		</c:if>			
+		</c:if>
 		
-		<div class="pane pane-table mt20">
-			<div class="header clr">
-				<div class="fr cl">
-					<span class="select-control state-filter fr">
-						<select name="" id="">
-							<option value="">顯示所有活動</option>
-							<option value="SELLER NOMINATION_NEED APPROVE">報名階段的活動</option>
-							<option value="PROMOTION SUBMITTED">審核階段的活動</option>
-							<option value="PROMOTION IN PROGRESS">活動進行階段的活動</option>
-							<option value="PROMOTION IN VALIDATION">獎勵審核階段的活動</option>
-						</select>
-					</span>
+		<c:choose>
+			<c:when test="${passedBrandsCnt le 0 }">
+				<div class="text-center mt20 mb20">
+					<p>沒有符合篩選條件的活動</p>
 				</div>
-				<h3>進行中的活動</h3>
-			</div>
-			<jsp:include page="table/ongoing.jsp"></jsp:include>
-		</div>
+			</c:when>
+			<c:otherwise>
+				<c:if test="${not empty introduction}">
+					<div class="mb20 clr">
+						<h2>項目簡介</h2>
+						<div class="pretty-text mt10">
+							${ introduction }
+						</div>
+					</div>
+				</c:if>
+				
+				<div class="pane pane-table mt20">
+					<div class="header clr">
+						<h3>品牌認證活動</h3>
+					</div>
+					<jsp:include page="table/brand_reg_promotions.jsp"></jsp:include>
+				</div>
+				
+				<div class="pane pane-table mt20">
+					<div class="header clr">
+						<h3>已通過認證的品牌&amp;品牌表現跟踪</h3>
+					</div>
+					<jsp:include page="table/passed_brands.jsp"></jsp:include>
+				</div>
+				
+				<div class="mt20 clr">
+					<h2>品牌推廣活動</h2>
+				</div>
+				
+				<div class="pane pane-table mt20">
+					<div class="header clr">
+						<div class="fr cl">
+							<span class="select-control state-filter fr">
+								<select name="" id="">
+									<option value="">顯示所有活動</option>
+									<option value="SELLER NOMINATION_NEED APPROVE">報名階段的活動</option>
+									<option value="PROMOTION SUBMITTED">審核階段的活動</option>
+									<option value="PROMOTION IN PROGRESS">活動進行階段的活動</option>
+									<option value="PROMOTION IN VALIDATION">獎勵審核階段的活動</option>
+								</select>
+							</span>
+						</div>
+						<h3>進行中的活動</h3>
+					</div>
+					<jsp:include page="table/ongoing.jsp"></jsp:include>
+				</div>
+				
+				<div class="pane pane-table mt20">
+					<div class="header clr">
+						<div class="fr cl">
+							<span class="select-control state-filter fr">
+								<select name="" id="">
+									<option value="">顯示所有活動</option>
+									<option value="Awarding">可申請獎勵的活動</option>
+									<option value="Visited">待填寫確認函的活動</option>
+									<option value="AppliableAgain">需要重新申請江離的活動</option>
+									<option value="Appliable">可領取獎勵的活動</option>
+									<option value="Commited">待上傳確認函的活動</option>
+									<option value="Uploaded">申請審核中的活動</option>
+								</select>
+							</span>
+						</div>
+						<h3>領取活動獎勵</h3>
+					</div>
+					<jsp:include page="table/rewarding.jsp"></jsp:include>
+				</div>
+				
+				<div class="pane pane-table mt20">
+					<div class="header clr">
+						<div class="fr cl">
+							<span class="select-control state-filter fr">
+								<select name="" id="">
+									<option value="">顯示所有活動</option>
+									<option value="SubsidyRetrieved">領取獎勵成功的活動</option>
+									<option value="Detailed">只能查看詳情的活動</option>
+								</select>
+							</span>
+						</div>
+						<h3>已結束的活動</h3>
+					</div>
+					<jsp:include page="table/end.jsp"></jsp:include>
+				</div>
+			</c:otherwise>
+		</c:choose>
 		
-		<div class="pane pane-table mt20">
-			<div class="header clr">
-				<div class="fr cl">
-					<span class="select-control state-filter fr">
-						<select name="" id="">
-							<option value="">顯示所有活動</option>
-							<option value="Awarding">可申請獎勵的活動</option>
-							<option value="Visited">待填寫確認函的活動</option>
-							<option value="AppliableAgain">需要重新申請江離的活動</option>
-							<option value="Appliable">可領取獎勵的活動</option>
-							<option value="Commited">待上傳確認函的活動</option>
-							<option value="Uploaded">申請審核中的活動</option>
-						</select>
-					</span>
-				</div>
-				<h3>領取活動獎勵</h3>
-			</div>
-			<jsp:include page="table/rewarding.jsp"></jsp:include>
-		</div>
-		
-		<div class="pane pane-table mt20">
-			<div class="header clr">
-				<div class="fr cl">
-					<span class="select-control state-filter fr">
-						<select name="" id="">
-							<option value="">顯示所有活動</option>
-							<option value="SubsidyRetrieved">領取獎勵成功的活動</option>
-							<option value="Detailed">只能查看詳情的活動</option>
-						</select>
-					</span>
-				</div>
-				<h3>已結束的活動</h3>
-			</div>
-			<jsp:include page="table/end.jsp"></jsp:include>
-		</div>
 	</div>
 
 	<!-- Global Footer -->

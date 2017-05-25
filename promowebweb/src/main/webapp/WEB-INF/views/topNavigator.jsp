@@ -5,7 +5,7 @@
 <c:set var="isDisplayDialog" value="${((!isInConvWhitelist && isCanSubscribeConv) || (!isInDDSWhitelist && isCanSubscribeDDS)) && !isSubscribeDialogClosed}" /> <!-- //((!isInConvWhitelist && IsCanSubscribeConv) || (!accessDDS && isCanSubscribeDDS)) && !isSubscribeDialogClosed -->
 <c:set var="isDisplayNewIcon" value="${(!isInConvWhitelist && isCanSubscribeConv) || (!isInDDSWhitelist && isCanSubscribeDDS)}" /> 
 
-<div class="navigator-top" role="navigation">
+<div id="navigator" class="navigator-top" role="navigation" v-cloak>
 	<div class="navigator-bar clr">
 		<div class="navigator-title">卖家中心</div>
 		<ul class="navigation-list">
@@ -19,7 +19,7 @@
 			<li class="active">
 				<a id="promotion" href="/promotion/index" target="_self">营销活动</a>
 				<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank"></a></small>
-				<a><c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a>
+				<small class="counter" v:if="statistics.all > 0">{{statistics.all}}</small>
 			</li>
 		</ul>
 		<div class="latestNotification" style="display:block;"><a href="javascript:void" style="cursor: pointer;" >最新通知</a></div>
@@ -27,13 +27,13 @@
 	
 	<ul class="secondary-nav-list" role="menubar">
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/index') ? 'active': ''}">
-			<a href="/promotion/index">活动促销</a>
+			<a href="/promotion/index">活动促销<small class="counter" v:if="statistics.all > 0">{{statistics.all}}</small></a>
 		</li>
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/brands') ? 'active': ''}">
-			<a href="/promotion/brands">品牌认证与推广</a>
+			<a href="/promotion/brands">品牌认证与推广<small class="counter" v-if="statistics.brand > 0 || statistics.vetting > 0">{{statistics.brand + statistics.vetting}}</small></a>
 		</li>
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/deals') ? 'active': ''}">
-			<a href="/promotion/deals">Deals活动</a>
+			<a href="/promotion/deals">Deals活动<small class="counter" v-if="statistics.deals > 0">{{statistics.deals}}</small></a>
 		</li>
 	</ul>
 	<div style="display:none;">
@@ -47,3 +47,39 @@
 
 <!-- notification -->
 <%@ include file="notification/notificationDialog.jsp"%>
+
+<script>
+$(function(){
+	// Vue plugin.
+	var topNav = new Vue({
+		el: "#navigator",
+		data: {
+			statistics: {
+				all: 0,
+				brand: 0,
+				vetting: 0,
+				deals: 0
+			}
+		},
+		methods: {
+		}
+	});
+	
+	$.ajax("/promotion/promotion/promoStatistics", {
+		type : 'GET',
+		dataType : 'json',
+		headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
+		context : this,
+		success : function(data) {
+			if (data && data.status === true && data.data) {
+				topNav.statistics.all = data.data.all || 0;
+				topNav.statistics.brand = data.data.brand || 0;
+				topNav.statistics.vetting = data.data.vetting || 0;
+				topNav.statistics.deals = data.data.deals || 0;
+			}
+		}
+	});
+	
+	window.topNav = topNav;
+});
+</script>

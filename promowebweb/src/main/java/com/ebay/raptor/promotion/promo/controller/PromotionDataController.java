@@ -1,7 +1,9 @@
 package com.ebay.raptor.promotion.promo.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -391,6 +393,24 @@ public class PromotionDataController{
 			logger.error("Unable to get promotion of user " + uid + " and promotionID " + promoId, e);
 			resp.setStatus(Boolean.FALSE);
 		}
+		return resp;
+	}
+	
+	@GET
+	@RequestMapping(Router.Promotion.promoStatistics)
+	@ResponseBody
+	public DataWebResponse<Map<String, Object>> getPromotionStatistics(HttpServletRequest request) throws MissingArgumentException {
+		DataWebResponse<Map<String, Object>> resp = new DataWebResponse<Map<String, Object>>();
+		UserData userData = loginService.getUserDataFromCookie(request);
+		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("all", 18);
+		data.put("brand", 8);
+		data.put("vetting", 2);
+		data.put("deals", 3);
+		
+		resp.setStatus(true);
+		resp.setData(data);
 		return resp;
 	}
 	

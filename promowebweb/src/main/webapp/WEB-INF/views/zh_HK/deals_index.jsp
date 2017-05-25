@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Deals活动</title>
-	<meta name="description" content="Deals活动">
+	<title>Deals活動</title>
+	<meta name="description" content="Deals活動">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -80,7 +80,7 @@
 	
 	<div id="page-pane">
 		<div class="clr" style="margin-bottom: 15px;">
-			<h2>Deals活动</h2>
+			<h2>Deals活動</h2>
 		</div>
 		
 		<c:if test="${ isAdmin eq true }">
@@ -88,7 +88,7 @@
 				<div class="header clr">
 					<div class="fr cl">
 					</div>
-					<h3>等待开放的活动</h3>
+					<h3>等待開放的活動</h3>
 				</div>
 				<jsp:include page="table/pending.jsp"></jsp:include>
 			</div>
@@ -99,15 +99,15 @@
 				<div class="fr cl">
 					<span class="select-control state-filter fr">
 						<select name="" id="">
-							<option value="">顯示所有活動</option>
-							<option value="SELLER NOMINATION_NEED APPROVE">報名階段的活動</option>
-							<option value="PROMOTION SUBMITTED">審核階段的活動</option>
-							<option value="PROMOTION IN PROGRESS">活動進行階段的活動</option>
-							<option value="PROMOTION IN VALIDATION">獎勵審核階段的活動</option>
+							<option value="">显示所有活动</option>
+							<option value="SELLER NOMINATION_NEED APPROVE">报名阶段的活动</option>
+							<option value="PROMOTION SUBMITTED">审核阶段的活动</option>
+							<option value="PROMOTION IN PROGRESS">活动进行阶段的活动</option>
+							<option value="PROMOTION IN VALIDATION">奖励审核阶段的活动</option>
 						</select>
 					</span>
 				</div>
-				<h3>進行中的活動</h3>
+				<h3>进行中的活动</h3>
 			</div>
 			<jsp:include page="table/ongoing.jsp"></jsp:include>
 		</div>
@@ -117,17 +117,17 @@
 				<div class="fr cl">
 					<span class="select-control state-filter fr">
 						<select name="" id="">
-							<option value="">顯示所有活動</option>
-							<option value="Awarding">可申請獎勵的活動</option>
-							<option value="Visited">待填寫確認函的活動</option>
-							<option value="AppliableAgain">需要重新申請江離的活動</option>
-							<option value="Appliable">可領取獎勵的活動</option>
-							<option value="Commited">待上傳確認函的活動</option>
-							<option value="Uploaded">申請審核中的活動</option>
+							<option value="">显示所有活动</option>
+							<option value="Awarding">可申领奖励的活动</option>
+							<option value="Visited">待填写协议的活动</option>
+							<option value="AppliableAgain">需要重新申领奖励的活动</option>
+							<option value="Appliable">可领取奖励的活动</option>
+							<option value="Commited">待上传协议的活动</option>
+							<option value="Uploaded">申领审核中的活动</option>
 						</select>
 					</span>
 				</div>
-				<h3>領取活動獎勵</h3>
+				<h3>领取活动奖励</h3>
 			</div>
 			<jsp:include page="table/rewarding.jsp"></jsp:include>
 		</div>
@@ -137,13 +137,13 @@
 				<div class="fr cl">
 					<span class="select-control state-filter fr">
 						<select name="" id="">
-							<option value="">顯示所有活動</option>
-							<option value="SubsidyRetrieved">領取獎勵成功的活動</option>
-							<option value="Detailed">只能查看詳情的活動</option>
+							<option value="">显示所有活动</option>
+							<option value="Applied">领取奖励成功的活动</option>
+							<option value="Detailed">只能查看详情的活动</option>
 						</select>
 					</span>
 				</div>
-				<h3>已結束的活動</h3>
+				<h3>已结束的活动</h3>
 			</div>
 			<jsp:include page="table/end.jsp"></jsp:include>
 		</div>

@@ -5,7 +5,7 @@
 <c:set var="isDisplayDialog" value="${((!isInConvWhitelist && isCanSubscribeConv) || (!isInDDSWhitelist && isCanSubscribeDDS)) && !isSubscribeDialogClosed}" /> <!-- //((!isInConvWhitelist && IsCanSubscribeConv) || (!accessDDS && isCanSubscribeDDS)) && !isSubscribeDialogClosed -->
 <c:set var="isDisplayNewIcon" value="${(!isInConvWhitelist && isCanSubscribeConv) || (!isInDDSWhitelist && isCanSubscribeDDS)}" /> 
 
-<div class="navigator-top" role="navigation">
+<div class="navigator-top" role="navigation" v-cloak>
 	<div class="navigator-bar clr">
 		<div class="navigator-title">賣家中心</div>
 		<ul class="navigation-list">	
@@ -19,7 +19,7 @@
 			<li class="active">
 				<a id="promotion" href="/promotion/index" target="_self">活動促銷</a>
 				<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank"></a></small>
-				<a><c:if test="${ promoUpdatedNum gt 0 }"><small>${promoUpdatedNum}</small></c:if></a>
+				<small class="counter" v:if="statistics.all > 0">{{statistics.all}}</small>
 			</li>
 		</ul>
 		<div class="latestNotification" style="display:block;"><a href="javascript:void" style="cursor: pointer;" >最新通知</a></div>
@@ -27,13 +27,13 @@
 	
 	<ul class="secondary-nav-list" role="menubar">
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/index') ? 'active': ''}">
-			<a href="/promotion/index">活動促銷</a>
+			<a href="/promotion/index">活動促銷<small class="counter" v:if="statistics.all > 0">{{statistics.all}}</small></a>
 		</li>
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/brands') ? 'active': ''}">
-			<a href="/promotion/brands">品牌認證與推廣</a>
+			<a href="/promotion/brands">品牌認證與推廣<small class="counter" v-if="statistics.brand > 0 || statistics.vetting > 0">{{statistics.brand + statistics.vetting}}</small></a>
 		</li>
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/deals') ? 'active': ''}">
-			<a href="/promotion/deals">Deals活動</a>
+			<a href="/promotion/deals">Deals活動<small class="counter" v-if="statistics.deals > 0">{{statistics.deals}}</small></a>
 		</li>
 	</ul>
 	<div style="display:none;">

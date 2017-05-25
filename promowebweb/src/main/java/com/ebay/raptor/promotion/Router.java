@@ -20,6 +20,7 @@ public interface Router {
 		String unpublishedBrandPromotions = "/unpublishedBrandPromotions";
 		
 		String getPromotionById = "/getPromotionById";
+		String promoStatistics = "/promoStatistics";
 	}
 	
 	public interface Listing {
