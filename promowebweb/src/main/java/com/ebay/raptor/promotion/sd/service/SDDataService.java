@@ -36,7 +36,7 @@ public class SDDataService {
 	@Autowired
 	HttpRequestService httpRequestService;
 
-	public String getNotification (String userid) throws HttpException {
+	public String getNotification (Long userid) throws HttpException {
         Map<String, String> headers = new HashMap<String, String>();
 
         headers.put("Authorization", authorization);
@@ -50,7 +50,7 @@ public class SDDataService {
         return notificationStr;
     }
 	
-	public String setSDNotifiStatus(String userid) throws HttpException {
+	public String setSDNotifiStatus(Long userid) throws HttpException {
         Map<String, String> headers = new HashMap<String, String>();
 
         headers.put("Authorization", authorization);
@@ -64,7 +64,7 @@ public class SDDataService {
         return notificationStr;
 	}
 
-	public String getNotiIgnoreSatus(String userid) throws HttpException {
+	public String getNotiIgnoreSatus(Long userid) throws HttpException {
 		Map<String, String> headers = new HashMap<String, String>();
 
         headers.put("Authorization", authorization);

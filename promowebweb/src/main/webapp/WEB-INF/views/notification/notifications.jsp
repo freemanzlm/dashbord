@@ -19,7 +19,7 @@
 
 <script type="text/javascript">
 $(function(){
-	var notificationsCookieName = "notices", notifications = [], currentNotificationIndex = 0;
+	var NOTIFICATIONSCOOKIENAME = "notices", notifications = [], currentNotificationIndex = 0;
 	var cookieUtil = cbt && cbt.cookie;
 	var $dialog = $("#notification"), $dialogTitle = $dialog.find(".notification-title");
 	var $dialogContent = $dialog.find(".notification-content");
@@ -37,10 +37,10 @@ $(function(){
 			if (pageData && !pageData.admin) {
 				logReadNotification(notification);
 				sendFeedback(notification);
-			}			
+			}
 			
 			// display next notification.
-			if (currentNotificationIndex < notification.length - 1) {
+			if (currentNotificationIndex < notifications.length - 1) {
 				showNotification(notifications[++currentNotificationIndex]);
 			}
 		});
@@ -58,17 +58,21 @@ $(function(){
 	}	
 	
 	function loadReadNotificationIds() {
-		var notificationRead = cookieUtil.read(notificationsCookieName);
+		var notificationRead = cookieUtil.read(NOTIFICATIONSCOOKIENAME);
 		return notificationRead ? notificationRead.split(",") : [];
 	}
 	
 	function logReadNotification(notification) {
 		// log the read notification id in cookie
-		var notificationRead = cookieUtil.read(notificationsCookieName);
+		var notificationRead = cookieUtil.read(NOTIFICATIONSCOOKIENAME);
 		if (!notificationRead || notificationRead.indexOf(notification.id) < 0) {
 			notificationRead = notificationRead ? (notificationRead +  "," + notification.id) : notification.id;
-			cookieUtil.create(notificationsCookieName, notificationRead);
+			cookieUtil.create(NOTIFICATIONSCOOKIENAME, notificationRead);
 		}
+	}
+	
+	function clearNotificationLogs() {
+		cookieUtil.remove(NOTIFICATIONSCOOKIENAME);
 	}
 	
 	function sortNotifications(notifications) {
@@ -80,7 +84,7 @@ $(function(){
 				if (readNotificationIds[i] == notification.id && !notification.always) {
 					notifications.splict(j, 1);
 					break;
-				}				
+				}
 			}
 		}
 		
@@ -90,21 +94,30 @@ $(function(){
 		});
 	}
 	
-	$.ajax("/promotion/notifications", {
-		type : 'GET',
-		dataType : 'json',
-		data: {timestamp:Date.now()},
-		headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
-		context : this,
-		success : function(data) {
-			if (data && data.status === true && data.data) {
-				  notifications = data.data || [];
-				  sortNotifications(notifications);
-				  if (notifications.length > 0) {
-					  showNotification(notifications[0]);
-				  }
+	function getLatestNotifications() {
+		$.ajax("/promotion/notifications", {
+			type : 'GET',
+			dataType : 'json',
+			data: {timestamp:Date.now()},
+			headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
+			context : this,
+			success : function(data) {
+				if (data && data.status === true && data.data) {
+					  notifications = data.data || [];
+					  sortNotifications(notifications);
+					  if (notifications.length > 0) {
+						  showNotification(notifications[0]);
+					  }
+				}
 			}
-		}
+		});
+	}
+	
+	getLatestNotifications();
+	
+	$(".latestNotification a").click(function(){
+		clearNotificationLogs();
+		getLatestNotifications();
 	});
 });
 </script>

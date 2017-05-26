@@ -36,18 +36,11 @@
 			<a href="/promotion/deals">Deals活动<small class="counter" v-if="statistics.deals > 0" v-cloak>{{statistics.deals}}</small></a>
 		</li>
 	</ul>
-	<div style="display:none;">
-		${promoUpdatedDetail}
-	</div>
 </div>
 
 <c:if test="${isDisplayDialog eq true }">
 <%@ include file="brsubscribe/subscribeDialog.jsp"%>
 </c:if>
-
-<!-- notification -->
-<%@ include file="notification/notificationDialog.jsp"%>
-<%@ include file="notification/notifications.jsp"%>
 
 <script>
 $(function(){
@@ -87,3 +80,6 @@ $(function(){
 	window.topNav = topNav;
 });
 </script>
+
+<!-- notification -->
+<%@ include file="notification/notifications.jsp"%>

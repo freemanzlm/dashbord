@@ -28,20 +28,20 @@ public class AppConfig {
 		if (bdCfg.isPreProd()) { 
 			// TODO 
 		} else if (bdCfg.isProduction()) {
-			sellerDashboardServicePrefix = "http://cbtsdws2.stratus.ebay.com/cbt/sdws2/v1/";
+			sellerDashboardServicePrefix = "http://cbtsdws2.stratus.ebay.com";
 			bizReportServicePrefix = "http://www.bizser.stratus.ebay.com/br/v1/";
 		} else if ("staging".equals(bdCfg.getPoolType())) {
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/cbt/sdws2/v1/";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isQATE()) {
 			// feature pool or staging pool
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/cbt/sdws2/v1/";
+			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com/br/v1/";
 		} else if (bdCfg.isDev()) {
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/cbt/sdws2/v1/";
+			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
 			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com/br/v1/";
 		} else {
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com/sdt/secureResource/v1/";
+			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
 			bizReportServicePrefix = "http://cbtsdws2.qa.ebay.com/";
 		}
 	}

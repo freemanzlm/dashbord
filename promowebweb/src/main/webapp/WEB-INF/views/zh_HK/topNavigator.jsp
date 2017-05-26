@@ -45,10 +45,6 @@
 <%@ include file="brsubscribe/subscribeDialog.jsp"%>
 </c:if>
 
-<!-- notification -->
-<%@ include file="notification/notificationDialog.jsp"%>
-<%@ include file="notification/notifications.jsp"%>
-
 <script>
 $(function(){
 	// Vue plugin.
@@ -87,3 +83,6 @@ $(function(){
 	window.topNav = topNav;
 });
 </script>
+
+<!-- notification -->
+<%@ include file="notification/notifications.jsp"%>

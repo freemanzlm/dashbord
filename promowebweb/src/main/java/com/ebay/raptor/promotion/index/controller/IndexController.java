@@ -1,8 +1,8 @@
 package com.ebay.raptor.promotion.index.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -250,55 +249,14 @@ public class IndexController {
 		return mav;
 	}
 
-	/**
-	 * 
-	 * @param req
-	 * @param rsp
-	 * @param itemId
-	 */
-	@RequestMapping(value = "/getNotification", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getNotification(HttpServletRequest req, HttpServletResponse rsp,
-			@RequestParam("userId") String userid) {
-
-		String resultJson = null;
-		try {
-			resultJson = sdDataService.getNotification(userid);
-		} catch (HttpException e) {
-			logger.error("Unable to get getNotification for " + userid, e);
-		}
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		jsonMap.put("status", true);
-		jsonMap.put("data", resultJson);
-		return jsonMap;
-
-	}
-
-	@RequestMapping(value = "/getNotiIgnoreSatus", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getNotiIgnoreSatus(HttpServletRequest req, HttpServletResponse rsp,
-			@RequestParam("userId") String userid) {
-
-		String resultJson = null;
-		try {
-			resultJson = sdDataService.getNotiIgnoreSatus(userid);
-		} catch (HttpException e) {
-			logger.error("Unable to get getNotiIgnoreSatus for " + userid, e);
-		}
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		jsonMap.put("status", true);
-		jsonMap.put("data", resultJson);
-		return jsonMap;
-
-	}
-
 	@RequestMapping(value = "/setSDNotifiStatus", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> setSDNotifiStatus(HttpServletRequest req, HttpServletResponse rsp,
-			@RequestParam("userId") String userid) {
-
+	public @ResponseBody Map<String, Object> setSDNotifiStatus(HttpServletRequest request, HttpServletResponse rsp) throws MissingArgumentException {
+		UserData userData = loginService.getUserDataFromCookie(request);
 		String resultJson = null;
 		try {
-			resultJson = sdDataService.setSDNotifiStatus(userid);
+			resultJson = sdDataService.setSDNotifiStatus(userData.getUserId());
 		} catch (HttpException e) {
-			logger.error("Unable to get setSDNotifiStatus for " + userid, e);
+			logger.error("Unable to get setSDNotifiStatus for " + userData.getUserId(), e);
 		}
 		Map<String, Object> jsonMap = new HashMap<String, Object>();
 		jsonMap.put("status", true);
@@ -312,11 +270,7 @@ public class IndexController {
 		result.setStatus(false);
 		
 		UserData userData = loginService.getUserDataFromCookie(request);
-		Notification n = configService.getPromotionNotification(LocaleUtil.getCurrentLocale());
-		
-		ArrayList<Notification> list = new ArrayList<Notification>();
-		
-		list.add(n);
+		List<Notification> list = configService.getPromotionNotifications(LocaleUtil.getCurrentLocale(), userData.getUserId());
 		
 		result.setStatus(true);
 		result.setData(list);
