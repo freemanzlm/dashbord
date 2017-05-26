@@ -182,6 +182,7 @@ public class PromotionDataController{
 		List<Promotion> result = new ArrayList<Promotion>();
 		try {
 			data = service.getEndPromotions(userData.getUserId());
+//			data = service.getEndDealsPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
@@ -402,15 +403,38 @@ public class PromotionDataController{
 	public DataWebResponse<Map<String, Object>> getPromotionStatistics(HttpServletRequest request) throws MissingArgumentException {
 		DataWebResponse<Map<String, Object>> resp = new DataWebResponse<Map<String, Object>>();
 		UserData userData = loginService.getUserDataFromCookie(request);
+		List<Promotion> data = null;
+		Map<String, Object> result = new HashMap<String, Object>();
+		int allCount = 0;
+		int brandCount = 0;
+		int vettingCount = 0;
+		int dealsCount = 0;
+		try {
+			data = service.getIngPromotion(userData.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+			logger.log(e.getMessage());
+		}
+		if(!CollectionUtils.isEmpty(data)){
+			allCount = data.size();
+			for (Promotion promo : data) {
+				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+					brandCount++;
+				}else if(promo.getType() != null && PMPromoTabType.BRAND_VETTING.getTypeId()==promo.getType()){
+					vettingCount++;
+				}else if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+					dealsCount++;
+				}
+			}
+		}
 		
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("promotion", 18);
-		data.put("brand", 8);
-		data.put("vetting", 2);
-		data.put("deals", 3);
+		result.put("all", allCount);
+		result.put("brand", brandCount);
+		result.put("vetting", vettingCount);
+		result.put("deals", dealsCount);
 		
 		resp.setStatus(true);
-		resp.setData(data);
+		resp.setData(result);
 		return resp;
 	}
 	
