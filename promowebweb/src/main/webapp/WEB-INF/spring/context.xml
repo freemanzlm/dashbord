@@ -60,7 +60,6 @@
 			<beans:property name="paramName" value="lang" />
 		</beans:bean>
 		<beans:bean class="com.ebay.raptor.promotion.interceptor.LanguageInterceptor"></beans:bean>
-		<beans:bean class="com.ebay.raptor.promotion.interceptor.UpdatedPromotionsNumInterceptor"></beans:bean>
 	</mvc:interceptors>
 	
 	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">

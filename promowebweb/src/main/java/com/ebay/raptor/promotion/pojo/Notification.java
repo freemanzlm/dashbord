@@ -10,13 +10,15 @@ public class Notification {
 	// larger integer has higher priority.
 	private int priority;
 	
+	// unique id for this notification.
 	private String id;
+	
+	// which module's notification.
+	private String module;
 	
 	private String title;
 	
 	private String content;
-	
-	private boolean read;
 	
 	// whether this notification is always published.
 	private boolean always;
@@ -29,6 +31,24 @@ public class Notification {
 	
 	private String feedbackRequestContentType = "application/x-www-form-urlencoded";
 	
+	// when to open this notification.
+	private Date openDate;
+	
+	// when to close this notification. 
+	private Date closeDate;
+	
+	public String getModule() {
+		return module;
+	}
+	public void setModule(String module) {
+		this.module = module;
+	}
+	public Date getCloseDate() {
+		return closeDate;
+	}
+	public void setCloseDate(Date closeDate) {
+		this.closeDate = closeDate;
+	}
 	public String getFeedbackRequestContentType() {
 		return feedbackRequestContentType;
 	}
@@ -46,14 +66,6 @@ public class Notification {
 	}
 	public void setFeedbackURL(String feedbackURL) {
 		this.feedbackURL = feedbackURL;
-	}
-	private Date openDate;
-	
-	public boolean isRead() {
-		return read;
-	}
-	public void setRead(boolean read) {
-		this.read = read;
 	}
 	
 	public boolean isAlways() {

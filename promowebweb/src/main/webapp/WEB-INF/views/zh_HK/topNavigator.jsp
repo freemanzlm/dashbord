@@ -47,6 +47,7 @@
 
 <!-- notification -->
 <%@ include file="notification/notificationDialog.jsp"%>
+<%@ include file="notification/notifications.jsp"%>
 
 <script>
 $(function(){
