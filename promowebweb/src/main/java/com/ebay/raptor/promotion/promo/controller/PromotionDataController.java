@@ -404,7 +404,7 @@ public class PromotionDataController{
 		UserData userData = loginService.getUserDataFromCookie(request);
 		
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("all", 18);
+		data.put("promotion", 18);
 		data.put("brand", 8);
 		data.put("vetting", 2);
 		data.put("deals", 3);

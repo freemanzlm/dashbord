@@ -56,6 +56,7 @@ $(function(){
 		data: {
 			statistics: {
 				all: 0,
+				promotion: 0,
 				brand: 0,
 				vetting: 0,
 				deals: 0
@@ -72,10 +73,11 @@ $(function(){
 		context : this,
 		success : function(data) {
 			if (data && data.status === true && data.data) {
-				topNav.statistics.all = data.data.all || 0;
+				topNav.statistics.promotion = data.data.promotion || 0;
 				topNav.statistics.brand = data.data.brand || 0;
 				topNav.statistics.vetting = data.data.vetting || 0;
 				topNav.statistics.deals = data.data.deals || 0;
+				topNav.statistics.all = topNav.statistics.promotion + topNav.statistics.brand + topNav.statistics.vetting + topNav.statistics.deals;  
 			}
 		}
 	});

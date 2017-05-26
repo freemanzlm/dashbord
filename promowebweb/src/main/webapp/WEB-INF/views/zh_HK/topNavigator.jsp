@@ -5,7 +5,7 @@
 <c:set var="isDisplayDialog" value="${((!isInConvWhitelist && isCanSubscribeConv) || (!isInDDSWhitelist && isCanSubscribeDDS)) && !isSubscribeDialogClosed}" /> <!-- //((!isInConvWhitelist && IsCanSubscribeConv) || (!accessDDS && isCanSubscribeDDS)) && !isSubscribeDialogClosed -->
 <c:set var="isDisplayNewIcon" value="${(!isInConvWhitelist && isCanSubscribeConv) || (!isInDDSWhitelist && isCanSubscribeDDS)}" /> 
 
-<div class="navigator-top" role="navigation" v-cloak>
+<div id="navigator" class="navigator-top" role="navigation" v-cloak>
 	<div class="navigator-bar clr">
 		<div class="navigator-title">賣家中心</div>
 		<ul class="navigation-list">	
@@ -47,3 +47,41 @@
 
 <!-- notification -->
 <%@ include file="notification/notificationDialog.jsp"%>
+
+<script>
+$(function(){
+	// Vue plugin.
+	var topNav = new Vue({
+		el: "#navigator",
+		data: {
+			statistics: {
+				all: 0,
+				promotion: 0,
+				brand: 0,
+				vetting: 0,
+				deals: 0
+			}
+		},
+		methods: {
+		}
+	});
+	
+	$.ajax("/promotion/promotion/promoStatistics", {
+		type : 'GET',
+		dataType : 'json',
+		headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
+		context : this,
+		success : function(data) {
+			if (data && data.status === true && data.data) {
+				topNav.statistics.promotion = data.data.promotion || 0;
+				topNav.statistics.brand = data.data.brand || 0;
+				topNav.statistics.vetting = data.data.vetting || 0;
+				topNav.statistics.deals = data.data.deals || 0;
+				topNav.statistics.all = topNav.statistics.promotion + topNav.statistics.brand + topNav.statistics.vetting + topNav.statistics.deals;  
+			}
+		}
+	});
+	
+	window.topNav = topNav;
+});
+</script>
