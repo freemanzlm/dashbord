@@ -411,12 +411,9 @@ public class PromotionDataController{
 		int vettingCount = 0;
 		int dealsCount = 0;
 		try {
-<<<<<<< 47edcf9e4a9c864d266cf9127a050d3cd9064323
-			data = service.getUpdatedPromotions(userData.getUserId());
-=======
+//			data = service.getUpdatedPromotions(userData.getUserId());
 			ingData = service.getIngPromotion(userData.getUserId());
 			awardData = service.awardingBrandPromotions(userData.getUserId());
->>>>>>> 0eecf73b8fbb064d662ccf0d32e700480f733d9b
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
