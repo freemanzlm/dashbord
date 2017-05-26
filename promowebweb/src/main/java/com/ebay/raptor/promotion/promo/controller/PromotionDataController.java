@@ -403,21 +403,39 @@ public class PromotionDataController{
 	public DataWebResponse<Map<String, Object>> getPromotionStatistics(HttpServletRequest request) throws MissingArgumentException {
 		DataWebResponse<Map<String, Object>> resp = new DataWebResponse<Map<String, Object>>();
 		UserData userData = loginService.getUserDataFromCookie(request);
-		List<Promotion> data = null;
+		List<Promotion> ingData = null;
+		List<Promotion> awardData = null;
 		Map<String, Object> result = new HashMap<String, Object>();
 		int allCount = 0;
 		int brandCount = 0;
 		int vettingCount = 0;
 		int dealsCount = 0;
 		try {
+<<<<<<< 47edcf9e4a9c864d266cf9127a050d3cd9064323
 			data = service.getUpdatedPromotions(userData.getUserId());
+=======
+			ingData = service.getIngPromotion(userData.getUserId());
+			awardData = service.awardingBrandPromotions(userData.getUserId());
+>>>>>>> 0eecf73b8fbb064d662ccf0d32e700480f733d9b
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
 		}
-		if(!CollectionUtils.isEmpty(data)){
-			allCount = data.size();
-			for (Promotion promo : data) {
+		if(!CollectionUtils.isEmpty(ingData)){
+			allCount = ingData.size();
+			for (Promotion promo : ingData) {
+				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
+					brandCount++;
+				}else if(promo.getType() != null && PMPromoTabType.BRAND_VETTING.getTypeId()==promo.getType()){
+					vettingCount++;
+				}else if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
+					dealsCount++;
+				}
+			}
+		}
+		if(!CollectionUtils.isEmpty(awardData)){
+			allCount += awardData.size();
+			for (Promotion promo : awardData) {
 				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
 					brandCount++;
 				}else if(promo.getType() != null && PMPromoTabType.BRAND_VETTING.getTypeId()==promo.getType()){
