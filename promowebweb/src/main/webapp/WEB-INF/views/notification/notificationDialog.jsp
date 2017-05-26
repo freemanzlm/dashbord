@@ -27,10 +27,10 @@
 			contentType : 'application/json',
 			dataType : 'json',
 			success : function(data) {
-			if(!isFirstLoad) return; 
+				if(!isFirstLoad || !data.data) return; 
 			
-			/* enhancement */
-			var resData = eval("(" + data.data.replace(/\\/g, '') + ")");
+				/* enhancement */
+				var resData = eval("(" + data.data.replace(/\\/g, '') + ")");
 			
 				/*check if display latestnotification icon*/
 				switch (resData.errormsg){

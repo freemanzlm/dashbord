@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.index.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,14 +39,17 @@ import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.brand.service.BrandService;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.enums.PromoError;
+import com.ebay.raptor.promotion.pojo.Notification;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.sd.service.SDDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
+import com.ebay.raptor.promotion.service.ConfigurationService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
@@ -68,6 +72,7 @@ public class IndexController {
 	@Autowired TrackService trackService;
 	@Autowired SDDataService sdDataService;
 	@Autowired BrandService brandService;
+	@Autowired ConfigurationService configService;
 	@Autowired ResourceBundleMessageSource msgResource;
 
 	@RequestMapping(value = "/backend", method = RequestMethod.GET)
@@ -301,17 +306,22 @@ public class IndexController {
 		return jsonMap;
 	}
 	
-	@RequestMapping(value = "/notification", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getPromotionNotification(HttpServletRequest req, HttpServletResponse rsp,
-			@RequestParam("userId") String userid) {
-
-		String resultJson = "Notification Content";
+	@RequestMapping(value = "/notifications", method = RequestMethod.GET)
+	public @ResponseBody ListDataWebResponse<Notification> getPromotionNotification(HttpServletRequest request, HttpServletResponse rsp) throws MissingArgumentException {
+		ListDataWebResponse<Notification> result = new ListDataWebResponse<Notification>();
+		result.setStatus(false);
 		
-		// TODO Get notification content from service.
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		jsonMap.put("status", true);
-		jsonMap.put("data", resultJson);
-		return jsonMap;
+		UserData userData = loginService.getUserDataFromCookie(request);
+		Notification n = configService.getPromotionNotification(LocaleUtil.getCurrentLocale());
+		
+		ArrayList<Notification> list = new ArrayList<Notification>();
+		
+		list.add(n);
+		
+		result.setStatus(true);
+		result.setData(list);
+		
+		return result;
 	}
 	
 	@RequestMapping(value = "/404", method = RequestMethod.GET)

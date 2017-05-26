@@ -410,7 +410,7 @@ public class PromotionDataController{
 		int vettingCount = 0;
 		int dealsCount = 0;
 		try {
-			data = service.getIngPromotion(userData.getUserId());
+			data = service.getUpdatedPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
