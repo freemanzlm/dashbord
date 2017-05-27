@@ -41,6 +41,7 @@ import com.ebay.raptor.promotion.enums.PromoError;
 import com.ebay.raptor.promotion.pojo.Notification;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
+import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
 import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
@@ -48,8 +49,8 @@ import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.sd.service.SDDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
-import com.ebay.raptor.promotion.service.ConfigurationService;
 import com.ebay.raptor.promotion.service.LoginService;
+import com.ebay.raptor.promotion.service.NotificationService;
 import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
@@ -71,7 +72,7 @@ public class IndexController {
 	@Autowired TrackService trackService;
 	@Autowired SDDataService sdDataService;
 	@Autowired BrandService brandService;
-	@Autowired ConfigurationService configService;
+	@Autowired NotificationService notificationService;
 	@Autowired ResourceBundleMessageSource msgResource;
 
 	@RequestMapping(value = "/backend", method = RequestMethod.GET)
@@ -264,13 +265,27 @@ public class IndexController {
 		return jsonMap;
 	}
 	
+	@RequestMapping(value = "/hasnotifications", method = RequestMethod.GET)
+	public @ResponseBody DataWebResponse<Boolean> hasNotifications(HttpServletRequest request, HttpServletResponse rsp) throws MissingArgumentException {
+		DataWebResponse<Boolean> result = new DataWebResponse<Boolean>();
+		result.setStatus(false);
+		
+		UserData userData = loginService.getUserDataFromCookie(request);
+		Boolean flag = notificationService.hasNotifications(LocaleUtil.getCurrentLocale(), userData.getUserId());
+		
+		result.setStatus(true);
+		result.setData(flag);
+		
+		return result;
+	}
+	
 	@RequestMapping(value = "/notifications", method = RequestMethod.GET)
-	public @ResponseBody ListDataWebResponse<Notification> getPromotionNotification(HttpServletRequest request, HttpServletResponse rsp) throws MissingArgumentException {
+	public @ResponseBody ListDataWebResponse<Notification> getNotifications(HttpServletRequest request, HttpServletResponse rsp) throws MissingArgumentException {
 		ListDataWebResponse<Notification> result = new ListDataWebResponse<Notification>();
 		result.setStatus(false);
 		
 		UserData userData = loginService.getUserDataFromCookie(request);
-		List<Notification> list = configService.getPromotionNotifications(LocaleUtil.getCurrentLocale(), userData.getUserId());
+		List<Notification> list = notificationService.getNotifications(LocaleUtil.getCurrentLocale(), userData.getUserId());
 		
 		result.setStatus(true);
 		result.setData(list);

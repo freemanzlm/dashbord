@@ -22,7 +22,7 @@
 				<small class="counter" v-if="statistics.all > 0" v-cloak>{{statistics.all}}</small>
 			</li>
 		</ul>
-		<div class="latestNotification" style="display:block;"><a href="javascript:void" style="cursor: pointer;" >最新通知</a></div>
+		<div class="latestNotification" style="display:none;"><a href="javascript:void" style="cursor: pointer;" >最新通知</a></div>
 	</div>
 	
 	<ul class="secondary-nav-list" role="menubar">

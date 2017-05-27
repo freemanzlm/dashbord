@@ -19,7 +19,7 @@
 
 <script type="text/javascript">
 $(function(){
-	var NOTIFICATIONSCOOKIENAME = "notices", notifications = [], currentNotificationIndex = 0;
+	var NOTIFICATIONSCOOKIENAME = "notices", notifications = [], currentNotificationIndex = 0, isLoadingNotifications=false;
 	var cookieUtil = cbt && cbt.cookie;
 	var $dialog = $("#notification"), $dialogTitle = $dialog.find(".notification-title");
 	var $dialogContent = $dialog.find(".notification-content");
@@ -34,6 +34,7 @@ $(function(){
 		$dialog.dialog({
 			 clazz : 'overlay'
 		}).on('close', function(){
+			$dialog.off('close'); // prevent multiple call
 			if (pageData && !pageData.admin) {
 				logReadNotification(notification);
 				sendFeedback(notification);
@@ -94,6 +95,29 @@ $(function(){
 		});
 	}
 	
+	function checkIfHasNotifications() {
+		$.ajax("/promotion/hasnotifications", {
+			type : 'GET',
+			dataType : 'json',
+			data: {timestamp:Date.now()},
+			headers: {'Cache-Control': 'no-cache', 'Pragma': 'no-cache'},
+			context : this,
+			success : function(data) {
+				// check if there is notification, then send the request to get notificaitons.
+				if (data && data.status === true && data.data === true) {
+					$(".latestNotification").show();
+					getLatestNotifications();
+				} else {
+					isLoadingNotifications = false;
+					$(".latestNotification").hide();
+				}
+			},
+			error: function(){
+				isLoadingNotifications = false;
+			}
+		});
+	}
+	
 	function getLatestNotifications() {
 		$.ajax("/promotion/notifications", {
 			type : 'GET',
@@ -109,13 +133,18 @@ $(function(){
 						  showNotification(notifications[0]);
 					  }
 				}
+			},
+			complete: function() {
+				isLoadingNotifications = false;
 			}
 		});
 	}
 	
-	getLatestNotifications();
+	checkIfHasNotifications();
 	
 	$(".latestNotification a").click(function(){
+		if (isLoadingNotifications) return;
+		isLoadingNotifications = true;
 		clearNotificationLogs();
 		getLatestNotifications();
 	});

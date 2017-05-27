@@ -58,7 +58,6 @@ import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
-import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.EncryptUtil;
@@ -93,8 +92,6 @@ public class SubsidyController {
 	PromotionViewService view;
 	@Autowired
 	SubsidyService subsidyService;
-	@Autowired
-	CSApiService csApiService;
 	@Autowired
 	WltApiService wltApiService;
 	@Autowired

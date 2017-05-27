@@ -17,26 +17,35 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class ConfigurationService {
-	private static Logger logger = Logger.getInstance(ConfigurationService.class);
+public class NotificationService {
+	private static Logger logger = Logger.getInstance(NotificationService.class);
 	@Autowired SDDataService sdDataService;
 	
 	private ObjectMapper mapper = new ObjectMapper();
 	
-	// @TODO this service
-	public List<Notification> getPromotionNotifications(Locale locale, Long userId) {
+	/**
+	 * Check if there is notification.
+	 * TODO, There should has a separate service to get the boolean value.
+	 * @param locale
+	 * @param userId
+	 * @return
+	 */
+	public boolean hasNotifications(Locale locale, Long userId) {
+		List<Notification> list = this.getNotifications(locale, userId);
+		return list != null && list.size() > 0;
+	}
+	
+	/**
+	 * Return all notifications.
+	 * @param locale
+	 * @param userId
+	 * @return
+	 */
+	public List<Notification> getNotifications(Locale locale, Long userId) {
 		List<Notification> list = new ArrayList<Notification>();
 		
-		Notification n = new Notification();
-		n.setTitle("Title");
-		n.setPriority(1);
-		n.setContent("Notificaiton Content");
-		n.setId("promotion");
-		
-		list.add(n);
-		
 		try {
-			Notification sdN = getSDNotification(locale, 22222222L);
+			Notification sdN = getSDNotification(locale, userId);
 			if (sdN != null) {
 				list.add(sdN);
 			}
@@ -47,10 +56,16 @@ public class ConfigurationService {
 		return list;
 	}
 	
-	public Notification getSDNotification(Locale locale, Long userId) throws HttpException {
+	/**
+	 * For history reason, we used dashboard existing notification. But later we should change this approach.
+	 * @param locale
+	 * @param userId
+	 * @return
+	 * @throws HttpException
+	 */
+	private Notification getSDNotification(Locale locale, Long userId) throws HttpException {
 		Notification n = null;
-		ObjectMapper mapper = new ObjectMapper();
-		String resultJson = sdDataService.getNotification(userId);
+		String resultJson = sdDataService.getNotiIgnoreSatus(userId);
 		
 		try {
 			JsonNode json = mapper.readTree(resultJson);

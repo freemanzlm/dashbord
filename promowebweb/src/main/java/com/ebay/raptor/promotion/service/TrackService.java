@@ -30,7 +30,7 @@ public class TrackService{
 	@Autowired
     protected HttpRequestService httpRequestService;
 	
-	protected static String insertAuditUrl = "listing/audit/save";
+	protected static String insertAuditUrl = "/cbt/sdws2/v1/listing/audit/save";
 	protected static String authorization;
 	
 	static {
