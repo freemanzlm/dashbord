@@ -47,8 +47,18 @@ public class BrandService extends BaseService {
 		return 2;
 	}
 
-	public String getBrandIntroduction(Locale locale) {
-		return "项目简介";
+	public String getBrandIntroduction(Locale locale){
+		String uri = url(params(ResourceProvider.PromotionRes.getBrandIntroduction, new Object[] { "{country}", locale.toString() }));
+		GingerClientResponse resp = httpGet(uri);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<String>> type = new GenericType<GeneralDataResponse<String>>() {
+			};
+			GeneralDataResponse<String> info = resp.getEntity(type);
+			return info.getData();
+		} else {
+			Logger.log("BrandVettingIntroduction not found!");
+			return null;
+		}
 	}
 
 	public List<BrandPerformance> getBrandPerformance(Long userId) throws PromoException {
