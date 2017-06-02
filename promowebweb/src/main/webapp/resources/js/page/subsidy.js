@@ -122,7 +122,7 @@ $(function(){
 				var responseData = $.parseJSON(response);
 				
 				if(responseData.status==true) {
-					$errorMsgEle.html('<a href=/promotion/subsidy/downloadAttachmentById/?id=' + responseData.message +'>'+local.getText('promo.listings.attachdownload')+'</a>');
+					$errorMsgEle.html('<a href=/promotion/subsidy/downloadAttachmentById/?id=' + responseData.message +'>'+local.getText('subsidy.attachment.attachdownload')+'</a>');
 					$form.find(".file-input input").val(""); // clear input[type=file] input value
 					$form.data("hasuploaded", true);
 				} else if(responseData.message && responseData.message.length > 0) {

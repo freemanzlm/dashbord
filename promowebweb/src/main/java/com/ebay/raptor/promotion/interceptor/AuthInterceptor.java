@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
@@ -56,23 +55,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		return true;
-	}
-	
-	@Override
-	public void postHandle(
-			HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-			throws Exception {
-		
-		/*Map <String, String> cookieMap = CookieUtil.convertCookieToMap(request.getCookies());
-		String backendToken = cookieMap.get(AppCookies.BACKEND_TOKEN_COOKIE_NAME);
-    	if (backendToken == null || backendToken.isEmpty()) {
-    		backendToken = cookieMap.get(AppCookies.HACK_MODE_COOKIE_NAME);
-    		if(backendToken == null || backendToken.isEmpty()) {
-	    		if (modelAndView != null) {
-	    			modelAndView.setViewName("maintain");
-	    		}
-    		}
-    	}*/
 	}
 	
 	private boolean authenticate (HttpServletRequest request,
