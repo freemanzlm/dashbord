@@ -30,7 +30,7 @@
 			<a href="/promotion/index">活動促銷<small class="counter" v-if="statistics.all > 0" v-cloak>{{statistics.all}}</small></a>
 		</li>
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/brands') ? 'active': ''}">
-			<a href="/promotion/brands">品牌認證與推廣<small class="counter" v-if="statistics.brand > 0 || statistics.vetting > 0" v-cloak>{{statistics.brand + statistics.vetting}}</small></a>
+			<a href="/promotion/brands">中國品牌智造計畫<small class="counter" v-if="statistics.brand > 0 || statistics.vetting > 0" v-cloak>{{statistics.brand + statistics.vetting}}</small></a>
 		</li>
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/deals') ? 'active': ''}">
 			<a href="/promotion/deals">Deals活動<small class="counter" v-if="statistics.deals > 0" v-cloak>{{statistics.deals}}</small></a>

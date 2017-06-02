@@ -13,7 +13,7 @@
 <html>
 <head>
 	<title>品牌认证与推广</title>
-	<meta name="description" content="品牌认证与推广">
+	<meta name="description" content="中国品牌智造计划">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -110,14 +110,14 @@
 				
 				<div class="pane pane-table mt20">
 					<div class="header clr">
-						<h3>品牌认证活动</h3>
+						<h3>品牌认证</h3>
 					</div>
 					<jsp:include page="table/brand_reg_promotions.jsp"></jsp:include>
 				</div>
 				
 				<div class="pane pane-table mt20">
 					<div class="header clr">
-						<h3>已通过认证的品牌&amp;品牌表现跟踪</h3>
+						<h3>已通过认证的品牌表现追踪</h3>
 					</div>
 					<jsp:include page="table/passed_brands.jsp"></jsp:include>
 				</div>
