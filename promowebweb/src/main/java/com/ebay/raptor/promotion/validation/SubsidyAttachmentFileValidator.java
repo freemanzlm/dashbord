@@ -91,7 +91,7 @@ public class SubsidyAttachmentFileValidator {
 		SubsidyAttachmentAllowedType[] fileTypes = SubsidyAttachmentAllowedType.values();
 		for (SubsidyAttachmentAllowedType type : fileTypes) {
 			if (fileHead.startsWith(type.getValue())) {
-				if (type.toString().equalsIgnoreCase(file.getOriginalFilename().split("\\.")[1])) {
+				if (type.toString().equalsIgnoreCase(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1))) {
 					return type;
 				}
 			}
