@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>活动促销</title>
-	<meta name="description" content="活动促销">
+	<title>活動促銷</title>
+	<meta name="description" content="活動促銷">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />

@@ -125,7 +125,6 @@
 	<%@ include file="previewDialog.jsp"%>
 
 	<script type="text/javascript">
-		
 		var pageData = {
 			promoId : '${promo.promoId}',
 			currentStep : '${currentStep}',
