@@ -131,11 +131,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.ebay.v3project.v3core</groupId>
-			<artifactId>CoreDomain</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.2.2.Final</version>

@@ -125,7 +125,6 @@
 	<%@ include file="previewDialog.jsp"%>
 
 	<script type="text/javascript">
-		
 		var pageData = {
 			promoId : '${promo.promoId}',
 			currentStep : '${currentStep}',
@@ -133,6 +132,7 @@
 			username: '${unm}',
 			subsidyStatus: '${subsidy.status}',
 			hasSubmitFields: JSON.parse('${subsidy.status eq 2 or subsidy.status eq 3 or subsidy.status eq 4 or subsidy.status eq 6}'),
+			hasUploadLetter: JSON.parse('${subsidy.status eq 3 or subsidy.status eq 4 or subsidy.status eq 6}'),
 			hasSubsidyApproved: JSON.parse('${subsidy.status eq 4 or subsidy.status eq 6 }'),
 			isAwardEnd: JSON.parse('${isAwardEnd eq true}')
 		};

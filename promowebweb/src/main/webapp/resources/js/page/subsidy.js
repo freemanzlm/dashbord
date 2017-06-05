@@ -33,7 +33,7 @@ $(function(){
 			user: {name: pageData.username},
 			hasAcceptLetter: false,
 			hasSubmitFields: pageData.hasSubmitFields,
-			hasUploadLetter: false,
+			hasUploadLetter: pageData.hasUploadLetter,
 			hasApproved: pageData.hasSubsidyApproved,
 			isAwardEnd: pageData.isAwardEnd
 		},
@@ -122,7 +122,7 @@ $(function(){
 				var responseData = $.parseJSON(response);
 				
 				if(responseData.status==true) {
-					$errorMsgEle.html('<a href=/promotion/subsidy/downloadAttachmentById/?id=' + responseData.message +'>'+local.getText('promo.listings.attachdownload')+'</a>');
+					$errorMsgEle.html('<a href=/promotion/subsidy/downloadAttachmentById/?id=' + responseData.message +'>'+local.getText('subsidy.attachment.attachdownload')+'</a>');
 					$form.find(".file-input input").val(""); // clear input[type=file] input value
 					$form.data("hasuploaded", true);
 				} else if(responseData.message && responseData.message.length > 0) {
