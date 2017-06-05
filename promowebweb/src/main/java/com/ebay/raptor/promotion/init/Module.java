@@ -22,7 +22,7 @@ public class Module extends BaseDIAwareModule {
 	}
 	
 	public static class InitializationManager extends BaseInitializationManager {
-		@Inject com.ebay.integ.user.common.Module userModule; 
+		@Inject Module userModule; 
 
 		// Moved to @Inject statement
 		final static ModuleInterface[] DEPENDENT_MODULES = { 
