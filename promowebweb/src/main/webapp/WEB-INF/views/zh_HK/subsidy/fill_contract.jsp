@@ -102,9 +102,10 @@
 	</div>
 	
 	<div id="pane2" class="tab-pane confirm-letter-submission-pane" v-bind:class="{active: (hasSubmitFields && !hasApproved)}" role="tabpanel">
-		<c:if test="${ subsidy.status eq 3 }">
-			<div style="background:#e8ecaf;padding:10px;">您的檔案已上傳成功！請耐心等待我們的稽核結果，由於數據量龐大，更新稽核狀態可能需要10個工作日。<br />您也可以隨時返回<a href="/promotion/index">活動清單</a>頁查看最新的稽核狀態。</div>
-		</c:if>
+	
+		<div style="background:#e8ecaf;padding:10px;" v-if="hasUploadLetter">
+			您的檔案已上傳成功！請耐心等待我們的稽核結果，由於數據量龐大，更新稽核狀態可能需要10個工作日。<br />您也可以隨時返回<a href="/promotion/index">活動清單</a>頁查看最新的稽核狀態。
+		</div>
 		
 		<div class="hint">
 			<p>為了方便核實您的上傳資訊，確保您能儘快領取相關獎勵，請仔細閱讀以下內容：</p>

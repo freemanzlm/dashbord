@@ -33,7 +33,7 @@ $(function(){
 			user: {name: pageData.username},
 			hasAcceptLetter: false,
 			hasSubmitFields: pageData.hasSubmitFields,
-			hasUploadLetter: false,
+			hasUploadLetter: pageData.hasUploadLetter,
 			hasApproved: pageData.hasSubsidyApproved,
 			isAwardEnd: pageData.isAwardEnd
 		},
