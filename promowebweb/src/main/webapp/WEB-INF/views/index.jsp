@@ -128,6 +128,9 @@
 				</div>
 				<h3>领取活动奖励</h3>
 			</div>
+			<div style="border: 1px solid #f00;padding: 10px;">
+				目前奖励系统维护中，建议维护结束后再做申领奖励操作！感谢您的配合和理解！
+			</div>
 			<jsp:include page="table/rewarding.jsp"></jsp:include>
 		</div>
 		
