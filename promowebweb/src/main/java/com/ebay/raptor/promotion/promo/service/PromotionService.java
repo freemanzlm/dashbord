@@ -10,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
-import com.ebay.cbt.raptor.promotion.po.Subsidy;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.HasListingNominatedResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;

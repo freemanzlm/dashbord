@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.cbt.common.constant.pm.PMSubsidyStatus;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
@@ -33,7 +34,6 @@ import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.cbt.sf.service.ServiceExecutor;
 import com.ebay.raptor.promotion.excep.PromoException;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
 import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;

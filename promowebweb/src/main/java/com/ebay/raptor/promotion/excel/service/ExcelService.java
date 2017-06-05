@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.po.Listing;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.SheetWriter;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
@@ -25,7 +26,6 @@ import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.RangeColumnConstraint;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.service.ListingService;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;

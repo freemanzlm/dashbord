@@ -36,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.common.constant.pm.PMSubsidyStatus;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
@@ -53,7 +54,6 @@ import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;

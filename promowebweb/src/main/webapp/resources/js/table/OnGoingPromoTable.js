@@ -106,11 +106,10 @@ var BizReport = BizReport || {};
 					sWidth : "120px",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
-						if(!data) {
-							return '-';
+						if(data) {
+							return (new Date(data)).format("yyyy-MM-dd hh:mm");
 						}
-						/*var date = new Date(data);
-						return date.format("yyyy-MM-dd hh:mm");*/
+						
 						return data;
 					}
 				}, {
@@ -121,10 +120,7 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
 						if (type == "display") {
-							/*var date1 = new Date(data);
-							var date2 = new Date(full.promoSdt);
-							return date2.format("yyyy-MM-dd hh:mm") + " ~ " + date1.format("yyyy-MM-dd hh:mm");*/
-							return full.promoSdt + " ~ " + data;
+							return (full.promoSdt ? (new Date(full.promoSdt)).format("yyyy-MM-dd hh:mm") : '-') + " ~ " + (data ? (new Date(data)).format("yyyy-MM-dd hh:mm") : '-');
 						}
 						return data;
 					}

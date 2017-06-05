@@ -94,7 +94,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: " ",
 					sWidth: "120px",
 					mRender: function(data, type, full) {
-						return data;
+						return data ? (new Date(data)).format("yyyy-MM-dd hh:mm") : data;
 					}
 				},
 				{
@@ -104,7 +104,7 @@ var BizReport = BizReport || {};
 					sDefaultContent: "-",
 					mRender: function(data, type, full) {
 						if (type == "display") {
-							return full.promoSdt + " ~ " + data;
+							return (full.promoSdt ? (new Date(full.promoSdt)).format("yyyy-MM-dd hh:mm") : '-') + " ~ " + (data ? (new Date(data)).format("yyyy-MM-dd hh:mm") : '-');
 						}
 						return data;
 					}
