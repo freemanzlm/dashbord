@@ -174,10 +174,14 @@ public class IndexController {
 				model.addObject("subsidy", subsidy);
 				if (promo.getRewardType() != null && promo.getRewardType() > 0) {
 					SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-					if (subsidyTerm != null && subsidyTerm.getSubsidyType() == 2) {
-						putWltAccountInfo(model, userData.getUserName(), null);
+					if (subsidyTerm == null) {
+						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
+					} else {
+						if (subsidyTerm != null && subsidyTerm.getSubsidyType() == 2) {
+							putWltAccountInfo(model, userData.getUserName(), null);
+						}
+						model.addObject("subsidyTerm", subsidyTerm);
 					}
-					model.addObject("subsidyTerm", subsidyTerm);
 				}
 			}
 		} else {
