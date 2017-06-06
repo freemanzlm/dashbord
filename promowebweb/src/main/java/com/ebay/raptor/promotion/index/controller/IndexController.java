@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.common.constant.pm.PMParticipantStatus;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
@@ -52,6 +53,7 @@ import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.siteApi.util.SiteApiUtil;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 @Controller
 @RequestMapping("/")
@@ -59,19 +61,27 @@ public class IndexController {
 
 	private static CommonLogger logger = CommonLogger.getInstance(IndexController.class);
 
-	@Autowired IRaptorContext raptorCtx;
-	@Autowired CSApiService csApiService;
-	@Autowired LoginService loginService;
-	@Autowired PromotionService service;
-	@Autowired PromotionViewService view;
-	@Autowired SubsidyService subsidyService;
-	@Autowired TrackService trackService;
-	@Autowired SDDataService sdDataService;
-	@Autowired ResourceBundleMessageSource msgResource;
+	@Autowired
+	IRaptorContext raptorCtx;
+	@Autowired
+	CSApiService csApiService;
+	@Autowired
+	LoginService loginService;
+	@Autowired
+	PromotionService service;
+	@Autowired
+	PromotionViewService view;
+	@Autowired
+	SubsidyService subsidyService;
+	@Autowired
+	TrackService trackService;
+	@Autowired
+	SDDataService sdDataService;
+	@Autowired
+	ResourceBundleMessageSource msgResource;
 
 	@RequestMapping(value = "/backend", method = RequestMethod.GET)
-	public void handleBackendRequest(HttpServletRequest request, HttpServletResponse response)
-			throws MissingArgumentException, IOException {
+	public void handleBackendRequest(HttpServletRequest request, HttpServletResponse response) throws MissingArgumentException, IOException {
 		String hackId = request.getParameter("hack_id"); // name
 		String userId = request.getParameter("user_id"); // id
 		String admin = request.getParameter("admin");
@@ -92,18 +102,14 @@ public class IndexController {
 			if (userId != null) {
 				// add hack mode in order to avoid login checking
 				// remove ebay token and hack mode can't exist at the same time.
-				CookieUtil.setCBTCookie(response, AppCookies.EBAY_TOKEN_COOKIE_NAME, "",
-						CookieUtil.EXPIRED_COOKIE_LIFESPAN);
-				CookieUtil.setCBTCookie(response, AppCookies.HACK_MODE_COOKIE_NAME, "true",
-						CookieUtil.SESSION_COOKIE_LIFESPAN);
+				CookieUtil.setCBTCookie(response, AppCookies.EBAY_TOKEN_COOKIE_NAME, "", CookieUtil.EXPIRED_COOKIE_LIFESPAN);
+				CookieUtil.setCBTCookie(response, AppCookies.HACK_MODE_COOKIE_NAME, "true", CookieUtil.SESSION_COOKIE_LIFESPAN);
 
-				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME,
-						SiteApiUtil.encodeUserId(userId), CookieUtil.SESSION_COOKIE_LIFESPAN);
+				CookieUtil
+						.setCBTCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, SiteApiUtil.encodeUserId(userId), CookieUtil.SESSION_COOKIE_LIFESPAN);
 				// hack_id is the user name.
-				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId,
-						CookieUtil.ONE_DAY_COOKIE_LIFESPAN);
-				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME, admin,
-						CookieUtil.SESSION_COOKIE_LIFESPAN);
+				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId, CookieUtil.ONE_DAY_COOKIE_LIFESPAN);
+				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME, admin, CookieUtil.SESSION_COOKIE_LIFESPAN);
 				response.sendRedirect("index");
 			} else {
 				response.sendRedirect("error");
@@ -113,8 +119,8 @@ public class IndexController {
 
 	@AuthNeed
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public ModelAndView handleIndexRequest(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+	public ModelAndView handleIndexRequest(HttpServletRequest request, HttpServletResponse response, @ModelAttribute RequestParameter param)
+			throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView();
 		// Set unconfirmed status
 		UserData userDt = loginService.getUserDataFromCookie(request);
@@ -128,8 +134,8 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/maintain", method = RequestMethod.GET)
-	public ModelAndView gotoMaintainPage(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+	public ModelAndView gotoMaintainPage(HttpServletRequest request, HttpServletResponse response, @ModelAttribute RequestParameter param)
+			throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("maintain");
 		return mav;
@@ -138,20 +144,17 @@ public class IndexController {
 	@AuthNeed
 	@GET
 	@RequestMapping("/{promoId}")
-	public ModelAndView promotion(@PathVariable("promoId") String promoId, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ModelAndView promotion(@PathVariable("promoId") String promoId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		Promotion promo = null;
 		Subsidy subsidy = null;
 
 		promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-		subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
-		model.addObject("subsidy", subsidy);
-		
 		if (promo == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
 		}
+		String promoStatus = promo.getState();
 
 		if (promo.getActiveFlag()) {
 			ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
@@ -164,24 +167,24 @@ public class IndexController {
 				promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
 			}
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
-			
-			if (promo.getRewardType() != null && promo.getRewardType() > 0) {
-				SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-
-				if (subsidyTerm == null) {
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
-				} else {
-					if (subsidyTerm.getSubsidyType() == 2) { // 奖励类型为wlt积分
-						putWltAccountInfo(model, userData.getUserName(), null);
+			if (isSubsidyState(promoStatus)) {
+				subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
+				model.addObject("subsidy", subsidy);
+				if (promo.getRewardType() != null && promo.getRewardType() > 0) {
+					SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+					if (subsidyTerm == null) {
+						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
+					} else {
+						if (subsidyTerm.getSubsidyType() == 2) {
+							putWltAccountInfo(model, userData.getUserName(), null);
+						}
+						model.addObject("subsidyTerm", subsidyTerm);
 					}
-					model.addObject("subsidyTerm", subsidyTerm);
 				}
 			}
 		} else {
 			model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
 		}
-		
 		return model;
 	}
 
@@ -226,8 +229,7 @@ public class IndexController {
 	 * @param itemId
 	 */
 	@RequestMapping(value = "/getNotification", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getNotification(HttpServletRequest req, HttpServletResponse rsp,
-			@RequestParam("userId") String userid) {
+	public @ResponseBody Map<String, Object> getNotification(HttpServletRequest req, HttpServletResponse rsp, @RequestParam("userId") String userid) {
 
 		String resultJson = null;
 		try {
@@ -243,8 +245,7 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/getNotiIgnoreSatus", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getNotiIgnoreSatus(HttpServletRequest req, HttpServletResponse rsp,
-			@RequestParam("userId") String userid) {
+	public @ResponseBody Map<String, Object> getNotiIgnoreSatus(HttpServletRequest req, HttpServletResponse rsp, @RequestParam("userId") String userid) {
 
 		String resultJson = null;
 		try {
@@ -260,8 +261,7 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/setSDNotifiStatus", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> setSDNotifiStatus(HttpServletRequest req, HttpServletResponse rsp,
-			@RequestParam("userId") String userid) {
+	public @ResponseBody Map<String, Object> setSDNotifiStatus(HttpServletRequest req, HttpServletResponse rsp, @RequestParam("userId") String userid) {
 
 		String resultJson = null;
 		try {
@@ -287,13 +287,14 @@ public class IndexController {
 		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
 	}
-	
+
 	/**
 	 * Put WLT account information into Model.
+	 * 
 	 * @param mav
 	 * @param userName
 	 * @param backURL
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) throws Exception {
 		WLTAccount wltAccount = subsidyService.getWLTAccount(userName);
@@ -308,6 +309,23 @@ public class IndexController {
 
 	private String getMessage(String key) {
 		return msgResource.getMessage(key, null, LocaleContextHolder.getLocale());
+	}
+
+	private boolean isSubsidyState(String state) {
+		if (null == state || state.trim().equals("")) {
+			return false;
+		}
+		if (state.equalsIgnoreCase(PMParticipantStatus.NOT_ENROLLED.getStatusName()) || state.equalsIgnoreCase(PMParticipantStatus.ENROLLED.getStatusName())
+				|| state.equalsIgnoreCase(PMParticipantStatus.RE_ENROLL.getStatusName())
+				|| state.equalsIgnoreCase(PMParticipantStatus.REVIEWING.getStatusName())
+				|| state.equalsIgnoreCase(PMParticipantStatus.REVIEW_PASSED.getStatusName())
+				|| state.equalsIgnoreCase(PMParticipantStatus.REWARD_AUDITING.getStatusName())) {
+			return false;
+		}
+		if (state.equalsIgnoreCase(PMParticipantStatus.PROMOTION_END.getStatusName())) {
+			return false;
+		}
+		return true;
 	}
 
 }
