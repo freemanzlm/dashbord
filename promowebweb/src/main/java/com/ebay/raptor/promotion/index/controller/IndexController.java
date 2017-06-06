@@ -26,6 +26,7 @@ import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.common.constant.pm.PMParticipantStatus;
+import com.ebay.cbt.raptor.promotion.enumcode.PromotionStep;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
@@ -154,7 +155,6 @@ public class IndexController {
 		if (promo == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
 		}
-		String promoStatus = promo.getState();
 
 		if (promo.getActiveFlag()) {
 			ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
@@ -166,8 +166,10 @@ public class IndexController {
 			if (promo.getDraftPreviewStep() != null) {
 				promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
 			}
+			
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
-			if (isSubsidyState(promoStatus)) {
+			
+			if (shallGetSubsidy(promo.getCurrentStep())) {
 				subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
 				model.addObject("subsidy", subsidy);
 				if (promo.getRewardType() != null && promo.getRewardType() > 0) {
@@ -311,21 +313,12 @@ public class IndexController {
 		return msgResource.getMessage(key, null, LocaleContextHolder.getLocale());
 	}
 
-	private boolean isSubsidyState(String state) {
-		if (null == state || state.trim().equals("")) {
-			return false;
+	private boolean shallGetSubsidy(String currentStep) {
+		if (PromotionStep.PROMOTION_VALIDATED.getName().equalsIgnoreCase(currentStep) ||
+				PromotionStep.PROMOTION_END.getName().equalsIgnoreCase(currentStep)) {
+			return true;
 		}
-		if (state.equalsIgnoreCase(PMParticipantStatus.NOT_ENROLLED.getStatusName()) || state.equalsIgnoreCase(PMParticipantStatus.ENROLLED.getStatusName())
-				|| state.equalsIgnoreCase(PMParticipantStatus.RE_ENROLL.getStatusName())
-				|| state.equalsIgnoreCase(PMParticipantStatus.REVIEWING.getStatusName())
-				|| state.equalsIgnoreCase(PMParticipantStatus.REVIEW_PASSED.getStatusName())
-				|| state.equalsIgnoreCase(PMParticipantStatus.REWARD_AUDITING.getStatusName())) {
-			return false;
-		}
-		if (state.equalsIgnoreCase(PMParticipantStatus.PROMOTION_END.getStatusName())) {
-			return false;
-		}
-		return true;
+		return false;
 	}
 
 }
