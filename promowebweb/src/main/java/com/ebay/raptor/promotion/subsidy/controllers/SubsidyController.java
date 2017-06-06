@@ -347,7 +347,7 @@ public class SubsidyController {
 			document.add(new Paragraph("   "));
 
 			/** add the end of the PDF **/
-			document.add(new Paragraph(v_seller + maohao + map.get("_sellerName") + "（" + map.get("_sellerCode") + "）", fontChinese));
+			document.add(new Paragraph(v_seller + maohao + map.get("_sellerName") + "(" + map.get("_sellerCode") + ")", fontChinese));
 			/** add the extra info **/
 			for (String key : retMap.keySet()) {
 				document.add(new Paragraph(key + maohao + retMap.get(key), fontChinese));
