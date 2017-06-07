@@ -128,7 +128,7 @@ public class SubsidyController {
 			
 			if (term.getSubsidyType() == 2) { // type = 2 means the bonus is wlt count
 				String backURL = getBindWltURL(request, userData.getUserName());
-				putWltAccountInfo(model, userData.getUserName(), backURL);
+				subsidyService.putWltAccountInfo(model, userData.getUserName(), backURL);
 			}
 			
 			ArrayList<SubsidyCustomField>[] fields = subsidyService.splitCustomFields(term);
@@ -612,28 +612,6 @@ public class SubsidyController {
 		return mav;
 	}
 	
-	/**
-	 * Put WLT account information into Model.
-	 * @param mav
-	 * @param userName
-	 * @param backURL
-	 */
-	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) {
-		WLTAccount wltAccount = null;
-		try {
-			wltAccount = subsidyService.getWLTAccount(userName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		if (wltAccount == null) {
-			String bindURL = wltApiService.bindWltAccount(userName, backURL);
-			mav.addObject("wltBindURL", bindURL);
-		}
-		
-		mav.addObject("wltAccount", wltAccount);
-	}
-
 	/**
 	 * Return http://host/promotion/subisdy/bindWlt?queryString&ebayId=userName.
 	 * 
