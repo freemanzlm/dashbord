@@ -42,7 +42,6 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyAttachment;
 import com.ebay.cbt.raptor.promotion.po.SubsidyCustomField;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
-import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.cbt.raptor.wltapi.pojo.SearchBindAck;
 import com.ebay.cbt.raptor.wltapi.resp.WltResponse;
 import com.ebay.cbt.raptor.wltapi.service.WltApiService;
@@ -587,7 +586,7 @@ public class SubsidyController {
 	public void bindWltAccount(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// returned by WLT
 		String mobile = request.getParameter("mobile");
-
+		
 		// returned in backURL as query parameters.
 		String userName = request.getParameter("ebayId");
 		String promoId = request.getParameter("promoId");
@@ -596,7 +595,7 @@ public class SubsidyController {
 			WltResponse<SearchBindAck> wltResponse = wltApiService.searchIsBind(userName);
 			SearchBindAck data = wltResponse.getData();
 			if (data != null && "00".equals(data.getCode())) {
-				subsidyService.saveWLTAccount(userName, mobile);
+				subsidyService.saveWLTAccount(userName, data.getMobile());
 				response.sendRedirect("acknowledgment?isWltFirstBound=true&promoId=" + promoId);
 			}
 		} else {
