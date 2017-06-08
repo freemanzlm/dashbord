@@ -20,7 +20,7 @@ var BizReport = BizReport || {};
 
 	var defaultDataTableConfigs = {
 		tableConfig : {
-			'aaSorting' : [[3, 'desc']],
+			'aaSorting' : [[0, 'desc']],
 			'bAutoWidth' : true,
 			'bDeferRender' : true,
 			'bFilter' : true,
@@ -78,6 +78,10 @@ var BizReport = BizReport || {};
 			columns : [{
 					data : 'name'
 				}, {
+					data : 'category',
+				}
+				/*, 
+				{
 					data : 'lastAuditDt'
 				}, {
 					data : 'nextAuditDt'
@@ -85,7 +89,7 @@ var BizReport = BizReport || {};
 					data : 'status'
 				}, {
 					data : 'count'
-				}
+				}*/
 			],
 			aoColumnDefs : [{
 					aTargets : ["name"],
