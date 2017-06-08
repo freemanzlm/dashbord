@@ -34,7 +34,7 @@
 	<res:useCss value="${res.css.local.css.icon_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+	<res:useCss value="${res.css.local.less.module_less}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
@@ -118,10 +118,10 @@
 						<select name="" id="">
 							<option value="">显示所有活动</option>
 							<option value="Awarding">可申领奖励的活动</option>
-							<option value="Visited">待填写协议的活动</option>
+							<option value="Visited">待填写确认函的活动</option>
 							<option value="AppliableAgain">需要重新申领奖励的活动</option>
 							<option value="Appliable">可领取奖励的活动</option>
-							<option value="Commited">待上传协议的活动</option>
+							<option value="Commited">待上传确认函的活动</option>
 							<option value="Uploaded">申领审核中的活动</option>
 						</select>
 					</span>

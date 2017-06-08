@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 
-import com.ebay.app.raptor.cbtcommon.util.EnviromentUtil;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.csApi.GetItemDetailResponse;
 import com.ebay.app.raptor.promocommon.csApi.GetTokenResponse;
@@ -26,10 +25,6 @@ import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestException;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestService;
 import com.ebay.app.raptor.promocommon.xml.XmlParseException;
 import com.ebay.app.raptor.promocommon.xml.XmlParser;
-import com.ebay.integ.dal.dao.FinderException;
-import com.ebay.integ.user.User;
-import com.ebay.integ.user.UserDAO;
-import com.ebay.raptor.geo.utils.CountryEnum;
 import com.ebay.raptor.promotion.soap.CSSOAPMessageFactory;
 import com.ebay.raptor.promotion.util.DateUtil;
 import com.ebay.raptor.promotion.util.StringUtil;
@@ -91,17 +86,6 @@ public class CSApiService {
 		return "";
 	}
 	
-	public String getUserCountryByNameDAL(String userName){
-		try {
-			User usr = UserDAO.getInstance().findCompactUserByName(userName, true, true);
-			_logger.error("Load user COUNTRY by user name via DAL, uname: " + userName);
-			return CountryEnum.get(usr.getCountryId()).getName();
-		} catch (FinderException e) {
-			_logger.error("Failed to load user COUNTRY by user name via DAL, uname: " + userName);
-		}
-		return "";
-	}
-	
 	/**
 	 * Get user id by the user name.
 	 *
@@ -155,61 +139,6 @@ public class CSApiService {
 		return null;
 	}
 	
-	
-	
-	/**
-	 * Get user region by the user name.
-	 *
-	 * @param userName    The user name
-	 * @return
-	 */
-	public String getUserCountryByName (String userName) {
-		if(EnviromentUtil.isProduction()){
-			return getUserCountryByNameDAL(userName);
-		}
-		String token = getToken();
-
-		SOAPMessage soapMessage = null;
-		String message = "";
-		try {
-			soapMessage = CSSOAPMessageFactory.createGetUserCoreByNameMessage(token, userName);
-			message = CSSOAPMessageFactory.parseToString(soapMessage);
-		} catch (SOAPException | IOException e1) {
-			_logger.error("Unable to create CSGetUserCoreRequest SOAP message.", e1);
-			return null;
-		}
-		String url = API_URL + "?callname=" + GETUSER_API;
-
-		Map <String, String> headers = new HashMap <String, String> ();
-		headers.put("Content-Type","text/xml; charset=utf-8");
-		headers.put("SOAPAction","");
-
-		try {
-			String xmlStr = httpRequestService.doHttpRequest(url,
-					HttpRequestService.POST_METHOD, message, headers);
-			
-			/*if (xmlStr != null) {
-				// if it's token expired, try again.
-				if (xmlStr.indexOf("<ErrorCode>931</ErrorCode>") != -1) {
-					tokenExpired = true;
-					return getUserCountryByName(userName);
-				}
-			}*/
-
-			if (!StringUtil.isEmpty(xmlStr)) {
-				int start = xmlStr.indexOf("<Country>");
-				int end = xmlStr.indexOf("</Country>");
-				if (start != -1 && end != -1) {
-					String country = xmlStr.substring(start + 9, end);
-					return country.trim();
-				}
-			}
-		} catch (HttpRequestException e) {
-			_logger.error("Unable to call CSGetUserCore API.", e);
-		}
-
-		return null;
-	}
 	
 	/**
      * Get Item detail data by the item id.

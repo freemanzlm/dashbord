@@ -20,7 +20,7 @@ import com.ebay.raptor.promotion.excel.validation.LengthColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.NotNullColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.RangeColumnConstraint;
 import com.ebay.raptor.promotion.excel.validation.UniqueColumnConstraint;
-import com.ebay.raptor.promotion.locale.LocaleUtil;
+import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 

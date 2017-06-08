@@ -2,7 +2,7 @@ package com.ebay.raptor.promotion.pojo.service.resp;
 
 import javax.ws.rs.core.Response.Status;
 
-import com.ebay.raptor.promotion.pojo.business.Promotion;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
 
 public class PromotionResponse extends BaseServiceResponse {
 

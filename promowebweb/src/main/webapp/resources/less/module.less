@@ -1,0 +1,281 @@
+[v-cloak] {
+	display:none;
+}
+
+.error-msg {
+	color: #f00;
+}
+
+.error-msg td {
+	vertical-align:top;
+}
+
+/* breadcrumb begin */
+.breadcrumb {
+/*	margin: 20px 0 10px 0;
+	padding: 0 0 0 20px;
+	background: #fff;*/
+	display: inline-block;
+}
+
+.breadcrumb li {
+	list-style: none inside none;
+	float: left;
+}
+
+.breadcrumb .separator {
+	margin: 0 5px;
+}
+
+/* breadcrumb end */
+
+/* links navigation begin */
+.links-nav {
+	list-style: none;
+}
+
+.links-nav li {
+	margin: 0 10px 0;
+	padding: 0 0 10px 0;
+	float: left;
+}
+
+.links-nav li.separator {
+	color: #ccc;
+}
+
+.links-nav li.active {
+	background: url("../img/bottom_pointer.png") no-repeat scroll bottom center;
+}
+/* links navigation end*/
+
+/* pane begin */
+.pane {
+	margin: 0;
+	border: 1px solid #ccc;
+	padding: 20px;
+	background: #fff;
+}
+
+.pane .header {
+	margin-bottom: 20px;
+	padding: 0 0 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.pane .header h3 {
+	padding-bottom: 4px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.pane-table .header {
+	margin-bottom: 0;
+}
+
+.pane-table .header .select-control {
+	margin-left: 20px;
+}
+/* pane end */
+
+/* message panel */
+.message-box {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+}
+/* message panel end */
+
+.table {
+	display: table;
+}
+
+.table-row {
+	display: table-row;
+}
+
+.table-cell {
+	display: table-cell;
+}
+
+/* active detail begin */
+.activity-detail {
+	margin: 20px 0;
+	padding: 0 0 20px 0;
+	
+	border-bottom: 1px solid #ccc;
+}
+
+.activity-detail .activity-brief {
+	margin-bottom: 10px;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.activity-detail .activity-brief .brief-title {
+	padding-top: 1em;
+	width: 68px;
+	font-weight: bold;
+}
+
+.activity-detail .activity-brief .table-cell {
+	vertical-align: top;
+}
+
+.activity-detail .activity-brief .pretty-text {
+	width: 1010px;
+}
+
+.activity-detail .activity-law {
+	margin-top: 1em;
+	margin-left: 68px;
+}
+/* active detail end */
+
+/* active status box begin */
+.promo-state-message {
+	border: 1px solid #9CC3E3;
+	background-color: #E2F2F9;
+	margin-bottom: 20px;
+	padding-bottom: 30px;
+	min-height: 129px;
+	text-align: center;
+	
+	position: relative;
+}
+
+.promo-state-message .message-content {
+	min-height: 100px;
+}
+
+.promo-state-message h3 {
+	padding: 30px 0 20px 0;
+	font-weight: bold;	
+}
+
+.promo-state-message h3 a {
+	text-decoration: underline;
+}
+
+.promo-state-message p {
+	line-height: 1.333;
+}
+
+.promo-state-message menu {
+	/* position: absolute;
+	bottom: 30px; */
+	
+	width: 100%;
+}
+
+.promo-state-message.fail h3,
+.promo-state-message.fail h3 a {
+	color: #f00;
+}
+
+.promo-state-message.success h3,
+.promo-state-message.success h3 a {
+	color: #83B841;
+}
+
+.promo-state-message .note {
+	margin: 0 auto 10px;
+	width: 800px;
+	text-align: left;
+}
+
+.promo-state-message .note ol {
+	margin: 10px 0;
+	padding-left: 40px;
+	list-style: decimal outside none;
+}
+
+.promo-state-message .note ol li {
+	padding: 2px 0;
+}
+/* active status box end */
+
+.listings-upload {
+	background-color: #ECF1F7;
+	padding: 30px 0 20px;
+	
+	min-height: 140px;
+}
+
+.listings-upload h3 {
+	font-weight: bold;
+	text-align: center;
+}
+
+.listings-upload p {
+	line-height: 1.333;
+}
+
+.listings-upload form {
+	font-size: 16px;
+	line-height: 29px;
+	clear: both;
+}
+
+.listings-upload a.template {
+	padding: 5px 10px;
+	background-color: #fff;
+}
+
+.listings-upload .body {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.listings-upload .body ul {
+	line-height: 1.333;
+	margin-left: 55px;
+	list-style: outside;
+}
+
+.listings-upload .error-msg {
+	margin-top: 20px;
+}
+
+.hide {
+	display: none;
+}
+
+.unhide {
+	display: inline-block;
+}
+
+/* loading control begin */
+.icon-refresh {
+	background: url("${res.img.local.img.loading_gif}") no-repeat center center;
+	height: 25px;
+	width: 25px;	
+	
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.isloading-wrapper.isloading-right {
+	margin-left: 10px;
+}
+
+.isloading-overlay {
+	position: relative;
+	text-align: center;
+}
+
+.isloading-overlay .isloading-wrapper,
+.isloading-inside-wrapper .isloading-inside {
+	background: #FFF;
+	-webkit-border-radius: 7px;
+	-webkit-background-clip: padding-box;
+	-moz-border-radius: 7px;
+	-moz-background-clip: padding;
+	border-radius: 7px;
+	background-clip: padding-box;
+	display: inline-block;
+	margin: 0 auto;
+	padding: 10px 20px;
+	color: #333;
+}
+/* loading control end */

@@ -71,6 +71,7 @@ BizReport.local = {
 			'PROMOTION END': '活动结束阶段'
 		},
 		'state': {
+			'Unknown': '',
 			'Created': '报名',
 			'Submitted': '已提交预审',
 			'Verifying': '预审进行中',
@@ -79,15 +80,6 @@ BizReport.local = {
 			'Applied': '已报名',
 			'Started': '活动进行中',
 			'SubsidyCounting': '奖励确认中',
-			//'SubsidyWaiting': '申领奖励',
-			//'SubsidyAccessed': '待填写协议',
-			//'SubsidySubmitted': '待上传协议',
-			//'SubsidyUploaded': '申领审核中',
-			//'SubsidyRetrievable': '领取奖励',
-			//'SubsidyResubmittable': '重新申领奖励',
-			//'SubsidyRetrieved': '领取奖励成功',
-			//'SubsidyRetrieveFailed': '奖励领取失败',	
-			//'SubsidyExpired': '奖励领取过期',
 			'Canceled': '活动已取消',
 			'Claimed': '我已领取奖励',
 			'Detailed': '查看详情',
@@ -101,12 +93,12 @@ BizReport.local = {
 			'Awarding':'申领奖励',
 			//'ReAwarding':'重新领取奖励',
 			'End':'活动已结束',
-			'Visited':'待填写协议',
+			'Visited':'填写确认函',
 			'AppliableAgain':'重新申领奖励',
-			'Commited':'待上传协议',
+			'Commited':'上传确认函',
 			'Appliable':'领取奖励',
 			'Uploaded':'申领审核中',
-			'Failed':'奖励领取失败',
+			'Failed':'申领审核中',
 			'Expired':'奖励领取过期',
 			'Applied':'领取奖励成功'
 		},
@@ -147,6 +139,14 @@ BizReport.local = {
 	},
 	'subscribe': {
 		'fail': '<p>订阅失败！请联系客服查询具体原因！</p>'
+	},
+	subsidy: {
+		attachment: {
+			notEmpty : '上传文件不能为空',
+			attachmentSizeError: '上传文件大小不能超过5M',
+			attachmentFileTypeError: '只能上传PDF，ZIP，JPG文件',
+			attachdownload : '查看'
+		}
 	}
 };
 

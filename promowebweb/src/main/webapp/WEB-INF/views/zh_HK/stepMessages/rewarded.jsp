@@ -1,164 +1,103 @@
-<%@ page trimDirectiveWhitespaces="true"
-	contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-<c:choose>
-	<c:when test="${ promo.rewardType eq 1 }">
-		<c:set var="rewardName" value="加油卡" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 2 }">
-		<c:set var="rewardName" value="ebay萬里通積分" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 3 }">
-		<c:set var="rewardName" value="萬邑通禮品卡" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 6 }">
-		<c:set var="rewardName" value="京東卡" />
-	</c:when>
-	<c:when test="${ promo.rewardType eq 4 }">
-		<c:set var="rewardName" value="郵票" />
-	</c:when>
-</c:choose>
 
 <c:choose>
 	<c:when test="${isAwardEnd eq true}">
 		<div class="promo-state-message">
 			<div class="message-content">
-				<h3>領取獎勵截止時間為${rewardDeadline}，目前已結束，感謝您的參與。</h3>
+				<h3>領取獎勵截止時間為${rewardDeadline}，現時已結束，感謝您的參與。</h3>
 			</div>
 			<menu>
-				<li><a href="index" class="btn">返回活動列表</a></li>
+				<li><a href="index" class="btn">返回活動清單</a></li>
 			</menu>
 		</div>
 	</c:when>
-	<c:otherwise>
+	
+	<c:when test="${promo.state eq 'AppliableAgain'}">
+		<div class="promo-state-message">
+			<div class="message-content">
+				<h3>很遗憾，您的申领未通过审核，请重新提交申领。</h3>
+			</div>
+			<menu>
+				<li>
+					<c:if test="${ not empty subsidyTerm and subsidyTerm.ovFlag == 1 }">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填寫獎勵申領確認函</a>
+						<br /><br />
+					</c:if> 
+					<a href="index">返回活動清單</a>
+				</li>
+			</menu>
+		</div>
+	</c:when>
+
+	<c:when test="${promo.state eq 'Applied' }">
 		<div class="promo-state-message success">
 			<div class="message-content">
 				<c:choose>
-					<c:when	test="${ (promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region eq 'CN' and promo.state ne 'End'}">
-		
-						<h3>恭喜!您的獎勵為等值 ${reward} ${promo.currency}的${rewardName }</h3>
-		
-						<c:if test="${ state ne 'Uploaded' }">
-							<c:choose>
-								<c:when test="${ promo.rewardType eq 1 and state eq 'Appliable'}">
-									<div class="note">
-										<p>再次感謝您參與了我們的活動。我們將通知第三方服務商“澳捷實業有限公司”發放獎勵。請予10個工作日以後及時領取，獎勵發放地址和時間如下：</p>
-										<ol>
-											<li>深圳 深圳市福田區深南中路3018號世紀匯廣場23/F</li>
-											<li>上海 上海市長寧區仙霞路317號遠東國際廣場B座1509</li>
-											<li>北京 北京市海淀區花園東路10號高德大廈803室</li>
-											<li>西安 西安市高新一路正信大廈B座203室</li>
-										</ol>
-										<p>工作時間為： AM9:00--PM6:00</p>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<c:if test="${ not empty rewardDeadline }">
-										<p class="desc">請在${ rewardDeadline }前點擊進入領獎流程完成申領。</p>
-									</c:if>
-								</c:otherwise>
-							</c:choose>
-						</c:if>
-		
+					<c:when test="${ promo.rewardType eq 2 }">
+						<h3>您已成功领取等值 ${reward} ${promo.currency}的ebay万里通积分！</h3>
 					</c:when>
-					
-					<c:when test="${ promo.rewardType eq 3 and promo.state ne 'End'}">
-						<h3>恭喜!您的獎勵為等值 ${reward} ${promo.currency}的${rewardName }</h3>
-						<c:if test="${ state ne 'Uploaded' }">
-							<c:choose>
-								<c:when test="${ state eq 'Appliable' }">
-									<div class="note">
-										<p>親愛的${unm}，再次感謝您參與了我們的活動。我們將在20個工作日內向您發放萬邑通禮品卡作為獎勵。請於收到禮品卡後30日內激活您的萬邑通禮品卡，禮品卡激活以及使用規則詳情請參考萬邑通網站的相關內容
-											（<a href="http://www.winit.com.cn/news/gcpolicy.html">http://www.winit.com.cn/news/gcpolicy.html</a>）。
-										</p>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<c:if test="${ not empty rewardDeadline}">
-										<p class="desc">請在${ rewardDeadline }前點擊進入領獎流程完成申領。</p>
-									</c:if>
-								</c:otherwise>
-							</c:choose>
-						</c:if>
+					<c:when test="${ promo.reward gt 0 }">
+						<h3>您已成功领取等值${reward} ${promo.currency}的奖励</h3>
 					</c:when>
-					
-					<c:when test="${ (((promo.rewardType eq 1 or promo.rewardType eq 2 or promo.rewardType eq 6) and promo.region eq 'CN' )
-						or  (promo.rewardType eq 3)) and promo.state eq 'End' and promo.endReason eq 'subsidyRetrieved'}">
-						<h3>您已成功領取等值 ${reward} ${promo.currency} 的${rewardName }</h3>
-					</c:when>
-					
-					<c:when test="${promo.state eq 'End' and promo.endReason eq 'subsidyAmountIsZero'}">
-						<div class="promo-state-message">
-							<div class="message-content">
-								<h3>很遺憾！您的活動表現未達到獎勵標準，感謝您對活動的支持！希望下次努力！</h3>
-							</div>
-							<menu><li><a href="index" class="btn">返回活動列表</a></li></menu>
-						</div>
-					</c:when>
-					
-					<c:otherwise>
-						<h3>恭喜您已完成本活動！接下來我們的客戶經理會聯繫您關於獎勵的相關事宜，請注意接收相關的郵件通知。感謝您的參與!</h3>
-					</c:otherwise>
 				</c:choose>
 			</div>
 		
-			<c:choose>
-				<c:when
-					test="${ (((promo.rewardType eq 1 or promo.rewardType eq 2) and promo.region == 'CN') or promo.rewardType eq 3)
-						and (not empty promo.rewardUrl) }">
-					<menu>
-						<li>
-							<c:choose>
-								<c:when test="${ state eq 'Commited' }">
-									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>上傳獎勵申請協議</a>
-									<br />
-									<br />
-									<a href="index">返回活動列表</a>
-								</c:when>
-								
-								<c:when test="${ state eq 'Appliable' }">
-									<c:choose>
-										<c:when test="${ promo.rewardType eq 2 and promo.region == 'CN'}">
-											<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>領取獎勵</a>
-											<br />
-											<br />
-											<a href="index">返回活動列表</a>
-										</c:when>
-										<c:otherwise>
-											<a href="index" class="btn">返回活動列表</a>
-										</c:otherwise>
-									</c:choose>
-								</c:when>
-								
-								<c:when test="${ state eq 'AppliableAgain' }">
-									<a href="${promo.rewardUrl}" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' }>重新申領獎勵</a>
-									<br />
-									<br />
-									<a href="index">返回活動列表</a>
-								</c:when>
-								
-								<c:when test="${ state eq 'Uploaded' }">
-									<a href="index" class="btn">返回活動列表</a>
-								</c:when>
-								<c:when	test="${ state eq 'Awarding' or state eq 'Visited' }">
-									<a href="${promo.rewardUrl}" class="btn"
-										${ isAdmin or isPreview ? 'disabled' : '' }>填寫獎勵申請協議</a>
-									<br />
-									<br />
-									<a href="index">返回活動列表</a>
-								</c:when>
-							</c:choose>
-						</li>
-					</menu>
-				</c:when>
-				<c:otherwise>
-					<menu>
-						<li><a href="index" class="btn">返回活動列表</a></li>
-					</menu>
-				</c:otherwise>
-			</c:choose>
+			<menu>
+				<li><a href="index" class="btn">返回活動清單</a></li>
+			</menu>
 		</div>
-	</c:otherwise>
+	</c:when>
+	
+	<c:when test="${ not empty subsidyTerm and subsidyTerm.ovFlag eq 1 }">
+		<div class="promo-state-message success">
+			<div class="message-content">
+				<h3>恭喜！您將獲得等值 ${reward} ${promo.currency} 的獎勵！</h3>
+				<c:if test="${ not empty wltAccount }">
+					<p class="wlt-binding">
+						请注意：您绑定的<a target="_blank" href="http://www.ebay.cn/mkt/leadsform/efu/11183.html">万里通</a>账号是：${wltAccount.wltUserId}，
+						<a href="http://www.wanlitong.com/myPoint/brandPointSch.do?fromType=avail&pageNo=1&brandPointNo=h5mg&dateType=0&sortFlag=ddd">查积分，积分当钱花。</a>
+					</p>
+				</c:if>
+			</div>
+			
+			<menu>
+				<li>
+					<c:if test="${subsidy.status eq 0 or subsidy.status eq 1 }">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">填寫領獎協定</a>
+					</c:if> 
+					<c:if test="${subsidy.status eq 2}">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">上傳領獎協定</a>
+					</c:if> 
+					<c:if test="${subsidy.status eq 3 }">
+						<p>獎勵申領稽核中，請耐心等待。</p> <br />
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">修改已上傳的確認函</a>
+					</c:if>
+					<c:if test="${subsidy.status eq 4 }">
+						<a class="btn" href="subsidy/acknowledgment?promoId=${promo.promoId }">領取獎勵</a>
+					</c:if>
+					<br /><br />
+					<a href="index">返回活動清單</a>
+				</li>
+			</menu>
+			
+		</div>
+	</c:when>
+	
+	<c:when test="${ not empty subsidyTerm and subsidyTerm.ovFlag ne 1 }">
+		<div class="promo-state-message success">
+			<div class="message-content">
+				<h3>恭喜！您將獲得等值 ${reward} ${promo.currency} 的獎勵！</h3>
+
+				<div class="pretty-text text-left">${ subsidyTerm.successInfo }</div>
+				<br />
+			</div>
+			
+			<menu>
+				<li>
+					<a href="index">返回活動清單</a>
+				</li>
+			</menu>
+		</div>
+	</c:when>
 </c:choose>

@@ -4,23 +4,23 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.LinkedList;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
+import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.raptor.promotion.enums.PromotionStep;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.list.controller.ListingController;
-import com.ebay.raptor.promotion.locale.LocaleUtil;
-import com.ebay.raptor.promotion.pojo.business.Promotion;
 import com.ebay.raptor.promotion.util.DateUtil;
+import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -43,22 +43,32 @@ public class PromotionViewService {
 		Map<String, Object> context = new HashMap<String, Object>();
 		Date now = new Date();
 		
-		// whether nomination end date has expired
-//		Date nominationEndDate = pro.getRegEndDate();
-//		boolean enrollEnded = false;
-//		if (nominationEndDate != null) {
-//			nominationEndDate = DateUtil.convertToSystemTime(nominationEndDate, DateUtil.BEIJING_TIMEZONE);
-//			context.put(ViewContext.IS_NOMINATION_END.getAttr(), enrollEnded = nominationEndDate.before(now));
-//		}
+		appendRegEndCheck(context, pro, now, uid);
+		appendPromoEndCheck(context, pro, now);
+		appendPromoAwardEndCheck(context, pro, now);
 		
-		// for non reg type
-//		Date confirmEndDate = pro.getPromoDlDt();
-//		boolean confirmEnded = false;
-//		if (confirmEndDate != null) {
-//			confirmEndDate = DateUtil.convertToSystemTime(confirmEndDate, DateUtil.BEIJING_TIMEZONE);
-//			context.put(ViewContext.IS_CONFIRM_END.getAttr(), confirmEnded = confirmEndDate.before(now));
-//		}
+		context.put(ViewContext.HAS_LISTINGS_NOMINATED.getAttr(), service.hasListingNominated(pro.getPromoId(), uid));
 		
+		String fieldsDefinitions = pro.getListingFields(); 
+		handleListingFields(fieldsDefinitions, context, pro.getRegion());
+		
+		calcualteCurentStep(pro);
+		
+		res.setContext(context);
+		
+		res.setView(ViewResource.CAMPAIGN);
+		
+		return res;
+	}
+	
+	/**
+	 * Add a flag if promotion meets registration deadline.
+	 * @param pro
+	 * @param context
+	 * @param now
+	 * @param uid
+	 */
+	public void appendRegEndCheck(Map<String, Object> context, Promotion pro, Date now, long uid) {
 		Date regEndDate = pro.getPromoDlDt();
 		boolean isRegEnded = false;
 		if (regEndDate != null) {
@@ -66,44 +76,51 @@ public class PromotionViewService {
 			context.put(ViewContext.IS_REG_END.getAttr(), isRegEnded = regEndDate.before(now));
 		}
 		
+		if (!isRegEnded) {
+			// Enroll and confirm need to check if user has accept the terms. 
+			context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
+		}
+	}
+	
+	/**
+	 * Add a flag if promotion has ended.
+	 * @param context
+	 * @param pro
+	 * @param now
+	 * @param uid
+	 */
+	public void appendPromoEndCheck(Map<String, Object> context, Promotion pro, Date now) {
 		// whether promotion has stopped
 		Date endDate = DateUtil.convertToSystemTime(pro.getPromoEdt(), DateUtil.BEIJING_TIMEZONE);
 		context.put(ViewContext.IS_PROMOTION_STOP.getAttr(), endDate.before(now));
-		
+	}
+	
+	/**
+	 * Calculate if promotion meet award deadline.
+	 * @param pro
+	 * @param context
+	 * @param uid
+	 */
+	public void appendPromoAwardEndCheck(Map<String, Object> context, Promotion pro, Date now) {
+
 		// whether promotion reward deadline has expired
 		Date awardEndDate = pro.getRewardDlDt();
 		if (awardEndDate != null) {
 			awardEndDate = DateUtil.convertToSystemTime(pro.getRewardDlDt(), DateUtil.BEIJING_TIMEZONE);
 			context.put(ViewContext.IS_AWARD_END.getAttr(), awardEndDate.before(now));
 		}
-		
+	}
+	
+	public void calcualteCurentStep(Promotion pro) {
 		// Promotion current step may be not an visible step, we need to adjust it. 
 		handleCurrentStep(pro, pro.getCurrentStep());
-		
-		String fieldsDefinitions = pro.getListingFields(); 
-		handleListingFields(fieldsDefinitions, context, pro.getRegion());
-		
-		if (!isRegEnded) {
-			// Enroll and confirm need to check if user has accept the terms. 
-			context.put(ViewContext.TermsAccept.getAttr(), service.isAcceptAgreement(pro.getPromoId(), uid));
-		}
 		
 		// if promotion is in draft step, it may be a preview-able promotion.
 		handleDraftPromotion(pro);
 		
-		context.put(ViewContext.HAS_LISTINGS_NOMINATED.getAttr(), service.hasListingNominated(pro.getPromoId(), uid));
-		
-//		context.put(ViewContext.HAS_REVIEWED.getAttr(), getIndexOfStep("Promotion Submitted", pro.getStepList())!=-1?(getIndexOfStep("Promotion Submitted", pro.getStepList())<=getIndexOfStep(pro.getCurrentStep(), pro.getStepList())):false);
-		
 		// We only leave visible step list for promotion display.
 		String visibleStepList = getVisibleStepList(pro.getStepList());
 		pro.setStepList(visibleStepList.toUpperCase());
-		
-		res.setContext(context);
-		
-		res.setView(ViewResource.CAMPAIGN);
-		
-		return res;
 	}
 	
 	/**

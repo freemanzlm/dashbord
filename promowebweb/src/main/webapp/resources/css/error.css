@@ -1,5 +1,11 @@
 @CHARSET "UTF-8";
 
-.error .fa-times {
+.error-box {
+	border: 2px solid #f00;
+	border-radius: 5px;
+	padding: 20px;
+}
+
+.error-box .fa-times {
 	color: red;
 }

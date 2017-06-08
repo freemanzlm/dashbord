@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>活动促销</title>
-	<meta name="description" content="活动促销">
+	<title>活動促銷</title>
+	<meta name="description" content="活動促銷">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
@@ -34,7 +34,7 @@
 	<res:useCss value="${res.css.local.css.icon_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.button_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.dropdown_css}" target="head-css"/>
-	<res:useCss value="${res.css.local.css.module_css}" target="head-css" />
+	<res:useCss value="${res.css.local.less.module_less}" target="head-css" />
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
@@ -118,10 +118,10 @@
 						<select name="" id="">
 							<option value="">顯示所有活動</option>
 							<option value="Awarding">可申請獎勵的活動</option>
-							<option value="Visited">待填寫協議的活動</option>
-							<option value="AppliableAgain">需要重新申請江離的活動</option>
+							<option value="Visited">待填寫確認函的活動</option>
+							<option value="AppliableAgain">需要重新申請獎勵的活動</option>
 							<option value="Appliable">可領取獎勵的活動</option>
-							<option value="Commited">待上傳協議的活動</option>
+							<option value="Commited">待上傳確認函的活動</option>
 							<option value="Uploaded">申請審核中的活動</option>
 						</select>
 					</span>
