@@ -23,6 +23,7 @@ import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.common.constant.pm.PMPromoTabType;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
+import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.Router;
@@ -455,7 +456,7 @@ public class PromotionDataController{
 	
 	@ExceptionHandler(Exception.class)
 	public BaseWebResponse handleException(Exception exception, HttpServletRequest request) {
-		logger.error(exception.getMessage(), exception);
+		CalEventHelper.writeException("Exception", exception, true);
 		BaseWebResponse resp = new BaseWebResponse();
 		resp.setStatus(false);
 		resp.setMessage(exception.getMessage());

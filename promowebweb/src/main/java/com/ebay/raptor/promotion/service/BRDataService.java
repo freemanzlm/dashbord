@@ -28,9 +28,9 @@ public class BRDataService {
 	@Autowired
     protected HttpRequestService httpRequestService;
 	
-    private static String addInWhitelistUrl = "subscription/addInWhitelist/user/{userId}/whitelistType/{whitelistType}";
-    private static String subscribeDialogClosedUrl = "subscription/subscribeDialogClosed/user/{userId}";
-    private static String getBizSubscribeMsgUrl = "subscription/subscriptionMsg/user/{userId}";
+    private static String addInWhitelistUrl = "/br/v1/subscription/addInWhitelist/user/{userId}/whitelistType/{whitelistType}";
+    private static String subscribeDialogClosedUrl = "/br/v1/subscription/subscribeDialogClosed/user/{userId}";
+    private static String getBizSubscribeMsgUrl = "/br/v1/subscription/subscriptionMsg/user/{userId}";
     
     public Map<String, Boolean> getSubscriptionMsg(Long userId) throws HttpRequestException {
 		String json = httpRequestService.doHttpRequest(buildServiceUrl(AppConfig.getBizReportServicePrefix(), getBizSubscribeMsgUrl, "{userId}", userId), GET_METHOD, null, prepareHeaders());

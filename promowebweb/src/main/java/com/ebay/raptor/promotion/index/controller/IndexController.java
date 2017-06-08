@@ -1,15 +1,11 @@
 package com.ebay.raptor.promotion.index.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 
-import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -19,11 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
-import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.enumcode.PromotionStep;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
@@ -38,11 +32,8 @@ import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.brand.service.BrandService;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.enums.PromoError;
-import com.ebay.raptor.promotion.pojo.Notification;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
-import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -50,7 +41,6 @@ import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.sd.service.SDDataService;
 import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
-import com.ebay.raptor.promotion.service.NotificationService;
 import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
@@ -61,8 +51,6 @@ import com.ebay.raptor.siteApi.util.SiteApiUtil;
 @RequestMapping("/")
 public class IndexController {
 
-	private static CommonLogger logger = CommonLogger.getInstance(IndexController.class);
-
 	@Autowired IRaptorContext raptorCtx;
 	@Autowired CSApiService csApiService;
 	@Autowired LoginService loginService;
@@ -72,7 +60,6 @@ public class IndexController {
 	@Autowired TrackService trackService;
 	@Autowired SDDataService sdDataService;
 	@Autowired BrandService brandService;
-	@Autowired NotificationService notificationService;
 	@Autowired ResourceBundleMessageSource msgResource;
 
 	@RequestMapping(value = "/backend", method = RequestMethod.GET)
@@ -243,48 +230,7 @@ public class IndexController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/setSDNotifiStatus", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> setSDNotifiStatus(HttpServletRequest request, HttpServletResponse rsp) throws MissingArgumentException {
-		UserData userData = loginService.getUserDataFromCookie(request);
-		String resultJson = null;
-		try {
-			resultJson = sdDataService.setSDNotifiStatus(userData.getUserId());
-		} catch (HttpException e) {
-			logger.error("Unable to get setSDNotifiStatus for " + userData.getUserId(), e);
-		}
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		jsonMap.put("status", true);
-		jsonMap.put("data", resultJson);
-		return jsonMap;
-	}
 	
-	@RequestMapping(value = "/hasnotifications", method = RequestMethod.GET)
-	public @ResponseBody DataWebResponse<Boolean> hasNotifications(HttpServletRequest request, HttpServletResponse rsp) throws MissingArgumentException {
-		DataWebResponse<Boolean> result = new DataWebResponse<Boolean>();
-		result.setStatus(false);
-		
-		UserData userData = loginService.getUserDataFromCookie(request);
-		Boolean flag = notificationService.hasNotifications(LocaleUtil.getCurrentLocale(), userData.getUserId());
-		
-		result.setStatus(true);
-		result.setData(flag);
-		
-		return result;
-	}
-	
-	@RequestMapping(value = "/notifications", method = RequestMethod.GET)
-	public @ResponseBody ListDataWebResponse<Notification> getNotifications(HttpServletRequest request, HttpServletResponse rsp) throws MissingArgumentException {
-		ListDataWebResponse<Notification> result = new ListDataWebResponse<Notification>();
-		result.setStatus(false);
-		
-		UserData userData = loginService.getUserDataFromCookie(request);
-		List<Notification> list = notificationService.getNotifications(LocaleUtil.getCurrentLocale(), userData.getUserId());
-		
-		result.setStatus(true);
-		result.setData(list);
-		
-		return result;
-	}
 	
 	@RequestMapping(value = "/404", method = RequestMethod.GET)
 	public ModelAndView notFound(Exception exception, HttpServletRequest request) {
