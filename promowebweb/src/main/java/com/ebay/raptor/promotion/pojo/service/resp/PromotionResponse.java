@@ -4,7 +4,6 @@ import javax.ws.rs.core.Response.Status;
 
 import com.ebay.cbt.raptor.promotion.po.Promotion;
 
-
 public class PromotionResponse extends BaseServiceResponse {
 
 	public PromotionResponse() {

@@ -25,10 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.promotion.enumcode.PromotionStep;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
-import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.kernel.calwrapper.CalEventHelper;
 import com.ebay.kernel.context.AppBuildConfig;
 import com.ebay.raptor.kernel.context.IRaptorContext;
@@ -76,8 +76,7 @@ public class IndexController {
 	@Autowired ResourceBundleMessageSource msgResource;
 
 	@RequestMapping(value = "/backend", method = RequestMethod.GET)
-	public void handleBackendRequest(HttpServletRequest request, HttpServletResponse response)
-			throws MissingArgumentException, IOException {
+	public void handleBackendRequest(HttpServletRequest request, HttpServletResponse response) throws MissingArgumentException, IOException {
 		String hackId = request.getParameter("hack_id"); // name
 		String userId = request.getParameter("user_id"); // id
 		String admin = request.getParameter("admin");
@@ -98,18 +97,14 @@ public class IndexController {
 			if (userId != null) {
 				// add hack mode in order to avoid login checking
 				// remove ebay token and hack mode can't exist at the same time.
-				CookieUtil.setCBTCookie(response, AppCookies.EBAY_TOKEN_COOKIE_NAME, "",
-						CookieUtil.EXPIRED_COOKIE_LIFESPAN);
-				CookieUtil.setCBTCookie(response, AppCookies.HACK_MODE_COOKIE_NAME, "true",
-						CookieUtil.SESSION_COOKIE_LIFESPAN);
+				CookieUtil.setCBTCookie(response, AppCookies.EBAY_TOKEN_COOKIE_NAME, "", CookieUtil.EXPIRED_COOKIE_LIFESPAN);
+				CookieUtil.setCBTCookie(response, AppCookies.HACK_MODE_COOKIE_NAME, "true", CookieUtil.SESSION_COOKIE_LIFESPAN);
 
-				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME,
-						SiteApiUtil.encodeUserId(userId), CookieUtil.SESSION_COOKIE_LIFESPAN);
+				CookieUtil
+						.setCBTCookie(response, AppCookies.EBAY_CBT_USER_ID_COOKIE_NAME, SiteApiUtil.encodeUserId(userId), CookieUtil.SESSION_COOKIE_LIFESPAN);
 				// hack_id is the user name.
-				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId,
-						CookieUtil.ONE_DAY_COOKIE_LIFESPAN);
-				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME, admin,
-						CookieUtil.SESSION_COOKIE_LIFESPAN);
+				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_USER_NAME_COOKIE_NAME, hackId, CookieUtil.ONE_DAY_COOKIE_LIFESPAN);
+				CookieUtil.setCBTCookie(response, AppCookies.EBAY_CBT_ADMIN_USER_COOKIE_NAME, admin, CookieUtil.SESSION_COOKIE_LIFESPAN);
 				response.sendRedirect("index");
 			} else {
 				response.sendRedirect("error");
@@ -119,8 +114,8 @@ public class IndexController {
 
 	@AuthNeed
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public ModelAndView handleIndexRequest(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+	public ModelAndView handleIndexRequest(HttpServletRequest request, HttpServletResponse response, @ModelAttribute RequestParameter param)
+			throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView();
 		// Set unconfirmed status
 		UserData userDt = loginService.getUserDataFromCookie(request);
@@ -166,8 +161,8 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/maintain", method = RequestMethod.GET)
-	public ModelAndView gotoMaintainPage(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+	public ModelAndView gotoMaintainPage(HttpServletRequest request, HttpServletResponse response, @ModelAttribute RequestParameter param)
+			throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("maintain");
 		return mav;
@@ -176,17 +171,13 @@ public class IndexController {
 	@AuthNeed
 	@GET
 	@RequestMapping("/{promoId}")
-	public ModelAndView promotion(@PathVariable("promoId") String promoId, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ModelAndView promotion(@PathVariable("promoId") String promoId, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView model = new ModelAndView();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		Promotion promo = null;
 		Subsidy subsidy = null;
 
 		promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-		subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
-		model.addObject("subsidy", subsidy);
-		
 		if (promo == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
 		}
@@ -194,17 +185,19 @@ public class IndexController {
 		if (promo.getActiveFlag()) {
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
 			
-			if (promo.getRewardType() != null && promo.getRewardType() > 0) {
-				SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
-
-				if (subsidyTerm == null) {
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-							getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
-				} else {
-					if (subsidyTerm.getSubsidyType() == 2) { // WLTˆ†
-						putWltAccountInfo(model, userData.getUserName(), null);
+			if (shallGetSubsidy(promo.getCurrentStep())) {
+				subsidy = subsidyService.getSubsidy(promoId, userData.getUserId());
+				model.addObject("subsidy", subsidy);
+				if (promo.getRewardType() != null && promo.getRewardType() > 0) {
+					SubsidyLegalTerm subsidyTerm = subsidyService.getSubsidyLegalTerm(promo.getRewardType(), promo.getRegion());
+					if (subsidyTerm == null) {
+						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, getMessage(PromoError.SUBSIDY_LEGALTERM_NOT_FOUND.getKey()));
+					} else {
+						if (subsidyTerm != null && subsidyTerm.getSubsidyType() == 2) {
+							subsidyService.putWltAccountInfo(model, userData.getUserName(), null);
+						}
+						model.addObject("subsidyTerm", subsidyTerm);
 					}
-					model.addObject("subsidyTerm", subsidyTerm);
 				}
 			}
 			
@@ -212,7 +205,7 @@ public class IndexController {
 		} else {
 			model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
 		}
-		
+			
 		return model;
 	}
 
@@ -305,21 +298,17 @@ public class IndexController {
 		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
 	}
-	
-	/**
-	 * Put WLT account information into Model.
-	 * @param mav
-	 * @param userName
-	 * @param backURL
-	 * @throws Exception 
-	 */
-	private void putWltAccountInfo(ModelAndView mav, String userName, String backURL) throws Exception {
-		WLTAccount wltAccount = subsidyService.getWLTAccount(userName);
-		mav.addObject("wltAccount", wltAccount);
-	}
 
 	private String getMessage(String key) {
 		return msgResource.getMessage(key, null, LocaleContextHolder.getLocale());
+	}
+
+	private boolean shallGetSubsidy(String currentStep) {
+		if (PromotionStep.PROMOTION_VALIDATED.getName().equalsIgnoreCase(currentStep) ||
+				PromotionStep.PROMOTION_END.getName().equalsIgnoreCase(currentStep)) {
+			return true;
+		}
+		return false;
 	}
 
 }

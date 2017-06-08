@@ -97,8 +97,8 @@ BizReport.local = {
 			'AppliableAgain':'重新申領獎勵',
 			'Commited':'上傳確認函',
 			'Appliable':'領取獎勵',
-			'Uploaded':'申領稽核中',
-			'Failed':'獎勵領取失敗',
+			'Uploaded':'申領審核中',
+			'Failed':'申领审核中',
 			'Expired':'獎勵領取過期',
 			'Applied':'領取獎勵成功'
 		},

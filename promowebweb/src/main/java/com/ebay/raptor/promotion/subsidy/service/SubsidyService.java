@@ -21,6 +21,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.cbt.common.constant.pm.PMSubsidyStatus;
@@ -32,6 +33,9 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.po.SubsidySubmission;
 import com.ebay.cbt.raptor.promotion.po.WLTAccount;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
+import com.ebay.cbt.raptor.wltapi.pojo.SearchBindAck;
+import com.ebay.cbt.raptor.wltapi.resp.WltResponse;
+import com.ebay.cbt.raptor.wltapi.service.WltApiService;
 import com.ebay.cbt.sf.service.ServiceExecutor;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
@@ -50,10 +54,41 @@ public class SubsidyService extends BaseService {
 
 	@Autowired ResourceBundleMessageSource msgResource;
 	@Autowired PromotionService promoService;
+	@Autowired WltApiService wltApiService;
 	private Locale locale;
 
 	private String url(String url) {
 		return secureUrl(ResourceProvider.SubsidyRes.base) + url;
+	}
+	
+	/**
+	 * Put WLT account information into Model.
+	 * 
+	 * @param mav
+	 * @param userName
+	 * @param backURL
+	 * @throws Exception
+	 */
+	public void putWltAccountInfo(ModelAndView mav, String userName, String backURL) throws Exception {
+		WLTAccount wltAccount = getWLTAccount(userName);
+		
+		if (wltAccount == null) {
+			WltResponse<SearchBindAck> wltResponse = wltApiService.searchIsBind(userName);
+			if (wltResponse != null && wltResponse.getData() != null) {
+				SearchBindAck data = wltResponse.getData();
+				if (data != null && "00".equals(data.getCode()) && data.getMobile() != null) {
+					saveWLTAccount(userName, data.getMobile());
+					wltAccount = getWLTAccount(userName);
+				}
+			}
+		}
+		
+		if (wltAccount == null) {
+			String bindURL = wltApiService.bindWltAccount(userName, backURL);
+			mav.addObject("wltBindURL", bindURL);
+		}
+		
+		mav.addObject("wltAccount", wltAccount);
 	}
 
 	/**

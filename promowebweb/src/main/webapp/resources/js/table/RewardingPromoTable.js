@@ -112,7 +112,11 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					sWidth : "120px",
 					mRender : function (data, type, full) {
-						return (new Date(data)).format("yyyy-MM-dd hh:mm");
+						if(data) {
+							return (new Date(data)).format("yyyy-MM-dd hh:mm");
+						}
+						
+						return data;
 					}
 				}, {
 					aTargets : ["promoDt"],

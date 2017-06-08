@@ -103,7 +103,7 @@ BizReport.local = {
 			'Commited':'上传确认函',
 			'Appliable':'领取奖励',
 			'Uploaded':'申领审核中',
-			'Failed':'奖励领取失败',
+			'Failed':'申领审核中',
 			'Expired':'奖励领取过期',
 			'Applied':'领取奖励成功'
 		},
