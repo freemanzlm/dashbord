@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>品牌認證與推廣</title>
+	<title>中國品牌智造計畫</title>
 	<meta name="description" content="中國品牌智造計畫">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
