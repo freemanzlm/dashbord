@@ -180,22 +180,13 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		List<Promotion> data = null;
-		List<Promotion> result = new ArrayList<Promotion>();
 		try {
-			data = service.getEndPromotions(userData.getUserId());
-//			data = service.getEndDealsPromotions(userData.getUserId());
+			data = service.endedDealsPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
 		}
-		if(!CollectionUtils.isEmpty(data)){
-			for (Promotion promo : data) {
-				if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
-					result.add(promo);
-				}
-			}
-		}
-		resp.setData(result);
+		resp.setData(data);
 		return resp;
 	}
 	
@@ -207,21 +198,13 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		List<Promotion> data = null;
-		List<Promotion> result = new ArrayList<Promotion>();
 		try {
-			data = service.getIngPromotion(userData.getUserId());
+			data = service.getIngDealsPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
 		}
-		if(!CollectionUtils.isEmpty(data)){
-			for (Promotion promo : data) {
-				if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
-					result.add(promo);
-				}
-			}
-		}
-		resp.setData(result);
+		resp.setData(data);
 		return resp;
 	}
 	
@@ -233,21 +216,13 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		List<Promotion> data = null;
-		List<Promotion> result = new ArrayList<Promotion>();
 		try {
 			data = service.awardingDealsPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
 		}
-		if(!CollectionUtils.isEmpty(data)){
-			for (Promotion promo : data) {
-				if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
-					result.add(promo);
-				}
-			}
-		}
-		resp.setData(result);
+		resp.setData(data);
 		return resp;
 	}
 	
@@ -285,21 +260,13 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		List<Promotion> data = null;
-		List<Promotion> result = new ArrayList<Promotion>();
 		try {
-			data = service.getEndPromotions(userData.getUserId());
+			data = service.endedBrandPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
 		}
-		if(!CollectionUtils.isEmpty(data)){
-			for (Promotion promo : data) {
-				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
-					result.add(promo);
-				}
-			}
-		}
-		resp.setData(result);
+		resp.setData(data);
 		return resp;
 	}
 	
@@ -311,21 +278,13 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		List<Promotion> data = null;
-		List<Promotion> result = new ArrayList<Promotion>();
 		try {
-			data = service.getIngPromotion(userData.getUserId());
+			data = service.getIngBrandPromotion(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
 		}
-		if(!CollectionUtils.isEmpty(data)){
-			for (Promotion promo : data) {
-				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
-					result.add(promo);
-				}
-			}
-		}
-		resp.setData(result);
+		resp.setData(data);
 		return resp;
 	}
 	
@@ -337,21 +296,13 @@ public class PromotionDataController{
 		ListDataWebResponse<Promotion> resp = new ListDataWebResponse<Promotion>();
 		UserData userData = loginService.getUserDataFromCookie(request);
 		List<Promotion> data = null;
-		List<Promotion> result = new ArrayList<Promotion>();
 		try {
 			data = service.awardingBrandPromotions(userData.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 			logger.log(e.getMessage());
 		}
-		if(!CollectionUtils.isEmpty(data)){
-			for (Promotion promo : data) {
-				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
-					result.add(promo);
-				}
-			}
-		}
-		resp.setData(result);
+		resp.setData(data);
 		return resp;
 	}
 	

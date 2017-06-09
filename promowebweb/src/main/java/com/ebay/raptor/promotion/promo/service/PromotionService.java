@@ -21,6 +21,7 @@ import com.ebay.raptor.promotion.pojo.service.resp.PromoAcceptResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromotionResponse;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 @Component
 public class PromotionService extends BaseService {
@@ -112,18 +113,6 @@ public class PromotionService extends BaseService {
 		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getEndPromotions, uid);
 	}
 	
-	
-	public List<Promotion> awardingDealsPromotions(Long uid) throws PromoException{
-		List<Promotion> promoList = getPromotionsByUserBase(ResourceProvider.PromotionRes.getSubsidyPromotions, uid);
-		return promoList;
-	}
-	
-	public List<Promotion> awardingBrandPromotions(Long uid) throws PromoException{
-			List<Promotion> promoList =  getPromotionsByUserBase(ResourceProvider.PromotionRes.getSubsidyPromotions, uid);
-			return promoList;
-	}
-		
-	
 	/**
 	 * Base method to get promotion list.
 	 * @param target
@@ -209,5 +198,29 @@ public class PromotionService extends BaseService {
 		}
 		return Boolean.FALSE;
 	}
+	
+	
+	public List<Promotion> getIngBrandPromotion(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getIngBrandPromotions, uid);
+	}
+	
+	public List<Promotion> awardingBrandPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getAwardingBrandPromotions, uid);
+	}
+	
+	public List<Promotion> endedBrandPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getEndedBrandPromotions, uid);
+	}
 
+	public List<Promotion> getIngDealsPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getIngDealsPromotions, uid);
+	}
+	
+	public List<Promotion> awardingDealsPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getAwardingDealsPromotions, uid);
+	}
+	
+	public List<Promotion> endedDealsPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getEndedDealsPromotions, uid);
+	}
 }
