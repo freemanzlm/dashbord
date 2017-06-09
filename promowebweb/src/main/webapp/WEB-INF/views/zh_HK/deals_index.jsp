@@ -62,7 +62,7 @@
 	<res:useJs value="${res.js.local.js.table['RewardingPromoTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['EndPromoTable.js']}" target="page-js2"></res:useJs>
 	<res:useJs value="${res.js.local.js.table['PendingPromoTable.js']}" target="page-js2"></res:useJs>
-	<res:useJs value="${res.js.local.js.page['index.js']}" target="exec-js"></res:useJs>
+	<res:useJs value="${res.js.local.js.page['deals_index.js']}" target="exec-js"></res:useJs>
 	
 </head>
 
