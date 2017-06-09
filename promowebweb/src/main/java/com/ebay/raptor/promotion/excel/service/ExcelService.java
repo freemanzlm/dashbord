@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +101,18 @@ public class ExcelService {
 		
 		SheetWriter writer = new SheetWriter();
 		writer.setMessageSource(messageSource);
+		
+		Font titleFont = workBook.createFont();
+		titleFont.setFontName("Arial");
+		titleFont.setFontHeightInPoints((short) 9);
+		titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		writer.setTitleFont(titleFont);
+		
+		Font ft = workBook.createFont();
+		ft.setFontName("Arial");
+		ft.setFontHeightInPoints((short) 9);
+		writer.setDefaultFont(ft);
+		
 		Sheet sheet = workBook.createSheet(messageSource.getMessage("listing.template", null, LocaleUtil.getCurrentLocale()));
 		
 		Promotion promo = promoService.getPromotionById(promoId, uid, isAdmin);

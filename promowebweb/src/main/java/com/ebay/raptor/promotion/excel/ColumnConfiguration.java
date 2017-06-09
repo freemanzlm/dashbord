@@ -20,6 +20,11 @@ public class ColumnConfiguration {
 	private String label;
 	
 	/**
+	 * Character length.
+	 */
+	private Integer length;
+	
+	/**
 	 * Which excel column to read data.
 	 */
 	private int readOrder;
@@ -64,7 +69,12 @@ public class ColumnConfiguration {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
+	public Integer getLength() {
+	    return length;
+	}
+	public void setLength(Integer length) {
+	    this.length = length;
+	}
 	public Boolean getWritable() {
 		return writable;
 	}
