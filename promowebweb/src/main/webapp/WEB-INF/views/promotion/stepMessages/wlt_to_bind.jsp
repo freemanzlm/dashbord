@@ -8,7 +8,7 @@
 		<p>如您已完成账号绑定，请尝试点击“<a href="javascript:location.reload()">刷新</a>”更新本页面。</p><br />
 	</div>
 	<menu>
-		<li><a href="${ wltBindURL }" class="btn">万里通账号绑定</a></li> <br />
+		<li><a href="${ wltBindURL }" class="btn">万里通账号绑定</a><br /></li> 
 		<li><a href="index">返回活动列表</a></li>
 	</menu>
 </div>

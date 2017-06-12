@@ -8,7 +8,7 @@
 		<p>如您已完成帳號綁定，請嘗試點擊“<a href="javascript:location.reload()">刷新</a>”更新本頁面。</p><br />
 	</div>
 	<menu>
-		<li><a href="${ wltBindURL }" class="btn">萬裏通帳號綁定</a></li> <br />
+		<li><a href="${ wltBindURL }" class="btn">萬裏通帳號綁定</a><br /></li> 
 		<li><a href="index">返回活動清單</a></li>
 	</menu>
 </div>

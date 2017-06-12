@@ -84,10 +84,10 @@
 <body>
 	<div class="container">
 		<!--  Global Header -->
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="../header.jsp"></jsp:include>
 		<!-- end: Global Header -->
 
-		<jsp:include page="topNavigator.jsp"></jsp:include>
+		<jsp:include page="../topNavigator.jsp"></jsp:include>
 		
 		<div id="page-pane">
 			<div class="pane">
@@ -100,7 +100,7 @@
 						<%@ include file="stepMessages/wlt_to_bind.jsp"%>
 					</c:when>
 					<c:when test="${ not empty subsidy and not empty subsidyTerm }">
-						<%@ include file="subsidy/fill_contract.jsp"%>
+						<%@ include file="../subsidy/fill_contract.jsp"%>
 					</c:when>
 				</c:choose>
 				
@@ -108,22 +108,22 @@
 		</div>
 		
 		<!-- Global Footer -->
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="../footer.jsp"></jsp:include>
 		<!-- End: Global Footer -->
 	</div>
 
-	<%@ include file="dialog/alert.jsp"%>
-	<%@ include file="dialog/confirm.jsp"%>
+	<%@ include file="../dialog/alert.jsp"%>
+	<%@ include file="../dialog/confirm.jsp"%>
 	<c:choose>
 		<c:when test="${promo.region eq 'CN'}">
-			<%@ include file="../dialog/terms.jsp"%>
+			<%@ include file="../../dialog/terms.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@ include file="dialog/terms.jsp"%>
+			<%@ include file="../dialog/terms.jsp"%>
 		</c:otherwise>
 	</c:choose>
 
-	<%@ include file="previewDialog.jsp"%>
+	<%@ include file="../previewDialog.jsp"%>
 
 	<script type="text/javascript">
 		var pageData = {

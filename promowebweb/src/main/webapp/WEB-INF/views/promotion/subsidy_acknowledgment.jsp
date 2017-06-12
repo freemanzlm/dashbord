@@ -1,7 +1,7 @@
 <%@ page trimDirectiveWhitespaces="true" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
@@ -12,7 +12,9 @@
 <!-- visible step list -->
 <c:set var="stepList" value="${ promo.stepList }" />
 <c:set var="regType" value="${ promo.regType }" />
-<c:set var="hasListingsNominated" value="${hasListingsNominated}" />
+
+<fmt:formatDate var="rewardDeadline" value="${promo.rewardDlDt}" pattern="yyyy-MM-dd" type="date" />
+<fmt:formatNumber var="reward" value="${promo.reward }" minFractionDigits="2"></fmt:formatNumber>
 
 <r:includeJquery jsSlot="head" />
 <r:client />
@@ -34,19 +36,23 @@
 
 <%--module "ebay.page" add Resets and Global css --%>
 <res:useCss value="${res.css.local.css['normalize.css']}" target="head-css" />
-<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css"/>
+<res:useCss value="${res.css.local.css['font.awesome.min.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['jquery.dataTables.1.10.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css['dataTables.override.css']}" target="head-css" />
 <res:useCss value="${res.css.local.css.reset_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.icon_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.button_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dropdown_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.signpost_css}" target="head-css" />
 <res:useCss value="${res.css.local.less.module_less}" target="head-css" />
+<res:useCss value="${res.css.local.less.form_layout_less}" target="head-css" />
 <res:useCss value="${res.css.local.less.form_less}" target="head-css" />
 <res:useCss value="${res.css.local.css.prettyText_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.dialog_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.popup_css}" target="head-css" />
+<res:useCss value="${res.css.local.less.tabs_less}" target="head-css" />
 <res:useCss value="${res.css.local.css.layout_css}" target="head-css" />
+<res:useCss value="${res.css.local.less.award_less}" target="head-css" />
 <res:useCss value="${res.css.local.css.header_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.promotion_css}" target="head-css" />
@@ -60,97 +66,95 @@
 <res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['posManager.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js['dropdown.js']}" target="page-js"></res:useJs>
-<res:useJs value="${res.js.local.js.jquery['jquery.dataTables.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['jquery.isloading.js']}" target="page-js"></res:useJs>
+<res:useJs value="${res.js.local.js.jquery['jquery.validate.min.js']}" target="page-js"></res:useJs>
+<res:useJs value="${res.js.local.js.jquery['messages_zh.min.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['vue.js']}" target="page-js"></res:useJs>
 
 <res:useJs value="${res.js.local.js.dialog['dialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['alert.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['confirm.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.dialog['TermsDialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.page['subsidy.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['FullListingTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.page['campaign_brand.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js['tabs_simple.js']}" target="page-js2"></res:useJs>
 </head>
 
 <body>
 	<div class="container">
 		<!--  Global Header -->
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="../header.jsp"></jsp:include>
 		<!-- end: Global Header -->
 
-		<jsp:include page="topNavigator.jsp"></jsp:include>
+		<jsp:include page="../topNavigator.jsp"></jsp:include>
+		
 		<div id="page-pane">
 			<div class="pane">
 				<h2>${promo.name}</h2>
 
-				<%@ include file="description_brand.jsp"%>
+				<%@ include file="steps.jsp"%>
 				
-				<%-- <c:if test="${ currentStep eq 'SELLER NOMINATION_NEED APPROVE' and not regType and not empty fieldsDefintions }"> --%>
-					<div class="mt20 my-listing">
-						<h3>提交稽核 <small>（ <span></span>）</small></h3>
-						<%@ include file="table/listings_brand.jsp"%>
-					</div>
-					
-					<c:choose>
-						<c:when test="${ isRegEnd ne true }">
-							<div class="mt20">
-								<%@ include file="upload_listings.jsp"%>
-							</div>
-							
-							<div class="mt20 page-bottom-actions">
-								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">预览并提交报名</button>
-								<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
-									<br /> <br /> <a href="index">返回活動列表</a>
-								</c:if>
-								<c:if test="${hasListingsNominated ne true and currentStep eq 'SELLER NOMINATION_NEED APPROVE'}">
-									<br /> <br /> <a href="index">返回活動列表</a>
-								</c:if>
-							</div>
-						</c:when>
-					</c:choose>
-				<%-- </c:if> --%>
+				<c:choose>
+					<c:when test="${ promo.rewardType eq 2 && empty wltAccount }">
+						<%@ include file="stepMessages/wlt_to_bind.jsp"%>
+					</c:when>
+					<c:when test="${ not empty subsidy and not empty subsidyTerm }">
+						<%@ include file="../subsidy/fill_contract.jsp"%>
+					</c:when>
+				</c:choose>
+				
 			</div>
 		</div>
-
+		
 		<!-- Global Footer -->
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="../footer.jsp"></jsp:include>
 		<!-- End: Global Footer -->
 	</div>
 
-	<%@ include file="dialog/alert.jsp"%>
-	<%@ include file="dialog/confirm.jsp" %>
+	<%@ include file="../dialog/alert.jsp"%>
+	<%@ include file="../dialog/confirm.jsp"%>
 	<c:choose>
 		<c:when test="${promo.region eq 'CN'}">
 			<%@ include file="../dialog/terms.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@ include file="dialog/terms.jsp"%>
+			<%@ include file="../zh_HK/dialog/terms.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	
-	<%@ include file="previewDialog.jsp" %>
+
+	<%@ include file="../previewDialog.jsp"%>
 
 	<script type="text/javascript">
 		var pageData = {
 			promoId : '${promo.promoId}',
-			currentStep: '${currentStep}',
-			columns: JSON.parse('${not empty columns ? columns : "[]"}'),
-			previewColumns: JSON.parse('${not empty previewColumns ? previewColumns : "[]"}'),
+			currentStep : '${currentStep}',
 			regType : JSON.parse('${promo.regType eq true}'),
-			isRegEnd : JSON.parse('${isRegEnd eq true}')
+			username: '${unm}',
+			subsidyStatus: '${subsidy.status}',
+			hasSubmitFields: JSON.parse('${subsidy.status eq 2 or subsidy.status eq 3 or subsidy.status eq 4 or subsidy.status eq 6}'),
+			hasUploadLetter: JSON.parse('${subsidy.status eq 3 or subsidy.status eq 4 or subsidy.status eq 6}'),
+			hasSubsidyApproved: JSON.parse('${subsidy.status eq 4 or subsidy.status eq 6 }'),
+			isAwardEnd: JSON.parse('${isAwardEnd eq true}')
 		};
 	</script>
-	
+
 	<script type="text/javascript">
+		var real_current_step = '${currentStep}';
+		var isAdmin = '${isAdmin}';
+		var publishFlag = '${promo.publishFlag}';
+		if (real_current_step == 'NOTIFICATION EDM APPROVED'
+				&& (publishFlag == 'false' || isAdmin == 'true')) {
+			$(".signpost .post").toggleClass("done", false);
+			$(".signpost .post").toggleClass("current-post", false);
+		}
 		var endReason = '${promo.endReason}';
 		var state = '${promo.state}';
-		if((endReason != 'claimExpired' && endReason != 'subsidyRetrieved') && state == 'End') {
+		if ((endReason != 'claimExpired' && endReason != 'subsidyRetrieved')
+				&& state == 'End') {
 			$(".signpost .post").remove();
-			$(".signpost-posts").html("<div class='post current-post'><span class='label'>活动结束</span></div>");
+			$(".signpost-posts")
+					.html(
+							"<div class='post current-post'><span class='label'>活动结束</span></div>");
 		}
 	</script>
 

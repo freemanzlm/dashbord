@@ -3,9 +3,9 @@ package com.ebay.raptor.promotion.promo.service;
 
 public enum ViewResource {
 
-	CAMPAIGN("campaign"),
-	BRAND_CAMPAIGN("brand_registration"),
-	CAMPAIGN_PREVIEW("campaignPreview"),
+	CAMPAIGN("promotion/general"),
+	BRAND_CAMPAIGN("promotion/brand"),
+	CAMPAIGN_PREVIEW("promotion/campaignPreview"),
 	LISTING_PREVIEW("listingPreview"),
 	UPLOAD_RESPONSE("uploadResponse"),
 	

@@ -5,6 +5,7 @@
 <%@ taglib prefix="res" uri="http://www.ebay.com/webres"%>
 <%@ taglib prefix="rui" uri="http://ebay.com/uicomponents"%>
 <%@ taglib prefix="r" uri="http://ebay.com/raptor"%>
+<%@ taglib prefix="ghs" uri="http://www.ebay.com/raptor/globalheader"%>
 
 <c:set var="isPreview" value="${ promo.isPreview }" />
 <c:set var="currentStep" value="${ isPreview ? promo.draftPreviewStep : promo.currentStep }" />
@@ -55,7 +56,7 @@
 
 <res:useJs value="${res.js.local.js['extension.js']}" target="head-js"></res:useJs>
 <res:useJs value="${res.js.local.js['util.js']}" target="head-js"></res:useJs>
-<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head-js"></res:useJs>
+<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="head-js"></res:useJs>
 <res:useJs value="${res.js.local.js['cookie.js']}" target="head-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
 <res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
@@ -80,10 +81,10 @@
 <body>
 	<div class="container">
 		<!--  Global Header -->
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="../header.jsp"></jsp:include>
 		<!-- end: Global Header -->
 
-		<jsp:include page="topNavigator.jsp"></jsp:include>
+		<jsp:include page="../topNavigator.jsp"></jsp:include>
 		<div id="page-pane">
 			<div class="pane">
 				<h2>${promo.name}</h2>
@@ -91,32 +92,32 @@
 				<%@ include file="steps.jsp"%>
 				
 				<%@ include file="state.jsp"%>
-				
-				<%@ include file="description.jsp"%>
+
+				<%@ include file="description/general.jsp"%>
 				
 				<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK') and not regType and not empty fieldsDefintions }">
 					<c:if test="${hasListingsNominated }">
 						<div class="mt20 my-listing">
 							<h3><strong>提交的刊登</strong></h3>
-							<%@ include file="table/listings.jsp"%>
+							<%@ include file="../table/listings.jsp"%>
 						</div>
 					</c:if>
 					
 					<c:choose>
 						<c:when test="${ isRegEnd ne true }">
 							<div class="mt20">
-								<%@ include file="upload_listings.jsp"%>
+								<%@ include file="../upload_listings.jsp"%>
 							</div>
 							
 							<div class="mt20 page-bottom-actions">
-								<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
-									<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
-								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">预览并提交报名</button>
+								<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閲讀並接受活動條款及
+									<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
+								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交報名</button>
 								<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
-									<br /> <br /> <a href="index">返回活动列表</a>
+									<br /> <br /> <a href="index">返回活動列表</a>
 								</c:if>
 								<c:if test="${hasListingsNominated ne true and currentStep eq 'SELLER NOMINATION_NEED APPROVE'}">
-									<br /> <br /> <a href="index">返回活动列表</a>
+									<br /> <br /> <a href="index">返回活動列表</a>
 								</c:if>
 							</div>
 						</c:when>
@@ -128,34 +129,34 @@
 				
 					<c:choose>
 						<c:when test="${ isRegEnd ne true }">
-							<!-- 非上传形式报名, 或者正式报名 -->
+							<!-- 非上傳形式報名, 或者正式報名 -->
 							<div class="mt20 my-listing">
-								<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
-								<%@ include file="table/listings.jsp"%>
+								<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
+								<%@ include file="../table/listings.jsp"%>
 							</div>
 							
 							<div class="mt20 page-bottom-actions">
 								<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
 									<input type="hidden" name="promoId" value="${promo.promoId}"/>
 									<input type="hidden" name="listings" value="[]" />
-									<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled/>我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-									<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
+									<label for="accept" title="每次提交報名前請確認點擊閲讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled/>我已閲讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+									<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
 									<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
-										<br /><br /> <a href="index">返回活动列表</a>
+										<br /><br /> <a href="index">返回活動列表</a>
 									</c:if>
 								</form>
 							</div>
 						</c:when>
 						<c:otherwise>
-							<c:if test="${hasListingsNominated }">
+							<%-- <c:if test="${hasListingsNominated }"> --%>
 								<div class="mt20 my-listing">
-									<h3><strong>提交的刊登</strong></h3>
-									<%@ include file="table/listings.jsp"%>
+									<h3><strong>報名刊登列表</strong></h3>
+									<%@ include file="../table/listings.jsp"%>
 								</div>
-							</c:if>
+							<%-- </c:if> --%>
 							
 							<!-- <div class="mt20 page-bottom-actions">
-								<a href="index">返回活动列表</a>
+								<a href="index">返回活動列表</a>
 							</div> -->
 						</c:otherwise>
 					</c:choose>
@@ -165,24 +166,22 @@
 				
 				<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE') or fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and 
 					(currentStep ne 'SELLER NOMINATION_NEED APPROVE' and currentStep ne 'SELLER FEEDBACK') and not empty fieldsDefintions }">
-					<c:if test="${not isRegEnd and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK'))}">
-						<c:set var="isRegEnd" value="${ true }"></c:set>
-					</c:if>
 					<c:choose>
 						<c:when test="${not isRegEnd and currentStep eq 'PROMOTION IN PROGRESS' }">
 							<c:choose>
 								<c:when test="${regType}">
 									<div class="mt20 my-listing">
-										<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
-										<%@ include file="table/listings.jsp"%>
+										<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
+										<%@ include file="../table/listings.jsp"%>
 									</div>
 									
 									<div class="mt20 page-bottom-actions">
 										<form id="listing-form" action="/promotion/listings/confirmListings" target="_self" method="post">
 											<input type="hidden" name="promoId" value="${promo.promoId}"/>
 											<input type="hidden" name="listings" value="[]" />
-											<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及 <a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /><br />
-											<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>预览并提交报名</button>
+											<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled/>我已閱讀並接受活動條款及 <a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /><br />
+											<button id="form-btn" class="btn" type="button" ${ isAdmin or isPreview ? 'disabled' : '' }>預覽並提交報名</button>
+											<!-- <br /><br /> <a href="index">返回活動列表</a> -->
 										</form>
 									</div>
 								</c:when>
@@ -190,19 +189,19 @@
 									<c:if test="${hasListingsNominated }">
 										<div class="mt20 my-listing">
 											<h3><strong>提交的刊登</strong></h3>
-											<%@ include file="table/listings.jsp"%>
+											<%@ include file="../table/listings.jsp"%>
 										</div>
 									</c:if>
 									
 									<div class="mt20">
-										<%@ include file="upload_listings.jsp"%>
+										<%@ include file="../upload_listings.jsp"%>
 									</div>
 									
 									<div class="mt20 page-bottom-actions">
-										<label for="accept" title="每次提交报名前请确认点击阅读其他条款，确认接受后方可提交报名。"><input type="checkbox" id="accept" disabled />我已阅读并接受活动条款及
-											<a class="terms-conditions" href="javascript:void(0)">其他条款</a></label> <br /> <br />
-										<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">预览并提交报名</button>
-										<!-- <br /><br /> <a href="index">返回活动列表</a> -->
+										<label for="accept" title="每次提交報名前請確認點擊閱讀其他條款，確認接受後方可提交報名。"><input type="checkbox" id="accept" disabled />我已閱讀並接受活動條款及
+											<a class="terms-conditions" href="javascript:void(0)">其他條款</a></label> <br /> <br />
+										<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交報名</button>
+										<!-- <br /><br /> <a href="index">返回活動列表</a> -->
 									</div>
 								</c:otherwise>
 							</c:choose>
@@ -210,12 +209,12 @@
 						<c:otherwise>
 							<%-- <c:if test="${hasListingsNominated }"> --%>
 								<div class="mt20 my-listing">
-									<h3><strong>报名刊登列表</strong></h3>
-									<%@ include file="table/listings.jsp"%>
+									<h3><strong>報名刊登列表</strong></h3>
+									<%@ include file="../table/listings.jsp"%>
 								</div>
 							<%-- </c:if> --%>
 							<!-- <div class="mt20 page-bottom-actions">
-								<a href="index">返回活动列表</a>
+								<a href="index">返回活動列表</a>
 							</div> -->
 						</c:otherwise>
 					</c:choose>
@@ -224,29 +223,28 @@
 				<c:if test="${(not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and not empty fieldsDefintions }">
 					<div class="mt20 my-listing">
 						<h3><strong>报名刊登列表</strong></h3>
-						<%@ include file="table/listings.jsp"%>
+						<%@ include file="../table/listings.jsp"%>
 					</div>
 				</c:if>
 			</div>
 		</div>
 
 		<!-- Global Footer -->
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="../footer.jsp"></jsp:include>
 		<!-- End: Global Footer -->
 	</div>
 
-	<%@ include file="dialog/alert.jsp"%>
-	<%@ include file="dialog/confirm.jsp" %>
+	<%@ include file="../dialog/alert.jsp"%>
+	<%@ include file="../dialog/confirm.jsp" %>
 	<c:choose>
 		<c:when test="${promo.region eq 'CN'}">
-			<%@ include file="dialog/terms.jsp"%>
+			<%@ include file="../../dialog/terms.jsp"%>
 		</c:when>
 		<c:otherwise>
-			<%@ include file="zh_HK/dialog/terms.jsp"%>
+			<%@ include file="../dialog/terms.jsp"%>
 		</c:otherwise>
 	</c:choose>
-	
-	<%@ include file="previewDialog.jsp" %>
+	<%@ include file="../previewDialog.jsp" %>
 
 	<script type="text/javascript">
 		var pageData = {
@@ -260,15 +258,13 @@
 	</script>
 	
 	<script type="text/javascript">
-		/* var hasReviewed = '${hasReviewed}';
-		var hasListingsNominated = '${hasListingsNominated}'; */
-		var real_current_step = '${currentStep}';
+		var real_current_step = '${promo.currentStep}';
 		var isAdmin = '${isAdmin}';
 		var publishFlag = '${promo.publishFlag}';
-		if(real_current_step == 'NOTIFICATION EDM APPROVED' && (publishFlag == 'false'|| isAdmin == 'true')) {
+		if(real_current_step == 'NOTIFICATION EDM APPROVED' && (publishFlag == 'false' || isAdmin == 'true')) {
 			$(".signpost .post").toggleClass("done", false);
 			$(".signpost .post").toggleClass("current-post", false);
-		}		
+		}
 	</script>
 
 	<res:jsSlot id="body" />
