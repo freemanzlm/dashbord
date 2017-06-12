@@ -119,6 +119,12 @@ public class ExcelUtil {
 	private static void resolveCommonConfigurations(ColumnConfiguration config, JsonNode field) {
 		config.setKey(field.get("api_Name").asText());
 		config.setLabel(field.get("labelName").asText());
+		if (field.has("length")) {
+			config.setLength(field.get("length").asInt());
+		} else {
+			// set default visible English characters.
+			config.setLength(30);
+		}
 //		config.setDisplay(field.get("display").asBoolean());	
 		config.setWritable(field.get("input").asBoolean());
 		if (field.has("sample")) {

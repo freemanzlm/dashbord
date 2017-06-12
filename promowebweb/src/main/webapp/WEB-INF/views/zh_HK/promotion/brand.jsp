@@ -91,7 +91,7 @@
 				
 				<%-- <c:if test="${ currentStep eq 'SELLER NOMINATION_NEED APPROVE' and not regType and not empty fieldsDefintions }"> --%>
 					<div class="mt20 my-listing">
-						<h3>提交稽核 <small>（ <span></span>）</small></h3>
+						<h3>提交審核 <small>（ <span></span>）</small></h3>
 						<%@ include file="../table/listings_brand.jsp"%>
 					</div>
 					

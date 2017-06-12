@@ -556,7 +556,7 @@ public class SheetWriter implements ISheetWriter {
 			
 		    if (config.getLength() != null) {
 				// character length + 2, 256 is a character's width;
-				int columnWidth = 512 * (config.getLength() + 2);
+				int columnWidth = 256 * (config.getLength() + 1); /* 1 is margin */
 				sheet.setColumnWidth(config.getWriteOrder(), columnWidth);
 		    } else {
 		    	sheet.autoSizeColumn(config.getWriteOrder());

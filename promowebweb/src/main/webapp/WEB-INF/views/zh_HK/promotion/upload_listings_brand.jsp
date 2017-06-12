@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="listings-upload">
-	<h3>批量上傳刊登</h3>
+	<h3>提交認證</h3>
 	
 	<div class="body mt20" style="width: 545px;">
 		<p class="mt10 font-bold">您可以通過下載<a class="template" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">品牌認證提交範本</a>按格式填寫並上傳您的刊登參與本活動。</p>
