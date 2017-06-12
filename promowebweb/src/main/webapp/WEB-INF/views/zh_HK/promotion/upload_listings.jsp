@@ -41,7 +41,7 @@
 						accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
 						<button type="button" class="btn" style="margin-left: 3px;">選擇</button></span>
 				</form>
-				<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
+				<iframe name="uploadIframe" src="about:blank" style="display: none;"></iframe>
 			</div>
 		</div>
 	</c:when>
@@ -67,7 +67,7 @@
 					<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇文件" /> <input type="file" name="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">選擇</button></span>
 					<input type="hidden" name="promoId" value="${promo.promoId}"/>
 				</form>
-				<iframe name="uploadIframe" src="about:blank" frameborder="0" style="display: none;"></iframe>
+				<iframe name="uploadIframe" src="about:blank" style="display: none;"></iframe>
 				
 				<div class="clr" style="margin-top: 30px; ">
 					<span style="float: left; font-weight: bold;">註：</span>

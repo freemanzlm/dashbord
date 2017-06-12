@@ -44,7 +44,7 @@
 <body>
 <div class="container">
 	<!--  Global Header -->
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="../header.jsp"></jsp:include>
 	<!-- end: Global Header -->
 	
 	<div id="page-pane">
@@ -55,7 +55,7 @@
 	</div>	
 
 	<!-- Global Footer -->
-		<jsp:include page="footer.jsp"></jsp:include>
+		<jsp:include page="../footer.jsp"></jsp:include>
 	<!-- End: Global Footer -->
 </div>
 

@@ -14,7 +14,7 @@ public enum ViewResource {
 	
 	TEST_PAGE("subsidy/test"),
 	
-	UNKNOW_CAMPAIGN("unknowCampaign");
+	UNKNOW_CAMPAIGN("promotion/unknow");
 
 	private ViewResource(String path) {
 		this.path = path;

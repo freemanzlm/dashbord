@@ -142,7 +142,7 @@
 					</div>
 				</form>
 				
-				<iframe name="uploadIframe_${field.key}" src="about:blank" frameborder="0" class="hidden" ></iframe>
+				<iframe name="uploadIframe_${field.key}" src="about:blank" class="hidden" ></iframe>
 			</c:if>
 		</c:forEach>
 		

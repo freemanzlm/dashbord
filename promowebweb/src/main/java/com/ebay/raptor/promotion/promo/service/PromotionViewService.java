@@ -44,7 +44,7 @@ public class PromotionViewService {
 	public void handlePromotion(ModelAndView model, Promotion promo, Long userId) {
 		if (promo.getType() !=  null) {
 			switch(promo.getType()) {
-			case 2:
+			case 2: /*Brand Vetting*/
 				handleBrandPromotion(model, promo, userId);
 				break;
 			default:

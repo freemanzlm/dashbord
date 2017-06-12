@@ -106,7 +106,7 @@
 					<c:choose>
 						<c:when test="${ isRegEnd ne true }">
 							<div class="mt20">
-								<%@ include file="../upload_listings.jsp"%>
+								<%@ include file="upload_listings.jsp"%>
 							</div>
 							
 							<div class="mt20 page-bottom-actions">
@@ -194,7 +194,7 @@
 									</c:if>
 									
 									<div class="mt20">
-										<%@ include file="../upload_listings.jsp"%>
+										<%@ include file="upload_listings.jsp"%>
 									</div>
 									
 									<div class="mt20 page-bottom-actions">
