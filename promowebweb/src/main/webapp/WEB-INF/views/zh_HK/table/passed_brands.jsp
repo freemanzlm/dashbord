@@ -7,10 +7,11 @@
 		<thead>
 			<tr>
 				<th class="itemName">品牌名稱</th>
-				<th class="date">上次稽核時間</th>
+				<th class="category">品類</th>
+				<!-- <th class="date">上次稽核時間</th>
 				<th class="date">下次稽核時間</th>				
 				<th class="state">不良率狀態</th>
-				<th class="number">不良率不達標次數</th>
+				<th class="number">不良率不達標次數</th> -->
 			</tr>
 		</thead>
 	</table>

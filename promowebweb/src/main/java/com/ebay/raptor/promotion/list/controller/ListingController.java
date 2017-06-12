@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import rx.internal.util.LinkedArrayList;
 
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
@@ -175,9 +178,14 @@ public class ListingController extends AbstractListingController {
 			responseData.setStatus(true);
 		} else {
 			responseData.setStatus(false);
+			
 			StringBuffer errorMessage = new StringBuffer();
 			
 			boolean first = true;
+			
+			LinkedList<ConstraintViolation<Object>> errors = new LinkedList<ConstraintViolation<Object>>();
+			responseData.setErrors(errors);
+			
 			for (ConstraintViolation<Object> violation : violations) {
 				errorMessage.append((first ? "" : "&lt;br/&gt;") + violation.getMessage());
 				first = false;

@@ -17,7 +17,7 @@
 			</c:if>
 			<li class="no-sub-menu"><a href="${sdurl}">買家體驗報告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
 			<li class="active">
-				<a id="promotion" href="/promotion/index" target="_self">活動促銷</a>
+				<a id="promotion" href="/promotion/index" target="_self">營銷活動</a>
 				<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank"></a></small>
 				<small class="counter" v-if="statistics.all > 0" v-cloak>{{statistics.all}}</small>
 			</li>
