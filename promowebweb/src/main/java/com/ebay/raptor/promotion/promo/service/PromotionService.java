@@ -1,7 +1,6 @@
 package com.ebay.raptor.promotion.promo.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response.Status;
@@ -11,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
-import com.ebay.binding.utils.CollectionUtils;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
-import com.ebay.cbt.raptor.promotion.po.StatisticVO;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
@@ -25,7 +22,6 @@ import com.ebay.raptor.promotion.pojo.service.resp.PromoAcceptResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromotionResponse;
 import com.ebay.raptor.promotion.service.BaseService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 
 @Component
 public class PromotionService extends BaseService {
