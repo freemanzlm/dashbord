@@ -147,6 +147,9 @@ BizReport.local = {
 			attachmentFileTypeError: '只能上傳PDF，ZIP，JPG檔案',
 			attachdownload : '查看'
 		}
+	},
+	excel: {
+		row: '第{0}行'
 	}
 };
 

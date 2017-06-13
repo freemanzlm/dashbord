@@ -5,7 +5,6 @@ public enum ViewResource {
 
 	CAMPAIGN("promotion/general"),
 	BRAND_CAMPAIGN("promotion/brand"),
-	CAMPAIGN_PREVIEW("promotion/campaignPreview"),
 	LISTING_PREVIEW("listingPreview"),
 	UPLOAD_RESPONSE("uploadResponse"),
 	

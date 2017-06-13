@@ -9,3 +9,20 @@
 .error-box .fa-times {
 	color: red;
 }
+
+.errors-summary {
+	padding: 5px 10px 5px 36px;
+	background: url(../img/icon/alert_16px.png) no-repeat scroll 8px 10px rgb(234, 221, 179);
+}
+
+.errors-summary li {
+	list-style: inside;
+}
+
+.listings-upload .errors-summary {
+	border: 1px solid orange;
+}
+
+.listings-upload .errors-summary ul {
+	margin-left: 0;
+}

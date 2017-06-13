@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -27,8 +26,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import rx.internal.util.LinkedArrayList;
-
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
@@ -48,7 +45,7 @@ import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.web.resp.DataWebResponse;
+import com.ebay.raptor.promotion.pojo.web.resp.ListingsUploadWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -129,7 +126,7 @@ public class ListingController extends AbstractListingController {
 	public ModelAndView uploadListings(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile uploadFile, @RequestParam String promoId) {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
-		DataWebResponse <String> responseData = new DataWebResponse <String>();
+		ListingsUploadWebResponse responseData = new ListingsUploadWebResponse();
 		Set<ConstraintViolation<Object>> violations = null;
 		UserData userData = null;
 		
@@ -168,30 +165,20 @@ public class ListingController extends AbstractListingController {
 			logger.log(LogLevel.ERROR, message, e);
 			CalEventHelper.writeLog(CalEvent.CAL_ERROR, "ListingController", message, e, "Error");
 			responseData.setStatus(false);
+			if (e instanceof PromoException) {
+				responseData.setStatusCode(((PromoException)e).getErrorType().getCode());
+			}
 			responseData.setMessage(e.getMessage());
 			mav.addObject("response", PojoConvertor.convertToJson(responseData));
 			return mav;
-		}
+		} 
 		
 		// if there is listing that not comply with validation rules
 		if (violations == null || violations.size() == 0) {
 			responseData.setStatus(true);
 		} else {
 			responseData.setStatus(false);
-			
-			StringBuffer errorMessage = new StringBuffer();
-			
-			boolean first = true;
-			
-			LinkedList<ConstraintViolation<Object>> errors = new LinkedList<ConstraintViolation<Object>>();
-			responseData.setErrors(errors);
-			
-			for (ConstraintViolation<Object> violation : violations) {
-				errorMessage.append((first ? "" : "&lt;br/&gt;") + violation.getMessage());
-				first = false;
-			}
-			
-			responseData.setMessage(errorMessage.toString());
+			responseData.setErrors(violations);
 		}
 			
 		mav.addObject("response", PojoConvertor.convertToJson(responseData));

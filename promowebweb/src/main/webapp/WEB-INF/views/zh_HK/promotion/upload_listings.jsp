@@ -24,13 +24,15 @@
 					</ul>
 				</div>
 
-				<div id="upload-error-msg" class="error-msg hide">
-					<table>
-						<tr>
-							<td><span class="icon error"></span></td>
-							<td><b></b></td>
-						</tr>
-					</table>
+				<div id="request-error" class="errors-summary mt10 hide">
+					<p class="mb3"></p>
+				</div>
+				
+				<div id="excel-errors" class="errors-summary mt10 hide">
+					<p class="mb3">請注意，您提交的檔案存在填寫錯誤，請檢查<span class="color-red">第{row}行</span>的資訊。建議您再次提交前檢查有沒有類似的填寫錯誤？避免再次提交失敗。詳細錯誤資訊如下：</p>
+					<ul>
+						
+					</ul>
 				</div>
 
 				<form id="upload-form" action="/promotion/listings/uploadListings" class="mt30" method="post"

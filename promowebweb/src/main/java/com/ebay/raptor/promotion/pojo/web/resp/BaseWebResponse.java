@@ -10,9 +10,8 @@ import java.util.List;
 public class BaseWebResponse {
 
 	private boolean status = Boolean.TRUE;
+	private Integer statusCode;
 	private String message;
-	@SuppressWarnings("rawtypes")
-	private List errors;
 
 	public boolean isStatus() {
 		return status;
@@ -30,14 +29,12 @@ public class BaseWebResponse {
 		this.message = message;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public List getErrors() {
-		return errors;
+	public Integer getStatusCode() {
+		return statusCode;
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void setErrors(List errors) {
-		this.errors = errors;
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
 	}
 
 }

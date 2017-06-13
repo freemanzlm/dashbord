@@ -18,6 +18,30 @@ $(function(){
 		};
 	}
 	
+	// only handle excel data errors
+	function createExcelErrorsSummary(container, errors) {
+		var $container = $(container), $errorList = $container.find('ul'), $summary = $container.find('p'), first = true;
+		
+		$errorList.empty(); // init		
+		if (errors && errors.length > 0) {
+			errors.forEach(function(error){
+				first && $summary.html($summary.html().replace(/{row}/, error.rowIndex + 1/*excel row start from 0*/)), first = false;
+				var li = document.createElement('li');
+				li.innerHTML = local.getText('excel.row', [error.rowIndex + 1]) + error.message;
+				$errorList.append(li);
+			});
+			$container.removeClass('hide');
+		} else {
+			$container.addClass('hide');
+		}
+	}
+	
+	// only handle request error
+	function createRequestErrorSummary(container, message) {
+		var $container = $(container), $summary = $container.find('p');
+		message ? $summary.html(message).removeClass('hide') : $summary.addClass('hide');
+	}
+	
 	uploadIFrame = $("iframe[name=uploadIframe]");
 	uploadBtn = document.getElementById("upload-btn");
 	form = $("#listing-form");
@@ -69,29 +93,22 @@ $(function(){
 					var response = uploadIFrame.contents().find("body").text();
 					var responseData = $.parseJSON(response);
 					// verification returns no error 
-					if (responseData && responseData.status) {
+					if (responseData && responseData.status === true) {
 						window.location.replace("/promotion/listings/reviewUploadedListings?promoId="+pageData.promoId);
-					}
-					// handle error
-					else {
-						// show error infor
-						if (responseData.message && responseData.message.length > 0) {
-							$("#upload-error-msg").removeClass("hide");
-							$("#upload-error-msg").find("b").html(responseData.message);
-						} else if (responseData.data && responseData.data.length > 0) {
-							var errCode = parseInt(responseData.data);
-							
-							if (errCode == 32) {
-								cbt.alert(local.getText("errorMsg.regDateExpired"));
-							} else {
-								cbt.alert(local.getText("errorMsg.uploadListingError"));
-							}
-							
-							window.location.replace("/promotion/" + pageData.promoId);
+					} else { // show error information
+						createExcelErrorsSummary('#excel-errors', responseData.errors);
+						
+						if (responseData.errors && responseData.errors.length > 0) {
+							console.log(cbt.util.getPositionInPage(document.getElementById('excel-errors')).top);
+							$(document.body).scrollTop(cbt.util.getPositionInPage(document.getElementById('excel-errors')).top);
 						}
-						// redirect to error page
-						else {
-							window.location.replace("promotion/error");
+						
+						if (!responseData.errors && responseData.errors.length <= 0) {
+							if (responseData.statusCode == 32) {
+								createRequestErrorSummary('#request-errors', local.getText("errorMsg.regDateExpired"));
+							} else {
+								createRequestErrorSummary('#request-errors', local.getText("errorMsg.uploadListingError"));
+							}
 						}
 					}
 				} else {
