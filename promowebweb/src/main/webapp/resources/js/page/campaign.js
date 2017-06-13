@@ -115,7 +115,7 @@ $(function(){
 							$(document.body).scrollTop(cbt.util.getPositionInPage(document.getElementById('excel-errors')).top);
 						}
 						
-						if (!responseData.errors && responseData.errors.length <= 0) {
+						if (!responseData.errors || responseData.errors.length <= 0) {
 							if (responseData.statusCode == 32) {
 								createRequestErrorSummary('#request-errors', local.getText("errorMsg.regDateExpired"));
 							} else {
