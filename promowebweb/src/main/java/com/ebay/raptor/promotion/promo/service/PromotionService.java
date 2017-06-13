@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.promo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response.Status;
@@ -10,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ebay.app.raptor.promocommon.CommonLogger;
+import com.ebay.binding.utils.CollectionUtils;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
+import com.ebay.cbt.raptor.promotion.po.StatisticVO;
 import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
+import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.HasListingNominatedResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromoAcceptResponse;
@@ -222,5 +226,19 @@ public class PromotionService extends BaseService {
 	
 	public List<Promotion> endedDealsPromotions(Long uid) throws PromoException{
 		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getEndedDealsPromotions, uid);
+	}
+	
+	public String promotionStatistics(Long uid){
+		String uri = url(params(ResourceProvider.PromotionRes.promotionStatistics, new Object[]{"{uid}", uid}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<GeneralDataResponse<String>> type = new GenericType<GeneralDataResponse<String>>() {
+			};
+			GeneralDataResponse<String> info = resp.getEntity(type);
+			return info.getData();
+		} else {
+			logger.error(String.format("Failed to get statistic  informatin"));
+		}
+		return null;
 	}
 }

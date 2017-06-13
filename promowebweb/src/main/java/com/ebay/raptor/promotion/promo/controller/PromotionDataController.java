@@ -1,7 +1,6 @@
 package com.ebay.raptor.promotion.promo.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +35,7 @@ import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.service.LoginService;
+import com.ebay.raptor.promotion.util.JsonUtils;
 
 @Controller
 @RequestMapping(Router.Promotion.base)
@@ -352,56 +352,13 @@ public class PromotionDataController{
 	@GET
 	@RequestMapping(Router.Promotion.promoStatistics)
 	@ResponseBody
-	public DataWebResponse<Map<String, Object>> getPromotionStatistics(HttpServletRequest request) throws MissingArgumentException {
-		DataWebResponse<Map<String, Object>> resp = new DataWebResponse<Map<String, Object>>();
+	public DataWebResponse<Map<String, Object>> promoStatistics(HttpServletRequest request) throws MissingArgumentException{
 		UserData userData = loginService.getUserDataFromCookie(request);
-		List<Promotion> ingData = null;
-		List<Promotion> awardData = null;
-		Map<String, Object> result = new HashMap<String, Object>();
-		int allCount = 0;
-		int brandCount = 0;
-		int vettingCount = 0;
-		int dealsCount = 0;
-		try {
-//			data = service.getUpdatedPromotions(userData.getUserId());
-			ingData = service.getIngPromotion(userData.getUserId());
-			awardData = service.awardingBrandPromotions(userData.getUserId());
-		} catch (PromoException e) {
-			e.printStackTrace();
-			logger.log(e.getMessage());
-		}
-		if(!CollectionUtils.isEmpty(ingData)){
-			allCount = ingData.size();
-			for (Promotion promo : ingData) {
-				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
-					brandCount++;
-				}else if(promo.getType() != null && PMPromoTabType.BRAND_VETTING.getTypeId()==promo.getType()){
-					vettingCount++;
-				}else if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
-					dealsCount++;
-				}
-			}
-		}
-		if(!CollectionUtils.isEmpty(awardData)){
-			allCount += awardData.size();
-			for (Promotion promo : awardData) {
-				if(promo.getType() != null && PMPromoTabType.BRAND_PROMO.getTypeId()==promo.getType()){
-					brandCount++;
-				}else if(promo.getType() != null && PMPromoTabType.BRAND_VETTING.getTypeId()==promo.getType()){
-					vettingCount++;
-				}else if(promo.getType() != null && PMPromoTabType.DEALS.getTypeId()==promo.getType()){
-					dealsCount++;
-				}
-			}
-		}
-		
-		result.put("all", allCount);
-		result.put("brand", brandCount);
-		result.put("vetting", vettingCount);
-		result.put("deals", dealsCount);
-		
+		DataWebResponse<Map<String, Object>> resp = new DataWebResponse<Map<String, Object>>();
+		String result = service.promotionStatistics(userData.getUserId());
+		Map<String,Object> map = JsonUtils.parseJson(result);
 		resp.setStatus(true);
-		resp.setData(result);
+		resp.setData(map);
 		return resp;
 	}
 	
