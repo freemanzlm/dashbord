@@ -32,6 +32,7 @@ import com.ebay.raptor.promotion.AuthNeed;
 import com.ebay.raptor.promotion.brand.service.BrandService;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.enums.PromoError;
+import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
@@ -124,7 +125,13 @@ public class IndexController {
 		UserData userDt = loginService.getUserDataFromCookie(request);
 		mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
 		
-		int passedBrandsCnt = brandService.countPassedBrandAmount(userDt.getUserId());
+		int passedBrandsCnt = 0;
+		try {
+			passedBrandsCnt = brandService.countPassedBrandAmount(userDt.getUserId());
+			passedBrandsCnt = 1;
+		} catch (PromoException e) {
+			e.printStackTrace();
+		}
 
 		mav.addObject("passedBrandsCnt", passedBrandsCnt);
 		mav.addObject("introduction", brandService.getBrandIntroduction(LocaleUtil.getCurrentLocale()));

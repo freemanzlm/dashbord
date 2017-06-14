@@ -42,9 +42,19 @@ public class BrandService extends BaseService {
 	 * 
 	 * @param userId
 	 * @return
+	 * @throws PromoException 
 	 */
-	public int countPassedBrandAmount(Long userId) {
-		return 2;
+	public int countPassedBrandAmount(Long userId) throws PromoException {
+		String uri = url(params(ResourceProvider.PromotionRes.countBrandPerformance, new Object[] { "{uid}", userId }));
+		GingerClientResponse resp = httpGet(uri);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<Integer>> type = new GenericType<GeneralDataResponse<Integer>>() {
+			};
+			GeneralDataResponse<Integer> countData = resp.getEntity(type);
+			return countData.getData();
+		} else {
+			throw new PromoException("BrandPerformanceCount not found!");
+		}
 	}
 
 	public String getBrandIntroduction(Locale locale){
@@ -86,20 +96,5 @@ public class BrandService extends BaseService {
 			throw new PromoException("BrandPerformance not found!");
 		}
 	}
-
-	public List<Promotion> getIngBrandPopuPromotions(Long userId) {
-		List<Promotion> result = new ArrayList<Promotion>();
-		List<Promotion> promos = null;
-		try {
-			promos = promotionService.getIngPromotion(userId);
-		} catch (PromoException e) {
-			e.printStackTrace();
-		}
-		if(!CollectionUtils.isEmpty(promos)){
-			for (Promotion promo : promos) {
-				
-			}
-		}
-		return null;
-	}
+	
 }

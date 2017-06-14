@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.promo.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -352,11 +353,11 @@ public class PromotionDataController{
 	@GET
 	@RequestMapping(Router.Promotion.promoStatistics)
 	@ResponseBody
-	public DataWebResponse<Map<String, Object>> promoStatistics(HttpServletRequest request) throws MissingArgumentException{
+	public DataWebResponse<Map<String, Integer>> promoStatistics(HttpServletRequest request) throws MissingArgumentException{
 		UserData userData = loginService.getUserDataFromCookie(request);
-		DataWebResponse<Map<String, Object>> resp = new DataWebResponse<Map<String, Object>>();
-		String result = service.promotionStatistics(userData.getUserId());
-		Map<String,Object> map = JsonUtils.parseJson(result);
+		DataWebResponse<Map<String, Integer>> resp = new DataWebResponse<Map<String, Integer>>();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map = service.promotionStatistics(userData.getUserId());
 		resp.setStatus(true);
 		resp.setData(map);
 		return resp;

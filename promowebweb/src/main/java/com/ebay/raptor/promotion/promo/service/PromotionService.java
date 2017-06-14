@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.promo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response.Status;
@@ -224,13 +225,13 @@ public class PromotionService extends BaseService {
 		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getEndedDealsPromotions, uid);
 	}
 	
-	public String promotionStatistics(Long uid){
+	public Map<String,Integer> promotionStatistics(Long uid){
 		String uri = url(params(ResourceProvider.PromotionRes.promotionStatistics, new Object[]{"{uid}", uid}));
 		GingerClientResponse resp = httpGet(uri);
 		if(Status.OK.getStatusCode() == resp.getStatus()){
-			GenericType<GeneralDataResponse<String>> type = new GenericType<GeneralDataResponse<String>>() {
+			GenericType<GeneralDataResponse<Map<String,Integer>>> type = new GenericType<GeneralDataResponse<Map<String,Integer>>>() {
 			};
-			GeneralDataResponse<String> info = resp.getEntity(type);
+			GeneralDataResponse<Map<String,Integer>> info = resp.getEntity(type);
 			return info.getData();
 		} else {
 			logger.error(String.format("Failed to get statistic  informatin"));
