@@ -125,6 +125,12 @@ BizReport.local = {
 			'counting' : '已成功上传文件{0}/{1}'
 		}
 	},
+	brandPromo: {
+		step: {
+			'NOMINATION EDM IN APPROVE FLOW': '提交认证',
+			'SELLER NOMINATION_NEED APPROVE': '提交认证'
+		}
+	},
 	'listing': {
 		'state': {
 			'null':'N/A',

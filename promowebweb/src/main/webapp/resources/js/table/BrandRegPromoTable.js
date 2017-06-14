@@ -93,18 +93,18 @@ var BizReport = BizReport || {};
 						return data;
 					}
 				}, {
-					aTargets : ["currentStep"],
+					aTargets : ["state"],
 					sClass : "text-center state",
 					sDefaultContent : "",
 					sType : 'numeric',
-					swidth: '120px',
+					swidth: '180px',
 					mRender : function (data, type, full) {
 						data = data.toUpperCase();
 						if (type == "display") {
 							switch (data) {
 							case 'SELLER NOMINATION_NEED APPROVE':
 							case 'SELLER FEEDBACK':
-								return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.Created') + "</a>";
+								return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('brandPromo.step.' + data) + "</a>";
 							}
 						}
 

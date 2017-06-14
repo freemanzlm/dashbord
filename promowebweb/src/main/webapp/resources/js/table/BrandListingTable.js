@@ -9,8 +9,8 @@
 var BizReport = BizReport || {};
 
 (function(namespace){
-	var FullListingTable = function() {};
-	FullListingTable.prototype = new cbt.Widget();
+	var BrandListingTable = function() {};
+	BrandListingTable.prototype = new cbt.Widget();
 	
 	var local = namespace.local;
 	var fileTypeReg = /\.(doc|docx|xls|xlsx|jpg|gif|zip|rar|pdf)$/i;
@@ -468,7 +468,7 @@ var BizReport = BizReport || {};
 			}
 		};
 	
-	$.extend(FullListingTable.prototype, {
+	$.extend(BrandListingTable.prototype, {
 		init: function(config) {
 			var that = this;
 
@@ -642,5 +642,5 @@ var BizReport = BizReport || {};
 		}
 	});
 	
-	namespace.FullListingTable = FullListingTable;
+	namespace.BrandListingTable = BrandListingTable;
 })(BizReport = BizReport || {});

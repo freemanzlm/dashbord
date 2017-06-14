@@ -7,7 +7,7 @@
 		<thead>
 			<tr>
 				<th class="name">活动名称</th>
-				<th class="state">活动状态</th>
+				<th class="state" style="width:180px;">活动状态</th>
 			</tr>
 		</thead>
 	</table>

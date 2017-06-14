@@ -72,7 +72,7 @@
 <res:useJs value="${res.js.local.js['popup.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js['file_input.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.jquery['DataTable.js']}" target="page-js2"></res:useJs>
-<res:useJs value="${res.js.local.js.table['FullListingTable.js']}" target="page-js2"></res:useJs>
+<res:useJs value="${res.js.local.js.table['BrandListingTable.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.dialog['ListingPreviewDialog.js']}" target="page-js2"></res:useJs>
 <res:useJs value="${res.js.local.js.page['campaign_brand.js']}" target="page-js2"></res:useJs>
 </head>

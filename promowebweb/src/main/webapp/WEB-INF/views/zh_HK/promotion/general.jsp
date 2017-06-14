@@ -49,6 +49,7 @@
 <res:useCss value="${res.css.local.css.dialog_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.popup_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.layout_css}" target="head-css" />
+<res:useCss value="${res.css.local.css.error_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.header_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css" />
 <res:useCss value="${res.css.local.css.promotion_css}" target="head-css" />
