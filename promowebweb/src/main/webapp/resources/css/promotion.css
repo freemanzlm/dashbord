@@ -106,12 +106,6 @@ table.item-list-table tbody tr.even {
 	background-color: #fff;
 }
 
-table.dataTable tbody td .msg {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	font-size: 1.2em;
-}
-
 table.dataTable td.skuName a span {
 	color: #f00;
 }

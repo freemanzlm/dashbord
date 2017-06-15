@@ -19,7 +19,8 @@
 	list-style: inside;
 }
 
-.listings-upload .errors-summary {
+.listings-upload .errors-summary,
+#attachments-errors {
 	border: 1px solid orange;
 }
 

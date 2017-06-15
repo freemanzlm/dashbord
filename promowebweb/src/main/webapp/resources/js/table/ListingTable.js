@@ -306,19 +306,20 @@ var BizReport = BizReport || {};
 						var disabled = disabled ? 'disabled' : "";
 						var id = full.skuId + "-" + key;
 						var iframeId = 'iframe-' + id;
-						var attachmentLink = data ? '<b><a href=/promotion/listings'+data+'>'+local.getText('promo.listings.attachdownload')+'</a></b>' : "<b></b>";
+						var attachmentLink = data ? '<a class="font-bold attachment" href=/promotion/listings'+data+'>'+local.getText('promo.listings.attachdownload')+'</a>' : "";
 						
 						if (type == "display") {
 							if(readonly) {
 								return attachmentLink;
 							} else {
 								// promoId is stored in meta.settings.oInit.promo object.
-								return '<form class="attachment-form" uploading="false" id="form-' + id + '" target="'+ iframeId + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+ 
+								return '<form class="attachment-form" uploading="false" target="'+ iframeId + '" method="post" enctype="multipart/form-data" action="/promotion/listings/uploadListingAttachment"><input type="hidden" value="'+ 
 								meta.settings.oInit.promo.promoId+'" name="promoId"/><input type="hidden" name="skuId" value="'+ 
 								full.skuId+'" /><input type="hidden" name="key" value="' + key + '"/><span class="file-input"><input type="text" style="height: 22px;" value="" placeholder="选择文件" /> <input type="file" name="uploadFile" '+
-								disabled+'/></span><button class="btn" id="btn-'+id+'" type="button">上传</button></form>' +
+								disabled+'/></span><button class="btn submit-btn" type="button">上传</button></form>' +
 								'<iframe name="'+ iframeId + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
-								'<span id="msg-'+id+'" class="msg">' + attachmentLink + '</span>';
+								'<span class="msg font-bold">' + attachmentLink + '</span>' +
+								'<span class="attachment font-bold">' + attachmentLink + '</span>';
 							}
 						}
 						
@@ -333,9 +334,9 @@ var BizReport = BizReport || {};
 						var key = settings.aoColumns[iColIndex].data, id = oRow.skuId + "-" + key;
 						var required = settings.aoColumns[iColIndex].bRequired;
 						var listingIframe = $nTd.find("iframe[name=iframe-" + id +"]");
-						var $attachForm = $nTd.find("#form-" + id);
-						var $fileUploadBtn = $attachForm.find("#btn-" + id);
-						var errorMsgEle = $nTd.find("#msg-" + id);
+						var $attachForm = $nTd.find(".attachment-form").attr({rowIndex: iRowIndex, colIndex: iColIndex});
+						var $fileUploadBtn = $attachForm.find(".submit-btn");
+						var errorMsgEle = $nTd.find(".msg");
 						
 						required && $attachForm.attr("required", required);
 						
@@ -346,7 +347,8 @@ var BizReport = BizReport || {};
 								
 								if(required) { //attachment is a must
 									if(!fileName && !oRow[key]) {
-										errorMsgEle.css({"color": "red"}).find("b").html(local.getText("promo.listings.notEmpty"));
+										errorMsgEle.css({"color": "red"}).html(local.getText("promo.listings.notEmpty"));
+										$attachForm.attr("hasError", true);
 										return false;
 									}
 								}
@@ -354,13 +356,15 @@ var BizReport = BizReport || {};
 								if (!fileName) return false;
 								
 								if (!fileTypeReg.test(fileName)) { // check attachment file type
-									errorMsgEle.css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
+									errorMsgEle.css({"color": "red"}).html(local.getText("promo.listings.typeError"));
+									$attachForm.attr("hasError", true);
 									return false;
 								}
 								
 								if (!hasValidSize(fileInput.get(0), 4718592)) {
 									// attachment size should be less than 4.5M.
-									errorMsgEle.css({"color": "red"}).find("b").html(local.getText("promo.listings.attachmentSizeError"));
+									errorMsgEle.css({"color": "red"}).html(local.getText("promo.listings.attachmentSizeError"));
+									$attachForm.attr("hasError", true);
 									return false;
 								}
 								
@@ -377,14 +381,17 @@ var BizReport = BizReport || {};
 										if (responseData.message && responseData.message.length > 0) {
 											// If uploading success, response should have attachemnt download URL.
 											if(responseData.status==true) {
-												errorMsgEle.find("b").html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
+												errorMsgEle.html('<a id="href'+oRow.skuId+'" href=/promotion/listings'+responseData.message+'>'+local.getText('promo.listings.attachdownload')+'</a>');
 												oRow[key] = responseData.message;
 												$attachForm.find(".file-input input").val(""); // clear input[type=file] input value
+												$attachForm.attr("hasError", false);
 											} else {
-												errorMsgEle.css({"color": "red"}).find("b").html(responseData.message);
+												errorMsgEle.css({"color": "red"}).html(responseData.message);
+												$attachForm.attr("hasError", true);
 											}
 										} else if(responseData.status == false) {
-											errorMsgEle.css({"color": "red"}).find("b").html(local.getText("attachmentUploadFailed"));
+											errorMsgEle.css({"color": "red"}).html(local.getText("attachmentUploadFailed"));
+											$attachForm.attr("hasError", true);
 										}
 									}
 								});
@@ -399,7 +406,7 @@ var BizReport = BizReport || {};
 								} else {
 									//validate file type
 									if (!fileTypeReg.test(fileDir)) {
-										errorMsgEle.css({"color": "red"}).find("b").html(local.getText("promo.listings.typeError"));
+										errorMsgEle.css({"color": "red"}).html(local.getText("promo.listings.typeError"));
 										return false;
 									} else {
 										$attachForm.submit();

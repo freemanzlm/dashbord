@@ -256,7 +256,7 @@ public class ListingController extends AbstractListingController {
 						
 		promoViewService.handleListingFields(fieldsDefinitions, mav, promo.getRegion());
 		
-		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
+		mav.addObject(ViewContext.Promotion.getAttr(), promo);
 		mav.setViewName(ViewResource.LISTING_PREVIEW.getPath());
 		return mav;
 	}

@@ -99,7 +99,6 @@ $(function(){
 						createExcelErrorsSummary('#excel-errors', responseData.errors);
 						
 						if (responseData.errors && responseData.errors.length > 0) {
-							console.log(cbt.util.getPositionInPage(document.getElementById('excel-errors')).top);
 							$(document.body).scrollTop(cbt.util.getPositionInPage(document.getElementById('excel-errors')).top);
 						}
 						
