@@ -93,7 +93,7 @@
 		</c:if>
 		
 		<c:choose>
-			<c:when test="${passedBrandsCnt le 0 }">
+			<c:when test="${passedBrandsCnt le 0 and brandVettingCnt le 0}">
 				<div class="text-center mt20 mb20">
 					<p>没有符合筛选条件的活动</p>
 				</div>

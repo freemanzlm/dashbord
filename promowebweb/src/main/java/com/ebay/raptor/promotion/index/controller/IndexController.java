@@ -126,14 +126,16 @@ public class IndexController {
 		mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
 		
 		int passedBrandsCnt = 0;
+		int brandVettingCnt = 0;
 		try {
 			passedBrandsCnt = brandService.countPassedBrandAmount(userDt.getUserId());
-			passedBrandsCnt = 1;
+			brandVettingCnt = service.getBrandVettingCnt(userDt.getUserId());
 		} catch (PromoException e) {
 			e.printStackTrace();
 		}
 
 		mav.addObject("passedBrandsCnt", passedBrandsCnt);
+		mav.addObject("brandVettingCnt", brandVettingCnt);
 		mav.addObject("introduction", brandService.getBrandIntroduction(LocaleUtil.getCurrentLocale()));
 		mav.setViewName("brands_index");
 		

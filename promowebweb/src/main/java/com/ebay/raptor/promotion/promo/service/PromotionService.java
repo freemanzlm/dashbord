@@ -238,4 +238,9 @@ public class PromotionService extends BaseService {
 		}
 		return null;
 	}
+	
+	public int getBrandVettingCnt (Long uid) {
+		// TODO add brandingVetting count
+		return 0;
+	}
 }
