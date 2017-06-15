@@ -239,8 +239,16 @@ public class PromotionService extends BaseService {
 		return null;
 	}
 	
-	public int getBrandVettingCnt (Long uid) {
-		// TODO add brandingVetting count
-		return 0;
+	public int getBrandVettingCnt (Long uid) throws PromoException {
+		String uri = url(params(ResourceProvider.PromotionRes.countBrandVetting, new Object[] { "{uid}", uid }));
+		GingerClientResponse resp = httpGet(uri);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<Integer>> type = new GenericType<GeneralDataResponse<Integer>>() {
+			};
+			GeneralDataResponse<Integer> countData = resp.getEntity(type);
+			return countData.getData();
+		} else {
+			throw new PromoException("BrandVettingCount not found!");
+		}	
 	}
 }
