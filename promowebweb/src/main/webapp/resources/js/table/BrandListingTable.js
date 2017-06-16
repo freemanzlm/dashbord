@@ -427,14 +427,13 @@ var BizReport = BizReport || {};
 								return 4;
 							}
 							switch (data) {
-							case 'ReEnroll':
-								return 3;
 							case 'Enrolled':
 							case 'ReviewPassed':
 								return 2;
 							case 'CanEnroll':
 							case 'NotEnrolled':
 							case 'ReviewFailed':
+							case 'ReEnroll':
 								return 0;
 							case 'Reviewing':
 								return 1;

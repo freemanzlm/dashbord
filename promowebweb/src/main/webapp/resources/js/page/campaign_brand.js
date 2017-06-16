@@ -13,7 +13,7 @@ $(function(){
 		
 		customTableConfig = {
 			'columns': pageData.columns,
-			'aaSorting': (hasState ? [[stateColumnIndex, 'desc']] : []), // empty aaSorting must be [], it can't be null
+			'aaSorting': (hasState ? [[stateColumnIndex, 'asc']] : []), // empty aaSorting must be [], it can't be null
 			'promo': {promoId:pageData.promoId, regType:pageData.regType, currentStep: pageData.currentStep, isRegEnd:pageData.isRegEnd, isListingPreview:pageData.isListingPreview}
 		};
 	}
