@@ -109,7 +109,7 @@ BizReport.local = {
 			'rrpLink': '連結',
 			'attachmentSizeError': '上傳文件大小不能超過4.5M',
 			'attachmentUploadFailed': '文件上傳失敗',
-			'typeError' : '文件類型不合法',
+			'typeError' : '附件類型僅支持PDF，doc，docx，xls，xlsx，JPG，ZIP，RAR',
 			'notEmpty' : '上傳文件不能為空',
 			'needCheck' : '請勾選左邊的複選框',
 			'attachdownload' : '下載附件'

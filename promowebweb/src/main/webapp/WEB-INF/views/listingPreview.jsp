@@ -11,7 +11,15 @@
 <html>
 <head>
 
-	<title>已选择的刊登预览</title>
+	<c:choose>
+		<c:when test="${ promo.type eq 2 }">
+			<title>已提交审核信息预览</title>
+		</c:when>
+		<c:otherwise>
+			<title>已选择的刊登预览</title>
+		</c:otherwise>
+	</c:choose>	
+	
 	<meta name="description" content="Deals招募">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
@@ -21,8 +29,7 @@
 		var BizReport = BizReport || {};
 	</script>
 	<res:jsSlot id="head" />	
-	<res:jsSlot id="head-js" />
-	
+	<res:jsSlot id="head-js" />	
 	
 	
 	<%--module "ebay.page" add Resets and Global css --%>
@@ -74,7 +81,15 @@
 		<div id="page">
 			<div id="page-pane">
 				<div class="pane">
-					<h2>已选择的刊登预览:如需上传相关报名所需材料,请补充</h2>
+					<c:choose>
+						<c:when test="${ promo.type eq 2 }">
+							<h2>已提交审核信息预览:如需上传相关报名所需材料,请补充</h2>
+						</c:when>
+						<c:otherwise>
+							<h2>已选择的刊登预览:如需上传相关报名所需材料,请补充</h2>
+						</c:otherwise>
+					</c:choose>	
+					
 
 					<div class="mt20">
 						<%@ include file="table/listings_no_id_no_state.jsp" %>

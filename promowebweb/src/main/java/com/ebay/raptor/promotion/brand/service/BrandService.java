@@ -1,6 +1,5 @@
 package com.ebay.raptor.promotion.brand.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -10,7 +9,6 @@ import javax.ws.rs.core.Response.Status;
 import org.ebayopensource.ginger.client.GingerClientResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import com.ebay.app.raptor.cbtcommon.CommonLogger;
 import com.ebay.cbt.raptor.promotion.po.BrandPerformance;

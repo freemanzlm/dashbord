@@ -29,7 +29,7 @@
 				</div>
 				
 				<div id="excel-errors" class="errors-summary mt10 hide">
-					<p class="mb3">請注意，您提交的檔案存在填寫錯誤，請檢查<span class="color-red">第{row}行</span>的資訊。建議您再次提交前檢查有沒有類似的填寫錯誤？避免再次提交失敗。詳細錯誤資訊如下：</p>
+					<p class="mb3">請注意，您提交的檔案存在填寫錯誤，請檢查<span class="color-red">第{row}行</span>的資訊。建議您再次提交前檢查有沒有類似的填寫錯誤，避免再次提交失敗。詳細錯誤資訊如下：</p>
 					<ul>
 						
 					</ul>
