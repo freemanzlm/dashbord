@@ -79,23 +79,25 @@ public class ExcelService {
 		
 		if (listings != null) {
 			for (Listing listing : listings) {
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("skuId", listing.getSkuId());
-				map.put("state", listing.getState());
-				map.put("currency", listing.getCurrency());
-				if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equalsIgnoreCase("NotEnrolled")
-						|| listing.getState().equalsIgnoreCase("UploadEnroll") || listing.getState().equalsIgnoreCase("ReEnroll")) {
-					map.put("toUpload", "N");
-				} else {
-					map.put("toUpload", "Y");
+				if(!listing.getLocked()){
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("skuId", listing.getSkuId());
+					map.put("state", listing.getState());
+					map.put("currency", listing.getCurrency());
+					if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equalsIgnoreCase("NotEnrolled")
+							|| listing.getState().equalsIgnoreCase("UploadEnroll") || listing.getState().equalsIgnoreCase("ReEnroll")) {
+						map.put("toUpload", "N");
+					} else {
+						map.put("toUpload", "Y");
+					}
+					
+					String nominationValues = listing.getNominationValues();
+					if (nominationValues != null) {
+						map.putAll(mapper.readValue(nominationValues, Map.class));
+					}
+					map.put("lock", listing.getLocked());
+					skuListings.add(map);
 				}
-				
-				String nominationValues = listing.getNominationValues();
-				if (nominationValues != null) {
-					map.putAll(mapper.readValue(nominationValues, Map.class));
-				}
-				map.put("lock", listing.getLocked());
-				skuListings.add(map);
 			}
 		}
 		
