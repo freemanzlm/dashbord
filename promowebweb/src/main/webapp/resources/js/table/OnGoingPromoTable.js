@@ -12,7 +12,7 @@ var BizReport = BizReport || {};
 	var OnGoingPromoTable = function () {};
 	OnGoingPromoTable.prototype = new cbt.Widget();
 
-	var local = namespace.local;
+	var local = namespace.local, timezoneOffset = ((new Date()).getTimezoneOffset() - 420) * 60000 /*promotion time is beijing time, but server is in us -7*/;
 
 	function getLink(promoId) {
 		return "/promotion/" + promoId;
@@ -107,7 +107,7 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
 						if(data) {
-							return (new Date(data)).format("yyyy-MM-dd hh:mm");
+							return (new Date(data + timezoneOffset)).format("yyyy-MM-dd hh:mm");
 						}
 						
 						return data;
@@ -120,7 +120,7 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
 						if (type == "display") {
-							return (full.promoSdt ? (new Date(full.promoSdt)).format("yyyy-MM-dd hh:mm") : '-') + " ~ " + (data ? (new Date(data)).format("yyyy-MM-dd hh:mm") : '-');
+							return (full.promoSdt ? (new Date(full.promoSdt + timezoneOffset)).format("yyyy-MM-dd hh:mm") : '-') + " ~ " + (data ? (new Date(data + timezoneOffset)).format("yyyy-MM-dd hh:mm") : '-');
 						}
 						return data;
 					}
