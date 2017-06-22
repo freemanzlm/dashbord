@@ -113,7 +113,7 @@ BizReport.local = {
 			'applyCondition': '申請參與活動需要選擇至少一條刊登報名。',
 			'onlyXls': '您選擇提交的不是Excel文件，請重新選擇刊登文件.',
 			'rrpLink': '鏈接',
-			'attachmentSizeError': '上傳文件大小不能超過4.5M',
+			'attachmentSizeError': '上傳文件大小不能超過3M',
 			'attachmentUploadFailed': '文件上傳失敗',
 			'typeError' : '附件類型僅支持PDF，doc，docx，xls，xlsx，JPG，ZIP，RAR',
 			'notEmpty' : '上傳文件不能為空',

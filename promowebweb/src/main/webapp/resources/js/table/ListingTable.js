@@ -360,8 +360,8 @@ var BizReport = BizReport || {};
 									return false;
 								}
 								
-								if (!hasValidSize(fileInput.get(0), 4718592)) {
-									// attachment size should be less than 4.5M.
+								if (!hasValidSize(fileInput.get(0), 3145728)) {
+									// attachment size should be less than 3M.
 									errorMsgEle.css({"color": "red"}).html(local.getText("promo.listings.attachmentSizeError"));
 									$attachForm.attr("hasError", true);
 									return false;
