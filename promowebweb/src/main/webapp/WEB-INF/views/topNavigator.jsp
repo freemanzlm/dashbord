@@ -16,7 +16,7 @@
 				</li>
 			</c:if>
 			<li class="no-sub-menu"><a href="${sdurl}">买家体验报告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
-			<li class="active">
+			<li class="no-sub-menu active">
 				<a id="promotion" href="/promotion/index" target="_self">营销活动</a>
 				<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank"></a></small>
 				<small class="counter" v-if="statistics.all > 0" v-cloak>{{statistics.all}}</small>
@@ -25,7 +25,7 @@
 		<div class="latestNotification" style="display:none;"><a href="javascript:void" style="cursor: pointer;" >最新通知</a></div>
 	</div>
 	
-	<ul class="secondary-nav-list" role="menubar">
+	<%-- <ul class="secondary-nav-list" role="menubar">
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/index') ? 'active': ''}">
 			<a href="/promotion/index">全部活动<small class="counter" v-if="statistics.all > 0"  v-cloak>{{statistics.all}}</small></a>
 		</li>
@@ -35,7 +35,7 @@
 		<li role="menuitem" class="${fn:containsIgnoreCase(requestURL, '/promotion/deals') ? 'active': ''}">
 			<a href="/promotion/deals">Deals活动<small class="counter" v-if="statistics.deals > 0" v-cloak>{{statistics.deals}}</small></a>
 		</li>
-	</ul>
+	</ul> --%>
 </div>
 
 <c:if test="${isDisplayDialog eq true }">
