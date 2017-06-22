@@ -96,7 +96,7 @@
 					</div>
 					
 					<div id="attachments-errors" class="errors-summary mt10 hide">
-						<p class="mb3">请注意，您提交的<span class="color-red">第{row}行</span>附件存在错误，允许的附件格式为：PDF，doc, docx,xls,xlsx,JPG,ZIP,RAR。重复上传按最终版本，每个文件不超过3MB。建议您再次提交前检查有没有类似的填写错误？避免再次提交失败。</p>
+						<p class="mb3">请注意，您提交的<span class="color-red">第{row}行</span>附件存在错误，允许的附件格式为：PDF，doc, docx,xls,xlsx,JPG,ZIP,RAR。重复上传按最终版本，每个文件不超过4.5MB。建议您再次提交前检查有没有类似的填写错误？避免再次提交失败。</p>
 					</div>
 
 					<div class="mt20 page-bottom-actions">

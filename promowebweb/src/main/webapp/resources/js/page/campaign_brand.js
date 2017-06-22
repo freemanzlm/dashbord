@@ -95,7 +95,7 @@ $(function(){
 					// verification returns no error 
 					if (responseData && responseData.status === true) {
 						window.location.replace("/promotion/listings/reviewUploadedListings?promoId="+pageData.promoId);
-					} else { // show error information
+					} else if (responseData) { // show error information
 						createExcelErrorsSummary('#excel-errors', responseData.errors);
 						
 						if (responseData.errors && responseData.errors.length > 0) {
@@ -105,10 +105,10 @@ $(function(){
 						if (!responseData.errors || responseData.errors.length <= 0) {
 							if (responseData.statusCode == 32) {
 								createRequestErrorSummary('#request-errors', local.getText("errorMsg.regDateExpired"));
-							} else {
-								createRequestErrorSummary('#request-errors', local.getText("errorMsg.uploadListingError"));
 							}
 						}
+					} else {
+						createRequestErrorSummary('#request-errors', local.getText("errorMsg.uploadListingError"));
 					}
 				} else {
 					// redirect to error page
