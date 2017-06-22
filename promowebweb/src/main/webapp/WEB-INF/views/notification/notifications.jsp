@@ -83,7 +83,7 @@ $(function(){
 			for (var j = 0; j< notifications.length; j++) {
 				var notification = notifications[j];
 				if (readNotificationIds[i] == notification.id && !notification.always) {
-					notifications.splict(j, 1);
+					notifications.splice(j, 1);
 					break;
 				}
 			}
