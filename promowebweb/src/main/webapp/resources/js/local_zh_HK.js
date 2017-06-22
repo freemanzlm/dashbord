@@ -54,6 +54,11 @@ BizReport.local = {
 			'noReward': '無獎勵',
 			'emptyTable': '<p>沒有符合篩選條件的活動。 </p>',
 			'zeroRecords': '<p>沒有符合篩選條件的活動。 </p>',
+		},
+		brand: {
+			info: '当前显示 _START_ 至 _END_，总共_TOTAL_个品牌',
+			emptyTable: '<p>没有通过认证的品牌。</p>',
+			zeroRecords: '<p>没有通过认证的品牌。</p>'
 		}
 	},
 	'promo': {
@@ -98,7 +103,7 @@ BizReport.local = {
 			'Commited':'上傳確認函',
 			'Appliable':'領取獎勵',
 			'Uploaded':'申領審核中',
-			'Failed':'申领审核中',
+			'Failed':'申領審核中',
 			'Expired':'獎勵領取過期',
 			'Applied':'領取獎勵成功'
 		},
@@ -106,7 +111,7 @@ BizReport.local = {
 			'zeroSubmitted': '您沒有勾選任何刊登，點擊“確認”將取消本活動報名!',
 			'applyCondition': '申請參與活動需要選擇至少一條刊登報名。',
 			'onlyXls': '您選擇提交的不是Excel文件，請重新選擇刊登文件.',
-			'rrpLink': '連結',
+			'rrpLink': '鏈接',
 			'attachmentSizeError': '上傳文件大小不能超過4.5M',
 			'attachmentUploadFailed': '文件上傳失敗',
 			'typeError' : '附件類型僅支持PDF，doc，docx，xls，xlsx，JPG，ZIP，RAR',
