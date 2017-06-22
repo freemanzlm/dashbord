@@ -44,7 +44,7 @@
 	
 	<res:useJs value="${res.js.local.js['extension.js']}" target="head-js" />
 	<res:useJs value="${res.js.local.js['util.js']}" target="head-js" />
-	<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head-js" />
+	<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="head-js" />
 	<res:useJs value="${res.js.local.js['cookie.js']}" target="head-js"/>
 	
 	<res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
