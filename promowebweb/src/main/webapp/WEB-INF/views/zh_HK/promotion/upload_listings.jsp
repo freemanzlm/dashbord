@@ -54,24 +54,7 @@
 			<div class="body mt20" style="width: 545px;">
 				<p>您可以通過下載<a class="template" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">批量提交模板</a>按格式填寫並上傳您的刊登參與本活動。</p>
 				
-				<div id="upload-error-msg" class="error-msg hide">
-					<table>
-						<tr>
-							<td><span class="icon error"></span></td>
-							<td><b></b></td>
-						</tr>
-					</table>
-				</div>
-				<!-- <p id="upload-error-msg" class="error-msg hide"><span class="icon error"></span><b ></b></p> -->
-				
-				<form id="upload-form" action="/promotion/listings/uploadListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
-					選擇上傳您的刊登列表 
-					<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇文件" /> <input type="file" name="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">選擇</button></span>
-					<input type="hidden" name="promoId" value="${promo.promoId}"/>
-				</form>
-				<iframe name="uploadIframe" src="about:blank" style="display: none;"></iframe>
-				
-				<div class="clr" style="margin-top: 30px; ">
+				<div class="mt10">
 					<span style="float: left; font-weight: bold;">註：</span>
 					<ul>
 						<li>通過"確認報名"列標記參加活動的刊登或信息。標記為N的數據行不會被提交。</li>
@@ -81,6 +64,24 @@
 						<li><a href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank">詳細請查閲使用指南</a></li>
 					</ul>
 				</div>
+				
+				<div id="request-error" class="errors-summary mt10 hide">
+					<p class="mb3"></p>
+				</div>
+				
+				<div id="excel-errors" class="errors-summary mt10 hide">
+					<p class="mb3">請注意，您提交的檔案存在填寫錯誤，請檢查<span class="color-red">第{row}行</span>的資訊。建議您再次提交前檢查有沒有類似的填寫錯誤，避免再次提交失敗。詳細錯誤資訊如下：</p>
+					<ul>
+						
+					</ul>
+				</div>
+				
+				<form id="upload-form" action="/promotion/listings/uploadListings" class="mt20" method="post" target="uploadIframe" enctype="multipart/form-data">
+					選擇上傳您的刊登列表 
+					<span class="file-input"><input type="text" style="height: 22px;" placeholder="選擇文件" /> <input type="file" name="uploadFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> <button class="btn" style="margin-left: 3px;" type="button">選擇</button></span>
+					<input type="hidden" name="promoId" value="${promo.promoId}"/>
+				</form>
+				<iframe name="uploadIframe" src="about:blank" style="display: none;"></iframe>
 				
 			</div>	
 		</div>

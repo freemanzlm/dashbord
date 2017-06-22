@@ -21,6 +21,7 @@ $(function(){
 	// only handle excel data errors
 	function createExcelErrorsSummary(container, errors) {
 		var $container = $(container), $errorList = $container.find('ul'), $summary = $container.find('p'), first = true;
+		if ($container.length <= 0) return;
 		
 		$errorList.empty(); // init		
 		if (errors && errors.length > 0) {
@@ -39,6 +40,8 @@ $(function(){
 	// only handle request error
 	function createRequestErrorSummary(container, message) {
 		var $container = $(container), $summary = $container.find('p');
+		if ($container.length <= 0) return;
+		
 		message ? $summary.html(message).removeClass('hide') : $summary.addClass('hide');
 	}
 	
