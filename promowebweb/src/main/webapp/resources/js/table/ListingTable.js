@@ -318,8 +318,7 @@ var BizReport = BizReport || {};
 								full.skuId+'" /><input type="hidden" name="key" value="' + key + '"/><span class="file-input"><input type="text" style="height: 22px;" value="" placeholder="选择文件" /> <input type="file" name="uploadFile" '+
 								disabled+'/></span><button class="btn submit-btn" type="button">上传</button></form>' +
 								'<iframe name="'+ iframeId + '" src="about:blank" frameborder="0" style="display: none;"></iframe>' +
-								'<span class="msg font-bold">' + attachmentLink + '</span>' +
-								'<span class="attachment font-bold">' + attachmentLink + '</span>';
+								'<span class="msg font-bold">' + attachmentLink + '</span>';
 							}
 						}
 						

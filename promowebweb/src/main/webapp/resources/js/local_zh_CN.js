@@ -108,6 +108,7 @@ BizReport.local = {
 			'Applied':'领取奖励成功'
 		},
 		'listings': {
+			fetchFailed: '对不起，您没有上传任何刊登，或者上传刊登失败。',
 			'zeroSubmitted': '您没有勾选任何刊登，点击“确认”将取消本活动报名!',
 			'applyCondition': '申请参与活动需要选择至少一条刊登报名。',
 			'onlyXls': '您选择提交的不是Excel文件，请重新选择刊登文件.',

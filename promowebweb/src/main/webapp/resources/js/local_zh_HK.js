@@ -108,6 +108,7 @@ BizReport.local = {
 			'Applied':'領取獎勵成功'
 		},
 		'listings': {
+			fetchFailed: '對不起，您沒有上傳任何刊登，或者上傳刊登失敗。',
 			'zeroSubmitted': '您沒有勾選任何刊登，點擊“確認”將取消本活動報名!',
 			'applyCondition': '申請參與活動需要選擇至少一條刊登報名。',
 			'onlyXls': '您選擇提交的不是Excel文件，請重新選擇刊登文件.',
@@ -141,8 +142,7 @@ BizReport.local = {
 			'ReviewPassed':'審核通過',
 			'ReviewFailed':'審核未通過',
 			'ReEnroll':'重新報名'
-		},
-		attachment: '附件'
+		}
 	},
 	'errorMsg': {
 		'regDateExpired': '很遺憾，報名已經截止，如需繼續報名，請聯繫客服！',
