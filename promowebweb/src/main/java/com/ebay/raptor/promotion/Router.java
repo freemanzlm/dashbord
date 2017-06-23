@@ -21,6 +21,7 @@ public interface Router {
 		
 		String getPromotionById = "/getPromotionById";
 		String promoStatistics = "/promoStatistics";
+		
 	}
 	
 	public interface Listing {

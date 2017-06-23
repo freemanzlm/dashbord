@@ -140,7 +140,7 @@ public class SubsidyController {
 			model.addObject("subsidyTerm", term);
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
 			model.addObject(ViewContext.IsAdmin.getAttr(), userData.getAdmin());
-			model.setViewName("subsidy_acknowledgment");
+			model.setViewName(ViewResource.SUBSIDY_ACKNOWLEDGMENT.getPath());
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, String.format("Subsidy not found for promotion:%s", promoId), e);
 			e.printStackTrace();

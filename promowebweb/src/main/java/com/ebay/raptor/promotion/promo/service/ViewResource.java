@@ -12,6 +12,7 @@ public enum ViewResource {
 	NOT_FOUND("404"),
 	
 	TEST_PAGE("subsidy/test"),
+	SUBSIDY_ACKNOWLEDGMENT("promotion/subsidy_acknowledgment"),
 	
 	UNKNOW_CAMPAIGN("promotion/unknow");
 
