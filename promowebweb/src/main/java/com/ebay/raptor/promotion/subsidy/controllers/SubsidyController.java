@@ -489,8 +489,6 @@ public class SubsidyController {
 		OutputStream outStream = null;
 		SubsidyAttachment attachment = null;
 		String attachmentName = "";
-		String attachmentType = "";
-
 		try {
 			attachment = subsidyService.downloadSubsidyAttachment(promoId, userData.getUserId(), key);
 			if (attachment != null && null != attachment.getFileContent()) {
@@ -498,8 +496,7 @@ public class SubsidyController {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				// avoid messy code of the chinese
 				attachmentName = URLEncoder.encode(attachment.getFileName(), "utf-8");
-				attachmentType = attachment.getFileType();
-				resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType + "\"");
+				resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "\"");
 				outStream = resp.getOutputStream();
 				int len = 0;
 				byte[] buffer = new byte[4096];
@@ -537,7 +534,6 @@ public class SubsidyController {
 		OutputStream outStream = null;
 		SubsidyAttachment attachment = null;
 		String attachmentName = "";
-		String attachmentType = "";
 		Long fileId = null;
 
 		try {
@@ -553,8 +549,7 @@ public class SubsidyController {
 			} else {
 				inputStream = new ByteArrayInputStream(attachment.getFileContent());
 				attachmentName = URLEncoder.encode(attachment.getFileName(), "utf-8");
-				attachmentType = attachment.getFileType();
-				resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "." + attachmentType + "\"");
+				resp.setHeader("Content-disposition", "attachment; filename=\"" + attachmentName + "\"");
 				outStream = resp.getOutputStream();
 				int len = 0;
 				byte[] buffer = new byte[4096];
