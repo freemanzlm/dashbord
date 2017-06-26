@@ -489,6 +489,7 @@ public class SubsidyController {
 		OutputStream outStream = null;
 		SubsidyAttachment attachment = null;
 		String attachmentName = "";
+
 		try {
 			attachment = subsidyService.downloadSubsidyAttachment(promoId, userData.getUserId(), key);
 			if (attachment != null && null != attachment.getFileContent()) {
