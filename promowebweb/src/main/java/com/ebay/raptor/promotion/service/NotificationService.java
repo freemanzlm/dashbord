@@ -65,7 +65,8 @@ public class NotificationService {
 	 */
 	private Notification getSDNotification(Locale locale, Long userId) throws HttpException {
 		Notification n = null;
-		String resultJson = sdDataService.getNotiIgnoreSatus(userId);
+//		String resultJson = sdDataService.getNotiIgnoreSatus(userId);
+		String resultJson = sdDataService.getNotification(userId);
 		
 		try {
 			JsonNode json = mapper.readTree(resultJson);
