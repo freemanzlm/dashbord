@@ -72,17 +72,6 @@
 		</dependency>
 		<dependency>
 			<groupId>com.ebay.cbt</groupId>
-			<artifactId>salesforceService</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<exclusions>  
-            	<exclusion>  
-                	<groupId>com.ebay.cbt</groupId>
-					<artifactId>cbtcommonfinal</artifactId>
-        	    </exclusion>  
-       		</exclusions>  
-		</dependency>
-		<dependency>
-			<groupId>com.ebay.cbt</groupId>
 			<artifactId>cbtcommonfinal</artifactId>
 			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
