@@ -354,9 +354,8 @@ public class SubsidyService extends BaseService {
 	public String uploadSubsidyAttachment(String promoId,String ebayID, Long userId, String key, final MultipartFile uploadFile) throws Exception {
 		// this method will response a the file id;
 		String urlbak = url(ResourceProvider.SubsidyRes.uploadAttachmentBak);
-		String fileNameString = uploadFile.getOriginalFilename();
-		String fileName = fileNameString.substring(0, fileNameString.lastIndexOf("."));
-		String fileType = fileNameString.substring(fileNameString.lastIndexOf(".")+1);
+		String fileName = uploadFile.getOriginalFilename();
+		String fileType = uploadFile.getContentType();
 		FormDataMultiPart multiPart = new FormDataMultiPart();
 		File file = multipartToFile(uploadFile);
 		FileDataBodyPart fileDataBodyPart = new FileDataBodyPart("file", file, MediaType.APPLICATION_OCTET_STREAM_TYPE);
@@ -427,8 +426,7 @@ public class SubsidyService extends BaseService {
 				"{id}", id}));
 		GingerClientResponse resp = httpGet(url);
 		if (Status.OK.getStatusCode() == resp.getStatus()) {
-			GenericType<GeneralDataResponse<List<SubsidyAttachment>>> type = new GenericType<GeneralDataResponse<List<SubsidyAttachment>>>() {
-			};
+			GenericType<GeneralDataResponse<List<SubsidyAttachment>>> type = new GenericType<GeneralDataResponse<List<SubsidyAttachment>>>() {};
 			GeneralDataResponse<List<SubsidyAttachment>> response = resp.getEntity(type);
 			if (null != response && AckValue.SUCCESS == response.getAckValue()) {
 				return response.getData();

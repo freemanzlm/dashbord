@@ -126,16 +126,16 @@ public class SheetReader implements ISheetReader {
 		for (int i = firstRowNum; i <= lastRowNum; i++) {
 			logger.log(Level.INFO,	"Beginning to read row " + i);
 			
-			Map<String, Object> obj = readRow(configs, sheet.getRow(i));
-			if (obj != null) {
-				if ("Y".equalsIgnoreCase((String)obj.get("toUpload"))) {
-					violations.addAll(validator.validate(i, obj, configs));
+			Map<String, Object> map = readRow(configs, sheet.getRow(i));
+			if (map != null) {
+				if ("Y".equalsIgnoreCase((String)map.get("toUpload"))) {
+					violations.addAll(validator.validate(i, map, configs));
 					if (violations.size() <= 0) {
-						list.add(obj);
+						list.add(map);
 					} else {
 						break;
 					}
-					obj.remove("toUpload");
+					map.remove("toUpload");
 				}
 			}
 		}
@@ -321,8 +321,7 @@ public class SheetReader implements ISheetReader {
 	/**
 	 * Read a single row and convert it into specified type instance. All cell values will be instance properties. 
 	 */
-	public Object readRow(List<ColumnConfiguration> headers, Row row,
-			Class<?> clazz) {
+	public Object readRow(List<ColumnConfiguration> headers, Row row, Class<?> clazz) {
 		
 		Object o = null;
 

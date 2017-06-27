@@ -1,6 +1,7 @@
 package com.ebay.raptor.promotion.promo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response.Status;
@@ -15,6 +16,7 @@ import com.ebay.cbt.raptor.promotion.po.SubsidyLegalTerm;
 import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.service.resp.BaseServiceResponse.AckValue;
+import com.ebay.raptor.promotion.pojo.service.resp.GeneralDataResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.HasListingNominatedResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.ListDataServiceResponse;
 import com.ebay.raptor.promotion.pojo.service.resp.PromoAcceptResponse;
@@ -197,5 +199,56 @@ public class PromotionService extends BaseService {
 		}
 		return Boolean.FALSE;
 	}
+	
+	
+	public List<Promotion> getIngBrandPromotion(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getIngBrandPromotions, uid);
+	}
+	
+	public List<Promotion> awardingBrandPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getAwardingBrandPromotions, uid);
+	}
+	
+	public List<Promotion> endedBrandPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getEndedBrandPromotions, uid);
+	}
 
+	public List<Promotion> getIngDealsPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getIngDealsPromotions, uid);
+	}
+	
+	public List<Promotion> awardingDealsPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getAwardingDealsPromotions, uid);
+	}
+	
+	public List<Promotion> endedDealsPromotions(Long uid) throws PromoException{
+		return getPromotionsByUserBase(ResourceProvider.PromotionRes.getEndedDealsPromotions, uid);
+	}
+	
+	public Map<String,Integer> promotionStatistics(Long uid){
+		String uri = url(params(ResourceProvider.PromotionRes.promotionStatistics, new Object[]{"{uid}", uid}));
+		GingerClientResponse resp = httpGet(uri);
+		if(Status.OK.getStatusCode() == resp.getStatus()){
+			GenericType<GeneralDataResponse<Map<String,Integer>>> type = new GenericType<GeneralDataResponse<Map<String,Integer>>>() {
+			};
+			GeneralDataResponse<Map<String,Integer>> info = resp.getEntity(type);
+			return info.getData();
+		} else {
+			logger.error(String.format("Failed to get statistic  informatin"));
+		}
+		return null;
+	}
+	
+	public int getBrandVettingCnt (Long uid) throws PromoException {
+		String uri = url(params(ResourceProvider.PromotionRes.countBrandVetting, new Object[] { "{uid}", uid }));
+		GingerClientResponse resp = httpGet(uri);
+		if (Status.OK.getStatusCode() == resp.getStatus()) {
+			GenericType<GeneralDataResponse<Integer>> type = new GenericType<GeneralDataResponse<Integer>>() {
+			};
+			GeneralDataResponse<Integer> countData = resp.getEntity(type);
+			return countData.getData();
+		} else {
+			throw new PromoException("BrandVettingCount not found!");
+		}	
+	}
 }

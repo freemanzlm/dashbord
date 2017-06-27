@@ -22,9 +22,9 @@ public class SDDataService {
 	private static String getNotiIgnoreSatusUrl;
 	private CommonLogger logger = CommonLogger.getInstance(SDDataService.class);
 	static {
-		notificationUrl = AppConfig.getSellerDashboardServicePrefix() + "listing/getNotification/";
-		getNotiIgnoreSatusUrl = AppConfig.getSellerDashboardServicePrefix() + "listing/getNotiIgnoreSatus/";
-		notificationStatusUrl = AppConfig.getSellerDashboardServicePrefix() + "listing/setSDNotifiStatus/";
+		notificationUrl = AppConfig.getSellerDashboardServicePrefix() + "/cbt/sdws2/v1/listing/getNotification/";
+		getNotiIgnoreSatusUrl = AppConfig.getSellerDashboardServicePrefix() + "/cbt/sdws2/v1/listing/getNotiIgnoreSatus/";
+		notificationStatusUrl = AppConfig.getSellerDashboardServicePrefix() + "/cbt/sdws2/v1/listing/setSDNotifiStatus/";
 		
 		if (AppConfig.bdCfg.isProduction()) {
 			authorization = "IAF v^1.1#i^1#p^1#d^2015-05-27T22:24:47.778Z#r^0#I^2#f^0#t^H4sIAAAAAAAAAKVUfWgbZRhvPtpRstY/VnTrqsbbpq7zkvcud/k4mtSs7dbYbKtLUruOQu8ub5pzubt47xvbVBhd3QqOTkeLWkRHB1OKQxwDddT5NRgo6Cb4iTClf2hdWVXKYGVS5+WaZknVKnh/vMf7Pr/nfX7P73neBwxWVNYPtw7fqDKtMU8MgkGzyUTZQGVF+bZqi7m2vAwUAUwTg5sHrUOWnxsQL6fS3F6I0qqCoD3U7CcSgg+KdILnodfnYmmRsIeUZUBU9ROMh3bTLOMTfYLgdbOUbkcoA0MKwryC/QQNKBdJUSTtjgKKoxmO8Tg8Hm8XYe+AGpJURYc4AGHvl1MK4gwCfiKjKZzKIwlxCi9DxGGRiwR3hTkdyaU1FauimiICBl3OCKcV+a/uziMENazHJQKh4I6mSIOz6JZAXoEI5nEGle6a1Di0d/CpDFw9ADLQXCQjihAhwhlYilB6KRdcpmGITPMsKwIgCD4Rej3u+P8X8T+LUCLiDlWTeby6b+5EipMJA8pBBUs4+89a6joIj0MR53e7dedQsz33ezTDp6SEBDU/0bI9uC/Y3k4EcnGhwGdJmdcOQJxO8SIkRb3VMjLUpDgn+lgoeDwC6RUTbpJxUV7S59UX3uUVGcHFxt1xNk9iKVJe/BUsmlQlLuXSR/bdKt4O9VzgSpGpIpF10B5ljxZM4BxbHceSgCVpT5Smi4vhXK5tBieVXLWhrMtjN7b/XsqCN8aaJGQwLNyw0mDI5yf4dFqKEyuNRofmG6Ef+YkkxmnO6ezr63P0uRyq1uukgfXQBUA5O3eFI2ISyjxRgEt/jy8Gk5KRiQh1LyRxOJvWqfTrTafHV3qJAOWiGNaVl72UVWDl6V8OilJ2lj6Twitanj2BMuOjhkzvgyHTlD7fgBc4qIdAfYUlZrWs3YQkDB0Sn3CIyIGkXkV/fBp0HIDZNC9pHEcDxmeuMDXGb9T0FM3FiW6wvjAZKy2UrWhMgrrblnLqjruq9Fwp2g0ommE8XWDTbauVutNasz41s2XtH5Fzctn0m8nTo68uXAMPgKoCyGQqL7MOmcpivt6veuLtZ64fZBYrLm8Ud5odv1XXfbr3xY5zVOyjU1O36Fu15082Zn88/sLF+x4uj8T2v/tsrPWV5qvM7L6Np8O1MZvtl3cuytEvLj3ff/KxxYHJ0YWWe61qdLY+8vvRl+em939+/xuzzYezj6Q/aVkIN2577ubbZ8bGBo5fmahvmxiemr/y2ejZE52HvvPboutaB6yXD9/z9YXrVzts4ymt84nkpZda5oM/PXUk88zowMFj61T7+Mfz3xy5tnXN4luvVQs1ZzfsfHDmaDjyuqWr58PumcnIt23MmHnrD+a2pxu6p+/ectM3xzqPfbl5cfKDubqR73vr6mLvjZ9vOzES+nWk9cnqmLzh1FId/wTAAj0GsQYAAA==";
@@ -36,7 +36,7 @@ public class SDDataService {
 	@Autowired
 	HttpRequestService httpRequestService;
 
-	public String getNotification (String userid) throws HttpException {
+	public String getNotification (Long userid) throws HttpException {
         Map<String, String> headers = new HashMap<String, String>();
 
         headers.put("Authorization", authorization);
@@ -50,7 +50,7 @@ public class SDDataService {
         return notificationStr;
     }
 	
-	public String setSDNotifiStatus(String userid) throws HttpException {
+	public String setSDNotifiStatus(Long userid) throws HttpException {
         Map<String, String> headers = new HashMap<String, String>();
 
         headers.put("Authorization", authorization);
@@ -64,7 +64,7 @@ public class SDDataService {
         return notificationStr;
 	}
 
-	public String getNotiIgnoreSatus(String userid) throws HttpException {
+	public String getNotiIgnoreSatus(Long userid) throws HttpException {
 		Map<String, String> headers = new HashMap<String, String>();
 
         headers.put("Authorization", authorization);

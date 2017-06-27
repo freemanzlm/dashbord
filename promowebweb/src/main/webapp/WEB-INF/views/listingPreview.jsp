@@ -11,7 +11,15 @@
 <html>
 <head>
 
-	<title>已选择的刊登预览</title>
+	<c:choose>
+		<c:when test="${ promo.type eq 2 }">
+			<title>已提交审核信息预览</title>
+		</c:when>
+		<c:otherwise>
+			<title>已选择的刊登预览</title>
+		</c:otherwise>
+	</c:choose>	
+	
 	<meta name="description" content="Deals招募">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
@@ -21,8 +29,7 @@
 		var BizReport = BizReport || {};
 	</script>
 	<res:jsSlot id="head" />	
-	<res:jsSlot id="head-js" />
-	
+	<res:jsSlot id="head-js" />	
 	
 	
 	<%--module "ebay.page" add Resets and Global css --%>
@@ -39,6 +46,7 @@
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.error_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.promotion_css}" target="head-css"/>
@@ -73,16 +81,35 @@
 		<div id="page">
 			<div id="page-pane">
 				<div class="pane">
-					<h2>已选择的刊登预览:如需上传相关报名所需材料,请补充</h2>
+					<c:choose>
+						<c:when test="${ promo.type eq 2 }">
+							<h2>已提交审核信息预览:如需上传相关报名所需材料,请补充</h2>
+						</c:when>
+						<c:otherwise>
+							<h2>已选择的刊登预览:如需上传相关报名所需材料,请补充</h2>
+						</c:otherwise>
+					</c:choose>	
+					
 
 					<div class="mt20">
 						<%@ include file="table/listings_no_id_no_state.jsp" %>
 					</div>
+					
+					<div id="attachments-errors" class="errors-summary mt10 hide">
+						<p class="mb3">请注意，您提交的<span class="color-red">第{row}行</span>附件存在错误，允许的附件格式为：PDF，doc, docx,xls,xlsx,JPG,ZIP,RAR。重复上传按最终版本，每个文件不超过3MB。建议您再次提交前检查有没有类似的填写错误？避免再次提交失败。</p>
+					</div>
 
 					<div class="mt20 page-bottom-actions">
 						<div id="submit-form">
-							<a href="/promotion/${promoId}">返回修改</a>
-							<button id="submit-btn" class="btn">提交预审</button>
+							<a href="/promotion/${promo.promoId}">返回修改</a>
+							<c:choose>
+								<c:when test="${ promo.type eq 2 }">
+									<button id="submit-btn" class="btn">提交认证</button>
+								</c:when>
+								<c:otherwise>
+									<button id="submit-btn" class="btn">提交预审</button>
+								</c:otherwise>
+							</c:choose>							
 						</div>
 					</div>
 				</div>
@@ -99,7 +126,7 @@
 
 	<script type="text/javascript">
 		var pageData = {
-			promoId : '${promoId}',
+			promoId : '${promo.promoId}',
 			columns: JSON.parse('${not empty columns ? columns : "{}"}'),
 			isListingPreview: true
 		};

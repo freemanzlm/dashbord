@@ -24,7 +24,6 @@ import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.security.DES;
 import com.ebay.raptor.promotion.service.BRDataService;
 import com.ebay.raptor.promotion.service.BaseDataService;
-import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.PGCService;
 import com.ebay.raptor.promotion.util.CookieUtil;
@@ -42,7 +41,6 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	BRDataService brdataService;
 	@Autowired LoginService loginService;
-	@Autowired private CSApiService service;
 	@Autowired BaseDataService baseService;
 	@Autowired PGCService pgcService;
 
@@ -98,7 +96,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		if (resp.getStatus() == HttpServletResponse.SC_OK) {
+		if (resp.getStatus() < HttpServletResponse.SC_BAD_REQUEST) {
 			addPageParameters(request, model, user);
 		}
 	}

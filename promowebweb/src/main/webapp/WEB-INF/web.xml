@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="WebApp_ID" version="3.0">
 	<display-name>promoweb</display-name>
-	<context-param>
+	<!-- <context-param>
 		<param-name>errorpath</param-name>
 		<param-value>/promotion/error</param-value>
-	</context-param>
+	</context-param> -->
 	<listener>
 		<listener-class>com.ebay.webres.resource.env.EbayResourceRuntimeListener</listener-class>
 	</listener>

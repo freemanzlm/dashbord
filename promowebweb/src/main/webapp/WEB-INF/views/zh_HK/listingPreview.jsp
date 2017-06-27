@@ -10,8 +10,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-	<title>已選擇的刊登預覽</title>
+	<c:choose>
+		<c:when test="${ promo.type eq 2 }">
+			<title>已提交稽覈資訊預覽</title>
+		</c:when>
+		<c:otherwise>
+			<title>已選擇的刊登預覽</title>
+		</c:otherwise>
+	</c:choose>	
+	
 	<meta name="description" content="Deals招募">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
@@ -39,6 +46,7 @@
 	<res:useCss value="${res.css.local.css.dialog_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.popup_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.layout_css}" target="head-css"/>
+	<res:useCss value="${res.css.local.css.error_css}" target="head-css" />
 	<res:useCss value="${res.css.local.css.header_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.topNavigation_css}" target="head-css"/>
 	<res:useCss value="${res.css.local.css.promotion_css}" target="head-css"/>
@@ -46,7 +54,7 @@
 	
 	<res:useJs value="${res.js.local.js['extension.js']}" target="head"></res:useJs>
 	<res:useJs value="${res.js.local.js['util.js']}" target="head"></res:useJs>
-	<res:useJs value="${res.js.local.js['local_zh_CN.js']}" target="head"></res:useJs>
+	<res:useJs value="${res.js.local.js['local_zh_HK.js']}" target="head"></res:useJs>
 	<res:useJs value="${res.js.local.js['cookie.js']}" target="head"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['widget.js']}" target="page-js"></res:useJs>
 	<res:useJs value="${res.js.local.js.lib['mask.js']}" target="page-js"></res:useJs>
@@ -73,16 +81,35 @@
 		<div id="page">
 			<div id="page-pane">
 				<div class="pane">
-					<h2>已選擇的刊登預覽:如需上傳相關報名所需材料,請補充</h2>
+					<c:choose>
+						<c:when test="${ promo.type eq 2 }">
+							<h2>已提交稽覈資訊預覽：如需上傳相關報名所需材料，請補充</h2>
+						</c:when>
+						<c:otherwise>
+							<h2>已選擇的刊登預覽:如需上傳相關報名所需材料,請補充</h2>
+						</c:otherwise>
+					</c:choose>	
+					
 
 					<div class="mt20">
 						<%@ include file="table/listings_no_id_no_state.jsp" %>
+					</div>
+					
+					<div id="attachments-errors" class="errors-summary mt10 hide">
+						<p class="mb3">请注意，您提交的<span class="color-red">第{row}行</span>附件存在错误，允许的附件格式为：PDF，doc, docx,xls,xlsx,JPG,ZIP,RAR。重复上传按最终版本，每个文件不超过3MB。建议您再次提交前检查有没有类似的填写错误？避免再次提交失败。</p>
 					</div>
 
 					<div class="mt20 page-bottom-actions">
 						<div id="submit-form">
 							<a href="/promotion/${promoId}">返回修改</a>
-							<button id="submit-btn" class="btn">提交預審</button>
+							<c:choose>
+								<c:when test="${ promo.type eq 2 }">
+									<button id="submit-btn" class="btn">提交認證</button>
+								</c:when>
+								<c:otherwise>
+									<button id="submit-btn" class="btn">提交預審</button>
+								</c:otherwise>
+							</c:choose>				
 						</div>
 					</div>
 				</div>

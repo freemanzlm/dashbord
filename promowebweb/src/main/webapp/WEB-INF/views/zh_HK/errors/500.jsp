@@ -46,10 +46,10 @@
 						<c:if test="${ not empty RaptorErrorData }">
 							<c:choose>
 								<c:when test="${ not empty RaptorErrorData.exception }">
-									<br /><p>${RaptorErrorData.exception.message }</p>
+									<br /><pre>${RaptorErrorData.exception.message }</pre>
 								</c:when>
 								<c:otherwise>
-									<br /><p>${RaptorErrorData.errorMessage }</p>
+									<br /><pre>${RaptorErrorData.errorMessage }</pre>
 								</c:otherwise>
 							</c:choose>
 						</c:if>		

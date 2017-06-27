@@ -1,14 +1,11 @@
 package com.ebay.raptor.promotion.index.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 
-import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -18,12 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
-import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
 import com.ebay.cbt.raptor.promotion.enumcode.PromotionStep;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
@@ -35,12 +29,12 @@ import com.ebay.raptor.kernel.context.IRaptorContext;
 import com.ebay.raptor.kernel.error.RaptorErrorData;
 import com.ebay.raptor.kernel.util.RaptorConstants;
 import com.ebay.raptor.promotion.AuthNeed;
+import com.ebay.raptor.promotion.brand.service.BrandService;
 import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.enums.PromoError;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.promo.service.ContextViewRes;
 import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
@@ -51,32 +45,23 @@ import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
 import com.ebay.raptor.promotion.util.CookieUtil;
+import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.ebay.raptor.siteApi.util.SiteApiUtil;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
 
-	private static CommonLogger logger = CommonLogger.getInstance(IndexController.class);
-
-	@Autowired
-	IRaptorContext raptorCtx;
-	@Autowired
-	CSApiService csApiService;
-	@Autowired
-	LoginService loginService;
-	@Autowired
-	PromotionService service;
-	@Autowired
-	PromotionViewService view;
-	@Autowired
-	SubsidyService subsidyService;
-	@Autowired
-	TrackService trackService;
-	@Autowired
-	SDDataService sdDataService;
-	@Autowired
-	ResourceBundleMessageSource msgResource;
+	@Autowired IRaptorContext raptorCtx;
+	@Autowired CSApiService csApiService;
+	@Autowired LoginService loginService;
+	@Autowired PromotionService service;
+	@Autowired PromotionViewService view;
+	@Autowired SubsidyService subsidyService;
+	@Autowired TrackService trackService;
+	@Autowired SDDataService sdDataService;
+	@Autowired BrandService brandService;
+	@Autowired ResourceBundleMessageSource msgResource;
 
 	@RequestMapping(value = "/backend", method = RequestMethod.GET)
 	public void handleBackendRequest(HttpServletRequest request, HttpServletResponse response) throws MissingArgumentException, IOException {
@@ -130,6 +115,46 @@ public class IndexController {
 		trackService.logUserActivityAsync(userDt, AuditType.VisitToPromo, "");
 		return mav;
 	}
+	
+	@AuthNeed
+	@RequestMapping(value = "/brands", method = RequestMethod.GET)
+	public ModelAndView handleBrandRequest(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+		ModelAndView mav = new ModelAndView();
+		// Set unconfirmed status
+		UserData userDt = loginService.getUserDataFromCookie(request);
+		mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
+		
+		int passedBrandsCnt = 0;
+		int brandVettingCnt = 0;
+		try {
+			passedBrandsCnt = brandService.countPassedBrandAmount(userDt.getUserId());
+			brandVettingCnt = service.getBrandVettingCnt(userDt.getUserId());
+		} catch (PromoException e) {
+			e.printStackTrace();
+		}
+
+		mav.addObject("passedBrandsCnt", passedBrandsCnt);
+		mav.addObject("brandVettingCnt", brandVettingCnt);
+		mav.addObject("introduction", brandService.getBrandIntroduction(LocaleUtil.getCurrentLocale()));
+		mav.setViewName("brands_index");
+		
+		return mav;
+	}
+	
+	@AuthNeed
+	@RequestMapping(value = "/deals", method = RequestMethod.GET)
+	public ModelAndView handleDealsRequest(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute RequestParameter param) throws MissingArgumentException {
+		ModelAndView mav = new ModelAndView();
+		// Set unconfirmed status
+		UserData userDt = loginService.getUserDataFromCookie(request);
+		mav.addObject(ViewContext.IsAdmin.getAttr(), userDt.getAdmin());
+		
+		mav.setViewName("deals_index");
+		
+		return mav;
+	}
 
 	@RequestMapping(value = "/maintain", method = RequestMethod.GET)
 	public ModelAndView gotoMaintainPage(HttpServletRequest request, HttpServletResponse response, @ModelAttribute RequestParameter param)
@@ -154,16 +179,6 @@ public class IndexController {
 		}
 
 		if (promo.getActiveFlag()) {
-			ContextViewRes res = handleViewBasedOnPromotion(promo, userData.getUserId());
-			model.setViewName(res.getView().getPath());
-			model.addAllObjects(res.getContext());
-			if (promo.getCurrentStep() != null) {
-				promo.setCurrentStep(promo.getCurrentStep().toUpperCase());
-			}
-			if (promo.getDraftPreviewStep() != null) {
-				promo.setDraftPreviewStep(promo.getDraftPreviewStep().toUpperCase());
-			}
-			
 			model.addObject(ViewContext.Promotion.getAttr(), promo);
 			
 			if (shallGetSubsidy(promo.getCurrentStep())) {
@@ -181,9 +196,12 @@ public class IndexController {
 					}
 				}
 			}
+			
+			view.handlePromotion(model, promo, userData.getUserId());
 		} else {
 			model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
 		}
+			
 		return model;
 	}
 
@@ -221,59 +239,8 @@ public class IndexController {
 		return mav;
 	}
 
-	/**
-	 * 
-	 * @param req
-	 * @param rsp
-	 * @param itemId
-	 */
-	@RequestMapping(value = "/getNotification", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getNotification(HttpServletRequest req, HttpServletResponse rsp, @RequestParam("userId") String userid) {
-
-		String resultJson = null;
-		try {
-			resultJson = sdDataService.getNotification(userid);
-		} catch (HttpException e) {
-			logger.error("Unable to get getNotification for " + userid, e);
-		}
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		jsonMap.put("status", true);
-		jsonMap.put("data", resultJson);
-		return jsonMap;
-
-	}
-
-	@RequestMapping(value = "/getNotiIgnoreSatus", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getNotiIgnoreSatus(HttpServletRequest req, HttpServletResponse rsp, @RequestParam("userId") String userid) {
-
-		String resultJson = null;
-		try {
-			resultJson = sdDataService.getNotiIgnoreSatus(userid);
-		} catch (HttpException e) {
-			logger.error("Unable to get getNotiIgnoreSatus for " + userid, e);
-		}
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		jsonMap.put("status", true);
-		jsonMap.put("data", resultJson);
-		return jsonMap;
-
-	}
-
-	@RequestMapping(value = "/setSDNotifiStatus", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> setSDNotifiStatus(HttpServletRequest req, HttpServletResponse rsp, @RequestParam("userId") String userid) {
-
-		String resultJson = null;
-		try {
-			resultJson = sdDataService.setSDNotifiStatus(userid);
-		} catch (HttpException e) {
-			logger.error("Unable to get setSDNotifiStatus for " + userid, e);
-		}
-		Map<String, Object> jsonMap = new HashMap<String, Object>();
-		jsonMap.put("status", true);
-		jsonMap.put("data", resultJson);
-		return jsonMap;
-	}
-
+	
+	
 	@RequestMapping(value = "/404", method = RequestMethod.GET)
 	public ModelAndView notFound(Exception exception, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("errors/404");
@@ -285,12 +252,6 @@ public class IndexController {
 		ModelAndView mav = new ModelAndView("errors/500");
 		CalEventHelper.writeException("Exception", exception, true);
 		return mav;
-	}
-
-	private ContextViewRes handleViewBasedOnPromotion(Promotion promo, long uid) throws PromoException {
-		ContextViewRes result = new ContextViewRes();
-		result = view.handleView(promo, uid);
-		return result;
 	}
 
 	private String getMessage(String key) {

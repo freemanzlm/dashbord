@@ -1,6 +1,7 @@
 <%@ page trimDirectiveWhitespaces="true"
 	contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <fmt:formatNumber var="reward" value="${promo.reward }" minFractionDigits="2"></fmt:formatNumber>
 <fmt:formatDate   var="rewardDeadline" value="${promo.rewardDlDt}" pattern="yyyy-MM-dd" type="date" />
@@ -140,7 +141,7 @@
 					</div>
 				</form>
 				
-				<iframe name="uploadIframe_${field.key}" src="about:blank" frameborder="0" class="hidden" ></iframe>
+				<iframe name="uploadIframe_${field.key}" src="about:blank" class="hidden" ></iframe>
 			</c:if>
 		</c:forEach>
 		

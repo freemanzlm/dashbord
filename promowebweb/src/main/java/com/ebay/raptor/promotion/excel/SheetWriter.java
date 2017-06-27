@@ -40,10 +40,8 @@ import com.ebay.raptor.promotion.util.StringUtil;
 public class SheetWriter implements ISheetWriter {
 	private final Logger logger = Logger.getLogger(SheetWriter.class.getName());
 	private Map<Integer, CellStyle> styleMapping = new HashMap<Integer, CellStyle>();
-	private int firstDataRowNum = 0;
-	private MessageSource messageSource;
-	private Locale locale;
 	
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void createCell(Workbook book, Sheet sheet, Row row, ColumnConfiguration config,
 			Object value, CellStyle style) {
@@ -117,9 +115,12 @@ public class SheetWriter implements ISheetWriter {
 
 	@Override
 	public void writeRow(Workbook book, Sheet sheet, Row row, List<Object> list) {
+		CellStyle cellStyle = book.createCellStyle();
+		cellStyle.setFont(defaultFont);
+		
 		int column = 0;
 		for (Object value : list) {
-			createCell(book, sheet, row, column++, value, null);
+			createCell(book, sheet, row, column++, value, cellStyle);
 		}
 	}
 
@@ -131,11 +132,11 @@ public class SheetWriter implements ISheetWriter {
 				if (cellStyle == null) {
 					cellStyle = book.createCellStyle();
 					cellStyle.setLocked(!config.getWritable());
+					cellStyle.setFont(defaultFont);
 					cellStyle.setWrapText(true);
 					styleMapping.put(config.getWriteOrder(), cellStyle);
 				}
 				if(map.get("lock")!=null && map.get("lock").equals(true)) {
-					cellStyle = book.createCellStyle();
 					cellStyle.setLocked(true);
 					cellStyle.setWrapText(true);
 				}
@@ -183,8 +184,10 @@ public class SheetWriter implements ISheetWriter {
 					// Display pick list when user click the cell.    
 					validation.setSuppressDropDownArrow(true);
 					
-					// Note this extra method call. If this method call is omitted, or if the
-					// boolean value false is passed, then Excel will not validate the value the
+					// Note this extra method call. If this method call is
+					// omitted, or if the
+					// boolean value false is passed, then Excel will not
+					// validate the value the
 					// user enters into the cell.
 					validation.setShowErrorBox(((RangeColumnConstraint) constraint).getMustInRange());
 					sheet.addValidationData(validation);
@@ -205,8 +208,10 @@ public class SheetWriter implements ISheetWriter {
 					// Display pick list when user click the cell.    
 					validation.setSuppressDropDownArrow(true);
 					
-					// Note this extra method call. If this method call is omitted, or if the
-					// boolean value false is passed, then Excel will not validate the value the
+					// Note this extra method call. If this method call is
+					// omitted, or if the
+					// boolean value false is passed, then Excel will not
+					// validate the value the
 					// user enters into the cell.
 					validation.setShowErrorBox(true);
 					sheet.addValidationData(validation);
@@ -238,11 +243,7 @@ public class SheetWriter implements ISheetWriter {
 		headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		headerStyle.setFillForegroundColor(IndexedColors.LIME.getIndex());
 		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		
-		Font ft = book.createFont();
-		ft.setFontName("Arial");
-		ft.setBoldweight(Font.BOLDWEIGHT_BOLD);
-		headerStyle.setFont(ft);
+		headerStyle.setFont(titleFont);
 		headerStyle.setWrapText(true);
 		
 		for (ColumnConfiguration config : configs) {
@@ -273,11 +274,8 @@ public class SheetWriter implements ISheetWriter {
 		headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		headerStyle.setFillForegroundColor(IndexedColors.LIME.getIndex());
 		headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-		
-		Font ft = book.createFont();
-		ft.setFontName("Arial");
-		ft.setBoldweight(Font.BOLDWEIGHT_BOLD);
-		headerStyle.setFont(ft);
+		headerStyle.setFont(this.defaultFont);
+		headerStyle.setWrapText(true);
 		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
@@ -288,6 +286,7 @@ public class SheetWriter implements ISheetWriter {
 	
 	/**
 	 * Freeze some columns and rows.
+	 * 
 	 * @param sheet
 	 * @param freezeRows
 	 * @param freezeCols
@@ -299,6 +298,7 @@ public class SheetWriter implements ISheetWriter {
 	
 	/**
 	 * Hide a column.
+	 * 
 	 * @param sheet
 	 * @param hiddenCol
 	 */
@@ -321,6 +321,7 @@ public class SheetWriter implements ISheetWriter {
 	
 	/**
 	 * Create general cell and in String type.
+	 * 
 	 * @param book
 	 * @param row
 	 * @param config
@@ -340,6 +341,7 @@ public class SheetWriter implements ISheetWriter {
 	
 	/**
 	 * Create cell in percentage format, percentage display in format:0.00%.
+	 * 
 	 * @param book
 	 * @param row
 	 * @param config
@@ -360,7 +362,12 @@ public class SheetWriter implements ISheetWriter {
 	}
 	
 	/**
-	 * Horizontal align datetime right. Decimal digits are determined by DoubleColumnConstraint.getDigits().
+     * Horizontal align datetime right. Decimal digits are determined by
+     * DoubleColumnConstraint.getDigits().
+     * 
+     * if value is LinkedHashMap object, it's treated like {value:#.##,
+     * currency:'RMB'}.
+     * 
 	 * @param book
 	 * @param row
 	 * @param config
@@ -399,7 +406,6 @@ public class SheetWriter implements ISheetWriter {
 		if (format != null) {
 			style.setDataFormat(book.createDataFormat().getFormat(format));
 		}
-		
 		cell.setCellStyle(style);
 		
 		if (value != null) {
@@ -418,7 +424,9 @@ public class SheetWriter implements ISheetWriter {
 	}
 	
 	/**
-	 * Horizontal align datetime center, and display datetime in format:yyyy-mm-dd.
+     * Horizontal align datetime center, and display datetime in
+     * format:yyyy-mm-dd.
+     * 
 	 * @param book
 	 * @param row
 	 * @param config
@@ -434,7 +442,7 @@ public class SheetWriter implements ISheetWriter {
 		if (value != null) {
 			if (value instanceof Date) {
 				cell.setCellValue(DateUtil.formatISODate((Date)value, null));
-			} if (value instanceof String) {
+			} else if (value instanceof String) {
 				cell.setCellValue((String)value);
 			} else if (value instanceof Number) {
 				Calendar date = Calendar.getInstance();
@@ -447,7 +455,9 @@ public class SheetWriter implements ISheetWriter {
 	}
 	
 	/**
-	 * Horizontal align datetime center, and display datetime in format:yyyy-mm-dd hh:mm:ss.
+     * Horizontal align datetime center, and display datetime in
+     * format:yyyy-mm-dd hh:mm:ss.
+     * 
 	 * @param book
 	 * @param row
 	 * @param config
@@ -462,7 +472,7 @@ public class SheetWriter implements ISheetWriter {
 		
 		if (value instanceof Date && value != null) {
 			cell.setCellValue(DateUtil.formatISODateTime((Date)value, null));
-		} if (value instanceof String && value != null) {
+		} else if (value instanceof String && value != null) {
 			cell.setCellValue((String)value);
 		} else if (value instanceof Number) {
 			Calendar date = Calendar.getInstance();
@@ -474,7 +484,8 @@ public class SheetWriter implements ISheetWriter {
 	}
 	
 	/**
-	 * Horizontal align time center, and display time in format:HH:mm:ss.
+     * Horizontal align time center, and display time in format:hh:mm:ss.
+     * 
 	 * @param book
 	 * @param row
 	 * @param config
@@ -489,7 +500,7 @@ public class SheetWriter implements ISheetWriter {
 		
 		if (value instanceof Date && value != null) {
 			cell.setCellValue(DateUtil.formatTime((Date)value));
-		} if (value instanceof String && value != null) {
+		} else if (value instanceof String && value != null) {
 			cell.setCellValue((String)value);
 		} else {
 			cell.setCellType(Cell.CELL_TYPE_BLANK);
@@ -498,6 +509,7 @@ public class SheetWriter implements ISheetWriter {
 	
 	/**
 	 * Create a row filled with sample data.
+	 * 
 	 * @param book
 	 * @param sheet
 	 * @param configs
@@ -509,6 +521,7 @@ public class SheetWriter implements ISheetWriter {
 		CellStyle style = book.createCellStyle();
 		style.setLocked(true);
 		style.setWrapText(true);
+		style.setFont(defaultFont);
 		
 		for (ColumnConfiguration config : configs) {
 			if (config != null) {
@@ -518,26 +531,62 @@ public class SheetWriter implements ISheetWriter {
 	}
 	
 	/**
-	 * Adjust column width to display all title.
+	 * <p>
+	 * Adjust column width. If there is visible character length setting, then
+	 * use this length setting. If there is no length setting, adjusts the
+	 * column width to fit the contents.
+	 * 
+	 * To compute the actual number of visible characters, Excel uses the
+	 * following formula (Section 3.3.1.12 of the OOXML spec):
+	 * </p>
+	 * <code>
+	 *     width = Truncate([{Number of Visible Characters} *
+	 *      {Maximum Digit Width} + {5 pixel padding}]/{Maximum Digit Width}*256)/256
+	 * </code>
+	 * <p>
+	 * The maximum column width for an individual cell is 255 characters.
+	 * </p>
+	 * 
 	 * @param sheet
 	 * @param configs
 	 */
 	protected void adjustColumnWidth(Sheet sheet, List<ColumnConfiguration> configs) {
-		Row firstRow = sheet.getRow(0);
-		
-		if (firstRow != null) {
-			for (int columnIndex = firstRow.getLastCellNum() - 1; columnIndex >= 0; columnIndex--) {
-				sheet.autoSizeColumn(columnIndex);
-				int columnWidth = sheet.getColumnWidth(columnIndex);
 				
+		for (ColumnConfiguration config : configs) {
+			
+		    if (config.getLength() != null) {
 				// character length + 2, 256 is a character's width;
-				int minColumnWidth = 512 * (configs.get(columnIndex).getTitle() != null ? (configs.get(columnIndex).getTitle().length() + 2) : 2);
-				if (columnWidth < minColumnWidth) {
-					sheet.setColumnWidth(columnIndex, columnWidth);
-				}
-			}
+				int columnWidth = 256 * (config.getLength() + 1); /* 1 is margin */
+				sheet.setColumnWidth(config.getWriteOrder(), columnWidth);
+		    } else {
+		    	sheet.autoSizeColumn(config.getWriteOrder());
+		    }
+		    
 		}
 	}
+	
+	private int firstDataRowNum = 0;
+	private MessageSource messageSource;
+	private Locale locale;
+	
+	private Font defaultFont;
+	private Font titleFont;
+
+	public Font getTitleFont() {
+		return titleFont;
+	}
+
+	public void setTitleFont(Font titleFont) {
+		this.titleFont = titleFont;
+	}
+
+    public Font getDefaultFont() {
+        return defaultFont;
+    }
+
+    public void setDefaultFont(Font defaultFont) {
+        this.defaultFont = defaultFont;
+    }
 
 	public MessageSource getMessageSource() {
 		return messageSource;

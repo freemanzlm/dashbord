@@ -37,6 +37,8 @@
 	<context:component-scan base-package="com.ebay.raptor.promotion.promo" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.user" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.subsidy" />
+	<context:component-scan base-package="com.ebay.raptor.promotion.brand.controller" />
+	<context:component-scan base-package="com.ebay.raptor.promotion.brand.service" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.index.controller" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.controller" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.service" />
@@ -53,11 +55,11 @@
 	
 	<mvc:interceptors>
 		<beans:bean class="com.ebay.raptor.promotion.interceptor.AuthInterceptor"></beans:bean>
+		<beans:bean class="com.ebay.raptor.promotion.interceptor.PathInterceptor"></beans:bean>
 		<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<beans:property name="paramName" value="lang" />
 		</beans:bean>
 		<beans:bean class="com.ebay.raptor.promotion.interceptor.LanguageInterceptor"></beans:bean>
-		<beans:bean class="com.ebay.raptor.promotion.interceptor.UpdatedPromotionsNumInterceptor"></beans:bean>
 	</mvc:interceptors>
 	
 	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">

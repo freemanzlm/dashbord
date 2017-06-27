@@ -21,7 +21,8 @@
 					customTableConfig: {
 						'sScrollY': "400",
 						'iDisplayLength': 10,
-						'columns':pageData && pageData.previewColumns
+						'columns':pageData && pageData.previewColumns,
+						'promo': {promoId:pageData.promoId, regType:pageData.regType, currentStep: pageData.currentStep, isRegEnd:pageData.isRegEnd, isListingPreview:pageData.isListingPreview}
 					}
 				}});
 			

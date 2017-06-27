@@ -86,16 +86,20 @@
 	 * @return {top: xxx, left: xxx}
 	 */
 	function getPositionInViewPort(node) {
-		var left = 0, top = 0;
-		while (node && !isNaN(node.offsetLeft) && !isNaN(node.offsetTop)) {
-			left += node.offsetLeft - node.scrollLeft;
-			top += node.offsetTop - node.scrollTop;
-			node = node.offsetParent;
+		if (node.getBoundingClientRect)	{
+			return node.getBoundingClientRect();
+		} else {
+			var left = 0, top = 0;
+			while (node && !isNaN(node.offsetLeft) && !isNaN(node.offsetTop)) {
+				left += node.offsetLeft - node.scrollLeft;
+				top += node.offsetTop - node.scrollTop;
+				node = node.offsetParent;
+			}
+			return {
+				top : top,
+				left : left
+			}
 		}
-		return {
-			top : top,
-			left : left
-		};
 	}
 	
 	/**

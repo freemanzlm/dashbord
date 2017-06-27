@@ -1,9 +1,6 @@
 package com.ebay.raptor.promotion.util;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 
@@ -18,8 +15,7 @@ public class LocaleUtil {
 	 * @return
 	 */
 	public static String getLocale(Locale locale) {
-//		return locale.getLanguage() + "_" + locale.getCountry();
-		return locale.getCountry();
+		return locale.getLanguage() + "_" + locale.getCountry();
 	}
 	
 	/**
@@ -46,10 +42,5 @@ public class LocaleUtil {
 	public static Locale getCurrentLocale() {
 		// in spring, use this code
 		return LocaleContextHolder.getLocale();
-	}
-	public static void main(String[] args) {
-		int x = 5*1024*1024;
-		System.out.println(x);
-	}
-	
+	}	
 }

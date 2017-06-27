@@ -106,12 +106,6 @@ table.item-list-table tbody tr.even {
 	background-color: #fff;
 }
 
-table.dataTable tbody td .msg {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	font-size: 1.2em;
-}
-
 table.dataTable td.skuName a span {
 	color: #f00;
 }
@@ -159,19 +153,16 @@ table.dataTable td.pic-id p {
 	line-height: 50px;
 }
 
-#rewarding-promo-table td .btn,
-#ongoing-promo-table td .btn,
-#end-promo-table td .btn,
-#pending-promo-table td .btn {
-	width: 100px;
-	font-size: 12px;
-	display: inline-block;
-}
-
 .dataTable td.state a{
 	margin-top: 5px;
 	font-size: 10px;
 	display: block;
+}
+
+.dataTable td.state .btn {
+	width: 100px;
+	font-size: 12px;
+	display: inline-block;
 }
 
 /* my uploaed listing */

@@ -26,11 +26,11 @@ public class BaseDataService {
     protected static final String GET_METHOD = "GET";
     protected static final String NO_ENCRIPTION_PARAM = "?encrypt=false";
 
-    protected static String selectSdParameterUrl = "listing/parameter/";
-    protected static String updateSdParameterUrl = "listing/parameter/save";
-    protected static String selectSdAuditUrl = "listing/audit/";
-    protected static String insertSdAuditUrl = "listing/audit/save";
-    private static String pgcReadyUrl = "listing/pgcReady/";
+    protected static String selectSdParameterUrl = "/cbt/sdws2/v1/listing/parameter/";
+    protected static String updateSdParameterUrl = "/cbt/sdws2/v1/listing/parameter/save";
+    protected static String selectSdAuditUrl = "/cbt/sdws2/v1/listing/audit/";
+    protected static String insertSdAuditUrl = "/cbt/sdws2/v1/listing/audit/save";
+    private static String pgcReadyUrl = "/cbt/sdws2/v1/listing/pgcReady/";
     protected static String authorization;
     
     // biz report service

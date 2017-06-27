@@ -46,7 +46,7 @@
 	font-size: 14px;
 }
 
-.navigator-top ul.navigation-list li a>small {
+.navigator-top .counter {
 	margin-left: 1px;
     padding: 0 5px;
     background-color: red;

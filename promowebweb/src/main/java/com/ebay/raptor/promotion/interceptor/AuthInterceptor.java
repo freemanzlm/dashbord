@@ -20,7 +20,6 @@ import com.ebay.raptor.promotion.config.AppCookies;
 import com.ebay.raptor.promotion.security.BackendTokenData;
 import com.ebay.raptor.promotion.security.BackendTokenUtil;
 import com.ebay.raptor.promotion.service.BaseDataService;
-import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.SiteAPIService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 import com.ebay.raptor.promotion.util.RequestUtil;
@@ -33,7 +32,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	
 	@Autowired protected SiteAPIService siteService;
 	@Autowired protected BaseDataService dataService;
-	@Autowired protected CSApiService csApiService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

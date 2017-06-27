@@ -1,9 +1,7 @@
 package com.ebay.raptor.promotion.util;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -13,7 +11,6 @@ import javax.crypto.NoSuchPaddingException;
 
 import com.ebay.cbt.raptor.wltapi.util.AES;
 import com.ebay.kernel.logger.Logger;
-import com.itextpdf.text.log.SysoCounter;
 
 /**
  * @author pinchen

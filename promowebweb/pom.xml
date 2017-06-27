@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.ebay.raptor.samples</groupId>
 		<artifactId>promoweb</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.2-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -78,7 +78,7 @@
 		<dependency>
 			<groupId>com.ebay.cbt</groupId>
 			<artifactId>promocampLib</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
+			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.ebay.app.raptor</groupId>
@@ -135,11 +135,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.ebay.cbt</groupId>
-			<artifactId>promocampLib</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
-		</dependency>
 		<!-- itextpdf start -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>

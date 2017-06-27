@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,28 +79,42 @@ public class ExcelService {
 		
 		if (listings != null) {
 			for (Listing listing : listings) {
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("skuId", listing.getSkuId());
-				map.put("state", listing.getState());
-				map.put("currency", listing.getCurrency());
-				if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equalsIgnoreCase("NotEnrolled")
-						|| listing.getState().equalsIgnoreCase("UploadEnroll") || listing.getState().equalsIgnoreCase("ReEnroll")) {
-					map.put("toUpload", "N");
-				} else {
-					map.put("toUpload", "Y");
+				if(!listing.getLocked()){
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("skuId", listing.getSkuId());
+					map.put("state", listing.getState());
+					map.put("currency", listing.getCurrency());
+					if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equalsIgnoreCase("NotEnrolled")
+							|| listing.getState().equalsIgnoreCase("UploadEnroll") || listing.getState().equalsIgnoreCase("ReEnroll")) {
+						map.put("toUpload", "N");
+					} else {
+						map.put("toUpload", "Y");
+					}
+					
+					String nominationValues = listing.getNominationValues();
+					if (nominationValues != null) {
+						map.putAll(mapper.readValue(nominationValues, Map.class));
+					}
+					map.put("lock", listing.getLocked());
+					skuListings.add(map);
 				}
-				
-				String nominationValues = listing.getNominationValues();
-				if (nominationValues != null) {
-					map.putAll(mapper.readValue(nominationValues, Map.class));
-				}
-				map.put("lock", listing.getLocked());
-				skuListings.add(map);
 			}
 		}
 		
 		SheetWriter writer = new SheetWriter();
 		writer.setMessageSource(messageSource);
+		
+		Font titleFont = workBook.createFont();
+		titleFont.setFontName("Arial");
+		titleFont.setFontHeightInPoints((short) 9);
+		titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		writer.setTitleFont(titleFont);
+		
+		Font ft = workBook.createFont();
+		ft.setFontName("Arial");
+		ft.setFontHeightInPoints((short) 9);
+		writer.setDefaultFont(ft);
+		
 		Sheet sheet = workBook.createSheet(messageSource.getMessage("listing.template", null, LocaleUtil.getCurrentLocale()));
 		
 		Promotion promo = promoService.getPromotionById(promoId, uid, isAdmin);

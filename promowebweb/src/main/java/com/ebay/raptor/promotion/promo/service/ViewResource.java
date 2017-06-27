@@ -3,8 +3,8 @@ package com.ebay.raptor.promotion.promo.service;
 
 public enum ViewResource {
 
-	CAMPAIGN("campaign"),
-	CAMPAIGN_PREVIEW("campaignPreview"),
+	CAMPAIGN("promotion/general"),
+	BRAND_CAMPAIGN("promotion/brand"),
 	LISTING_PREVIEW("listingPreview"),
 	UPLOAD_RESPONSE("uploadResponse"),
 	
@@ -12,8 +12,9 @@ public enum ViewResource {
 	NOT_FOUND("404"),
 	
 	TEST_PAGE("subsidy/test"),
+	SUBSIDY_ACKNOWLEDGMENT("promotion/subsidy_acknowledgment"),
 	
-	UNKNOW_CAMPAIGN("unknowCampaign");
+	UNKNOW_CAMPAIGN("promotion/unknow");
 
 	private ViewResource(String path) {
 		this.path = path;

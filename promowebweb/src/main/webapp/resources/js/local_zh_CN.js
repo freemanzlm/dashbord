@@ -54,6 +54,11 @@ BizReport.local = {
 			'noReward': '无奖励',
 			'emptyTable': '<p>没有符合筛选条件的活动。</p>',
 			'zeroRecords': '<p>没有符合筛选条件的活动。</p>',
+		},
+		brand: {
+			info: '当前显示 _START_ 至 _END_，总共_TOTAL_个品牌',
+			emptyTable: '<p>没有通过认证的品牌。</p>',
+			zeroRecords: '<p>没有通过认证的品牌。</p>'
 		}
 	},
 	'promo': {
@@ -103,13 +108,14 @@ BizReport.local = {
 			'Applied':'领取奖励成功'
 		},
 		'listings': {
+			fetchFailed: '对不起，您没有上传任何刊登，或者上传刊登失败。',
 			'zeroSubmitted': '您没有勾选任何刊登，点击“确认”将取消本活动报名!',
 			'applyCondition': '申请参与活动需要选择至少一条刊登报名。',
 			'onlyXls': '您选择提交的不是Excel文件，请重新选择刊登文件.',
 			'rrpLink': '链接',
-			'attachmentSizeError': '上传文件大小不能超过4.5M',
+			'attachmentSizeError': '上传文件大小不能超过3M',
 			'attachmentUploadFailed': '文件上传失败',
-			'typeError' : '文件类型不合法',
+			'typeError' : '附件类型仅支持PDF,doc,docx,xls,xlsx, JPG,ZIP, RAR',
 			'notEmpty' : '上传文件不能为空',
 			'needCheck' : '请勾选左边的复选框',
 			'attachdownload' : '下载附件'
@@ -118,6 +124,12 @@ BizReport.local = {
 			'fail': '请求提交失败',
 			'sending': '请求已发送，请稍候。。。',
 			'counting' : '已成功上传文件{0}/{1}'
+		}
+	},
+	brandPromo: {
+		step: {
+			'NOMINATION EDM IN APPROVE FLOW': '提交认证',
+			'SELLER NOMINATION_NEED APPROVE': '提交认证'
 		}
 	},
 	'listing': {
@@ -133,6 +145,9 @@ BizReport.local = {
 		},
 		attachment: '附件'
 	},
+	brand: {
+		
+	},
 	'errorMsg': {
 		'regDateExpired': '很遗憾，报名已经截止，如需继续报名，请联系客服！',
 		'uploadListingError': '上传刊登失败，请联系客服了解详细情况！'
@@ -147,6 +162,9 @@ BizReport.local = {
 			attachmentFileTypeError: '只能上传PDF，ZIP，JPG文件',
 			attachdownload : '查看'
 		}
+	},
+	excel: {
+		row: '第{0}行'
 	}
 };
 

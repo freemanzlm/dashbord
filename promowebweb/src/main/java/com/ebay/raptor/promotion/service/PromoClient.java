@@ -26,8 +26,8 @@ public class PromoClient {
 		String[][] envs = new String[][]{
 			{"dev", "dev"},
 			{"feature", "feature"},
-			{"sandbox", "feature"},
-			{"staging", "feature"},
+			{"sandbox", "sandbox"},
+			{"staging", "staging"},
 			{"production", "production"},
 		};
 		for(String[] env : envs){

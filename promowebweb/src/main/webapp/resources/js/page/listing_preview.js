@@ -11,7 +11,8 @@ $(function(){
 			customTableConfig: {
                 'sAjaxSource': '/promotion/listings/getUploadedListings',
                 'sScrollY': '',
-                columns: pageData && pageData.columns
+                'columns': pageData && pageData.columns,
+                'promo': {promoId:pageData.promoId, regType:pageData.regType, currentStep: pageData.currentStep, isRegEnd:pageData.isRegEnd, isListingPreview:pageData.isListingPreview}
             }
 		},
 		fnDataUpdatedCallback: function(data){
@@ -21,7 +22,7 @@ $(function(){
 					return "{'itemId': '" + item.itemId + "', 'selected': " + (item.checked ? 1 : 0) + "}";
 				}).join(",") + "]");
 			} else {
-				cbt.alert("对不起，您没有上传任何刊登，或者上传刊登失败。");
+				cbt.alert(local.getText('promo.listings.fetchFailed'));
 				confirmForm.find("button").attr("disabled", "disabled");
 			}
 			
@@ -39,16 +40,10 @@ $(function(){
 			data: {promoId: pageData && pageData.promoId},
 			success : function(json){
 				if (json && json.status) {
-					$(document.body).isLoading('hide');
-					window.location.replace("/promotion/"+pageData.promoId);
-				} else if (json.data && json.data.length > 0) {
-					$(document.body).isLoading('hide');
-					//cbt.alert(local.getText("errorMsg.regDateExpired"));
 					window.location.replace("/promotion/"+pageData.promoId);
 				} else {
 					$(document.body).isLoading('hide');
-					//cbt.alert(local.getText('promo.request.fail'));
-					window.location.replace("/promotion/"+pageData.promoId);
+					cbt.alert(local.getText('promo.request.fail'));
 				}
 			},
 			error: function(){
@@ -58,8 +53,21 @@ $(function(){
 	}
 
 	/********************** Upload listings attachments ****************************************/
-	var container = $("#listing-table-container"), requriedAttachments = [], optionalAttachments, toUploadAttachments;
-	var attachmentTotalNum = attachmentUploadedNum = currentAttachIndex = 0, uploadingAttachment = false;
+	var container = $("#listing-table-container"), requriedAttachments = [], optionalAttachments = [], toUploadAttachments = [];
+	var attachmentTotalNum = attachmentUploadedNum = currentAttachIndex = 0, uploadingAttachment = false, $attachmentErrorSummary = $('#attachments-errors');
+	
+	function showAttachmentUploadErrors(container, form) {
+		var $container = $(container), $summary = $container.find('p');
+		if (!$container || $container.length <=0 || !$container.hasClass('hide')) return; // only show the first listing attachment upload error.
+		
+		if (form.attr('hasError') == "true") {
+			$summary.html($summary.html().replace(/{row}/, parseInt(form.attr('rowIndex')) + 1/*excel row start from 0*/));
+			$container.removeClass('hide');
+			$(document.body).scrollTop(cbt.util.getPositionInPage(container.get(0)).top);
+		} else {
+			$container.addClass('hide');
+		}		
+	}
 	
 	// get the number of attachments that will be uploaded.
 	function sumAttachments() {
@@ -110,6 +118,7 @@ $(function(){
 			if (hasUploadCompleted()) {
 				hasUploadSuccess() && (attachmentUploadedNum += 1);
 				listingAttachmentsUploaded();
+				showAttachmentUploadErrors($attachmentErrorSummary, $currentForm);
 			} else {
 				var timer = setInterval(function() {
 					if (hasUploadCompleted()) {
@@ -131,6 +140,7 @@ $(function(){
 		if (uploadingAttachment) return;
 		
 		uploadingAttachment = true;
+		$attachmentErrorSummary.addClass('hide');
 		sumAttachments();
 		uploadingAttachment = !(toUploadAttachments.length <= 0); // no attachment
 		

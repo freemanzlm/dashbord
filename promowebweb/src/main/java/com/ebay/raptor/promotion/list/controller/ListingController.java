@@ -4,11 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,16 +23,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ebay.app.raptor.promocommon.CommonLogger;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
-import com.ebay.cbt.raptor.promotion.po.Listing;
 import com.ebay.cbt.raptor.promotion.po.ListingAttachment;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
-import com.ebay.cbt.raptor.promotion.route.ResourceProvider;
+import com.ebay.kernel.calwrapper.CalEvent;
+import com.ebay.kernel.calwrapper.CalEventHelper;
+import com.ebay.kernel.logger.LogLevel;
+import com.ebay.kernel.logger.Logger;
+import com.ebay.raptor.promotion.Router;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
 import com.ebay.raptor.promotion.excel.UploadedListingFileHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
@@ -43,14 +41,11 @@ import com.ebay.raptor.promotion.excel.util.ExcelUtil;
 import com.ebay.raptor.promotion.excep.AttachmentUploadException;
 import com.ebay.raptor.promotion.excep.PromoException;
 import com.ebay.raptor.promotion.excep.UploadListingIsNullException;
-import com.ebay.raptor.promotion.list.req.ListingWebParam;
-import com.ebay.raptor.promotion.list.req.SelectableListing;
-import com.ebay.raptor.promotion.list.req.UploadListingForm;
 import com.ebay.raptor.promotion.list.service.ListingService;
 import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
-import com.ebay.raptor.promotion.pojo.web.resp.ListDataWebResponse;
+import com.ebay.raptor.promotion.pojo.web.resp.ListingsUploadWebResponse;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -58,6 +53,7 @@ import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.util.LocaleUtil;
 import com.ebay.raptor.promotion.util.PojoConvertor;
 import com.ebay.raptor.promotion.validation.AttachmentFileValidator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -67,10 +63,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
  * @author lyan2
  */
 @Controller
-@RequestMapping(ResourceProvider.ListingRes.listingBase)
+@RequestMapping(Router.Listing.base)
 public class ListingController extends AbstractListingController {
-	private static CommonLogger logger = CommonLogger.getInstance(ListingController.class);
-	
+	private Logger logger = Logger.getInstance(ListingController.class);
 	private final ObjectMapper mapper = new ObjectMapper();
 	
 	@Autowired LoginService loginService;
@@ -85,29 +80,31 @@ public class ListingController extends AbstractListingController {
 	 * @param resp
 	 * @param param
 	 * @throws MissingArgumentException
+	 * @throws IOException 
+	 * @throws JsonProcessingException 
+	 * @throws PromoException 
 	 */
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.downloadTempldate)
+	@RequestMapping(Router.Listing.downloadTempldate)
     public void createListingUploadTemplet(HttpServletRequest req,
     		HttpServletResponse resp, @ModelAttribute RequestParameter param)
-    				throws MissingArgumentException {
+    				throws MissingArgumentException, PromoException, JsonProcessingException, IOException {
 		
 		UserData userData = loginService.getUserDataFromCookie(req);
 		XSSFWorkbook workBook = null;
 
         try {
-        	workBook = excelService.getListingWorkbook(param.getPromoId(),
-        			userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
-        	
-            resp.setContentType("application/x-msdownload;");
-    		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
-    		workBook.write(resp.getOutputStream());
+		 workBook = excelService.getListingWorkbook(param.getPromoId(),	userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
+    	
+        resp.setContentType("application/x-msdownload;");
+		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
+		workBook.write(resp.getOutputStream());
         } catch (IOException | PromoException e) {
-        	logger.error("Failed to generate upload template.", e);
+        	logger.log(LogLevel.ERROR, "Failed to generate upload template.", e);
         } finally {
         	if (workBook != null) {
     			try {
-					workBook.close();
+		workBook.close();
 				} catch (IOException e) {
 					// ignore
 				}
@@ -118,31 +115,32 @@ public class ListingController extends AbstractListingController {
 	/**
 	 * Read user uploaded template file.
 	 * Use this method, you need to pass in promotion id and user oracle id.
+	 * Response is a HTML page, but its body is a JSON string.
 	 * @param req
 	 * @param resp
 	 * @param uploadFile
 	 * @param promoId
-	 * @throws MissingArgumentException
 	 */
 	@POST
-	@RequestMapping(ResourceProvider.ListingRes.uploadListings)
+	@RequestMapping(Router.Listing.uploadListings)
 	public ModelAndView uploadListings(HttpServletRequest req, HttpServletResponse resp, 
-			@RequestPart MultipartFile uploadFile, @RequestParam String promoId) throws MissingArgumentException{
+			@RequestPart MultipartFile uploadFile, @RequestParam String promoId) {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
-		UserData userData = loginService.getUserDataFromCookie(req);
-		ResponseData <String> responseData = new ResponseData <String>();
+		ListingsUploadWebResponse responseData = new ListingsUploadWebResponse();
+		Set<ConstraintViolation<Object>> violations = null;
+		UserData userData = null;
 		
-		XSSFWorkbook workbook = null;
 		try {
+			userData = loginService.getUserDataFromCookie(req);
+			
 			// get listing fields definitions
 			Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 			String fieldsDefinitions = promo.getListingFields();
 
 			Locale locale = LocaleUtil.getLocale(promo.getRegion());
-			Set<ConstraintViolation<Object>> violations = null;
 			
 			// read uploaded excel file.
-			workbook = new XSSFWorkbook(uploadFile.getInputStream());			
+			XSSFWorkbook workbook = new XSSFWorkbook(uploadFile.getInputStream());			
 			Sheet sheet = workbook.getSheetAt(0);
 			UploadedListingFileHandler handler = new UploadedListingFileHandler(listingService, promoId, userData.getUserId());
 			
@@ -151,74 +149,44 @@ public class ListingController extends AbstractListingController {
 				if (tree.isArray()) {
 					List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
 					excelService.adjustColumnConfigurations(columnConfigs, locale, promoId);
+					
 					violations = handler.handleSheet(sheet, columnConfigs);
 				}
 			}
 			
-			// if there is listing that not comply with validation rules
-			if (violations == null || violations.size() == 0) {
-				responseData.setStatus(true);
-				this.acceptAgreement(promoId, userData.getUserId());
-			} else {
-				responseData.setStatus(false);
-				StringBuffer errorMessage = new StringBuffer();
-				
-				boolean first = true;
-				for (ConstraintViolation<Object> violation : violations) {
-					errorMessage.append((first ? "" : "&lt;br/&gt;") + violation.getMessage());
-					first = false;
-				}
-				
-				responseData.setMessage(errorMessage.toString());
-			}
-			
-		} catch (IOException e) {
-			// Got IO or PromoException exception -> means app level error -> show error page.
-			logger.error("Unable to read upload file", e);
-			responseData.setStatus(false);
-		} catch (PromoException e) {
-			// Got IO or PromoException exception -> means app level error -> show error page.
-			logger.error("Got error when to read uploaded listings.", e);
-			responseData.setData(e.getErrorType().getCode() + "");
-			responseData.setStatus(false);
-		} catch(UploadListingIsNullException e) {
+			workbook.close();
+		} catch (UploadListingIsNullException e) {
 			responseData.setStatus(false);
 			responseData.setMessage(messageSource.getMessage("excel.validation.listing.notnull.message", null, LocaleUtil.getCurrentLocale()));
-		} finally {
-			if (workbook != null) {
-				try {
-					workbook.close();
-				} catch (IOException e) {}
+			mav.addObject("response", PojoConvertor.convertToJson(responseData));
+			return mav;
+		} catch (Exception e) {
+			String message = String.format("Failed to upload listings for user(ID is %s)", userData != null ? userData.getUserId() : null);
+			logger.log(LogLevel.ERROR, message, e);
+			CalEventHelper.writeLog(CalEvent.CAL_ERROR, "ListingController", message, e, "Error");
+			responseData.setStatus(false);
+			if (e instanceof PromoException) {
+				responseData.setStatusCode(((PromoException)e).getErrorType().getCode());
 			}
+			responseData.setMessage(e.getMessage());
+			mav.addObject("response", PojoConvertor.convertToJson(responseData));
+			return mav;
+		} 
+		
+		// if there is listing that not comply with validation rules
+		if (violations == null || violations.size() == 0) {
+			responseData.setStatus(true);
+		} else {
+			responseData.setStatus(false);
+			responseData.setErrors(violations);
 		}
-
+			
 		mav.addObject("response", PojoConvertor.convertToJson(responseData));
 		return mav;
 	}
 	
 	@POST
-	@RequestMapping(ResourceProvider.ListingRes.confirmListings)
-	@ResponseBody
-	public ResponseData <String> confirmListings(HttpServletRequest req, @ModelAttribute("listings") UploadListingForm listings) {
-		ResponseData <String> responseData = new ResponseData <String>();
-
-		if(null != listings){
-			SelectableListing[] listingAry = PojoConvertor.convertToObject(listings.getListings(), SelectableListing[].class);
-			try {
-				UserData userData = loginService.getUserDataFromCookie(req);
-				boolean result = listingService.confirmListings(listingAry, listings.getPromoId(), userData.getUserId());
-				responseData.setStatus(result);
-			} catch (PromoException | MissingArgumentException e) {
-				// do not throw but set the error status.
-				responseData.setStatus(false);
-				responseData.setMessage("Internal Error happens.");
-			}
-		}
-		return responseData;
-	}
-	
-	@POST
-	@RequestMapping(ResourceProvider.ListingRes.uploadListingAttachment)
+	@RequestMapping(Router.Listing.uploadListingAttachment)
 	public ModelAndView uploadListingAttachment(HttpServletRequest req, HttpServletResponse resp, 
 			@RequestPart MultipartFile uploadFile, @RequestParam String skuId, @RequestParam String promoId, @RequestParam String key) throws MissingArgumentException {
 		ModelAndView mav = new ModelAndView(ViewResource.UPLOAD_RESPONSE.getPath());
@@ -248,211 +216,49 @@ public class ListingController extends AbstractListingController {
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes.listingAttachment)
+	@RequestMapping(Router.Listing.listingAttachment)
 	public void downloadListingAttachment(HttpServletRequest req, HttpServletResponse resp,
 			@PathVariable("promoId") String promoId, @PathVariable("userId") Long userId, 
 			@PathVariable("skuId") String skuId, @PathVariable("key") String key) throws MissingArgumentException, IOException, PromoException {
 		resp.setContentType("application/x-msdownload;");
-		UserData userData = loginService.getUserDataFromCookie(req);
-		if(userData.getUserId()!=userId) {
-			//throw new PromoException();
-		}
 		InputStream inputStream = null;
-		OutputStream outStream = null;
-		ListingAttachment attachment = null;
 		String attachmentName = "";
 		String attachmentType = "";
-		try {
-			attachment = listingService.downloadListingAttachment(promoId, userId, skuId, key);
-			if(attachment!=null) {
-				inputStream = new  ByteArrayInputStream(attachment.getContent());
-				attachmentName = attachment.getAttachmentName();
-				attachmentType = attachment.getAttachmentType();
-			}
-			resp.setHeader("Content-disposition", "attachment; filename=\""+attachmentName+"."+attachmentType+"\"");
-			System.out.println(resp.getHeaders("Content-disposition"));
-			outStream = resp.getOutputStream();
-			int len = 0;
-			byte[] buffer = new byte[4096];
-			while((len = inputStream.read(buffer)) != -1) {
-	            outStream.write(buffer, 0, len);
-	        }
-		} catch (PromoException e) {
-			e.printStackTrace();
-		} finally {
-			if (inputStream != null) {
-				inputStream.close();
-				outStream.flush();
-				outStream.close();
-			}
+		
+		ListingAttachment attachment = listingService.downloadListingAttachment(promoId, userId, skuId, key);
+		if(attachment!=null) {
+			inputStream = new  ByteArrayInputStream(attachment.getContent());
+			attachmentName = attachment.getAttachmentName();
+			attachmentType = attachment.getAttachmentType();
 		}
-	}
-	
-	@GET
-	@RequestMapping(ResourceProvider.ListingRes._getPromotionListings)
-	@ResponseBody
-	public ListDataWebResponse<?> getPromotionListings(HttpServletRequest req,
-			@ModelAttribute ListingWebParam param)  {
+		resp.setHeader("Content-disposition", "attachment; filename=\""+attachmentName+"."+attachmentType+"\"");
 		
-		return getListings(req, param, false);
+		OutputStream outStream = resp.getOutputStream();
+		int len = 0;
+		byte[] buffer = new byte[4096];
+		while((len = inputStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, len);
+        }
+
+		inputStream.close();
+		outStream.flush();
+		outStream.close();
 	}
 	
 	@GET
-	@RequestMapping(ResourceProvider.ListingRes._getUploadedListings)
-	@ResponseBody
-	public ListDataWebResponse<?> getUploadListings(HttpServletRequest req,
-			@ModelAttribute ListingWebParam param)  {
-		
-		return getListings(req, param, true);
-	}
-	
-	@GET
-	@RequestMapping(ResourceProvider.ListingRes.reviewUploadedListings)
-	public ModelAndView reviewUploadedListings(HttpServletRequest req, @RequestParam String promoId) throws MissingArgumentException {
+	@RequestMapping(Router.Listing.reviewUploadedListings)
+	public ModelAndView reviewUploadedListings(HttpServletRequest req, @RequestParam String promoId) throws MissingArgumentException, PromoException {
 		ModelAndView mav = new ModelAndView();
-		Map<String, Object> context = new HashMap<String, Object>();
-		
 		UserData userData = loginService.getUserDataFromCookie(req);
 
-		Promotion promo;
-		try {
-			promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
-			String fieldsDefinitions = promo.getListingFields();
+		Promotion promo = promoService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+		String fieldsDefinitions = promo.getListingFields();
 						
-			promoViewService.handleListingFields(fieldsDefinitions, context, promo.getRegion());
-		} catch (PromoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		promoViewService.handleListingFields(fieldsDefinitions, mav, promo.getRegion());
 		
-		mav.addAllObjects(context);
-		//mav.addObject("formUrl", "/promotion/listings/submitDealsListings");
-		mav.addObject(ViewContext.PromotionId.getAttr(), promoId);
+		mav.addObject(ViewContext.Promotion.getAttr(), promo);
 		mav.setViewName(ViewResource.LISTING_PREVIEW.getPath());
 		return mav;
 	}
-	
-	/**
-	 * After user confirm his listing, submit all of his listings to SalesForce.
-	 * @param req
-	 * @param listings
-	 * @return
-	 */
-	@POST
-	@RequestMapping(ResourceProvider.ListingRes.submitListings)
-	public @ResponseBody ResponseData <String> submitDealsListings(HttpServletRequest req, HttpServletResponse resp) throws MissingArgumentException{
-		ResponseData <String> responseData = new ResponseData <String>();
-		String promoId = req.getParameter("promoId");
-
-		try {
-			UserData userData = loginService.getUserDataFromCookie(req);
-			boolean result = listingService.submitListings(promoId, userData.getUserId());
-			responseData.setStatus(result);
-		} catch (PromoException | MissingArgumentException e) {
-			// do not throw but set the error status.
-			responseData.setStatus(false);
-			responseData.setMessage("Internal Error happens: " + e.getMessage());
-			responseData.setData(e.getErrorType().getCode() + "");
-		}
-		return responseData;
-	}
-	
-	/**
-	 * In phase1, there are several kinds of getListings() by state. We keep this method for future usage.
-	 * 
-	 * @param req
-	 * @param param
-	 * @return
-	 */
-	protected ListDataWebResponse<?> getListings (HttpServletRequest req,
-			ListingWebParam param, boolean isUploaded) {
-		UserData userData = null;
-
-		try {
-			userData = loginService.getUserDataFromCookie(req);
-		} catch (MissingArgumentException e) {
-			logger.error("Missing required argument.", e);
-			ListDataWebResponse<Void> resp = new ListDataWebResponse<Void>();
-			resp.setStatus(Boolean.FALSE);
-			return resp;
-		}
-
-		ListDataWebResponse<Listing> resp = getListings(param.getPromoId(), userData.getUserId(), isUploaded);
-		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-		ListDataWebResponse<Map<String, Object>> mergedResp = new ListDataWebResponse<Map<String, Object>>();
-		
-		if (resp != null && resp.getData() != null) {
-			for (Listing listing : resp.getData()) {
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("skuId", listing.getSkuId());
-				map.put("state", listing.getState());
-				map.put("currency", listing.getCurrency());
-				
-				if (listing.getNominationValues() != null) {
-					try {
-						@SuppressWarnings("unchecked")
-						Map<String, Object> fields = mapper.readValue(listing.getNominationValues(), HashMap.class);
-						map.putAll(fields);
-						
-					} catch (IOException e) {
-						logger.error("Can't read listing normination values for listing with sku ID: " + listing.getSkuId());
-					}
-				}
-				
-				List<Map<String, Object>> attachments = listing.getAttachments(); 
-				if (attachments != null) {
-					for (Map<String, Object> attachment : attachments) {
-						String key = attachment.get("key").toString();
-						Object filename = attachment.get("filename");
-						if (key != null && filename != null) {
-							String attachmentUrl = "/attachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId() + "/key/" + key;
-							map.put(key, attachmentUrl);
-						}
-					}
-				}
-				
-				// TODO, remove this test line
-//				if(listing.getHasUploaded()) {
-//					map.put("Account_List_Attachment_base__c", "/attachment/promoId/"+param.getPromoId()+"/userId/"+userData.getUserId()+"/skuId/"+listing.getSkuId() + "/key/Account_List_Attachment_base__c");
-//				}
-				
-				map.put("lock", listing.getLocked());
-				data.add(map);
-			}
-			
-			mergedResp.setStatus(resp.isStatus());
-			mergedResp.setData(data);
-		} else {
-			mergedResp.setStatus(resp.isStatus());
-		}
-		
-		
-		return mergedResp;
-	}
-	
-	/**
-	 * Get listings of specified user and promotion. If "isUploaded" is true, it will only get user uploaded listings by excel.
-	 * @param promoId
-	 * @param userId
-	 * @param isUploaded
-	 * @return
-	 */
-	protected <T> ListDataWebResponse<T> getListings (String promoId, Long userId, boolean isUploaded) {
-		ListDataWebResponse<T> resp = new ListDataWebResponse<T>();
-		try {
-			List<T> listings = listingService.getListingsByPromotionId(promoId, userId, isUploaded);
-			
-			if (listings != null && listings.size() > 0) {
-				resp.setData(listings);
-			} else {
-				logger.error("No listings found for promotion: " + promoId + ", user:" + userId);
-			}
-		} catch (PromoException e) {
-			logger.error("No listings found for promotion: " + promoId + ", user:" + userId + ", with error", e);
-			resp.setStatus(Boolean.FALSE);
-		}
-
-		return resp;
-	} 
 	
 }
