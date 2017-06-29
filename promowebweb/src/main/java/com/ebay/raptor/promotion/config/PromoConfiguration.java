@@ -9,7 +9,6 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 import com.ebay.app.raptor.promocommon.concurrent.CommonExecutorService;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestService;
-import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.validation.LocalValidatorFactoryBean;
 
 @Configuration
@@ -35,11 +34,6 @@ public class PromoConfiguration {
 	@Bean
 	public HttpRequestService getHttpRequestService () {
 		return new HttpRequestService();
-	}
-	
-	@Bean
-	public CSApiService getCSApiService () {
-	    return new CSApiService();
 	}
 	
 	@Bean

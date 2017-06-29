@@ -182,6 +182,10 @@ var BizReport = BizReport || {};
 							return new Date(data).format('HH:mm:ss');
 						}
 						
+						if (type === 'sort') {
+							return data ? data : -1;
+						}
+						
 						return data;
 					}
 				},
@@ -195,6 +199,10 @@ var BizReport = BizReport || {};
 							return new Date(data).format('yyyy-MM-dd HH:mm:ss');
 						}
 						
+						if (type === 'sort') {
+							return data ? data : -1;
+						}
+						
 						return data;
 					}
 				},
@@ -206,6 +214,10 @@ var BizReport = BizReport || {};
 					mRender: function(data, type, full) {
 						if (type == "display" && data) {
 							return new Date(data).format('yyyy-MM-dd');
+						}
+						
+						if (type === 'sort') {
+							return data ? data : -1;
 						}
 						
 						return data;

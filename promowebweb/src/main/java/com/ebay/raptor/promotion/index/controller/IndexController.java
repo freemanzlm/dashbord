@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.MissingArgumentException;
+import com.ebay.cbt.raptor.csApi.service.CSApiService;
 import com.ebay.cbt.raptor.promotion.enumcode.PromotionStep;
 import com.ebay.cbt.raptor.promotion.po.Promotion;
 import com.ebay.cbt.raptor.promotion.po.Subsidy;
@@ -40,7 +41,6 @@ import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
 import com.ebay.raptor.promotion.sd.service.SDDataService;
-import com.ebay.raptor.promotion.service.CSApiService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.subsidy.service.SubsidyService;
@@ -73,7 +73,8 @@ public class IndexController {
 			response.sendRedirect("error");
 		} else {
 			if (userId == null || userId.isEmpty()) {
-				userId = csApiService.getUserIdByName(hackId);
+				Long uid = csApiService.getUserIdByName(hackId); 
+				userId = uid.toString();
 			} else if (hackId == null || hackId.isEmpty()) {
 				hackId = userId;
 			}

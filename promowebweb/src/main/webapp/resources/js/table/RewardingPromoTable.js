@@ -112,8 +112,12 @@ var BizReport = BizReport || {};
 					sDefaultContent : "-",
 					sWidth : "120px",
 					mRender : function (data, type, full) {
-						if(data) {
+						if(data && type === 'display') {
 							return (new Date(data + timezoneOffset)).format("yyyy-MM-dd hh:mm");
+						}
+						
+						if (type === 'sort') {
+							return data ? data : -1;
 						}
 						
 						return data;
@@ -128,6 +132,11 @@ var BizReport = BizReport || {};
 						if (type == "display") {
 							return (full.promoSdt ? (new Date(full.promoSdt + timezoneOffset)).format("yyyy-MM-dd hh:mm") : '-') + " ~ " + (data ? (new Date(data + timezoneOffset)).format("yyyy-MM-dd hh:mm") : '-');
 						}
+						
+						if (type === 'sort') {
+							return data ? data : -1;
+						}
+						
 						return data;
 					}
 				}, {
