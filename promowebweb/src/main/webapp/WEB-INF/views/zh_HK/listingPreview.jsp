@@ -126,7 +126,7 @@
 
 	<script type="text/javascript">
 		var pageData = {
-			promoId : '${promoId}',
+			promoId : '${promo.promoId}',
 			columns: JSON.parse('${not empty columns ? columns : "{}"}'),
 			isListingPreview: true
 		};
