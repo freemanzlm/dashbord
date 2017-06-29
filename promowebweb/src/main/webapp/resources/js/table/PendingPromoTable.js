@@ -89,7 +89,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["promoDlDt"],
-					sType: "date",
+					sType: "numeric",
 					sClass: "text-center",
 					sDefaultContent: " ",
 					sWidth: "120px",
@@ -107,7 +107,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["promoDt"],
-					sType: "date",
+					sType: "numeric",
 					sClass: "text-center",
 					sDefaultContent: "-",
 					mRender: function(data, type, full) {

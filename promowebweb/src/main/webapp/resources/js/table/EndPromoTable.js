@@ -103,7 +103,7 @@ var BizReport = BizReport || {};
 					}
 				}, {
 					aTargets : ["rewardDlDt"],
-					sType : "date",
+					sType : "numeric",
 					sClass : "text-center",
 					sDefaultContent : "-",
 					sWidth : "120px",
@@ -120,7 +120,7 @@ var BizReport = BizReport || {};
 					}
 				}, {
 					aTargets : ["promoDt"],
-					sType : "date",
+					sType : "numeric",
 					sClass : "text-center",
 					sDefaultContent : "-",
 					sWidth : "220px",

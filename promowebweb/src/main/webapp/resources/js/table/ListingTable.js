@@ -174,7 +174,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["time"],
-					sType: "date",
+					sType: "numeric",
 					sClass: "text-center",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
@@ -191,7 +191,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["datetime"],
-					sType: "date",
+					sType: "numeric",
 					sClass: "text-center",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
@@ -208,7 +208,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["date"],
-					sType: "date",
+					sType: "numeric",
 					sClass: "text-center",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
@@ -242,7 +242,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["email"],
-					sType: "date",
+					sType: "string",
 					sClass: "text-right",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
@@ -255,7 +255,7 @@ var BizReport = BizReport || {};
 				},
 				{
 					aTargets: ["url"],
-					sType: "date",
+					sType: "string",
 					sClass: "text-right",
 					sDefaultContent: "NA",
 					mRender: function(data, type, full) {
