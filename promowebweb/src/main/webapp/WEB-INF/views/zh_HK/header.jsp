@@ -24,8 +24,6 @@
 	</div>
 </div>
 
-<div style="text-align: center; border: 2px solid red; line-height: 40px">企業入駐通道將會於6月29日 18:00 – 19:00進行系統維護，該時間段內將不能提交申請。</div>
-
 <script type="text/javascript">
 function updateLocationParameter (l, a, p) {
 	if (!a || !p) return e;
