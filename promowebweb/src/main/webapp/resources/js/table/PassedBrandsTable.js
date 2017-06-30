@@ -31,7 +31,7 @@ var BizReport = BizReport || {};
 			'bSort' : true,
 			'iDisplayLength' : 10,
 			'sPaginationType' : 'full_numbers',
-			'sDom' : '<"datatable_header">t<"datatable_pager"i>',
+			'sDom' : '<"datatable_header">t<"datatable_pager"ip>',
 			'oLanguage' : {
 				sEmptyTable : local.getText('dataTable.brand.emptyTable'),
 				sInfoFiltered : local.getText('dataTable.promo.infoFiltered'),
