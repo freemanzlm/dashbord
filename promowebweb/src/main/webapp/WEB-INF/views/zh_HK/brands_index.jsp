@@ -12,8 +12,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>中國品牌智造計畫</title>
-	<meta name="description" content="中國品牌智造計畫">
+	<title>中國品牌智造計劃</title>
+	<meta name="description" content="中國品牌智造計劃">
 	<meta name="author" content="eBay: Apps">
 	<res:cssSlot id="head" />
 	<res:cssSlot id="head-css" />
