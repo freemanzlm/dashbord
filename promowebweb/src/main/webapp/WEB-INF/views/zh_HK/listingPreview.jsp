@@ -92,7 +92,7 @@
 					
 
 					<div class="mt20">
-						<%@ include file="table/listings_no_id_no_state.jsp" %>
+						<%@ include file="../table/listings_no_id_no_state.jsp" %>
 					</div>
 					
 					<div id="attachments-errors" class="errors-summary mt10 hide">

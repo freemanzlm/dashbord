@@ -120,6 +120,24 @@ var BizReport = BizReport || {};
 				},
 				columns: null,
 				aoColumnDefs: [{
+					aTargets: ["sticky"],
+					sType: "numeric",
+					sDefaultContent: "0",
+					bVisible: false,
+					mRender: function(data, type, full, meta) {
+						if (type === 'sort') {
+							if (typeof data === 'boolean') {
+								return data ? 1 : 0;
+							} else if (typeof data === 'string') {
+								return data == 'true' ? 1 : 0;
+							} else {
+								return data ? parseInt(data) : 0;
+							}
+						}
+						
+						return data;
+					}
+				},{
 					aTargets: ["check"],
 					bSortable: false,
 					sDefaultContent: "",

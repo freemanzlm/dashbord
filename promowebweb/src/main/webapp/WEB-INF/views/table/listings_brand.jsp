@@ -10,6 +10,10 @@
 		<table id="listing-table" class="dataTable">
 			<thead>
 				<tr>
+					<th class="sticky">
+						<!-- hidden column for making sticky listings always display first -->
+					</th>
+					
 					<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'  or currentStep eq 'PROMOTION IN PROGRESS') and isRegEnd ne true}">
 						<th class="state">
 							<c:choose>
@@ -41,10 +45,10 @@
 			<c:when test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'  or currentStep eq 'PROMOTION IN PROGRESS') and isRegEnd ne true}">
 				<c:choose>
 					<c:when test="${regType}">
-						<c:set var="columns" value='[{"data:":"skuId"},{"data":"state"}, ${ columns }]' />
+						<c:set var="columns" value='[{"data":"sticky"},{"data:":"skuId"},{"data":"state"}, ${ columns }]' />
 					</c:when>
 					<c:otherwise>
-						<c:set var="columns" value='[{"data":"state"}, ${ columns }]' />
+						<c:set var="columns" value='[{"data":"sticky"},{"data":"state"}, ${ columns }]' />
 					</c:otherwise>
 				</c:choose>
 			</c:when>

@@ -5,15 +5,17 @@ $(function(){
 
 	var uploadForm, fileInput, uploadBtn, uploadIFrame, form, formBtn, listingCountJ;
 	
-	var hasState = false, stateColumnIndex = 0, customTableConfig;
+	var hasState = false, stateColumnIndex = 0, customTableConfig, listingSortingConfig = [] /* empty aaSorting must be [], it can't be null */;
 	
 	if (pageData && pageData.columns && pageData.columns.length > 1) {
 		// state column must the first column or the second column
 		hasState = pageData.columns[0]['data'] == 'state' || (stateColumnIndex = 1, pageData.columns[1]['data'] == 'state');
+		hasState && listingSortingConfig.push([stateColumnIndex, 'asc']);
 		
 		customTableConfig = {
 			'columns': pageData.columns,
-			'aaSorting': (hasState ? [[stateColumnIndex, 'asc']] : []), // empty aaSorting must be [], it can't be null
+			'aaSortingFixed': [[0, 'desc']],
+			'aaSorting': listingSortingConfig, 
 			'promo': {promoId:pageData.promoId, regType:pageData.regType, currentStep: pageData.currentStep, isRegEnd:pageData.isRegEnd, isListingPreview:pageData.isListingPreview}
 		};
 	}

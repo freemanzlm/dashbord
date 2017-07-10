@@ -5,16 +5,18 @@ $(function(){
 
 	var uploadForm, fileInput, uploadBtn, uploadIFrame, acceptCheckbox, form, formBtn, listingCountJ;
 	
-	var hasState = false, customTableConfig;
+	var hasState = false, customTableConfig, listingSortingConfig = []/* empty aaSorting must be [], it can't be null */;
 	
 	//var successCount = 0;
 	
 	if (pageData && pageData.columns && pageData.columns.length > 1) {
 		hasState = pageData.columns[pageData.columns.length - 1]['data'] == 'state';
+		hasState && listingSortingConfig.push([pageData.columns.length - 1, 'asc']);
 		
 		customTableConfig = {
 			'columns': pageData.columns,
-			'aaSorting': (hasState ? [[pageData.columns.length - 1, 'desc']] : []),
+			'aaSortingFixed': [[0, 'desc']],
+			'aaSorting': listingSortingConfig,
 			'promo': {promoId:pageData.promoId, regType:pageData.regType, currentStep: pageData.currentStep, isRegEnd:pageData.isRegEnd, isListingPreview:pageData.isListingPreview}
 		};
 	}

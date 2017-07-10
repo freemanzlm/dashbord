@@ -100,7 +100,7 @@
 					<c:if test="${hasListingsNominated }">
 						<div class="mt20 my-listing">
 							<h3><strong>提交的刊登</strong></h3>
-							<%@ include file="../table/listings.jsp"%>
+							<%@ include file="../../table/listings.jsp"%>
 						</div>
 					</c:if>
 					
@@ -133,7 +133,7 @@
 							<!-- 非上傳形式報名, 或者正式報名 -->
 							<div class="mt20 my-listing">
 								<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
-								<%@ include file="../table/listings.jsp"%>
+								<%@ include file="../../table/listings.jsp"%>
 							</div>
 							
 							<div class="mt20 page-bottom-actions">
@@ -152,7 +152,7 @@
 							<%-- <c:if test="${hasListingsNominated }"> --%>
 								<div class="mt20 my-listing">
 									<h3><strong>報名刊登列表</strong></h3>
-									<%@ include file="../table/listings.jsp"%>
+									<%@ include file="../../table/listings.jsp"%>
 								</div>
 							<%-- </c:if> --%>
 							
@@ -173,7 +173,7 @@
 								<c:when test="${regType}">
 									<div class="mt20 my-listing">
 										<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
-										<%@ include file="../table/listings.jsp"%>
+										<%@ include file="../../table/listings.jsp"%>
 									</div>
 									
 									<div class="mt20 page-bottom-actions">
@@ -190,7 +190,7 @@
 									<c:if test="${hasListingsNominated }">
 										<div class="mt20 my-listing">
 											<h3><strong>提交的刊登</strong></h3>
-											<%@ include file="../table/listings.jsp"%>
+											<%@ include file="../../table/listings.jsp"%>
 										</div>
 									</c:if>
 									
@@ -211,7 +211,7 @@
 							<%-- <c:if test="${hasListingsNominated }"> --%>
 								<div class="mt20 my-listing">
 									<h3><strong>報名刊登列表</strong></h3>
-									<%@ include file="../table/listings.jsp"%>
+									<%@ include file="../../table/listings.jsp"%>
 								</div>
 							<%-- </c:if> --%>
 							<!-- <div class="mt20 page-bottom-actions">
@@ -224,7 +224,7 @@
 				<c:if test="${(not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and not empty fieldsDefintions }">
 					<div class="mt20 my-listing">
 						<h3><strong>报名刊登列表</strong></h3>
-						<%@ include file="../table/listings.jsp"%>
+						<%@ include file="../../table/listings.jsp"%>
 					</div>
 				</c:if>
 			</div>
