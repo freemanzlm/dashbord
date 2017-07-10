@@ -145,10 +145,12 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 'SELLER NOMINATION_NEED APPROVE':
 							case 'SELLER FEEDBACK':
+								// type == 2 is brand vetting
+								var prefix = data.type == 2 ? 'promo.state.' : 'brandPromo.state.';
 								if(full.state == 'Enrolled') {
-									return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+									return local.getText(prefix + full.ostate) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								} else {
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('promo.state.' + full.state) + "</a>";
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText(prefix + full.state) + "</a>";
 								}
 							case 'PROMOTION IN PROGRESS':
 								full.state = 'InProgress';

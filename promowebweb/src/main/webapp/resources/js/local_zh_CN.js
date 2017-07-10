@@ -130,6 +130,26 @@ BizReport.local = {
 		step: {
 			'NOMINATION EDM IN APPROVE FLOW': '提交认证',
 			'SELLER NOMINATION_NEED APPROVE': '提交认证'
+		},
+		state: {
+			'Created': '提交认证',
+			'Submitted': '已提交认证',
+			'Verifying': '已提交认证',
+			'PromotionApproved': '已提交认证',
+			'VerifyFailed': '提交认证',
+			'Applied': '已提交认证',
+			'Started': '活动进行中',
+			'SubsidyCounting': '奖励确认中',
+			'Canceled': '活动已取消',
+			'Claimed': '我已领取奖励',
+			'Detailed': '查看详情',
+			'ReEnroll':'重新提交认证',
+			'Enrolled':'已提交认证',
+			'NotEnrolled':'提交认证',
+			'Reviewing':'认证审核中',
+			'ReviewPassed':'正式认证',
+			'RewardAuditing':'奖励审核中',
+			'InProgress':'活动进行中',
 		}
 	},
 	'listing': {
