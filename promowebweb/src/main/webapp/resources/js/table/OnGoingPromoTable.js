@@ -106,6 +106,8 @@ var BizReport = BizReport || {};
 					sWidth : "120px",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
+						if (full.type == 2) { data = null };
+						
 						if(data && type === 'display') {
 							return (new Date(data + timezoneOffset)).format("yyyy-MM-dd hh:mm");
 						}
@@ -141,14 +143,14 @@ var BizReport = BizReport || {};
 					swidth: '120px',
 					mRender : function (data, type, full) {
 						data = data.toUpperCase();
+						var prefix = full.type != 2 ? 'promo.state.' : 'brandPromo.state.'; // type == 2 is brand vetting
+						
 						if (type == "display") {
 							switch (data) {
 							case 'SELLER NOMINATION_NEED APPROVE':
 							case 'SELLER FEEDBACK':
-								// type == 2 is brand vetting
-								var prefix = data.type == 2 ? 'promo.state.' : 'brandPromo.state.';
 								if(full.state == 'Enrolled') {
-									return local.getText(prefix + full.ostate) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+									return local.getText(prefix + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 								} else {
 									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText(prefix + full.state) + "</a>";
 								}
@@ -156,7 +158,7 @@ var BizReport = BizReport || {};
 								full.state = 'InProgress';
 							case 'PROMOTION SUBMITTED':
 							case 'PROMOTION IN VALIDATION':
-								return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+								return local.getText(prefix + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
 							}
 
 							return '<a href="' + getLink(full.promoId) + '" target="_self">'+ local.getText('promo.state.Detailed') + '</a>';

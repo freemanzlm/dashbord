@@ -132,6 +132,7 @@ BizReport.local = {
 			'SELLER NOMINATION_NEED APPROVE': '提交认证'
 		},
 		state: {
+			'Unknown': '',
 			'Created': '提交认证',
 			'Submitted': '已提交认证',
 			'Verifying': '已提交认证',
