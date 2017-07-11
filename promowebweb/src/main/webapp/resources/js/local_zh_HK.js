@@ -146,7 +146,7 @@ BizReport.local = {
 			'Detailed': '查看詳情',
 			'ReEnroll':'重新提交認證',
 			'Enrolled':'已提交認證',
-			'NotEnrolled':'活動報名',
+			'NotEnrolled':'提交認證',
 			'Reviewing':'認證審核中',
 			'ReviewPassed':'正式認證',
 			'RewardAuditing':'獎勵審核中',
