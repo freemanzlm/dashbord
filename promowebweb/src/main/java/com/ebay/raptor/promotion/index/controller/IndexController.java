@@ -176,7 +176,8 @@ public class IndexController {
 
 		promo = service.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
 		if (promo == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND, getMessage(PromoError.PROMOTION_NOT_FOUND.getKey()));
+			model.setViewName(ViewResource.UNKNOW_CAMPAIGN.getPath());
+			return model;
 		}
 
 		if (promo.getActiveFlag()) {
