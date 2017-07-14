@@ -125,7 +125,11 @@ var BizReport = BizReport || {};
 					sWidth : "240px",
 					sDefaultContent : "-",
 					mRender : function (data, type, full) {
+						if (full.type == 2) { data = null };
+						
 						if (type == "display") {
+							if (full.type == 2) { return "-" }
+							
 							return (full.promoSdt ? (new Date(full.promoSdt + timezoneOffset)).format("yyyy-MM-dd hh:mm") : '-') + " ~ " + (data ? (new Date(data + timezoneOffset)).format("yyyy-MM-dd hh:mm") : '-');
 						}
 						
