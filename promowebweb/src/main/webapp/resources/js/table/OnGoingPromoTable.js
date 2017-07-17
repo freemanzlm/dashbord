@@ -157,7 +157,7 @@ var BizReport = BizReport || {};
 									if(full.canEnrollListNum > 0){
 										return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText(prefix + full.state) + "</a>";
 									}else{
-										return local.getText(prefix + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+										return local.getText(prefix + 'Submitted') + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('brandPromo.state.Detailed') + "</a>";
 									}
 								}else{
 									if(full.state == 'Enrolled') {
