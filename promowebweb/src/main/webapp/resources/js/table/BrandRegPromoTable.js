@@ -104,7 +104,11 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 'SELLER NOMINATION_NEED APPROVE':
 							case 'SELLER FEEDBACK':
-								return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('brandPromo.step.' + data) + "</a>";
+								if(full.canEnrollListNum > 0){
+									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('brandPromo.step.' + data) + "</a>";
+								}else{
+									return local.getText('promo.state.' + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+								}
 							}
 						}
 

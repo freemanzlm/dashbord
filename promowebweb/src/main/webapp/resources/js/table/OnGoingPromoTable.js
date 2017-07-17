@@ -153,10 +153,18 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 'SELLER NOMINATION_NEED APPROVE':
 							case 'SELLER FEEDBACK':
-								if(full.state == 'Enrolled') {
-									return local.getText(prefix + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
-								} else {
-									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText(prefix + full.state) + "</a>";
+								if(full.type == 2){
+									if(full.canEnrollListNum > 0){
+										return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText(prefix + full.state) + "</a>";
+									}else{
+										return local.getText(prefix + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+									}
+								}else{
+									if(full.state == 'Enrolled') {
+										return local.getText(prefix + full.state) + "<br/>" + '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('promo.state.Detailed') + "</a>";
+									} else {
+										return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText(prefix + full.state) + "</a>";
+									}
 								}
 							case 'PROMOTION IN PROGRESS':
 								full.state = 'InProgress';
