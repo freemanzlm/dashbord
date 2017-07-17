@@ -2,6 +2,8 @@ package com.ebay.raptor.promotion.list.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,11 +144,27 @@ public class ListingDataController extends AbstractListingController {
 		List<Listing> listings = listingService.getListingsByPromotionId(promoId, userId, isUploaded);
 		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 		
+		Collections.sort(listings,new Comparator<Listing>(){
+			public int compare(Listing list1, Listing list2) {  
+                if(list1.getStickFlag()){  
+                    return 0;  
+                }  
+                if(list2.getStickFlag()){  
+                    return 1;  
+                }  
+                return -1;  
+            }  
+		});
+		for(Listing listing : listings){
+			System.out.println(listing.getSkuId());
+		}
+		
 		for (Listing listing : listings) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("skuId", listing.getSkuId());
 			map.put("state", listing.getState());
 			map.put("currency", listing.getCurrency());
+			map.put("lock", listing.getLocked());
 			
 			if (listing.getNominationValues() != null) {
 				@SuppressWarnings("unchecked")
@@ -166,7 +184,6 @@ public class ListingDataController extends AbstractListingController {
 				}
 			}
 			
-			map.put("lock", listing.getLocked());
 			data.add(map);
 		}
 		
