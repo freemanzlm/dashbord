@@ -155,10 +155,6 @@ public class ListingDataController extends AbstractListingController {
                 return -1;  
             }  
 		});
-		for(Listing listing : listings){
-			System.out.println(listing.getSkuId());
-		}
-		
 		for (Listing listing : listings) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("skuId", listing.getSkuId());
