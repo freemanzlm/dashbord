@@ -99,6 +99,7 @@
 					<c:if test="${hasListingsNominated }">
 						<div class="mt20 my-listing">
 							<h3><strong>提交的刊登</strong></h3>
+							<a class="btn" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">下载刊登列表</a>
 							<%@ include file="../table/listings.jsp"%>
 						</div>
 					</c:if>
@@ -132,6 +133,7 @@
 							<!-- 非上传形式报名, 或者正式报名 -->
 							<div class="mt20 my-listing">
 								<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
+								<a class="btn" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">下载刊登列表</a>
 								<%@ include file="../table/listings.jsp"%>
 							</div>
 							
@@ -151,6 +153,7 @@
 							<c:if test="${hasListingsNominated }">
 								<div class="mt20 my-listing">
 									<h3><strong>提交的刊登</strong></h3>
+									<a class="btn" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">下载刊登列表</a>
 									<%@ include file="../table/listings.jsp"%>
 								</div>
 							</c:if>
@@ -175,6 +178,7 @@
 								<c:when test="${regType}">
 									<div class="mt20 my-listing">
 										<h3>选择报名刊登 <small>（已选 <span>0</span> 项）</small></h3>
+										<a class="btn" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">下载刊登列表</a>
 										<%@ include file="../table/listings.jsp"%>
 									</div>
 									
@@ -191,6 +195,7 @@
 									<c:if test="${hasListingsNominated }">
 										<div class="mt20 my-listing">
 											<h3><strong>提交的刊登</strong></h3>
+											<a class="btn" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">下载刊登列表</a>
 											<%@ include file="../table/listings.jsp"%>
 										</div>
 									</c:if>
@@ -212,6 +217,7 @@
 							<%-- <c:if test="${hasListingsNominated }"> --%>
 								<div class="mt20 my-listing">
 									<h3><strong>报名刊登列表</strong></h3>
+									<a class="btn" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">下载刊登列表</a>
 									<%@ include file="../table/listings.jsp"%>
 								</div>
 							<%-- </c:if> --%>
@@ -225,6 +231,7 @@
 				<c:if test="${(not fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and (not fn:containsIgnoreCase(stepList, 'SELLER FEEDBACK')) and not empty fieldsDefintions }">
 					<div class="mt20 my-listing">
 						<h3><strong>报名刊登列表</strong></h3>
+						<a class="btn" href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}" target="_self">下载刊登列表</a>
 						<%@ include file="../table/listings.jsp"%>
 					</div>
 				</c:if>
