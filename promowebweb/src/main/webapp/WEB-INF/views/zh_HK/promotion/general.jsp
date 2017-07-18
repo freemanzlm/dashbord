@@ -101,6 +101,7 @@
 						<div class="mt20 my-listing">
 							<h3><strong>提交的刊登</strong></h3>
 							<%@ include file="../../table/listings.jsp"%>
+							<p style="text-align: right;"><a href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}&listFlag=1" target="_self">下載刊登列表</a></p>
 						</div>
 					</c:if>
 					
@@ -134,6 +135,7 @@
 							<div class="mt20 my-listing">
 								<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
 								<%@ include file="../../table/listings.jsp"%>
+								<p style="text-align: right;"><a href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}&listFlag=1" target="_self">下載刊登列表</a></p>
 							</div>
 							
 							<div class="mt20 page-bottom-actions">
@@ -153,6 +155,7 @@
 								<div class="mt20 my-listing">
 									<h3><strong>報名刊登列表</strong></h3>
 									<%@ include file="../../table/listings.jsp"%>
+									<p style="text-align: right;"><a href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}&listFlag=1" target="_self">下載刊登列表</a></p>
 								</div>
 							<%-- </c:if> --%>
 							
@@ -174,6 +177,7 @@
 									<div class="mt20 my-listing">
 										<h3>選擇報名刊登 <small>（已選 <span>0</span> 項）</small></h3>
 										<%@ include file="../../table/listings.jsp"%>
+										<p style="text-align: right;"><a href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}&listFlag=1" target="_self">下載刊登列表</a></p>
 									</div>
 									
 									<div class="mt20 page-bottom-actions">
@@ -191,6 +195,7 @@
 										<div class="mt20 my-listing">
 											<h3><strong>提交的刊登</strong></h3>
 											<%@ include file="../../table/listings.jsp"%>
+											<p style="text-align: right;"><a href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}&listFlag=1" target="_self">下載刊登列表</a></p>
 										</div>
 									</c:if>
 									
@@ -212,6 +217,7 @@
 								<div class="mt20 my-listing">
 									<h3><strong>報名刊登列表</strong></h3>
 									<%@ include file="../../table/listings.jsp"%>
+									<p style="text-align: right;"><a href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}&listFlag=1" target="_self">下載刊登列表</a></p>
 								</div>
 							<%-- </c:if> --%>
 							<!-- <div class="mt20 page-bottom-actions">
@@ -225,6 +231,7 @@
 					<div class="mt20 my-listing">
 						<h3><strong>報名刊登列表</strong></h3>
 						<%@ include file="../../table/listings.jsp"%>
+						<p style="text-align: right;"><a href="/promotion/listings/downloadTemplate?promoId=${promo.promoId}&listFlag=1" target="_self">下載刊登列表</a></p>
 					</div>
 				</c:if>
 			</div>

@@ -4,6 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -46,6 +49,7 @@ import com.ebay.raptor.promotion.pojo.RequestParameter;
 import com.ebay.raptor.promotion.pojo.ResponseData;
 import com.ebay.raptor.promotion.pojo.UserData;
 import com.ebay.raptor.promotion.pojo.web.resp.ListingsUploadWebResponse;
+import com.ebay.raptor.promotion.promo.service.PromotionService;
 import com.ebay.raptor.promotion.promo.service.PromotionViewService;
 import com.ebay.raptor.promotion.promo.service.ViewContext;
 import com.ebay.raptor.promotion.promo.service.ViewResource;
@@ -72,6 +76,7 @@ public class ListingController extends AbstractListingController {
 	@Autowired ListingService listingService;
 	@Autowired PromotionViewService promoViewService;
 	@Autowired ExcelService excelService;
+	@Autowired PromotionService promotionService;
 
 	/**
 	 * Generate listing upload template.
@@ -91,13 +96,21 @@ public class ListingController extends AbstractListingController {
     				throws MissingArgumentException, PromoException, JsonProcessingException, IOException {
 		
 		UserData userData = loginService.getUserDataFromCookie(req);
+		String listFlag = req.getParameter("listFlag");
 		XSSFWorkbook workBook = null;
 
         try {
 		 workBook = excelService.getListingWorkbook(param.getPromoId(),	userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
     	
         resp.setContentType("application/x-msdownload;");
-		resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
+        if(listFlag.equals("1")){
+        	Promotion promo = promotionService.getPromotionById(param.getPromoId(), userData.getUserId(), false);
+        	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        	String attachmentName = URLEncoder.encode(promo.getName(),"utf-8");
+        	resp.setHeader("Content-disposition", "attachment; filename=" + attachmentName + "_" +sdf.format(new Date())+".xlsx");
+        }else{
+        	resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
+        }
 		workBook.write(resp.getOutputStream());
         } catch (IOException | PromoException e) {
         	logger.log(LogLevel.ERROR, "Failed to generate upload template.", e);
