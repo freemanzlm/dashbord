@@ -103,7 +103,7 @@ public class ListingController extends AbstractListingController {
 		 workBook = excelService.getListingWorkbook(param.getPromoId(),	userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
     	
         resp.setContentType("application/x-msdownload;");
-        if(listFlag.equals("1")){
+        if(listFlag!=null&&listFlag.equals("1")){
         	Promotion promo = promotionService.getPromotionById(param.getPromoId(), userData.getUserId(), false);
         	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         	String attachmentName = URLEncoder.encode(promo.getName(),"utf-8");
