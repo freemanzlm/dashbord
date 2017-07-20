@@ -40,7 +40,7 @@ var BizReport = BizReport || {};
 				'bPaginate': false,
 				'bServerSide': false,
 				'bSortCellsTop': true,
-				'bSort': true,
+				'bSort': false,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
