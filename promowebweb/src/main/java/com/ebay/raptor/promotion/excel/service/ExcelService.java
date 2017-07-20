@@ -76,29 +76,6 @@ public class ExcelService {
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		
 		List<Listing> listings = listingService.getListingsByPromotionId(promoId, uid, false);
-		for(Listing l:listings){
-			System.out.print("stickflag"+l.getStickFlag());
-			System.out.print("state"+l.getState());
-			System.out.print("lock"+l.getLocked());
-			System.out.println("");
-		}
-		Collections.sort(listings,new Comparator<Listing>(){
-			public int compare(Listing list1, Listing list2) {  
-                if(list1.getLocked()){  
-                    return 0;  
-                }  
-                if(list2.getLocked()){  
-                    return 1;  
-                }  
-                return -1;  
-            }  
-		});
-		for(Listing l:listings){
-			System.out.print("stickflag"+l.getStickFlag());
-			System.out.print("state"+l.getState());
-			System.out.print("lock"+l.getLocked());
-			System.out.println("");
-		}
 		List<Map<String, Object>> skuListings = new ArrayList<Map<String, Object>>();
 		
 		if (listings != null) {

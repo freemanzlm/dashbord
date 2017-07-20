@@ -144,17 +144,6 @@ public class ListingDataController extends AbstractListingController {
 		List<Listing> listings = listingService.getListingsByPromotionId(promoId, userId, isUploaded);
 		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 		
-		Collections.sort(listings,new Comparator<Listing>(){
-			public int compare(Listing list1, Listing list2) {  
-                if(list1.getStickFlag()){  
-                    return 0;  
-                }  
-                if(list2.getStickFlag()){  
-                    return 1;  
-                }  
-                return -1;  
-            }  
-		});
 		for (Listing listing : listings) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("skuId", listing.getSkuId());
