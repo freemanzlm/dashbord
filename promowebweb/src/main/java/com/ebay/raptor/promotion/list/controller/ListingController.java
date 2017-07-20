@@ -96,28 +96,46 @@ public class ListingController extends AbstractListingController {
     				throws MissingArgumentException, PromoException, JsonProcessingException, IOException {
 		
 		UserData userData = loginService.getUserDataFromCookie(req);
-		String listFlag = req.getParameter("listFlag");
 		XSSFWorkbook workBook = null;
-
         try {
-		 workBook = excelService.getListingWorkbook(param.getPromoId(),	userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
-    	
-        resp.setContentType("application/x-msdownload;");
-        if(listFlag!=null&&listFlag.equals("1")){
-        	Promotion promo = promotionService.getPromotionById(param.getPromoId(), userData.getUserId(), false);
-        	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        	String attachmentName = URLEncoder.encode(promo.getName(),"utf-8");
-        	resp.setHeader("Content-disposition", "attachment; filename=" + attachmentName + "_" +sdf.format(new Date())+".xlsx");
-        }else{
+        	workBook = excelService.getListingWorkbook(param.getPromoId(),	userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
         	resp.setHeader("Content-disposition", "attachment; filename=" + excelService.getSKUListingTemplateFileName());
-        }
-		workBook.write(resp.getOutputStream());
+	        resp.setContentType("application/x-msdownload;");
+	        workBook.write(resp.getOutputStream());
         } catch (IOException | PromoException e) {
         	logger.log(LogLevel.ERROR, "Failed to generate upload template.", e);
         } finally {
         	if (workBook != null) {
     			try {
 		workBook.close();
+				} catch (IOException e) {
+					// ignore
+				}
+    		}
+        }
+    }
+	
+	@GET
+	@RequestMapping(Router.Listing.downloadListings)
+    public void downloadListings(HttpServletRequest req,
+    		HttpServletResponse resp) throws MissingArgumentException, PromoException, JsonProcessingException, IOException {
+		String promoId = req.getParameter("promoId");
+		UserData userData = loginService.getUserDataFromCookie(req);
+		XSSFWorkbook workBook = null;
+        try {
+        	Promotion promo = promotionService.getPromotionById(promoId, userData.getUserId(), userData.getAdmin());
+        	workBook = excelService.getDownLoadListingWorkbook(promo,userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
+        	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
+        	String attachmentName = URLEncoder.encode(promo.getName(),"utf-8");
+        	resp.setHeader("Content-disposition", "attachment; filename=" + attachmentName + "_" +sdf.format(new Date())+".xlsx");
+	        resp.setContentType("application/x-msdownload;");
+		workBook.write(resp.getOutputStream());
+        } catch (IOException | PromoException e) {
+        	logger.log(LogLevel.ERROR, "Failed to generate listings excel.", e);
+        } finally {
+        	if (workBook != null) {
+    			try {
+    				workBook.close();
 				} catch (IOException e) {
 					// ignore
 				}

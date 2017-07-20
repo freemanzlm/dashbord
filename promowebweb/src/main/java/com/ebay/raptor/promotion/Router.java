@@ -30,6 +30,7 @@ public interface Router {
 		String getPromotionListings = "/getPromotionListings";
 		String getUploadedListings = "/getUploadedListings";
 		String downloadTempldate = "/downloadTemplate";
+		String downloadListings = "/downloadListings";
 		String uploadListings = "/uploadListings";
 		String reviewUploadedListings = "/reviewUploadedListings";
 		String submitListings = "/submitListings";

@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -74,7 +76,29 @@ public class ExcelService {
 		XSSFWorkbook workBook = new XSSFWorkbook();
 		
 		List<Listing> listings = listingService.getListingsByPromotionId(promoId, uid, false);
-		Collections.sort(listings);
+		for(Listing l:listings){
+			System.out.print("stickflag"+l.getStickFlag());
+			System.out.print("state"+l.getState());
+			System.out.print("lock"+l.getLocked());
+			System.out.println("");
+		}
+		Collections.sort(listings,new Comparator<Listing>(){
+			public int compare(Listing list1, Listing list2) {  
+                if(list1.getLocked()){  
+                    return 0;  
+                }  
+                if(list2.getLocked()){  
+                    return 1;  
+                }  
+                return -1;  
+            }  
+		});
+		for(Listing l:listings){
+			System.out.print("stickflag"+l.getStickFlag());
+			System.out.print("state"+l.getState());
+			System.out.print("lock"+l.getLocked());
+			System.out.println("");
+		}
 		List<Map<String, Object>> skuListings = new ArrayList<Map<String, Object>>();
 		
 		if (listings != null) {
@@ -132,6 +156,66 @@ public class ExcelService {
 				adjustColumnConfigurations(columnConfigs, locale, promoId);
 				preHandleData(columnConfigs, skuListings, locale);
 				writer.writeSheet(workBook, sheet, columnConfigs, skuListings, true);
+			}
+		}
+		
+		writer.freeze(sheet, 0, writer.getFirstDataRowNum());
+		// lock not writable cells
+		writer.setProtectionPassword(sheet, password);
+
+		return workBook;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public XSSFWorkbook getDownLoadListingWorkbook(Promotion promo, Long uid, Locale locale, boolean isAdmin)
+			throws PromoException, MissingArgumentException, JsonProcessingException, IOException {
+		XSSFWorkbook workBook = new XSSFWorkbook();
+		List<Listing> listings = listingService.getListingsByPromotionId(promo.getPromoId(), uid, false);
+		
+		List<Map<String, Object>> ListingData = new ArrayList<Map<String, Object>>();
+		if (!CollectionUtils.isEmpty(listings)) {
+			for (Listing listing : listings) {
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("lockFlag", listing.getLocked()==true?"Y":"N");
+					String nominationValues = listing.getNominationValues();
+					if (nominationValues != null) {
+						map.putAll(mapper.readValue(nominationValues, Map.class));
+					}
+					ListingData.add(map);
+			}
+		}
+		
+		SheetWriter writer = new SheetWriter();
+		writer.setMessageSource(messageSource);
+		
+		Font titleFont = workBook.createFont();
+		titleFont.setFontName("Arial");
+		titleFont.setFontHeightInPoints((short) 9);
+		titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		writer.setTitleFont(titleFont);
+		
+		Font ft = workBook.createFont();
+		ft.setFontName("Arial");
+		ft.setFontHeightInPoints((short) 9);
+		writer.setDefaultFont(ft);
+		
+		Sheet sheet = workBook.createSheet(messageSource.getMessage("listing.template", null, LocaleUtil.getCurrentLocale()));
+		
+		String fieldsDefinitions = null;
+		if(promo != null) {
+			fieldsDefinitions = promo.getListingFields();
+		}
+		
+		locale = LocaleUtil.getLocale(promo.getRegion());
+		writer.setLocale(locale);
+		if (fieldsDefinitions != null) {
+			JsonNode tree = mapper.readTree(fieldsDefinitions);
+			if (tree.isArray()) {
+				List<ColumnConfiguration> columnConfigs = ExcelUtil.getColumnConfigurations((ArrayNode)tree, locale);
+				adjustColumnConfigurations2(columnConfigs, locale, promo.getPromoId());
+				preHandleData(columnConfigs, ListingData, locale);
+				writer.writeSheet(workBook, sheet, columnConfigs, ListingData, true);
 			}
 		}
 		
@@ -215,6 +299,39 @@ public class ExcelService {
 			
 			columnConfigs.add(nominationConfig);
 			columnConfigs.add(uploadConfig);
+		}
+		
+		return columnConfigs;
+	}
+	
+	public List<ColumnConfiguration> adjustColumnConfigurations2(List<ColumnConfiguration> columnConfigs, Locale locale, String promoId) {
+		if (locale == null) locale = LocaleUtil.getCurrentLocale();
+		
+		ColumnConfiguration lockConfig = new ColumnConfiguration();
+		lockConfig.setKey("lockFlag");
+		lockConfig.setTitle(messageSource.getMessage("excel.header.lockFlag", null, locale));
+		lockConfig.setSample(messageSource.getMessage("excel.header.lockFlagSample", null, locale));
+		lockConfig.setReadOrder(0);
+		lockConfig.setWriteOrder(0);
+		lockConfig.setWritable(false);
+		lockConfig.setDisplay(true);
+		lockConfig.setRawType("picklist");
+		
+		RangeColumnConstraint lockRangeConstraint = new RangeColumnConstraint();
+		String[] whetherLock = {"Y", "N"};
+		lockRangeConstraint.setPickList(whetherLock);
+		lockConfig.getConstraints().add(lockRangeConstraint);
+		
+		
+		if (columnConfigs != null) {
+			
+			// move colmuns to right by one column
+			for (ColumnConfiguration config : columnConfigs) {
+				config.setReadOrder(config.getReadOrder() + 1);
+				config.setWriteOrder(config.getWriteOrder() + 1);
+			}
+			
+			columnConfigs.add(lockConfig);
 		}
 		
 		return columnConfigs;
