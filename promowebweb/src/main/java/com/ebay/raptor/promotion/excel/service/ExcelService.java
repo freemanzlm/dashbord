@@ -154,14 +154,22 @@ public class ExcelService {
 		if (!CollectionUtils.isEmpty(listings)) {
 			for (Listing listing : listings) {
 					Map<String, Object> map = new HashMap<String, Object>();
+					
 					String lockMsg = "";
 					if(listing.getLocked()){
 						lockMsg=messageSource.getMessage("listing.lockedMsg", null, LocaleUtil.getCurrentLocale());
 					}else{
 						lockMsg=messageSource.getMessage("listing.unlockedMsg", null, LocaleUtil.getCurrentLocale());
 					}
-					
 					map.put("lockFlag",lockMsg);
+					String stateMsg = "";
+					if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equalsIgnoreCase("NotEnrolled")
+							|| listing.getState().equalsIgnoreCase("UploadEnroll") || listing.getState().equalsIgnoreCase("ReEnroll")) {
+						stateMsg=messageSource.getMessage("listing.stateMsg", null, LocaleUtil.getCurrentLocale());
+					} else {
+						stateMsg=messageSource.getMessage("listing.unStateMsg", null, LocaleUtil.getCurrentLocale());
+					}
+					map.put("stateFlag", stateMsg);
 					String nominationValues = listing.getNominationValues();
 					if (nominationValues != null) {
 						map.putAll(mapper.readValue(nominationValues, Map.class));
@@ -291,12 +299,22 @@ public class ExcelService {
 	public List<ColumnConfiguration> adjustColumnConfigurations2(List<ColumnConfiguration> columnConfigs, Locale locale, String promoId) {
 		if (locale == null) locale = LocaleUtil.getCurrentLocale();
 		
+		ColumnConfiguration stateConfig = new ColumnConfiguration();
+		stateConfig.setKey("stateFlag");
+		stateConfig.setTitle(messageSource.getMessage("excel.header.stateFlag", null, locale));
+		stateConfig.setSample("");
+		stateConfig.setReadOrder(0);
+		stateConfig.setWriteOrder(0);
+		stateConfig.setWritable(false);
+		stateConfig.setDisplay(true);
+		stateConfig.setRawType("string");
+		
 		ColumnConfiguration lockConfig = new ColumnConfiguration();
 		lockConfig.setKey("lockFlag");
 		lockConfig.setTitle(messageSource.getMessage("excel.header.lockFlag", null, locale));
 		lockConfig.setSample("");
-		lockConfig.setReadOrder(0);
-		lockConfig.setWriteOrder(0);
+		lockConfig.setReadOrder(1);
+		lockConfig.setWriteOrder(1);
 		lockConfig.setWritable(false);
 		lockConfig.setDisplay(true);
 		lockConfig.setRawType("string");
@@ -306,6 +324,7 @@ public class ExcelService {
 				config.setReadOrder(config.getReadOrder() + 1);
 				config.setWriteOrder(config.getWriteOrder() + 1);
 			}
+			columnConfigs.add(stateConfig);
 			columnConfigs.add(lockConfig);
 		}
 		
