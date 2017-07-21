@@ -165,9 +165,9 @@ public class ExcelService {
 					String stateMsg = "";
 					if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equalsIgnoreCase("NotEnrolled")
 							|| listing.getState().equalsIgnoreCase("UploadEnroll") || listing.getState().equalsIgnoreCase("ReEnroll")) {
-						stateMsg=messageSource.getMessage("listing.unstateMsg", null, LocaleUtil.getCurrentLocale());
+						stateMsg=messageSource.getMessage("listing.unStateMsg", null, LocaleUtil.getCurrentLocale());
 					} else {
-						stateMsg=messageSource.getMessage("listing.StateMsg", null, LocaleUtil.getCurrentLocale());
+						stateMsg=messageSource.getMessage("listing.stateMsg", null, LocaleUtil.getCurrentLocale());
 					}
 					map.put("stateFlag", stateMsg);
 					String nominationValues = listing.getNominationValues();
