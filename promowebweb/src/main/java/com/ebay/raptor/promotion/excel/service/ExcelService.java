@@ -165,9 +165,9 @@ public class ExcelService {
 					String stateMsg = "";
 					if(listing.getState().equalsIgnoreCase("CanEnroll") || listing.getState().equalsIgnoreCase("NotEnrolled")
 							|| listing.getState().equalsIgnoreCase("UploadEnroll") || listing.getState().equalsIgnoreCase("ReEnroll")) {
-						stateMsg=messageSource.getMessage("listing.stateMsg", null, LocaleUtil.getCurrentLocale());
+						stateMsg=messageSource.getMessage("listing.unstateMsg", null, LocaleUtil.getCurrentLocale());
 					} else {
-						stateMsg=messageSource.getMessage("listing.unStateMsg", null, LocaleUtil.getCurrentLocale());
+						stateMsg=messageSource.getMessage("listing.StateMsg", null, LocaleUtil.getCurrentLocale());
 					}
 					map.put("stateFlag", stateMsg);
 					String nominationValues = listing.getNominationValues();
@@ -321,8 +321,8 @@ public class ExcelService {
 		
 		if (columnConfigs != null) {
 			for (ColumnConfiguration config : columnConfigs) {
-				config.setReadOrder(config.getReadOrder() + 1);
-				config.setWriteOrder(config.getWriteOrder() + 1);
+				config.setReadOrder(config.getReadOrder() + 2);
+				config.setWriteOrder(config.getWriteOrder() + 2);
 			}
 			columnConfigs.add(stateConfig);
 			columnConfigs.add(lockConfig);
