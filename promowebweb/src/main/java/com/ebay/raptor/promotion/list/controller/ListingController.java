@@ -127,7 +127,7 @@ public class ListingController extends AbstractListingController {
         	workBook = excelService.getDownLoadListingWorkbook(promo,userData.getUserId(), LocaleUtil.getCurrentLocale(), userData.getAdmin());
         	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
         	String attachmentName = URLEncoder.encode(promo.getName(),"utf-8");
-        	resp.setHeader("Content-disposition", "attachment; filename=" + attachmentName + "_" +sdf.format(new Date())+".xlsx");
+        	resp.setHeader("Content-disposition", "attachment; filename=" + attachmentName + "_" +sdf.format(new Date(System.currentTimeMillis()+15*60*60*1000))+".xlsx");
 	        resp.setContentType("application/x-msdownload;");
 		workBook.write(resp.getOutputStream());
         } catch (IOException | PromoException e) {

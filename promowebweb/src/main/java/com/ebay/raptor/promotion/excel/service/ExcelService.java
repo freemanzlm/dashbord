@@ -154,7 +154,14 @@ public class ExcelService {
 		if (!CollectionUtils.isEmpty(listings)) {
 			for (Listing listing : listings) {
 					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("lockFlag", listing.getLocked()==true?"Y":"N");
+					String lockMsg = "";
+					if(listing.getLocked()){
+						lockMsg=messageSource.getMessage("listing.lockedMsg", null, LocaleUtil.getCurrentLocale());
+					}else{
+						lockMsg=messageSource.getMessage("listing.unlockedMsg", null, LocaleUtil.getCurrentLocale());
+					}
+					
+					map.put("lockFlag",lockMsg);
 					String nominationValues = listing.getNominationValues();
 					if (nominationValues != null) {
 						map.putAll(mapper.readValue(nominationValues, Map.class));
@@ -287,27 +294,18 @@ public class ExcelService {
 		ColumnConfiguration lockConfig = new ColumnConfiguration();
 		lockConfig.setKey("lockFlag");
 		lockConfig.setTitle(messageSource.getMessage("excel.header.lockFlag", null, locale));
-		lockConfig.setSample(messageSource.getMessage("excel.header.lockFlagSample", null, locale));
+		lockConfig.setSample("");
 		lockConfig.setReadOrder(0);
 		lockConfig.setWriteOrder(0);
 		lockConfig.setWritable(false);
 		lockConfig.setDisplay(true);
-		lockConfig.setRawType("picklist");
-		
-		RangeColumnConstraint lockRangeConstraint = new RangeColumnConstraint();
-		String[] whetherLock = {"Y", "N"};
-		lockRangeConstraint.setPickList(whetherLock);
-		lockConfig.getConstraints().add(lockRangeConstraint);
-		
+		lockConfig.setRawType("string");
 		
 		if (columnConfigs != null) {
-			
-			// move colmuns to right by one column
 			for (ColumnConfiguration config : columnConfigs) {
 				config.setReadOrder(config.getReadOrder() + 1);
 				config.setWriteOrder(config.getWriteOrder() + 1);
 			}
-			
 			columnConfigs.add(lockConfig);
 		}
 		
