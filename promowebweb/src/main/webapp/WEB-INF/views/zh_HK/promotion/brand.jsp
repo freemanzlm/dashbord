@@ -97,12 +97,16 @@
 					
 					<c:choose>
 						<c:when test="${ isRegEnd ne true }">
-							<div class="mt20">
-								<%@ include file="upload_listings_brand.jsp"%>
-							</div>
+							<c:if test="${promo.canEnrollListNum gt 0}">
+								<div class="mt20">
+									<%@ include file="upload_listings_brand.jsp"%>
+								</div>
+							</c:if>
 							
 							<div class="mt20 page-bottom-actions">
-								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交認證</button>
+								<c:if test="${promo.canEnrollListNum gt 0}">
+									<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交認證</button>
+								</c:if>
 								<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
 									<br /> <br /> <a href="index">返回活動列表</a>
 								</c:if>
