@@ -157,6 +157,22 @@ var BizReport = BizReport || {};
 						return data;
 					}
 				},{
+					aTargets: ["lockFlag"],
+					sType: "numeric",
+					sDefaultContent: "",
+					sClass: "text-center dt-nowrap",
+					mRender: function(data, type, full, meta) {
+						if (type === 'display') {
+							return data ? local.getText('dataTable.listing.locked') : local.getText('dataTable.listing.unlocked');
+						}
+						
+						if (type === 'sort') {
+							return data ? 1 : 0;
+						}
+						
+						return data;
+					}
+				},{
 					aTargets: ["check"],
 					bSortable: false,
 					sDefaultContent: "",

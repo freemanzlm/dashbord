@@ -26,6 +26,17 @@
 						</c:if>
 					</c:forEach>
 					
+					<th class="lockFlag">
+						<c:choose>
+							<c:when test="${promo.region eq 'CN' }">
+								锁定状态
+							</c:when>
+							<c:otherwise>
+								鎖定狀態
+							</c:otherwise>
+						</c:choose>
+					</th>
+					
 					<th class="state">
 						<c:choose>
 							<c:when test="${promo.region eq 'CN' }">
@@ -36,6 +47,7 @@
 							</c:otherwise>
 						</c:choose>
 					</th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -44,10 +56,10 @@
 		
 		<c:choose>
 			<c:when test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'  or currentStep eq 'PROMOTION IN PROGRESS') and  regType and isRegEnd ne true}">
-				<c:set var="columns" value='[{"data":"stickyFlag"}, {"data:":"skuId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
+				<c:set var="columns" value='[{"data":"stickyFlag"}, {"data:":"skuId"},${ fn:substringAfter(columns, ",")}, {"data":"lock"}, {"data":"state"}]' />
 			</c:when>
 			<c:otherwise>
-				<c:set var="columns" value='[{"data":"stickyFlag"},${ fn:substringAfter(columns, ",") },{"data":"state"}]' />
+				<c:set var="columns" value='[{"data":"stickyFlag"},${ fn:substringAfter(columns, ",") },{"data":"lock"},{"data":"state"}]' />
 			</c:otherwise>
 		</c:choose>
 		

@@ -10,7 +10,7 @@ $(function(){
 	//var successCount = 0;
 	
 	if (pageData && pageData.columns && pageData.columns.length > 1) {
-		hasState = pageData.columns[pageData.columns.length - 1]['data'] == 'state';
+		hasState = pageData.columns[pageData.columns.length - 2]['data'] == 'state';
 		hasState && listingSortingConfig.push([pageData.columns.length - 1, 'asc']);
 		
 		customTableConfig = {

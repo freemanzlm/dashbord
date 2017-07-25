@@ -45,7 +45,9 @@ BizReport.local = {
 		'listing': {
 			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_条刊登',
 			'emptyTable': '<p>没有相关报名刊登数据,如果是网络问题，请稍后再试。</p>',
-			'zeroRecords': '<p>没有相关报名刊登数据,如果是网络问题，请稍后再试。</p>'
+			'zeroRecords': '<p>没有相关报名刊登数据,如果是网络问题，请稍后再试。</p>',
+			locked: '已锁定',
+			unlocked: '未锁定'
 		},
 		'promo': {
 			'info': '当前显示 _START_ 至 _END_，总共_TOTAL_项活动',
