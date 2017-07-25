@@ -104,7 +104,7 @@ var BizReport = BizReport || {};
 							switch (data) {
 							case 'SELLER NOMINATION_NEED APPROVE':
 							case 'SELLER FEEDBACK':
-								if(full.canEnrollListNum > 0){
+								if(full.canEnrollListNum > 0 && full.state != 'End'){
 									return "<a class='btn' href='" + getLink(full.promoId) + "'>" + local.getText('brandPromo.step.' + data) + "</a>";
 								}else{
 									return '<a href="' + getLink(full.promoId) + '" target="_self">' + local.getText('brandPromo.state.Detailed') + "</a>";
