@@ -11,7 +11,7 @@
 		<table id="listing-table" class="dataTable">
 			<thead>
 				<tr>
-					<th class="sticky">
+					<th class="stickyFlag">
 						<!-- hidden column for making sticky listings always display first -->
 					</th>
 					
@@ -44,10 +44,10 @@
 		
 		<c:choose>
 			<c:when test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'  or currentStep eq 'PROMOTION IN PROGRESS') and  regType and isRegEnd ne true}">
-				<c:set var="columns" value='[{"data":"sticky"}, {"data:":"skuId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
+				<c:set var="columns" value='[{"data":"stickyFlag"}, {"data:":"skuId"},${ fn:substringAfter(columns, ",")},{"data":"state"}]' />
 			</c:when>
 			<c:otherwise>
-				<c:set var="columns" value='[{"data":"sticky"},${ fn:substringAfter(columns, ",") },{"data":"state"}]' />
+				<c:set var="columns" value='[{"data":"stickyFlag"},${ fn:substringAfter(columns, ",") },{"data":"state"}]' />
 			</c:otherwise>
 		</c:choose>
 		

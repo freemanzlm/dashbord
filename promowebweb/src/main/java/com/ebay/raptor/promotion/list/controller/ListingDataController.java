@@ -150,6 +150,7 @@ public class ListingDataController extends AbstractListingController {
 			map.put("state", listing.getState());
 			map.put("currency", listing.getCurrency());
 			map.put("lock", listing.getLocked());
+			map.put("stickyFlag", listing.getStickFlag());
 			
 			if (listing.getNominationValues() != null) {
 				@SuppressWarnings("unchecked")

@@ -15,6 +15,9 @@ var BizReport = BizReport || {};
 	var local = namespace.local;
 	var fileTypeReg = /\.(doc|docx|xls|xlsx|jpg|gif|zip|rar|pdf)$/i;
 	
+	/**
+	 * Check if file size exceed maximum size (in bytes).
+	 */
 	function hasValidSize(inputElement, maxSize) {
 		if (inputElement && inputElement.files) {
 			for (var i = 0; i < inputElement.files.length; i++)	{
@@ -27,6 +30,22 @@ var BizReport = BizReport || {};
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * Check if table has check box for selection.
+	 */
+	function hasCheckbox(settings) {
+		if (!settings || !settings.aoColumns) return false;
+		
+		for (var i = 0; i < settings.aoColumns.length; i++) {
+			var oColumn = settings.aoColumns[i];
+			if (oColumn && oColumn.data === 'skuId') {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	var defaultDataTableConfigs = {
@@ -93,7 +112,7 @@ var BizReport = BizReport || {};
 				},
 				"fnDrawCallback": function(settings){
 					// update checkbox status
-					if (settings.aoColumns[0].bVisible) {
+					if (hasCheckbox(settings)) {
 						settings.aoData.forEach(function(oRow){
 							var jTr = $(oRow.nTr);
 							jTr.find("input[type=checkbox]:enabled").prop("checked", oRow._aData.checked);
@@ -120,7 +139,7 @@ var BizReport = BizReport || {};
 				},
 				columns: null,
 				aoColumnDefs: [{
-					aTargets: ["sticky"],
+					aTargets: ["stickyFlag"],
 					sType: "numeric",
 					sDefaultContent: "0",
 					bVisible: false,
