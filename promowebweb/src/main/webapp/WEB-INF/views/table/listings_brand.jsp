@@ -43,17 +43,10 @@
 		
 		<c:choose>
 			<c:when test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'  or currentStep eq 'PROMOTION IN PROGRESS') and isRegEnd ne true}">
-				<c:choose>
-					<c:when test="${regType}">
-						<c:set var="columns" value='[{"data":"sticky"},{"data:":"skuId"},{"data":"state"}, ${ columns }]' />
-					</c:when>
-					<c:otherwise>
-						<c:set var="columns" value='[{"data":"sticky"},{"data":"state"}, ${ columns }]' />
-					</c:otherwise>
-				</c:choose>
+				<c:set var="columns" value='[{"data":"sticky"},{"data":"state"}, ${ columns }]' />
 			</c:when>
 			<c:otherwise>
-				<c:set var="columns" value='[${ columns }]' />
+				<c:set var="columns" value='[{"data":"sticky"},${ columns }]' />
 			</c:otherwise>
 		</c:choose>
 		

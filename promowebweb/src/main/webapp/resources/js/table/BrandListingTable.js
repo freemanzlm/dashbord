@@ -92,15 +92,6 @@ var BizReport = BizReport || {};
 					}
 				},
 				"fnDrawCallback": function(settings){
-					// update checkbox status
-					if (settings.aoColumns[0].bVisible) {
-						settings.aoData.forEach(function(oRow){
-							var jTr = $(oRow.nTr);
-							jTr.find("input[type=checkbox]:enabled").prop("checked", oRow._aData.checked);
-							oRow._aData.checked ? jTr.addClass("selected") : jTr.removeClass('selected');
-						});
-					}
-					
 					$(".file-input").each(function(){
 						if (this.hasAttribute("inited")) return;
 						

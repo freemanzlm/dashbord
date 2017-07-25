@@ -89,34 +89,32 @@
 
 				<%@ include file="description/brand.jsp"%>
 				
-				<%-- <c:if test="${ currentStep eq 'SELLER NOMINATION_NEED APPROVE' and not regType and not empty fieldsDefintions }"> --%>
+				<c:if test="${ currentStep eq 'SELLER NOMINATION_NEED APPROVE' and not empty fieldsDefintions }">
 					<div class="mt20 my-listing">
 						<h3>提交審核 <small>（ <span></span>）</small></h3>
 						<%@ include file="../../table/listings_brand.jsp"%>
 					</div>
 					
-					<c:choose>
-						<c:when test="${ isRegEnd ne true }">
-							<c:if test="${promo.canEnrollListNum gt 0}">
-								<div class="mt20">
-									<%@ include file="upload_listings_brand.jsp"%>
-								</div>
-							</c:if>
-							
-							<div class="mt20 page-bottom-actions">
-								<c:if test="${promo.canEnrollListNum gt 0}">
-									<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交認證</button>
-								</c:if>
-								<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
-									<br /> <br /> <a href="index">返回活動列表</a>
-								</c:if>
-								<c:if test="${hasListingsNominated ne true and currentStep eq 'SELLER NOMINATION_NEED APPROVE'}">
-									<br /> <br /> <a href="index">返回活動列表</a>
-								</c:if>
+					<c:if test="${ isRegEnd ne true }">
+						<c:if test="${promo.canEnrollListNum gt 0}">
+							<div class="mt20">
+								<%@ include file="upload_listings_brand.jsp"%>
 							</div>
-						</c:when>
-					</c:choose>
-				<%-- </c:if> --%>
+						</c:if>
+						
+						<div class="mt20 page-bottom-actions">
+							<c:if test="${promo.canEnrollListNum gt 0}">
+								<button id="upload-btn" class="btn" ${ isAdmin or isPreview ? 'disabled' : '' } type="button">預覽並提交認證</button>
+							</c:if>
+							<c:if test="${(fn:containsIgnoreCase(stepList, 'SELLER NOMINATION_NEED APPROVE')) and currentStep eq 'SELLER FEEDBACK'}">
+								<br /> <br /> <a href="brands">返回活動列表</a>
+							</c:if>
+							<c:if test="${hasListingsNominated ne true and currentStep eq 'SELLER NOMINATION_NEED APPROVE'}">
+								<br /> <br /> <a href="brands">返回活動列表</a>
+							</c:if>
+						</div>
+					</c:if>
+				</c:if>
 			</div>
 		</div>
 
