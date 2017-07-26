@@ -158,6 +158,7 @@ var BizReport = BizReport || {};
 					}
 				},{
 					aTargets: ["lockFlag"],
+					bVisible: false,
 					sType: "numeric",
 					sDefaultContent: "",
 					sClass: "text-center dt-nowrap",
@@ -487,12 +488,16 @@ var BizReport = BizReport || {};
 					sDefaultContent: "NA",
 					sWidthOrig: "75",
 					mRender: function(data, type, full) {
-						if (type == "display") {
-							if(data == 'ReEnroll') {
-								return '<span class="color-red">'+local.getText('listing.state.' + data)+'</span>';
-							}
-							return !!data ? local.getText('listing.state.' + data) : '';
+						var lockLabel = full.lock ? local.getText('dataTable.listing.locked') : local.getText('dataTable.listing.unlocked');
+						var stateLabel = !!data ? local.getText('listing.state.' + data) : '';
+						if(data == 'ReEnroll') {
+							stateLabel = '<span class="color-red">'+local.getText('listing.state.' + data)+'</span>';
 						}
+						
+						if (type == "display") {
+							return stateLabel + (!!data ? "<br/>" : "") + lockLabel;
+						}
+						
 						if (type == "sort") {
 							if(full.lock == true) {
 								return 4;

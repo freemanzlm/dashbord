@@ -46,8 +46,8 @@ BizReport.local = {
 			'info': '當前顯示 _START_ 至 _END_，總共_TOTAL_條刊登',
 			'emptyTable': '<p>沒有相關報名刊登數據,如果是網絡問題，請稍後再試。</p>',
 			'zeroRecords': '<p>沒有相關報名刊登數據,如果是網絡問題，請稍後再試。</p>',
-			locked: '已鎖定',
-			unlocked: '未鎖定'
+			locked: '(已鎖定)',
+			unlocked: '(未鎖定)'
 		},
 		'promo': {
 			'info': '當前顯示 _START_ 至 _END_，總共_TOTAL_項活動',
