@@ -482,14 +482,18 @@ var BizReport = BizReport || {};
 					sDefaultContent: "NA",
 					sWidthOrig: "75",
 					mRender: function(data, type, full) {
-						var lockLabel = full.lock ? local.getText('dataTable.listing.locked') : local.getText('dataTable.listing.unlocked');
+						var lockLabel = full.lock ? local.getText('dataTable.listing.locked') : '';
 						var stateLabel = !!data ? local.getText('listing.state.' + data) : '';
+						
 						if(data == 'ReEnroll') {
 							stateLabel = '<span class="color-red">'+local.getText('listing.state.' + data)+'</span>';
 						}
 						
 						if (type == "display") {
-							return stateLabel + (!!data ? "<br/>" : "") + lockLabel;
+							if (full.lock) {
+								return stateLabel + (!!stateLabel ? "<br/>" : "") + lockLabel;
+							}
+							return stateLabel;
 						}
 						
 						if (type == "sort") {
