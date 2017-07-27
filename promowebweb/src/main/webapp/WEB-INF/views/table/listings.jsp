@@ -23,13 +23,6 @@
 						<th class="check"><input type="checkbox" class="check-all" /></th>
 					</c:if>
 					
-					<c:forEach items="${ fieldsDefintions }" var="field">
-						<c:if test="${field.key ne 'Listing_Local_Currency_base__c'}">
-							<th class="${fn:toLowerCase(field.rawType)} dt-nowrap ${field.key}">${field.title}</th>
-							<c:set var="columns" value='${columns},{"data":"${field.key}", "bRequired":${field.required}, "bReadonly":${readonly}, "bDisabled":${true}}' ></c:set>
-						</c:if>
-					</c:forEach>
-					
 					<th class="state">
 						<c:choose>
 							<c:when test="${promo.region eq 'CN' }">
@@ -41,6 +34,12 @@
 						</c:choose>
 					</th>
 					
+					<c:forEach items="${ fieldsDefintions }" var="field">
+						<c:if test="${field.key ne 'Listing_Local_Currency_base__c'}">
+							<th class="${fn:toLowerCase(field.rawType)} dt-nowrap ${field.key}">${field.title}</th>
+							<c:set var="columns" value='${columns},{"data":"${field.key}", "bRequired":${field.required}, "bReadonly":${readonly}, "bDisabled":${true}}' ></c:set>
+						</c:if>
+					</c:forEach>
 				</tr>
 			</thead>
 			<tbody>
@@ -49,10 +48,10 @@
 		
 		<c:choose>
 			<c:when test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'  or currentStep eq 'PROMOTION IN PROGRESS') and  regType and isRegEnd ne true}">
-				<c:set var="columns" value='[{"data":"stickyFlag"}, {"data":"lock"}, {"data:":"skuId"},${ fn:substringAfter(columns, ",")}, {"data":"state"}]' />
+				<c:set var="columns" value='[{"data":"stickyFlag"}, {"data":"lock"}, {"data:":"skuId"}, {"data":"state"},${ fn:substringAfter(columns, ",")}]' />
 			</c:when>
 			<c:otherwise>
-				<c:set var="columns" value='[{"data":"stickyFlag"},{"data":"lock"}, ${ fn:substringAfter(columns, ",") },{"data":"state"}]' />
+				<c:set var="columns" value='[{"data":"stickyFlag"},{"data":"lock"},{"data":"state"}, ${ fn:substringAfter(columns, ",") }]' />
 			</c:otherwise>
 		</c:choose>
 		

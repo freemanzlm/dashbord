@@ -8,7 +8,7 @@ $(function(){
 	var hasState = false, customTableConfig, listingSortingConfig = []/* empty aaSorting must be [], it can't be null */;
 	
 	function findStateColumnIndex(columns) {
-		for (var i = columns.length - 1; i >= 0; i--) {
+		for (var i = 0; i < columns.length; i++) {
 			if (columns[i]['data'] === 'state') {
 				return i;
 			}
