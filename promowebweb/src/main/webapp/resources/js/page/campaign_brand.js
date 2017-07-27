@@ -22,8 +22,6 @@ $(function(){
 		var stateColumnIndex = findStateColumnIndex(pageData.columns);
 		stateColumnIndex > -1 && listingSortingConfig.push([stateColumnIndex, 'asc']);
 		
-		listingSortingConfig.push([1, 'asc']); // lock column
-		
 		customTableConfig = {
 			'columns': pageData.columns,
 			'aaSortingFixed': [[0, 'desc']],

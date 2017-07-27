@@ -8,7 +8,7 @@ $(function(){
 	var hasState = false, customTableConfig, listingSortingConfig = []/* empty aaSorting must be [], it can't be null */;
 	
 	function findStateColumnIndex(columns) {
-		for (var i = columns.length - 1; i >= 0; i++) {
+		for (var i = columns.length - 1; i >= 0; i--) {
 			if (columns[i]['data'] === 'state') {
 				return i;
 			}
@@ -20,7 +20,7 @@ $(function(){
 	if (pageData && pageData.columns && pageData.columns.length > 1) {
 		var stateColumnIndex = findStateColumnIndex(pageData.columns);
 		stateColumnIndex > -1 && listingSortingConfig.push([stateColumnIndex, 'asc']);
-		listingSortingConfig.push([1, 'asc']);
+		console.log(stateColumnIndex);
 		
 		customTableConfig = {
 			'columns': pageData.columns,

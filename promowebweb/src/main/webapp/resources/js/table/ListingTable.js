@@ -59,7 +59,7 @@ var BizReport = BizReport || {};
 				'bPaginate': false,
 				'bServerSide': false,
 				'bSortCellsTop': true,
-				'bSort': false,
+				'bSort': true,
 				'iDisplayLength': 10,
 				'sPaginationType': 'full_numbers',
 				'sDom': '<"datatable_header"rf>t<"datatable_pager clr"ip>',
@@ -503,6 +503,10 @@ var BizReport = BizReport || {};
 						}
 						
 						if (type == "sort") {
+							if(full.lock == true) {
+								return 4;
+							}
+							
 							switch (data) {
 							case 'ReEnroll':
 								return 3;
