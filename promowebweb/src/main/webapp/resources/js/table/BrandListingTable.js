@@ -497,9 +497,6 @@ var BizReport = BizReport || {};
 						}
 						
 						if (type == "sort") {
-							if(full.lock == true) {
-								return 4;
-							}
 							switch (data) {
 							case 'Enrolled':
 							case 'ReviewPassed':

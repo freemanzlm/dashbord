@@ -11,7 +11,11 @@
 			<thead>
 				<tr>
 					<th class="stickyFlag">
-						<!-- hidden column for making sticky listings always display first -->
+						<!-- hidden column for sorting -->
+					</th>
+					
+					<th class="lockFlag">
+						<!-- hidden column for sorting -->
 					</th>
 					
 					<c:if test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'  or currentStep eq 'PROMOTION IN PROGRESS') and isRegEnd ne true}">
@@ -34,16 +38,7 @@
 						</c:if>
 					</c:forEach>
 					
-					<th class="lockFlag">
-						<c:choose>
-							<c:when test="${promo.region eq 'CN' }">
-								锁定状态
-							</c:when>
-							<c:otherwise>
-								鎖定狀態
-							</c:otherwise>
-						</c:choose>
-					</th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -54,10 +49,10 @@
 		
 		<c:choose>
 			<c:when test="${(currentStep eq 'SELLER NOMINATION_NEED APPROVE' or currentStep eq 'SELLER FEEDBACK'  or currentStep eq 'PROMOTION IN PROGRESS') and isRegEnd ne true}">
-				<c:set var="columns" value='[{"data":"stickyFlag"},{"data":"state"}, ${ columns },{"data":"lock"}]' />
+				<c:set var="columns" value='[{"data":"stickyFlag"},{"data":"lock"},{"data":"state"}, ${ columns }]' />
 			</c:when>
 			<c:otherwise>
-				<c:set var="columns" value='[{"data":"stickyFlag"},${ columns },{"data":"lock"}]' />
+				<c:set var="columns" value='[{"data":"stickyFlag"},{"data":"lock"},${ columns }]' />
 			</c:otherwise>
 		</c:choose>
 		

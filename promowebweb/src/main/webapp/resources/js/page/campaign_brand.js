@@ -7,10 +7,22 @@ $(function(){
 	
 	var hasState = false, stateColumnIndex = 0, customTableConfig, listingSortingConfig = [] /* empty aaSorting must be [], it can't be null */;
 	
+	function findStateColumnIndex(columns) {
+		for (var i = 0; i < columns.length; i++) {
+			if (columns[i]['data'] === 'state') {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
 	if (pageData && pageData.columns && pageData.columns.length > 1) {
-		// state column must the first column or the second column
-		hasState = pageData.columns[0]['data'] == 'state' || (stateColumnIndex = 1, pageData.columns[1]['data'] == 'state');
-		hasState && listingSortingConfig.push([stateColumnIndex, 'asc']);
+		// find the index of state column.
+		var stateColumnIndex = findStateColumnIndex(pageData.columns);
+		stateColumnIndex > -1 && listingSortingConfig.push([stateColumnIndex, 'asc']);
+		
+		listingSortingConfig.push([1, 'asc']); // lock column
 		
 		customTableConfig = {
 			'columns': pageData.columns,

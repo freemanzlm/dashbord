@@ -7,11 +7,20 @@ $(function(){
 	
 	var hasState = false, customTableConfig, listingSortingConfig = []/* empty aaSorting must be [], it can't be null */;
 	
-	//var successCount = 0;
+	function findStateColumnIndex(columns) {
+		for (var i = columns.length - 1; i >= 0; i++) {
+			if (columns[i]['data'] === 'state') {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 	
 	if (pageData && pageData.columns && pageData.columns.length > 1) {
-		hasState = pageData.columns[pageData.columns.length - 2]['data'] == 'state';
-		hasState && listingSortingConfig.push([pageData.columns.length - 1, 'asc']);
+		var stateColumnIndex = findStateColumnIndex(pageData.columns);
+		stateColumnIndex > -1 && listingSortingConfig.push([stateColumnIndex, 'asc']);
+		listingSortingConfig.push([1, 'asc']);
 		
 		customTableConfig = {
 			'columns': pageData.columns,
