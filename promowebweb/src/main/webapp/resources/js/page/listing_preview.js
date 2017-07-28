@@ -11,6 +11,7 @@ $(function(){
 			customTableConfig: {
                 'sAjaxSource': '/promotion/listings/getUploadedListings',
                 'sScrollY': '',
+                'aaSortingFixed': [[0, 'desc']],
                 'columns': pageData && pageData.columns,
                 'promo': {promoId:pageData.promoId, regType:pageData.regType, currentStep: pageData.currentStep, isRegEnd:pageData.isRegEnd, isListingPreview:pageData.isListingPreview}
             }

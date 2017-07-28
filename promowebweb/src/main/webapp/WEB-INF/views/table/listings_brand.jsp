@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<c:set var="columns" value=""></c:set>
+<c:set var="columns" value="[]"></c:set>
 <c:set var="readonly" value="${ (promo.regType eq true and isRegEnd eq true) or promo.regType eq false }"></c:set>
 
 <div id="listing-table-container" class="dataTable-container">
