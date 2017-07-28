@@ -38,10 +38,16 @@ $(function(){
 		$errorList.empty(); // init		
 		if (errors && errors.length > 0) {
 			errors.forEach(function(error){
-				first && $summary.html($summary.html().replace(/{row}/, error.rowIndex + 1/*excel row start from 0*/)), first = false;
-				var li = document.createElement('li');
-				li.innerHTML = local.getText('excel.row', [error.rowIndex + 1]) + error.message;
-				$errorList.append(li);
+				if (error.rowIndex !== undefined) {
+					first && $summary.html($summary.html().replace(/{row}/, error.rowIndex + 1/*excel row start from 0*/)), first = false;
+					var li = document.createElement('li');
+					li.innerHTML = local.getText('excel.row', [error.rowIndex + 1]) + error.message;
+					$errorList.append(li);
+				} else {
+					var li = document.createElement('li');
+					li.innerHTML = error.message;
+					$errorList.append(li);
+				}		
 			});
 			$container.removeClass('hide');
 		} else {

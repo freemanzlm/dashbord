@@ -38,6 +38,7 @@ import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.Router;
 import com.ebay.raptor.promotion.excel.ColumnConfiguration;
+import com.ebay.raptor.promotion.excel.ExcelError;
 import com.ebay.raptor.promotion.excel.UploadedListingFileHandler;
 import com.ebay.raptor.promotion.excel.service.ExcelService;
 import com.ebay.raptor.promotion.excel.util.ExcelUtil;
@@ -188,7 +189,9 @@ public class ListingController extends AbstractListingController {
 			workbook.close();
 		} catch (UploadListingIsNullException e) {
 			responseData.setStatus(false);
-			responseData.setMessage(messageSource.getMessage("excel.validation.listing.notnull.message", null, LocaleUtil.getCurrentLocale()));
+			ExcelError error = new ExcelError();
+			error.setMessage(messageSource.getMessage("excel.validation.listing.notnull.message", null, LocaleUtil.getCurrentLocale()));
+			responseData.getErrors().add(error);
 			mav.addObject("response", PojoConvertor.convertToJson(responseData));
 			return mav;
 		} catch (Exception e) {
