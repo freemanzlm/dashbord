@@ -73,7 +73,7 @@ public class UploadedListingFileHandler {
 					logger.error("Listing nomination value is unresolvable.");
 				}
 				listings.add(listing);
-			}			
+			}
 			
 			listingService.uploadListings(listings, promoId, userId);
 		} else {
