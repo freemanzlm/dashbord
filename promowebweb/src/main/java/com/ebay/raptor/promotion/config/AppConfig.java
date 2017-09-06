@@ -35,7 +35,7 @@ public class AppConfig {
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com";
 		} else if (bdCfg.isQATE()) {
 			// feature pool or staging pool
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
+			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com";
 		} else if (bdCfg.isDev()) {
 			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
