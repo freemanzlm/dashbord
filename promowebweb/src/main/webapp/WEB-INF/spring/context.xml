@@ -43,6 +43,7 @@
 	<context:component-scan base-package="com.ebay.raptor.promotion.controller" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.service" />
 	<context:component-scan base-package="com.ebay.raptor.promotion.sd.service" />
+	<context:component-scan base-package="com.ebay.raptor.promotion.nsd.service" />
 	<context:component-scan base-package="com.ebay.raptor.subsidy.service" />
 	<context:component-scan base-package="com.ebay.raptor.subsidy.controller" />
 	<context:component-scan base-package="com.ebay.cbt.raptor.csApi.soap.api" />

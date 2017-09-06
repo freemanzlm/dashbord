@@ -38,11 +38,11 @@ public class AppConfig {
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com";
 		} else if (bdCfg.isDev()) {
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
-			bizReportServicePrefix = "http://sdbrws.stratus.qa.ebay.com";
+			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
+			bizReportServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
 		} else {
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
-			bizReportServicePrefix = "http://cbtsdws2.qa.ebay.com";
+			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
+			bizReportServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
 		}
 	}
 	

@@ -17,6 +17,7 @@ import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.config.AppConfig;
 import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.nsd.service.NSDDataService;
 import com.ebay.raptor.promotion.pojo.PGCSeller;
 import com.ebay.raptor.promotion.pojo.PgcEligiblity;
 import com.ebay.raptor.promotion.pojo.UserData;
@@ -43,6 +44,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	@Autowired LoginService loginService;
 	@Autowired BaseDataService baseService;
 	@Autowired PGCService pgcService;
+	@Autowired NSDDataService nsdService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -120,6 +122,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		boolean isCanSubscribeConv = isAdmin;
 		boolean isCanSubscribeDDS = isAdmin;
 		boolean isInConvWhitelist = isAdmin;
+		boolean accessAccountOverview=isAdmin;
 		try {
 //			accessBizReport = userData.getAdmin() || baseService.isUserAbleToAccessBizReport(userData.getUserId());
 
@@ -139,8 +142,9 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		} catch (HttpRequestException e1) {
 			logger.log(LogLevel.WARN, "Failed to check if user can access biz report.");
 		}
-		
+		accessAccountOverview=nsdService.isUserAbleAccessNewBiz(userData.getUserId());
 		model.addObject("accessBiz", accessBizReport);
+		model.addObject("accessAccountOverview",accessAccountOverview);
 		model.addObject("isInDDSWhitelist", isInDDSWhitelist);
 		model.addObject("isSubscribeDialogClosed", isSubscribeDialogClosed);
 		model.addObject("isCanSubscribeConv", isCanSubscribeConv);
