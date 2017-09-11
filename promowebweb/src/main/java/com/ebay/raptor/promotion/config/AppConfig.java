@@ -8,8 +8,8 @@ import com.ebay.kernel.context.AppBuildConfig;
  */
 public class AppConfig {
 
-	public final static String SELLER_DASHBOARD_URL = "http://cbtreport.ebay.com.hk/";
-    public final static String BIZ_REPORT_URL = "http://biz.ebay.com.hk/bizreportweb/index";
+	public  static String SELLER_DASHBOARD_URL = "http://cbtreport.ebay.com.hk/";
+    public  static String BIZ_REPORT_URL = "http://biz.ebay.com.hk/bizreportweb/index";
     
     /*
      * LOGIN_URL and REFER_PARAM are very important for login.
@@ -32,6 +32,8 @@ public class AppConfig {
 			bizReportServicePrefix = "http://www.bizser.stratus.ebay.com";
 		} else if ("staging".equals(bdCfg.getPoolType())) {
 			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
+			SELLER_DASHBOARD_URL="dashboard-4.stratus.qa.ebay.com/";
+			BIZ_REPORT_URL="http://anonymous-1-bizreport-envf7jokk59vh.vip.stratus.qa.ebay.com/bizreportweb";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com";
 		} else if (bdCfg.isQATE()) {
 			// feature pool or staging pool
@@ -63,5 +65,22 @@ public class AppConfig {
 			String sellerDashboardServicePrefix) {
 		AppConfig.sellerDashboardServicePrefix = sellerDashboardServicePrefix;
 	}
+
+	public static String getSELLER_DASHBOARD_URL() {
+		return SELLER_DASHBOARD_URL;
+	}
+
+	public static void setSELLER_DASHBOARD_URL(String sELLER_DASHBOARD_URL) {
+		SELLER_DASHBOARD_URL = sELLER_DASHBOARD_URL;
+	}
+
+	public static String getBIZ_REPORT_URL() {
+		return BIZ_REPORT_URL;
+	}
+
+	public static void setBIZ_REPORT_URL(String bIZ_REPORT_URL) {
+		BIZ_REPORT_URL = bIZ_REPORT_URL;
+	}
+	
 	
 }
