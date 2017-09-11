@@ -31,8 +31,8 @@ public class AppConfig {
 			sellerDashboardServicePrefix = "http://cbtsdws2.stratus.ebay.com";
 			bizReportServicePrefix = "http://www.bizser.stratus.ebay.com";
 		} else if ("staging".equals(bdCfg.getPoolType())) {
-			sellerDashboardServicePrefix = "http://cbtsdws2.qa.ebay.com";
-			SELLER_DASHBOARD_URL="dashboard-4.stratus.qa.ebay.com/";
+			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
+			SELLER_DASHBOARD_URL="http://dashboard-4.stratus.qa.ebay.com/";
 			BIZ_REPORT_URL="http://anonymous-1-bizreport-envf7jokk59vh.vip.stratus.qa.ebay.com/bizreportweb";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com";
 		} else if (bdCfg.isQATE()) {
