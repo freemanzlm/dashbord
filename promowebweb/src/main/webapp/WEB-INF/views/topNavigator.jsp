@@ -17,7 +17,7 @@
 				</li>
 				<li class="no-sub-menu"><a href="${sdurl}policyreminds">政策表现</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
 				<c:if test="${accessBiz == true}">
-				<li class=""><a href="${bizurl}">销售报告</a>
+				<li class=""><a href="${bizurl}">销售分析</a>
 					<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=246" target="_blank"></a></small>
 					<c:if test="${isDisplayNewIcon eq true}"><span class="icon icon-new"></span></c:if>
 				</li>
