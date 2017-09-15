@@ -9,26 +9,31 @@
 	<div class="navigator-bar clr">
 		<div class="navigator-title">賣家中心</div>
 		<ul class="navigation-list">
-		<c:if test="${accessAccountOverview == true}">
+		<c:choose>
+			<c:when test="${accessAccountOverview == true}">
 				<li class=""><a href="${sdurl}accountOverview">賬號概況</a>
 					<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=246" target="_blank"></a></small>
 					<c:if test="${isDisplayNewIcon eq true}"><span class="icon icon-new"></span></c:if>
 				</li>
-			</c:if>	
-			<c:if test="${accessBiz == true}">
-				<li class=""><a href="${bizurl}">業務分析報告</a>
+				<li class="no-sub-menu"><a href="${sdurl}policyreminds">政策表現</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
+				<c:if test="${accessBiz == true}">
+				<li class=""><a href="${bizurl}">銷售分析</a>
 					<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=246" target="_blank"></a></small>
 					<c:if test="${isDisplayNewIcon eq true}"><span class="icon icon-new"></span></c:if>
 				</li>
-			</c:if>
-			<c:choose>
-				<c:when test="${accessAccountOverview == true}">
-					<li class="no-sub-menu"><a href="${sdurl}policyreminds">政策提醒</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
-				</c:when>
-				<c:otherwise>
-					<li class="no-sub-menu"><a href="${sdurl}">買家體驗報告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
-				</c:otherwise>
-			</c:choose>
+				</c:if>
+			</c:when>
+			<c:otherwise>
+						<c:if test="${accessBiz == true}">
+								<li class=""><a href="${bizurl}">業務分析報告</a>
+									<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=246" target="_blank"></a></small>
+									<c:if test="${isDisplayNewIcon eq true}"><span class="icon icon-new"></span></c:if>
+								</li>
+						</c:if>
+						<li class="no-sub-menu"><a href="${sdurl}">買家體驗報告</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
+			</c:otherwise>
+		
+		</c:choose>
 			<li class="active">
 				<a id="promotion" href="/promotion/index" target="_self">營銷活動</a>
 				<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=250" target="_blank"></a></small>
