@@ -156,12 +156,12 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		
 		if (accessBizReport) {
 			model.addObject(ViewContext.BizUrl.getAttr(),
-					AppConfig.BIZ_REPORT_URL + "?lang" + language);
+					AppConfig.BIZ_REPORT_URL + "?lang=" + language);
 		}
 		//access new phase1 version to new biz 
 		if(accessAccountOverview){
 			model.addObject(ViewContext.BizUrl.getAttr(),
-					AppConfig.BIZ_REPORT_URL+"1" + "?lang" + language);
+					AppConfig.BIZ_REPORT_URL+"1" + "?lang=" + language);
 		}
 
 	}
