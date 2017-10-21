@@ -12,7 +12,7 @@
 		<c:choose>
 			<c:when test="${accessAccountOverview == true}">
 				<li class=""><a href="${sdurl}accountOverview">帳號概況</a>
-					<small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=246" target="_blank"></a></small>
+					<small><a class="fa fa-question-circle" href="http://university.ebay.cn/newcms/university/67" target="_blank"></a></small>
 					<c:if test="${isDisplayNewIcon eq true}"><span class="icon icon-new"></span></c:if>
 				</li>
 				<li class="no-sub-menu"><a href="${sdurl}policyreminds">政策表現</a><small><a class="fa fa-question-circle" href="http://community.ebay.cn/portal.php?mod=view&aid=247" target="_blank"></a></small></li>
