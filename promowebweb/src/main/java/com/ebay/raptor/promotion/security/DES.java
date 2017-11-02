@@ -163,8 +163,13 @@ public class DES {
 
 	private byte[] desKey;
 	public static void main(String[] args) throws Exception{
-		System.out.println(base64Encode("hello".getBytes())); //aGVsbG8=
-		System.out.println(DES.getInstance().encrypt("1", true)); //Dl3YGwmmKXU%3D
-
+		System.out.println(base64Encode("best-shopping-mall".getBytes())); //aGVsbG8=
+		String ecncrypted = DES.getInstance().encrypt2("best-shopping-mall");
+		System.out.println(ecncrypted); //Dl3YGwmmKXU%3D
+		
+		ecncrypted = DES.getInstance().encrypt("best-shopping-mall", true);
+		System.out.println(ecncrypted); //Dl3YGwmmKXU%3D
+		
+//		String descripted = DES.getInstance().de;
 	}
 }
