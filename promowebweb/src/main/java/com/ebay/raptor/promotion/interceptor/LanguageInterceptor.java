@@ -174,7 +174,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			obj.put("LoggedCBTAccountID", userData.getUserId());
 			obj.put("time", System.currentTimeMillis());
 			String secretParams = DES.getInstance().encrypt2(obj.toString());
-			secretParams = URLEncoder.encode(secretParams, "UTF-8");
+			//secretParams = URLEncoder.encode(secretParams, "UTF-8");
 			mav.addObject("secretParams", secretParams);
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "secretParams failed."+e.getMessage());
