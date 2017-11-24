@@ -143,6 +143,9 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			logger.log(LogLevel.WARN, "Failed to check if user can access biz report.");
 		}
 		accessAccountOverview=nsdService.isUserAbleAccessNewBiz(userData.getUserId());
+		long useractGrade = nsdService.getNSDActGradeByEbayOracleId(userData.getUserId()+"");
+		boolean accessDiagnose=useractGrade>1?true:false;
+		model.addObject("accessDiagnose",accessDiagnose );
 		model.addObject("accessBiz", accessBizReport);
 		model.addObject("accessAccountOverview",accessAccountOverview);
 		model.addObject("isInDDSWhitelist", isInDDSWhitelist);

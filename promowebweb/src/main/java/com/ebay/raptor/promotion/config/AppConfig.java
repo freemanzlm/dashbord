@@ -34,19 +34,19 @@ public class AppConfig {
 			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
 			SELLER_DASHBOARD_URL="http://dashboard-4.stratus.qa.ebay.com/";
 			BIZ_REPORT_URL="http://anonymous-1-bizreport-envf7jokk59vh.vip.stratus.qa.ebay.com/bizreportweb/index";
-			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com";
+			bizReportServicePrefix = "http://anonymous-1-sdbrws-envf7jokk59vh.vip.stratus.qa.ebay.com";
 		} else if (bdCfg.isQATE()) {
 			// feature pool or staging pool
 			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
 			bizReportServicePrefix = "http://sdbrws-2.stratus.qa.ebay.com";
 		} else if (bdCfg.isDev()) {
 			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
-			bizReportServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
+			bizReportServicePrefix = "http://anonymous-1-sdbrws-envf7jokk59vh.vip.stratus.qa.ebay.com";
 			BIZ_REPORT_URL="http://L-SHC-15008822.corp.ebay.com:8030/bizreportweb/index";
 			SELLER_DASHBOARD_URL="http://L-SHC-15008822.corp.ebay.com:8090/";
 		} else {
 			sellerDashboardServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
-			bizReportServicePrefix = "http://cbtsdws2-2.stratus.qa.ebay.com";
+			bizReportServicePrefix = "anonymous-1-sdbrws-envf7jokk59vh.vip.stratus.qa.ebay.com";
 		}
 	}
 	
