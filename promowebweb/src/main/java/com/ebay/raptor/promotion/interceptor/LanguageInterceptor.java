@@ -12,11 +12,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.servlet.support.RequestContext;
 
+import com.ebay.app.raptor.cbtcommon.pojo.db.Audit;
+import com.ebay.app.raptor.cbtcommon.pojo.db.AuditType;
 import com.ebay.app.raptor.promocommon.httpRequest.HttpRequestException;
 import com.ebay.kernel.logger.LogLevel;
 import com.ebay.kernel.logger.Logger;
 import com.ebay.raptor.promotion.config.AppConfig;
 import com.ebay.raptor.promotion.config.AppCookies;
+import com.ebay.raptor.promotion.nsd.pojo.TrackingType;
 import com.ebay.raptor.promotion.nsd.service.NSDDataService;
 import com.ebay.raptor.promotion.pojo.PGCSeller;
 import com.ebay.raptor.promotion.pojo.PgcEligiblity;
@@ -27,6 +30,7 @@ import com.ebay.raptor.promotion.service.BRDataService;
 import com.ebay.raptor.promotion.service.BaseDataService;
 import com.ebay.raptor.promotion.service.LoginService;
 import com.ebay.raptor.promotion.service.PGCService;
+import com.ebay.raptor.promotion.service.TrackService;
 import com.ebay.raptor.promotion.util.CookieUtil;
 
 /**
@@ -45,7 +49,8 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 	@Autowired BaseDataService baseService;
 	@Autowired PGCService pgcService;
 	@Autowired NSDDataService nsdService;
-
+	@Autowired TrackService trackService;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
@@ -145,6 +150,11 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 		accessAccountOverview=nsdService.isUserAbleAccessNewBiz(userData.getUserId());
 		long useractGrade = nsdService.getNSDActGradeByEbayOracleId(userData.getUserId()+"");
 		boolean accessDiagnose=useractGrade>1?true:false;
+		if(accessDiagnose==true){try {
+			trackService.insertAudit(new Audit(TrackingType.NewDashBoardPromotion.getType(),userData.getUserId()+"",userData.getUserName(),""));//tracking nsd phase2 access new promotion
+		} catch (com.ebay.app.raptor.cbtcommon.httpRequest.HttpRequestException e) {
+			logger.log(LogLevel.ERROR,"Unable to insert login audit data into DB.");
+		}}
 		model.addObject("accessDiagnose",accessDiagnose );
 		model.addObject("accessBiz", accessBizReport);
 		model.addObject("accessAccountOverview",accessAccountOverview);
