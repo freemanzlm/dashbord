@@ -1,5 +1,6 @@
 package com.ebay.raptor.promotion.interceptor;
 
+import java.net.URLEncoder;
 import java.util.Locale;
 import java.util.Map;
 
@@ -186,6 +187,7 @@ public class LanguageInterceptor extends HandlerInterceptorAdapter {
 			obj.put("LoggedCBTAccountID", userData.getUserId());
 			obj.put("time", System.currentTimeMillis());
 			String secretParams = DES.getInstance().encrypt2(obj.toString());
+			//secretParams = URLEncoder.encode(secretParams, "UTF-8");
 			mav.addObject("secretParams", secretParams);
 		} catch (Exception e) {
 			logger.log(LogLevel.ERROR, "secretParams failed."+e.getMessage());
