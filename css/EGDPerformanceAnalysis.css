@@ -1,0 +1,103 @@
+/* css resize */
+html,body {
+    min-width: 1200px;
+}
+
+a{
+	color: #0654ba;
+    text-decoration: none !important;
+}
+
+
+.clearfix::after{
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    clear: both;
+}
+/* css resize */
+
+
+.egd_performance_analysis{
+    padding-top: 20px;
+    margin: 0 auto;
+    width: 1200px;
+}
+
+
+/* header  start*/
+.egd_title{
+    color: black;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.egd_title h1{
+    font-weight: 800;
+    font-family: "楷体";
+    margin-right: 20px;
+}
+
+.egd_title a{
+    color: black;
+}
+
+/* header  end*/
+
+/* topbar start */
+.egd_sort {
+    padding: 30px 0 23px 0;
+}
+
+.egd_line li{
+    float: left;
+    margin-right: 10px;
+    height: 47px;
+    line-height: 47px;
+    background-color: #d9d9d9;
+    text-align: center;
+}
+
+.egd_line li a{
+    color: #525252;
+    font-weight: 600;
+    display: block;
+    width: 100%;
+}
+
+.egd_line li:first-of-type{
+    width: 232px;
+}
+
+.egd_line li:nth-of-type(2) {
+    width: 206px;
+}
+
+.egd_line li:nth-of-type(2) span {
+    color: red
+}
+
+.egd_line li:last-of-type{
+    width: 214px;
+}
+
+.egd_line li:last-of-type span {
+    color: #00b050
+}
+
+/* topbar end */
+
+/* export data start  */
+#data_link {
+    display: block;
+    width: 216px;
+    color: #fff;
+    font-size: 20px;
+    height: 46px;
+    line-height: 46px;
+    background-color: #5b9bd5;
+    margin: 0 auto;
+}
+/* export data end  */

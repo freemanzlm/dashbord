@@ -1,0 +1,35 @@
+.egd_performance_analysis #example th {
+    background-color: #a5a5a5;
+    color: #fff;
+    border: none ;
+}
+
+
+.egd_performance_analysis #example tr{
+    background-color: #fff;
+    text-align: center;
+    border-color: #d2d2d2;
+}
+
+.egd_performance_analysis #example {
+    border:1px solid #d2d2d2;    
+}
+
+.egd_performance_analysis #example tr td:nth-of-type(-n+3)
+{
+    color: #1b8cdd;
+}
+
+.egd_performance_analysis #example tr td:last-of-type {
+    background-color: #fff2cc;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.egd_performance_analysis #example tr td:last-of-type ul{
+
+    list-style: initial;
+    
+    padding: 3px 0 3px 12px;
+}
+

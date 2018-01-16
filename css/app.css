@@ -1,0 +1,46 @@
+/**** Typography ****/
+html body {
+	font-size:12px;
+	color:#666;
+	background-color:#fff;
+	font-family:Arial, Sans-Serif, Verdana;
+}
+
+p {
+	margin:0 0 1em;
+}
+
+hr {
+	/* HR has four borders by default */
+	border-top: 1px solid #ccc; 
+	border-bottom: none; 
+}
+
+/*** Hyperlinks ***/
+
+a{
+	color: #0654ba;
+	text-decoration: none;
+}
+
+a:visited, a.scnd:visited{
+	color: #6a29b9;
+	text-decoration: none;
+}
+
+#footer .legal-notice {
+	padding: 20px 20px 0;
+}
+
+.container-full #footer .legal-notice {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.legal-notice + #glbfooter {
+	padding-top: 0;
+}
+
+#glbfooter a {
+    color: #0064D2 !important;
+}
