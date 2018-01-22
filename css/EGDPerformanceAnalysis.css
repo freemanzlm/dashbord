@@ -5,9 +5,17 @@ html,body {
 
 a{
 	color: #0654ba;
-    text-decoration: none !important;
+    text-decoration: none;
 }
 
+a:hover {
+    text-decoration: none;    
+}
+
+h1 {
+    font-weight: 800;
+    font-family: "楷体";
+}
 
 .clearfix::after{
     content: "";
@@ -19,7 +27,8 @@ a{
 /* css resize */
 
 
-.egd_performance_analysis{
+.egd_performance_analysis,
+.overseas_warehouse_settings{
     padding-top: 20px;
     margin: 0 auto;
     width: 1200px;
@@ -35,8 +44,6 @@ a{
 }
 
 .egd_title h1{
-    font-weight: 800;
-    font-family: "楷体";
     margin-right: 20px;
 }
 
@@ -46,7 +53,7 @@ a{
 
 /* header  end*/
 
-/* topbar start */
+/* topbar buttons start */
 .egd_sort {
     padding: 30px 0 23px 0;
 }
@@ -67,27 +74,27 @@ a{
     width: 100%;
 }
 
-.egd_line li:first-of-type{
+.egd_line li:first-child{
     width: 232px;
 }
 
-.egd_line li:nth-of-type(2) {
+.egd_line li:nth-child(2) {
     width: 206px;
 }
 
-.egd_line li:nth-of-type(2) span {
+.egd_line li:nth-child(2) span {
     color: red
 }
 
-.egd_line li:last-of-type{
+.egd_line li:last-child{
     width: 214px;
 }
 
-.egd_line li:last-of-type span {
+.egd_line li:last-child span {
     color: #00b050
 }
 
-/* topbar end */
+/* topbar buttons end */
 
 /* export data start  */
 #data_link {
@@ -101,3 +108,170 @@ a{
     margin: 0 auto;
 }
 /* export data end  */
+
+
+/* Overseas warehouse settings analysis  start*/
+.overseas_warehouse_preview {
+    margin-top: 20px;
+    width: 316px;
+}
+
+.overseas_warehouse_preview .tips{
+    width: 275px;
+    height: 38px;
+    background-color: #5b9bd5;
+    line-height: 13px;
+    color: #fff;
+    border-radius: 5px;
+    position: relative;
+    padding: 11px 0 11px 20px;
+    box-sizing: border-box;
+    font-size: 12px;
+}
+
+.overseas_warehouse_preview .tips::after {
+    content: "";
+    width: 0;
+    height: 0;
+    display: block;
+    border-top: 15px solid #5b9bd5;
+    border-left: 19px solid transparent;
+    border-right: 19px solid transparent;
+    position: absolute;
+    top: 38px;
+    left: 118.5px;
+}
+
+.overseas_warehouse_preview ul li 
+{
+    float: left;
+    width: 277px;
+    height: 65px;
+    background-color: #7f7f7f;
+    border-radius: 10px;    
+    box-sizing: border-box;
+    padding: 12px 0 5px 18px;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    margin-top: 10px;
+}
+
+
+
+.overseas_warehouse_preview .warehouse 
+{
+    padding-right: 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.warehouse a{
+    color: #ffff00;
+    text-decoration: underline !important;
+}
+
+.warehouse_sales {
+    height: 48px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    border-left: 1px solid #fff;
+}
+
+.warehouse_sales span {
+    color: #ffff00;
+}
+
+.overseas_warehouse_preview li h1 {
+    font-size: 16px;
+}
+
+.overseas_warehouse_preview ul li.active {
+    background-color: #62983e;
+}
+
+.overseas_warehouse_preview ul li.active::after
+{
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 28px solid #62983e;
+    border-bottom: 17px solid transparent;
+    border-top: 17px solid transparent;
+    position: absolute;
+    right: -35px;
+    top: 13px;
+}
+
+/* Overseas warehouse settings analysis  end*/
+
+/* overseas warehouse maps start*/
+#overseas_warehouse_maps{
+    border: 1px solid #d9d9d9;
+    overflow: hidden;
+    padding: 27px 10px 20px 10px;
+    box-sizing: border-box;    
+}
+
+.overseas_warehouse_messages ul li {
+    margin-bottom: 5px;
+} 
+
+.overseas_warehouse_messages li span {
+    color: #5b9bd5;    
+}
+
+.overseas_warehouse_messages .details {
+    overflow: hidden;
+    padding: 20px 0 0 10px;
+}
+
+.overseas_warehouse_messages {
+    font-weight: 800;    
+}
+
+.overseas_warehouse_messages li select {
+    height: 25px;
+    color: #5b9bd5;
+    outline: none;
+    border-color:#d9d9d9;
+} 
+
+.overseas_warehouse_messages li select option {
+    color: #5b9bd5;
+}
+
+#coverage_area {
+    border-bottom:1px dashed #d9d9d9;
+}
+
+#overseas_warehouse_maps .overseas_warehouse_tips{
+    padding: 18px 40px 5px 57px; 
+    /* box-sizing: border-box; */
+    color:#A1A1A1;
+}
+
+#overseas_warehouse_maps .overseas_warehouse_tips ul {
+    padding-left: 16px;
+}
+
+#overseas_warehouse_maps .overseas_warehouse_tips li a {
+    text-decoration: underline;
+    color: #5b9bd5
+}
+
+#overseas_warehouse_maps .overseas_warehouse_tips li {
+    line-height: 18px;
+    list-style: initial;
+}
+
+#circle {
+    width: 10px;
+    height: 10px;
+    background-color: yellow;
+    border-radius: 5px;
+}
+/* overseas warehouse maps end*/
+
+
+

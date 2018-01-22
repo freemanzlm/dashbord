@@ -8,10 +8,10 @@
     <title>Document</title>
     <link rel="stylesheet" href="./lib/datatables/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="./css/common/base.css">
+    <!-- <link rel="stylesheet" href="./css/common/layout1.css"> -->
     <link rel="stylesheet" href="./css/common/layout.css">
     <link rel="stylesheet" href="./css/EGDPerformanceAnalysis.css">
     <link rel="stylesheet" href="./css/dataTables/EGDTables.css">
-
 </head>
 
 <body>
@@ -23,7 +23,7 @@
             <span class="fr">2018.01.01-2018.03.31</span>
         </div>
 
-        <!-- topbar start -->
+        <!-- topbar buttons start -->
         <div class="egd_sort">
             <ul class="egd_line clearfix">
                 <li class="GMV_USD_sort">
@@ -37,9 +37,9 @@
                 </li>
             </ul>
         </div>
-        <!-- topbar end -->
+        <!-- topbar buttons end -->
 
-        <!-- table statr -->
+        <!-- datatable statr -->
         <table id="example" class="display mb20" cellspacing="0" style="width:1200px">
 
             <thead>
@@ -453,8 +453,8 @@
                 </tr>
             </tbody>
         </table>
-        <!-- table end -->
-        
+        <!-- datatable end -->
+
         <!--export data start  -->
         <div class="export_data mt20 text-center">
             <a href="javascript:;" id="data_link">完整数据导出</a>
@@ -463,14 +463,209 @@
     </div>
 
 
+    <!-- Overseas warehouse settings analysis  start -->
+    <div class="overseas_warehouse_settings clearfix">
+        <div class="egd_title clearfix">
+            <h1 class="fl">按EGD标准的海外仓设置分析:</h1>
+            <!-- <span class="fr">2018.01.01-2018.03.31</span> -->
+        </div>
+        <!-- sidebar buttons start -->
+        <div class="overseas_warehouse_preview fl">
+            <div class="tips">点击预览增加海外仓对有效覆盖区域的影响</div>
+            <div class="overseas_warehouse1">
+                <h1 class="mt20 mb8">万邑通WINIT美国仓</h1>
+                <ul class="clearfix">
+                    <li class="clearfix active">
+                        <div class="warehouse fl">
+                            <h1 class="mb8">增加CA仓</h1>
+                            <a href="javascript:;">CA仓介绍</a>
+                        </div>
+                        <div class="warehouse_sales fl">
+                            <p>EGD涵盖销售区域: <span>+26</span></p>
+                            <p>EGD涵盖销售额: <span>+20%</span></p>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="warehouse fl">
+                            <h1 class="mb8">增加CA仓</h1>
+                            <a href="javascript:;">CA仓介绍</a>
+                        </div>
+                        <div class="warehouse_sales fl">
+                            <p>EGD涵盖销售区域: <span>+26</span></p>
+                            <p>EGD涵盖销售额: <span>+20%</span></p>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="warehouse fl">
+                            <h1 class="mb8">增加CA仓</h1>
+                            <a href="javascript:;">CA仓介绍</a>
+                        </div>
+                        <div class="warehouse_sales fl">
+                            <p>EGD涵盖销售区域: <span>+26</span></p>
+                            <p>EGD涵盖销售额: <span>+20%</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="overseas_warehouse2">
+                <h1 class="mt20 mb8">NEW EGG美国仓</h1>
+                <ul class="clearfix">
+                    <li class="clearfix active">
+                        <div class="warehouse fl">
+                            <h1 class="mb8">增加CA仓</h1>
+                            <a href="javascript:;">CA仓介绍</a>
+                        </div>
+                        <div class="warehouse_sales fl">
+                            <p>EGD涵盖销售区域: <span>+26</span></p>
+                            <p>EGD涵盖销售额: <span>+20%</span></p>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="warehouse fl">
+                            <h1 class="mb8">增加CA仓</h1>
+                            <a href="javascript:;">CA仓介绍</a>
+                        </div>
+                        <div class="warehouse_sales fl">
+                            <p>EGD涵盖销售区域: <span>+26</span></p>
+                            <p>EGD涵盖销售额: <span>+20%</span></p>
+                        </div>
+                    </li>
+                    <li class="clearfix active">
+                        <div class="warehouse fl">
+                            <h1 class="mb8">增加CA仓</h1>
+                            <a href="javascript:;">CA仓介绍</a>
+                        </div>
+                        <div class="warehouse_sales fl">
+                            <p>EGD涵盖销售区域: <span>+26</span></p>
+                            <p>EGD涵盖销售额: <span>+20%</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- sidebar buttons end -->
+
+        <!--Overseas warehouse maps start  -->
+        <div id="overseas_warehouse_maps" class="mt20">
+            <div class="overseas_warehouse_messages clearfix">
+                <ul class="fl">
+                    <li>
+                        增加<span style="color:#5b9bd5"> CA 仓 </span>采用
+                        <select name="" id="">
+                                <option value="1">Winit:USPS Priority Mail</option>
+                                <option value="2" selected>2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                        </select>
+                    </li>
+                    <li>
+                        增加<span> CA 仓 </span>采用
+                        <select name="" id="">
+                                    <option value="1">Winit:USPS Priority Mail</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                            </select>
+                    </li>
+                    <li>
+                        增加<span> CA 仓 </span>采用
+                        <select name="" id="">
+                                    <option value="1">Winit:USPS Priority Mail</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                            </select>
+                    </li>
+                    <li>
+                        增加<span> CA 仓 </span>采用
+                        <select name="" id="">
+                                    <option value="1">Winit:USPS Priority Mail</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                            </select>
+                    </li>
+                    <li>
+                        增加<span> CA 仓 </span>采用
+                        <select name="" id="">
+                                    <option value="1">Winit:USPS Priority Mail</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                            </select>
+                    </li>
+                    <li>
+                        增加<span> CA 仓 </span>采用
+                        <select name="" id="">
+                                    <option value="1">Winit:USPS Priority Mail</option>
+                                    <option value="2" selected>2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                            </select>
+                    </li>
+                </ul>
+                <!-- <div class="delivery_method fl">
+                    
+                </div> -->
+
+                <div class="details">
+                    您目前的海外仓可按EGD标准有效覆盖
+                    <a href="" title="aaa">1111</a>
+                    <span>9</span> 个销售区域,涉及
+                    <span>25%</span> 的当前账户月销售额
+
+                    <i></i>
+                </div>
+            </div>
+            <!-- maps start -->
+            <div id="coverage_area" style="height: 480px;"></div>
+            <!-- maps end -->
+            <div class="overseas_warehouse_tips">
+                注:
+                <ul>
+                    <li>
+                        有效覆盖只是海外仓服务的一个方面，建议通过<a href="javascript:;">EGD标准海外仓服务简介</a>，查看并联系服务提供商了解详细服务及价格后再做出您的选择。
+                    </li>
+                    <li>
+                        EGD有效覆盖区域：指对应选择的海外仓，发货到该地区4天内可送达（包括4天。本时效起点为海外仓出库完成时间，终点是妥投时间，handling time请遵照服务商要求。 ）
+                    </li>
+                    <li>
+                        当前账户月销售额：仅指当前账户过去一个月实际销售额，未涉及增仓后对相关地区的销售促进预期。比例=EGD有效覆盖地区累计月销售额/账户总体月销售额。
+                    </li>
+                    <li>
+                        CA=California; NJ=New Jersey; IN=Indiana; KY=Kentucky; TX=Texas.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--Overseas warehouse maps end  -->
+
+    </div>
+    <!-- Overseas warehouse settings analysis  end -->
+
 </body>
 
 </html>
 
-<script src="./lib/jQuery/dist/jquery.min.js"></script>
+
+<script src="./lib/jQuery/jquery-1.8.3.min.js"></script>
 <script src="./lib/datatables/js/jquery.dataTables.min.js"></script>
 <script src="./lib/datatables/js/dataTables.sort.plungin.js"></script>
-
+<script src="./lib/backbone/underscore/underscore-min.js"></script>
+<script src="./lib/backbone/backbone-min.js"></script>
+<script src="./js/common/common.js"></script>
+<script src="./lib/highmaps/highmaps.js"></script>
+<script src="./lib/highmaps/maps_data.js"></script>
+<!--[if (gte IE 6)&(lte IE 9)]>
+  <script type="text/javascript" src="selectivizr.js"></script>
+  <noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
+<![endif]-->
 <script>
     $(function () {
 
@@ -481,7 +676,7 @@
             "cursor": "pointer"
         })
         // $("th").off().on("click", function () {});
-        $('#example').dataTable({
+        var dt = $('#example').dataTable({
             // language : {
             // "sProcessing": "处理中...",
             // "sLengthMenu": "每页 _MENU_ 项",
@@ -503,14 +698,14 @@
             //     "sJump": "跳转"
             // }},
 
-            "language":{
-                    "info":"",
-                    "oPaginate": {
-                "sFirst": "第一页",
-                "sPrevious": "上一页",
-                "sNext": "下一页",
-                "sLast": "最后一页",
-                "sJump": "跳转"
+            "language": {
+                "info": "",
+                "oPaginate": {
+                    "sFirst": "第一页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "最后一页",
+                    "sJump": "跳转"
                 },
             },
             'ordering': false,
@@ -526,11 +721,30 @@
 
         // initcomplete:function(){
 
-        $("#sort").on("click", function () {
-            // alert(1);
-            dt.order([
-                [3, "asc"]
-            ]).draw();
+        $(".GMV_USD_sort a").on("click", function () {
+            alert(1);
+            //         "aoColumnDefs": [
+            //   { "aDataSort": [ 0, 1 ], "aTargets": [ 0 ] },
+            //   { "aDataSort": [ 1, 0 ], "aTargets": [ 1 ] },
+            //   { "aDataSort": [ 2, 3, 4 ], "aTargets": [ 2 ] }
+            // ]
+
+
+            dt.api({
+                aoColumnDefs: {
+                    "bSortable": true,
+                    "aTargets": [3],
+                    "asSorting": ["asc"],
+                    "aTargets": [3]
+                }
+            })
+            // dt.aoColumnDefs=[
+            // ]
+
+
+            // dt.order([
+            //     [3, "asc"]
+            // ]).draw();
             $("#example_paginate").hide();
 
         })
@@ -545,5 +759,123 @@
 
 
 
+
+
     })
+</script>
+
+
+<!-- maps -->
+<script>
+    $(function () {
+        $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/us-population-density.json&callback=?',
+            function (data) {
+                // Make codes uppercase to match the map data
+                $.each(data, function () {
+                    this.code = this.code.toUpperCase();
+                });
+                // Instanciate the map
+                $('#coverage_area').highcharts('Map', {
+                    chart: {
+                        borderWidth: 0
+                    },
+                    legend: {
+                        // comment out legend
+                        enabled: false  // 清除图例
+                    },
+                    title: {
+                        // comment out title
+                        text: null  // 清空标题内容
+                    },
+                    // legend: {
+                    //     layout: 'horizontal',
+                    //     borderWidth: 0,
+                    //     backgroundColor: 'rgba(255,255,255,0.85)',
+                    //     floating: true,
+                    //     verticalAlign: 'top',
+                    //     y: 25
+                    // },
+                    // mapNavigation: {
+                    //     enabled: true
+                    // },
+                    colorAxis: {
+                        // min: 1111,
+                        type: 'logarithmic',
+                        minColor: 'gray',
+                        maxColor: '#000022',
+                        stops: [
+                            [0, '#e9eaeb'],
+                            // [0.67, '#4444FF'],
+                            // [1, '#000022']
+                        ]
+                    },
+                    // mapNavigation:{
+                    //     enableButtons:false
+                    // },
+                    plotOptions: {
+                        // comment out Mouse Tracking
+                        series: {
+                            enableMouseTracking: false  // 鼠标移动到地图上显示气泡信息
+                        }
+                    },
+                    series: [{
+                        // animation: {
+                        //     duration: 1000
+                        // },
+                        // align:"left",
+                        data: data,
+                        mapData: Highcharts.maps['countries/us/us-all'],// 地图的地理信息
+                        joinBy: ['postal-code', 'code'],// 鼠标移动到地图上地址时，显示的详细地理信息
+                        dataLabels: {
+                            enabled: true,
+                            // shape:"square",
+                            borderWidth:2,
+                            // color: 'green',
+                            // backgroundColor:"yellow",
+                            // format: '{point.code}',
+                            useHTML:true,
+                            formatter:function(){
+                                if (this.point.value != null)
+                                //添加图片元素
+
+                                
+
+                                return 
+                                
+                                    
+                                '<span id = "circle" class = "fl">'+'</span>';   
+                                    '<span class = "fl">' +"{point.code}" + '</span>'
+                                    
+                                
+                            }
+                            // align:"right",
+                            // crop:false,
+                            // overflow:"none"
+                        },
+                        // datalables:{
+                        //     enabled: true,
+
+                        // color:'red',
+
+                        // middleX: 0.5,                                        //设置节点中心的水平位置
+
+                        // middleY: 0.5,                                        //设置节点中心的垂直位置
+
+                        // align: 'left',                                             //设置水平对齐方式
+
+                        // verticalAlign: 'top',                                //设置垂直对齐方式
+
+                        // x: 0,                                                         //设置水平偏移距离
+
+                        // y:0                                                           //设置垂直偏移距离
+                        // }
+                       
+                    }],
+                    // Comment out the copyright information 清除版权声明
+                    credits: {
+                        enabled: false
+                    }
+                });
+            });
+    });
 </script>
