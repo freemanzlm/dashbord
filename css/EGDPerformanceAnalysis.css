@@ -74,6 +74,10 @@ h1 {
     width: 100%;
 }
 
+.egd_line li.active a {
+    background-color: #B3B3B3
+}
+
 .egd_line li:first-child{
     width: 232px;
 }

@@ -26,433 +26,54 @@
         <!-- topbar buttons start -->
         <div class="egd_sort">
             <ul class="egd_line clearfix">
-                <li class="GMV_USD_sort">
-                    <a href="javascript:;">交易额比重最高的线路(前5)</a>
+                <li class="active">
+                    <a href="javascript:;" class="GMV_USD_sort">交易额比重最高的线路(前5)</a>
                 </li>
-                <li class="egd_set_sort">
-                    <a href="javascript:;">已设置EGD的问题线路 <span>( 12 )</span></a>
+                <li>
+                    <a href="javascript:;" class="egd_set_sort">已设置EGD的问题线路 <span>( 12 )</span></a>
                 </li>
-                <li class="egd_unset_sort">
-                    <a href="javascript:;">待设置EGD优质线路 <span>( 12 )</span></a>
+                <li>
+                    <a href="javascript:;"  class="egd_unset_sort">待设置EGD优质线路 <span>( 12 )</span></a>
                 </li>
             </ul>
         </div>
         <!-- topbar buttons end -->
 
         <!-- datatable statr -->
-        <table id="example" class="display mb20" cellspacing="0" style="width:1200px">
+        <div class="table_container">
+            <table id="example" class="display mb20" cellspacing="0" style="width:1200px">
 
-            <thead>
+                <thead>
 
-                <tr>
+                    <tr>
 
-                    <th style="width:85px">发货地</th>
+                        <th >发货地</th>
 
-                    <th style="width:115px">收货地</th>
+                        <th >收货地</th>
 
-                    <th style="width:130px">货运方式</th>
+                        <th >货运方式</th>
 
-                    <th style="width:105px">交易量/比重</th>
+                        <th >交易量/<br>比重</th>
 
-                    <th style="width:95px">交易额/比重</th>
+                        <th >交易额/<br>比重</th>
 
-                    <th style="width:97px">实际货运时间(97%以上达到时间)</th>
+                        <th >实际货运时间(97%以上达到时间)</th>
 
-                    <th style="width:80px">您设置的EGD时效</th>
+                        <th >您设置的EGD时效</th>
 
-                    <th style="width:108px">您设置的EDG达标比例</th>
+                        <th >您设置的EDG达标比例</th>
 
-                    <th style="width:245px">表现分析</th>
-                </tr>
-            </thead>
+                        <th >表现分析</th>
+                    </tr>
 
+                </thead>
 
-            <tbody>
 
-                <tr>
-
-                    <td>Tiger Nixon</td>
-
-                    <td>System Architect</td>
-
-                    <td>Edinburgh</td>
-
-                    <td>61</td>
-
-                    <td>2011/04/25</td>
-
-                    <td>$320,800</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>
-                        <ul>
-                            <li>表现良好</li>
-                            <li></li>
-                        </ul>
-                    </td>
-                </tr>
-
-                <tr>
-
-                    <td>Garrett Winters</td>
-
-                    <td>Accountant</td>
-
-                    <td>Tokyo</td>
-
-                    <td>63</td>
-
-                    <td>2011/07/25</td>
-
-                    <td>$170,750</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Ashton Cox</td>
-
-                    <td>Junior Technical Author</td>
-
-                    <td>San Francisco</td>
-
-                    <td>66</td>
-
-                    <td>2009/01/12</td>
-
-                    <td>$86,000</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Cedric Kelly</td>
-
-                    <td>Senior Javascript Developer</td>
-
-                    <td>Edinburgh</td>
-
-                    <td>22</td>
-
-                    <td>2012/03/29</td>
-
-                    <td>$433,060</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Airi Satou</td>
-
-                    <td>Accountant</td>
-
-                    <td>Tokyo</td>
-
-                    <td>33</td>
-
-                    <td>2008/11/28</td>
-
-                    <td>$162,700</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Brielle Williamson</td>
-
-                    <td>Integration Specialist</td>
-
-                    <td>New York</td>
-
-                    <td>61</td>
-
-                    <td>2012/12/02</td>
-
-                    <td>$372,000</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Herrod Chandler</td>
-
-                    <td>Sales Assistant</td>
-
-                    <td>San Francisco</td>
-
-                    <td>59</td>
-
-                    <td>2012/08/06</td>
-
-                    <td>$137,500</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Rhona Davidson</td>
-
-                    <td>Integration Specialist</td>
-
-                    <td>Tokyo</td>
-
-                    <td>55</td>
-
-                    <td>2010/10/14</td>
-
-                    <td>$327,900</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Colleen Hurst</td>
-
-                    <td>Javascript Developer</td>
-
-                    <td>San Francisco</td>
-
-                    <td>39</td>
-
-                    <td>2009/09/15</td>
-
-                    <td>$205,500</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Sonya Frost</td>
-
-                    <td>Software Engineer</td>
-
-                    <td>Edinburgh</td>
-
-                    <td>23</td>
-
-                    <td>2008/12/13</td>
-
-                    <td>$103,600</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Jena Gaines</td>
-
-                    <td>Office Manager</td>
-
-                    <td>London</td>
-
-                    <td>30</td>
-
-                    <td>2008/12/19</td>
-
-                    <td>$90,560</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Quinn Flynn</td>
-
-                    <td>Support Lead</td>
-
-                    <td>Edinburgh</td>
-
-                    <td>22</td>
-
-                    <td>2013/03/03</td>
-
-                    <td>$342,000</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Charde Marshall</td>
-
-                    <td>Regional Director</td>
-
-                    <td>San Francisco</td>
-
-                    <td>36</td>
-
-                    <td>2008/10/16</td>
-
-                    <td>$470,600</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Haley Kennedy</td>
-
-                    <td>Senior Marketing Designer</td>
-
-                    <td>London</td>
-
-                    <td>43</td>
-
-                    <td>2012/12/18</td>
-
-                    <td>$313,500</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Tatyana Fitzpatrick</td>
-
-                    <td>Regional Director</td>
-
-                    <td>London</td>
-
-                    <td>19</td>
-
-                    <td>2010/03/17</td>
-
-                    <td>$385,750</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Michael Silva</td>
-
-                    <td>Marketing Designer</td>
-
-                    <td>London</td>
-
-                    <td>66</td>
-
-                    <td>2012/11/27</td>
-
-                    <td>$198,500</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Paul Byrd</td>
-
-                    <td>Chief Financial Officer (CFO)</td>
-
-                    <td>New York</td>
-
-                    <td>64</td>
-
-                    <td>2010/06/09</td>
-
-                    <td>$725,000</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-
-                <tr>
-
-                    <td>Gloria Little</td>
-
-                    <td>Systems Administrator</td>
-
-                    <td>New York</td>
-
-                    <td>59</td>
-
-                    <td>2009/04/10</td>
-
-                    <td>$237,500</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-
-                    <td>aa</td>
-                </tr>
-            </tbody>
-        </table>
+                <tbody id="Performance_analysis">
+                    <!-- Performance analysis datas -->
+                </tbody>
+            </table>
+         </div>
         <!-- datatable end -->
 
         <!--export data start  -->
@@ -659,23 +280,111 @@
 <script src="./lib/datatables/js/dataTables.sort.plungin.js"></script>
 <script src="./lib/backbone/underscore/underscore-min.js"></script>
 <script src="./lib/backbone/backbone-min.js"></script>
+<script src="./lib/arttemplate/template-web.js"></script>
 <script src="./js/common/common.js"></script>
 <script src="./lib/highmaps/highmaps.js"></script>
 <script src="./lib/highmaps/maps_data.js"></script>
+<script src="./until/config.js"></script>
+<!-- datas -->
+<!-- <script src="./js/data/table.js"></script> -->
+<!-- 表格数据 -->
+<script type="text/html" id='EGD_Datas'>
+    {{each result v i}}
+    <tr>
+
+        <td>{{v.ship_from}}</td>
+
+        <td>{{v.ship_to}}</td>
+
+        <td>{{v.SHPMT_MTHD}}</td>
+
+        <td>{{v.TXN_CNT}}/{{v.TXN_CNT_share}}</td>
+
+        <td>{{v.GMV_USD}}/{{v.GMV_USD_share}}</td>
+
+        <td>{{v.PD_97}}</td>
+
+        <td>{{v.egd_set_day}}</td>
+
+        <!-- style= {{v.egd_rate}}.Tostring().split("%")[0]'>'97?"color:#00b050":"color:red" -->
+        <td>{{v.egd_rate}}</td>
+        <td>
+            <!-- 未设置EGD的逻辑 -->
+            <% if (v.egd_set_day ==0||"") { %>
+                <ul>
+                    <% if (v.PD_97 <= 4) { %>
+                    <li style="color:#00b050;font-weight:800" >可设置EGD={{v.PD_97}}天</li>
+                    <% } else { %>
+                        <!--v.PD_97大于4的逻辑  -->
+                    <li>当前海外仓未能有效覆盖</li>
+                    <li><a href="javascript:;">点击查看可以有效覆盖的海外仓</a></li>
+                    <% } %>
+                </ul>
+                <!-- 设置EGD的逻辑 -->
+            <% } else if(v.egd_set_day > 0) { %>
+                <% if (v.PD_97 <= 4 && v.PD_97 < v.egd_set_day) { %>
+                <span>表现良好,继续加油！</span>
+                <% } else { %>
+            <ul>
+                    <!-- “PD_97”小于等于4，但大于“egd_set_day” -->
+                    <% if (v.PD_97 <= 4 && v.PD_97 > v.egd_set_day) { %>
+                    <li style="color:#00b050;font-weight:800" >可设置EGD={{v.PD_97}}天</li>
+                    <% } %>
+                    <% if (v.PD_97 > 4) { %>
+                    <li>当前海外仓未能有效覆盖</li>
+                    <li><a href="javascript:;">点击查看可以有效覆盖的海外仓</a></li>
+                    <% } %>
+                    <!--出仓时间大于1天  -->
+                    <% if (v.WH_AP_time > 1 ) { %>
+                    <li>请注意将出仓时间控制在1天内，目前{{v.WH_AP_time}}天</li>
+                    <% } %>
+                    <!--PD_97的值比egd_set_day的值大于等于2的逻辑 -->
+                    <% if (v.PD_97 - v.egd_set_day >=2) { %>
+                        <li>请合理设置EGD，避免影响账户表现</li>
+                    <% } %>
+            </ul>
+                <% } %>
+            <% } %>
+        </td>
+    </tr>
+    {{/each}}
+</script>
+<script src="./js/model/EGDTableModel.js"></script>
+
+
+<script src="./js/view/EgdPerformanceTableView.js"></script>
+
 <!--[if (gte IE 6)&(lte IE 9)]>
   <script type="text/javascript" src="selectivizr.js"></script>
   <noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
 <![endif]-->
-<script>
+
+
+
+<!-- <script>
     $(function () {
-
-
-
         $("th").css({
             "height": "60px",
             "cursor": "pointer"
-        })
+        });
         // $("th").off().on("click", function () {});
+
+        var lang = {
+                "bProcessing" : true,
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "info": "",
+                "sEmptyTable": "没有符合条件的记录",   // 数据为空时显示的信息
+                "sInfoEmpty": "", // 表格页脚显示多少条信息具体内容                                            
+                "oPaginate": {
+                    "sFirst": "第一页",
+                    "sPrevious": "上一页",
+                    "sNext": "下一页",
+                    "sLast": "最后一页",
+                    "sJump": "跳转"
+                },
+        }
+
         var dt = $('#example').dataTable({
             // language : {
             // "sProcessing": "处理中...",
@@ -687,7 +396,6 @@
             // "sInfoPostFix": "",
             // "sSearch": "搜索:",
             // // "sUrl": "",
-            // "sEmptyTable": "表中数据为空",
             // "sLoadingRecords": "载入中...",
             // "sInfoThousands": ",",
             // "oPaginate": {
@@ -698,20 +406,18 @@
             //     "sJump": "跳转"
             // }},
 
-            "language": {
-                "info": "",
-                "oPaginate": {
-                    "sFirst": "第一页",
-                    "sPrevious": "上一页",
-                    "sNext": "下一页",
-                    "sLast": "最后一页",
-                    "sJump": "跳转"
-                },
-            },
-            'ordering': false,
+            "language":lang,
+
+            columnDefs: [{
+                "targets": 'nosort',  //列的样式名
+                "orderable": false    //包含上样式名‘nosort’的禁止排序
+            }],
+
+            // 'ordering': false,
             autoWidth: false,
             searching: false,
-            "aLengthMenu": [5, 12]
+            "aLengthMenu": [5, 12],
+            bFilter : true
 
         });
 
@@ -755,19 +461,38 @@
         })
 
 
-
-
-
-
-
-
     })
-</script>
+</script> -->
+<!-- <script src="./js/EGD/EgdTables.js"></script> -->
+<!-- <script src="./js/EGD/tables.js"></script> -->
 
+<!-- tables data -->
+<script>
+    // EGD.model.GetTable.fetch({
+    //     url:"./json/transactions.json",
+    //     success:function(model,res){
+    //         console.log(res);
+    //     }
+    // })
+
+
+</script>
+<!-- <script>
+    
+    $.ajax({
+        url:"./json/transactions.json",
+        success:function(data){
+            console.log(data);
+        }
+    })
+
+</script> -->
 
 <!-- maps -->
 <script>
+
     $(function () {
+       
         $.getJSON('https://data.jianshukeji.com/jsonp?filename=json/us-population-density.json&callback=?',
             function (data) {
                 // Make codes uppercase to match the map data
@@ -781,11 +506,11 @@
                     },
                     legend: {
                         // comment out legend
-                        enabled: false  // 清除图例
+                        enabled: false // 清除图例
                     },
                     title: {
                         // comment out title
-                        text: null  // 清空标题内容
+                        text: null // 清空标题内容
                     },
                     // legend: {
                     //     layout: 'horizontal',
@@ -815,7 +540,7 @@
                     plotOptions: {
                         // comment out Mouse Tracking
                         series: {
-                            enableMouseTracking: false  // 鼠标移动到地图上显示气泡信息
+                            enableMouseTracking: false // 鼠标移动到地图上显示气泡信息
                         }
                     },
                     series: [{
@@ -824,29 +549,29 @@
                         // },
                         // align:"left",
                         data: data,
-                        mapData: Highcharts.maps['countries/us/us-all'],// 地图的地理信息
-                        joinBy: ['postal-code', 'code'],// 鼠标移动到地图上地址时，显示的详细地理信息
+                        mapData: Highcharts.maps['countries/us/us-all'], // 地图的地理信息
+                        joinBy: ['postal-code', 'code'], // 鼠标移动到地图上地址时，显示的详细地理信息
                         dataLabels: {
                             enabled: true,
                             // shape:"square",
-                            borderWidth:2,
+                            borderWidth: 2,
                             // color: 'green',
                             // backgroundColor:"yellow",
                             // format: '{point.code}',
-                            useHTML:true,
-                            formatter:function(){
+                            useHTML: true,
+                            formatter: function () {
                                 if (this.point.value != null)
-                                //添加图片元素
+                                    //添加图片元素
 
-                                
 
-                                return 
-                                
-                                    
-                                '<span id = "circle" class = "fl">'+'</span>';   
-                                    '<span class = "fl">' +"{point.code}" + '</span>'
-                                    
-                                
+
+                                    return
+
+
+                                '<span id = "circle" class = "fl">' + '</span>';
+                                '<span class = "fl">' + "{point.code}" + '</span>'
+
+
                             }
                             // align:"right",
                             // crop:false,
@@ -869,7 +594,7 @@
 
                         // y:0                                                           //设置垂直偏移距离
                         // }
-                       
+
                     }],
                     // Comment out the copyright information 清除版权声明
                     credits: {

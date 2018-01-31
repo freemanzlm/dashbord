@@ -1,32 +1,62 @@
-.egd_performance_analysis #example th {
+div.table_container {
+    width: 1200px;
+}
+
+table#example{
+    table-layout: fixed;   
+}
+
+#example th {
     background-color: #a5a5a5;
     color: #fff;
     border: none ;
+    box-sizing: border-box
 }
 
+#example td {
+    word-wrap:break-word;
+}
 
-.egd_performance_analysis #example tr{
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc{
+    background-image:none;
+}
+
+#example tr{
     background-color: #fff;
     text-align: center;
     border-color: #d2d2d2;
 }
 
-.egd_performance_analysis #example {
+#example {
     border:1px solid #d2d2d2;    
 }
 
-.egd_performance_analysis #example tr td:nth-of-type(-n+3)
-{
+#Performance_analysis .sorting_1 {
+    background-color: #fff;    
+}
+
+#example tr td.tb{
     color: #1b8cdd;
 }
 
-.egd_performance_analysis #example tr td:last-of-type {
+#example tr td.analysis {
     background-color: #fff2cc;
     box-sizing: border-box;
     text-align: left;
 }
 
-.egd_performance_analysis #example tr td:last-of-type ul{
+#example tr td.analysis ul li {
+    margin-bottom: 5px;
+}
+
+#example tr td.analysis ul li a {
+    color: #4472c4;
+    text-decoration: underline
+}
+
+#example tr td:last-of-type ul{
 
     list-style: initial;
     
