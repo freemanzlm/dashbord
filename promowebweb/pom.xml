@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.ebay.raptor.samples</groupId>
@@ -79,21 +78,61 @@
 			<groupId>com.ebay.cbt</groupId>
 			<artifactId>promocampLib</artifactId>
 			<version>0.0.3-SNAPSHOT</version>
+			<exclusions>
+        <exclusion>
+          <artifactId>bcmail-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bcprov-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+      </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.ebay.app.raptor</groupId>
 			<artifactId>PromoCommon</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+        <exclusion>
+          <artifactId>bcmail-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bcprov-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+      </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.ebay.app.raptor</groupId>
 			<artifactId>CBTCommon</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+        <exclusion>
+          <artifactId>bcmail-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bcprov-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+      </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.ebay.cbt.raptor</groupId>
 			<artifactId>CBTCSApi</artifactId>
 			<version>0.0.4-SNAPSHOT</version>
+			<exclusions>
+        <exclusion>
+          <artifactId>bcmail-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bcprov-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+      </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -138,6 +177,16 @@
 			<groupId>com.ebay.cbt.raptor</groupId>
 			<artifactId>CBTWltApi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+        <exclusion>
+          <artifactId>bcmail-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bcprov-jdk15</artifactId>
+          <groupId>org.bouncycastle</groupId>
+        </exclusion>
+      </exclusions>
 		</dependency>
 
 		<!-- itextpdf start -->
@@ -152,6 +201,16 @@
 			<artifactId>xmlworker</artifactId>
 			<version>5.4.1</version>
 		</dependency>
+
+		<dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcmail-jdk16</artifactId>
+    </dependency>
+
+		<dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk16</artifactId>
+    </dependency>
 
 		<!-- itextpdf end -->
 	</dependencies>
@@ -198,6 +257,10 @@
 				<groupId>com.ebay.raptor.build</groupId>
 				<artifactId>maven-content-plugin</artifactId>
 			</plugin>
+			<plugin>
+        <groupId>com.ebay.raptor.build</groupId>
+        <artifactId>service-discovery-maven-plugin</artifactId>
+      </plugin>
 		</plugins>
 	</build>
 </project>
